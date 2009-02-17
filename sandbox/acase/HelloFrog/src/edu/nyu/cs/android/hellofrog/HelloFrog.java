@@ -10,7 +10,7 @@ public class HelloFrog extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TextView tv = new TextView(this);
-        tv.setText("Hello, Android");
+        tv.setText("Hello, Android2");
         setContentView(tv);
 
     }
