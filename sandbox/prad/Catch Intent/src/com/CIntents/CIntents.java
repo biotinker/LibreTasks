@@ -1,18 +1,11 @@
 package com.CIntents;
 
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -48,10 +41,7 @@ public class CIntents extends Activity {
 	       	sendBroadcast(intent);
 	       }
 	       };
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
-	@Override
+	
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		unregisterReceiver(BR);	
@@ -59,23 +49,10 @@ public class CIntents extends Activity {
 }
 
 @Override
-protected void onResume() {
-	// TODO Auto-generated method stub
-	try
+	protected void onResume() {
+		try
 	{
 	super.onResume();
-	/*BufferedWriter buf = new BufferedWriter(new FileWriter("UserConfig.txt"));
-	buf.write("ACTION_TIME_TICK");
-	buf.write("ACTION_TIME_CHANGED");
-    
-	BufferedReader bufr=new BufferedReader(new FileReader("UserConfig.txt"));
-	
-	String strLine;
-	while ((strLine = bufr.readLine()) != null)   {
-	      Ifilter.addAction(strLine);
-	    }
-	
-	*/
 	/*Ifilter.addAction("ACTION_TIME_TICK");
 	Ifilter.addAction("ACTION_TIME_CHANGED");
 	Ifilter.addAction("ACTION_TIMEZONE_CHANGED");
@@ -83,25 +60,29 @@ protected void onResume() {
 	Ifilter.addAction("ACTION_DELETE");
 	*/
 	
-	     final String TESTSTRING = new String("ACTION_TIME_TICK"); 
-         
-        FileOutputStream fOut = openFileOutput("samplefile.txt",MODE_WORLD_READABLE); 
+	    final String TESTSTRING = new String("ACTION_TIME_TICK"); 
+        FileOutputStream fOut = openFileOutput("UserConfig.txt",MODE_WORLD_READABLE); 
         OutputStreamWriter osw = new OutputStreamWriter(fOut);  
         osw.write(TESTSTRING); 
         osw.flush(); 
         osw.close();
 
-        FileInputStream fIn = openFileInput("samplefile.txt"); 
+        /*FileInputStream fIn = openFileInput("samplefile.txt"); 
         InputStreamReader isr = new InputStreamReader(fIn); 
-        char[] inputBuffer = new char[TESTSTRING.length()]; 
+        char[] inputBuffer = new char[]; 
         isr.read(inputBuffer); 
-        String readString = new String(inputBuffer); 
-        boolean isTheSame = TESTSTRING.equals(readString); 
-       
-        Log.i("File Reading stuff", "success = " + isTheSame); 
-	
-        Ifilter.addAction(readString);
-    	
+        String line = new String(inputBuffer); 
+        */
+        
+        FileInputStream FIn = openFileInput("UserConfig.txt"); 
+        BufferedInputStream bis = new BufferedInputStream(FIn); 
+        DataInputStream dis = new DataInputStream(bis);
+        String line;
+        
+        while((line=dis.readLine())!=null)
+        {                
+        Ifilter.addAction(line);
+        }
      	registerReceiver(BR, Ifilter);
 	
 	}catch(Exception e)
