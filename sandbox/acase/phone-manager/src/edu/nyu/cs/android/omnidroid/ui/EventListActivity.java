@@ -1,4 +1,4 @@
-package edu.nyu.cs.android.phonemamager;
+package edu.nyu.cs.android.omnidroid.ui;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-public class PhoneManagerEventListActivity extends ListActivity {
+public class EventListActivity extends ListActivity {
     private static final String TAG = "EventListActivity";
         
 	/** Called when the activity is first created. */
