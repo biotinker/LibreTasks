@@ -1,10 +1,10 @@
 <cruisecontrol>
   <property name="repo.url" value="https://subversive.cims.nyu.edu/itp/sp09-google" />
   <property name="build.dir" value="/home/acase/classes/itp/build" />
-  <property name="cc.work.dir" value="${build.dir}/cruisecontrol-work" />
+  <property name="cc.work.dir" value="${build.dir}/work" />
   <property name="artifacts.dir" value="${cc.work.dir}/artifacts" />
   <property name="checkout.dir" value="${cc.work.dir}/checkout" />
-  <property name="cc.install.dir" value="${build.dir}/cruisecontrol-bin-2.7.2" />
+  <property name="cc.install.dir" value="${build.dir}/cruisecontrol-bin-2.8.2" />
   <property name="ant.dir" value="${cc.install.dir}/apache-ant-1.7.0" />
 <!--
   <property name="eclipse.test.results.dir" value="${cc.work.dir}/omnidroid-test/eclipse/results" />
