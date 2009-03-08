@@ -1,0 +1,66 @@
+<cruisecontrol>
+  <property name="repo.url" value="https://subversive.cims.nyu.edu/itp/sp09-google" />
+  <property name="build.dir" value="/home/acase/classes/itp/build" />
+  <property name="cc.work.dir" value="${build.dir}/cruisecontrol-work" />
+  <property name="artifacts.dir" value="${cc.work.dir}/artifacts" />
+  <property name="checkout.dir" value="${cc.work.dir}/checkout" />
+  <property name="cc.install.dir" value="${build.dir}/cruisecontrol-bin-2.7.2" />
+  <property name="ant.dir" value="${cc.install.dir}/apache-ant-1.7.0" />
+<!--
+  <property name="eclipse.test.results.dir" value="${cc.work.dir}/omnidroid-test/eclipse/results" />
+-->
+
+  <project name="omnidroid" buildafterfailed="false">
+    <listeners>
+      <currentbuildstatuslistener
+          file="logs/omnidroid/status.txt"/>
+    </listeners>
+
+    <!-- Bootstrappers are run every time the build runs,
+        *before* the modification checks -->
+    <bootstrappers>
+      <svnbootstrapper localWorkingCopy="${cc.work.dir}"/>
+    </bootstrappers>
+
+    <!-- Defines where cruise looks for changes, to decide
+         whether to run the build -->
+    <modificationset quietperiod="0">
+      <svn repositorylocation="${repo.url}/trunk" />
+    </modificationset>
+
+    <!-- Configures the actual build loop, how often and which
+         build file/target -->
+    <schedule interval="300">
+      <ant anthome="${ant.dir}"
+           buildfile="build_omnidroid.xml"
+           target="build"
+           usedebug="false" showprogress="false" showantoutput="false"/>
+    </schedule>
+
+    <log logdir="logs/omnidroid">
+      <merge dir="${eclipse.test.results.dir}"/>
+    </log>
+
+    <!-- Publishers are run *after* a build completes -->
+    <publishers>
+      <artifactspublisher dir="${eclipse.test.results.dir}" dest="${artifacts.dir}/omnidroid" />
+      <htmlemail
+        buildresultsurl="http://linserv3.cims.nyu.edu:12321"
+        mailhost="smtp.cims.nyu.edu"
+        skipusers="true"
+        reportsuccess="always"
+        css="${cc.install.dir}/webapps/cruisecontrol/css/cruisecontrol.css"
+        xsldir="${cc.install.dir}/webapps/cruisecontrol/xsl"
+        logdir="logs/omnidroid"
+        subjectprefix="[cc]"
+        returnaddress="acase@cims.nyu.edu" >
+        <!--<always address="itp-sp09-google@cs.nyu.edu" />-->
+        <always address="acase@cs.nyu.edu" />
+      </htmlemail>
+      <onsuccess>
+        <antpublisher buildfile="${cc.work.dir}/publish-omnidroid-apk.xml"/>
+      </onsuccess>
+    </publishers>
+  </project>
+
+</cruisecontrol>

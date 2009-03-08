@@ -1,0 +1,45 @@
+<project name="publish-jar" default="publish-jar">  
+
+  <property name="current.version"  value="0.2.0-SNAPSHOT"/>
+  <property name="project.dir"      location="/home/jhl388/cruisecontrol/checkout/javagit/javagit"/>
+  <property name="build.dir"        location="${project.dir}/target"/>
+  <property name="publish.dir"      location="/home/jhl388/public_html/javagit/cc-builds"/>
+
+  <target name="publish-jar">  
+    <!-- Post the dated jar for this build.  -->
+    <copy
+      file="${build.dir}/javagit-${current.version}.jar"  
+      tofile="${publish.dir}/javagit-${cctimestamp}-${current.version}.jar" />
+    <chmod 
+      file="${publish.dir}/javagit-${cctimestamp}-${current.version}.jar"
+      perm="go+r" />
+
+    <!-- Post the new latest jar. -->
+    <copy
+      file="${build.dir}/javagit-${current.version}.jar"  
+      tofile="${publish.dir}/javagit-latest.jar" />
+    <chmod 
+      file="${publish.dir}/javagit-latest.jar"
+      perm="go+r" />
+
+    <!-- Zip and post the new latest javadocs. -->
+    <zip destfile="${publish.dir}/javagit-latest-javadocs.zip">
+      <zipfileset dir="${build.dir}/site/apidocs" prefix="apidocs" />
+    </zip>
+    <chmod 
+      file="${publish.dir}/javagit-latest-javadocs.zip"
+      perm="go+r" />
+
+    <!-- Publish the latest javadocs in exploded form.  -->
+    <delete dir="${publish.dir}/javagit-latest-javadocs"/>
+    <mkdir dir="${publish.dir}/javagit-latest-javadocs"/>
+    <copy todir="${publish.dir}/javagit-latest-javadocs">
+      <fileset dir="${build.dir}/site/apidocs"/>
+    </copy>
+    <exec executable="chmod">
+      <arg line="-R go+rx ${publish.dir}/javagit-latest-javadocs"/>
+    </exec>
+  
+  </target>   
+
+</project>
