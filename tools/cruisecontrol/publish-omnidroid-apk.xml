@@ -1,45 +1,53 @@
-<project name="publish-jar" default="publish-jar">  
+<project name="publish-apk" default="publish-apk">  
 
-  <property name="current.version"  value="0.2.0-SNAPSHOT"/>
-  <property name="project.dir"      location="/home/jhl388/cruisecontrol/checkout/javagit/javagit"/>
-  <property name="build.dir"        location="${project.dir}/target"/>
-  <property name="publish.dir"      location="/home/jhl388/public_html/javagit/cc-builds"/>
+  <property name="current.version"  value="0.0.1-SNAPSHOT"/>
+  <property name="build.dir"        location="/home/acase/classes/itp/build"/>
+  <property name="trunk.dir"        location="${build.dir}/checkout/trunk"/>
+  <property name="publish.dir"      location="/home/acase/public_html/omnidroid/cc-builds"/>
 
-  <target name="publish-jar">  
-    <!-- Post the dated jar for this build.  -->
+  <target name="publish-apk">  
+    <!-- Post the dated apk for this build.  -->
+<!--
     <copy
-      file="${build.dir}/javagit-${current.version}.jar"  
-      tofile="${publish.dir}/javagit-${cctimestamp}-${current.version}.jar" />
+      file="${build.dir}/omnidroid-${current.version}.apk"  
+      tofile="${publish.dir}/omnidroid-${cctimestamp}-${current.version}.apk" />
     <chmod 
-      file="${publish.dir}/javagit-${cctimestamp}-${current.version}.jar"
+      file="${publish.dir}/omnidroid-${cctimestamp}-${current.version}.apk"
       perm="go+r" />
+-->
 
-    <!-- Post the new latest jar. -->
+    <!-- Post the new latest apk. -->
+<!--
     <copy
-      file="${build.dir}/javagit-${current.version}.jar"  
-      tofile="${publish.dir}/javagit-latest.jar" />
+      file="${build.dir}/omnidroid-${current.version}.apk"  
+      tofile="${publish.dir}/omnidroid-latest.apk" />
     <chmod 
-      file="${publish.dir}/javagit-latest.jar"
+      file="${publish.dir}/omnidroid-latest.apk"
       perm="go+r" />
+-->
 
     <!-- Zip and post the new latest javadocs. -->
-    <zip destfile="${publish.dir}/javagit-latest-javadocs.zip">
+<!--
+    <zip destfile="${publish.dir}/omnidroid-latest-javadocs.zip">
       <zipfileset dir="${build.dir}/site/apidocs" prefix="apidocs" />
     </zip>
     <chmod 
-      file="${publish.dir}/javagit-latest-javadocs.zip"
+      file="${publish.dir}/omnidroid-latest-javadocs.zip"
       perm="go+r" />
+-->
 
     <!-- Publish the latest javadocs in exploded form.  -->
-    <delete dir="${publish.dir}/javagit-latest-javadocs"/>
-    <mkdir dir="${publish.dir}/javagit-latest-javadocs"/>
-    <copy todir="${publish.dir}/javagit-latest-javadocs">
+<!--
+    <delete dir="${publish.dir}/omnidroid-latest-javadocs"/>
+    <mkdir dir="${publish.dir}/omnidroid-latest-javadocs"/>
+    <copy todir="${publish.dir}/omnidroid-latest-javadocs">
       <fileset dir="${build.dir}/site/apidocs"/>
     </copy>
     <exec executable="chmod">
-      <arg line="-R go+rx ${publish.dir}/javagit-latest-javadocs"/>
+      <arg line="-R go+rx ${publish.dir}/omnidroid-latest-javadocs"/>
     </exec>
-  
+ -->
+ 
   </target>   
 
 </project>
