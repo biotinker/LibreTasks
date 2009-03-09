@@ -4,11 +4,17 @@
   <property name="cc.work.dir" value="${build.dir}/work" />
   <property name="artifacts.dir" value="${cc.work.dir}/artifacts" />
   <property name="checkout.dir" value="${cc.work.dir}/checkout" />
+  <property name="config.dir" value="${checkout.dir}/cruisecontrol" />
   <property name="cc.install.dir" value="${build.dir}/cruisecontrol-bin-2.8.2" />
   <property name="ant.dir" value="${cc.install.dir}/apache-ant-1.7.0" />
-<!--
-  <property name="eclipse.test.results.dir" value="${cc.work.dir}/omnidroid-test/eclipse/results" />
--->
+  <property name="test.results.dir" value="${cc.work.dir}/omnidroid-test/results" />
+  <property name="svnant.dir" value="${cc.install.dir}/svnant-1.1.0-RC2/lib" />
+
+  <path id="svn.classpath">
+    <pathelement location="${svnant.dir}/svnjavahl.jar" />
+    <pathelement location="${svnant.dir}/svnant.jar" />
+    <pathelement location="${svnant.dir}/svnClientAdapter.jar" />
+  </path>
 
   <project name="omnidroid" buildafterfailed="false">
     <listeners>
@@ -19,7 +25,7 @@
     <!-- Bootstrappers are run every time the build runs,
         *before* the modification checks -->
     <bootstrappers>
-      <svnbootstrapper localWorkingCopy="${cc.work.dir}"/>
+      <svnbootstrapper localWorkingCopy="${checkout.dir}/trunk"/>
     </bootstrappers>
 
     <!-- Defines where cruise looks for changes, to decide
@@ -31,19 +37,17 @@
     <!-- Configures the actual build loop, how often and which
          build file/target -->
     <schedule interval="300">
-      <ant anthome="${ant.dir}"
-           buildfile="build_omnidroid.xml"
+      <ant antscript="${build.dir}/bin/ant-build.sh"
            target="build"
            usedebug="false" showprogress="false" showantoutput="false"/>
     </schedule>
-
     <log logdir="logs/omnidroid">
-      <merge dir="${eclipse.test.results.dir}"/>
+      <merge dir="${test.results.dir}"/>
     </log>
 
     <!-- Publishers are run *after* a build completes -->
     <publishers>
-      <artifactspublisher dir="${eclipse.test.results.dir}" dest="${artifacts.dir}/omnidroid" />
+      <artifactspublisher dir="${test.results.dir}" dest="${artifacts.dir}/omnidroid" />
       <htmlemail
         buildresultsurl="http://linserv3.cims.nyu.edu:12321"
         mailhost="smtp.cims.nyu.edu"
