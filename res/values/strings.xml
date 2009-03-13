@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, PhoneManager</string>
-    <string name="app_name">Phone Manager</string>
+    <string name="app_name">OmniDroid</string>
+    <string name="choose_app">Choose an application</string>
+    <string name="omnihandler">OmniHandler</string>
+    <string name="enabled">Enabled</string>
 </resources>
