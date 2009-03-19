@@ -1,5 +1,6 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
+import edu.nyu.cs.omnidroid.bkgservice.*;
 import edu.nyu.cs.omnidroid.R;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -21,7 +22,7 @@ public class OmniBR extends Activity {
         	Button button = (Button)findViewById(R.id.BR);
             button.setOnClickListener(BRListener);
        //Intent intentBR=new Intent("",null,this,com.OmniBR.BRService.class);\
-       
+            
         }catch(Exception e)
         {
         	Log.i("Exception",e.getLocalizedMessage());
@@ -36,8 +37,11 @@ public class OmniBR extends Activity {
 	       	// Call to start the BR
 	       	//ComponentName comp = new ComponentName(this.getClass().getPackage().getName(), BRService.class.getName());
 	       	//startService(new Intent().setComponent(comp));
-	       	Intent intentBR=new Intent();
-	       	intentBR.setClassName("com.OmniBR", "com.OmniBR.BRService");
+	    	
+	             	   
+	    	Intent intentBR=new Intent();
+	       	
+	       	intentBR.setClassName(this.getClass().getPackage().getName(),this.getClass().getPackage().getName()+".BRService");
 	       	startService(intentBR);
 	       	Intent intent = new Intent("SMS_RECEIVED");
 	       	sendBroadcast(intent);
