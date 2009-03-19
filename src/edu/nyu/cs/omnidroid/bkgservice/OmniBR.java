@@ -40,8 +40,7 @@ public class OmniBR extends Activity {
 	    	
 	             	   
 	    	Intent intentBR=new Intent();
-	       	
-	       	intentBR.setClassName(this.getClass().getPackage().getName(),this.getClass().getPackage().getName()+".BRService");
+	       	intentBR.setClassName("edu.nyu.cs.omnidroid","edu.nyu.cs.omnidroid.bkgservice.BRService");
 	       	startService(intentBR);
 	       	Intent intent = new Intent("SMS_RECEIVED");
 	       	sendBroadcast(intent);
