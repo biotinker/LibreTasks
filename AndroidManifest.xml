@@ -21,9 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".bkgservice.BRService" />
-      
+        
+      <service android:name=".bkgservice.BRService" />
     <activity android:name=".ui.Summary"></activity>
+    
 </application>
     
 </manifest> 

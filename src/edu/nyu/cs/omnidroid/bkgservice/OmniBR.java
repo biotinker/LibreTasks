@@ -1,11 +1,19 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
+import java.io.IOException;
+import java.util.Formatter;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 import edu.nyu.cs.omnidroid.bkgservice.*;
 import edu.nyu.cs.omnidroid.R;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,13 +27,17 @@ public class OmniBR extends Activity {
         super.onCreate(savedInstanceState);
         try{
         	setContentView(R.layout.main);
+        	       	
         	Button button = (Button)findViewById(R.id.BR);
             button.setOnClickListener(BRListener);
+            //OmLogger.write("Starting Backgnd Service");
        //Intent intentBR=new Intent("",null,this,com.OmniBR.BRService.class);\
             
         }catch(Exception e)
         {
         	Log.i("Exception",e.getLocalizedMessage());
+        	  	
+        	       	
         	
         }
     }
