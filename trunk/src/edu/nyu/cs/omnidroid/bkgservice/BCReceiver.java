@@ -1,5 +1,7 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
+import java.util.logging.Logger;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +13,7 @@ public class BCReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent intent)
 	    {
 	    Toast.makeText(context,intent.getAction(),5).show();
-	    Toast.makeText(context, Logger.read(), 5).show();
+	    Toast.makeText(context, "yahoo", 5).show();
 	    try{
 		Log.i("Received Intent", intent.getAction());
 		}catch(Exception e)

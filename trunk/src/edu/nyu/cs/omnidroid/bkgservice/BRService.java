@@ -1,8 +1,9 @@
 package edu.nyu.cs.omnidroid.bkgservice;
-
+import edu.nyu.cs.omnidroid.util.*;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import android.app.Service;
@@ -50,12 +51,19 @@ public class BRService extends Service{
         	Ifilter.addAction(parts[1].toString());
         }
      	registerReceiver(BR, Ifilter);
-     	Logger.write("BroadcastReceiver Registered");
+     	OmLogger.write(this,"3.Success");
+     	OmLogger.read(this);
      	
-	}catch(Exception e)
+	}catch(FileNotFoundException fe)
 	{
-		Log.i("Error",e.getLocalizedMessage());
-		Logger.write("Unable to start BroadcastReceiver");
+		Log.i("File Not Found",fe.getLocalizedMessage());
+	}
+    catch(Exception e)
+	{
+		Log.i("BRService",e.getLocalizedMessage());
+		Log.i("BRService",e.toString());
+		
+		//Logger.write("Unable to start BroadcastReceiver");
 	}
 	}
 
