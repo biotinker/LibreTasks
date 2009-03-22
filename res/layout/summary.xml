@@ -63,10 +63,7 @@
 				Example3 Handler
 			</ListView>
 		</TableRow>
-	
-	    
-	
-	    
+
 		<TableRow android:id="@+id/TableRow01">
 			<TableLayout android:id="@+id/TableLayout02"
 				android:layout_width="wrap_content"
