@@ -1,8 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 	<LinearLayout android:id="@+id/LinearLayout02"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content">
-<?xml version="1.0" encoding="utf-8"?>
 
 	
 	<TableLayout android:id="@+id/TableLayout01"
