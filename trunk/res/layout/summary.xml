@@ -46,7 +46,8 @@
     		android:layout_height="wrap_content">
 			Example3 Handler
     		
-		</ListView>
+		
+</ListView>
 	</TableRow>
 
     
@@ -54,6 +55,7 @@
     
 	<TableRow android:id="@+id/TableRow01">
 	<TableLayout android:id="@+id/TableLayout02" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableLayout><LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
+<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 </LinearLayout><AbsoluteLayout android:id="@+id/AbsoluteLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content">
 </AbsoluteLayout>
 		 
