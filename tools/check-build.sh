@@ -26,7 +26,7 @@ initialize() {
     else
         # Otherwise, it's off to the races!
         /bin/touch ${TMPFILE}
-        REV=`grep "^New Revision" ${BUILD_FLAG} | awk '{print $3}'`
+        REV=`grep -m 1 "^New Revision" ${BUILD_FLAG} | awk '{print $3}'`
     fi
 }
 
