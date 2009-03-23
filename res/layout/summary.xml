@@ -6,8 +6,8 @@
 	android:layout_height="wrap_content">
 
 	<TableLayout android:id="@+id/TableLayout01"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
 		<TableRow android:layout_width="fill_parent"
 				android:clickable="false"
 				android:padding="3dip">
@@ -85,4 +85,21 @@
 		</TableRow>
 	
 	</TableLayout>
+	<LinearLayout android:id="@+id/LinearLayout02"
+    	android:orientation="vertical"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+    	<TextView android:id="@+id/TextView02"
+    		android:text="Second Linear Layour (Vertical)"
+			android:layout_height="fill_parent"
+			android:layout_width="fill_parent"
+			android:gravity="fill_vertical|fill_horizontal|fill">Test
+		</TextView>
+    	<TextView android:id="@+id/TextView03"
+    		android:text="Vertical2"
+			android:layout_height="fill_parent"
+			android:layout_width="fill_parent"
+			android:gravity="fill_vertical|fill_horizontal|fill">Test
+		</TextView>
+	</LinearLayout>
 </LinearLayout>
