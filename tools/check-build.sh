@@ -12,8 +12,8 @@ TMPFILE="$BUILD_DIR/var/tmp/check-build"
 EMAIL_HEAD="$BUILD_DIR/share/templates/email_header"
 EMAIL_FOOT="$BUILD_DIR/share/templates/email_footer"
 LOG="$BUILD_DIR/logs/omnidroid.build.log.$DATE"
-#TO="itp-sp09-google-private@cims.nyu.edu"
-TO="acase@cims.nyu.edu"
+TO="itp-sp09-google-private@cims.nyu.edu"
+#TO="acase@cims.nyu.edu"
 SUBJECT="[Build] Rev#"
 
 initialize() {
