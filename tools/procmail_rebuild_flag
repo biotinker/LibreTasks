@@ -1,0 +1,18 @@
+# This is the source for the procmail filter that I use
+# that flags the code for rebuild.  The SVN server sends
+# me an email on commit.  This grabs that email an
+# tells the check-build.sh to run via cron job every 5mins.
+
+REBUILD_FLAG="$HOME/classes/itp/build/.NEEDS_REBUILD"
+
+:0:
+* ^From:.*svn\@cims\.nyu\.edu
+* ^Subject:.svn.commit
+{
+    :0c
+    $HOME/mail/itp/commits
+
+    :0
+    $REBUILD_FLAG
+}
+
