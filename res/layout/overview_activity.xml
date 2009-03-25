@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/LinearLayout01"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:orientation="vertical"
+	android:layout_height="wrap_content">
+	
+	<TableLayout android:id="@+id/TableLayout01"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TableRow android:id="@+id/TableHeader"
+			android:layout_width="fill_parent"
+			android:clickable="false"
+			android:padding="3dip">
+	        <TextView android:padding="1dip"
+	        	android:layout_weight="1"
+	        	android:layout_width="fill_parent"
+	        	android:hint="@string/omnihandler"
+	        	android:clickable="false"
+	        	android:focusable="false"
+	        	android:gravity="center_horizontal"/>
+			<TextView android:padding="1dip"
+	        	android:clickable="false"
+	        	android:focusable="false"
+				android:hint="@string/enabled"
+				android:gravity="center_horizontal"/>
+		</TableRow>
+ 
+	    <TableRow android:id="@+id/TableRow01"
+			android:layout_width="fill_parent">
+	    	<Button
+	        	android:layout_weight="1"
+		        android:id="@+id/example1"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginLeft="10dip"
+		        android:text="AutoReplyWhenSilent"
+		        android:bufferType="editable"
+		        android:clickable="true"
+		        android:cursorVisible="true"/>
+	    	<CheckBox android:id="@+id/enabled"
+	    		android:enabled="true"
+	    		android:layout_gravity="right">
+	    	</CheckBox>
+	    </TableRow>	
+	
+	    <TableRow android:id="@+id/TableRow02"
+			android:layout_width="fill_parent">
+	    	<Button
+	        	android:layout_weight="1"
+		        android:id="@+id/example2"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginLeft="10dip"
+		        android:text="PowerLowIgnoreCalls"
+		        android:bufferType="editable"
+		        android:clickable="true"
+		        android:cursorVisible="true"/>
+	    	<CheckBox android:id="@+id/enabled"
+	    		android:enabled="true"
+	    		
+	    		android:layout_gravity="right" android:checked="true">
+	    	</CheckBox>
+	    </TableRow>
+	
+	    <TableRow android:id="@+id/TableRow03"
+			android:layout_width="fill_parent">
+	    	<Button
+	        	android:layout_weight="1"
+		        android:id="@+id/example3"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginLeft="10dip"
+		        android:text="SendEmailOnCalEvent"
+		        android:bufferType="editable"
+		        android:clickable="true"
+		        android:cursorVisible="true"/>
+	    	<CheckBox android:id="@+id/enabled"
+	    		android:enabled="true"
+	    		android:layout_gravity="right">
+	    	</CheckBox>
+	    </TableRow>
+	
+	
+	</TableLayout>
+</LinearLayout>
