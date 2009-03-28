@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class EventAppListActivity extends ListActivity {
+public class EventCatcher extends ListActivity {
     private static final String TAG = "EventListActivity";
 
     /** Called when the activity is first created. */
