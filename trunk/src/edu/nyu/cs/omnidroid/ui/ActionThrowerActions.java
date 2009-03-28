@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-public class EventListActivity extends ListActivity {
+public class ActionThrowerActions extends ListActivity {
     private static final String TAG = "EventListActivity";
         
 	/** Called when the activity is first created. */

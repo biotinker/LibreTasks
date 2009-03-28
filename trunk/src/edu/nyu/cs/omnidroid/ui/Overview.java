@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import edu.nyu.cs.omnidroid.R;
 
-public class OverviewActivity extends Activity {
+public class Overview extends Activity {
   private static final int MENU_ADD = 0;
 
   /** Called when the activity is first created. */
@@ -26,7 +26,7 @@ public class OverviewActivity extends Activity {
 
   /* Creates the menu items */
   public boolean onCreateOptionsMenu(Menu menu) {
-      menu.add(0, MENU_ADD, 0, "Add OmniHandler");
+      menu.add(0, MENU_ADD, 0, "Add OmniHandler").setIcon(android.R.drawable.ic_menu_add);;
       return true;
   }
 
@@ -42,11 +42,7 @@ public class OverviewActivity extends Activity {
   
 
   private void RunEventAppListActivity() {
-//    EventAppListActivity applist = new EventAppListActivity();
-//    applist.addContentView(view, params)
-    // TODO: We shouldn't be calling intents for this, there
-    //       has to be a way to just start up the next activity page
-    startActivity(new Intent(Intent.ACTION_EDIT));
+    startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
   }
 
   // TODO: Pull this from the UsrConfigFile
