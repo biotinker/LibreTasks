@@ -41,7 +41,7 @@ public class EventCatcherActions extends ListActivity {
 
     // TODO: Pull this from the Package Manager
     // TODO: Filter by only apps that contain actions
-    static final String[] EVENTS = new String[] {
+    private static final String[] EVENTS = new String[] {
         "Email Received", "Email was Deleted", "Email was Moved" };
 
 }

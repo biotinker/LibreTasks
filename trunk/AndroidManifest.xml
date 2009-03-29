@@ -9,7 +9,7 @@
 		<!--  Activity that displays currently saved OmniHandlers
 		      and allows the user to create/edit/delete them. -->
         <activity android:name=".ui.Overview"
-                  android:label="@string/app_name">
+                  android:label="@string/overview_title">
             <intent-filter>
             	<!-- Create an application launder from the application menu  -->
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,8 @@
             	<category android:name="android.intent.category.DEFAULT"></category>
 			</intent-filter>
 			<intent-filter>
-            	<action android:name="edu.nyu.cs.omnidroid.SELECT"></action>
+				<!--  TODO: Use a custom intent such as edu.nyu.cs.omnidroid.SELECT -->
+            	<action android:name="android.intent.action.SELECT"></action>
             	<category android:name="android.intent.category.DEFAULT"></category>
 			</intent-filter>
 		</activity>
@@ -49,7 +50,8 @@
         <activity android:name=".ui.EventCatcherActions"
                   android:label="@string/event_catcher_actions_title">
             <intent-filter>
-                <action android:name="edu.nyu.cs.omnidroid.eventcatcheractions.SELECT"/>
+				<!--  TODO: Use a custom intent such as edu.nyu.cs.omnidroid.VIEW -->
+                <action android:name="android.intent.action.VIEW"/>
             	<category android:name="android.intent.category.DEFAULT"></category>                
 			</intent-filter>
 		</activity>
@@ -77,7 +79,7 @@
 		<!-- TODO: This should be launched through having an Enabled
 		     item in .ui.Overview instead -->
         <activity android:name=".bkgservice.OmniBR"
-                  android:label="@string/app_name">
+                  android:label="@string/service_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
