@@ -9,12 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class EventCatcher extends ListActivity {
-    private static final String TAG = "EventListActivity";
+    private static final String TAG = "EventCatcher";
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i("<onCreate>", "Test");
+        Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
         setListAdapter(new ArrayAdapter<String>(this,
@@ -35,7 +35,15 @@ public class EventCatcher extends ListActivity {
         //String action = getIntent().getAction();
         // Launch activity to view/edit the currently selected item
         // TODO: Build URI dynamically
-        startActivity(new Intent(Intent.ACTION_CALL));
+        
+        //startActivity(new Intent(edu.nyu.cs.omnidroid.util.intents.eventcatcheractions.SELECT));
+        //Intent i = new Intent("SELECT");
+        //Intent i = new Intent(this., edu.nyu.cs.omnidroid.ui.ActionThrower.class)
+        //i.setAction("SELECT");
+        // TODO: Turn into a omnidroid specific intent
+        startActivity(new Intent(Intent.ACTION_VIEW, getIntent().getData()));
+
+
         Log.i(TAG, "Exit");
     }
 
