@@ -1,7 +1,8 @@
-  package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
+
+import java.io.IOException;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -11,16 +12,20 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.UserConfig;
 
 /**
- * Overview is an Android Activity that is the main UI Launcher for the OmniDroid Application.
+ * Test Application to Verify Configuration File Functionality
  * 
  */
-public class Overview extends Activity {
+public class TestConfigFile extends Activity {
 //public class Overview extends Activity implements OnClickListener {
   private static final int MENU_ADD = 0;
   private static final int MENU_EDIT = 1;
   private static final int MENU_DELETE = 2;
+
+  // Configuration file locations for the TM/RM.
+  private static String userConfigFile;
 
   // TODO: Pull this from the UsrConfigFile
   static final String[] UserConfigActions = new String[] { "AutoReplyWhenSilent", "", "" };
@@ -33,11 +38,7 @@ public class Overview extends Activity {
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
-    // TODO: Connect buttons to the proper activities  
-    //Button example1 = (Button) findViewById(R.id.example1);
-    //example1.setOnClickListener(this);
-
-    setContentView(R.layout.overview);
+    setContentView(R.layout.test_config);
     registerForContextMenu(this.findViewById(R.id.example1));
   }
 
@@ -80,7 +81,40 @@ public class Overview extends Activity {
   }
 
   private void AddOmniHandler() {
-    startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
+    initConfig();
+    /*
+    final String TESTSTRING = new String("SMS,SMS_RECEIVED,Evan,SMS,SMS_SEND,URI"); 
+    FileOutputStream fOut = openFileOutput("UserConfig.txt",MODE_WORLD_READABLE); 
+    OutputStreamWriter osw = new OutputStreamWriter(fOut);  
+    osw.write(TESTSTRING); 
+    osw.flush(); 
+    osw.close();
+    
+    FileInputStream FIn = openFileInput("UserConfig.txt"); 
+    BufferedInputStream bis = new BufferedInputStream(FIn); 
+    DataInputStream dis = new DataInputStream(bis);
+    String line;
+    
+    while((line=dis.readLine())!=null)
+    {                
+      String[] parts=line.split(",");
+      Log.i("error",parts[1].toString());
+      Ifilter.addAction(parts[1].toString());
+    }
+*/
+  }
+
+  /**
+   * Initialize the server configuration objects
+   */
+  private static void initConfig() {
+    try {
+      UserConfig.getInstance().init(userConfigFile);
+    } catch (IOException e) {
+      // TODO (acase): Use OmnidroidExceptions
+      System.err.println("Unable to load user config properties file.");
+      System.err.println("  " + e.getMessage());
+    }
   }
 
   /*
