@@ -6,6 +6,7 @@
 
    <!-- OmniDroid: -->
     <application android:icon="@drawable/icon" android:label="@string/app_name">
+
 		<!--  Activity that displays currently saved OmniHandlers
 		      and allows the user to create/edit/delete them. -->
         <activity android:name=".ui.Overview"
@@ -26,6 +27,15 @@
                 <data android:mimeType="vnd.android.cursor.dir/vnd.nyu.omnidroid" />
             </intent-filter>
 			-->
+		</activity>
+
+        <activity android:name=".tests.TestConfigFile"
+                  android:label="@string/test_app">
+            <intent-filter>
+            	<!-- Create an application launder from the application menu  -->
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 		</activity>
 
 		
