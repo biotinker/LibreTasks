@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.util.Log;
 public class OmLogger{
 
@@ -22,8 +23,9 @@ public static void write(Context context,String s)
         	Toast.makeText(context, "2.Write to log", 5).show();
         	Log.i("Succees","inserted into Omni.log");
 			 */    
-		  
-	        FileOutputStream fOut = context.openFileOutput("Omni.log",32768); 
+		   //Context context=edu.nyu.cs.omnidroid.bkgservice.OmniBR.class.cast(context);
+			
+			FileOutputStream fOut = context.openFileOutput("Omni.log",32768); 
 	        OutputStreamWriter osw = new OutputStreamWriter(fOut);  
 	        osw.write(s+"\n"); 
 	        osw.flush(); 

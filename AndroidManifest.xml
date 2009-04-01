@@ -9,6 +9,12 @@
 
 		<!--  Activity that displays currently saved OmniHandlers
 		      and allows the user to create/edit/delete them. -->
+		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	    <receiver android:name=".bkgservice.Starter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
             <intent-filter>

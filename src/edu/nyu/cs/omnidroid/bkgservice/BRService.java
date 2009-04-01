@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
 
 public class BRService extends Service{
     /* (non-Javadoc)
@@ -28,43 +32,50 @@ public class BRService extends Service{
 
 	/** Called when the activity is first created. */
     @Override
-    public void onCreate() {
+    public void onCreate() 
+    {
     	try
     	{
     	// To be deleted from this Code
-    	final String TESTSTRING = new String("SMS,SMS_RECEIVED,Evan,SMS,SMS_SEND,URI"); 
-        FileOutputStream fOut = openFileOutput("UserConfig.txt",MODE_WORLD_READABLE); 
-        OutputStreamWriter osw = new OutputStreamWriter(fOut);  
-        osw.write(TESTSTRING); 
-        osw.flush(); 
-        osw.close();
+    	UGParser ug=new UGParser();
+    	ug.write(getBaseContext(), "Enabled", "True");
+    	ug.write(getBaseContext(), "EventName", "SMS_RECEIVED");
         
-        FileInputStream FIn = openFileInput("UserConfig.txt"); 
-        BufferedInputStream bis = new BufferedInputStream(FIn); 
-        DataInputStream dis = new DataInputStream(bis);
-        String line;
+    	String Enabled=ug.readLine(getBaseContext(), "Enabled"); 
+    	ArrayList<String> Events=ug.readLines(getBaseContext(), "EventName");   	
+        String Event;
         
-        while((line=dis.readLine())!=null)
-        {                
-        	String[] parts=line.split(",");
-        	Log.i("error",parts[1].toString());
-        	Ifilter.addAction(parts[1].toString());
+    	Iterator<String> i=Events.iterator();
+        while(i.hasNext())
+    	{
+        Event=i.next();
+    	Toast.makeText(getBaseContext(),Event,5).show();
+    	Ifilter.addAction(Event);
+    	
+    	}
+    	
+    	if(Enabled.equalsIgnoreCase("True"))
+        {
+        registerReceiver(BR, Ifilter);
+        Toast.makeText(getBaseContext(),Enabled,5).show();
         }
-     	registerReceiver(BR, Ifilter);
+        else
+        {
+        	Toast.makeText(getBaseContext(),":(",5).show();
+        this.onDestroy();
+        }
+        
      	OmLogger.write(this,"3.Success");
      	OmLogger.read(this);
      	
-	}catch(FileNotFoundException fe)
-	{
-		Log.i("File Not Found",fe.getLocalizedMessage());
-	}
-    catch(Exception e)
-	{
+     	
+    	}catch(Exception e)   	   
+    	{
 		Log.i("BRService",e.getLocalizedMessage());
 		Log.i("BRService",e.toString());
 		
 		//Logger.write("Unable to start BroadcastReceiver");
-	}
+    	}
 	}
 
 	/* (non-Javadoc)
@@ -73,7 +84,8 @@ public class BRService extends Service{
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		//unregisterReceiver(BR);
+		unregisterReceiver(BR);
 		super.onDestroy();
+		
 	}
 }
