@@ -8,7 +8,8 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name">
 
 		<!--  Activity that displays currently saved OmniHandlers
-		      and allows the user to create/edit/delete them. -->
+		      and allows the user to create/edit/delete them.
+-->
 		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	    <receiver android:name=".bkgservice.Starter">
             <intent-filter>
@@ -35,18 +36,19 @@
 			-->
 		</activity>
 
-        <activity android:name=".tests.TestConfigFile"
+        <activity android:name=".tests.TestActivity"
                   android:label="@string/test_app">
             <intent-filter>
-            	<!-- Create an application launder from the application menu  -->
+                <!-- Create an application launder from the application menu  -->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-		</activity>
+                </activity>
 
 		
 		<!--  Activity used to by the event catcher to determine
-		      what application's actions to catch -->
+		      what application's actions to catch
+-->
         <activity android:name=".ui.EventCatcher"
                   android:label="@string/event_catcher_title">
             <intent-filter>
@@ -62,7 +64,8 @@
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application -->
+		      what actions to catch for a given application
+-->
         <activity android:name=".ui.EventCatcherActions"
                   android:label="@string/event_catcher_actions_title">
             <intent-filter>
@@ -73,7 +76,8 @@
 		</activity>
 
 		<!--  Activity used to by the action thrower to determine
-		      what application's actions to throw -->
+		      what application's actions to throw
+-->
         <activity android:name=".ui.ActionThrower"
                   android:label="@string/action_thrower_title">
             <intent-filter>
@@ -83,7 +87,8 @@
 		</activity>
 
 		<!--  Activity used to by the action thrower to determine
-		      what actions to throw for a given application -->
+		      what actions to throw for a given application
+-->
         <activity android:name=".ui.ActionThrowerActions"
                   android:label="@string/action_thrower_actions_title">
             <intent-filter>
@@ -93,7 +98,8 @@
 		</activity>
 
 		<!-- TODO: This should be launched through having an Enabled
-		     item in .ui.Overview instead -->
+		     item in .ui.Overview instead
+-->
         <activity android:name=".bkgservice.OmniBR"
                   android:label="@string/service_name">
             <intent-filter>

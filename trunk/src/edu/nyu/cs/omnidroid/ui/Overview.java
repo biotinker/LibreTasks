@@ -1,31 +1,39 @@
-  package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.ui;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * Overview is an Android Activity that is the main UI Launcher for the OmniDroid Application.
  * 
  */
-public class Overview extends Activity {
-//public class Overview extends Activity implements OnClickListener {
+public class Overview extends Activity implements OnClickListener {
   private static final int MENU_ADD = 0;
   private static final int MENU_EDIT = 1;
   private static final int MENU_DELETE = 2;
 
-  // TODO: Pull this from the UsrConfigFile
-  static final String[] UserConfigActions = new String[] { "AutoReplyWhenSilent", "", "" };
-  // TODO: Pull this from the UsrConfigFile
-  static final boolean[] UserConfigActionsEnabled = { true, false, true, true };
+  static private UGParser ug = new UGParser();
 
   /** Called when the activity is first created. */
   @Override
@@ -33,12 +41,55 @@ public class Overview extends Activity {
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
-    // TODO: Connect buttons to the proper activities  
-    //Button example1 = (Button) findViewById(R.id.example1);
-    //example1.setOnClickListener(this);
-
     setContentView(R.layout.overview);
-    registerForContextMenu(this.findViewById(R.id.example1));
+
+    // TODO: Connect buttons to the proper activities
+    TableLayout table_layout = (TableLayout) findViewById(R.id.TableLayout01);
+
+    // Add in each OmniHandler
+
+    Collection<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
+    Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
+    while (i.hasNext()) {
+      HashMap<String, String> HM1 = i.next();
+      Log.i(this.getLocalClassName().toString(), "Found record");
+
+      // Add a new row
+      Log.i(this.getLocalClassName().toString(), "Adding a row");
+      TableRow table_row = new TableRow(this.getApplicationContext());
+      LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+      table_row.setLayoutParams(params);
+      table_layout.addView(table_row);
+
+
+      // Add a button to the row
+      Log.i(this.getLocalClassName().toString(), "Adding a button");
+      Button button = new Button(table_row.getContext());
+      button.setLayoutParams(params);
+      button.setClickable(true);
+      button.setCursorVisible(true);
+      table_row.addView(button);
+
+      // Add an enable/disable checkbox to the row
+      Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
+      CheckBox checkbox = new CheckBox(this.getApplicationContext());
+      checkbox.setGravity(Gravity.RIGHT);
+      if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
+        Log.i(this.getLocalClassName().toString(), "Settign enabled");
+        //checkbox.setEnabled(true);
+      } else {
+        Log.i(this.getLocalClassName().toString(), "Settign disabled");
+        //checkbox.setEnabled(false);
+      }
+      table_row.addView(checkbox);
+
+      Log.i(this.getLocalClassName().toString(), "Next.");
+      // Add a context menu for the row
+      registerForContextMenu(button);
+
+      // Go to the next row
+    }
+
   }
 
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -90,8 +141,8 @@ public class Overview extends Activity {
    */
   public void onClick(View v) {
     // TODO:
-    //Toast.makeText(this.getBaseContext(), "OmniHandler Selected", 5).show();
-    //startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
+    // Toast.makeText(this.getBaseContext(), "OmniHandler Selected", 5).show();
+    // startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
   }
 
 }
