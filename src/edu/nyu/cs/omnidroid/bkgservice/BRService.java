@@ -48,6 +48,19 @@ public class BRService extends Service{
 			HM.put("ActionData","ContentProvider_URI");
 			HM.put("EnableInstance","True");
     	ug.writeRecord(getApplicationContext(),HM);
+    	
+    	
+		HM.put("InstanceName","SMS to Email2");
+		HM.put("EventName","SMS_RECEIVED");
+	    HM.put("EventApp","SMS");
+		HM.put("FilterType","S_PhoneNum");
+		HM.put("FilterData","212-555-1234");
+		HM.put("ActionName","SEND_EMAIL");
+		HM.put("ActionApp","EMAIL");
+		HM.put("ActionData","ContentProvider_URI");
+		HM.put("EnableInstance","True");
+		
+	ug.writeRecord(getApplicationContext(),HM);
         
     	//Code starts here
     	ArrayList<HashMap<String,String>> UCRecords=ug.readRecords(getApplicationContext());
