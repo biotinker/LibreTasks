@@ -50,7 +50,7 @@ public void delete_all(Context context)
  * @param HM
  *         HashMap of the record to be deleted.
  */ 
-public void deleteRecord(Context context,HashMap<String,String> HM)
+public int deleteRecord(Context context,HashMap<String,String> HM)
 {
 try
 {
@@ -73,10 +73,12 @@ while(i1.hasNext())
 	HashMap<String,String> HM1=i.next();
     writeRecord(context, HM1);
 }
+return 1;
 }
 catch(Exception e)
 {
 OmLogger.write(context,"Could not delete Instance Record");	
+return 0;
 }
 }
 
@@ -196,9 +198,11 @@ public int write(Context context,String key,String val)
 		  { 
 			  HashMap<String,String> HM=new HashMap<String,String>();
 			  String[] parts=line.split(":");
-			  	if(parts[0].toString().equalsIgnoreCase("EventName"))
+			  	if(parts[0].toString().equalsIgnoreCase("InstanceName"))
 			  			{
-			  		HM.put("EventName",line.split(":")[1].toString());
+			  		HM.put("InstanceName",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("EventName",line.split(":")[1].toString());
 		  			line=dis.readLine();
 		  			HM.put("EventApp",line.split(":")[1].toString());
 		  			line=dis.readLine();
@@ -231,7 +235,7 @@ public int write(Context context,String key,String val)
    * @param Context
    *          Application Context
    * @param Key
-   *          EventName to be passed.
+   *          InstanceName to be passed.
    * @return Returns Array List of HashMaps. HashMaps have the keys as EventName, EventApp, FilterType, FilterData, ActionName, ActionApp, AppData,EnableInstance
    */
   public ArrayList<HashMap<String,String>> readRecord(Context context,String Key)
@@ -249,8 +253,10 @@ public int write(Context context,String key,String val)
 			  HashMap<String,String> HM=new HashMap<String,String>();
 			  
 			  String[] parts=line.split(":");
-			  	if(parts[0].toString().equalsIgnoreCase("EventName") && parts[1].toString().equalsIgnoreCase(Key) )
+			  	if(parts[0].toString().equalsIgnoreCase("InstanceName") && parts[1].toString().equalsIgnoreCase(Key) )
 			  			{
+			  			HM.put("InstanceName",line.split(":")[1].toString());
+			  			line=dis.readLine();
 			  			HM.put("EventName",line.split(":")[1].toString());
 			  			line=dis.readLine();
 			  			HM.put("EventApp",line.split(":")[1].toString());
@@ -291,6 +297,28 @@ public int write(Context context,String key,String val)
   public int writeRecord(Context context,HashMap<String,String> HM)
   {
 	  try{
+	  write(context,"InstanceName",HM.get("InstanceName").toString());
+	  write(context,"EventName",HM.get("EventName").toString());
+	  write(context,"EventApp",HM.get("EventApp").toString());
+	  write(context,"FilterType",HM.get("FilterType").toString());
+	  write(context,"FilterData",HM.get("FilterData").toString());
+	  write(context,"ActionName",HM.get("ActionName").toString());
+	  write(context,"ActionApp",HM.get("ActionApp").toString());
+	  write(context,"ActionData",HM.get("ActionData").toString());
+	  write(context,"EnableInstance",HM.get("EnableInstance").toString());
+	  return 1;
+	  }catch(Exception e)
+	  {
+		  OmLogger.write(context,"Unable to write record from User Config");
+		  return 0;
+	  }
+  }
+  
+  public int updateRecord(Context context,HashMap<String,String> HM)
+  {
+	  try{
+	  deleteRecord(context, HM);
+	  write(context,"InstanceName",HM.get("InstanceName").toString());
 	  write(context,"EventName",HM.get("EventName").toString());
 	  write(context,"EventApp",HM.get("EventApp").toString());
 	  write(context,"FilterType",HM.get("FilterType").toString());
