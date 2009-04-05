@@ -27,7 +27,7 @@ public class OmniBR extends Activity {
         super.onCreate(savedInstanceState);
         try{
         	setContentView(R.layout.main);
-        	       	
+        	
         	Button button = (Button)findViewById(R.id.BR);
             button.setOnClickListener(BRListener);
             //OmLogger.write("Starting Backgnd Service");
