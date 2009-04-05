@@ -1,12 +1,7 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 import edu.nyu.cs.omnidroid.util.*;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import android.app.Service;
@@ -24,6 +19,7 @@ public class BRService extends Service{
 	 */
 	IntentFilter Ifilter=new IntentFilter();
     BroadcastReceiver BR=new BCReceiver();
+    
     @Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -36,44 +32,52 @@ public class BRService extends Service{
     {
     	try
     	{
+    	
     	// To be deleted from this Code
     	UGParser ug=new UGParser();
-    	ug.write(getBaseContext(), "Enabled", "True");
-    	ug.write(getBaseContext(), "EventName", "SMS_RECEIVED");
+    	ug.delete_all(getApplicationContext());
+    	ug.write(getApplicationContext(), "Enabled", "True");
+    		HashMap<String,String> HM=new HashMap<String,String>();
+    	    HM.put("EventApp","SMS");
+			HM.put("EventName","SMS_RECEIVED");
+			HM.put("FilterType","S_PhoneNum");
+			HM.put("FilterData","212-555-1234");
+			HM.put("ActionName","SEND_EMAIL");
+			HM.put("ActionApp","EMAIL");
+			HM.put("ActionData","ContentProvider_URI");
+			HM.put("EnableInstance","True");
+    	ug.writeRecord(getApplicationContext(),HM);
         
-    	String Enabled=ug.readLine(getBaseContext(), "Enabled"); 
-    	ArrayList<String> Events=ug.readLines(getBaseContext(), "EventName");   	
-        String Event;
-        
-    	Iterator<String> i=Events.iterator();
-        while(i.hasNext())
+    	//Code starts here
+    	ArrayList<HashMap<String,String>> UCRecords=ug.readRecord(getApplicationContext(), "SMS_RECEIVED");
+    	Iterator<HashMap<String,String>> i=UCRecords.iterator();
+    	while(i.hasNext())
     	{
-        Event=i.next();
-    	Toast.makeText(getBaseContext(),Event,5).show();
-    	Ifilter.addAction(Event);
-    	
+        HashMap<String,String> HM1=i.next();
+        //Configure the Intent Filter with the Events
+        if(HM1.get("EnableInstance").equalsIgnoreCase("True"))
+    	Ifilter.addAction(HM1.get("EventName"));
     	}
     	
-    	if(Enabled.equalsIgnoreCase("True"))
+        /*Check the User Config to start OmniDroid*/
+        String Enabled=ug.readLine(getBaseContext(), "Enabled"); 
+        if(Enabled.equalsIgnoreCase("True"))
         {
         registerReceiver(BR, Ifilter);
-        Toast.makeText(getBaseContext(),Enabled,5).show();
         }
         else
         {
-        	Toast.makeText(getBaseContext(),":(",5).show();
-        this.onDestroy();
+        Toast.makeText(getBaseContext(),"Stopping OmniDroid",5).show();
+        unregisterReceiver(BR);
         }
         
-     	OmLogger.write(this,"3.Success");
-     	OmLogger.read(this);
-     	
+     	  	
      	
     	}catch(Exception e)   	   
     	{
 		Log.i("BRService",e.getLocalizedMessage());
 		Log.i("BRService",e.toString());
-		
+		OmLogger.write(getApplicationContext(),"Not able to Enable/Diable Omnidroid");
 		//Logger.write("Unable to start BroadcastReceiver");
     	}
 	}
@@ -84,7 +88,6 @@ public class BRService extends Service{
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		unregisterReceiver(BR);
 		super.onDestroy();
 		
 	}

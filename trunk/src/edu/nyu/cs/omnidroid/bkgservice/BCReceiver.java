@@ -1,24 +1,26 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
-import java.util.logging.Logger;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
+import edu.nyu.cs.omnidroid.util.OmLogger;
 
-public class BCReceiver extends BroadcastReceiver{
+public class BCReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent)
 	    {
-	    Toast.makeText(context,intent.getAction(),5).show();
-	    Toast.makeText(context, "yahoo", 5).show();
-	    try{
+		try{
+		Toast.makeText(context,intent.getAction(),5).show();
+	    
+	    /* Call to Rajivs Code from here.*/
+	   
 		Log.i("Received Intent", intent.getAction());
 		}catch(Exception e)
 		{
 			Log.i("Exception in Intent",e.getLocalizedMessage());
+			OmLogger.write(context,"Unable to execute required action");
 		}
 		}
 	    }
