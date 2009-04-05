@@ -26,6 +26,8 @@
 				android:hint="@string/enabled"
 				android:gravity="center_horizontal"/>
 		</TableRow>
+
+<!--  TODO: This should be dynamically generated in Overview.java
  
 	    <TableRow android:id="@+id/TableRow01"
 			android:layout_width="fill_parent">
@@ -84,7 +86,7 @@
 	    		android:layout_gravity="right">
 	    	</CheckBox>
 	    </TableRow>
-	
+-->	
 	
 	</TableLayout>
 </LinearLayout>
