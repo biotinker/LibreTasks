@@ -335,5 +335,56 @@ public int write(Context context,String key,String val)
 	  }
   }
   
+  /**
+   * Reads Instance Records from the UserConfig based on the EventName passed
+   *  
+   * @param Context
+   *          Application Context
+   * @param Key
+   *          EventName to be passed.
+   * @return Returns ArrayList. 
+   *    */
+  public ArrayList<HashMap<String,String>> readbyEventName(Context context,String Key)
+  {
+	  ArrayList<HashMap<String,String>> UCRecords=new ArrayList<HashMap<String,String>>();
+	  
+	  try{
+		  FileInputStream FIn = context.openFileInput("UserConfig.txt"); 
+		  BufferedInputStream bis = new BufferedInputStream(FIn); 
+		  DataInputStream dis = new DataInputStream(bis);
+		  String line="";
+		    
+		  while((line=dis.readLine())!=null)
+		  { 
+			  HashMap<String,String> HM=new HashMap<String,String>();
+			  String[] parts=line.split(":");
+			  	if(parts[0].toString().equalsIgnoreCase("EventName") && parts[1].toString().equalsIgnoreCase(Key) )
+			  			{
+			  		HM.put("EventName",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("EventApp",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("FilterType",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("FilterData",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("ActionName",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("ActionApp",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("ActionData",line.split(":")[1].toString());
+		  			line=dis.readLine();
+		  			HM.put("EnableInstance",line.split(":")[1].toString());
+		  			line=dis.readLine();
+			  			}
+			  	UCRecords.add(HM);
+		  }
+		  return UCRecords;
+	  }catch(Exception e)
+	  {
+		  OmLogger.write(context,"Unable to read Line from User Config");
+		  return UCRecords;
+	  }
+  }
   
 }
