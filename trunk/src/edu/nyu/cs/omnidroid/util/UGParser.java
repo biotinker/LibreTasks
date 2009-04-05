@@ -230,17 +230,18 @@ public int write(Context context,String key,String val)
   }
  
   /**
-   * Reads Instance Records from the UserConfig based on the EventName passed
+   * Reads Instance Records from the UserConfig based on the InstanceName passed
    *  
    * @param Context
    *          Application Context
    * @param Key
    *          InstanceName to be passed.
-   * @return Returns Array List of HashMaps. HashMaps have the keys as EventName, EventApp, FilterType, FilterData, ActionName, ActionApp, AppData,EnableInstance
-   */
-  public ArrayList<HashMap<String,String>> readRecord(Context context,String Key)
+   * @return Returns HashMap. 
+   *    */
+  public HashMap<String,String> readRecord(Context context,String Key)
   {
-	  ArrayList<HashMap<String,String>> UCRecords=new ArrayList<HashMap<String,String>>();
+	  HashMap<String,String> HM=new HashMap<String,String>();
+	  
 	  
 	  try{
 		  FileInputStream FIn = context.openFileInput("UserConfig.txt"); 
@@ -250,8 +251,7 @@ public int write(Context context,String key,String val)
 		 
 		  while((line=dis.readLine())!=null)
 		  { 
-			  HashMap<String,String> HM=new HashMap<String,String>();
-			  
+			 
 			  String[] parts=line.split(":");
 			  	if(parts[0].toString().equalsIgnoreCase("InstanceName") && parts[1].toString().equalsIgnoreCase(Key) )
 			  			{
@@ -273,15 +273,15 @@ public int write(Context context,String key,String val)
 			  			line=dis.readLine();
 			  			HM.put("EnableInstance",line.split(":")[1].toString());
 			  			line=dis.readLine();
-			  			UCRecords.add(HM);
+			  			break;
 			  			}
 			  	
 		 }
-		  return UCRecords;
+		 return HM;  
 	  }catch(Exception e)
 	  {
 		  OmLogger.write(context,"Unable to read record from User Config");
-		  return UCRecords;
+		  return HM;
 	  }
   }
   
