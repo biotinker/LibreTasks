@@ -38,8 +38,9 @@ public class BRService extends Service{
     	ug.delete_all(getApplicationContext());
     	ug.write(getApplicationContext(), "Enabled", "True");
     		HashMap<String,String> HM=new HashMap<String,String>();
+    		HM.put("InstanceName","SMS to Email");
+    		HM.put("EventName","SMS_RECEIVED");
     	    HM.put("EventApp","SMS");
-			HM.put("EventName","SMS_RECEIVED");
 			HM.put("FilterType","S_PhoneNum");
 			HM.put("FilterData","212-555-1234");
 			HM.put("ActionName","SEND_EMAIL");
@@ -49,7 +50,7 @@ public class BRService extends Service{
     	ug.writeRecord(getApplicationContext(),HM);
         
     	//Code starts here
-    	ArrayList<HashMap<String,String>> UCRecords=ug.readRecord(getApplicationContext(), "SMS_RECEIVED");
+    	ArrayList<HashMap<String,String>> UCRecords=ug.readRecords(getApplicationContext());
     	Iterator<HashMap<String,String>> i=UCRecords.iterator();
     	while(i.hasNext())
     	{
