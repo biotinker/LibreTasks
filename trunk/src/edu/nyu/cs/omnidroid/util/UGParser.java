@@ -218,8 +218,9 @@ public int write(Context context,String key,String val)
 		  			line=dis.readLine();
 		  			HM.put("EnableInstance",line.split(":")[1].toString());
 		  			line=dis.readLine();
+		  			UCRecords.add(HM);	
 			  			}
-			  	UCRecords.add(HM);
+			  	
 		  }
 		  return UCRecords;
 	  }catch(Exception e)
@@ -376,8 +377,9 @@ public int write(Context context,String key,String val)
 		  			line=dis.readLine();
 		  			HM.put("EnableInstance",line.split(":")[1].toString());
 		  			line=dis.readLine();
+		  			UCRecords.add(HM);	
 			  			}
-			  	UCRecords.add(HM);
+			  	
 		  }
 		  return UCRecords;
 	  }catch(Exception e)
