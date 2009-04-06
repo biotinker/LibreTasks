@@ -45,6 +45,15 @@
             </intent-filter>
                 </activity>
 
+        <activity android:name=".masterapp.OmniCPActivity"
+                  android:label="@string/master_app">
+            <intent-filter>
+                <!-- Create an application launder from the application menu  -->
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+                </activity>
+
 		
 		<!--  Activity used to by the event catcher to determine
 		      what application's actions to catch
