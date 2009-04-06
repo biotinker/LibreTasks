@@ -40,7 +40,8 @@ public static void write(Context context,String s)
 
 public static String read(Context context)
 	{
-			String total="";
+
+	String total="";
 			try
 			{
 			FileInputStream FIn1 = context.openFileInput("Omni.log"); 
