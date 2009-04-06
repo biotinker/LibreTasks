@@ -1,10 +1,12 @@
 package com.example1.contacts;
 
+import java.net.URI;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Contacts.People;
+
 import android.widget.Toast;
 
 public class Contacts extends Activity {
@@ -24,11 +26,10 @@ public class Contacts extends Activity {
 
 	
 
-	String columns[] = new String[] { People.NAME, People.NUMBER };
 
-	Uri mContacts = People.CONTENT_URI;
-
-	Cursor cur = managedQuery(mContacts, columns, 
+	
+// put the uri in the content:// format in the managedQuery
+	Cursor cur = managedQuery(Uri.parse("content://call_log/calls"), null, 
 
 	null, 
 
@@ -40,19 +41,15 @@ public class Contacts extends Activity {
 
 	if (cur.moveToFirst()) {
 
-	String name = null;
-
-	String phoneNo = null;
-
+		
 	do {
 
-	
-
-	name = cur.getString(cur.getColumnIndex(People.NAME));
-
-	phoneNo = cur.getString(cur.getColumnIndex(People.NUMBER));
-
-	Toast.makeText(this, name + "" + phoneNo, Toast.LENGTH_LONG).show();
+			String[] cols = cur.getColumnNames(); 
+		//for(int i = 0; i < cols.length; i++) { Log.d(TAG, "Column: " + cols[i]); } while(c.moveToNext()) { Log.d(TAG, c.getString(c.getColumnIndex("address")) + ":" + c.getString(c.getColumnIndex("person")) + ":" +c.getString(c.getColumnIndex("date")) + ":" +c.getString(c.getColumnIndex("body"))); } 
+		for(int i = 0; i < cols.length; i++)
+		{
+		Toast.makeText(this, cols[i], Toast.LENGTH_LONG).show();
+		}
 
 	} while (cur.moveToNext());
 
