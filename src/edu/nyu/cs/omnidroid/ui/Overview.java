@@ -1,6 +1,6 @@
 package edu.nyu.cs.omnidroid.ui;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -32,6 +32,7 @@ public class Overview extends Activity implements OnClickListener {
   private static final int MENU_ADD = 0;
   private static final int MENU_EDIT = 1;
   private static final int MENU_DELETE = 2;
+  private static final int MENU_SETTINGS = 3;
 
   static private UGParser ug = new UGParser();
 
@@ -41,71 +42,75 @@ public class Overview extends Activity implements OnClickListener {
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.overview);
-
-    // TODO: Connect buttons to the proper activities
-    TableLayout table_layout = (TableLayout) findViewById(R.id.TableLayout01);
+    ArrayList<View> rowList = new ArrayList<View>();
+    ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
+    Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
 
     // Add in each OmniHandler
-
-    Collection<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
-    Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
     while (i.hasNext()) {
       HashMap<String, String> HM1 = i.next();
       Log.i(this.getLocalClassName().toString(), "Found record");
 
-      // Add a new row
-      Log.i(this.getLocalClassName().toString(), "Adding a row");
-      TableRow table_row = new TableRow(this.getApplicationContext());
-      LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
-      table_row.setLayoutParams(params);
-      table_layout.addView(table_row);
-
-
-      // Add a button to the row
+      // Build our button
       Log.i(this.getLocalClassName().toString(), "Adding a button");
-      Button button = new Button(table_row.getContext());
-      button.setLayoutParams(params);
+      Button button = new Button(this);
       button.setClickable(true);
+      Log.i(this.getLocalClassName().toString(), "Setting button text=" + HM1.get("InstanceName"));
+      button.setText(HM1.get("InstanceName"));
       button.setCursorVisible(true);
-      table_row.addView(button);
 
-      // Add an enable/disable checkbox to the row
+      // Build our checkbox
+      // TODO (acase): Connect buttons to the proper activities
       Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
-      CheckBox checkbox = new CheckBox(this.getApplicationContext());
+      CheckBox checkbox = new CheckBox(this);
       checkbox.setGravity(Gravity.RIGHT);
       if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
-        Log.i(this.getLocalClassName().toString(), "Settign enabled");
-        //checkbox.setEnabled(true);
+        checkbox.setEnabled(true);
       } else {
-        Log.i(this.getLocalClassName().toString(), "Settign disabled");
-        //checkbox.setEnabled(false);
+        checkbox.setEnabled(false);
       }
-      table_row.addView(checkbox);
-
-      Log.i(this.getLocalClassName().toString(), "Next.");
       // Add a context menu for the row
       registerForContextMenu(button);
 
-      // Go to the next row
+      // Build our table row
+      Log.i(this.getLocalClassName().toString(), "Adding a row");
+      TableRow row = new TableRow(this);
+      row.addView(button);
+      row.addView(checkbox);
+      rowList.add(row);
+
     }
+
+    // Build our tables
+    Log.i(this.getLocalClassName().toString(), "Creating table");
+    TableLayout table_layout = new TableLayout(this);
+    table_layout.setColumnStretchable(0, true);
+    for (View rows : rowList) {
+      rows.setPadding(2, 2, 2, 2);
+      table_layout.addView(rows);
+    }
+
+    // Add our table to a scrollpane
+    ScrollView scrollPane = new ScrollView(this);
+    scrollPane.addView(table_layout);
+    setContentView(scrollPane);
 
   }
 
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    menu.add(0, MENU_EDIT, 0, "Edit");
-    menu.add(0, MENU_DELETE, 0, "Delete");
+    menu.add(0, MENU_EDIT, 0, R.string.edit);
+    menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
   public boolean onContextItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_EDIT:
-      // TODO:
+      // TODO (acase): Call next activity
       Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
       return true;
     case MENU_DELETE:
-      // TODO:
+      // TODO (acase): Delete confirmation dialog
       Toast.makeText(this.getBaseContext(), "Delete OmniHandler Selected", 5).show();
       return true;
     default:
@@ -115,7 +120,8 @@ public class Overview extends Activity implements OnClickListener {
 
   /* Creates the menu items */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_ADD, 0, "Add OmniHandler").setIcon(android.R.drawable.ic_menu_add);
+    menu.add(0, MENU_ADD, 0, R.string.add).setIcon(android.R.drawable.ic_menu_add);
+    menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);
     ;
     return true;
   }
@@ -124,6 +130,10 @@ public class Overview extends Activity implements OnClickListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_ADD:
+      AddOmniHandler();
+      return true;
+    case MENU_SETTINGS:
+      // TODO (acase): Call preferences activity
       AddOmniHandler();
       return true;
     }
