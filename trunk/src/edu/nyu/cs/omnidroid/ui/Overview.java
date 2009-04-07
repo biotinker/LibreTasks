@@ -46,6 +46,8 @@ public class Overview extends Activity implements OnClickListener {
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
 
+    Log.i(this.getLocalClassName().toString(), "Number of Records: " + userConfigRecords.size());
+    
     // Add in each OmniHandler
     while (i.hasNext()) {
       HashMap<String, String> HM1 = i.next();
@@ -99,8 +101,8 @@ public class Overview extends Activity implements OnClickListener {
 
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    menu.add(0, MENU_EDIT, 0, R.string.edit);
-    menu.add(0, MENU_DELETE, 0, R.string.del);
+    menu.add(0, MENU_EDIT, 0, R.string.edit).setIcon(android.R.drawable.ic_menu_edit);
+    menu.add(0, MENU_DELETE, 0, R.string.del).setIcon(android.R.drawable.ic_menu_delete);
   }
 
   public boolean onContextItemSelected(MenuItem item) {
