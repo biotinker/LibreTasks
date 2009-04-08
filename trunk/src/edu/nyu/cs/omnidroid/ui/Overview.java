@@ -25,30 +25,34 @@ import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
- * Overview is an Android Activity that is the main UI Launcher for the OmniDroid Application.
+ * Overview is the main UI Launcher for the OmniDroid Application. It presents all the current
+ * OmniHandlers as well as a way to add/delete/edit them.
  * 
  */
 public class Overview extends Activity implements OnClickListener {
+  // Menu options
   private static final int MENU_ADD = 0;
   private static final int MENU_EDIT = 1;
   private static final int MENU_DELETE = 2;
   private static final int MENU_SETTINGS = 3;
 
-  static private UGParser ug = new UGParser();
+  // User Config Parser
+  private static UGParser ug = new UGParser();
 
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    // Create our Activity
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
+    // Get a list of our current OmniHandlers
     ArrayList<View> rowList = new ArrayList<View>();
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
-
     Log.i(this.getLocalClassName().toString(), "Number of Records: " + userConfigRecords.size());
-    
-    // Add in each OmniHandler
+
+    // Add current OmniHandlers to our list
     while (i.hasNext()) {
       HashMap<String, String> HM1 = i.next();
       Log.i(this.getLocalClassName().toString(), "Found record");
@@ -83,7 +87,7 @@ public class Overview extends Activity implements OnClickListener {
 
     }
 
-    // Build our tables
+    // Build our OmniHandler display table
     Log.i(this.getLocalClassName().toString(), "Creating table");
     TableLayout table_layout = new TableLayout(this);
     table_layout.setColumnStretchable(0, true);
@@ -99,12 +103,14 @@ public class Overview extends Activity implements OnClickListener {
 
   }
 
+  // Create a context menu options
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    menu.add(0, MENU_EDIT, 0, R.string.edit).setIcon(android.R.drawable.ic_menu_edit);
-    menu.add(0, MENU_DELETE, 0, R.string.del).setIcon(android.R.drawable.ic_menu_delete);
+    menu.add(0, MENU_EDIT, 0, R.string.edit);
+    menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
+  /* Context Menu Actions */
   public boolean onContextItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_EDIT:
@@ -120,10 +126,11 @@ public class Overview extends Activity implements OnClickListener {
     }
   }
 
-  /* Creates the menu items */
+  /* Creates the options menu items */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_ADD, 0, R.string.add).setIcon(android.R.drawable.ic_menu_add);
-    menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(android.R.drawable.ic_menu_preferences);
+    menu.add(0, MENU_SETTINGS, 0, R.string.settings)
+        .setIcon(android.R.drawable.ic_menu_preferences);
     ;
     return true;
   }
@@ -136,13 +143,13 @@ public class Overview extends Activity implements OnClickListener {
       return true;
     case MENU_SETTINGS:
       // TODO (acase): Call preferences activity
-      AddOmniHandler();
       return true;
     }
     return false;
   }
 
   private void AddOmniHandler() {
+    // TODO (acase): Fix intent calling
     startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
   }
 
@@ -152,8 +159,8 @@ public class Overview extends Activity implements OnClickListener {
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
-    // TODO:
-    // Toast.makeText(this.getBaseContext(), "OmniHandler Selected", 5).show();
+    // TODO (acase): Call next activity
+    Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
     // startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
   }
 
