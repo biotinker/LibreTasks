@@ -6,42 +6,45 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+/**
+ * Presents a list of possible actions that the selected <code>EventCatcher</code>
+ * could have performed that we want to hook an OmniHandler onto.
+ *
+ */
 public class EventCatcherActions extends ListActivity {
-    private static final String TAG = "EventListActivity";
-        
-	/** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  private final String TAG = this.getLocalClassName();
 
-        setListAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, EVENTS));
-        getListView().setTextFilterEnabled(true);
+  // TODO: Pull this from the AppConfig
+  // TODO: Filter by only apps that contain actions
+  private static final String[] EVENTS = new String[] { "Email Received", "Email was Deleted",
+      "Email was Moved" };
 
-        final Intent intent = getIntent();
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // Do some setup based on the action being performed.
+    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EVENTS));
+    getListView().setTextFilterEnabled(true);
 
-        final String action = intent.getAction();
-        if (Intent.ACTION_CALL.equals(action)) {
-            // The new entry was created, so assume all will end well and
-        	Log.i(TAG, "Found ACTION_CALL");
-        } else {
-        	Log.i(TAG, "Unknown ACTION");
-        }
-        // Set the layout for this activity.  You can find it in res/layout/
-        //setContentView(R.layout.event_list_activity);
-        
-        setListAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, EVENTS));
-        getListView().setTextFilterEnabled(true);
-        Log.i(TAG, "Success");
+    final Intent intent = getIntent();
 
+    // Do some setup based on the action being performed.
+
+    final String action = intent.getAction();
+    if (Intent.ACTION_CALL.equals(action)) {
+      // The new entry was created, so assume all will end well and
+      Log.i(TAG, "Found ACTION_CALL");
+    } else {
+      Log.i(TAG, "Unknown ACTION");
     }
+    // Set the layout for this activity. You can find it in res/layout/
+    // setContentView(R.layout.event_list_activity);
 
-    // TODO: Pull this from the Package Manager
-    // TODO: Filter by only apps that contain actions
-    private static final String[] EVENTS = new String[] {
-        "Email Received", "Email was Deleted", "Email was Moved" };
+    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EVENTS));
+    getListView().setTextFilterEnabled(true);
+    Log.i(TAG, "Success");
+
+  }
 
 }
