@@ -1,5 +1,9 @@
-package edu.nyu.cs.omnidroid;
+package edu.nyu.cs.omnidroid.tests;
 
+import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.R.id;
+import edu.nyu.cs.omnidroid.R.layout;
+import edu.nyu.cs.omnidroid.core.OmniCP;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;

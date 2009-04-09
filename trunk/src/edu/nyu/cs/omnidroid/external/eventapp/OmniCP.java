@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid;
+package edu.nyu.cs.omnidroid.external.eventapp;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package edu.nyu.cs.omnidroid.masterapp;
+package edu.nyu.cs.omnidroid.external.eventapp;
 
 public final class R {
     public static final class attr {

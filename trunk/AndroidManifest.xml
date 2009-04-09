@@ -45,8 +45,8 @@
             </intent-filter>
                 </activity>
 
-        <activity android:name=".masterapp.OmniCPActivity"
-                  android:label="@string/master_app">
+        <activity android:name=".external.eventapp.OmniCPActivity"
+                  android:label="@string/event_app">
             <intent-filter>
                 <!-- Create an application launder from the application menu  -->
                 <action android:name="android.intent.action.MAIN" />
