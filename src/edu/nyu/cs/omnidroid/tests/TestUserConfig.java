@@ -9,6 +9,7 @@ import edu.nyu.cs.omnidroid.util.UserConfig;
 /**
  * Test Application to Verify Configuration File Functionality
  * 
+ * @author acase
  */
 public class TestUserConfig {
 
