@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.masterapp;
+package edu.nyu.cs.omnidroid.external.eventapp;
 
 import android.app.Activity;
 import android.content.ContentValues;

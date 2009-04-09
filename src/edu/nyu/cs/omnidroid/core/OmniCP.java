@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.masterapp;
+package edu.nyu.cs.omnidroid.core;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
