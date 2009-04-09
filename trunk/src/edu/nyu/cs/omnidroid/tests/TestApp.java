@@ -9,12 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * Test Application to Verify Configuration File Functionality o *
+ * This class will present a list of test applications that we can run via UI
+ * selection.
+ * 
+ * @author acase
  */
 public class TestApp extends ListActivity {
 
 	static final String[] TESTS = new String[] { "Test User Config",
-			"Test App Config Get", "Test CP", "Test Exception Handler" };
+			"Test App Config Get", "Test CP", "Test Exception Handler",
+			"TestApp" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,13 @@ public class TestApp extends ListActivity {
 		case 3:
 			i.setClassName("edu.nyu.cs.omnidroid.tests",
 					"edu.nyu.cs.omnidroid.tests.TestExceptionHandler");
+			break;
+		case 4:
+			i.setClassName("edu.nyu.cs.omnidroid.tests",
+					"edu.nyu.cs.omnidroid.tests.TestApp");
+			break;
+		default:
+			Log.i(this.getLocalClassName(), "Invalid Test Selection");
 			break;
 		}
 		startActivity(i);
