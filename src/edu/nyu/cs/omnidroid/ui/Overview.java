@@ -37,18 +37,19 @@ public class Overview extends Activity implements OnClickListener {
   private static final int MENU_SETTINGS = 3;
 
   // User Config Parser
-  private static UGParser ug = new UGParser();
-
+  private static UGParser ug;
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
+    
+    ug= new UGParser(getApplicationContext());
     // Create our Activity
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
     // Get a list of our current OmniHandlers
     ArrayList<View> rowList = new ArrayList<View>();
-    ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords(getApplicationContext());
+    ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
     Log.i(this.getLocalClassName().toString(), "Number of Records: " + userConfigRecords.size());
 
