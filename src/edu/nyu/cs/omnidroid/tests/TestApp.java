@@ -11,10 +11,10 @@ import android.widget.ListView;
 /**
  * Test Application to Verify Configuration File Functionality o *
  */
-public class TestActivity extends ListActivity {
+public class TestApp extends ListActivity {
 
-  static final String[] TESTS = new String[] { "Test User Config Put",
-    "Test User Config Get", "Test Exception Handler" };
+  static final String[] TESTS = new String[] { "Test User Config",
+    "Test App Config Get", "Test Exception Handler" };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

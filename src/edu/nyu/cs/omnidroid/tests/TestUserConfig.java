@@ -10,12 +10,12 @@ import edu.nyu.cs.omnidroid.util.UserConfig;
  * Test Application to Verify Configuration File Functionality
  * 
  */
-public class TestConfigFile {
+public class TestUserConfig {
 
   // Configuration file locations for the TM/RM.
   private static String userConfigFile;
 
-  public TestConfigFile() {
+  public TestUserConfig() {
     initConfig();
   }
 
