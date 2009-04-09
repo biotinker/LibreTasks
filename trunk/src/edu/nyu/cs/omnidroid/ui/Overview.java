@@ -42,14 +42,14 @@ public class Overview extends Activity implements OnClickListener {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     
-    ug= new UGParser();
+    ug= new UGParser(getApplicationContext());
     // Create our Activity
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
     // Get a list of our current OmniHandlers
     ArrayList<View> rowList = new ArrayList<View>();
-    ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords(this);
+    ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
     Log.i(this.getLocalClassName().toString(), "Number of Records: " + userConfigRecords.size());
 
