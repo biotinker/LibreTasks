@@ -14,7 +14,7 @@ import java.util.Iterator;
 import android.content.Context;
 
 /**
- * Initializes the parser to be a User Config or App Config based on the parameter
+ * Used to Specify the User Config schema
  * 
  * @param ParserType
  *          Specify UC for UserConfig and AC for Application Config
