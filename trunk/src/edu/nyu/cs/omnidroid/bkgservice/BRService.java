@@ -4,7 +4,6 @@ import edu.nyu.cs.omnidroid.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
 
 public class BRService extends Service {
   /*
@@ -80,6 +80,48 @@ public class BRService extends Service {
         unregisterReceiver(BR);
       }
 
+      /*Code demonstrating use of Appl Config parser; To be deleted*/
+      AGParser ag=new AGParser(getApplicationContext());
+      ag.write("Application:SMS");
+      ag.write("EventName:SMS_RECEIVED,RECEIVED SMS");
+      ag.write("Filters:S_Name,S_Ph_No,Text,Location");
+      ag.write("EventName:SMS_SENT,SENT SMS");
+      ag.write("Filters:R_Name,R_Ph_no,Text");
+      ag.write("ActionName:SMS_SEND,SEND SMS");
+      ag.write("URIFields:R_NAME,R_Ph_No,Text");
+      ag.write("ContentMap:");
+      ag.write("S_Name,SENDER NAME,STRING");
+      ag.write("R_Name,RECEIVER NAME,STRING ");
+      ag.write("S_Ph_No,SENDER PHONE NUMBER,INT");
+      ag.write("R_Ph_No,RECEIVER PHONE NUMBER,INT");
+      ag.write("Text,Text,STRING");
+      ag.write("Location,SMS Number,INT");
+    
+      //Getting the Events from AppConfig
+      ArrayList<HashMap<String, String>> eArrayList = ag.readEvents("SMS");
+      Iterator<HashMap<String, String>> i1 = eArrayList.iterator();
+      while (i1.hasNext()) {
+        HashMap<String, String> HM1 = i1.next();
+        Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+      }
+      
+      //Getting the Actions from AppConfig
+      ArrayList<HashMap<String, String>> aArrayList = ag.readActions("SMS");
+      Iterator<HashMap<String, String>> i2 = aArrayList.iterator();
+      while (i1.hasNext()) {
+        HashMap<String, String> HM1 = i1.next();
+        Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+      }
+      
+      //Getting the Filters from AppConfig
+      ArrayList<String> FilterList = ag.readFilters("SMS","SMS_RECEIVED");
+      Iterator<String> i3 = FilterList.iterator();
+      while (i3.hasNext()) {
+        String filter = i3.next();
+        Toast.makeText(getBaseContext(), filter.toString(), 5).show();
+      }
+      
+    
     } catch (Exception e) {
       Log.i("BRService", e.getLocalizedMessage());
       Log.i("BRService", e.toString());
