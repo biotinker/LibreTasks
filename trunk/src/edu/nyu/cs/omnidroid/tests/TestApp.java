@@ -38,28 +38,35 @@ public class TestApp extends ListActivity {
 		Log.i(this.getLocalClassName(), "position: " + position);
 		Log.i(this.getLocalClassName(), "id: " + id);
 
-		// Intent i = new Intent();
 		Intent i = new Intent();
-
+		
 		switch (position) {
 		case 0:
+			i = new Intent(this, edu.nyu.cs.omnidroid.tests.TestApp.class);
 			i.setClassName("edu.nyu.cs.omnidroid.tests",
 					"edu.nyu.cs.omnidroid.tests.TestUserConfig");
 			break;
 		case 1:
+			i = new Intent(this, edu.nyu.cs.omnidroid.tests.TestApp.class);
 			i.setClassName("edu.nyu.cs.omnidroid.tests",
 					"edu.nyu.cs.omnidroid.tests.TestAppConfig");
 			break;
 		case 2:
+			i = new Intent(this, edu.nyu.cs.omnidroid.tests.TestApp.class);
 			i.setClassName("edu.nyu.cs.omnidroid.tests",
 					"edu.nyu.cs.omnidroid.tests.TestCP");
 			break;
 		case 3:
+			i = new Intent(this, edu.nyu.cs.omnidroid.tests.TestApp.class);
 			i.setClassName("edu.nyu.cs.omnidroid.tests",
 					"edu.nyu.cs.omnidroid.tests.TestExceptionHandler");
 			break;
 		case 4:
-			i.setClassName("edu.nyu.cs.omnidroid.tests",
+			//i = new Intent(this, edu.nyu.cs.omnidroid.tests.TestApp.class);
+			i = new Intent();
+			//i.setClassName("com.android.alarmclock",
+			//"com.android.alarmclock.AlarmClock"); 
+			i.setClassName("edu.nyu.cs.omnidroid", 
 					"edu.nyu.cs.omnidroid.tests.TestApp");
 			break;
 		default:
