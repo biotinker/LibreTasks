@@ -82,6 +82,7 @@ public class BRService extends Service {
 
       /*Code demonstrating use of Appl Config parser; To be deleted*/
       AGParser ag=new AGParser(getApplicationContext());
+      ag.delete_all();
       ag.write("Application:SMS");
       ag.write("EventName:SMS_RECEIVED,RECEIVED SMS");
       ag.write("Filters:S_Name,S_Ph_No,Text,Location");
@@ -121,6 +122,13 @@ public class BRService extends Service {
         Toast.makeText(getBaseContext(), filter.toString(), 5).show();
       }
       
+      //Getting the ContentMap from AppConfig
+      ArrayList<String[]> contentmap = ag.readContentMap("SMS");
+      Iterator<String[]> i4 = contentmap.iterator();
+      while (i4.hasNext()) {
+        String[] fieldmap = i4.next();
+        Toast.makeText(getBaseContext(), fieldmap[0].toString()+fieldmap[1].toString()+fieldmap[2].toString(), 5).show();
+      }
     
     } catch (Exception e) {
       Log.i("BRService", e.getLocalizedMessage());
