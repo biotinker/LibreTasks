@@ -77,6 +77,7 @@ public class BRService extends Service {
       /* Check the User Config to start OmniDroid */
       String Enabled = ug.readLine( "Enabled");
       if (Enabled.equalsIgnoreCase("True")) {
+        Toast.makeText(getBaseContext(), "Starting OmniDroid", 5).show();
         registerReceiver(BR, Ifilter);
       } else {
         Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
@@ -106,7 +107,7 @@ public class BRService extends Service {
       Iterator<HashMap<String, String>> i1 = eArrayList.iterator();
       while (i1.hasNext()) {
         HashMap<String, String> HM1 = i1.next();
-        Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+        //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       }
       
       //Getting the Actions from AppConfig
@@ -114,7 +115,7 @@ public class BRService extends Service {
       Iterator<HashMap<String, String>> i2 = aArrayList.iterator();
       while (i2.hasNext()) {
         HashMap<String, String> HM1 = i2.next();
-        Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+        //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       }
       
       //Getting the Filters from AppConfig
@@ -122,7 +123,7 @@ public class BRService extends Service {
       Iterator<String> i3 = FilterList.iterator();
       while (i3.hasNext()) {
         String filter = i3.next();
-        Toast.makeText(getBaseContext(), filter.toString(), 5).show();
+        //Toast.makeText(getBaseContext(), filter.toString(), 5).show();
       }
       
       //Getting the ContentMap from AppConfig
@@ -130,7 +131,7 @@ public class BRService extends Service {
       Iterator<String[]> i4 = contentmap.iterator();
       while (i4.hasNext()) {
         String[] fieldmap = i4.next();
-        Toast.makeText(getBaseContext(), fieldmap[0].toString()+fieldmap[1].toString()+fieldmap[2].toString(), 5).show();
+        //Toast.makeText(getBaseContext(), fieldmap[0].toString()+fieldmap[1].toString()+fieldmap[2].toString(), 5).show();
       }
     
     } catch (Exception e) {
