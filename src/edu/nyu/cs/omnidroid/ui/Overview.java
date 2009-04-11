@@ -17,6 +17,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -55,6 +56,9 @@ public class Overview extends Activity implements OnClickListener {
 		Log.i(this.getLocalClassName().toString(), "Number of Records: "
 				+ userConfigRecords.size());
 
+		// Build List 
+		//ListView lv = new ListView(this);
+		
 		// Add current OmniHandlers to our list
 		while (i.hasNext()) {
 			HashMap<String, String> HM1 = i.next();
@@ -63,7 +67,7 @@ public class Overview extends Activity implements OnClickListener {
 			// Build our button
 			Log.i(this.getLocalClassName().toString(), "Adding a button");
 			Button button = new Button(this);
-			button.setClickable(true);
+			//button.setClickable(true);
 			Log.i(this.getLocalClassName().toString(), "Setting button text="
 					+ HM1.get("InstanceName"));
 			button.setText(HM1.get("InstanceName"));
@@ -81,14 +85,15 @@ public class Overview extends Activity implements OnClickListener {
 			}
 			// Add a context menu for the row
 			registerForContextMenu(button);
+			
+	    // Build our table row
+	    Log.i(this.getLocalClassName().toString(), "Adding a row");
+	    TableRow row = new TableRow(this);
+	    row.addView(button);
+	    row.addView(checkbox);
+	    rowList.add(row);
 
-			// Build our table row
-			Log.i(this.getLocalClassName().toString(), "Adding a row");
-			TableRow row = new TableRow(this);
-			row.addView(button);
-			row.addView(checkbox);
-			rowList.add(row);
-
+	    //lv.addView(button);
 		}
 
 		// Build our OmniHandler display table
@@ -112,12 +117,12 @@ public class Overview extends Activity implements OnClickListener {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, MENU_EDIT, 0, R.string.edit);
-		menu.add(0, MENU_DELETE, 0, R.string.del);
+    menu.add(0, MENU_DELETE, 0, R.string.del);
 	}
 
 	/* Context Menu Actions */
 	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+	  switch (item.getItemId()) {
 		case MENU_EDIT:
 			// TODO (acase): Call next activity
 			Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected",
@@ -126,14 +131,24 @@ public class Overview extends Activity implements OnClickListener {
 		case MENU_DELETE:
 			// TODO (acase): Delete confirmation dialog
 			Toast.makeText(this.getBaseContext(),
-					"Delete OmniHandler Selected", 5).show();
+					"Deleting " + item.getIntent() + "OmniHandler", 5).show();
+//			ug.deleteRecord(selected.getText());
 			return true;
 		default:
 			return super.onContextItemSelected(item);
 		}
 	}
 
-	/* Creates the options menu items */
+	/**
+   * @param view of the menu item
+   */
+  private void deleteHandler(View view) {
+      Button selected = (Button) view;
+      // TODO: Delete the OmniHandler
+      //ug.delete(selected.getText());
+  }
+
+  /* Creates the options menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, MENU_ADD, 0, R.string.add).setIcon(
 				android.R.drawable.ic_menu_add);
