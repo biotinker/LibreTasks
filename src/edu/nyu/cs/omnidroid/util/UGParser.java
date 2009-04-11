@@ -27,6 +27,15 @@ public class UGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
+  private static final String KEY_InstanceName = "InstanceName";
+  private static final String KEY_EventName = "EventName";
+  private static final String KEY_EventApp = "EventApp";
+  private static final String KEY_FilterType = "FilterType";
+  private static final String KEY_FilterData = "FilterData";
+  private static final String KEY_ActionApp = "ActionApp";
+  private static final String KEY_ActionName = "ActionName";
+  private static final String KEY_ActionData = "ActionData";
+  private static final String KEY_EnableInstance = "EnableInstance";
 
   /**
    * Initializes the parser to be a User Config or App Config based on the parameter
