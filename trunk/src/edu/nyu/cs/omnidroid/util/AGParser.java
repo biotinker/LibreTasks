@@ -10,8 +10,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import android.content.Context;
+
 
 /**
  * Initializes the parser to be a User Config or App Config based on the parameter
@@ -25,6 +25,13 @@ public class AGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
+  private static final String KEY_APPLICATION = "Application";
+  private static final String KEY_EventName = "EventName";
+  private static final String KEY_Filters = "Filters";
+  private static final String KEY_ActionName = "ActionName";
+  private static final String KEY_URIFields = "URIFields";
+  private static final String KEY_ContentMap = "ContentMap";
+  
 
   /**
    * Used to Specify the App Config Schema
@@ -32,13 +39,6 @@ public class AGParser {
    */
   public AGParser(Context context) {
     // Defining the User Config Schema in ArrayList
-    Schema = new ArrayList<String>();
-    Schema.add("Application");
-    Schema.add("EventName");
-    Schema.add("Filters");
-    Schema.add("ActionName");
-    Schema.add("URIFields");
-    Schema.add("ContentMap");
     this.context = context;
   }
 
