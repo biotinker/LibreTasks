@@ -81,6 +81,9 @@
         <activity android:name=".tests.TestService"
                   android:label="@string/service_name">
         </activity>
+        <activity android:name=".tests.TestCP"
+                  android:label="@string/service_name">
+        </activity>
 
 		<!--  TODO: Replace with Catcher/Thrower Services -->	        
 		<service android:name=".bkgservice.BRService" />
@@ -94,6 +97,8 @@
 		<!--
 		<service android:name=".bkgservice.ThrowerService" />
 		 -->
+		 <provider android:name=".core.OmniCP"
+         android:authorities="edu.nyu.cs.omnidroid.core.cp" />
 
 	</application>
 
