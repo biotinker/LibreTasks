@@ -137,9 +137,8 @@ public class AGParser {
    *          NAME,STRING R_Name,RECEIVER NAME,STRING S_Ph_No,SENDER PHONE NUMBER,INT
    *          R_Ph_No,RECEIVER PHONE NUMBER,INT Text,Text,STRING Location,SMS Number,INT
    * @return Returns true if successful
+   * @author Sucharita Gaat
    */
-  
-  //Author: Sucharita Gaat
   public String[] allRead()
   {
 	  String lines[] = new String[100];
@@ -389,6 +388,34 @@ public class AGParser {
       OmLogger.write(context, "Unable to read Events from Application Config");
       e.printStackTrace();
       return URIList;
+    }
+  }
+  /**
+   * Reads values from the UserConfig based on the Key
+   * 
+   * @param Key
+   *          Specify the Key to be read. example ActionName, EventName
+   * @return Returns values as ArrayList of Strings
+   */
+  public ArrayList<String> readLines(String key) {
+    ArrayList<String> cols2 = new ArrayList<String>();
+
+    String val;
+    try {
+      OpenFileRead();
+      String line;
+
+      while ((line = dis.readLine()) != null) {
+        String[] parts = line.split(":");
+        if (parts[0].toString().equalsIgnoreCase(key)) {
+          val = parts[1].toString();
+          cols2.add(val);
+        }
+      }
+      return cols2;
+    } catch (Exception e) {
+      OmLogger.write(context, "Unable to read Line from User Config");
+      return cols2;
     }
   }
 
