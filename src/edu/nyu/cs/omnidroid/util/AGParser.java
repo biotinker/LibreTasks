@@ -138,6 +138,30 @@ public class AGParser {
    *          R_Ph_No,RECEIVER PHONE NUMBER,INT Text,Text,STRING Location,SMS Number,INT
    * @return Returns true if successful
    */
+  
+  //Author: Sucharita Gaat
+  public String[] allRead()
+  {
+	  String lines[] = new String[100];
+	  try {
+	      OpenFileRead();
+	      
+	      String l;
+	      int i=0;
+	      while ((l = dis.readLine()) != null) {
+	    	 
+	        lines[i]=l;
+	        i++;
+	        }
+	      return lines;
+	  } catch (Exception e)
+	  {
+		  e.printStackTrace();
+		  return null;
+	  }
+	      
+
+  }
   public boolean write(String AGLine) {
     try {
       final String LineString = new String(AGLine + "\n");
