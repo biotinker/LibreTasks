@@ -1,5 +1,6 @@
 package edu.nyu.cs.omnidroid.tests;
 
+import edu.nyu.cs.omnidroid.contprovider.*;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -94,7 +95,9 @@ public class TestCP extends Activity {
         {
         	public void onClick(View v)
         	{
-        	    		Uri OmniURI = Uri.parse(
+        		CProvider cp = new CProvider();
+        		cp.displayRecords("content://com.omnidroid.provider.CP/CP");
+        	  /*  		Uri OmniURI = Uri.parse(
                         "content://com.omnidroid.provider.CP/CP");
                      Cursor c = managedQuery(OmniURI, null, null, null, null);
                      if (c.moveToFirst()) {
@@ -106,7 +109,7 @@ public class TestCP extends Activity {
                                  OmniCP.DESCRIPTION)), 
                               Toast.LENGTH_LONG).show();               
                         } while (c.moveToNext());
-                     }
+                     } */
               
             }
           
