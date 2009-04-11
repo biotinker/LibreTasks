@@ -95,9 +95,9 @@ public class TestCP extends Activity {
         {
         	public void onClick(View v)
         	{
-        		CProvider cp = new CProvider();
-        		cp.displayRecords("content://com.omnidroid.provider.CP/CP");
-        	  /*  		Uri OmniURI = Uri.parse(
+        		/*CProvider cp = new CProvider();
+        		cp.displayRecords("content://com.omnidroid.provider.CP/CP");*/
+        	  		Uri OmniURI = Uri.parse(
                         "content://com.omnidroid.provider.CP/CP");
                      Cursor c = managedQuery(OmniURI, null, null, null, null);
                      if (c.moveToFirst()) {
@@ -109,7 +109,7 @@ public class TestCP extends Activity {
                                  OmniCP.DESCRIPTION)), 
                               Toast.LENGTH_LONG).show();               
                         } while (c.moveToNext());
-                     } */
+                     } 
               
             }
           
