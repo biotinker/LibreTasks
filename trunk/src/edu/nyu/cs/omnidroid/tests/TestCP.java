@@ -50,7 +50,7 @@ public class TestCP extends Activity {
                 	Toast.makeText(getBaseContext(),"Good Job",Toast.LENGTH_SHORT).show();
                 	
                   	//SENDING THE INTENT
-                   	Intent intent = new Intent(desc, uri);
+                   	Intent intent = new Intent(desc);
                    	intent.putExtra("uri", uri.toString());
         	       	sendBroadcast(intent);
                     
