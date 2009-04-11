@@ -51,6 +51,7 @@ public class TestCP extends Activity {
                 	
                   	//SENDING THE INTENT
                    	Intent intent = new Intent(desc, uri);
+                   	intent.putExtra("uri", uri.toString());
         	       	sendBroadcast(intent);
                     
                 }
