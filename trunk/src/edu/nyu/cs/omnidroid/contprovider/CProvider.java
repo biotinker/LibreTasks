@@ -1,11 +1,12 @@
 package edu.nyu.cs.omnidroid.contprovider;
 
 
-import edu.nyu.cs.omnidroid.util.*;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import edu.nyu.cs.omnidroid.util.*;
 
 import android.widget.Toast;
 
@@ -18,9 +19,9 @@ public class CProvider extends Activity {
 
 	super.onCreate(savedInstanceState);
 
-	//setContentView(R.layout.main);
+//	setContentView(R.layout.main);
 
-	String[] cols=displayRecords();
+	String[] cols=displayRecords("content://sms/");
 	
 	
 	AGParser ag = new AGParser(this);
@@ -45,11 +46,10 @@ public class CProvider extends Activity {
 	}
 
 	
-	
-	private String[] displayRecords() {
+	private String[] displayRecords(String uri) {
 
 // put the uri in the content:// format in the managedQuery
-	Cursor cur = managedQuery(Uri.parse("content://call_log/calls"), null, 
+	Cursor cur = managedQuery(Uri.parse(uri), null, 
 
 	null, 
 
