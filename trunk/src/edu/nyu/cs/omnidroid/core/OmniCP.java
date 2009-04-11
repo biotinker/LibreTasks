@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class OmniCP extends ContentProvider
 {
-	public static final String CP_Name ="com.omnidroid.provider.CP";
+	public static final String CP_Name ="edu.nyu.cs.omnidroid.core.cp";
     public static final Uri CONTENT_URI = Uri.parse("content://"+ CP_Name + "/CP");
     public static final String _ID = "_id";
     public static final String DESCRIPTION = "description";
@@ -74,10 +74,11 @@ public class OmniCP extends ContentProvider
 		
 		switch (uriMatcher.match(uri))
 		{
-        	case DESC:
-        		return "vnd.android.cursor.dir/vnd.omnidroid.provider.CP ";
+		
+		      case DESC:
+        		return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.core.cp ";
         	case DESC_ID:                
-        		return "vnd.android.cursor.item/vnd.omnidroid.provider.CP ";
+        		return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.core.cp ";
         	default:
         		throw new IllegalArgumentException("Incorrect URI " + uri);        
 		}   
