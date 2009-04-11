@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import edu.nyu.cs.omnidroid.util.*;
+import edu.nyu.cs.omnidroid.R;
 
 import android.widget.Toast;
 
@@ -19,34 +20,14 @@ public class CProvider extends Activity {
 
 	super.onCreate(savedInstanceState);
 
-//	setContentView(R.layout.main);
+	setContentView(R.layout.main);
 
-	String[] cols=displayRecords("content://sms/");
 	
-	
-	AGParser ag = new AGParser(this);
-	ag.OpenFileWrite(2);
-		for(int i = 0; i < cols.length; i++)
-				{
-			ag.write(cols[i]);
-		
-			//Toast.makeText(this, cols[i], Toast.LENGTH_LONG).show();
-				}	
-		
-		String line[] = new String[100];
-		line = ag.allRead();
-		
-		
-		for(int j = 0; j < cols.length; j++)
-		{
-
-	Toast.makeText(this, line[j], Toast.LENGTH_LONG).show();
-		}
 	
 	}
 
 	
-	private String[] displayRecords(String uri) {
+	public void displayRecords(String uri) {
 
 // put the uri in the content:// format in the managedQuery
 	Cursor cur = managedQuery(Uri.parse(uri), null, 
@@ -72,7 +53,26 @@ public class CProvider extends Activity {
 	} while (cur.moveToNext());
 
 	}
-	return cols;
+	
+	
+	AGParser ag = new AGParser(this);
+	ag.OpenFileWrite(2);
+		for(int i = 0; i < cols.length; i++)
+				{
+			ag.write(cols[i]);
+		
+			//Toast.makeText(this, cols[i], Toast.LENGTH_LONG).show();
+				}	
+		
+		String line[] = new String[100];
+		line = ag.allRead();
+		
+		
+		for(int j = 0; j < cols.length; j++)
+		{
+
+	Toast.makeText(this, line[j], Toast.LENGTH_LONG).show();
+		}
 
 	}
 }
