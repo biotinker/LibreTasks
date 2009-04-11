@@ -25,7 +25,6 @@ public class AGParser {
   public static final String KEY_URIFields = "URIFields";
   public static final String KEY_ContentMap = "ContentMap";
 
-  private ArrayList<String> Schema;
   private FileOutputStream fout;
   private OutputStreamWriter osw;
   private FileInputStream FIn;
