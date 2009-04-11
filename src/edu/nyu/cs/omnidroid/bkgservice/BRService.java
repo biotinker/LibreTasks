@@ -1,9 +1,9 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
-import edu.nyu.cs.omnidroid.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.OmLogger;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 
 public class BRService extends Service {
@@ -109,8 +112,8 @@ public class BRService extends Service {
       //Getting the Actions from AppConfig
       ArrayList<HashMap<String, String>> aArrayList = ag.readActions("SMS");
       Iterator<HashMap<String, String>> i2 = aArrayList.iterator();
-      while (i1.hasNext()) {
-        HashMap<String, String> HM1 = i1.next();
+      while (i2.hasNext()) {
+        HashMap<String, String> HM1 = i2.next();
         Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       }
       
