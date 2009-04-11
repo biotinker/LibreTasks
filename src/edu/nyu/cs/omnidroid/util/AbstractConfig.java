@@ -11,6 +11,11 @@ import edu.nyu.cs.omnidroid.util.ExceptionMessageMap;
 /**
  * This class is a base class for configuration information management. It should be extended by any
  * application needing special configuration information.
+ * 
+ * Update: This class currently isn't being used. We're using UGParser/AGParser at them moment.
+ * Later we may want to merge the two configurations.
+ * 
+ * @author acase
  */
 public abstract class AbstractConfig {
 

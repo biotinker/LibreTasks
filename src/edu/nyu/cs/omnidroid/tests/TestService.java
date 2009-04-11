@@ -1,26 +1,15 @@
-package edu.nyu.cs.omnidroid.bkgservice;
+package edu.nyu.cs.omnidroid.tests;
 
-import java.io.IOException;
-import java.util.Formatter;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-
-import edu.nyu.cs.omnidroid.bkgservice.*;
-import edu.nyu.cs.omnidroid.R;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.content.Context;
+import edu.nyu.cs.omnidroid.R;
 
-public class OmniBR extends Activity {
+public class TestService extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {

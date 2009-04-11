@@ -6,8 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.util.Log;
+
 public class OmLogger{
 
 public static void write(Context context,String s)

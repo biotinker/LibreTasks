@@ -1,17 +1,12 @@
 package edu.nyu.cs.omnidroid.util;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-
-import android.content.Context;
-import edu.nyu.cs.omnidroid.util.AbstractConfig;
 
 /**
  * This class manages the configuration information for the User Configuration.
+ * Update: This class currently isn't being used.  We're using UGParser instead ATM.
+ *         Later we may want to merge the two configurations.
+ * @author acase
  */
 public class UserConfig extends AbstractConfig {
 

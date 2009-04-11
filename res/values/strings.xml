@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">OmniDroid</string>
     <string name="service_name">OmniDroid Service</string>
-    <string name="overview_title">OmniDroid Overview</string>
+    <string name="overview_title">OmniDroid</string>
     <string name="event_catcher_title">Choose Application To Catch Events</string>
     <string name="event_catcher_actions_title">Choose Action To Catch</string>
     <string name="action_thrower_title">Choose Application To Throw Actions</string>
