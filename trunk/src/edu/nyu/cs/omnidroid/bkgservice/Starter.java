@@ -1,14 +1,11 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
-import edu.nyu.cs.omnidroid.util.OmLogger;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
+import edu.nyu.cs.omnidroid.util.OmLogger;
 
 /*Broadcast Receiver to detect system bootup*/
 public class Starter extends BroadcastReceiver {

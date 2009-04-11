@@ -16,6 +16,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
             <intent-filter>
@@ -43,83 +44,42 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
 		</activity>
-
 
         <activity android:name=".external.eventapp.OmniCPActivity"
                   android:label="@string/event_app">
-            <intent-filter>
-                <!-- Create an application launder from the application menu  -->
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 		</activity>
 
-		
 		<!--  Activity used to by the event catcher to determine
-		      what application's actions to catch
--->
+		      what application's actions to catch -->
         <activity android:name=".ui.EventCatcher"
                   android:label="@string/event_catcher_title">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT"/>
-                <action android:name="android.intent.action.INSERT"/>
-            	<category android:name="android.intent.category.DEFAULT"></category>
-			</intent-filter>
-			<intent-filter>
-				<!--  TODO: Use a custom intent such as edu.nyu.cs.omnidroid.SELECT -->
-            	<action android:name="android.intent.action.SELECT"></action>
-            	<category android:name="android.intent.category.DEFAULT"></category>
-			</intent-filter>
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application
--->
+		      what actions to catch for a given application -->
         <activity android:name=".ui.EventCatcherActions"
                   android:label="@string/event_catcher_actions_title">
-            <intent-filter>
-				<!--  TODO: Use a custom intent such as edu.nyu.cs.omnidroid.VIEW -->
-                <action android:name="android.intent.action.VIEW"/>
-            	<category android:name="android.intent.category.DEFAULT"></category>                
-			</intent-filter>
 		</activity>
 
 		<!--  Activity used to by the action thrower to determine
-		      what application's actions to throw
--->
+		      what application's actions to throw -->
         <activity android:name=".ui.ActionThrower"
                   android:label="@string/action_thrower_title">
-            <intent-filter>
-                <action android:name="edu.nyu.cs.omnidroid.actionthrower.SELECT"/>
-            	<category android:name="android.intent.category.DEFAULT"></category>                
-			</intent-filter>
 		</activity>
 
 		<!--  Activity used to by the action thrower to determine
 		      what actions to throw for a given application
--->
+		-->
         <activity android:name=".ui.ActionThrowerActions"
                   android:label="@string/action_thrower_actions_title">
-            <intent-filter>
-                <action android:name="edu.nyu.cs.omnidroid.actionthroweractions.SELECT"/>
-            	<category android:name="android.intent.category.DEFAULT"></category>                
-			</intent-filter>
 		</activity>
 
 		<!-- TODO: This should be launched through having an Enabled
 		     item in .ui.Overview instead
--->
-        <activity android:name=".bkgservice.OmniBR"
+		-->
+        <activity android:name=".tests.TestService"
                   android:label="@string/service_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
 		<!--  TODO: Replace with Catcher/Thrower Services -->	        

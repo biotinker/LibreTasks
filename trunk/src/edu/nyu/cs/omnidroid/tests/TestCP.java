@@ -1,9 +1,5 @@
 package edu.nyu.cs.omnidroid.tests;
 
-import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.R.id;
-import edu.nyu.cs.omnidroid.R.layout;
-import edu.nyu.cs.omnidroid.core.OmniCP;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -15,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.OmniCP;
 
 public class TestCP extends Activity {
     /** Called when the activity is first created. */

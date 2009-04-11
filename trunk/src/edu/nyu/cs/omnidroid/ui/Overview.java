@@ -157,8 +157,9 @@ public class Overview extends Activity implements OnClickListener {
 	}
 
 	private void AddOmniHandler() {
-		// TODO (acase): Fix intent calling
-		startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
+	  Intent i = new Intent();
+	  i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcher.class);
+		startActivity(i);
 	}
 
 	/*
