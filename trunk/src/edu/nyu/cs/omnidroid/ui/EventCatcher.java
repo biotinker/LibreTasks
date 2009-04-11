@@ -3,6 +3,8 @@ package edu.nyu.cs.omnidroid.ui;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +14,15 @@ import android.widget.ListView;
 import edu.nyu.cs.omnidroid.util.AGParser;
 
 public class EventCatcher extends ListActivity {
-	private static final String TAG = "EventCatcher";
-
+	private static final String TAG = EventCatcher.class.getSimpleName();
+  private static AGParser ag;
+  
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+	  ag = new AGParser(getApplicationContext());
+	  
 		Log.i(this.getLocalClassName(), "onCreate start");
 		super.onCreate(savedInstanceState);
 
@@ -35,9 +39,8 @@ public class EventCatcher extends ListActivity {
 	}
 
 	ArrayList<String> populateList() {
-	  AGParser ag=new AGParser(getApplicationContext());
 	  //Getting the Events from AppConfig
-    return ag.readLines(ag.KEY_APPLICATION);
+    return ag.readLines(AGParser.KEY_APPLICATION);
 }
 	
 	@Override
@@ -53,15 +56,20 @@ public class EventCatcher extends ListActivity {
 		// Launch activity to view/edit the currently selected item
 		// TODO: Build URI dynamically
 
-		// startActivity(new
-		// Intent(edu.nyu.cs.omnidroid.util.intents.eventcatcheractions.SELECT));
-		// Intent i = new Intent("SELECT");
-		// Intent i = new Intent(this.,
-		// edu.nyu.cs.omnidroid.ui.ActionThrower.class)
-		// i.setAction("SELECT");
-		// TODO: Turn into a omnidroid specific intent
-		startActivity(new Intent(Intent.ACTION_VIEW, getIntent().getData()));
 
+		// TODO: Turn into a omnidroid specific intent
+    Intent i = new Intent();
+    i.setClassName("edu.nyu.cs.omnidroid", "edu.nyu.cs.omnidroid.ui.EventCatcherActions");
+
+    //Context context = getBaseContext();
+    //ComponentName comp = new ComponentName(context.getPackageName(), EventCatcherActions.class.getName());
+    //ComponentName activity = context.startActivity(new Intent().setComponent(comp));
+    //ComponentName service = context.startService(new Intent().setComponent(comp));
+
+    //i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.EventCatcherActions");
+		//TextView tv = (TextView) v;
+		//i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
+		startActivity(i);
 		Log.i(TAG, "Exit");
 	}
 

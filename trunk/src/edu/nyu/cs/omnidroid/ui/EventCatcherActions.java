@@ -1,5 +1,6 @@
 package edu.nyu.cs.omnidroid.ui;
 
+import edu.nyu.cs.omnidroid.util.AGParser;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import android.widget.ArrayAdapter;
  * 
  */
 public class EventCatcherActions extends ListActivity {
-	private final String TAG = this.getLocalClassName();
+  private static final String TAG = EventCatcherActions.class.getSimpleName();
+  private static AGParser ag;
 
 	// TODO: Pull this from the AppConfig
 	// TODO: Filter by only apps that contain actions
