@@ -4,12 +4,9 @@
           package="edu.nyu.cs.omnidroid"
           android:versionCode="1">
 
-   <!-- OmniDroid: -->
     <application android:icon="@drawable/icon" android:label="@string/app_name">
 
-		<!--  Activity that displays currently saved OmniHandlers
-		      and allows the user to create/edit/delete them.
--->
+		<!--  We need to start our service on bootup -->
 		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	    <receiver android:name=".bkgservice.Starter">
             <intent-filter>
@@ -17,6 +14,7 @@
             </intent-filter>
         </receiver>
 
+		<!--  The main UI for our OmniDroid -->
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
             <intent-filter>
@@ -37,6 +35,7 @@
 			-->
 		</activity>
 
+		<!--  Runs all our Test Cases -->
         <activity android:name=".tests.TestApp"
                   android:label="@string/test_app">
             <intent-filter>
@@ -46,6 +45,7 @@
             </intent-filter>
 		</activity>
 
+		<!--  External EventApp testcase -->
         <activity android:name=".external.eventapp.OmniCPActivity"
                   android:label="@string/event_app">
 		</activity>
@@ -69,20 +69,19 @@
 		</activity>
 
 		<!--  Activity used to by the action thrower to determine
-		      what actions to throw for a given application
-		-->
+		      what actions to throw for a given application -->
         <activity android:name=".ui.ActionThrowerActions"
                   android:label="@string/action_thrower_actions_title">
 		</activity>
 
-		<!-- TODO: This should be launched through having an Enabled
-		     item in .ui.Overview instead
-		-->
+		<!-- Test our service -->
         <activity android:name=".tests.TestService"
                   android:label="@string/service_name">
         </activity>
+        
+        <!-- Test the CP -->
         <activity android:name=".tests.TestCP"
-                  android:label="@string/service_name">
+                  android:label="@string/testcp_name">
         </activity>
 
 		<!--  TODO: Replace with Catcher/Thrower Services -->	        
