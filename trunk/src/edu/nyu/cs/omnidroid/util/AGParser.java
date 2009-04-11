@@ -18,6 +18,13 @@ import android.content.Context;
  * 
  */
 public class AGParser {
+  public static final String KEY_APPLICATION = "Application";
+  public static final String KEY_EventName = "EventName";
+  public static final String KEY_Filters = "Filters";
+  public static final String KEY_ActionName = "ActionName";
+  public static final String KEY_URIFields = "URIFields";
+  public static final String KEY_ContentMap = "ContentMap";
+
   private ArrayList<String> Schema;
   private FileOutputStream fout;
   private OutputStreamWriter osw;
@@ -25,12 +32,7 @@ public class AGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
-  private static final String KEY_APPLICATION = "Application";
-  private static final String KEY_EventName = "EventName";
-  private static final String KEY_Filters = "Filters";
-  private static final String KEY_ActionName = "ActionName";
-  private static final String KEY_URIFields = "URIFields";
-  private static final String KEY_ContentMap = "ContentMap";
+  private static final String CONFIG_FILE = "AppConfig.txt";
   
 
   /**
@@ -42,8 +44,8 @@ public class AGParser {
     this.context = context;
   }
 
-  private static final int MODE_WRITE = 2;
-  private static final int MODE_APPEND = 32768;
+  private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
+  private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
 
   /**
    * Opens Application Config for writing
@@ -51,7 +53,7 @@ public class AGParser {
    */
   public void OpenFileWrite(int mode) {
     try {
-      fout = context.openFileOutput("AppConfig.txt", mode);
+      fout = context.openFileOutput(CONFIG_FILE, mode);
       osw = new OutputStreamWriter(fout);
     } catch (FileNotFoundException e) {
       OmLogger.write(context, "Unable to Open User Config to write");
@@ -64,7 +66,7 @@ public class AGParser {
    */
   public void OpenFileRead() {
     try {
-      FIn = context.openFileInput("AppConfig.txt");
+      FIn = context.openFileInput(CONFIG_FILE);
       bis = new BufferedInputStream(FIn);
       dis = new DataInputStream(bis);
     } catch (FileNotFoundException e) {
@@ -107,7 +109,7 @@ public class AGParser {
           while ((line = dis.readLine()) != null) {
             dparts = line.split(":");
             // Ignore lines of the application to be deleted.
-            if (dparts[0].toString().equalsIgnoreCase("Application"))
+            if (dparts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
               // Stop ignoring once the next application map is reached of EOF
               break;
           }
@@ -208,9 +210,9 @@ public class AGParser {
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
-        if (parts[0].toString().equalsIgnoreCase("ContentMap"))
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
-        if (parts[0].toString().equalsIgnoreCase("EventName")) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_EventName)) {
           ActualEvent = parts[1].split(",")[0].toString();
           DisplayEvent = parts[1].split(",")[1].toString();
           HM.put(ActualEvent, DisplayEvent);
@@ -260,9 +262,9 @@ public class AGParser {
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
-        if (parts[0].toString().equalsIgnoreCase("ContentMap"))
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
-        if (parts[0].toString().equalsIgnoreCase("ActionName")) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)) {
           ActualAction = parts[1].split(",")[0].toString();
           DisplayAction = parts[1].split(",")[1].toString();
           HM.put(ActualAction, DisplayAction);
@@ -309,12 +311,11 @@ public class AGParser {
         return FilterList;
       }
 
-      HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
-        if (parts[0].toString().equalsIgnoreCase("ContentMap"))
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
-        if (parts[0].toString().equalsIgnoreCase("EventName")
+        if (parts[0].toString().equalsIgnoreCase(KEY_EventName)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(EventName)) {
           line = dis.readLine();
           String[] fparts = line.split(":");
@@ -365,12 +366,11 @@ public class AGParser {
         return URIList;
       }
 
-      HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
-        if (parts[0].toString().equalsIgnoreCase("ContentMap"))
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
-        if (parts[0].toString().equalsIgnoreCase("ActionName")
+        if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(ActionName)) {
           line = dis.readLine();
           String[] fparts = line.split(":");
@@ -449,9 +449,9 @@ public class AGParser {
 
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
-        if (parts[0].toString().equalsIgnoreCase("Application"))
+        if (parts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
           break;
-        if (parts[0].toString().equalsIgnoreCase("ContentMap")) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap)) {
           while ((line = dis.readLine()) != null) {
             String[] fmparts = line.split(",");
             contentmap.add(fmparts);
