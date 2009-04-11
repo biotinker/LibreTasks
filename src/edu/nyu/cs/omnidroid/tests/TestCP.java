@@ -43,7 +43,7 @@ public class TestCP extends Activity {
                     values.put("description", desc);
                     Uri uri = getContentResolver().insert(
                             Uri.parse(
-                               "content://com.omnidroid.provider.CP/CP"), 
+                                "content://edu.nyu.cs.omnidroid.core.cp/CP"), 
                                values);
                     Toast.makeText(getBaseContext(),uri.toString(),Toast.LENGTH_SHORT).show();
                             Log.d("Insert Complete","This is a log");
@@ -69,7 +69,7 @@ public class TestCP extends Activity {
         		if (id.length()>0) 
                 {
         			Uri OmniURI = Uri.parse(
-                    "content://com.omnidroid.provider.CP/CP");
+                    "content://edu.nyu.cs.omnidroid.core.cp/CP");
                     Cursor c = managedQuery(OmniURI, null, null, null, null);
                     int new_id =Integer.parseInt(id);
                     
@@ -98,7 +98,7 @@ public class TestCP extends Activity {
         		/*CProvider cp = new CProvider();
         		cp.displayRecords("content://com.omnidroid.provider.CP/CP");*/
         	  		Uri OmniURI = Uri.parse(
-                        "content://com.omnidroid.provider.CP/CP");
+                        "content://edu.nyu.cs.omnidroid.core.cp/CP");
                      Cursor c = managedQuery(OmniURI, null, null, null, null);
                      if (c.moveToFirst()) {
                         do{
