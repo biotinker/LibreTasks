@@ -3,18 +3,19 @@ package edu.nyu.cs.omnidroid.ui;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import edu.nyu.cs.omnidroid.util.AGParser;
 
 public class EventCatcher extends ListActivity {
 	private static final String TAG = EventCatcher.class.getSimpleName();
+  public static final String KEY_APPLICATION = "APPLICATION";
+  
   private static AGParser ag;
   
 
@@ -59,16 +60,9 @@ public class EventCatcher extends ListActivity {
 
 		// TODO: Turn into a omnidroid specific intent
     Intent i = new Intent();
-    i.setClassName("edu.nyu.cs.omnidroid", "edu.nyu.cs.omnidroid.ui.EventCatcherActions");
-
-    //Context context = getBaseContext();
-    //ComponentName comp = new ComponentName(context.getPackageName(), EventCatcherActions.class.getName());
-    //ComponentName activity = context.startActivity(new Intent().setComponent(comp));
-    //ComponentName service = context.startService(new Intent().setComponent(comp));
-
-    //i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.EventCatcherActions");
-		//TextView tv = (TextView) v;
-		//i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
+    i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.EventCatcherActions");
+		TextView tv = (TextView) v;
+		i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
 		startActivity(i);
 		Log.i(TAG, "Exit");
 	}
