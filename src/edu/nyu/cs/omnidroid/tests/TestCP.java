@@ -19,6 +19,7 @@ public class TestCP extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState){
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main1);
         Button Store;
@@ -32,6 +33,7 @@ public class TestCP extends Activity {
         Retrieve=(Button) findViewById(R.id.Retrieve);
         ID=(EditText) findViewById(R.id.ID);
         GetAll=(Button) findViewById(R.id.GetAll);
+        final CProvider cp = new CProvider(this);
         Store.setOnClickListener(new View.OnClickListener()
         {
         	public void onClick(View v)
@@ -96,9 +98,9 @@ public class TestCP extends Activity {
         {
         	public void onClick(View v)
         	{
-        		/*CProvider cp = new CProvider();
-        		cp.displayRecords("content://com.omnidroid.provider.CP/CP");*/
-        	  		Uri OmniURI = Uri.parse(
+        		
+        		cp.displayRecords("content://edu.nyu.cs.omnidroid.core.cp/CP");
+        	  	/*	Uri OmniURI = Uri.parse(
                         "content://edu.nyu.cs.omnidroid.core.cp/CP");
                      Cursor c = managedQuery(OmniURI, null, null, null, null);
                      if (c.moveToFirst()) {
@@ -111,7 +113,7 @@ public class TestCP extends Activity {
                               Toast.LENGTH_LONG).show();               
                         } while (c.moveToNext());
                      } 
-              
+              */
             }
           
         });    
