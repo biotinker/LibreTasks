@@ -36,12 +36,14 @@ public class UGParser {
   private static final String KEY_ActionName = "ActionName";
   private static final String KEY_ActionData = "ActionData";
   private static final String KEY_EnableInstance = "EnableInstance";
-
+  private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
+  private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
+  
   /**
    * Initializes the parser to be a User Config or App Config based on the parameter
    * 
-   * @param ParserType
-   *          Specify UC for UserConfig and AC for Application Config
+   * @param context
+   *          Specify the context of the Application
    */
   public UGParser(Context context) {
     // Defining the User Config Schema in ArrayList
@@ -57,9 +59,6 @@ public class UGParser {
     Schema.add("EnableInstance");
     this.context = context;
   }
-
-  private static final int MODE_WRITE = 2;
-  private static final int MODE_APPEND = 32768;
 
   /**
    * Opens User Config for writing
