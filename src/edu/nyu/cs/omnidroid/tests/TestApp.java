@@ -1,5 +1,6 @@
 package edu.nyu.cs.omnidroid.tests;
 
+import edu.nyu.cs.omnidroid.util.AGParser;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.widget.ListView;
 public class TestApp extends ListActivity {
 
   static final String[] TESTS = new String[] { "Test User Config", "Test App Config Get",
-      "Test CP", "Test Exception Handler", "Test Service", "TestApp" };
+      "Test CP", "Test Exception Handler", "Test Service", "TestApp", "ActionThrowerData" };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class TestApp extends ListActivity {
       break;
     case 5:
       i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestApp");
+      break;
+    case 6:
+      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.ActionThrowerData");
+      i.putExtra(AGParser.KEY_APPLICATION, "SMS");
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");

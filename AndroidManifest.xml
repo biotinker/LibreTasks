@@ -62,6 +62,12 @@
                   android:label="@string/event_catcher_actions_title">
 		</activity>
 
+		<!--  Activity used to by the event catcher to determine
+		      what actions to catch for a given application -->
+        <activity android:name=".tests.ActionThrowerData"
+                  android:label="@string/action_thrower_data">
+		</activity>
+
 		<!--  Activity used to by the action thrower to determine
 		      what application's actions to throw -->
         <activity android:name=".ui.ActionThrower"

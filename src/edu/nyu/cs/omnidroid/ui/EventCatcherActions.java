@@ -1,55 +1,66 @@
 package edu.nyu.cs.omnidroid.ui;
 
-import edu.nyu.cs.omnidroid.util.AGParser;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
+import edu.nyu.cs.omnidroid.util.AGParser;
 
 /**
- * Presents a list of possible actions that the selected
- * <code>EventCatcher</code> could have performed that we want to hook an
- * OmniHandler onto.
+ * Presents a list of possible actions that the selected <code>EventCatcher</code> could have
+ * performed that we want to hook an OmniHandler onto.
  * 
  */
 public class EventCatcherActions extends ListActivity {
   private static final String TAG = EventCatcherActions.class.getSimpleName();
   private static AGParser ag;
 
-	// TODO: Pull this from the AppConfig
-	// TODO: Filter by only apps that contain actions
-	private static final String[] EVENTS = new String[] { "Email Received",
-			"Email was Deleted", "Email was Moved" };
+  // TODO: Pull this from the AppConfig
+  // TODO: Filter by only apps that contain actions
+  private static final String[] EVENTS = new String[] { "Email Received", "Email was Deleted",
+      "Email was Moved" };
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, EVENTS));
-		getListView().setTextFilterEnabled(true);
+    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, EVENTS));
+    getListView().setTextFilterEnabled(true);
 
-		final Intent intent = getIntent();
+    String appName = null;
+    Intent i = getIntent();
+    Bundle extras = i.getExtras();
+    if (extras != null) {
+      appName = extras.getString(EventCatcher.KEY_APPLICATION);
+    } else {
+       //TODO (acase): Throw exception
+    }
 
-		// Do some setup based on the action being performed.
 
-		final String action = intent.getAction();
-		if (Intent.ACTION_CALL.equals(action)) {
-			// The new entry was created, so assume all will end well and
-			Log.i(TAG, "Found ACTION_CALL");
-		} else {
-			Log.i(TAG, "Unknown ACTION");
-		}
-		// Set the layout for this activity. You can find it in res/layout/
-		// setContentView(R.layout.event_list_activity);
+    // Set the layout for this activity. You can find it in res/layout/
+    ArrayList<HashMap<String, String>> eventNames;
+    eventNames = ag.readEvents(appName);
 
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, EVENTS));
-		getListView().setTextFilterEnabled(true);
-		Log.i(TAG, "Success");
+    //Getting the Events from AppConfig
+        ArrayList<HashMap<String, String>> eArrayList = ag.readEvents("SMS");
+        Iterator<HashMap<String, String>> i1 = eArrayList.iterator();
+        while (i1.hasNext()) {
+          HashMap<String, String> HM1 = i1.next();
+          Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+        }
+    
+    setListAdapter(new ArrayAdapter<HashMap<String,String>>(this,
+        android.R.layout.simple_list_item_1, eventNames));
+    getListView().setTextFilterEnabled(true);
 
-	}
+    Log.i(this.getLocalClassName(), "onCreate exit");
+  }
 
 }
