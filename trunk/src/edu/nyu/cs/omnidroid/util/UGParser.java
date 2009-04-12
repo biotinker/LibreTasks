@@ -140,6 +140,38 @@ public class UGParser {
   }
 
   /**
+   * deletes the Record from userConfig.
+   * 
+   * @param InstanceName
+   *          InstanceName of the record to be deleted.
+   */
+  public boolean deleteRecordbyInstance(String InstanceName) {
+    try {
+      ArrayList<HashMap<String, String>> UCRecords = readRecords();
+      ArrayList<HashMap<String, String>> UCRecords_New = readRecords();
+
+      Iterator<HashMap<String, String>> i = UCRecords.iterator();
+      while (i.hasNext()) {
+        HashMap<String, String> HM1 = i.next();
+        if (HM1.get(KEY_InstanceName).equals(InstanceName))
+          continue;
+        UCRecords_New.add(HM1);
+      }
+      delete_all();
+
+      Iterator<HashMap<String, String>> i1 = UCRecords_New.iterator();
+      while (i1.hasNext()) {
+        HashMap<String, String> HM1 = i.next();
+        writeRecord(HM1);
+      }
+      return true;
+    } catch (Exception e) {
+      OmLogger.write(context, "Could not delete Instance Record");
+      return false;
+    }
+  }
+
+  /**
    * Writes a Key Value into the UserConfig as Key:Value
    * 
    * @param Key
