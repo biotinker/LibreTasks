@@ -12,10 +12,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import android.content.Context;
 
-
 /**
- * Initializes the parser to be a User Config or App Config based on the parameter
- * 
+ * Provides functionality to parse the Application Config
  */
 public class AGParser {
   public static final String KEY_APPLICATION = "Application";
@@ -32,30 +30,27 @@ public class AGParser {
   private DataInputStream dis;
   private Context context;
   private static final String CONFIG_FILE = "AppConfig.txt";
-  
+  private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
+  private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
 
   /**
-   * Used to Specify the App Config Schema
+   * Used to set the Context of the Class
    * 
    */
   public AGParser(Context context) {
-    // Defining the User Config Schema in ArrayList
     this.context = context;
   }
-
-  private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
-  private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
 
   /**
    * Opens Application Config for writing
    * 
    */
-  public void OpenFileWrite(int mode) {
+  private void OpenFileWrite(int mode) {
     try {
       fout = context.openFileOutput(CONFIG_FILE, mode);
       osw = new OutputStreamWriter(fout);
     } catch (FileNotFoundException e) {
-      OmLogger.write(context, "Unable to Open User Config to write");
+      OmLogger.write(context, "Unable to Open App Config to write");
     }
   }
 
@@ -63,18 +58,18 @@ public class AGParser {
    * Opens Application Config for reading
    * 
    */
-  public void OpenFileRead() {
+  private void OpenFileRead() {
     try {
       FIn = context.openFileInput(CONFIG_FILE);
       bis = new BufferedInputStream(FIn);
       dis = new DataInputStream(bis);
     } catch (FileNotFoundException e) {
-      OmLogger.write(context, "Unable to Open Application Config to write");
+      OmLogger.write(context, "Unable to Open Application Config to Read");
     }
   }
 
   /**
-   * deletes the entire userConfig except the Enabled Field.
+   * deletes the entire AppConfig
    * 
    */
   public void delete_all() {
@@ -84,23 +79,24 @@ public class AGParser {
       osw.flush();
       osw.close();
     } catch (Exception e) {
-      OmLogger.write(context, "Could not delete Instances");
+      OmLogger.write(context, "Could not delete AppConfig");
     }
   }
 
   /**
-   * deletes the Record from App Config.
+   * deletes a Record from App Config.
    * 
    * @param AppName
    *          Specify the Application Name.
    */
   public boolean deleteApp(String AppName) {
     try {
+      // Opeing App Config in Read Mode
       OpenFileRead();
       String line;
       ArrayList<String> lines = null;
-      // Navigate to the Application Record
       String[] parts;
+      // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
         parts = line.split(":");
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
@@ -109,7 +105,7 @@ public class AGParser {
             dparts = line.split(":");
             // Ignore lines of the application to be deleted.
             if (dparts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
-              // Stop ignoring once the next application map is reached of EOF
+              // Stop ignoring once the next application map is reached
               break;
           }
         }
@@ -138,30 +134,8 @@ public class AGParser {
    *          NAME,STRING R_Name,RECEIVER NAME,STRING S_Ph_No,SENDER PHONE NUMBER,INT
    *          R_Ph_No,RECEIVER PHONE NUMBER,INT Text,Text,STRING Location,SMS Number,INT
    * @return Returns true if successful
-   * @author Sucharita Gaat
+   * 
    */
-  public String[] allRead()
-  {
-	  String lines[] = new String[100];
-	  try {
-	      OpenFileRead();
-	      
-	      String l;
-	      int i=0;
-	      while ((l = dis.readLine()) != null) {
-	    	 
-	        lines[i]=l;
-	        i++;
-	        }
-	      return lines;
-	  } catch (Exception e)
-	  {
-		  e.printStackTrace();
-		  return null;
-	  }
-	      
-
-  }
   public boolean write(String AGLine) {
     try {
       final String LineString = new String(AGLine + "\n");
@@ -181,15 +155,18 @@ public class AGParser {
    * 
    * @param AppName
    *          Specify the Application
-   * @return Returns ArrayList of Hashmaps containing ActualName and Display Name
+   * @return Returns ArrayList of Hashmaps containing Actual Name and Display Name
    */
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
     try {
-      OpenFileRead();
+
+      String ActualEvent;
+      String DisplayEvent;
       String line;
 
+      OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
@@ -198,23 +175,22 @@ public class AGParser {
           break;
         }
       }
-
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return eArrayList;
       }
-
-      String ActualEvent;
-      String DisplayEvent;
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
+        // Check if the pointer reached the ContentMap Section of the Record
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_EventName)) {
           ActualEvent = parts[1].split(",")[0].toString();
           DisplayEvent = parts[1].split(",")[1].toString();
+          // Add Event to HashMap
           HM.put(ActualEvent, DisplayEvent);
+          // Add Hash Map of a single Event to the ArrayList
           eArrayList.add(HM);
         }
       }
@@ -229,7 +205,7 @@ public class AGParser {
   }
 
   /**
-   * Reads the Events from the App Config
+   * Reads the Actions from the App Config
    * 
    * @param AppName
    *          Specify the Application
@@ -250,12 +226,10 @@ public class AGParser {
           break;
         }
       }
-
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return aArrayList;
       }
-
       String ActualAction;
       String DisplayAction;
       HashMap<String, String> HM = new HashMap<String, String>();
@@ -304,12 +278,10 @@ public class AGParser {
           break;
         }
       }
-
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return FilterList;
       }
-
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
@@ -359,12 +331,10 @@ public class AGParser {
           break;
         }
       }
-
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return URIList;
       }
-
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
@@ -389,8 +359,9 @@ public class AGParser {
       return URIList;
     }
   }
+
   /**
-   * Reads values from the UserConfig based on the Key
+   * Reads values from the AppConfig based on the Key
    * 
    * @param Key
    *          Specify the Key to be read. example ActionName, EventName
@@ -413,7 +384,7 @@ public class AGParser {
       }
       return cols2;
     } catch (Exception e) {
-      OmLogger.write(context, "Unable to read Line from User Config");
+      OmLogger.write(context, "Unable to read Line from Application Config");
       return cols2;
     }
   }
@@ -431,7 +402,6 @@ public class AGParser {
     try {
       OpenFileRead();
       String line;
-
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
@@ -440,12 +410,10 @@ public class AGParser {
           break;
         }
       }
-
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return contentmap;
       }
-
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":");
         if (parts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
