@@ -396,7 +396,7 @@ public class UGParser {
    */
   public boolean updateRecord(Context context, HashMap<String, String> HM) {
     try {
-      deleteRecord(HM);
+      deleteRecordbyInstance(HM.get("KEY_InstanceName"));
       writeRecord(HM);
       return true;
     } catch (Exception e) {
