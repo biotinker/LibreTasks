@@ -27,15 +27,15 @@ public class UGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
-  private static final String KEY_InstanceName = "InstanceName";
-  private static final String KEY_EventName = "EventName";
-  private static final String KEY_EventApp = "EventApp";
-  private static final String KEY_FilterType = "FilterType";
-  private static final String KEY_FilterData = "FilterData";
-  private static final String KEY_ActionApp = "ActionApp";
-  private static final String KEY_ActionName = "ActionName";
-  private static final String KEY_ActionData = "ActionData";
-  private static final String KEY_EnableInstance = "EnableInstance";
+  public static final String KEY_InstanceName = "InstanceName";
+  public static final String KEY_EventName = "EventName";
+  public static final String KEY_EventApp = "EventApp";
+  public static final String KEY_FilterType = "FilterType";
+  public static final String KEY_FilterData = "FilterData";
+  public static final String KEY_ActionApp = "ActionApp";
+  public static final String KEY_ActionName = "ActionName";
+  public static final String KEY_ActionData = "ActionData";
+  public static final String KEY_EnableInstance = "EnableInstance";
   private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
   private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
   
