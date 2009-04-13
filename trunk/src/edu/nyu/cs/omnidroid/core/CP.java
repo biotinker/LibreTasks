@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package edu.nyu.cs.omnidroid.core;
 
 import android.content.ContentProvider;
@@ -14,15 +17,16 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- * * @author RS * The OmniCP class creates the database * for the master application for the
- * OmniDroid system.
- * */
-
-public class OmniCP extends ContentProvider {
-  public static final String CP_Name = "edu.nyu.cs.omnidroid.core.cp";
+ * @author Rajiv
+ * 
+ */
+public class CP extends ContentProvider {
+  public static final String CP_Name = "edu.nyu.cs.omnidroid.core.maincp";
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
   public static final String _ID = "_id";
-  public static final String DESCRIPTION = "description";
+  public static final String ACTION_DATA = "a_data";
+  public static final String INSTANCE_NAME = "i_name";
+  
   private static final int DESC = 1;
   private static final int DESC_ID = 2;
   private static final UriMatcher uriMatcher;
@@ -32,13 +36,12 @@ public class OmniCP extends ContentProvider {
     uriMatcher.addURI(CP_Name, "CP/#", DESC_ID);
   }
   // DATABASE INITIALIZATION
-
-  private SQLiteDatabase OmniDB;
+  private SQLiteDatabase OmniMainDB;
   private static final String DATABASE_NAME = "Omnidroid";
-  private static final String DATABASE_TABLE = "Info";
-  private static final int DATABASE_VERSION = 1;
+  private static final String DATABASE_TABLE = "Main";
+  private static final int DATABASE_VERSION = 3;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
-      + " (_id integer primary key autoincrement, " + "description text not null);";
+      + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
   private static class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context) {
@@ -53,6 +56,9 @@ public class OmniCP extends ContentProvider {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       Log.d("OmniDroid database", "On Upgrade");
+      db.execSQL("DROP TABLE IF EXISTS Main");
+      onCreate(db);
+
     }
   }
 
@@ -65,13 +71,11 @@ public class OmniCP extends ContentProvider {
   @Override
   public String getType(Uri uri) {
     // TODO Auto-generated method stub
-
     switch (uriMatcher.match(uri)) {
-
     case DESC:
-      return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.core.cp ";
+      return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.core.maincp ";
     case DESC_ID:
-      return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.core.cp ";
+      return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.core.maincp ";
     default:
       throw new IllegalArgumentException("Incorrect URI " + uri);
     }
@@ -82,8 +86,7 @@ public class OmniCP extends ContentProvider {
   public Uri insert(Uri uri, ContentValues values) {
     // TODO:: Allow UI to insert a value
     // Link the module with Andrew's code
-    long row = OmniDB.insert(DATABASE_TABLE, "", values);
-
+    long row = OmniMainDB.insert(DATABASE_TABLE, "", values);
     if (row > 0) {
       Uri _uri = ContentUris.withAppendedId(CONTENT_URI, row);
       getContext().getContentResolver().notifyChange(_uri, null);
@@ -98,8 +101,8 @@ public class OmniCP extends ContentProvider {
     // TODO:: Open the connection to the database
     Context context = getContext();
     DatabaseHelper dbHelper = new DatabaseHelper(context);
-    OmniDB = dbHelper.getWritableDatabase();
-    return (OmniDB == null) ? false : true;
+    OmniMainDB = dbHelper.getWritableDatabase();
+    return (OmniMainDB == null) ? false : true;
 
   }
 
@@ -113,11 +116,10 @@ public class OmniCP extends ContentProvider {
     if (uriMatcher.match(uri) == DESC_ID)
       sqlBuilder.appendWhere(_ID + " = " + uri.getPathSegments().get(1));
 
-    Cursor c = sqlBuilder.query(OmniDB, projection, selection, selectionArgs, null, null, null);
+    Cursor c = sqlBuilder.query(OmniMainDB, projection, selection, selectionArgs, null, null, null);
 
     c.setNotificationUri(getContext().getContentResolver(), uri);
     return c;
-
   }
 
   @Override
