@@ -46,7 +46,7 @@ public class TestApp extends ListActivity {
       i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestAppConfig");
       break;
     case 2:
-      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestCP");
+      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.MainCP");
       break;
     case 3:
       i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestExceptionHandler");
