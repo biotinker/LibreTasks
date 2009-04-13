@@ -6,7 +6,7 @@
 	<TextView android:id="@+id/appName" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="TODO:Display App Selected" />
 
-	<TextView android:layout_width="fill_parent" android:id="@+id/appName"
+	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="Enter the data to be inserted" />
 
 	<EditText android:id="@+id/data" android:layout_width="fill_parent"

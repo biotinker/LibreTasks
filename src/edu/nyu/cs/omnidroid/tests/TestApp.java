@@ -58,7 +58,7 @@ public class TestApp extends ListActivity {
       i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestApp");
       break;
     case 6:
-      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.ActionThrowerData");
+      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.ActionThrowerData");
       i.putExtra(AGParser.KEY_APPLICATION, "SMS");
       break;
     default:
