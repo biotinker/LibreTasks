@@ -90,6 +90,7 @@ public class AGParser {
    *          Specify the Application Name.
    */
   public boolean deleteApp(String AppName) {
+    boolean deleted=false;
     try {
       // Opeing App Config in Read Mode
       OpenFileRead();
@@ -117,10 +118,13 @@ public class AGParser {
       while (i.hasNext()) {
         agwrite(i.next());// Writing new lines into AppConfig
       }
-      return true;
+      deleted=true;
     } catch (Exception e) {
       OmLogger.write(context, "Could not delete Instance Record");
-      return false;
+      deleted=false;
+    }
+    finally{
+      return deleted;
     }
   }
 
@@ -137,18 +141,21 @@ public class AGParser {
    * 
    */
   public boolean agwrite(String AGLine) {
+    boolean written=false;
     try {
       final String LineString = new String(AGLine + "\n");
       OpenFileWrite(MODE_APPEND);
       osw.write(LineString);
       osw.flush();
       osw.close();
-      return true;
+      written=true;
     } catch (Exception e) {
       OmLogger.write(context, "Unable to write line in Application Config");
-      return false;
+     written=false;    
     }
-  }
+    finally{return written;}
+      
+   }
 
   /**
    * Reads the Events from the App Config
