@@ -124,9 +124,7 @@ public class OmniCP extends ContentProvider
 	      sqlBuilder.setTables(DATABASE_TABLE);
 	      if (uriMatcher.match(uri) == DESC_ID)
 	         sqlBuilder.appendWhere(_ID + " = " + uri.getPathSegments().get(1));                
-	     if (sortOrder==null || sortOrder=="")
-	         sortOrder = _ID;
-	   
+	     
 	      Cursor c = sqlBuilder.query(
 	         OmniDB, 
 	         projection, 
@@ -134,7 +132,7 @@ public class OmniCP extends ContentProvider
 	         selectionArgs, 
 	         null, 
 	         null, 
-	         sortOrder);
+	         null);
 	   
 	      c.setNotificationUri(getContext().getContentResolver(), uri);
 	      return c;
