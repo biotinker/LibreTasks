@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 
+// TODO: Please add documentation for this class.
 public class CProvider {
 	Activity a;
 	

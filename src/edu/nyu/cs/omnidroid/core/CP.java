@@ -39,7 +39,7 @@ public class CP extends ContentProvider {
   private SQLiteDatabase OmniMainDB;
   private static final String DATABASE_NAME = "Omnidroid";
   private static final String DATABASE_TABLE = "Main";
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 2;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
@@ -55,6 +55,7 @@ public class CP extends ContentProvider {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+      // TODO (acase): Don't drop the table, instead convert it to new version.
       Log.d("OmniDroid database", "On Upgrade");
       db.execSQL("DROP TABLE IF EXISTS Main");
       onCreate(db);

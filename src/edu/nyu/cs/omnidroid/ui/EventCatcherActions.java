@@ -52,7 +52,7 @@ public class EventCatcherActions extends ListActivity {
     ArrayList<String> values = new ArrayList<String>();
     while (i1.hasNext()) {
       HashMap<String, String> HM1 = i1.next();
-      Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+      //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       // TODO (acase): We need a better way then accessing a hashmap
       values.addAll(HM1.values());
       //values.add(HM1.get("SMS_Received"));
@@ -66,7 +66,7 @@ public class EventCatcherActions extends ListActivity {
     Iterator<String> iter = values.iterator();
     while (iter.hasNext()) {
       String eventName = iter.next();
-      Toast.makeText(getBaseContext(), "List includes = " + eventName, 4).show();
+      //Toast.makeText(getBaseContext(), "List includes = " + eventName, 4).show();
     }
 /*
     setListAdapter(new ArrayAdapter<HashMap<String, String>>(this,
