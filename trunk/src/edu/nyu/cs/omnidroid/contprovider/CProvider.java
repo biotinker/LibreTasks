@@ -29,7 +29,7 @@ public class CProvider {
 
 	
 	public String[] displayRecords(String uri) {
-		AGParser ag = new AGParser(a.getApplicationContext());
+	AGParser ag = new AGParser(a.getApplicationContext());
 // put the uri in the content:// format in the managedQuery
 	Cursor cur = a.managedQuery(Uri.parse(uri), null, 
 
@@ -49,15 +49,12 @@ public class CProvider {
 
 			 cols = cur.getColumnNames();
 			
-			
-		
 	} while (cur.moveToNext());
 
 	}
 	
 	
 	
-    ag.delete_all();
     
     
     ag.delete_all();
