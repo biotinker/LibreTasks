@@ -17,7 +17,7 @@ import android.widget.ListView;
 public class TestApp extends ListActivity {
 
   static final String[] TESTS = new String[] { "Test User Config", "Test App Config Get",
-      "Test CP", "Test Exception Handler", "Test Service", "TestApp", "ActionThrowerData" };
+      "Test CP", "Test Exception Handler", "Test Service", "TestApp", "PackageLister" };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,7 @@ public class TestApp extends ListActivity {
       i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.tests.TestApp");
       break;
     case 6:
-      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.ActionThrowerData");
-      i.putExtra(AGParser.KEY_APPLICATION, "SMS");
+      i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.PackageLister");
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");
