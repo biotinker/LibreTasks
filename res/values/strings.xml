@@ -17,5 +17,7 @@
 	<string name="add">Add</string>
 	<string name="del">Delete</string>
 	<string name="edit">Edit</string>
+	<string name="tests">Run Tests</string>
+	<string name="help">Help</string>
 	<string name="settings">Settings</string>
 </resources>
