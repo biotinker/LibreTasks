@@ -39,6 +39,9 @@ public class BRService extends Service {
       UGParser ug = new UGParser(getApplicationContext());
       ug.update(getApplicationContext(), "Enabled", "True");
       ug.delete_all();
+
+      // TODO: Delete this sample code
+      /* Code demonstrating use of User Config parser */
       HashMap<String, String> HM = new HashMap<String, String>();
       HM.put("InstanceName", "SMS to Email");
       HM.put("EventName", "SMS_RECEIVED");
@@ -60,7 +63,9 @@ public class BRService extends Service {
       HM.put("ActionData", "ContentProvider_URI");
       HM.put("EnableInstance", "True");
       ug.writeRecord(HM);
-      /* Code demonstrating use of Appl Config parser; To be deleted */
+
+      // TODO: Delete this sample code
+      /* Code demonstrating use of Appl Config parser */
       AGParser ag = new AGParser(getApplicationContext());
       ag.delete_all();
       ag.agwrite("Application:SMS");

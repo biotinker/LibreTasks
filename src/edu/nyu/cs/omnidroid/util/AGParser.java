@@ -164,6 +164,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing Actual Name and Display Name
    */
+  // FIXME (acase): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
@@ -218,6 +219,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing ActualName and Display Name
    */
+  // FIXME (acase): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readActions(String AppName) {
     ArrayList<HashMap<String, String>> aArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
