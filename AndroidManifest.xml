@@ -68,6 +68,11 @@
                   android:label="@string/action_thrower_data">
 		</activity>
 
+		<!--  Activity used to list all the phone application packages -->
+        <activity android:name=".ui.PackageLister"
+                  android:label="@string/package_lister">
+		</activity>
+
 		<!--  Activity used to by the action thrower to determine
 		      what application's actions to throw -->
         <activity android:name=".ui.ActionThrower"
