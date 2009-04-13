@@ -24,7 +24,6 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  */
 public class ActionThrowerActions extends ListActivity {
   private static AGParser ag;
-  private static UGParser ug;
   private String eventApp = null;
   private String eventName = null;
   private String throwerApp = null;
@@ -37,7 +36,6 @@ public class ActionThrowerActions extends ListActivity {
 
     // Initialize our AGParser
     ag = new AGParser(getApplicationContext());
-    ug = new UGParser(getApplicationContext());
 
     // See what application we want to handle events for from the
     // intent data passed to us.
