@@ -1,7 +1,6 @@
 package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -9,7 +8,10 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.AGParser;
 
@@ -20,6 +22,7 @@ import edu.nyu.cs.omnidroid.util.AGParser;
  */
 public class EventCatcherActions extends ListActivity {
   private static AGParser ag;
+  private String appName = null;
 
   /** Called when the activity is first created. */
   @Override
@@ -32,7 +35,6 @@ public class EventCatcherActions extends ListActivity {
 
     // See what application we want to handle events for from the
     // intent data passed to us.
-    String appName = null;
     Intent i = getIntent();
     Bundle extras = i.getExtras();
     if (extras != null) {
@@ -70,12 +72,23 @@ public class EventCatcherActions extends ListActivity {
     setListAdapter(new ArrayAdapter<HashMap<String, String>>(this,
         android.R.layout.simple_list_item_1, eventList));
 */
-    ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this,
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
 
     Log.i(this.getLocalClassName(), "onCreate exit");
+  }
+
+  @Override
+  protected void onListItemClick(ListView l, View v, int position, long id) {
+    Intent i = new Intent();
+    // TODO (acase): Choose Filter page
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrower.class);
+    TextView tv = (TextView) v;
+    i.putExtra(AGParser.KEY_APPLICATION, appName);
+    i.putExtra(AGParser.KEY_EventName, tv.getText());
+    startActivity(i);
   }
 
 }

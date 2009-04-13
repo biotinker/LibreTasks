@@ -1,47 +1,108 @@
 package edu.nyu.cs.omnidroid.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
+/**
+ * Presents a list of possible actions that the selected <code>ActionThrower</code> could 
+ * throw as it's action to perform for that OmniHandler.
+ *
+ * @author acase
+ */
 public class ActionThrowerActions extends ListActivity {
-	private static final String TAG = "EventListActivity";
+  private static AGParser ag;
+  private static UGParser ug;
+  private String eventApp = null;
+  private String eventName = null;
+  private String throwerApp = null;
+  
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    // Android Boilerplate
+    super.onCreate(savedInstanceState);
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    // Initialize our AGParser
+    ag = new AGParser(getApplicationContext());
+    ug = new UGParser(getApplicationContext());
 
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, EVENTS));
-		getListView().setTextFilterEnabled(true);
+    // See what application we want to handle events for from the
+    // intent data passed to us.
+    Intent i = getIntent();
+    Bundle extras = i.getExtras();
+    if (extras != null) {
+      eventApp = extras.getString(AGParser.KEY_APPLICATION);
+      eventName = extras.getString(UGParser.KEY_EventApp);
+      throwerApp = extras.getString(UGParser.KEY_ActionApp);
+    } else {
+      // TODO (acase): Throw exception
+    }
 
-		final Intent intent = getIntent();
+    
 
-		// Do some setup based on the action being performed.
+    // Getting the Events from AppConfig
+    ArrayList<HashMap<String, String>> eventList = ag.readEvents(throwerApp);
+    Iterator<HashMap<String, String>> i1 = eventList.iterator();
+    
+    ArrayList<String> values = new ArrayList<String>();
+    while (i1.hasNext()) {
+      HashMap<String, String> HM1 = i1.next();
+      Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
+      // TODO (acase): We need a better way then accessing a hashmap
+      values.addAll(HM1.values());
+      //values.add(HM1.get("SMS_Received"));
+      //values.add(HM1.get("SMS_Sent"));
 
-		final String action = intent.getAction();
-		if (Intent.ACTION_CALL.equals(action)) {
-			// The new entry was created, so assume all will end well and
-			Log.i(TAG, "Found ACTION_CALL");
-		} else {
-			Log.i(TAG, "Unknown ACTION");
-		}
-		// Set the layout for this activity. You can find it in res/layout/
-		// setContentView(R.layout.event_list_activity);
+    }
+    if (values == null)
+    {
+      // TODO (acase): Throw exception
+    }
+    Iterator<String> iter = values.iterator();
+    while (iter.hasNext()) {
+      String eventName = iter.next();
+      Toast.makeText(getBaseContext(), "List includes = " + eventName, 4).show();
+    }
+/*
+    setListAdapter(new ArrayAdapter<HashMap<String, String>>(this,
+        android.R.layout.simple_list_item_1, eventList));
+*/
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_1, values);
+    setListAdapter(arrayAdapter);
+    getListView().setTextFilterEnabled(true);
 
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, EVENTS));
-		getListView().setTextFilterEnabled(true);
-		Log.i(TAG, "Success");
+    Log.i(this.getLocalClassName(), "onCreate exit");
+  }
 
-	}
-
-	// TODO: Pull this from the Package Manager
-	// TODO: Filter by only apps that contain actions
-	static final String[] EVENTS = new String[] { "Email Received",
-			"Email was Deleted", "Email was Moved" };
+  @Override
+  protected void onListItemClick(ListView l, View v, int position, long id) {
+    Intent i = new Intent();
+    // TODO (acase): Choose Filter page
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrowerData.class);
+    TextView tv = (TextView) v;
+    // EventCatcherApp
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    // EventCatcherAction
+    i.putExtra(AGParser.KEY_EventName, eventName);
+    // ActionThrowerApp
+    i.putExtra(AGParser.KEY_APPLICATION, throwerApp);
+    // ActionThrowerAction
+    i.putExtra(AGParser.KEY_ActionName, tv.getText());
+    startActivity(i);
+  }
 
 }
