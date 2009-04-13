@@ -115,7 +115,7 @@ public class AGParser {
 
       Iterator<String> i = lines.iterator();
       while (i.hasNext()) {
-        write(i.next());// Writing new lines into AppConfig
+        agwrite(i.next());// Writing new lines into AppConfig
       }
       return true;
     } catch (Exception e) {
@@ -136,7 +136,7 @@ public class AGParser {
    * @return Returns true if successful
    * 
    */
-  public boolean write(String AGLine) {
+  public boolean agwrite(String AGLine) {
     try {
       final String LineString = new String(AGLine + "\n");
       OpenFileWrite(MODE_APPEND);
