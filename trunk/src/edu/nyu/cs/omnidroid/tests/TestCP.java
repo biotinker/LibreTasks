@@ -117,33 +117,7 @@ public class TestCP extends Activity {
             }
           
         });    
-       /*ContentValues values = new ContentValues();
-        values.put("description", "This is a test");
-        values.put("description", "This is the second test");
-        values.put("description", "This is the third test");
-        values.put("description", "This is the fourth test");
-        values.put("description", "This is the final test");
-        Uri uri = getContentResolver().insert(
-        Uri.parse(
-           "content://com.omnidroid.provider.CP/CP"), 
-           values);
-        Log.d("Insert Complete","This is a log");
-        */
-      /*  Uri OmniURI = Uri.parse(
-        "content://com.omnidroid.provider.CP/CP");
-     Cursor c = managedQuery(OmniURI, null, null, null, "description desc");
-     if (c.moveToFirst()) {
-        do{
-           Toast.makeText(this, 
-              c.getString(c.getColumnIndex(
-              OmniCP._ID)) + ", " +                     
-              c.getString(c.getColumnIndex(
-                 OmniCP.DESCRIPTION)), 
-              Toast.LENGTH_LONG).show();               
-        } while (c.moveToNext());
-     }
-
-        */
+    
     }
     
 }
