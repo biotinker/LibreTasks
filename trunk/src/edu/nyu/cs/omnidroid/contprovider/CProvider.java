@@ -2,42 +2,32 @@ package edu.nyu.cs.omnidroid.contprovider;
 
 
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
-import edu.nyu.cs.omnidroid.util.*;
-import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.AGParser;
 
-import android.widget.Toast;
 
 
 
 public class CProvider {
+	Activity a;
 	
-	private Activity a;
-	private Context context;
-	
+
 	public CProvider(Activity a)
 	{
-		this.a=a;		
+		this.a=a;	
+		
 	}
 	
 	
 
 	
 	public String[] displayRecords(String uri) {
-
+		AGParser ag = new AGParser(a.getApplicationContext());
 // put the uri in the content:// format in the managedQuery
 	Cursor cur = a.managedQuery(Uri.parse(uri), null, 
 
@@ -65,8 +55,7 @@ public class CProvider {
 	
 	
 	
-	AGParser ag = new AGParser(this.context);
-	
+    ag.delete_all();
     
     ArrayList<HashMap<String, String>> al = new ArrayList<HashMap<String, String>>();
     
