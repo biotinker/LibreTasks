@@ -35,7 +35,9 @@ public class Overview extends Activity implements OnClickListener {
 	private static final int MENU_ADD = 0;
 	private static final int MENU_EDIT = 1;
 	private static final int MENU_DELETE = 2;
-	private static final int MENU_SETTINGS = 3;
+  private static final int MENU_SETTINGS = 3;
+  private static final int MENU_HELP = 4;
+  private static final int MENU_TESTS = 5;
 
 	// User Config Parser
 	private static UGParser ug;
@@ -150,10 +152,14 @@ public class Overview extends Activity implements OnClickListener {
 
   /* Creates the options menu items */
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_ADD, 0, R.string.add).setIcon(
-				android.R.drawable.ic_menu_add);
+    menu.add(0, MENU_ADD, 0, R.string.add).setIcon(
+        android.R.drawable.ic_menu_add);
 		menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(
 				android.R.drawable.ic_menu_preferences);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
+        android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_TESTS, 0, R.string.tests).setIcon(
+        android.R.drawable.ic_menu_manage);
 		;
 		return true;
 	}
@@ -164,9 +170,17 @@ public class Overview extends Activity implements OnClickListener {
 		case MENU_ADD:
 			AddOmniHandler();
 			return true;
-		case MENU_SETTINGS:
-			// TODO (acase): Call preferences activity
-			return true;
+    case MENU_SETTINGS:
+      // TODO (acase): Call preferences activity
+      return true;
+    case MENU_HELP:
+      // TODO (acase): Call help dialog
+      return true;
+    case MENU_TESTS:
+      Intent i = new Intent();
+      i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.tests.TestApp.class);
+      startActivity(i);
+      return true;
 		}
 		return false;
 	}
