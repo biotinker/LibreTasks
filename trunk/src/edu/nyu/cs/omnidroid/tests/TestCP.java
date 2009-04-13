@@ -33,7 +33,7 @@ public class TestCP extends Activity {
     Retrieve = (Button) findViewById(R.id.Retrieve);
     ID = (EditText) findViewById(R.id.ID);
     GetAll = (Button) findViewById(R.id.GetAll);
-    // final CProvider cp = new CProvider(this);
+    final CProvider cp = new CProvider(this);
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String desc = Desc.getText().toString();
@@ -83,9 +83,9 @@ public class TestCP extends Activity {
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
 
-        // cp.displayRecords("content://edu.nyu.cs.omnidroid.core.cp/CP");
+         cp.displayRecords("content://edu.nyu.cs.omnidroid.core.cp/CP");
 
-        Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.cp/CP");
+      /*  Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.cp/CP");
         Cursor c = managedQuery(OmniURI, null, null, null, null);
         if (c.moveToFirst()) {
           do {
@@ -94,7 +94,7 @@ public class TestCP extends Activity {
                 c.getString(c.getColumnIndex(OmniCP._ID)) + ", "
                     + c.getString(c.getColumnIndex(OmniCP.DESCRIPTION)), Toast.LENGTH_LONG).show();
           } while (c.moveToNext());
-        }
+        }*/
 
       }
 
