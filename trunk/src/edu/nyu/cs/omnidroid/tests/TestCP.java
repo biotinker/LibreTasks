@@ -13,7 +13,7 @@ import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.CP;
 
-public class MainCP extends Activity {
+public class TestCP extends Activity {
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {

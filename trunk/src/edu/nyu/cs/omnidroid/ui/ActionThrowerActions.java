@@ -41,7 +41,7 @@ public class ActionThrowerActions extends ListActivity {
     Bundle extras = i.getExtras();
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventApp);
+      eventName = extras.getString(UGParser.KEY_EventName);
       throwerApp = extras.getString(UGParser.KEY_ActionApp);
     } else {
       // TODO (acase): Throw exception
