@@ -102,6 +102,9 @@
 		<!--
 		<service android:name=".bkgservice.ThrowerService" />
 		 -->
+
+		<!--  Our Content Provider that stores data to link between 
+		      the ThrowerApp and the CatcherApp -->
 		 <provider android:name=".core.CP"
          android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
 

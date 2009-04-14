@@ -83,39 +83,6 @@ public class BRService extends Service {
       ag.agwrite("Text,Text,STRING");
       ag.agwrite("Location,SMS Number,INT");
 
-      // Getting the Events from AppConfig
-      ArrayList<HashMap<String, String>> eArrayList = ag.readEvents("SMS");
-      Iterator<HashMap<String, String>> i1 = eArrayList.iterator();
-      while (i1.hasNext()) {
-        HashMap<String, String> HM1 = i1.next();
-        // Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
-      }
-
-      // Getting the Actions from AppConfig
-      ArrayList<HashMap<String, String>> aArrayList = ag.readActions("SMS");
-      Iterator<HashMap<String, String>> i2 = aArrayList.iterator();
-      while (i2.hasNext()) {
-        HashMap<String, String> HM1 = i2.next();
-        // Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
-      }
-
-      // Getting the Filters from AppConfig
-      ArrayList<String> FilterList = ag.readFilters("SMS", "SMS_RECEIVED");
-      Iterator<String> i3 = FilterList.iterator();
-      while (i3.hasNext()) {
-        String filter = i3.next();
-        // Toast.makeText(getBaseContext(), filter.toString(), 5).show();
-      }
-
-      // Getting the ContentMap from AppConfig
-      ArrayList<String[]> contentmap = ag.readContentMap("SMS");
-      Iterator<String[]> i4 = contentmap.iterator();
-      while (i4.hasNext()) {
-        String[] fieldmap = i4.next();
-        // Toast.makeText(getBaseContext(),
-        // fieldmap[0].toString()+fieldmap[1].toString()+fieldmap[2].toString(), 5).show();
-      }
-
       // Code starts here. The above code above this line is temporary usage.
 
       /* Check the User Config to start OmniDroid */

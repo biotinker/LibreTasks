@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import edu.nyu.cs.omnidroid.contprovider.*;
+import edu.nyu.cs.omnidroid.contprovider.PopulateAppConfigSetup;
 
 
 public class PackageLister extends ListActivity {
