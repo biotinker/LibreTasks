@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
@@ -55,7 +54,6 @@ public class ActionThrowerActions extends ListActivity {
     while (i1.hasNext()) {
       // TODO (acase): We need a better way then accessing a hashmap
       HashMap<String, String> HM1 = i1.next();
-      Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       values.addAll(HM1.values());
     }
 
