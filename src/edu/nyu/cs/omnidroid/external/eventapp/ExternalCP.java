@@ -13,11 +13,14 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-public class OmniCP extends ContentProvider {
-  public static final String CP_Name = "com.omnidroid.provider.CP";
+public class ExternalCP extends ContentProvider {
+  public static final String CP_Name = "com.external.cp";
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
   public static final String _ID = "_id";
-  public static final String DESCRIPTION = "description";
+  public static final String S_NAME = "s_name";
+  public static final String S_PH_NO = "s_ph_no";
+  public static final String TEXT = "text";
+
   private static final int DESC = 1;
   private static final int DESC_ID = 2;
   private static final UriMatcher uriMatcher;
@@ -27,13 +30,12 @@ public class OmniCP extends ContentProvider {
     uriMatcher.addURI(CP_Name, "CP/#", DESC_ID);
   }
   // DATABASE INITIALIZATION
-
   private SQLiteDatabase OmniDB;
   private static final String DATABASE_NAME = "Omnidroid";
   private static final String DATABASE_TABLE = "Info";
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 2;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
-      + " (_id integer primary key autoincrement, " + "description text not null);";
+      + " (_id integer primary key autoincrement, " + "s_name text, s_ph_no text, text text);";
 
   private static class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context) {
@@ -48,6 +50,9 @@ public class OmniCP extends ContentProvider {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       Log.d("OmniDroid database", "On Upgrade");
+      db.execSQL("DROP TABLE IF EXISTS Info");
+      onCreate(db);
+
     }
   }
 
@@ -63,9 +68,9 @@ public class OmniCP extends ContentProvider {
 
     switch (uriMatcher.match(uri)) {
     case DESC:
-      return "vnd.android.cursor.dir/vnd.omnidroid.provider.CP ";
+      return "vnd.android.cursor.dir/vnd.external.cp ";
     case DESC_ID:
-      return "vnd.android.cursor.item/vnd.omnidroid.provider.CP ";
+      return "vnd.android.cursor.item/vnd.external.cp ";
     default:
       throw new IllegalArgumentException("Incorrect URI " + uri);
     }
@@ -77,7 +82,6 @@ public class OmniCP extends ContentProvider {
     // TODO:: Allow UI to insert a value
     // Link the module with Andrew's code
     long row = OmniDB.insert(DATABASE_TABLE, "", values);
-
     if (row > 0) {
       Uri _uri = ContentUris.withAppendedId(CONTENT_URI, row);
       getContext().getContentResolver().notifyChange(_uri, null);
@@ -111,7 +115,6 @@ public class OmniCP extends ContentProvider {
 
     c.setNotificationUri(getContext().getContentResolver(), uri);
     return c;
-
   }
 
   @Override
