@@ -71,13 +71,13 @@ public class ActionThrowerData extends Activity {
               Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
           HashMap<String, String> HM = new HashMap<String, String>();
           HM.put("InstanceName", aData);
-          HM.put("EventName", eventName);  // null
+          HM.put("EventName", eventName);  // TODO: null
           HM.put("EventApp", eventApp);
           // TODO: get these from the user
           HM.put("FilterType", "S_PhoneNum");
           HM.put("FilterData", "212-555-1234");
-          HM.put("ActionName", throwerName);  // null
-          HM.put("ActionApp", throwerApp);  // null
+          HM.put("ActionName", throwerName);  // TODO: null
+          HM.put("ActionApp", throwerApp);  // TODO: null
           HM.put("ActionData", uri.toString());
           HM.put("EnableInstance", "True");
 

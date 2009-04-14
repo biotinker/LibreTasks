@@ -7,7 +7,6 @@ import java.util.Iterator;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -49,41 +48,28 @@ public class ActionThrowerActions extends ListActivity {
       // TODO (acase): Throw exception
     }
 
-    
-
     // Getting the Events from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readEvents(throwerApp);
-    Iterator<HashMap<String, String>> i1 = eventList.iterator();
-    
+    Iterator<HashMap<String, String>> i1 = eventList.iterator();    
     ArrayList<String> values = new ArrayList<String>();
     while (i1.hasNext()) {
+      // TODO (acase): We need a better way then accessing a hashmap
       HashMap<String, String> HM1 = i1.next();
       Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
-      // TODO (acase): We need a better way then accessing a hashmap
       values.addAll(HM1.values());
-      //values.add(HM1.get("SMS_Received"));
-      //values.add(HM1.get("SMS_Sent"));
-
     }
+
+    // Make sure we have an appropriate selection
     if (values == null)
     {
       // TODO (acase): Throw exception
     }
-    Iterator<String> iter = values.iterator();
-    while (iter.hasNext()) {
-      String eventName = iter.next();
-      Toast.makeText(getBaseContext(), "List includes = " + eventName, 4).show();
-    }
-/*
-    setListAdapter(new ArrayAdapter<HashMap<String, String>>(this,
-        android.R.layout.simple_list_item_1, eventList));
-*/
+
+    // Build our list of Actions  
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
-
-    Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
   @Override
@@ -95,11 +81,11 @@ public class ActionThrowerActions extends ListActivity {
     // EventCatcherApp
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     // EventCatcherAction
-    i.putExtra(AGParser.KEY_EventName, eventName);
+    i.putExtra(UGParser.KEY_EventName, eventName);
     // ActionThrowerApp
-    i.putExtra(AGParser.KEY_APPLICATION, throwerApp);
+    i.putExtra(UGParser.KEY_ActionApp, throwerApp);
     // ActionThrowerAction
-    i.putExtra(AGParser.KEY_ActionName, tv.getText());
+    i.putExtra(UGParser.KEY_ActionName, tv.getText());
     startActivity(i);
   }
 
