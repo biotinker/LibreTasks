@@ -41,7 +41,7 @@
 		</activity>
 
 		<!--  External EventApp testcase -->
-        <activity android:name=".external.eventapp.OmniCPActivity"
+        <activity android:name=".external.eventapp.ExternalCPActivity"
                   android:label="@string/event_app">
 		</activity>
 
