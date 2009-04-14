@@ -40,9 +40,9 @@ public class ActionThrowerData extends Activity {
     Bundle extras = i.getExtras();
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventApp);
+      eventName = extras.getString(UGParser.KEY_EventName);
       throwerApp = extras.getString(UGParser.KEY_ActionApp);
-      throwerName = extras.getString(UGParser.KEY_InstanceName);
+      throwerName = extras.getString(UGParser.KEY_ActionName);
     } else {
       // TODO (acase): Throw exception
     }
@@ -57,11 +57,10 @@ public class ActionThrowerData extends Activity {
     instanceName = (EditText) findViewById(R.id.Iname);
 
     save.setOnClickListener(new View.OnClickListener() {
+      
       public void onClick(View v) {
         String iName = instanceName.getText().toString();
         String aData = appData.getText().toString();
-        // TODO (acase): Check for errors
-        // TODO (acase): Pass to next page of UI
         // TODO (acase): Add it to the config
         if (iName.length() > 0 && aData.length() > 0) {
           ContentValues values = new ContentValues();
@@ -73,13 +72,13 @@ public class ActionThrowerData extends Activity {
           HM.put("InstanceName", aData);
           HM.put("EventName", eventName);  // TODO: null
           HM.put("EventApp", eventApp);
+          HM.put("ActionName", throwerName);
+          HM.put("ActionApp", throwerApp);
+          HM.put("ActionData", uri.toString());
+          HM.put("EnableInstance", "True");
           // TODO: get these from the user
           HM.put("FilterType", "S_PhoneNum");
           HM.put("FilterData", "212-555-1234");
-          HM.put("ActionName", throwerName);  // TODO: null
-          HM.put("ActionApp", throwerApp);  // TODO: null
-          HM.put("ActionData", uri.toString());
-          HM.put("EnableInstance", "True");
 
           // Initialize our AGParser
           UGParser ug = new UGParser(getApplicationContext());
@@ -87,8 +86,12 @@ public class ActionThrowerData extends Activity {
 
           Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
           Log.d("Insert Complete", "This is a log");
-          Toast.makeText(getBaseContext(), "Good Job", Toast.LENGTH_SHORT).show();
+          // TODO (acase): Pass to next page of UI... I'm so close I can taste it!
+          //Intent i = new Intent();
+          //i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.Overview");
+          //startActivity(i);
         } else {
+          // TODO (acase): Check for errors
           Toast.makeText(getBaseContext(), "No Value", Toast.LENGTH_SHORT).show();
         }
       }
