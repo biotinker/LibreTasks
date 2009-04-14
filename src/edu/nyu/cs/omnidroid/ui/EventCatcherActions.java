@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.AGParser;
 
 /**
@@ -63,15 +62,6 @@ public class EventCatcherActions extends ListActivity {
     {
       // TODO (acase): Throw exception
     }
-    Iterator<String> iter = values.iterator();
-    while (iter.hasNext()) {
-      String eventName = iter.next();
-      //Toast.makeText(getBaseContext(), "List includes = " + eventName, 4).show();
-    }
-/*
-    setListAdapter(new ArrayAdapter<HashMap<String, String>>(this,
-        android.R.layout.simple_list_item_1, eventList));
-*/
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);

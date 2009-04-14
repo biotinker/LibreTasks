@@ -1,6 +1,5 @@
 package edu.nyu.cs.omnidroid.tests;
 
-import edu.nyu.cs.omnidroid.util.AGParser;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
