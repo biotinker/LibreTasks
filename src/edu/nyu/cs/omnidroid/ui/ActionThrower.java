@@ -33,7 +33,7 @@ public class ActionThrower extends ListActivity {
     Bundle extras = i.getExtras();
     if (extras != null) {
       appName = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(AGParser.KEY_EventName);
+      eventName = extras.getString(UGParser.KEY_EventName);
     } else {
       // TODO (acase): Throw exception
     }
@@ -71,7 +71,7 @@ public class ActionThrower extends ListActivity {
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrowerActions.class);
     TextView tv = (TextView) v;
     i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(AGParser.KEY_EventName, eventName);
+    i.putExtra(UGParser.KEY_EventName, eventName);
     i.putExtra(UGParser.KEY_ActionApp, tv.getText());
     startActivity(i);
 	}

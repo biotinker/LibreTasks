@@ -86,7 +86,7 @@
         </activity>
         
         <!-- Test the CP -->
-        <activity android:name=".tests.MainCP"
+        <activity android:name=".tests.TestCP"
                   android:label="@string/maincp_name">
         </activity>
 

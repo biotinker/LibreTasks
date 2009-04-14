@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * Presents a list of possible actions that the selected <code>EventCatcher</code> could have
@@ -77,7 +78,7 @@ public class EventCatcherActions extends ListActivity {
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrower.class);
     TextView tv = (TextView) v;
     i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(AGParser.KEY_EventName, tv.getText());
+    i.putExtra(UGParser.KEY_EventName, tv.getText());
     startActivity(i);
   }
 
