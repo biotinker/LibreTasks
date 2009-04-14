@@ -50,7 +50,7 @@ public class MainCP extends Activity {
 
         /*  // SENDING THE INTENT
           Intent intent = new Intent(text1);
-          sendBroadcast(intent);
+          sendBroadcast(intent);k
 */
         } else
 
