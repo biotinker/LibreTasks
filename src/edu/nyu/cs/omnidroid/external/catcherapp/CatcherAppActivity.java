@@ -1,66 +1,59 @@
-/*package edu.nyu.cs.omnidroid.external.catcherapp;
+package edu.nyu.cs.omnidroid.external.catcherapp;
 
 import android.app.Activity;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
-import android.telephony.gsm.SmsManager;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.CP;
 public class CatcherAppActivity extends Activity {
-    /** Called when the activity is first created. 
-    @Override
+    /** Called when the activity is first created.*/ 
+  private String uri;
+  Intent intent;  
+  @Override
     public void onCreate(Bundle savedInstanceState) {
-      Button SendSMS;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        SendSMS = (Button) findViewById(R.id.SendSMS);
-                
-       SendSMS.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View v) {
-          String phoneNo = "5556";
-          String message = Message.getText().toString();
-         if (phoneNo.length() > 0 && message.length() > 0)
-          sendSMS(phoneNo, message);
-         else
-          Toast.makeText(getBaseContext(), "Both fields are required.", Toast.LENGTH_SHORT).show();
-            }
-          });
-           
-        }
-        private void sendSMS(String phoneNumber, String message) {
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
-        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT), 0);
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent(DELIVERED), 0);
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-              Toast.makeText(getBaseContext(), "SMS SENT", Toast.LENGTH_SHORT).show();
-            }
-          }, new IntentFilter(SENT));
+        setContentView(R.layout.main2);
+        this.intent=getIntent();
+        uri = getURI(intent);
+     //  Uri DummyURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
+     String action_data = displayAction(uri.toString());
+     //  String action_data = displayAction(DummyURI.toString());
+        Toast.makeText(getBaseContext(), action_data, 5);
+  } 
+       
+       public String getURI(Intent intent1)
+  {
+    Bundle b = intent1.getExtras();
+    Object c = b.get("uri");
+    String uri=c.toString();
+    return uri;
+    
+  }
 
-          registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-              Toast.makeText(getBaseContext(), "SMS delivered", Toast.LENGTH_SHORT).show();
-
-            }
-          }, new IntentFilter(DELIVERED));
-
-          SmsManager sms = SmsManager.getDefault();
-          sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
-        }
-
+   
+public String displayAction(String uri) {
+      
+      String str_uri = uri.toString();
+      String[] temp = null;
+      temp = str_uri.split("/");
+      String num = temp[temp.length - 1];
+      String final_uri=str_uri.substring(0, str_uri.length()-num.length());
+      int new_id = Integer.parseInt(num);
+      Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+      if (cur.moveToPosition(new_id)) {
+        Toast.makeText(
+            getBaseContext(),
+            cur.getString(cur.getColumnIndex(CP._ID)) + ","
+            + cur.getString(cur.getColumnIndex(CP.ACTION_DATA)), Toast.LENGTH_LONG).show();
       }
+      String action = cur.getColumnName(cur.getColumnIndex(CP.ACTION_DATA));
+      return action;
+    }
+
+  }
+    
 
 
-
-*/  
