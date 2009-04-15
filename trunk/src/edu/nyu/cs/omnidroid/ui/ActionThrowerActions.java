@@ -47,9 +47,9 @@ public class ActionThrowerActions extends ListActivity {
       // TODO (acase): Throw exception
     }
 
-    // Getting the Events from AppConfig
-    ArrayList<HashMap<String, String>> eventList = ag.readEvents(throwerApp);
-    Iterator<HashMap<String, String>> i1 = eventList.iterator();    
+    // Getting the Actions from AppConfig
+    ArrayList<HashMap<String, String>> eventList = ag.readActions(throwerApp);
+    Iterator<HashMap<String, String>> i1 = eventList.iterator();
     ArrayList<String> values = new ArrayList<String>();
     while (i1.hasNext()) {
       // TODO (acase): We need a better way then accessing a hashmap

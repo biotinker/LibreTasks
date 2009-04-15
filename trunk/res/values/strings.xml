@@ -24,5 +24,6 @@
 	<string name="help">Help</string>
 	<string name="name_to_save">Enter a name to remember me by</string>
 	<string name="save_response">Save Data to Pass using the OmniHandler</string>
-	<string name="settings">OmniDroid Settings</string>
+	<string name="settings_title">OmniDroid Settings</string>
+	<string name="settings">Settings</string>
 </resources>
