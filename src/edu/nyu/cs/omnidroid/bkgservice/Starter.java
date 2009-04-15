@@ -12,7 +12,7 @@ public class Starter extends BroadcastReceiver {
     
 	public void onReceive(Context context, Intent intent) {
 		/*Check to see if system is booted up*/
-		if( "android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) 
+		if( "android.intent.action.BOOT_COMPLETED".equals(intent.getAction()) || "OmniStart".equals(intent.getAction())) 
 		{
 			ComponentName comp = new ComponentName(context.getPackageName(), BRService.class.getName());
 			ComponentName service = context.startService(new Intent().setComponent(comp));
