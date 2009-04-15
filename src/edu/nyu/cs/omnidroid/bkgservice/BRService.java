@@ -42,6 +42,7 @@ public class BRService extends Service {
 
       // TODO: Delete this sample code
       /* Code demonstrating use of User Config parser */
+      Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
       HashMap<String, String> HM = new HashMap<String, String>();
       HM.put("InstanceName", "SMS to Email");
       HM.put("EventName", "SMS_RECEIVED");
@@ -97,7 +98,11 @@ public class BRService extends Service {
           HashMap<String, String> HM1 = i.next();
           // Configure the Intent Filter with the Events if Instance in enabled
           if (HM1.get("EnableInstance").equalsIgnoreCase("True"))
+            {
             Ifilter.addAction(HM1.get("EventName"));
+            Toast.makeText(getBaseContext(), "Registering"+HM1.get("EventName"), 5).show();
+            
+            }
         }
         registerReceiver(BR, Ifilter);
       } else {
