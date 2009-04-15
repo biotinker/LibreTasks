@@ -46,13 +46,13 @@ public class ExternalCPActivity extends Activity {
           values.put("s_ph_no", sphno);
           values.put("text", text1);
           Uri uri = getContentResolver().insert(
-              Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp/CP"), values);
+              Uri.parse("content://" + ExternalCP.CP_Name + "/CP"), values);
           Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
           Log.d("Insert Complete", "This is a log");
           Toast.makeText(getBaseContext(), "Good Job", Toast.LENGTH_SHORT).show();
 
           // SENDING THE INTENT
-          Intent intent = new Intent("SMS_SENT");
+          Intent intent = new Intent("SMS_RECEIVED");
           intent.putExtra("uri", uri.toString());
           sendBroadcast(intent);
 
@@ -68,7 +68,7 @@ public class ExternalCPActivity extends Activity {
       public void onClick(View v) {
         String id = ID.getText().toString();
         if (id.length() > 0) {
-          Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp/CP");
+          Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp.cp/CP");
           Cursor c = managedQuery(OmniURI, null, null, null, null);
           int new_id = Integer.parseInt(id);
 
@@ -90,7 +90,7 @@ public class ExternalCPActivity extends Activity {
 
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp/CP");
+        Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp.cp/CP");
         Cursor c = managedQuery(OmniURI, null, null, null, null);
         if (c.moveToFirst()) {
           do {
