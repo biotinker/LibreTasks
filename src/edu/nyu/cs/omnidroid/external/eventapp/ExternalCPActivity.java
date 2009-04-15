@@ -52,7 +52,7 @@ public class ExternalCPActivity extends Activity {
           Toast.makeText(getBaseContext(), "Good Job", Toast.LENGTH_SHORT).show();
 
           // SENDING THE INTENT
-          Intent intent = new Intent("SMS_RECEIVED");
+          Intent intent = new Intent("SMS_SENT");
           intent.putExtra("uri", uri.toString());
           sendBroadcast(intent);
 
