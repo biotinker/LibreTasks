@@ -8,6 +8,8 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,15 +41,14 @@ public class BRService extends Service {
       UGParser ug = new UGParser(getApplicationContext());
       ug.update("Enabled", "True");
       ug.delete_all();
-
-      // TODO: Delete this sample code
+       // TODO: Delete this sample code
       /* Code demonstrating use of User Config parser */
       Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
       HashMap<String, String> HM = new HashMap<String, String>();
       HM.put("InstanceName", "SMS to Email");
       HM.put("EventName", "SMS_RECEIVED");
       HM.put("EventApp", "SMS");
-      HM.put("FilterType", "S_PhoneNum");
+      HM.put("FilterType", "s_ph_no");
       HM.put("FilterData", "212-555-1234");
       HM.put("ActionName", "SEND_EMAIL");
       HM.put("ActionApp", "EMAIL");
@@ -57,7 +58,7 @@ public class BRService extends Service {
       HM.put("InstanceName", "SMS to Email2");
       HM.put("EventName", "SMS_RECEIVED");
       HM.put("EventApp", "SMS");
-      HM.put("FilterType", "S_PhoneNum");
+      HM.put("FilterType", "s_ph_no");
       HM.put("FilterData", "212-555-1234");
       HM.put("ActionName", "SEND_EMAIL");
       HM.put("ActionApp", "EMAIL");
@@ -71,7 +72,7 @@ public class BRService extends Service {
       ag.delete_all();
       ag.agwrite("Application:SMS");
       ag.agwrite("EventName:SMS_RECEIVED,RECEIVED SMS");
-      ag.agwrite("Filters:S_Name,S_Ph_No,Text,Location");
+      ag.agwrite("Filters:S_Name,s_ph_no,Text,Location");
       ag.agwrite("EventName:SMS_SENT,SENT SMS");
       ag.agwrite("Filters:R_Name,R_Ph_no,Text");
       ag.agwrite("ActionName:SMS_SEND,SEND SMS");
@@ -79,7 +80,7 @@ public class BRService extends Service {
       ag.agwrite("ContentMap:");
       ag.agwrite("S_Name,SENDER NAME,STRING");
       ag.agwrite("R_Name,RECEIVER NAME,STRING ");
-      ag.agwrite("S_Ph_No,SENDER PHONE NUMBER,INT");
+      ag.agwrite("s_ph_no,SENDER PHONE NUMBER,INT");
       ag.agwrite("R_Ph_No,RECEIVER PHONE NUMBER,INT");
       ag.agwrite("Text,Text,STRING");
       ag.agwrite("Location,SMS Number,INT");
