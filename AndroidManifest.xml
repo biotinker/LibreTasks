@@ -17,6 +17,12 @@
             </intent-filter>
         </receiver>
 
+	    <receiver android:name=".external.catcherapp.SMSListener">
+            <intent-filter>
+                <action android:name="SMS_SENT"/>
+            </intent-filter>
+        </receiver>
+
 		<!--  The main UI for our OmniDroid -->
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
