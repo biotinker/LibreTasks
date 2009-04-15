@@ -21,7 +21,7 @@ public class DummyActivity extends Activity {
 	String filterdata = null;
 	String filtertype = null;
 	String uridata = null;
-	
+	String actionname = null;
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.main2);
@@ -59,6 +59,7 @@ public class DummyActivity extends Activity {
         	filtertype = HM1.get(ug.KEY_FilterType);
             filterdata = HM1.get(ug.KEY_FilterData);
             uridata = HM1.get("ActionData");
+            actionname = HM1.get("ActionName");
            // boolean val=checkFilter(uri,filtertype,filterdata);
             getCols(uri,filtertype,filterdata);
            
