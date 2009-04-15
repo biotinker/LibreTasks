@@ -61,6 +61,7 @@ public class Overview extends Activity implements OnClickListener {
       Button button = new Button(this);
       button.setText(HM1.get(UGParser.KEY_InstanceName));
       button.setCursorVisible(true);
+      // FIXME (acase): Attach a onClick listener
 
       // Build our checkbox
       Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
@@ -76,7 +77,7 @@ public class Overview extends Activity implements OnClickListener {
         checkbox.setEnabled(false);
         checkbox.setChecked(false);
       }
-      // TODO: Attach a onClick listener
+      // FIXME (acase): Attach a onClick listener
 
       // Add a context menu for the row
       registerForContextMenu(button);
