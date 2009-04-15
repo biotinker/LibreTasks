@@ -1,7 +1,5 @@
 package edu.nyu.cs.omnidroid.external.eventapp;
 
-import edu.nyu.cs.omnidroid.external.eventapp.R.id;
-import edu.nyu.cs.omnidroid.external.eventapp.R.layout;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
