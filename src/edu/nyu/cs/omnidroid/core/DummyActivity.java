@@ -28,10 +28,8 @@ public class DummyActivity extends Activity {
 	    this.intent=getIntent();
 		
 		this.uri=getURI(intent);
-		if(matchEventName())
-		{
-			
-		}
+		matchEventName();
+		
 
 }
 	
@@ -46,7 +44,7 @@ public class DummyActivity extends Activity {
 		
 	}
 	
-	public boolean matchEventName()
+	public void matchEventName()
 	{
 		 UGParser ug = new UGParser(getApplicationContext());
 		 
@@ -63,10 +61,9 @@ public class DummyActivity extends Activity {
             uridata = HM1.get("ActionData");
            // boolean val=checkFilter(uri,filtertype,filterdata);
             getCols(uri,filtertype,filterdata);
-            return true;
+           
             }
         }
-		return false;
 	}
 	
 	public boolean checkFilter(String uri, String filtertype1, String filterdata1) 
@@ -118,7 +115,7 @@ public class DummyActivity extends Activity {
 
 				int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
 
-					//cols = cur.getColumnNames();
+					
 				 if (new_id==id)
 				 {
 					 if(filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1))))
