@@ -14,7 +14,7 @@ import android.net.Uri;
 import android.util.Log;
 
 public class ExternalCP extends ContentProvider {
-  public static final String CP_Name = "com.external.cp";
+  public static final String CP_Name = "edu.nyu.cs.omnidroid.external.eventapp";
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
   public static final String _ID = "_id";
   public static final String S_NAME = "s_name";
@@ -68,9 +68,9 @@ public class ExternalCP extends ContentProvider {
 
     switch (uriMatcher.match(uri)) {
     case DESC:
-      return "vnd.android.cursor.dir/vnd.external.cp ";
+      return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.external.eventapp";
     case DESC_ID:
-      return "vnd.android.cursor.item/vnd.external.cp ";
+      return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.external.eventapp";
     default:
       throw new IllegalArgumentException("Incorrect URI " + uri);
     }
