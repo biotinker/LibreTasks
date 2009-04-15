@@ -26,4 +26,5 @@
 	<string name="save_response">Save Data to Pass using the OmniHandler</string>
 	<string name="settings_title">OmniDroid Settings</string>
 	<string name="settings">Settings</string>
-</resources>
+	<string name="event_catcher">Catcher</string>
+	</resources>
