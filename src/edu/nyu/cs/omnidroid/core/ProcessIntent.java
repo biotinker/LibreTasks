@@ -10,6 +10,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,24 +61,6 @@ public class ProcessIntent {
         }
 		return filterdata;
 	}
-	
-	/*public String[] getActionData()
-	{
-		Cursor cur = context.getApplicationContext().managedQuery(uri, null, null, null, null);
-				String[] cols = null;
-
-				if (cur.moveToFirst()) {
-
-					
-				do {
-
-						 cols = cur.getColumnNames();
-						
-				} while (cur.moveToNext());
-
-				}
-		return cols;
-	}
-	*/
-
 }
+	
+	
