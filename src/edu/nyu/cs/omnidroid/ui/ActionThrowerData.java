@@ -91,8 +91,10 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       HM.put(UGParser.KEY_EnableInstance, "True");
       HM.put(UGParser.KEY_ActionData, uri.toString());
       // TODO: get these from the user
-      HM.put("FilterType", "S_PhoneNum");
-      HM.put("FilterData", "212-555-1234");
+      HM.put("FilterType", "");
+      HM.put("FilterData", "");
+      //HM.put("FilterType", "S_PhoneNum");
+      //HM.put("FilterData", "212-555-1234");
       ug.writeRecord(HM);
 
       // Go back to our start page

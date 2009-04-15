@@ -4,6 +4,6 @@
 	android:layout_height="fill_parent" android:id="@+id/settings">
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:hint="@string/settings" />
+		android:layout_height="wrap_content" android:hint="@string/settings_title" />
 
 </LinearLayout>

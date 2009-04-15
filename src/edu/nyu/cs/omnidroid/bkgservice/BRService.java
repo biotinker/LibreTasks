@@ -43,7 +43,7 @@ public class BRService extends Service {
       ug.delete_all();
        // TODO: Delete this sample code
       /* Code demonstrating use of User Config parser */
-      Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
+      //Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
       HashMap<String, String> HM = new HashMap<String, String>();
       HM.put("InstanceName", "SMS to Email");
       HM.put("EventName", "SMS_RECEIVED");
@@ -118,14 +118,20 @@ public class BRService extends Service {
     }
   }
 
-  /*
+  @Override
+public boolean stopService(Intent name) {
+    Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
+	return super.stopService(name);
+}
+
+/*
    * (non-Javadoc)
    * 
    * @see android.app.Service#onDestroy()
    */
   @Override
   public void onDestroy() {
-    // TODO Auto-generated method stub
+    Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
     super.onDestroy();
 
   }
