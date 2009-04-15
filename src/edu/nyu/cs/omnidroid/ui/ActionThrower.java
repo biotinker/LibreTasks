@@ -13,6 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Activity used to present a list of Applications which are registered in Omnidroid configuration.
+ * The user can then select an application whose actions can be thrown using our Omnihandler.
+ * 
+ * @author acase
+ *
+ */
 public class ActionThrower extends ListActivity {
   private static AGParser ag;
   private String appName;
@@ -39,24 +46,14 @@ public class ActionThrower extends ListActivity {
     }
 
     // TODO: Filter by only apps that contain actions
+    // Getting the Events from AppConfig
     ArrayList<String> pkgNames;
-    pkgNames = populateList();
-
+    pkgNames = ag.readLines(AGParser.KEY_APPLICATION);
+    // Display possible actions
     setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pkgNames));
     getListView().setTextFilterEnabled(true);
-
-    Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
-  /**
-   * Gets an ArrayList of Strings which contain registered applications
-   * 
-   * @return ArrayList of Strings which contain registered applications
-   */
-  ArrayList<String> populateList() {
-    // Getting the Events from AppConfig
-    return ag.readLines(AGParser.KEY_APPLICATION);
-	}
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {

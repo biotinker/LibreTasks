@@ -15,7 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.contprovider.PopulateAppConfigSetup;
 
-
+/**
+ * This class will present a list of all the packages installed on Android.
+ * 
+ * @author acase
+ */
 public class PackageLister extends ListActivity {
 	private static final String TAG = "EventCatcher";
 

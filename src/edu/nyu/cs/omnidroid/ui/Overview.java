@@ -44,32 +44,24 @@ public class Overview extends Activity implements OnClickListener {
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
-
-    ug = new UGParser(getApplicationContext());
     // Create our Activity
-    Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
 
+    
+
     // Get a list of our current OmniHandlers
+    ug = new UGParser(getApplicationContext());
     ArrayList<View> rowList = new ArrayList<View>();
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
-    Log.i(this.getLocalClassName().toString(), "Number of Records: " + userConfigRecords.size());
-
-    // Build List
-    // ListView lv = new ListView(this);
 
     // Add current OmniHandlers to our list
     while (i.hasNext()) {
       HashMap<String, String> HM1 = i.next();
-      Log.i(this.getLocalClassName().toString(), "Found record");
 
       // Build our button
-      Log.i(this.getLocalClassName().toString(), "Adding a button");
       Button button = new Button(this);
-      // button.setClickable(true);
-      Log.i(this.getLocalClassName().toString(), "Setting button text=" + HM1.get("InstanceName"));
-      button.setText(HM1.get("InstanceName"));
+      button.setText(HM1.get(UGParser.KEY_InstanceName));
       button.setCursorVisible(true);
 
       // Build our checkbox
@@ -77,26 +69,24 @@ public class Overview extends Activity implements OnClickListener {
       Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
       CheckBox checkbox = new CheckBox(this);
       checkbox.setGravity(Gravity.RIGHT);
-      if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
+      checkbox.setClickable(true);
+      if (HM1.get(UGParser.KEY_EnableInstance).equalsIgnoreCase("True")) {
         checkbox.setEnabled(true);
       } else {
         checkbox.setEnabled(false);
       }
+
       // Add a context menu for the row
       registerForContextMenu(button);
 
       // Build our table row
-      Log.i(this.getLocalClassName().toString(), "Adding a row");
       TableRow row = new TableRow(this);
       row.addView(button);
       row.addView(checkbox);
       rowList.add(row);
-
-      // lv.addView(button);
     }
 
     // Build our OmniHandler display table
-    Log.i(this.getLocalClassName().toString(), "Creating table");
     TableLayout table_layout = new TableLayout(this);
     table_layout.setColumnStretchable(0, true);
     for (View rows : rowList) {
@@ -153,7 +143,10 @@ public class Overview extends Activity implements OnClickListener {
     Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
   }
 
-  /* Creates the options menu items */
+  /**
+   * Creates the options menu items
+   * @param menu - the options menu to create
+   */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_ADD, 0, R.string.add).setIcon(android.R.drawable.ic_menu_add);
     menu.add(0, MENU_SETTINGS, 0, R.string.settings)
@@ -164,17 +157,19 @@ public class Overview extends Activity implements OnClickListener {
     return true;
   }
 
-  /* Handles item selections */
+  /**
+   * Handles menu item selections
+   */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_ADD:
       AddOmniHandler();
       return true;
     case MENU_SETTINGS:
-      // TODO (acase): Call preferences activity
+      Settings();
       return true;
     case MENU_HELP:
-      // TODO (acase): Call help dialog
+      Help();
       return true;
     case MENU_TESTS:
       Intent i = new Intent();
@@ -185,10 +180,29 @@ public class Overview extends Activity implements OnClickListener {
     return false;
   }
 
+  /**
+   * Add a new OmniHandler to OmniDroid
+   */
   private void AddOmniHandler() {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcher.class);
     startActivity(i);
+  }
+
+  /**
+   * Call our Settings Activity
+   */
+  private void Settings() {
+    Intent i = new Intent();
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Settings.class);
+    startActivity(i);
+  }
+
+  /**
+   * Call our Help dialog
+   */
+  private void Help() {
+    // TODO (acase): Create a help dialog for this activity
   }
 
   /*

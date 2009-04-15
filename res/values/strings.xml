@@ -3,10 +3,10 @@
     <string name="app_name">OmniDroid</string>
     <string name="service_name">OmniDroid Service</string>
     <string name="overview_title">OmniDroid</string>
-    <string name="event_catcher_title">Choose Application To Catch Events</string>
-    <string name="event_catcher_actions_title">Choose Action To Catch</string>
-    <string name="action_thrower_title">Choose Application To Throw Actions</string>
-    <string name="action_thrower_actions_title">Choose Action To Throw</string>
+    <string name="event_catcher_title">Choose an application to catch events</string>
+    <string name="event_catcher_actions_title">Choose event type to catch</string>
+    <string name="action_thrower_title">Choose an application to throw actions</string>
+    <string name="action_thrower_actions_title">Choose the action type to throw</string>
 	<string name="action_thrower_data">Action Thrower Data</string>
     <string name="omnihandler">OmniHandler</string>
     <string name="enabled">Enabled</string>
@@ -14,10 +14,12 @@
     <string name="maincp_name">Test CP</string>
 	<string name="package_lister">Package Lister</string>
 	<string name="event_app">OmniDroid Event Application</string>
-	<string name="add">Add</string>
+	<string name="add">Add OmniHandler</string>
 	<string name="del">Delete</string>
 	<string name="edit">Edit</string>
 	<string name="tests">Run Tests</string>
 	<string name="help">Help</string>
 	<string name="settings">Settings</string>
+	<string name="name_to_save">Enter a name to remember me by</string>
+	<string name="save_response">Save Data to Pass using the OmniHandler</string>
 </resources>
