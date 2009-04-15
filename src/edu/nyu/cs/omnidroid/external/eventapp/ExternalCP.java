@@ -14,7 +14,7 @@ import android.net.Uri;
 import android.util.Log;
 
 public class ExternalCP extends ContentProvider {
-  public static final String CP_Name = "edu.nyu.cs.omnidroid.external.eventapp";
+  public static final String CP_Name = "edu.nyu.cs.omnidroid.external.eventapp.cp";
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
   public static final String _ID = "_id";
   public static final String S_NAME = "s_name";
@@ -33,7 +33,7 @@ public class ExternalCP extends ContentProvider {
   private SQLiteDatabase OmniDB;
   private static final String DATABASE_NAME = "Omnidroid";
   private static final String DATABASE_TABLE = "Info";
-  private static final int DATABASE_VERSION = 2;
+  private static final int DATABASE_VERSION = 4;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "s_name text, s_ph_no text, text text);";
 
@@ -68,9 +68,9 @@ public class ExternalCP extends ContentProvider {
 
     switch (uriMatcher.match(uri)) {
     case DESC:
-      return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.external.eventapp";
+      return "vnd.android.cursor.dir/vnd.nyu.cs.omnidroid.external.eventapp.cp";
     case DESC_ID:
-      return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.external.eventapp";
+      return "vnd.android.cursor.item/vnd.nyu.cs.omnidroid.external.eventapp.cp";
     default:
       throw new IllegalArgumentException("Incorrect URI " + uri);
     }
