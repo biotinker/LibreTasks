@@ -100,7 +100,7 @@ public class BRService extends Service {
           if (HM1.get("EnableInstance").equalsIgnoreCase("True"))
             {
             Ifilter.addAction(HM1.get("EventName"));
-            Toast.makeText(getBaseContext(), "Registering"+HM1.get("EventName"), 5).show();
+            Toast.makeText(getBaseContext(), "REGISTERING: "+HM1.get("EventName"), 5).show();
             
             }
         }
