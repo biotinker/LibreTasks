@@ -89,13 +89,14 @@ public class AGParser {
    * @param AppName
    *          Specify the Application Name.
    */
+  @SuppressWarnings("finally")
   public boolean deleteApp(String AppName) {
     boolean deleted=false;
     try {
       // Opeing App Config in Read Mode
       OpenFileRead();
       String line;
-      ArrayList<String> lines = null;
+      ArrayList<String> lines = new ArrayList<String>();
       String[] parts;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
@@ -140,6 +141,7 @@ public class AGParser {
    * @return Returns true if successful
    * 
    */
+  @SuppressWarnings("finally")
   public boolean agwrite(String AGLine) {
     boolean written=false;
     try {
