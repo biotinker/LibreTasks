@@ -27,6 +27,7 @@ public class UGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
+  //public static final String KEY_ID = "ID";
   public static final String KEY_InstanceName = "InstanceName";
   public static final String KEY_EventName = "EventName";
   public static final String KEY_EventApp = "EventApp";
@@ -38,7 +39,10 @@ public class UGParser {
   public static final String KEY_EnableInstance = "EnableInstance";
   private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
   private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
-  
+
+  // TODO (acase): We should really ditch this ConfigFile idea and switch to using
+  // internal CPs for all this data
+
   /**
    * Initializes the parser to be a User Config or App Config based on the parameter
    * 
@@ -46,8 +50,10 @@ public class UGParser {
    *          Specify the context of the Application
    */
   public UGParser(Context context) {
-    // Defining the User Config Schema in ArrayList
+	  
+	  // Defining the User Config Schema in ArrayList
     Schema = new ArrayList<String>();
+    //Schema.add("ID");
     Schema.add("InstanceName");
     Schema.add("EventName");
     Schema.add("EventApp");
@@ -202,13 +208,13 @@ public class UGParser {
    *          Specify the Value to be written
    * @return Returns true if successful
    */
-  public boolean update(Context context, String key, String val) {
+  public boolean update(String key, String val) {
     try {
       OpenFileRead();
       String line;
       ArrayList<String> lines = new ArrayList<String>();
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (!parts[0].toString().equalsIgnoreCase(key)) {
           lines.add(line);
         }
@@ -244,7 +250,7 @@ public class UGParser {
       String line;
 
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(key)) {
           col2 = parts[1].toString();
           break;
@@ -276,7 +282,7 @@ public class UGParser {
       String line;
 
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(key)) {
           val = parts[1].toString();
           cols2.add(val);
@@ -304,15 +310,15 @@ public class UGParser {
 
       while ((line = dis.readLine()) != null) {
         HashMap<String, String> HM = new HashMap<String, String>();
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase("InstanceName")) {
 
           Iterator<String> i = Schema.iterator();
           String key;
           while (i.hasNext()) {
             key = i.next();
-            HM.put(key, line.split(":")[1].toString());
-            if (!line.split(":")[0].toString().equalsIgnoreCase("EnableInstance"))
+            HM.put(key, line.split(":", 2)[1].toString());
+            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
               line = dis.readLine();
           }
           UCRecords.add(HM);
@@ -342,15 +348,15 @@ public class UGParser {
 
       while ((line = dis.readLine()) != null) {
 
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase("InstanceName")
             && parts[1].toString().equalsIgnoreCase(Key)) {
           Iterator<String> i = Schema.iterator();
           String key;
           while (i.hasNext()) {
             key = i.next();
-            HM.put(key, line.split(":")[1].toString());
-            if (!line.split(":")[0].toString().equalsIgnoreCase("EnableInstance"))
+            HM.put(key, line.split(":", 2)[1].toString());
+            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
               line = dis.readLine();
           }
         }
@@ -394,7 +400,7 @@ public class UGParser {
    *          AppData,EnableInstance
    * @return Returns true if successful else false.
    */
-  public boolean updateRecord(Context context, HashMap<String, String> HM) {
+  public boolean updateRecord(HashMap<String, String> HM) {
     try {
       deleteRecordbyInstance(HM.get("KEY_InstanceName"));
       writeRecord(HM);
@@ -412,7 +418,7 @@ public class UGParser {
    *          EventName to be passed.
    * @return Returns ArrayList.
    * */
-  public ArrayList<HashMap<String, String>> readbyEventName(Context context, String Key) {
+  public ArrayList<HashMap<String, String>> readbyEventName(String Key) {
     ArrayList<HashMap<String, String>> UCRecords = new ArrayList<HashMap<String, String>>();
 
     try {
@@ -421,7 +427,7 @@ public class UGParser {
 
       while ((line = dis.readLine()) != null) {
         HashMap<String, String> HM = new HashMap<String, String>();
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase("EventName")
             && parts[1].toString().equalsIgnoreCase(Key)) {
           Iterator<String> i = Schema.iterator();
@@ -429,8 +435,8 @@ public class UGParser {
           String key;
           while (i.hasNext()) {
             key = i.next();
-            HM.put(key, line.split(":")[1].toString());
-            if (!line.split(":")[0].toString().equalsIgnoreCase("EnableInstance"))
+            HM.put(key, line.split(":", 2)[1].toString());
+            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
               line = dis.readLine();
           }
           UCRecords.add(HM);

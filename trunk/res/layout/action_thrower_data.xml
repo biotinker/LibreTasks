@@ -7,13 +7,13 @@
 		android:layout_height="wrap_content" android:hint="@string/save_response" />
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:hint="@string/omnihandler" />
+		android:layout_height="wrap_content" android:hint="@string/name_omnihandler" />
 
 	<EditText android:id="@+id/Iname" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="Enter the data to be inserted" />
+		android:layout_height="wrap_content" android:text="@string/name_data" />
 
 	<EditText android:id="@+id/data" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />

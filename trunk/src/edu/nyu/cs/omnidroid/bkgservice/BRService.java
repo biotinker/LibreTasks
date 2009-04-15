@@ -37,7 +37,7 @@ public class BRService extends Service {
 
       // Initializing the UGParser. To be deleted from this Code after Andrews Module
       UGParser ug = new UGParser(getApplicationContext());
-      ug.update(getApplicationContext(), "Enabled", "True");
+      ug.update("Enabled", "True");
       ug.delete_all();
 
       // TODO: Delete this sample code
@@ -50,7 +50,7 @@ public class BRService extends Service {
       HM.put("FilterData", "212-555-1234");
       HM.put("ActionName", "SEND_EMAIL");
       HM.put("ActionApp", "EMAIL");
-      HM.put("ActionData", "ContentProvider_URI");
+      HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/1");
       HM.put("EnableInstance", "True");
       ug.writeRecord(HM);
       HM.put("InstanceName", "SMS to Email2");
@@ -60,7 +60,7 @@ public class BRService extends Service {
       HM.put("FilterData", "212-555-1234");
       HM.put("ActionName", "SEND_EMAIL");
       HM.put("ActionApp", "EMAIL");
-      HM.put("ActionData", "ContentProvider_URI");
+      HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/3");
       HM.put("EnableInstance", "True");
       ug.writeRecord(HM);
 

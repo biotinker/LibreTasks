@@ -65,7 +65,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    *  
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
-  public void onClick(View arg0) {
+  public void onClick(View v) {
     // Get data from our user
     String iName = instanceName.getText().toString();
     String aData = appData.getText().toString();
@@ -88,7 +88,6 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       HM.put(UGParser.KEY_EventApp, eventApp);
       HM.put(UGParser.KEY_ActionName, throwerName);
       HM.put(UGParser.KEY_ActionApp, throwerApp);
-      HM.put(UGParser.KEY_ActionData, uri.toString());
       HM.put(UGParser.KEY_EnableInstance, "True");
       HM.put(UGParser.KEY_ActionData, uri.toString());
       // TODO: get these from the user
