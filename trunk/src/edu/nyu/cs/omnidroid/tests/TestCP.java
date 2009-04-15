@@ -1,7 +1,10 @@
 package edu.nyu.cs.omnidroid.tests;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.core.CP;
+import edu.nyu.cs.omnidroid.core.*;
+import edu.nyu.cs.omnidroid.contprovider.CProvider;
 
 public class TestCP extends Activity {
   /** Called when the activity is first created. */
@@ -32,7 +36,9 @@ public class TestCP extends Activity {
     Retrieve = (Button) findViewById(R.id.Retrieve);
     ID = (EditText) findViewById(R.id.ID);
     GetAll = (Button) findViewById(R.id.GetAll);
-    
+    final CProvider cp = new CProvider(this);
+    Intent intent = new Intent("SMS_RECEIVED");
+   
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String iname = Iname.getText().toString();
@@ -84,6 +90,10 @@ public class TestCP extends Activity {
 
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+          Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
+
+    	  ArrayList<String> al=cp.displayRecords(OmniURI.toString());
+    	  /*
         Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP");
         Cursor c = managedQuery(OmniURI, null, null, null, null);
         if (c.moveToFirst()) {
@@ -95,7 +105,7 @@ public class TestCP extends Activity {
                     + c.getString(c.getColumnIndex(CP.ACTION_DATA)), Toast.LENGTH_LONG).show();
           } while (c.moveToNext());
         }
-
+*/
       }
 
     });
