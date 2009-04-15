@@ -124,7 +124,7 @@
 
 		<!--  Thrower Test Provider -->
 		 <provider android:name=".external.eventapp.ExternalCP"
-         android:authorities="edu.nyu.cs.omnidroid.external.eventapp" />
+         android:authorities="edu.nyu.cs.omnidroid.external.eventapp.cp" />
 
 	</application>
 
