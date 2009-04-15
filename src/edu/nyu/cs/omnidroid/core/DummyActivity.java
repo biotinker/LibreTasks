@@ -62,7 +62,7 @@ public class DummyActivity extends Activity {
             filterdata = HM1.get(ug.KEY_FilterData);
             uridata = HM1.get("ActionData");
            // boolean val=checkFilter(uri,filtertype,filterdata);
-            boolean cols = getCols(uri,filtertype,filterdata);
+            getCols(uri,filtertype,filterdata);
             return true;
             }
         }
@@ -95,13 +95,13 @@ public class DummyActivity extends Activity {
 	public void sendIntent()
 	{
 		Intent send_intent = new Intent("SMS_SENT");
-        intent.putExtra("uri", uri);
+        intent.putExtra("uri", uridata);
         
         sendBroadcast(send_intent);
         Toast.makeText(getBaseContext(), "Sent!", Toast.LENGTH_SHORT).show();
 	}
 	
-	public boolean getCols(String uri, String filtertype1, String filterdata1)
+	public void getCols(String uri, String filtertype1, String filterdata1)
 	{String[] cols = null;
 	String str_uri = uri;
     String[] temp = null;
@@ -116,24 +116,25 @@ public class DummyActivity extends Activity {
 			
 			do {
 
+				int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
 
 					//cols = cur.getColumnNames();
-				 if (new_id==cur.getColumnIndex("_id"))
+				 if (new_id==id)
 				 {
 					 if(filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1))))
 				    	{
 				      Toast.makeText(
 				          getApplicationContext(),
 				          cur.getString(cur.getColumnIndex(filtertype1)) , Toast.LENGTH_LONG).show();
+				      sendIntent();
 				    	}
 					 
 				 }
-				 return true;
-						
+										
 					
 			} while (cur.moveToNext());
 
 			}
-		return false;
+		
 	}
 }
