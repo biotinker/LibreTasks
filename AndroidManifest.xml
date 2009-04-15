@@ -70,6 +70,11 @@
         <activity android:name=".ui.EventCatcherActions"
                   android:label="@string/event_catcher_actions_title">
 		</activity>
+		<!--  Activity used to by the event catcher to determine
+		      what actions to catch for a given application -->
+        <activity android:name=".external.catcherapp.CatcherAppActivity"
+                  android:label="@string/event_catcher">
+		</activity>
 
 		<!--  Activity used to by the event catcher to determine
 		      what actions to catch for a given application -->
