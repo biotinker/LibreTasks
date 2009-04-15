@@ -22,7 +22,7 @@ public class Settings extends Activity {
 
     // Create a base layout to present our settings
     ScrollView scrollPane = new ScrollView(this);
-    LinearLayout layout = (LinearLayout) findViewById(R.id.settings);
+    LinearLayout layout = (LinearLayout) findViewById(R.layout.settings);
     scrollPane.addView(layout);
     setContentView(scrollPane);
 

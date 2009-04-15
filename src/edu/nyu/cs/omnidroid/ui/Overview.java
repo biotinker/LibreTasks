@@ -47,8 +47,6 @@ public class Overview extends Activity implements OnClickListener {
     // Create our Activity
     super.onCreate(savedInstanceState);
 
-    
-
     // Get a list of our current OmniHandlers
     ug = new UGParser(getApplicationContext());
     ArrayList<View> rowList = new ArrayList<View>();
@@ -65,16 +63,20 @@ public class Overview extends Activity implements OnClickListener {
       button.setCursorVisible(true);
 
       // Build our checkbox
-      // TODO (acase): Connect buttons to the proper activities
       Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
       CheckBox checkbox = new CheckBox(this);
-      checkbox.setGravity(Gravity.RIGHT);
+      checkbox.setGravity(Gravity.CENTER);
       checkbox.setClickable(true);
       if (HM1.get(UGParser.KEY_EnableInstance).equalsIgnoreCase("True")) {
+        Log.d(this.getLocalClassName(), "Enabled=true");
         checkbox.setEnabled(true);
+        checkbox.setChecked(true);
       } else {
+        Log.d(this.getLocalClassName(), "Enabled=false");
         checkbox.setEnabled(false);
+        checkbox.setChecked(false);
       }
+      // TODO: Attach a onClick listener
 
       // Add a context menu for the row
       registerForContextMenu(button);
@@ -207,14 +209,54 @@ public class Overview extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
-   * 
+   * Add OmniHandler to OmniDroid if appropriate
+   *  
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
+    // TODO (acase): Handle "Edit", "Delete" and "Enable/Disable"
+
     // TODO (acase): Call next activity
     Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
-    // startActivity(new Intent(Intent.ACTION_INSERT,
-    // getIntent().getData()));
-  }
+/*
+    // Get data from our user
+    String iName = instanceName.getText().toString();
+    String aData = appData.getText().toString();
 
+    // Add OmniHandler to OmniDroid
+    if (iName.length() > 0 && aData.length() > 0) {
+
+      // Add OmniHandler to the CP
+      ContentValues values = new ContentValues();
+      values.put("i_name", iName);
+      values.put("a_data", aData);
+      Uri uri = getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+
+      // Add OmniHandler to the UGConfig
+      UGParser ug = new UGParser(getApplicationContext());
+      HashMap<String, String> HM = new HashMap<String, String>();
+      HM.put(UGParser.KEY_InstanceName, iName);
+      HM.put(UGParser.KEY_EventName, eventName);
+      HM.put(UGParser.KEY_EventApp, eventApp);
+      HM.put(UGParser.KEY_ActionName, throwerName);
+      HM.put(UGParser.KEY_ActionApp, throwerApp);
+      HM.put(UGParser.KEY_ActionData, uri.toString());
+      HM.put(UGParser.KEY_EnableInstance, "True");
+      HM.put(UGParser.KEY_ActionData, uri.toString());
+      // TODO: get these from the user
+      HM.put("FilterType", "S_PhoneNum");
+      HM.put("FilterData", "212-555-1234");
+      ug.writeRecord(HM);
+
+      // Go back to our start page
+      Intent i = new Intent();
+      i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Overview.class);
+      startActivity(i);
+      finish();
+    } else {
+      Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
+    }
+*/
+  }
 }
