@@ -12,6 +12,7 @@ import edu.nyu.cs.omnidroid.util.OmLogger;
 /**
  * Exception Handler UI. When an Exception is caught by our app it should send
  * an intent for this activity to catch it.
+ * 
  */
 public class ExceptionHandler extends Activity {
 

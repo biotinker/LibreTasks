@@ -4,10 +4,10 @@
 	android:layout_height="fill_parent">
 
 	<TextView android:id="@+id/appName" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="TODO:Display App Selected" />
+		android:layout_height="wrap_content" android:hint="@string/save_response" />
 
 	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="Enter the Instance_Name" />
+		android:layout_height="wrap_content" android:hint="@string/omnihandler" />
 
 	<EditText android:id="@+id/Iname" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />

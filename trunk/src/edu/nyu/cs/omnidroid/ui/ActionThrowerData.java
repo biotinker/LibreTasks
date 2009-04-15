@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,20 +23,23 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  * @author acase
  */
-public class ActionThrowerData extends Activity {
+public class ActionThrowerData extends Activity implements OnClickListener {
   private String eventApp;
   private String eventName;
   private String throwerApp;
   private String throwerName;
-  
-  /** Called when the activity is first created. */
+  private EditText appData;
+  private EditText instanceName;
+
+  /**
+   *  Ask the user for data about the OmniHandler
+   */
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
     setContentView(R.layout.action_thrower_data);
 
-    // Get Application passed
+    // Get data passed to us
     Intent i = getIntent();
     Bundle extras = i.getExtras();
     if (extras != null) {
@@ -46,55 +50,60 @@ public class ActionThrowerData extends Activity {
     } else {
       // TODO (acase): Throw exception
     }
-    // final String actionName = "SMS";
 
-    Button save;
-    final EditText appData;
-    final EditText instanceName;
-
-    save = (Button) findViewById(R.id.save);
+    // Setup our UI
+    Button save = (Button) findViewById(R.id.save);
     appData = (EditText) findViewById(R.id.data);
     instanceName = (EditText) findViewById(R.id.Iname);
 
-    save.setOnClickListener(new View.OnClickListener() {
-      
-      public void onClick(View v) {
-        String iName = instanceName.getText().toString();
-        String aData = appData.getText().toString();
-        // TODO (acase): Add it to the config
-        if (iName.length() > 0 && aData.length() > 0) {
-          ContentValues values = new ContentValues();
-          values.put("i_name", iName);
-          values.put("a_data", aData);
-          Uri uri = getContentResolver().insert(
-              Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-          HashMap<String, String> HM = new HashMap<String, String>();
-          HM.put("InstanceName", aData);
-          HM.put("EventName", eventName);  // TODO: null
-          HM.put("EventApp", eventApp);
-          HM.put("ActionName", throwerName);
-          HM.put("ActionApp", throwerApp);
-          HM.put("ActionData", uri.toString());
-          HM.put("EnableInstance", "True");
-          // TODO: get these from the user
-          HM.put("FilterType", "S_PhoneNum");
-          HM.put("FilterData", "212-555-1234");
+    // Listen for the save button click
+    save.setOnClickListener(this);
+  }
 
-          // Initialize our AGParser
-          UGParser ug = new UGParser(getApplicationContext());
-          ug.writeRecord(HM);
+  /*
+   * (non-Javadoc)
+   * Add OmniHandler to OmniDroid if appropriate
+   *  
+   * @see android.view.View.OnClickListener#onClick(android.view.View)
+   */
+  public void onClick(View arg0) {
+    // Get data from our user
+    String iName = instanceName.getText().toString();
+    String aData = appData.getText().toString();
 
-          Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
-          Log.d("Insert Complete", "This is a log");
-          // TODO (acase): Pass to next page of UI... I'm so close I can taste it!
-          //Intent i = new Intent();
-          //i.setClassName(this.getApplicationContext(), "edu.nyu.cs.omnidroid.ui.Overview");
-          //startActivity(i);
-        } else {
-          // TODO (acase): Check for errors
-          Toast.makeText(getBaseContext(), "No Value", Toast.LENGTH_SHORT).show();
-        }
-      }
-    });
+    // Add OmniHandler to OmniDroid
+    if (iName.length() > 0 && aData.length() > 0) {
+
+      // Add OmniHandler to the CP
+      ContentValues values = new ContentValues();
+      values.put("i_name", iName);
+      values.put("a_data", aData);
+      Uri uri = getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+
+      // Add OmniHandler to the UGConfig
+      UGParser ug = new UGParser(getApplicationContext());
+      HashMap<String, String> HM = new HashMap<String, String>();
+      HM.put(UGParser.KEY_InstanceName, iName);
+      HM.put(UGParser.KEY_EventName, eventName);
+      HM.put(UGParser.KEY_EventApp, eventApp);
+      HM.put(UGParser.KEY_ActionName, throwerName);
+      HM.put(UGParser.KEY_ActionApp, throwerApp);
+      HM.put(UGParser.KEY_ActionData, uri.toString());
+      HM.put(UGParser.KEY_EnableInstance, "True");
+      HM.put(UGParser.KEY_ActionData, uri.toString());
+      // TODO: get these from the user
+      HM.put("FilterType", "S_PhoneNum");
+      HM.put("FilterData", "212-555-1234");
+      ug.writeRecord(HM);
+
+      // Go back to our start page
+      Intent i = new Intent();
+      i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Overview.class);
+      startActivity(i);
+      finish();
+    } else {
+      Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
+    }
   }
 }

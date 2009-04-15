@@ -19,6 +19,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * Presents a list of possible actions that the selected <code>EventCatcher</code> could have
  * performed that we want to hook an OmniHandler onto.
  * 
+ * @author acase
  */
 public class EventCatcherActions extends ListActivity {
   private static AGParser ag;
