@@ -40,6 +40,11 @@
                   android:label="@string/test_app">
 		</activity>
 
+		<!--  Settings activity -->
+        <activity android:name=".ui.Settings"
+                  android:label="@string/settings">
+		</activity>
+
 		<!--  External EventApp testcase -->
         <activity android:name=".external.eventapp.ExternalCPActivity"
                   android:label="@string/event_app">
