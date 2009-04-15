@@ -433,8 +433,11 @@ public class UGParser {
             if (!line.split(":")[0].toString().equalsIgnoreCase("EnableInstance"))
               line = dis.readLine();
           }
+          UCRecords.add(HM);
         }
+        
       }
+      
       return UCRecords;
     } catch (Exception e) {
       OmLogger.write(context, "Unable to read Line from User Config");
