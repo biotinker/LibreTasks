@@ -50,8 +50,9 @@ public class SMSListener extends BroadcastReceiver {
     String[] temp = null;
     temp = str_uri.split("/");
     String num = temp[temp.length - 1];
+    String final_uri=str_uri.substring(0, str_uri.length()-num.length());
     int new_id = Integer.parseInt(num);
-    Cursor cur = act.managedQuery(Uri.parse(uri), null, null, null, null);
+    Cursor cur = act.managedQuery(Uri.parse(final_uri), null, null, null, null);
     if (cur.moveToPosition(new_id)) {
       Toast.makeText(
           act,
