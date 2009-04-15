@@ -49,7 +49,7 @@ public class ProcessIntent {
 	public String matchEventName()
 	{
 		 UGParser ug = new UGParser(context);
-		ArrayList<HashMap<String, String>> recs = ug.readbyEventName(context, intent.getAction());
+		ArrayList<HashMap<String, String>> recs = ug.readbyEventName(intent.getAction());
 		//ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
         Iterator<HashMap<String, String>> i = recs.iterator();
         while (i.hasNext()) {

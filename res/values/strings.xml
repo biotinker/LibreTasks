@@ -9,6 +9,9 @@
     <string name="action_thrower_actions_title">Choose the action type to throw</string>
 	<string name="action_thrower_data">Action Thrower Data</string>
     <string name="omnihandler">OmniHandler</string>
+    <string name="name_omnihandler">Name this OmniHandler</string>
+    <string name="name_data">Enter the data to be inserted</string>
+    <string name="save">Save</string>
     <string name="enabled">Enabled</string>
     <string name="test_app">OmniDroid TestApp</string>
     <string name="maincp_name">Test CP</string>

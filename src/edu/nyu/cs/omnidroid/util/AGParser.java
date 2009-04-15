@@ -100,11 +100,11 @@ public class AGParser {
       String[] parts;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        parts = line.split(":");
+        parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           String[] dparts;
           while ((line = dis.readLine()) != null) {
-            dparts = line.split(":");
+            dparts = line.split(":", 2);
             // Ignore lines of the application to be deleted.
             if (dparts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
               // Stop ignoring once the next application map is reached
@@ -166,7 +166,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing Actual Name and Display Name
    */
-  // FIXME (acase): I don't think this formats the data properly into a data structure.
+  // TODO: I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
@@ -179,7 +179,7 @@ public class AGParser {
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
@@ -191,7 +191,7 @@ public class AGParser {
       }
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
@@ -221,7 +221,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing ActualName and Display Name
    */
-  // FIXME (acase): I don't think this formats the data properly into a data structure.
+  // TODO: I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readActions(String AppName) {
     ArrayList<HashMap<String, String>> aArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
@@ -231,7 +231,7 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
@@ -245,7 +245,7 @@ public class AGParser {
       String DisplayAction;
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)) {
@@ -283,7 +283,7 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
@@ -294,13 +294,13 @@ public class AGParser {
         return FilterList;
       }
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_EventName)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(EventName)) {
           line = dis.readLine();
-          String[] fparts = line.split(":");
+          String[] fparts = line.split(":", 2);
           String[] filters = fparts[1].split(",");
           for (int i = 0; i < filters.length; i++) {
             FilterList.add(filters[i]);
@@ -336,7 +336,7 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
@@ -347,13 +347,13 @@ public class AGParser {
         return URIList;
       }
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(ActionName)) {
           line = dis.readLine();
-          String[] fparts = line.split(":");
+          String[] fparts = line.split(":", 2);
           String[] URIs = fparts[1].split(",");
           for (int i = 0; i < URIs.length; i++) {
             URIList.add(URIs[i]);
@@ -387,7 +387,7 @@ public class AGParser {
       String line;
 
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(key)) {
           val = parts[1].toString();
           cols2.add(val);
@@ -415,7 +415,7 @@ public class AGParser {
       String line;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
@@ -426,7 +426,7 @@ public class AGParser {
         return contentmap;
       }
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":");
+        String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap)) {
