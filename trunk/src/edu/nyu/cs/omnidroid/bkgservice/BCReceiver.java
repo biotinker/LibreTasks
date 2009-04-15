@@ -25,8 +25,13 @@ public class BCReceiver extends BroadcastReceiver {
 			
 		Toast.makeText(context,intent.getAction(),5).show();
 	    
-	   //	ProcessIntent p = new ProcessIntent(intent,context);
-		//String filter = p.matchEventName();
+	   	/*ProcessIntent p = new ProcessIntent(intent,context);
+		String filter = p.matchEventName();
+		String[] cols = p.getActionData();*/
+		
+		intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
+		intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
 		Log.i("Received Intent", intent.getAction());
 		}catch(Exception e)
 		{
