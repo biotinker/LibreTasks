@@ -50,7 +50,7 @@ public class BRService extends Service {
       HM.put("EventApp", "SMS");
       HM.put("FilterType", "s_ph_no");
       HM.put("FilterData", "212-555-1234");
-      HM.put("ActionName", "SEND_EMAIL");
+      HM.put("ActionName", "SMS_SENT");
       HM.put("ActionApp", "EMAIL");
       HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/1");
       HM.put("EnableInstance", "True");
@@ -60,7 +60,7 @@ public class BRService extends Service {
       HM.put("EventApp", "SMS");
       HM.put("FilterType", "s_ph_no");
       HM.put("FilterData", "212-555-1234");
-      HM.put("ActionName", "SEND_EMAIL");
+      HM.put("ActionName", "SMS_SENT");
       HM.put("ActionApp", "EMAIL");
       HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/3");
       HM.put("EnableInstance", "True");
