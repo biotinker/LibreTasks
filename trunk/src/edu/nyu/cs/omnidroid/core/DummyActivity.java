@@ -92,9 +92,9 @@ public class DummyActivity extends Activity {
 		
 	public void sendIntent()
 	{
-		Intent send_intent = new Intent("SMS_SENT");
+		Intent send_intent = new Intent();
+		send_intent.setAction("SMS_SENT");
         intent.putExtra("uri", uridata);
-        
         sendBroadcast(send_intent);
         Toast.makeText(getBaseContext(), "Sent!", Toast.LENGTH_SHORT).show();
 	}
@@ -123,7 +123,7 @@ public class DummyActivity extends Activity {
 				    	{
 				      Toast.makeText(
 				          getApplicationContext(),
-				          cur.getString(cur.getColumnIndex(filtertype1)) , Toast.LENGTH_LONG).show();
+				          cur.getString(cur.getColumnIndex("s_name"))+":"+cur.getString(cur.getColumnIndex(filtertype1)) , Toast.LENGTH_LONG).show();
 				      sendIntent();
 				    	}
 					 
