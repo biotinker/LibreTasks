@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-import edu.nyu.cs.omnidroid.util.OmLogger;
 
 /**
  * @author Rajiv
