@@ -98,6 +98,10 @@
         <activity android:name=".ui.ActionThrowerActions"
                   android:label="@string/action_thrower_actions_title">
 		</activity>
+		
+		<activity android:name=".core.DummyActivity"
+                  android:label="@string/dummy_activity">
+		</activity>
 
 		<!-- Test our service -->
         <activity android:name=".tests.TestService"
