@@ -96,7 +96,7 @@ public class DummyActivity extends Activity {
 		send_intent.setAction("SMS_SENT");
         intent.putExtra("uri", uridata);
         sendBroadcast(send_intent);
-        Toast.makeText(getBaseContext(), "Sent!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
 	}
 	
 	public void getCols(String uri, String filtertype1, String filterdata1)
@@ -107,6 +107,7 @@ public class DummyActivity extends Activity {
     String num = temp[temp.length - 1];
     String final_uri=str_uri.substring(0, str_uri.length()-num.length()-1);
     int new_id = Integer.parseInt(num);
+    int flag = 0;
     
 		Cursor cur = managedQuery(Uri.parse("content://com.external.cp/CP"), null, null, null, null);
 		if (cur.moveToFirst()) {
@@ -125,12 +126,19 @@ public class DummyActivity extends Activity {
 				          getApplicationContext(),
 				          cur.getString(cur.getColumnIndex("s_name"))+":"+cur.getString(cur.getColumnIndex(filtertype1)) , Toast.LENGTH_LONG).show();
 				      sendIntent();
+				      flag = 1;
 				    	}
 					 
 				 }
 										
 					
 			} while (cur.moveToNext());
+			if(flag==0)
+			{
+				Toast.makeText(
+				          getApplicationContext(),
+				          cur.getString(cur.getColumnIndex(filtertype1)) + " does not exist" , Toast.LENGTH_LONG).show();
+			}
 
 			}
 		
