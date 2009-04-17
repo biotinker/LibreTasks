@@ -99,12 +99,12 @@ public class UGParser {
    */
   public void delete_all() {
     try {
-      String Enabled = readLine("Enabled");
-      if (Enabled.equals(null))
-        Enabled = "True";
-      String LineString = new String("Enabled" + ":" + Enabled + "\n");
+      //String Enabled = readLine("Enabled");
+      //if (Enabled.equals(null))
+      // Enabled = "True";
+      //String LineString = new String("Enabled" + ":" + Enabled + "\n");
       OpenFileWrite(MODE_WRITE);
-      osw.write(LineString);
+      //osw.write(LineString);
       osw.flush();
       osw.close();
     } catch (Exception e) {
