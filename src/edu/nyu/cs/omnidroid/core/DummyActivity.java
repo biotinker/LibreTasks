@@ -94,7 +94,7 @@ public class DummyActivity extends Activity {
 	{
 		Intent send_intent = new Intent();
 		send_intent.setAction("SMS_SENT");
-        intent.putExtra("uri", uridata);
+        send_intent.putExtra("uri", uridata);
         sendBroadcast(send_intent);
         Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
 	}
@@ -109,7 +109,7 @@ public class DummyActivity extends Activity {
     int new_id = Integer.parseInt(num);
     int flag = 0;
     
-		Cursor cur = managedQuery(Uri.parse("content://com.external.cp/CP"), null, null, null, null);
+		Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
 		if (cur.moveToFirst()) {
 
 			
