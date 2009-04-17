@@ -43,7 +43,7 @@ public void displayAction(String uri) {
     String final_uri=str_uri.substring(0, str_uri.length()-num.length()-1);
     int new_id = Integer.parseInt(num);
     
-    Cursor cur = managedQuery(Uri.parse(uri), null, null, null, null);
+    Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
     if (cur.moveToFirst()) {
 
       
