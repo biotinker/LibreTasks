@@ -39,12 +39,12 @@ public class BRService extends Service {
 
       // Initializing the UGParser. To be deleted from this Code after Andrews Module
       UGParser ug = new UGParser(getApplicationContext());
-      ug.update("Enabled", "True");
-      ug.delete_all();
+      //ug.update("Enabled", "True");
+     // ug.delete_all();
        // TODO: Delete this sample code
       /* Code demonstrating use of User Config parser */
       //Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
-      HashMap<String, String> HM = new HashMap<String, String>();
+      /*HashMap<String, String> HM = new HashMap<String, String>();
       HM.put("InstanceName", "SMS to Email");
       HM.put("EventName", "SMS_RECEIVED");
       HM.put("EventApp", "SMS");
@@ -65,17 +65,17 @@ public class BRService extends Service {
       HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/3");
       HM.put("EnableInstance", "True");
       ug.writeRecord(HM);
-
+      */
       // TODO: Delete this sample code
       /* Code demonstrating use of Appl Config parser */
       AGParser ag = new AGParser(getApplicationContext());
       ag.delete_all();
       ag.agwrite("Application:SMS");
-      ag.agwrite("EventName:SMS_RECEIVED,RECEIVED SMS");
+      ag.agwrite("EventName:SMS_RECEIVED,SMS_RECEIVED");
       ag.agwrite("Filters:S_Name,s_ph_no,Text,Location");
       ag.agwrite("EventName:SMS_SENT,SENT SMS");
       ag.agwrite("Filters:R_Name,R_Ph_no,Text");
-      ag.agwrite("ActionName:SMS_SEND,SEND SMS");
+      ag.agwrite("ActionName:SMS_SENT,SMS_SENT");
       ag.agwrite("URIFields:R_NAME,R_Ph_No,Text");
       ag.agwrite("ContentMap:");
       ag.agwrite("S_Name,SENDER NAME,STRING");
@@ -88,8 +88,8 @@ public class BRService extends Service {
       // Code starts here. The above code above this line is temporary usage.
 
       /* Check the User Config to start OmniDroid */
-      String Enabled = ug.readLine("Enabled");
-      if (Enabled.equalsIgnoreCase("True")) {
+      //String Enabled = ug.readLine("Enabled");
+      //if (Enabled.equalsIgnoreCase("True")) {
         Toast.makeText(getBaseContext(), "Starting OmniDroid", 5).show();
 
         // Get the User Instances in an Arraylist from the User Config
@@ -106,10 +106,10 @@ public class BRService extends Service {
             }
         }
         registerReceiver(BR, Ifilter);
-      } else {
-        Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
-        unregisterReceiver(BR);
-      }
+      //} else {
+        //Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
+        //unregisterReceiver(BR);
+      //}
     } catch (Exception e) {
       Log.i("BRService", e.getLocalizedMessage());
       Log.i("BRService", e.toString());
