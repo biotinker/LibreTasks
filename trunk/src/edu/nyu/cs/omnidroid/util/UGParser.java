@@ -104,6 +104,7 @@ public class UGParser {
       // Enabled = "True";
       //String LineString = new String("Enabled" + ":" + Enabled + "\n");
       OpenFileWrite(MODE_WRITE);
+      osw.write("");
       //osw.write(LineString);
       osw.flush();
       osw.close();
@@ -153,7 +154,7 @@ public class UGParser {
   public boolean deleteRecordbyInstance(String InstanceName) {
     try {
       ArrayList<HashMap<String, String>> UCRecords = readRecords();
-      ArrayList<HashMap<String, String>> UCRecords_New = readRecords();
+      ArrayList<HashMap<String, String>> UCRecords_New = new ArrayList<HashMap<String,String>>();
 
       Iterator<HashMap<String, String>> i = UCRecords.iterator();
       while (i.hasNext()) {
@@ -165,8 +166,9 @@ public class UGParser {
       delete_all();
 
       Iterator<HashMap<String, String>> i1 = UCRecords_New.iterator();
+      
       while (i1.hasNext()) {
-        HashMap<String, String> HM1 = i.next();
+        HashMap<String, String> HM1 = i1.next();
         writeRecord(HM1);
       }
       return true;
@@ -402,7 +404,7 @@ public class UGParser {
    */
   public boolean updateRecord(HashMap<String, String> HM) {
     try {
-      deleteRecordbyInstance(HM.get("KEY_InstanceName"));
+      deleteRecordbyInstance(HM.get(KEY_InstanceName));
       writeRecord(HM);
       return true;
     } catch (Exception e) {
