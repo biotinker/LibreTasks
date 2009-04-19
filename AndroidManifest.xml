@@ -48,6 +48,11 @@
         <activity android:name=".tests.TestApp"
                   android:label="@string/test_app">
 		</activity>
+		
+		<!--  Runs all our Test App Config Cases -->
+        <activity android:name=".tests.TestAppConfig"
+                  android:label="@string/test_app">
+		</activity>
 
 		<!--  Settings activity -->
         <activity android:name=".ui.Settings"
