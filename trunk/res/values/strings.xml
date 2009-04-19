@@ -20,7 +20,8 @@
     <string name="maincp_name">Test CP</string>
 	<string name="package_lister">Package Lister</string>
 	<string name="event_app">OmniDroid Event Application</string>
-	<string name="add">Add OmniHandler</string>
+	<string name="add_omnihandler">Add OmniHandler</string>
+	<string name="add_filter">Add Filter</string>
 	<string name="del">Delete</string>
 	<string name="edit">Edit</string>
 	<string name="tests">Run Tests</string>

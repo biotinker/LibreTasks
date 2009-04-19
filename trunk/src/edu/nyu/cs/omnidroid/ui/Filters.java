@@ -29,7 +29,8 @@ public class Filters extends ListActivity {
   private String eventName;
 
   // Standard Menu options (Android menus require int, so no enums)
-  private static final int MENU_HELP = 0;
+  private static final int MENU_ADD = 0;
+  private static final int MENU_HELP = 1;
 
   /**
    * Creates the activity
@@ -88,6 +89,8 @@ public class Filters extends ListActivity {
    *            - the options menu to create
    */
   public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(0, MENU_ADD, 0, R.string.add_filter).setIcon(
+        android.R.drawable.ic_menu_add);
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
         android.R.drawable.ic_menu_help);
     return true;
@@ -98,11 +101,22 @@ public class Filters extends ListActivity {
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+    case MENU_ADD:
+      Add_Filter();
+      return true;
     case MENU_HELP:
       Help();
       return true;
     }
     return false;
+  }
+
+  /**
+   * Add a new filter to this OmniHandler
+   */
+  private void Add_Filter() {
+    // TODO Auto-generated method stub
+    
   }
 
   /**
