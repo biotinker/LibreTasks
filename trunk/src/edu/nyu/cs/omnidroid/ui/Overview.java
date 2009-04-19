@@ -32,10 +32,11 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  */
 public class Overview extends Activity implements OnClickListener {
 
-	// Context Menu Options
+	// Context Menu Options (Android menus require int, so no enums)
 	private static final int MENU_EDIT = 0;
 	private static final int MENU_DELETE = 1;
-	// Standard Menu options
+
+	// Standard Menu options (Android menus require int, so no enums)
 	private static final int MENU_ADD = 2;
 	private static final int MENU_SETTINGS = 3;
 	private static final int MENU_HELP = 4;
@@ -130,7 +131,7 @@ public class Overview extends Activity implements OnClickListener {
 			return super.onContextItemSelected(item);
 		}
 	}
-
+	
 	/**
 	 * @param item
 	 *            of the menu item
@@ -172,7 +173,6 @@ public class Overview extends Activity implements OnClickListener {
 				android.R.drawable.ic_menu_help);
 		menu.add(0, MENU_TESTS, 0, R.string.tests).setIcon(
 				android.R.drawable.ic_menu_manage);
-		;
 		return true;
 	}
 
@@ -233,7 +233,8 @@ public class Overview extends Activity implements OnClickListener {
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	public void onClick(View v) {
-		//if (v.getClass().getName() == CheckBox.class.getName()) {
+	  Log.d(this.getLocalClassName(), "Classname of v=" + v.getClass().getName());
+	  //if (v.getClass().getName() == CheckBox.class.getName()) {
 			// Handle "Enable" button clicked
 			String instanceName = (String) v.getTag();
 			CheckBox cb = (CheckBox) v;

@@ -1,4 +1,9 @@
-//Author: Pradeep Varma
+/**
+ * TODO (pradeep): Use OmniHandler as the public interface instead of Hashmap.  You
+ * can do this by moving the HashMap structure inside the OmniHandler class
+ * 
+ * @author: Pradeep Varma
+ */
 package edu.nyu.cs.omnidroid.util;
 
 import java.io.BufferedInputStream;
@@ -27,7 +32,7 @@ public class UGParser {
   private BufferedInputStream bis;
   private DataInputStream dis;
   private Context context;
-  //public static final String KEY_ID = "ID";
+  // public static final String KEY_ID = "ID";
   public static final String KEY_InstanceName = "InstanceName";
   public static final String KEY_EventName = "EventName";
   public static final String KEY_EventApp = "EventApp";
@@ -50,10 +55,10 @@ public class UGParser {
    *          Specify the context of the Application
    */
   public UGParser(Context context) {
-	  
-	  // Defining the User Config Schema in ArrayList
+
+    // Defining the User Config Schema in ArrayList
     Schema = new ArrayList<String>();
-    //Schema.add("ID");
+    // Schema.add("ID");
     Schema.add("InstanceName");
     Schema.add("EventName");
     Schema.add("EventApp");
@@ -99,13 +104,13 @@ public class UGParser {
    */
   public void delete_all() {
     try {
-      //String Enabled = readLine("Enabled");
-      //if (Enabled.equals(null))
+      // String Enabled = readLine("Enabled");
+      // if (Enabled.equals(null))
       // Enabled = "True";
-      //String LineString = new String("Enabled" + ":" + Enabled + "\n");
+      // String LineString = new String("Enabled" + ":" + Enabled + "\n");
       OpenFileWrite(MODE_WRITE);
       osw.write("");
-      //osw.write(LineString);
+      // osw.write(LineString);
       osw.flush();
       osw.close();
     } catch (Exception e) {
@@ -154,7 +159,7 @@ public class UGParser {
   public boolean deleteRecordbyInstance(String InstanceName) {
     try {
       ArrayList<HashMap<String, String>> UCRecords = readRecords();
-      ArrayList<HashMap<String, String>> UCRecords_New = new ArrayList<HashMap<String,String>>();
+      ArrayList<HashMap<String, String>> UCRecords_New = new ArrayList<HashMap<String, String>>();
 
       Iterator<HashMap<String, String>> i = UCRecords.iterator();
       while (i.hasNext()) {
@@ -166,7 +171,7 @@ public class UGParser {
       delete_all();
 
       Iterator<HashMap<String, String>> i1 = UCRecords_New.iterator();
-      
+
       while (i1.hasNext()) {
         HashMap<String, String> HM1 = i1.next();
         writeRecord(HM1);
@@ -443,14 +448,22 @@ public class UGParser {
           }
           UCRecords.add(HM);
         }
-        
+
       }
-      
+
       return UCRecords;
     } catch (Exception e) {
       OmLogger.write(context, "Unable to read Line from User Config");
       return UCRecords;
     }
+  }
+
+  /**
+   * @return
+   */
+  public UGParser getInstance() {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
