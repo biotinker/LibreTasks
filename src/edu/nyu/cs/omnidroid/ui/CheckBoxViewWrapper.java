@@ -1,6 +1,6 @@
 /***
 	Copyright (c) 2008-2009 CommonsWare, LLC
-  Copyright (c) 2009 Andrew Case
+  Copyright (c) 2009 Andrew I. Case
 	
 	Licensed under the Apache License, Version 2.0 (the "License"); you may
 	not use this file except in compliance with the License. You may obtain
@@ -22,22 +22,22 @@ import android.widget.CheckBox;
 class CheckBoxViewWrapper {
   ViewGroup base;
   View guts = null;
-  CheckBox rate = null;
+  CheckBox cb = null;
 
   CheckBoxViewWrapper(ViewGroup base) {
     this.base = base;
   }
 
   CheckBox getCheckBox() {
-    if (rate == null) {
-      rate = (CheckBox) base.getChildAt(0);
+    if (cb == null) {
+      cb = (CheckBox) base.getChildAt(0);
     }
 
-    return (rate);
+    return (cb);
   }
 
-  void setCheckBox(CheckBox rate) {
-    this.rate = rate;
+  void setCheckBox(CheckBox cb) {
+    this.cb = cb;
   }
 
   View getGuts() {

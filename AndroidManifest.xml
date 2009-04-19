@@ -124,7 +124,7 @@
         </activity>
 
 		<!-- Test fancy list -->
-        <activity android:name=".ui.CheckListView"
+        <activity android:name=".ui.CheckListViewDemo"
                   android:label="@string/overview_title">
         </activity>
 

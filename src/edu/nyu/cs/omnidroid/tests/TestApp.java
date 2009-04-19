@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
-import edu.nyu.cs.omnidroid.ui.CheckListView;
+import edu.nyu.cs.omnidroid.ui.CheckListViewDemo;
 import edu.nyu.cs.omnidroid.ui.PackageLister;
 
 /**
@@ -18,9 +18,16 @@ import edu.nyu.cs.omnidroid.ui.PackageLister;
  */
 public class TestApp extends ListActivity {
 
-  static final String[] TESTS = new String[] { "Test User Config", "Test App Config", "Test CP",
-      "Test Exception Handler", "Test Service", "PackageLister", "External Event App",
-      "Test Fancy List" };
+  static final String[] TESTS = new String[] {
+      "Test CP",
+      "Test Service",
+      "PackageLister",
+      "External Event App",
+      "Test Fancy List",
+      "Test User Config",
+      "Test App Config",
+      "Test Exception Handler"
+  };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -42,29 +49,29 @@ public class TestApp extends ListActivity {
     Intent i = new Intent();
 
     switch (position) {
-    case 0:
+    case 5:
       i.setClass(this.getApplicationContext(), TestUserConfig.class);
       break;
-    case 1:
+    case 6:
       i.setClass(this.getApplicationContext(), TestAppConfig.class);
       break;
-    case 2:
+    case 0:
       i.setClass(this.getApplicationContext(), TestCP.class);
       break;
-    case 3:
+    case 7:
       i.setClass(this.getApplicationContext(), TestExceptionHandler.class);
       break;
-    case 4:
+    case 1:
       i.setClass(this.getApplicationContext(), TestService.class);
       break;
-    case 5:
+    case 2:
       i.setClass(this.getApplicationContext(), PackageLister.class);
       break;
-    case 6:
+    case 3:
       i.setClass(this.getApplicationContext(), ExternalCPActivity.class);
       break;
-    case 7:
-      i.setClass(this.getApplicationContext(), CheckListView.class);
+    case 4:
+      i.setClass(this.getApplicationContext(), CheckListViewDemo.class);
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");
