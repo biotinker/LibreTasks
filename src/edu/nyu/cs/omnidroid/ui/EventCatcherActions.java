@@ -50,8 +50,6 @@ public class EventCatcherActions extends ListActivity {
       // TODO (acase): Throw exception
     }
 
-    
-
     // Getting the Events from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readEvents(appName);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
@@ -62,14 +60,8 @@ public class EventCatcherActions extends ListActivity {
       //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       // TODO (acase): We need a better way then accessing a hashmap
       values.addAll(HM1.values());
-      //values.add(HM1.get("SMS_Received"));
-      //values.add(HM1.get("SMS_Sent"));
+    }
 
-    }
-    if (values == null)
-    {
-      // TODO (acase): Throw exception
-    }
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);

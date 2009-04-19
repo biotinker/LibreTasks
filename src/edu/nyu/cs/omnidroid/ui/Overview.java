@@ -165,7 +165,7 @@ public class Overview extends Activity implements OnClickListener {
 	 *            - the options menu to create
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_ADD, 0, R.string.add).setIcon(
+		menu.add(0, MENU_ADD, 0, R.string.add_omnihandler).setIcon(
 				android.R.drawable.ic_menu_add);
 		menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(
 				android.R.drawable.ic_menu_preferences);

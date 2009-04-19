@@ -1,4 +1,3 @@
-//Author: Pradeep Varma
 package edu.nyu.cs.omnidroid.util;
 
 import java.io.BufferedInputStream;
@@ -14,6 +13,7 @@ import android.content.Context;
 
 /**
  * Provides functionality to parse the Application Config
+ * @author: Pradeep Varma
  */
 public class AGParser {
   public static final String KEY_APPLICATION = "Application";
@@ -166,7 +166,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing Actual Name and Display Name
    */
-  // TODO: I don't think this formats the data properly into a data structure.
+  // TODO(Pradeep): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
@@ -221,7 +221,7 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList of Hashmaps containing ActualName and Display Name
    */
-  // TODO: I don't think this formats the data properly into a data structure.
+  // TODO(Pradeep): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readActions(String AppName) {
     ArrayList<HashMap<String, String>> aArrayList = new ArrayList<HashMap<String, String>>();
     Boolean found = false;
