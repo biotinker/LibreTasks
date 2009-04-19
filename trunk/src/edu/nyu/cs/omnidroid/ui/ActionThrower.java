@@ -21,7 +21,7 @@ import android.widget.TextView;
  * The user can then select an application whose actions can be thrown using our Omnihandler.
  * 
  * @author acase
- *
+ * 
  */
 public class ActionThrower extends ListActivity {
   private static AGParser ag;
@@ -30,12 +30,12 @@ public class ActionThrower extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
-  
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		Log.i(this.getLocalClassName(), "onCreate");
-		super.onCreate(savedInstanceState);
+
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    Log.i(this.getLocalClassName(), "onCreate");
+    super.onCreate(savedInstanceState);
 
     // Initialize our AGParser
     ag = new AGParser(getApplicationContext());
@@ -60,34 +60,37 @@ public class ActionThrower extends ListActivity {
     getListView().setTextFilterEnabled(true);
   }
 
-
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   */
+  @Override
+  protected void onListItemClick(ListView l, View v, int position, long id) {
     Log.i(this.getLocalClassName(), "onListItemClicked");
 
     // TODO: Build URI dynamically
-		// Uri uri = ContentUris.withAppendedId(getIntent().getData(), id);
-		// String action = getIntent().getAction();
-		// Launch activity to view/edit the currently selected item
+    // Uri uri = ContentUris.withAppendedId(getIntent().getData(), id);
+    // String action = getIntent().getAction();
+    // Launch activity to view/edit the currently selected item
     Intent i = new Intent();
     // TODO (acase): Choose Filter page
-    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrowerActions.class);
+    i.setClass(this.getApplicationContext(), ActionThrowerActions.class);
     TextView tv = (TextView) v;
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     i.putExtra(UGParser.KEY_ActionApp, tv.getText());
     startActivity(i);
-	}
+  }
 
   /**
    * Creates the options menu items
    * 
    * @param menu
-   *            - the options menu to create
+   *          - the options menu to create
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
-        android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 

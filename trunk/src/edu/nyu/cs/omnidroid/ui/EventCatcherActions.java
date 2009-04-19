@@ -78,11 +78,14 @@ public class EventCatcherActions extends ListActivity {
     Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Intent i = new Intent();
-    // TODO (acase): Choose Filter page
-    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrower.class);
+    i.setClass(this.getApplicationContext(), Filters.class);
     TextView tv = (TextView) v;
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, tv.getText());
