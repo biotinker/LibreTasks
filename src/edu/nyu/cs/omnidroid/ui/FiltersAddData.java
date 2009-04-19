@@ -16,13 +16,14 @@ import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 
 /**
- * Activity used to present a list of Applications which are registered in Omnidroid configuration.
- * The user can then select an application whose events we want to catch using our Omnihandler.
+ * Activity used to present a list of filters to apply to this OmniHandler. Filters allow the user
+ * to only apply this OmniHandler if the filter data matches the data in provided by the Event
+ * that was caught.
  * 
  * @author acase
  * 
  */
-public class EventCatcher extends ListActivity {
+public class FiltersAddData extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
@@ -52,6 +53,9 @@ public class EventCatcher extends ListActivity {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcherActions.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
+    // For each filter pass it to the next page
+    // TODO (acase):
+    //i.putExtra(UGParser.KEY_Filter, tv.getText());
     startActivity(i);
   }
 

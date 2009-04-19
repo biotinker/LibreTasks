@@ -7,6 +7,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -29,6 +31,9 @@ public class ActionThrowerData extends Activity implements OnClickListener {
   private String throwerName;
   private EditText appData;
   private EditText instanceName;
+
+  // Standard Menu options (Android menus require int, so no enums)
+  private static final int MENU_HELP = 0;
 
   /**
    *  Ask the user for data about the OmniHandler
@@ -105,5 +110,36 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     } else {
       Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
     }
+  }
+
+  /**
+   * Creates the options menu items
+   * 
+   * @param menu
+   *            - the options menu to create
+   */
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
+        android.R.drawable.ic_menu_help);
+    return true;
+  }
+
+  /**
+   * Handles menu item selections
+   */
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_HELP:
+      Help();
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Call our Help dialog
+   */
+  private void Help() {
+    // TODO (acase): Create a help dialog for this activity
   }
 }

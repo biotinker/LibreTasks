@@ -8,10 +8,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
@@ -24,6 +27,9 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class EventCatcherActions extends ListActivity {
   private static AGParser ag;
   private String appName = null;
+
+  // Standard Menu options (Android menus require int, so no enums)
+  private static final int MENU_HELP = 0;
 
   /** Called when the activity is first created. */
   @Override
@@ -81,6 +87,37 @@ public class EventCatcherActions extends ListActivity {
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, tv.getText());
     startActivity(i);
+  }
+
+  /**
+   * Creates the options menu items
+   * 
+   * @param menu
+   *            - the options menu to create
+   */
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
+        android.R.drawable.ic_menu_help);
+    return true;
+  }
+
+  /**
+   * Handles menu item selections
+   */
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_HELP:
+      Help();
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Call our Help dialog
+   */
+  private void Help() {
+    // TODO (acase): Create a help dialog for this activity
   }
 
 }

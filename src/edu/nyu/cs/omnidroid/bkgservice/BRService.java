@@ -8,15 +8,13 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
-import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
+// TODO (pradeep): Document this class
 public class BRService extends Service {
   /*
    * (non-Javadoc)
@@ -39,53 +37,6 @@ public class BRService extends Service {
 
       // Initializing the UGParser. To be deleted from this Code after Andrews Module
       UGParser ug = new UGParser(getApplicationContext());
-      //ug.update("Enabled", "True");
-     // ug.delete_all();
-       // TODO: Delete this sample code
-      /* Code demonstrating use of User Config parser */
-      //Toast.makeText(getBaseContext(), "Populating Instances", 5).show();
-      /*HashMap<String, String> HM = new HashMap<String, String>();
-      HM.put("InstanceName", "SMS to Email");
-      HM.put("EventName", "SMS_RECEIVED");
-      HM.put("EventApp", "SMS");
-      HM.put("FilterType", "s_ph_no");
-      HM.put("FilterData", "212-555-1234");
-      HM.put("ActionName", "SMS_SENT");
-      HM.put("ActionApp", "EMAIL");
-      HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/1");
-      HM.put("EnableInstance", "True");
-      ug.writeRecord(HM);
-      HM.put("InstanceName", "SMS to Email2");
-      HM.put("EventName", "SMS_RECEIVED");
-      HM.put("EventApp", "SMS");
-      HM.put("FilterType", "s_ph_no");
-      HM.put("FilterData", "212-555-1234");
-      HM.put("ActionName", "SMS_SENT");
-      HM.put("ActionApp", "EMAIL");
-      HM.put("ActionData", "content:///edu.nyu.cs.omnidroid/random/string/3");
-      HM.put("EnableInstance", "True");
-      ug.writeRecord(HM);
-      */
-      // TODO: Delete this sample code
-      /* Code demonstrating use of Appl Config parser */
-      AGParser ag = new AGParser(getApplicationContext());
-      ag.delete_all();
-      ag.agwrite("Application:SMS");
-      ag.agwrite("EventName:SMS_RECEIVED,SMS_RECEIVED");
-      ag.agwrite("Filters:S_Name,s_ph_no,Text,Location");
-      ag.agwrite("EventName:SMS_SENT,SENT SMS");
-      ag.agwrite("Filters:R_Name,R_Ph_no,Text");
-      ag.agwrite("ActionName:SMS_SENT,SMS_SENT");
-      ag.agwrite("URIFields:R_NAME,R_Ph_No,Text");
-      ag.agwrite("ContentMap:");
-      ag.agwrite("S_Name,SENDER NAME,STRING");
-      ag.agwrite("R_Name,RECEIVER NAME,STRING ");
-      ag.agwrite("s_ph_no,SENDER PHONE NUMBER,INT");
-      ag.agwrite("R_Ph_No,RECEIVER PHONE NUMBER,INT");
-      ag.agwrite("Text,Text,STRING");
-      ag.agwrite("Location,SMS Number,INT");
-
-      // Code starts here. The above code above this line is temporary usage.
 
       /* Check the User Config to start OmniDroid */
       //String Enabled = ug.readLine("Enabled");
