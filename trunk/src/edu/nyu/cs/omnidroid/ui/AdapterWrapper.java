@@ -1,6 +1,6 @@
 /***
 	Copyright (c) 2008-2009 CommonsWare, LLC
-  Copyright (c) 2009 Andrew Case
+  Copyright (c) 2009 Andrew I. Case
 
 	Licensed under the Apache License, Version 2.0 (the "License"); you may
 	not use this file except in compliance with the License. You may obtain
@@ -20,12 +20,13 @@ import android.widget.ListAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 public class AdapterWrapper implements ListAdapter {
 	ListAdapter delegate=null;
 	
 	public AdapterWrapper(ListAdapter delegate) {
 		this.delegate=delegate;
-	}
+ 	}
 	
 	public int getCount() {
 		return(delegate.getCount());
@@ -75,4 +76,5 @@ public class AdapterWrapper implements ListAdapter {
 	public boolean isEnabled(int position) {
 		return(delegate.isEnabled(position));
 	}
+
 }
