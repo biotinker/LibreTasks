@@ -200,10 +200,10 @@ public class AGParser {
           DisplayEvent = parts[1].split(",")[1].toString();
           // Add Event to HashMap
           HM.put(ActualEvent, DisplayEvent);
-          // Add Hash Map of a single Event to the ArrayList
-          eArrayList.add(HM);
+      
         }
       }
+      eArrayList.add(HM);
       dis.close();
       bis.close();
       return eArrayList;
@@ -252,9 +252,10 @@ public class AGParser {
           ActualAction = parts[1].split(",")[0].toString();
           DisplayAction = parts[1].split(",")[1].toString();
           HM.put(ActualAction, DisplayAction);
-          aArrayList.add(HM);
+        
         }
       }
+      aArrayList.add(HM);
       dis.close();
       bis.close();
       return aArrayList;
