@@ -22,7 +22,7 @@ public class ExceptionHandler extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(this.getLocalClassName(), "onCreate");
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.test_config);
+		setContentView(R.layout.linear_default);
 	}
 
 	public void onReceive(Context context, Intent intent) {
