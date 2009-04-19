@@ -46,11 +46,15 @@ public class EventCatcher extends ListActivity {
     Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     TextView tv = (TextView) v;
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcherActions.class);
+    i.setClass(this.getApplicationContext(), EventCatcherActions.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
     startActivity(i);
   }

@@ -76,11 +76,15 @@ public class ActionThrowerActions extends ListActivity {
     getListView().setTextFilterEnabled(true);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Intent i = new Intent();
     // TODO (acase): Choose Filter page
-    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.ActionThrowerData.class);
+    i.setClass(this.getApplicationContext(), ActionThrowerData.class);
     TextView tv = (TextView) v;
     // EventCatcherApp
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);

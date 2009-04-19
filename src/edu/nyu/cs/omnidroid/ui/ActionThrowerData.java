@@ -103,9 +103,9 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       ug.writeRecord(HM);
 
       // Go back to our start page
-      Intent i = new Intent();
-      i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Overview.class);
-      startActivity(i);
+      //Intent i = new Intent();
+      //i.setClass(this.getApplicationContext(), Overview.class);
+      //startActivity(i);
       finish();
     } else {
       Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
