@@ -65,6 +65,21 @@
                   android:label="@string/event_catcher_title">
 		</activity>
 
+		<!--  Activity used to setup filters for OmniHandlers -->
+        <activity android:name=".ui.Filters"
+                  android:label="@string/filters_title">
+		</activity>
+
+		<!--  Activity used to add a filter to an OmniHandler -->
+        <activity android:name=".ui.FiltersAdd"
+                  android:label="@string/filters_add_title">
+		</activity>
+
+		<!--  Activity used to add data to an OmniHandler filter -->
+        <activity android:name=".ui.FiltersAddData"
+                  android:label="@string/filters_add_data_title">
+		</activity>
+
 		<!--  Activity used to by the event catcher to determine
 		      what actions to catch for a given application -->
         <activity android:name=".ui.EventCatcherActions"
@@ -107,7 +122,12 @@
         <activity android:name=".tests.TestService"
                   android:label="@string/service_name">
         </activity>
-        
+
+		<!-- Test fancy list -->
+        <activity android:name=".ui.CheckListView"
+                  android:label="@string/overview_title">
+        </activity>
+
         <!-- Test the CP -->
         <activity android:name=".tests.TestCP"
                   android:label="@string/maincp_name">
