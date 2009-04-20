@@ -117,7 +117,7 @@ public class AGParser {
 
       Iterator<String> i = lines.iterator();
       while (i.hasNext()) {
-        agwrite(i.next());// Writing new lines into AppConfig
+        write(i.next());// Writing new lines into AppConfig
       }
       deleted=true;
     } catch (Exception e) {
@@ -142,7 +142,7 @@ public class AGParser {
    * 
    */
   @SuppressWarnings("finally")
-  public boolean agwrite(String AGLine) {
+  public boolean write(String AGLine) {
     boolean written=false;
     try {
       final String LineString = new String(AGLine + "\n");

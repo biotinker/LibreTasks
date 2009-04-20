@@ -28,14 +28,14 @@ public class PopulateAppConfigSetup {
 	{
 		boolean ap;
 		ag.delete_all();
-	    ag.agwrite("Application:SMS");
-	    ag.agwrite("EventName:SMS_RECEIVED,RECEIVED SMS");
-	    ag.agwrite("Filters:S_Name,S_Ph_No,Text");
-	    ag.agwrite("ActionName:SMS_SEND,SEND SMS");
-	    ag.agwrite("ContentMap:");
-	    ag.agwrite("S_Name,SENDER NAME,STRING");
-	    ag.agwrite("S_Ph_No,SENDER PHONE NUMBER,INT");
-	    ag.agwrite("Text,Text,STRING");
+	  ag.write("Application:SMS");
+	  ag.write("EventName:SMS_RECEIVED,RECEIVED SMS");
+	  ag.write("Filters:S_Name,S_Ph_No,Text");
+	  ag.write("ActionName:SMS_SEND,SEND SMS");
+	  ag.write("ContentMap:");
+	  ag.write("S_Name,SENDER NAME,STRING");
+	  ag.write("S_Ph_No,SENDER PHONE NUMBER,INT");
+	  ag.write("Text,Text,STRING");
 	}
 	
 	
