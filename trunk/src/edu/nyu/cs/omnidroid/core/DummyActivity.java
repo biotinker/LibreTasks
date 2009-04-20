@@ -96,11 +96,11 @@ public class DummyActivity extends Activity {
 		Intent send_intent = new Intent();
 		send_intent.setAction("SMS_SENT");
         send_intent.putExtra("uri", uridata);
-        //sendBroadcast(send_intent);
-        send_intent.setClass(this.getApplicationContext(),
+        sendBroadcast(send_intent);
+        /*send_intent.setClass(this.getApplicationContext(),
             edu.nyu.cs.omnidroid.external.catcherapp.SMSListener.class);
         startActivity(send_intent);
-        
+        */
         Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
 	}
 	
