@@ -29,6 +29,7 @@ public class DummyActivity extends Activity {
 		
 		this.uri=getURI(intent);
 		matchEventName();
+		this.finish();
 		
 
 }
