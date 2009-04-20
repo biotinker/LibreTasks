@@ -57,8 +57,8 @@ public class CP extends ContentProvider {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       // TODO (acase): Don't drop the table, instead convert it to new version.
       Log.d("OmniDroid database", "On Upgrade");
-      db.execSQL("DROP TABLE IF EXISTS Main");
-      onCreate(db);
+     // db.execSQL("DROP TABLE IF EXISTS Main");
+    //  onCreate(db);
 
     }
   }
