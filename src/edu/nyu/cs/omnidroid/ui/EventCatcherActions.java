@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.tests.Filters;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
@@ -44,11 +45,7 @@ public class EventCatcherActions extends ListActivity {
     // intent data passed to us.
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    if (extras != null) {
-      appName = extras.getString(AGParser.KEY_APPLICATION);
-    } else {
-      // TODO (acase): Throw exception
-    }
+    appName = extras.getString(AGParser.KEY_APPLICATION);
 
     // Getting the Events from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readEvents(appName);
@@ -77,7 +74,9 @@ public class EventCatcherActions extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), Filters.class);
+    // TODO(acase): Use Filters
+    //i.setClass(this.getApplicationContext(), Filters.class);
+    i.setClass(this.getApplicationContext(), ActionThrower.class);
     TextView tv = (TextView) v;
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, tv.getText());

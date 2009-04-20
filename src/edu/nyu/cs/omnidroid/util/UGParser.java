@@ -25,14 +25,8 @@ import android.content.Context;
  *          Specify UC for UserConfig and AC for Application Config
  */
 public class UGParser {
-  private ArrayList<String> Schema;
-  private FileOutputStream fout;
-  private OutputStreamWriter osw;
-  private FileInputStream FIn;
-  private BufferedInputStream bis;
-  private DataInputStream dis;
-  private Context context;
-  // public static final String KEY_ID = "ID";
+  // Public class vars
+  // TODO(Pradeep): public static final String KEY_ID = "ID";
   public static final String KEY_InstanceName = "InstanceName";
   public static final String KEY_EventName = "EventName";
   public static final String KEY_EventApp = "EventApp";
@@ -42,6 +36,15 @@ public class UGParser {
   public static final String KEY_ActionName = "ActionName";
   public static final String KEY_ActionData = "ActionData";
   public static final String KEY_EnableInstance = "EnableInstance";
+
+  // Private class vars
+  private ArrayList<String> Schema;
+  private FileOutputStream fout;
+  private OutputStreamWriter osw;
+  private FileInputStream FIn;
+  private BufferedInputStream bis;
+  private DataInputStream dis;
+  private Context context;
   private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
   private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
 
@@ -58,7 +61,7 @@ public class UGParser {
 
     // Defining the User Config Schema in ArrayList
     Schema = new ArrayList<String>();
-    // Schema.add("ID");
+    // TODO(Pradeep): Schema.add("ID");
     Schema.add("InstanceName");
     Schema.add("EventName");
     Schema.add("EventApp");
@@ -75,7 +78,7 @@ public class UGParser {
    * Opens User Config for writing
    * 
    */
-  public void OpenFileWrite(int mode) {
+  private void OpenFileWrite(int mode) {
     try {
       fout = context.openFileOutput("UserConfig.txt", mode);
       osw = new OutputStreamWriter(fout);
@@ -88,7 +91,7 @@ public class UGParser {
    * Opens User Config for reading
    * 
    */
-  public void OpenFileRead() {
+  private void OpenFileRead() {
     try {
       FIn = context.openFileInput("UserConfig.txt");
       bis = new BufferedInputStream(FIn);

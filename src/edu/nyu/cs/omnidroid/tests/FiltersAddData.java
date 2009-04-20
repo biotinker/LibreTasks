@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
 import java.util.ArrayList;
 

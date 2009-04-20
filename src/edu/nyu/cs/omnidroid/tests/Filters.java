@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,7 @@ public class Filters extends ListActivity {
     super.onCreate(savedInstanceState);
 
     // Initialize our AGParser
-    AGParser ag = new AGParser(getApplicationContext());
+    UGParser ug = new UGParser(getApplicationContext());
 
     // See what application we want to handle events for from the
     // intent data passed to us.
@@ -52,13 +52,13 @@ public class Filters extends ListActivity {
     }
 
     // Get a list of active filters
-    ArrayList<String> filtersType = ag.readLines(UGParser.KEY_FilterType);
-    ArrayList<String> filtersData = ag.readLines(UGParser.KEY_FilterData);
+    ArrayList<String> filterType = ug.readLines(UGParser.KEY_FilterType);
+    ArrayList<String> filterData = ug.readLines(UGParser.KEY_FilterData);
 
     // Display possible actions
     // TODO (acase): Display currently set filters
     // TODO (acase): Present "Next" button
-    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filtersType));
+    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, filterData));
     getListView().setTextFilterEnabled(true);
   }
 
@@ -70,13 +70,15 @@ public class Filters extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
+    // TODO(acase): Make the edit pages for this
+    TextView tv = (TextView) v;
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAdd.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
+    //i.putExtra(UGParser.KEY_FilterID, filterID);
     // For each filter pass it to the next page
     // TODO (acase): Put each filter into the extras
-    //i.putExtra(UGParser.KEY_Filter, tv.getText());
     startActivity(i);
   }
 
@@ -115,8 +117,11 @@ public class Filters extends ListActivity {
    * Add a new filter to this OmniHandler
    */
   private void Add_Filter() {
-    // TODO Auto-generated method stub
-    
+    Intent i = new Intent();
+    i.setClass(this.getApplicationContext(), FiltersAdd.class);
+    i.putExtra(AGParser.KEY_APPLICATION, appName);
+    i.putExtra(UGParser.KEY_EventName, eventName);
+    startActivity(i);
   }
 
   /**

@@ -10,6 +10,8 @@ import android.widget.ListView;
 import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
 import edu.nyu.cs.omnidroid.ui.CheckListViewDemo;
 import edu.nyu.cs.omnidroid.ui.PackageLister;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * This class will present a list of test applications that we can run via UI selection.
@@ -26,7 +28,8 @@ public class TestApp extends ListActivity {
       "Test Fancy List",
       "Test User Config",
       "Test App Config",
-      "Test Exception Handler"
+      "Test Exception Handler",
+      "Test Filters"
   };
 
   @Override
@@ -49,17 +52,8 @@ public class TestApp extends ListActivity {
     Intent i = new Intent();
 
     switch (position) {
-    case 5:
-      i.setClass(this.getApplicationContext(), TestUserConfig.class);
-      break;
-    case 6:
-      i.setClass(this.getApplicationContext(), TestAppConfig.class);
-      break;
     case 0:
       i.setClass(this.getApplicationContext(), TestCP.class);
-      break;
-    case 7:
-      i.setClass(this.getApplicationContext(), TestExceptionHandler.class);
       break;
     case 1:
       i.setClass(this.getApplicationContext(), TestService.class);
@@ -72,6 +66,20 @@ public class TestApp extends ListActivity {
       break;
     case 4:
       i.setClass(this.getApplicationContext(), CheckListViewDemo.class);
+      break;
+    case 5:
+      i.setClass(this.getApplicationContext(), TestUserConfig.class);
+      break;
+    case 6:
+      i.setClass(this.getApplicationContext(), TestAppConfig.class);
+      break;
+    case 7:
+      i.setClass(this.getApplicationContext(), TestExceptionHandler.class);
+      break;
+    case 8:
+      i.putExtra(AGParser.KEY_APPLICATION, "SMS");
+      i.putExtra(UGParser.KEY_EventName, "SMS RECEIVED");
+      i.setClass(this.getApplicationContext(), Filters.class);
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");
