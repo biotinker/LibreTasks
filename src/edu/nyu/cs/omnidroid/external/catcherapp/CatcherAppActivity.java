@@ -15,13 +15,14 @@ public class CatcherAppActivity extends Activity {
   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main2);
+        //setContentView(R.layout.main2);
         this.intent=getIntent();
         uri = getURI(intent);
      //  Uri DummyURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
      displayAction(uri.toString());
      //  String action_data = displayAction(DummyURI.toString());
        // Toast.makeText(getBaseContext(), action_data, 5);
+     this.finish();
   } 
        
        public String getURI(Intent intent1)
@@ -57,8 +58,8 @@ public void displayAction(String uri) {
            
            Toast.makeText(
                getBaseContext(),
-               cur.getString(cur.getColumnIndex(CP._ID)) + ","
-               + cur.getString(cur.getColumnIndex(CP.ACTION_DATA)), Toast.LENGTH_LONG).show();
+               /*cur.getString(cur.getColumnIndex(CP._ID)) + ","
+               +*/ cur.getString(cur.getColumnIndex(CP.ACTION_DATA)), Toast.LENGTH_LONG).show();
          }
                     
           
