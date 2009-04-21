@@ -15,8 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.tests.Filters;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -51,17 +51,43 @@ private static final int ADD_RESULT = 1;
     // Getting the Events from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readEvents(appName);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
+    //ArrayList<StringMap> eventList = ag.readEvents(appName);
+    //Iterator<StringMap> i1 = eventList.iterator();
     
-    ArrayList<String> values = new ArrayList<String>();
+    //ArrayList<String> values = new ArrayList<String>();
+    ArrayList<TextView> values = new ArrayList<TextView>();
+    ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
     while (i1.hasNext()) {
+      // FIXME(acase): Add key also
+      
       HashMap<String, String> HM1 = i1.next();
+      HM1.toString();
+      String splits[] = HM1.toString().split(",");
+      for (int cnt=0; cnt < splits.length; cnt++) {
+        String pairs[] = splits[cnt].split("=");
+        String key = pairs[0].replaceFirst("\\{","");
+        String entry = pairs[1].replaceFirst("\\}","");
+        //TextView tv = new TextView(this);
+        //tv.setText(entry);
+        //tv.setTag(key);
+        //values.add(tv);
+        stringvalues.add(new StringMap(key,entry));
+      }
+      //key = splits[0];
+      //value = splits[1];
+      
+      //StringMap<String, String> HM1 = i1.next();
       //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
       // TODO (acase): We need a better way then accessing a hashmap
-      values.addAll(HM1.values());
+      //TextView tv = new TextView(this);
+      //tv.setText(value[cnt]);
+      //tv.setTag(key[cnt]);
+      //values.add(HM1.values());
+      //values.add(tv);
     }
 
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, values);
+    ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
+        android.R.layout.simple_list_item_1, stringvalues);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
 
@@ -74,14 +100,16 @@ private static final int ADD_RESULT = 1;
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
+    StringMap sm = (StringMap)l.getAdapter().getItem(position);
+    
     Intent i = new Intent();
     // TODO(acase): Use Filters
     //i.setClass(this.getApplicationContext(), Filters.class);
     i.setClass(this.getApplicationContext(), ActionThrower.class);
-    TextView tv = (TextView) v;
+    String eName = sm.getKey();
     i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, tv.getText());
-	startActivityForResult(i, ADD_RESULT);
+    i.putExtra(UGParser.KEY_EventName, eName);
+    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
