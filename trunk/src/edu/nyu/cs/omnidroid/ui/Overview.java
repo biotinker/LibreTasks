@@ -41,11 +41,20 @@ public class Overview extends Activity implements OnClickListener {
 	private static final int MENU_SETTINGS = 3;
 	private static final int MENU_HELP = 4;
 	private static final int MENU_TESTS = 5;
+	private static final int MENU_ABOUT = 6;
+
+    // Return value for our subactivities
+	private static final int RESULT_ADD = 1;
+	private static final int RESULT_SETTING = 2;
+	private static final int RESULT_ADD_SUCCESS = 1;
 
 	// User Config Parser
 	private static UGParser ug;
 
-	/** Called when the activity is first created. */
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// Create our Activity
@@ -109,7 +118,10 @@ public class Overview extends Activity implements OnClickListener {
 
 	}
 
-	// Create a context menu options
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
+	 */
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		menuInfo = new AdapterContextMenuInfo(v, 0, 0);
@@ -118,7 +130,10 @@ public class Overview extends Activity implements OnClickListener {
 		menu.add(0, MENU_DELETE, 0, R.string.del);
 	}
 
-	/* Context Menu Actions */
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
+	 */
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case MENU_EDIT:
@@ -131,7 +146,26 @@ public class Overview extends Activity implements OnClickListener {
 			return super.onContextItemSelected(item);
 		}
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case RESULT_ADD:
+			switch (resultCode) { 
+			case RESULT_ADD_SUCCESS:
+				// TODO(acase): Repopulate our list if needed
+				break;
+			}
+          break;
+		case RESULT_SETTING:
+          // TODO(acase): Repopulate our list if needed
+          break;
+		}
+     }
+
 	/**
 	 * @param item
 	 *            of the menu item
@@ -171,6 +205,8 @@ public class Overview extends Activity implements OnClickListener {
 				android.R.drawable.ic_menu_preferences);
 		menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
 				android.R.drawable.ic_menu_help);
+		menu.add(0, MENU_ABOUT, 0, R.string.about).setIcon(
+				android.R.drawable.ic_menu_info_details);
 		menu.add(0, MENU_TESTS, 0, R.string.tests).setIcon(
 				android.R.drawable.ic_menu_manage);
 		return true;
@@ -190,14 +226,24 @@ public class Overview extends Activity implements OnClickListener {
 		case MENU_HELP:
 			Help();
 			return true;
+		case MENU_ABOUT:
+			About();
+			return true;
 		case MENU_TESTS:
-			Intent i = new Intent();
-			i.setClass(this.getApplicationContext(),
-					edu.nyu.cs.omnidroid.tests.TestApp.class);
-			startActivity(i);
+			RunTests();
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Presents the TestApp activity to run any available tests.
+	 */
+	private void RunTests() {
+		Intent i = new Intent();
+		i.setClass(this.getApplicationContext(),
+				edu.nyu.cs.omnidroid.tests.TestApp.class);
+		startActivity(i);
 	}
 
 	/**
@@ -207,7 +253,7 @@ public class Overview extends Activity implements OnClickListener {
 		Intent i = new Intent();
 		i.setClass(this.getApplicationContext(),
 				edu.nyu.cs.omnidroid.ui.EventCatcher.class);
-		startActivity(i);
+		startActivityForResult(i, RESULT_ADD);
 	}
 
 	/**
@@ -217,7 +263,7 @@ public class Overview extends Activity implements OnClickListener {
 		Intent i = new Intent();
 		i.setClass(this.getApplicationContext(),
 				edu.nyu.cs.omnidroid.ui.Settings.class);
-		startActivity(i);
+		startActivityForResult(i, RESULT_SETTING);
 	}
 
 	/**
@@ -225,6 +271,13 @@ public class Overview extends Activity implements OnClickListener {
 	 */
 	private void Help() {
 		// TODO (acase): Create a help dialog for this activity
+	}
+
+	/**
+	 * Call our About dialog
+	 */
+	private void About() {
+		// TODO (acase): Create an about dialog for our program
 	}
 
 	/*

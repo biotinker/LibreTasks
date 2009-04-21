@@ -34,12 +34,18 @@ public class FiltersAdd extends ListActivity {
   // Application Configuration
   private AGParser ag;
 
-  /**
-   * Creates the activity
+  // User Selected Data
+  String appName = null;
+  String eventName = null;
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     // Initialize our AGParser
     ag = new AGParser(getApplicationContext());
 
@@ -47,15 +53,13 @@ public class FiltersAdd extends ListActivity {
     // intent data passed to us.
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    String appName = extras.getString(AGParser.KEY_APPLICATION);
-    String eventName = extras.getString(UGParser.KEY_EventName);
+    appName = extras.getString(AGParser.KEY_APPLICATION);
+    eventName = extras.getString(UGParser.KEY_EventName);
 
     // Getting the list of Filters available from AppConfig
-    ArrayList<String> filterList = ag.readFilters(appName, eventName);
-    Iterator<String> i1 = filterList.iterator();
-
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, filterList);
+    ArrayList<String[]> contentMap = ag.readContentMap(appName);
+    ArrayAdapter<String[]> arrayAdapter = new ArrayAdapter<String[]>(this,
+        android.R.layout.simple_list_item_1, contentMap);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
     Log.i(this.getLocalClassName(), "onCreate exit");
@@ -72,11 +76,12 @@ public class FiltersAdd extends ListActivity {
     TextView tv = (TextView) v;
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
-    i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
+    i.putExtra(AGParser.KEY_APPLICATION, appName);
+    i.putExtra(UGParser.KEY_EventName, eventName);
     // For each filter pass it to the next page
     // TODO (acase): Once UGParser has support for FilterIDs, we can provide multiple filters.
     i.putExtra(UGParser.KEY_FilterType, tv.getText());
-    startActivity(i);
+    finish();
   }
 
   /**

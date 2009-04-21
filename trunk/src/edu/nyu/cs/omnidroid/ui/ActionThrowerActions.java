@@ -95,7 +95,7 @@ public class ActionThrowerActions extends ListActivity {
     // ActionThrowerAction
     i.putExtra(UGParser.KEY_ActionName, tv.getText());
     startActivity(i);
-    //startActivityForResult(i);
+    finish();
   }
 
   /**

@@ -80,6 +80,7 @@ public class Filters extends ListActivity {
     // For each filter pass it to the next page
     // TODO (acase): Put each filter into the extras
     startActivity(i);
+    finish();
   }
 
   // TODO: If 

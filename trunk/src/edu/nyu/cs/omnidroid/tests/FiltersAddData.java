@@ -1,7 +1,5 @@
 package edu.nyu.cs.omnidroid.tests;
 
-import java.util.ArrayList;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +7,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * Activity used to present a list of filters to apply to this OmniHandler. Filters allow the user
@@ -23,26 +24,44 @@ import edu.nyu.cs.omnidroid.util.AGParser;
  * @author acase
  * 
  */
-public class FiltersAddData extends ListActivity {
+public class FiltersAddData extends ListActivity implements OnClickListener {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
 
-  /**
-   * Creates the activity
+  // User Selected Data
+  String appName = null;
+  String eventName = null;
+  String filterType = null;
+  Button saveBtn = null;
+  AutoCompleteTextView filterData = null;
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    AGParser ag = new AGParser(getApplicationContext());
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.filter_add_data);
 
-    // Getting the Events from AppConfig
-    ArrayList<String> appNames;
-    appNames = ag.readLines(AGParser.KEY_APPLICATION);
+    // Build our AGParser interface
+    AGParser ag = new AGParser(getApplicationContext());
 
-    // Populate our layout with applications
-    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appNames));
-    getListView().setTextFilterEnabled(true);
+    // See what application we want to handle events for from the
+    // intent data passed to us.
+    Intent i = getIntent();
+    Bundle extras = i.getExtras();
+    appName = extras.getString(AGParser.KEY_APPLICATION);
+    eventName = extras.getString(UGParser.KEY_EventName);
+    filterType = extras.getString(UGParser.KEY_FilterType);
+
+    // Connect to our UI layout
+    saveBtn = (Button) findViewById(R.id.save);
+    filterData = (AutoCompleteTextView) findViewById(R.id.data);
+    
+    // Listen for the save button click
+    saveBtn.setOnClickListener(this);
 
     Log.i(this.getLocalClassName(), "onCreate exit");
   }
@@ -53,16 +72,6 @@ public class FiltersAddData extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    TextView tv = (TextView) v;
-    Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), Filters.class);
-    i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
-    // For each filter pass it to the next page
-    // TODO (acase):
-    //i.putExtra(UGParser.KEY_Filter, tv.getText());
-    startActivity(i);
-    // Pass this data back to Filters
-    finish();
   }
 
   /**
@@ -95,5 +104,17 @@ public class FiltersAddData extends ListActivity {
   private void Help() {
     // TODO (acase): Create a help dialog for this activity
   }
+
+public void onClick(View v) {
+    // Pass the data back to Filters
+    Intent i = new Intent();
+    i.setClass(this.getApplicationContext(), Filters.class);
+    i.putExtra(AGParser.KEY_APPLICATION, appName);
+    i.putExtra(UGParser.KEY_EventName, eventName);
+    i.putExtra(UGParser.KEY_FilterType, filterType);
+    i.putExtra(UGParser.KEY_FilterData, filterData.getText());
+    startActivity(i);
+    finish();
+}
 
 }

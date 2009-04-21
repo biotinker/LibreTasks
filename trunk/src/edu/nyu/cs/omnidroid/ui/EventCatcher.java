@@ -26,6 +26,8 @@ public class EventCatcher extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
+private static final int ADD_RESULT = 1;
+private static final int RESULT_ADD_SUCCESS = 1;
 
   /**
    * Creates the activity
@@ -56,14 +58,30 @@ public class EventCatcher extends ListActivity {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), EventCatcherActions.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
-    startActivity(i);
+	startActivityForResult(i, ADD_RESULT);
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *            - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case ADD_RESULT:
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				setResult(resultCode, data);
+                finish();
+                break;
+			}
+			break;
+		}
+
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
@@ -71,8 +89,9 @@ public class EventCatcher extends ListActivity {
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
@@ -85,6 +104,7 @@ public class EventCatcher extends ListActivity {
 
   /**
    * Call our Help dialog
+   * @return void
    */
   private void Help() {
     // TODO (acase): Create a help dialog for this activity

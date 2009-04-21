@@ -87,5 +87,6 @@ public class TestApp extends ListActivity {
       break;
     }
     startActivity(i);
+    finish();
   }
 }
