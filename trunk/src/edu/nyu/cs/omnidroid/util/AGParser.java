@@ -17,6 +17,8 @@ import android.content.Context;
  */
 public class AGParser {
   public static final String KEY_APPLICATION = "Application";
+  public static final String KEY_PkgName="PkgName";
+  public static final String KEY_ListenerClass="ListenerClass";
   public static final String KEY_EventName = "EventName";
   public static final String KEY_Filters = "Filters";
   public static final String KEY_ActionName = "ActionName";
@@ -160,6 +162,105 @@ public class AGParser {
    }
 
   /**
+   * Reads the package name from the App Config
+   * 
+   * @param AppName
+   *          Specify the Application
+   * @return Returns String 
+   */
+  public String readPkgName(String AppName) {
+    String PkgName=null;
+    Boolean found = false;
+    try {
+
+      String ActualEvent;
+      String DisplayEvent;
+      String line;
+
+      OpenFileRead();
+      // Navigate to the Application Record
+      while ((line = dis.readLine()) != null) {
+        String[] parts = line.split(":", 2);
+        if (parts[1].toString().equalsIgnoreCase(AppName)) {
+          found = true;
+          break;
+        }
+      }
+      if (found == false) {
+        OmLogger.write(context, "Application: " + AppName + " not present in App Config");
+        return PkgName;
+      }
+      HashMap<String, String> HM = new HashMap<String, String>();
+      while ((line = dis.readLine()) != null) {
+        String[] parts = line.split(":", 2);
+        // Check if the pointer reached the ContentMap Section of the Record
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+          break;
+        if (parts[0].toString().equalsIgnoreCase(KEY_PkgName)) {
+          PkgName=parts[1].toString();
+        }
+      }
+      dis.close();
+      bis.close();
+      return PkgName;
+    } catch (Exception e) {
+      OmLogger.write(context, "Unable to read Events from Application Config");
+      e.printStackTrace();
+      return PkgName;
+    }
+  }
+
+  /**
+   * Reads the ListenerClass from the App Config
+   * 
+   * @param AppName
+   *          Specify the Application
+   * @return Returns String 
+   */
+  public String readListenerClass(String AppName) {
+    String ListerClass=null;
+    Boolean found = false;
+    try {
+
+      String ActualEvent;
+      String DisplayEvent;
+      String line;
+
+      OpenFileRead();
+      // Navigate to the Application Record
+      while ((line = dis.readLine()) != null) {
+        String[] parts = line.split(":", 2);
+        if (parts[1].toString().equalsIgnoreCase(AppName)) {
+          found = true;
+          break;
+        }
+      }
+      if (found == false) {
+        OmLogger.write(context, "Application: " + AppName + " not present in App Config");
+        return ListerClass;
+      }
+      HashMap<String, String> HM = new HashMap<String, String>();
+      while ((line = dis.readLine()) != null) {
+        String[] parts = line.split(":", 2);
+        // Check if the pointer reached the ContentMap Section of the Record
+        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+          break;
+        if (parts[0].toString().equalsIgnoreCase(KEY_ListenerClass)) {
+          ListerClass=parts[1].toString();
+        }
+      }
+      dis.close();
+      bis.close();
+      return ListerClass;
+    } catch (Exception e) {
+      OmLogger.write(context, "Unable to read Events from Application Config");
+      e.printStackTrace();
+      return ListerClass;
+    }
+  }
+
+  
+  /**
    * Reads the Events from the App Config
    * 
    * @param AppName
@@ -213,7 +314,7 @@ public class AGParser {
       return eArrayList;
     }
   }
-
+  
   /**
    * Reads the Actions from the App Config
    * 
