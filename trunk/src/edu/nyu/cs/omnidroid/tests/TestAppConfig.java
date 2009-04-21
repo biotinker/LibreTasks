@@ -22,7 +22,8 @@ public class TestAppConfig extends Activity {
     AGParser ag=new AGParser(this.getApplicationContext());
     ag.delete_all();
     ag.write("Application:SMS"); 
-
+    ag.write("PkgName:edu.nyu.cs.omnidroid"); 
+    ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener"); 
     ag.write("EventName:SMS_RECEIVED,SMS_RECEIVED");
 
     ag.write("Filters:S_Name,S_Ph_No,Text,Location");
