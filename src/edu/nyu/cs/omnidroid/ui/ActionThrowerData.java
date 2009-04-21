@@ -46,14 +46,10 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     // Get data passed to us
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    if (extras != null) {
-      eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventName);
-      throwerApp = extras.getString(UGParser.KEY_ActionApp);
-      throwerName = extras.getString(UGParser.KEY_ActionName);
-    } else {
-      // TODO (acase): Throw exception
-    }
+    eventApp = extras.getString(AGParser.KEY_APPLICATION);
+    eventName = extras.getString(UGParser.KEY_EventName);
+    throwerApp = extras.getString(UGParser.KEY_ActionApp);
+    throwerName = extras.getString(UGParser.KEY_ActionName);
 
     // Setup our UI
     Button save = (Button) findViewById(R.id.save);
@@ -95,7 +91,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       HM.put(UGParser.KEY_ActionApp, throwerApp);
       HM.put(UGParser.KEY_EnableInstance, "False");
       HM.put(UGParser.KEY_ActionData, uri.toString());
-      // TODO: get these from the user
+      // FIXME(acase): get these from the user
       //HM.put("FilterType", "");
       //HM.put("FilterData", "");
       HM.put("FilterType", "s_ph_no");
@@ -103,9 +99,9 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       ug.writeRecord(HM);
 
       // Go back to our start page
-      //Intent i = new Intent();
-      //i.setClass(this.getApplicationContext(), Overview.class);
-      //startActivity(i);
+      Intent i = new Intent();
+      i.setClass(this.getApplicationContext(), Overview.class);
+      startActivity(i);
       finish();
     } else {
       Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
