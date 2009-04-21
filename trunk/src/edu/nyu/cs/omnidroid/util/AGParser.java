@@ -270,6 +270,7 @@ public class AGParser {
   // TODO(Pradeep): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
+    //ArrayList<StringMap> eArrayList = new ArrayList<StringMap>();
     Boolean found = false;
     try {
 
@@ -290,7 +291,10 @@ public class AGParser {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return eArrayList;
       }
+
+      
       HashMap<String, String> HM = new HashMap<String, String>();
+      //StringMap SM = new StringMap();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
@@ -299,9 +303,9 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_EventName)) {
           ActualEvent = parts[1].split(",")[0].toString();
           DisplayEvent = parts[1].split(",")[1].toString();
+          //SM.set(ActualEvent,DisplayEvent);
           // Add Event to HashMap
-          HM.put(ActualEvent, DisplayEvent);
-      
+          HM.put(ActualEvent, DisplayEvent);      
         }
       }
       eArrayList.add(HM);

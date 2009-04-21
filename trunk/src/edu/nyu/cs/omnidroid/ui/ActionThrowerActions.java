@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -57,10 +58,24 @@ public class ActionThrowerActions extends ListActivity {
     ArrayList<HashMap<String, String>> eventList = ag.readActions(throwerApp);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
     ArrayList<String> values = new ArrayList<String>();
+    ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
     while (i1.hasNext()) {
-      // TODO (acase): We need a better way then accessing a hashmap
       HashMap<String, String> HM1 = i1.next();
-      values.addAll(HM1.values());
+      HM1.toString();
+      String splits[] = HM1.toString().split(",");
+      for (int cnt=0; cnt < splits.length; cnt++) {
+        String pairs[] = splits[cnt].split("=");
+        String key = pairs[0].replaceFirst("\\{","");
+        String entry = pairs[1].replaceFirst("\\}","");
+        //TextView tv = new TextView(this);
+        //tv.setText(entry);
+        //tv.setTag(key);
+        //values.add(tv);
+        stringvalues.add(new StringMap(key,entry));
+      }
+      // TODO (acase): We need a better way then accessing a hashmap
+      //HashMap<String, String> HM1 = i1.next();
+      //values.addAll(HM1.values());
     }
 
     // Make sure we have an appropriate selection
@@ -70,8 +85,10 @@ public class ActionThrowerActions extends ListActivity {
     }
 
     // Build our list of Actions  
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, values);
+    ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
+        android.R.layout.simple_list_item_1, stringvalues);
+    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+    //    android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
   }
@@ -82,6 +99,7 @@ public class ActionThrowerActions extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
+    StringMap sm = (StringMap)l.getAdapter().getItem(position);
     Intent i = new Intent();
     // TODO (acase): Choose Filter page
     i.setClass(this.getApplicationContext(), ActionThrowerData.class);
@@ -93,7 +111,9 @@ public class ActionThrowerActions extends ListActivity {
     // ActionThrowerApp
     i.putExtra(UGParser.KEY_ActionApp, throwerApp);
     // ActionThrowerAction
-    i.putExtra(UGParser.KEY_ActionName, tv.getText());
+    String aName = sm.getKey();
+    //i.putExtra(UGParser.KEY_ActionName, tv.getText());
+    i.putExtra(UGParser.KEY_ActionName, aName);
     startActivity(i);
     finish();
   }
