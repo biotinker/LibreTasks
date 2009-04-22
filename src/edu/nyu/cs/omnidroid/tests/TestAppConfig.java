@@ -59,22 +59,22 @@ public class TestAppConfig extends Activity {
     ag.write("Location,SMS Number,INT");
     
     ag.write("Application:System");
-    ag.write("EventName:ACTION_TIME_CHANGED,TIME CHANGED");
-    ag.write("EventName:ACTION_SCREEN_OFF,SCREEN OFF");
-    ag.write("EventName:ACTION_SCREEN_ON,SCREEN ON");
-    ag.write("EventName:ACTION_DATE_CHANGED,DATE CHANGED");
-    ag.write("EventName:ACTION_NEW_OUTGOING_CALL ,NEW OUTGOING CALL");
-    ag.write("EventName:ACTION_WALLPAPER_CHANGED ,WALLPAPER CHANGED");
-    ag.write("EventName:ACTION_CAMERA_BUTTON ,CAMERA BUTTON ");
-    ag.write("EventName:ACTION_REBOOT ,REBOOT ");
-    ag.write("ActionName:ACTION_TIME_CHANGED,TIME CHANGED");
-    ag.write("ActionName:ACTION_SCREEN_OFF,SCREEN OFF");
-    ag.write("ActionName:ACTION_SCREEN_ON,SCREEN ON");
-    ag.write("ActionName:ACTION_DATE_CHANGED,DATE CHANGED");
-    ag.write("ActionName:ACTION_NEW_OUTGOING_CALL ,NEW OUTGOING CALL");
-    ag.write("ActionName:ACTION_WALLPAPER_CHANGED ,WALLPAPER CHANGED");
-    ag.write("ActionName:ACTION_CAMERA_BUTTON ,CAMERA BUTTON ");
-    ag.write("ActionName:ACTION_REBOOT ,REBOOT ");
+    ag.write("EventName:android.intent.action.TIME_SET,TIME CHANGED");
+    ag.write("EventName:android.intent.action.SCREEN_OFF,SCREEN OFF");
+    ag.write("EventName:android.intent.action.SCREEN_ON,SCREEN ON");
+    ag.write("EventName:android.intent.action.DATE_CHANGED,DATE CHANGED");
+    ag.write("EventName:android.intent.action.NEW_OUTGOING_CALL,NEW OUTGOING CALL");
+    ag.write("EventName:android.intent.action.WALLPAPER_CHANGED,WALLPAPER CHANGED");
+    ag.write("EventName:android.intent.action.CAMERA_BUTTON,CAMERA CLICK");
+    ag.write("EventName:android.intent.action.REBOOT,REBOOT ");
+    ag.write("ActionName:android.intent.action.TIME_SET,TIME CHANGED");
+    ag.write("ActionName:android.intent.action.SCREEN_OFF,SCREEN OFF");
+    ag.write("ActionName:android.intent.action.SCREEN_ON,SCREEN ON");
+    ag.write("ActionName:android.intent.action.DATE_CHANGED,DATE CHANGED");
+    ag.write("ActionName:android.intent.action.NEW_OUTGOING_CALL,NEW OUTGOING CALL");
+    ag.write("ActionName:android.intent.action.WALLPAPER_CHANGED,WALLPAPER CHANGED");
+    ag.write("ActionName:android.intent.action.CAMERA_BUTTON,CAMERA CLICK");
+    ag.write("ActionName:android.intent.action.REBOOT,REBOOT ");
     
     Toast.makeText(getApplicationContext(), "Population Test App Config File", 5).show();
     this.finish();
