@@ -281,18 +281,20 @@ public class AGParser {
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
+        try{
         String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
         }
+        } catch(Exception e)
+        {}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return eArrayList;
       }
 
-      
       HashMap<String, String> HM = new HashMap<String, String>();
       //StringMap SM = new StringMap();
       while ((line = dis.readLine()) != null) {
@@ -336,11 +338,15 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
+       try
+       {
         String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
         }
+       }catch(Exception e)
+       {}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
