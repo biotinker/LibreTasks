@@ -7,6 +7,7 @@ import java.util.Iterator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -57,6 +58,7 @@ public class Overview extends Activity implements OnClickListener {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Debug.startMethodTracing("OmniDroid");
 		// Create our Activity
 		super.onCreate(savedInstanceState);
 
@@ -118,6 +120,15 @@ public class Overview extends Activity implements OnClickListener {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onDestroy()
+	 */
+	public void onDestroy() {
+		super.onDestroy();
+		Debug.stopMethodTracing();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
