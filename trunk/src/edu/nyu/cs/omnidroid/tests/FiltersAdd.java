@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -57,8 +58,9 @@ public class FiltersAdd extends ListActivity {
     eventName = extras.getString(UGParser.KEY_EventName);
 
     // Getting the list of Filters available from AppConfig
-    ArrayList<String[]> contentMap = ag.readContentMap(appName);
-    ArrayAdapter<String[]> arrayAdapter = new ArrayAdapter<String[]>(this,
+    //ArrayList<StringMap> contentMap = new ArrayList<StringMap>();
+    ArrayList<StringMap> contentMap = ag.readContentMap(appName);
+    ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, contentMap);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
@@ -81,7 +83,9 @@ public class FiltersAdd extends ListActivity {
     // For each filter pass it to the next page
     // TODO (acase): Once UGParser has support for FilterIDs, we can provide multiple filters.
     i.putExtra(UGParser.KEY_FilterType, tv.getText());
-    finish();
+    startActivity(i);
+    // TODO(acase): Cleanup/destroy
+    //finish();
   }
 
   /**

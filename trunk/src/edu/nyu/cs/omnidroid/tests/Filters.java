@@ -27,7 +27,9 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class Filters extends ListActivity {
   private String appName;
   private String eventName;
-
+  private String filterType;
+  private String filterData;
+  
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_ADD = 0;
   private static final int MENU_HELP = 1;
@@ -49,10 +51,17 @@ public class Filters extends ListActivity {
     if (extras != null) {
       appName = extras.getString(AGParser.KEY_APPLICATION);
       eventName = extras.getString(UGParser.KEY_EventName);
+      filterType = extras.getString(UGParser.KEY_FilterType);
+      filterData = extras.getString(UGParser.KEY_FilterData);
     }
 
+    // TODO (acase): Pull data if we have filtertype/data passed to us
+    if ((filterType != null) && (filterData != null)) {
+      ug.write(UGParser.KEY_FilterType, filterType);
+      ug.write(UGParser.KEY_FilterData, filterData);
+    }
+    
     // Get a list of active filters
-    ArrayList<String> filterType = ug.readLines(UGParser.KEY_FilterType);
     ArrayList<String> filterData = ug.readLines(UGParser.KEY_FilterData);
 
     // Display possible actions
