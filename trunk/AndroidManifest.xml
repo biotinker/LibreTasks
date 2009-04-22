@@ -16,12 +16,16 @@
                 <action android:name="OmniRestart"/>
             </intent-filter>
         </receiver>
-
+		
 	    <receiver android:name=".external.catcherapp.SMSListener">
             <intent-filter>
                 <action android:name="SMS_SENT"/>
             </intent-filter>
         </receiver>
+        
+    
+	
+    
 
 		<!--  The main UI for our OmniDroid -->
         <activity android:name=".ui.Overview"
@@ -138,13 +142,13 @@
                   android:label="@string/maincp_name">
         </activity>
 
-		<!--  TODO: Replace with Catcher/Thrower Services -->	        
+		<!--  Service/receiver that runs to catch events -->        
 		<service android:name=".bkgservice.BRService" />
-
-		<!--  TODO: The service that runs to catch events -->
-		<!--
-		<service android:name=".bkgservice.CatcherService" />
-		 -->
+        <receiver android:name=".bkgservice.BCReceiver"> 
+            <intent-filter> 
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
+            </intent-filter> 
+        </receiver>
 
 		<!--  TODO: The service that runs to throw actions -->
 		<!--
@@ -161,5 +165,9 @@
          android:authorities="edu.nyu.cs.omnidroid.external.eventapp.cp" />
 
 	</application>
+	<uses-permission android:name="android.permission.SEND_SMS">
+    </uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_SMS">
+    </uses-permission>
 
 </manifest> 
