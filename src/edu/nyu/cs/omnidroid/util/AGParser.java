@@ -513,8 +513,8 @@ public class AGParser {
    *          Specify the Application
    * @return Returns ArrayList<String[]> of Strings containing Field Details.
    */
-  public ArrayList<String[]> readContentMap(String AppName) {
-    ArrayList<String[]> contentmap = new ArrayList<String[]>();
+  public ArrayList<StringMap> readContentMap(String AppName) {
+    ArrayList<StringMap> contentmap = new ArrayList<StringMap>();
     Boolean found = false;
     try {
       OpenFileRead();
@@ -538,7 +538,7 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap)) {
           while ((line = dis.readLine()) != null) {
             String[] fmparts = line.split(",");
-            contentmap.add(fmparts);
+            contentmap.add(new StringMap(fmparts[0],fmparts[1]));
           }
         }
       }

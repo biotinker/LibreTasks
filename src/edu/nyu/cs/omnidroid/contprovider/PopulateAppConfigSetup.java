@@ -9,6 +9,7 @@ import java.util.Iterator;
 import android.content.Context;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 
 
 
@@ -65,10 +66,10 @@ public class PopulateAppConfigSetup {
        Toast.makeText(context, filter.toString(), 5).show();
     }
 
-    ArrayList<String[]> contentmap = ag.readContentMap("SMS");
-    Iterator<String[]> i4 = contentmap.iterator();
+    ArrayList<StringMap> contentmap = ag.readContentMap("SMS");
+    Iterator<StringMap> i4 = contentmap.iterator();
     while (i4.hasNext()) {
-      String[] fieldmap = i4.next();
+      StringMap fieldmap = i4.next();
      // Toast.makeText(a.getBaseContext(), fieldmap.toString(), 5).show();
 	}
 }

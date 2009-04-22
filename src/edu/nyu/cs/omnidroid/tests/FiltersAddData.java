@@ -1,5 +1,6 @@
 package edu.nyu.cs.omnidroid.tests;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
@@ -24,7 +26,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author acase
  * 
  */
-public class FiltersAddData extends ListActivity implements OnClickListener {
+public class FiltersAddData extends Activity implements OnClickListener {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
@@ -34,7 +36,7 @@ public class FiltersAddData extends ListActivity implements OnClickListener {
   String eventName = null;
   String filterType = null;
   Button saveBtn = null;
-  AutoCompleteTextView filterData = null;
+  EditText filterData = null;
 
   /*
    * (non-Javadoc)
@@ -44,9 +46,6 @@ public class FiltersAddData extends ListActivity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filter_add_data);
-
-    // Build our AGParser interface
-    AGParser ag = new AGParser(getApplicationContext());
 
     // See what application we want to handle events for from the
     // intent data passed to us.
@@ -58,20 +57,12 @@ public class FiltersAddData extends ListActivity implements OnClickListener {
 
     // Connect to our UI layout
     saveBtn = (Button) findViewById(R.id.save);
-    filterData = (AutoCompleteTextView) findViewById(R.id.data);
+    filterData = (EditText) findViewById(R.id.data);
     
     // Listen for the save button click
     saveBtn.setOnClickListener(this);
 
     Log.i(this.getLocalClassName(), "onCreate exit");
-  }
-
-  /*
-   * (non-Javadoc)
-   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
-   */
-  @Override
-  protected void onListItemClick(ListView l, View v, int position, long id) {
   }
 
   /**
@@ -106,15 +97,19 @@ public class FiltersAddData extends ListActivity implements OnClickListener {
   }
 
 public void onClick(View v) {
-    // Pass the data back to Filters
-    Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), Filters.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    i.putExtra(UGParser.KEY_FilterType, filterType);
-    i.putExtra(UGParser.KEY_FilterData, filterData.getText());
-    startActivity(i);
-    finish();
+  // Pass the data back to Filters
+  //AutoCompleteTextView data = (AutoCompleteTextView) findViewById(R.id.data);
+  EditText data = (EditText) findViewById(R.id.data);
+  String filterData = data.getText().toString();
+  
+  Intent i = new Intent();
+  i.setClass(this.getApplicationContext(), Filters.class);
+  i.putExtra(AGParser.KEY_APPLICATION, appName);
+  i.putExtra(UGParser.KEY_EventName, eventName);
+  i.putExtra(UGParser.KEY_FilterType, filterType);
+  i.putExtra(UGParser.KEY_FilterData, filterData);
+  startActivity(i);
+  finish();
 }
 
 }
