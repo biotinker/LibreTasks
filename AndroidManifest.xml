@@ -19,7 +19,7 @@
 		
 	    <receiver android:name=".external.catcherapp.SMSListener">
             <intent-filter>
-                <action android:name="SMS_SENT"/>
+                <action android:name="Display_Contact"/>
             </intent-filter>
         </receiver>
         
