@@ -20,7 +20,7 @@ public class SMSListener extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     this.context = context;
     Toast.makeText(context, intent.getAction(), 5).show();
-    if (intent.getAction().equalsIgnoreCase("SMS_SENT")) {
+    if (intent.getAction().equalsIgnoreCase("Display_Contact")) {
       // Bundle bundle = intent.getExtras();
       try{
       intent.setClass(context, edu.nyu.cs.omnidroid.external.catcherapp.CatcherAppActivity.class);
