@@ -3,6 +3,7 @@
  */
 package edu.nyu.cs.omnidroid.core;
 
+import edu.nyu.cs.omnidroid.util.UGParser;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -103,6 +104,8 @@ public class CP extends ContentProvider {
     Context context = getContext();
     DatabaseHelper dbHelper = new DatabaseHelper(context);
     OmniMainDB = dbHelper.getWritableDatabase();
+    UGParser ug=new UGParser(getContext());
+    ug.delete_all();
     return (OmniMainDB == null) ? false : true;
 
   }
