@@ -136,6 +136,7 @@ public class Overview extends Activity implements OnClickListener {
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		menuInfo = new AdapterContextMenuInfo(v, 0, 0);
+		
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, MENU_EDIT, 0, R.string.edit);
 		menu.add(0, MENU_DELETE, 0, R.string.del);
@@ -146,12 +147,14 @@ public class Overview extends Activity implements OnClickListener {
 	 * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
 	 */
 	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
 		switch (item.getItemId()) {
 		case MENU_EDIT:
-			editHandler(item);
+			editHandler(info.id);
 			return true;
 		case MENU_DELETE:
-			deleteHandler(item);
+			deleteHandler(info.id);
 			return true;
 		default:
 			return super.onContextItemSelected(item);
@@ -178,12 +181,13 @@ public class Overview extends Activity implements OnClickListener {
      }
 
 	/**
-	 * @param item
+	 * @param l
 	 *            of the menu item
 	 */
-	private void deleteHandler(MenuItem item) {
+	private void deleteHandler(long l) {
 		// TODO (acase): Present delete confirmation dialog
-		ContextMenuInfo cmi = item.getMenuInfo();
+		Object data = getIntent().getData();
+		
 		Toast.makeText(this.getBaseContext(),
 				"Delete OmniHandler Selected", 5).show();
 		// TODO (acase): Delete from UGParser
@@ -194,10 +198,10 @@ public class Overview extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * @param item
+	 * @param l
 	 *            of the menu item
 	 */
-	private void editHandler(MenuItem item) {
+	private void editHandler(long l) {
 		// TODO (acase): Call next activity
 		Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5)
 				.show();
