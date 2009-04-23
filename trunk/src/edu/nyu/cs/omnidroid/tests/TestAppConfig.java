@@ -31,8 +31,8 @@ public class TestAppConfig extends Activity {
     ag.write("Filters:S_Name,S_Ph_No,Text,Location");
     ag.write("EventName:SMS_SENT,SENT SMS");
     ag.write("Filters:R_Name,R_Ph_no,Text");
-    ag.write("ActionName: SMS_SEND,SEND SMS");
-    ag.write("URIFields:R_NAME,R_Ph_No,Text");
+    ag.write("ActionName:SMS_SENT,SEND SMS");
+    ag.write("URIFields:RECEIVER NAME,,Text,ActionData");
     ag.write("ContentMap:");
     ag.write("S_Name,SENDER NAME,STRING");
     ag.write("R_Name,RECEIVER NAME,STRING");
