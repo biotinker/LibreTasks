@@ -177,6 +177,10 @@ public class AGParser {
       String DisplayEvent;
       String line;
 
+      try{
+      dis.close();
+      bis.close();
+      }catch(Exception e){}
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
@@ -225,7 +229,11 @@ public class AGParser {
       String ActualEvent;
       String DisplayEvent;
       String line;
-
+      try
+      {
+      dis.close();
+      bis.close();
+      }catch(Exception e){}
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
