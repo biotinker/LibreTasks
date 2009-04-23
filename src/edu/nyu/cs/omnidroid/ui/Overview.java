@@ -58,7 +58,7 @@ public class Overview extends Activity implements OnClickListener {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Debug.startMethodTracing("OmniDroid");
+		//Debug.startMethodTracing("OmniDroid");
 		// Create our Activity
 		super.onCreate(savedInstanceState);
 
@@ -126,7 +126,7 @@ public class Overview extends Activity implements OnClickListener {
 	 */
 	public void onDestroy() {
 		super.onDestroy();
-		Debug.stopMethodTracing();
+		//Debug.stopMethodTracing();
 	}
 	
 	/*
