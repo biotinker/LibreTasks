@@ -72,7 +72,7 @@ public class DummyActivity extends Activity {
 
         // added by Pradeep to populate Omniu CP at runtime
         uridata = HM1.get("ActionData");
-        //uridata = "SENDER PHONE NUMBER";
+        // uridata = "SENDER PHONE NUMBER";
         if (!uridata.contains("content://") && !uridata.equals("")) {
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
           // s_ph_no etc. and not the actual URI.
@@ -201,8 +201,10 @@ public class DummyActivity extends Activity {
     AGParser ag = new AGParser(getApplicationContext());
     String pkgname = ag.readPkgName(actiondata1);
     String listener = ag.readListenerClass(actiondata1);
-    ComponentName comp = new ComponentName(pkgname, listener);
-    // send_intent.setComponent(comp);
+    if (!pkgname.equalsIgnoreCase("")) {
+      ComponentName comp = new ComponentName(pkgname, listener);
+      send_intent.setComponent(comp);
+    }
     // send_intent.setClass(this.getApplicationContext(), pi.getClass());
     // startActivity(send_intent);
 
