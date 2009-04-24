@@ -30,6 +30,7 @@ public class DummyActivity extends Activity {
   String filterdata = null;
   String filtertype = null;
   String uridata = null;
+  String uridatatwo=null;
   String actionname = null;
   String actionapp = null;
 
@@ -67,17 +68,29 @@ public class DummyActivity extends Activity {
       if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
         filtertype = HM1.get(ug.KEY_FilterType);
         filterdata = HM1.get(ug.KEY_FilterData);
-        actionname = HM1.get("ActionName");
+        actionname = HM1.get(ug.KEY_ActionName);
         actionapp = HM1.get(ug.KEY_ActionApp);
 
         // added by Pradeep to populate Omniu CP at runtime
-        uridata = HM1.get("ActionData");
+        if(HM1.containsKey(ug.KEY_ActionData))
+        uridata = HM1.get(ug.KEY_ActionData);
+        else uridata="";
+        
+        if(HM1.containsKey(ug.KEY_ActionData2))
+         if (!HM1.get(ug.KEY_ActionData2).equals("True"))
+          uridatatwo=HM1.get(ug.KEY_ActionData2);
+        else uridatatwo="";
         // uridata = "SENDER PHONE NUMBER";
         if (!uridata.contains("content://") && !uridata.equals("")) {
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
-          // s_ph_no etc. and not the actual URI.
+          // SENDER PHONE NO etc. and not the actual URI.
         }
 
+        if (!uridatatwo.contains("content://") && !uridatatwo.equals("")) {
+          uridatatwo = fillURIData(uri, uridatatwo);// Call fillURIData if ActionData contains fields like
+          // TEXT etc. and not the actual URI.
+        }
+        
         // boolean val=checkFilter(uri,filtertype,filterdata);
         //added by pradeep to check if filters have to be tested.
         if (filtertype.equals(""))
@@ -198,6 +211,7 @@ public class DummyActivity extends Activity {
     Intent send_intent = new Intent();
     send_intent.setAction(actionname);
     send_intent.putExtra("uri", uridata);
+    send_intent.putExtra("uri2", uridatatwo);
     // sendBroadcast(send_intent);
     // PackageManager pm = this.getPackageManager();
     // try {
