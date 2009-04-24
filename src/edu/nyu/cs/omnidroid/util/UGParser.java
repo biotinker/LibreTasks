@@ -35,6 +35,7 @@ public class UGParser {
   public static final String KEY_ActionApp = "ActionApp";
   public static final String KEY_ActionName = "ActionName";
   public static final String KEY_ActionData = "ActionData";
+  public static final String KEY_ActionData2 = "ActionData2";
   public static final String KEY_EnableInstance = "EnableInstance";
 
   // Private class vars
@@ -70,6 +71,7 @@ public class UGParser {
     Schema.add("ActionApp");
     Schema.add("ActionName");
     Schema.add("ActionData");
+    Schema.add("ActionData2");
     Schema.add("EnableInstance");
     this.context = context;
   }
@@ -309,7 +311,7 @@ public class UGParser {
    * Reads Instance Records from the UserConfig
    * 
    * @return Returns Array List of HashMaps. HashMaps have the keys as EventName, EventApp,
-   *         FilterType, FilterData, ActionName, ActionApp, AppData,EnableInstance
+   *         FilterType, FilterData, ActionName, ActionApp, AppData,ActionData2,EnableInstance
    */
   public ArrayList<HashMap<String, String>> readRecords() {
     ArrayList<HashMap<String, String>> UCRecords = new ArrayList<HashMap<String, String>>();
@@ -384,7 +386,7 @@ public class UGParser {
    * 
    * @param HM
    *          HashMap containing EventName, EventApp, FilterType, FilterData, ActionName, ActionApp,
-   *          AppData,EnableInstance
+   *          AppData,Actiondata2,EnableInstance
    * @return Returns 1 if successful else 0.
    */
   public int writeRecord(HashMap<String, String> HM) {
@@ -393,7 +395,9 @@ public class UGParser {
       String key;
       while (i.hasNext()) {
         key = i.next();
+        if(HM.containsKey(key))
         write(key, HM.get(key).toString());
+      
       }
       return 1;
     } catch (Exception e) {
@@ -407,7 +411,7 @@ public class UGParser {
    * 
    * @param HM
    *          HashMap containing EventName, EventApp, FilterType, FilterData, ActionName, ActionApp,
-   *          AppData,EnableInstance
+   *          AppData,Actiondata2,EnableInstance
    * @return Returns true if successful else false.
    */
   public boolean updateRecord(HashMap<String, String> HM) {
