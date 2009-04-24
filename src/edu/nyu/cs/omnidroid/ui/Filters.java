@@ -53,6 +53,10 @@ public class Filters extends Activity implements OnClickListener {
   // List Data
   private ListView list;
 
+  // Activity results
+  private static final int ADD_RESULT = 1;
+  private static final int RESULT_ADD_SUCCESS = 1;
+
   /*
    * (non-Javadoc)
    * 
@@ -242,8 +246,23 @@ public class Filters extends Activity implements OnClickListener {
         i.putExtra(UGParser.KEY_FilterType, fType);
         i.putExtra(UGParser.KEY_FilterData, fData);
       }
-      
-      startActivity(i);
+  	startActivityForResult(i, ADD_RESULT);
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case ADD_RESULT:
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				setResult(resultCode, data);
+                finish();
+                break;
+			}
+			break;
+		}
+  }
 }

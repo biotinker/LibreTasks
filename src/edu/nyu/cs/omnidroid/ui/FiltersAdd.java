@@ -37,6 +37,10 @@ public class FiltersAdd extends ListActivity {
   String appName = null;
   String eventName = null;
 
+  // Activity results
+  private static final int ADD_RESULT = 1;
+  private static final int RESULT_ADD_SUCCESS = 1;
+
   /*
    * (non-Javadoc)
    * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -79,9 +83,24 @@ public class FiltersAdd extends ListActivity {
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     i.putExtra(UGParser.KEY_FilterType, sm.getKey());
-    startActivity(i);
-    // TODO(acase): Cleanup/destroy
-    //finish();
+	startActivityForResult(i, ADD_RESULT);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case ADD_RESULT:
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				setResult(resultCode, data);
+                finish();
+                break;
+			}
+			break;
+		}
   }
 
   /**

@@ -31,7 +31,10 @@ public class EventCatcherActions extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
-private static final int ADD_RESULT = 1;
+
+  // Activity results
+  private static final int ADD_RESULT = 1;
+  private static final int RESULT_ADD_SUCCESS = 1;
 
   /** Called when the activity is first created. */
   @Override
@@ -83,7 +86,7 @@ private static final int ADD_RESULT = 1;
     i.setClass(this.getApplicationContext(), Filters.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, sm.getKey());
-    startActivityForResult(i, ADD_RESULT);
+	startActivityForResult(i, ADD_RESULT);
   }
 
   /*
@@ -93,9 +96,13 @@ private static final int ADD_RESULT = 1;
   protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case ADD_RESULT:
-			setResult(resultCode, data);
-			  finish();	  
-          break;
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				setResult(resultCode, data);
+                finish();
+                break;
+			}
+			break;
 		}
   }
 
