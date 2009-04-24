@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -45,7 +45,7 @@ public class FiltersAddData extends Activity implements OnClickListener {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.filter_add_data);
+    setContentView(R.layout.filters_add_data);
 
     // See what application we want to handle events for from the
     // intent data passed to us.

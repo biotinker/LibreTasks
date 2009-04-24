@@ -8,14 +8,17 @@ package edu.nyu.cs.omnidroid.util;
  *
  */
 public class StringMap {
+  public static final int KEY = 0;
+  public static final int VALUE = 1;
+
   private String[] strings = {"",""};
   
   public StringMap() {
   }
 
   public StringMap(String s1, String s2) {
-    strings[0] = s1;
-    strings[1] = s2;
+    strings[KEY] = s1;
+    strings[VALUE] = s2;
   }
 
   public String get(int i) {
@@ -26,13 +29,16 @@ public class StringMap {
    * @param displayEvent
    */
   public void set(String s1, String s2) {
-    strings[0] = s1;
-    strings[1] = s2;
+    strings[KEY] = s1;
+    strings[VALUE] = s2;
   }
   public String toString() {
     return strings[1];
   }
   public String getKey() {
-    return strings[0];
+    return strings[KEY];
+  }
+  public String getValue() {
+    return strings[VALUE];
   }
 }

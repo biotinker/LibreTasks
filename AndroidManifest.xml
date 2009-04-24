@@ -75,17 +75,17 @@
 		</activity>
 
 		<!--  Activity used to setup filters for OmniHandlers -->
-        <activity android:name=".tests.Filters"
+        <activity android:name=".ui.Filters"
                   android:label="@string/filters_title">
 		</activity>
 
 		<!--  Activity used to add a filter to an OmniHandler -->
-        <activity android:name=".tests.FiltersAdd"
+        <activity android:name=".ui.FiltersAdd"
                   android:label="@string/filters_add_title">
 		</activity>
 
 		<!--  Activity used to add data to an OmniHandler filter -->
-        <activity android:name=".tests.FiltersAddData"
+        <activity android:name=".ui.FiltersAddData"
                   android:label="@string/filters_add_data_title">
 		</activity>
 

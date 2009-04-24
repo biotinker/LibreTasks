@@ -27,6 +27,8 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class ActionThrowerData extends Activity implements OnClickListener {
   private String eventApp;
   private String eventName;
+  private String filterType;
+  private String filterData;
   private String throwerApp;
   private String throwerName;
   private EditText appData;
@@ -48,6 +50,9 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     Bundle extras = i.getExtras();
     eventApp = extras.getString(AGParser.KEY_APPLICATION);
     eventName = extras.getString(UGParser.KEY_EventName);
+    // TODO(acase): Allow more than one filter
+    filterType = extras.getString(UGParser.KEY_FilterType);
+    filterData = extras.getString(UGParser.KEY_FilterData);
     throwerApp = extras.getString(UGParser.KEY_ActionApp);
     throwerName = extras.getString(UGParser.KEY_ActionName);
 
@@ -89,13 +94,15 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       HM.put(UGParser.KEY_EventApp, eventApp);
       HM.put(UGParser.KEY_ActionName, throwerName);
       HM.put(UGParser.KEY_ActionApp, throwerApp);
-      HM.put(UGParser.KEY_EnableInstance, "False");
+      HM.put(UGParser.KEY_EnableInstance, "True");
       HM.put(UGParser.KEY_ActionData, uri.toString());
-      // FIXME(acase): get these from the user
-      //HM.put("FilterType", "");
-      //HM.put("FilterData", "");
-      HM.put("FilterType", "s_ph_no");
-      HM.put("FilterData", "212-555-1234");
+      if ((filterType != null) && (filterData != null)) {
+        HM.put(UGParser.KEY_FilterType, filterType);
+        HM.put(UGParser.KEY_FilterData, filterData);
+      } else {
+        HM.put(UGParser.KEY_FilterType, "");
+        HM.put(UGParser.KEY_FilterData, "");
+      }
       ug.writeRecord(HM);
 
       // Go back to our start page
