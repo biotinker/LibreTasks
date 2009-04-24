@@ -1,8 +1,6 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -75,14 +73,12 @@ public class FiltersAdd extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    TextView tv = (TextView) v;
+    StringMap sm = (StringMap) l.getAdapter().getItem(position);
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
-    // For each filter pass it to the next page
-    // TODO (acase): Once UGParser has support for FilterIDs, we can provide multiple filters.
-    i.putExtra(UGParser.KEY_FilterType, tv.getText());
+    i.putExtra(UGParser.KEY_FilterType, sm.getKey());
     startActivity(i);
     // TODO(acase): Cleanup/destroy
     //finish();

@@ -51,15 +51,8 @@ private static final int ADD_RESULT = 1;
     // Getting the Events from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readEvents(appName);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
-    //ArrayList<StringMap> eventList = ag.readEvents(appName);
-    //Iterator<StringMap> i1 = eventList.iterator();
-    
-    //ArrayList<String> values = new ArrayList<String>();
-    ArrayList<TextView> values = new ArrayList<TextView>();
     ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
     while (i1.hasNext()) {
-      // FIXME(acase): Add key also
-      
       HashMap<String, String> HM1 = i1.next();
       HM1.toString();
       String splits[] = HM1.toString().split(",");
@@ -67,23 +60,8 @@ private static final int ADD_RESULT = 1;
         String pairs[] = splits[cnt].split("=");
         String key = pairs[0].replaceFirst("\\{","");
         String entry = pairs[1].replaceFirst("\\}","");
-        //TextView tv = new TextView(this);
-        //tv.setText(entry);
-        //tv.setTag(key);
-        //values.add(tv);
         stringvalues.add(new StringMap(key,entry));
       }
-      //key = splits[0];
-      //value = splits[1];
-      
-      //StringMap<String, String> HM1 = i1.next();
-      //Toast.makeText(getBaseContext(), HM1.toString(), 5).show();
-      // TODO (acase): We need a better way then accessing a hashmap
-      //TextView tv = new TextView(this);
-      //tv.setText(value[cnt]);
-      //tv.setTag(key[cnt]);
-      //values.add(HM1.values());
-      //values.add(tv);
     }
 
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
@@ -100,15 +78,11 @@ private static final int ADD_RESULT = 1;
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    StringMap sm = (StringMap)l.getAdapter().getItem(position);
-    
+    StringMap sm = (StringMap)l.getAdapter().getItem(position);    
     Intent i = new Intent();
-    // TODO(acase): Use Filters
-    //i.setClass(this.getApplicationContext(), Filters.class);
-    i.setClass(this.getApplicationContext(), ActionThrower.class);
-    String eName = sm.getKey();
+    i.setClass(this.getApplicationContext(), Filters.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eName);
+    i.putExtra(UGParser.KEY_EventName, sm.getKey());
     startActivityForResult(i, ADD_RESULT);
   }
 

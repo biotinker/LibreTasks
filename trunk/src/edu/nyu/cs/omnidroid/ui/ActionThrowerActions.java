@@ -19,20 +19,22 @@ import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
- * Presents a list of possible actions that the selected <code>ActionThrower</code> could 
- * throw as it's action to perform for that OmniHandler.
- *
+ * Presents a list of possible actions that the selected <code>ActionThrower</code> could throw as
+ * it's action to perform for that OmniHandler.
+ * 
  * @author acase
  */
 public class ActionThrowerActions extends ListActivity {
   private static AGParser ag;
   private String eventApp = null;
   private String eventName = null;
+  private String filterType = null;
+  private String filterData = null;
   private String throwerApp = null;
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
-  
+
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -49,71 +51,54 @@ public class ActionThrowerActions extends ListActivity {
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
       eventName = extras.getString(UGParser.KEY_EventName);
+      // TODO(acase): Allow more than one filter
+      filterType = extras.getString(UGParser.KEY_FilterType);
+      filterData = extras.getString(UGParser.KEY_FilterData);
       throwerApp = extras.getString(UGParser.KEY_ActionApp);
-    } else {
-      // TODO (acase): Throw exception
     }
 
     // Getting the Actions from AppConfig
     ArrayList<HashMap<String, String>> eventList = ag.readActions(throwerApp);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
-    ArrayList<String> values = new ArrayList<String>();
     ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
     while (i1.hasNext()) {
       HashMap<String, String> HM1 = i1.next();
       HM1.toString();
       String splits[] = HM1.toString().split(",");
-      for (int cnt=0; cnt < splits.length; cnt++) {
+      for (int cnt = 0; cnt < splits.length; cnt++) {
         String pairs[] = splits[cnt].split("=");
-        String key = pairs[0].replaceFirst("\\{","");
-        String entry = pairs[1].replaceFirst("\\}","");
-        //TextView tv = new TextView(this);
-        //tv.setText(entry);
-        //tv.setTag(key);
-        //values.add(tv);
-        stringvalues.add(new StringMap(key,entry));
+        String key = pairs[0].replaceFirst("\\{", "");
+        String entry = pairs[1].replaceFirst("\\}", "");
+        stringvalues.add(new StringMap(key, entry));
       }
-      // TODO (acase): We need a better way then accessing a hashmap
-      //HashMap<String, String> HM1 = i1.next();
-      //values.addAll(HM1.values());
     }
 
-    // Make sure we have an appropriate selection
-    if (values == null)
-    {
-      // TODO (acase): Throw exception
-    }
-
-    // Build our list of Actions  
+    // Build our list of Actions
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, stringvalues);
-    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-    //    android.R.layout.simple_list_item_1, values);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
   }
 
   /*
    * (non-Javadoc)
-   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    StringMap sm = (StringMap)l.getAdapter().getItem(position);
+    StringMap sm = (StringMap) l.getAdapter().getItem(position);
     Intent i = new Intent();
-    // TODO (acase): Choose Filter page
     i.setClass(this.getApplicationContext(), ActionThrowerData.class);
-    TextView tv = (TextView) v;
-    // EventCatcherApp
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
-    // EventCatcherAction
     i.putExtra(UGParser.KEY_EventName, eventName);
-    // ActionThrowerApp
+    if ((filterType != null) && (filterData != null)) {
+      i.putExtra(UGParser.KEY_FilterType, filterType);
+      i.putExtra(UGParser.KEY_FilterData, filterData);
+    }
     i.putExtra(UGParser.KEY_ActionApp, throwerApp);
-    // ActionThrowerAction
-    String aName = sm.getKey();
-    //i.putExtra(UGParser.KEY_ActionName, tv.getText());
-    i.putExtra(UGParser.KEY_ActionName, aName);
+    i.putExtra(UGParser.KEY_ActionName, sm.getKey());
     startActivity(i);
     finish();
   }
@@ -122,11 +107,10 @@ public class ActionThrowerActions extends ListActivity {
    * Creates the options menu items
    * 
    * @param menu
-   *            - the options menu to create
+   *          - the options menu to create
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
-        android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
