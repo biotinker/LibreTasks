@@ -26,8 +26,10 @@ public class EventCatcher extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
-private static final int ADD_RESULT = 1;
-private static final int RESULT_ADD_SUCCESS = 1;
+
+  // Activity results
+  private static final int ADD_RESULT = 1;
+  private static final int RESULT_ADD_SUCCESS = 1;
 
   /**
    * Creates the activity
@@ -76,7 +78,6 @@ private static final int RESULT_ADD_SUCCESS = 1;
 			}
 			break;
 		}
-
   }
 
   /*

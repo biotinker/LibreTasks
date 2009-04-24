@@ -44,7 +44,7 @@ public class Overview extends Activity implements OnClickListener {
 	private static final int MENU_TESTS = 5;
 	private static final int MENU_ABOUT = 6;
 
-    // Return value for our subactivities
+	// Return value for our subactivities
 	private static final int RESULT_ADD = 1;
 	private static final int RESULT_SETTING = 2;
 	private static final int RESULT_ADD_SUCCESS = 1;
@@ -52,16 +52,24 @@ public class Overview extends Activity implements OnClickListener {
 	// User Config Parser
 	private static UGParser ug;
 
+	// Output to UI
+	TableLayout table_layout;
+	
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		//Debug.startMethodTracing("OmniDroid");
+		// Debug.startMethodTracing("OmniDroid");
 		// Create our Activity
 		super.onCreate(savedInstanceState);
 
+		update();
+	}
+
+	private void update() {
 		// Get a list of our current OmniHandlers
 		ug = new UGParser(getApplicationContext());
 		ArrayList<View> rowList = new ArrayList<View>();
@@ -77,7 +85,7 @@ public class Overview extends Activity implements OnClickListener {
 			button.setText(HM1.get(UGParser.KEY_InstanceName));
 			button.setCursorVisible(true);
 			button.setTag(HM1.get((String) UGParser.KEY_InstanceName));
-			//button.setOnClickListener(this);
+			// button.setOnClickListener(this);
 
 			// Build our checkbox
 			Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
@@ -97,7 +105,7 @@ public class Overview extends Activity implements OnClickListener {
 
 			// Add a context menu for the row
 			registerForContextMenu(button);
-			
+
 			// Build our table row
 			TableRow row = new TableRow(this);
 			row.addView(button);
@@ -106,7 +114,7 @@ public class Overview extends Activity implements OnClickListener {
 		}
 
 		// Build our OmniHandler display table
-		TableLayout table_layout = new TableLayout(this);
+		table_layout = new TableLayout(this);
 		table_layout.setColumnStretchable(0, true);
 		for (View rows : rowList) {
 			rows.setPadding(2, 2, 2, 2);
@@ -117,26 +125,28 @@ public class Overview extends Activity implements OnClickListener {
 		ScrollView scrollPane = new ScrollView(this);
 		scrollPane.addView(table_layout);
 		setContentView(scrollPane);
-
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onDestroy()
 	 */
 	public void onDestroy() {
 		super.onDestroy();
-		//Debug.stopMethodTracing();
+		// Debug.stopMethodTracing();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
+	 * 
+	 * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu,
+	 * android.view.View, android.view.ContextMenu.ContextMenuInfo)
 	 */
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		menuInfo = new AdapterContextMenuInfo(v, 0, 0);
-		
+
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.add(0, MENU_EDIT, 0, R.string.edit);
 		menu.add(0, MENU_DELETE, 0, R.string.del);
@@ -144,10 +154,12 @@ public class Overview extends Activity implements OnClickListener {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
 	 */
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
 
 		switch (item.getItemId()) {
 		case MENU_EDIT:
@@ -161,25 +173,6 @@ public class Overview extends Activity implements OnClickListener {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
-	 */
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case RESULT_ADD:
-			switch (resultCode) { 
-			case RESULT_ADD_SUCCESS:
-				// TODO(acase): Repopulate our list if needed
-				break;
-			}
-          break;
-		case RESULT_SETTING:
-          // TODO(acase): Repopulate our list if needed
-          break;
-		}
-     }
-
 	/**
 	 * @param l
 	 *            of the menu item
@@ -187,9 +180,9 @@ public class Overview extends Activity implements OnClickListener {
 	private void deleteHandler(long l) {
 		// TODO (acase): Present delete confirmation dialog
 		Object data = getIntent().getData();
-		
-		Toast.makeText(this.getBaseContext(),
-				"Delete OmniHandler Selected", 5).show();
+
+		Toast.makeText(this.getBaseContext(), "Delete OmniHandler Selected", 5)
+				.show();
 		// TODO (acase): Delete from UGParser
 		// TODO (acase): Delete from CP
 
@@ -271,6 +264,24 @@ public class Overview extends Activity implements OnClickListener {
 		startActivityForResult(i, RESULT_ADD);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onActivityResult(int, int,
+	 * android.content.Intent)
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case RESULT_ADD:
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				update();
+				break;
+			}
+			break;
+		}
+	}
+
 	/**
 	 * Call our Settings Activity
 	 */
@@ -301,29 +312,31 @@ public class Overview extends Activity implements OnClickListener {
 	 * @see android.view.View.OnClickListener#onClick(android.view.View)
 	 */
 	public void onClick(View v) {
-	  Log.d(this.getLocalClassName(), "Classname of v=" + v.getClass().getName());
-	  //if (v.getClass().getName() == CheckBox.class.getName()) {
-			// Handle "Enable" button clicked
-			String instanceName = (String) v.getTag();
-			CheckBox cb = (CheckBox) v;
-			HashMap<String, String> HM = ug.readRecord(instanceName);
-			if (cb.isChecked()) {
-				Toast.makeText(this.getBaseContext(), "Enabling " + instanceName,
-						5).show();
-				HM.put(UGParser.KEY_EnableInstance, "true");
-			} else {
-				Toast.makeText(this.getBaseContext(), "Disabling " + instanceName,
-						5).show();
-				HM.put(UGParser.KEY_EnableInstance, "false");
-			}
-			ug.updateRecord(HM);
+		Log.d(this.getLocalClassName(), "Classname of v="
+				+ v.getClass().getName());
+		// if (v.getClass().getName() == CheckBox.class.getName()) {
+		// Handle "Enable" button clicked
+		String instanceName = (String) v.getTag();
+		CheckBox cb = (CheckBox) v;
+		HashMap<String, String> HM = ug.readRecord(instanceName);
+		if (cb.isChecked()) {
+			Toast
+					.makeText(this.getBaseContext(),
+							"Enabling " + instanceName, 5).show();
+			HM.put(UGParser.KEY_EnableInstance, "true");
+		} else {
+			Toast.makeText(this.getBaseContext(), "Disabling " + instanceName,
+					5).show();
+			HM.put(UGParser.KEY_EnableInstance, "false");
+		}
+		ug.updateRecord(HM);
 
-			// Restart the service
-			Intent i = new Intent();
-			i.setAction("OmniRestart");
-			sendBroadcast(i);
-		//} else if (v.getClass().getName() == Button.class.getName()) {
-			// TODO (acase): Handle "Edit" button clicked
-		//}
+		// Restart the service
+		Intent i = new Intent();
+		i.setAction("OmniRestart");
+		sendBroadcast(i);
+		// } else if (v.getClass().getName() == Button.class.getName()) {
+		// TODO (acase): Handle "Edit" button clicked
+		// }
 	}
 }

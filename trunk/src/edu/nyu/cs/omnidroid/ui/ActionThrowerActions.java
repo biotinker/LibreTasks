@@ -35,6 +35,10 @@ public class ActionThrowerActions extends ListActivity {
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
 
+  // Activity results
+  private static final int ADD_RESULT = 1;
+  private static final int RESULT_ADD_SUCCESS = 1;
+
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -99,8 +103,24 @@ public class ActionThrowerActions extends ListActivity {
     }
     i.putExtra(UGParser.KEY_ActionApp, throwerApp);
     i.putExtra(UGParser.KEY_ActionName, sm.getKey());
-    startActivity(i);
-    finish();
+	startActivityForResult(i, ADD_RESULT);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case ADD_RESULT:
+			switch (resultCode) {
+			case RESULT_ADD_SUCCESS:
+				setResult(resultCode, data);
+                finish();
+                break;
+			}
+			break;
+		}
   }
 
   /**
