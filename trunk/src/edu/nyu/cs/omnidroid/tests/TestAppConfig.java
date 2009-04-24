@@ -28,11 +28,11 @@ public class TestAppConfig extends Activity {
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener");
     ag.write("EventName:Contact_Saved,Contact Saved");
-    ag.write("Filters:S_Name,S_Ph_No,Text");
+    ag.write("Filters:S_Name,S_Ph_No,Text");    
     ag.write("EventName:Contact_Updated,Contact Updated");
     ag.write("Filters:S_Name,S_Ph_no,Text");
     ag.write("ActionName:Display_Contact,Display Contact");
-    ag.write("URIFields:CONTACT NAME,CONTACT PHONE NUMBER,TEXT,ActionData");
+    ag.write("URIFields:CONTACT PHONE NUMBER,TEXT,ActionData");
     ag.write("ContentMap:");
     ag.write("S_Name,CONTACT NAME,STRING");
     ag.write("S_Ph_No,CONTACT PHONE NUMBER,INT");
