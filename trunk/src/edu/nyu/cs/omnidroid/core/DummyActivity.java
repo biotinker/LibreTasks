@@ -79,7 +79,11 @@ public class DummyActivity extends Activity {
         }
 
         // boolean val=checkFilter(uri,filtertype,filterdata);
-        getCols(uri, filtertype, filterdata, actionapp);
+        //added by pradeep to check if filters have to be tested.
+        if (filtertype.equals(""))
+          sendIntent(actionapp);
+        else
+          getCols(uri, filtertype, filterdata, actionapp);
 
       }
     }
@@ -227,34 +231,39 @@ public class DummyActivity extends Activity {
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
     int flag = 0;
+    try {
 
-    Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-    if (cur.moveToFirst()) {
+      Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+      if (cur.moveToFirst()) {
 
-      do {
+        do {
 
-        int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
+          int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
 
-        if (new_id == id) {
-          if (filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1)))) {
-            Toast.makeText(
-                getApplicationContext(),
-                cur.getString(cur.getColumnIndex("s_name")) + ":"
-                    + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
-            sendIntent(actiondata1);
-            flag = 1;
+          if (new_id == id) {
+            if (filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1)))) {
+              Toast.makeText(
+                  getApplicationContext(),
+                  cur.getString(cur.getColumnIndex("s_name")) + ":"
+                      + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
+              sendIntent(actiondata1);
+              flag = 1;
+            }
+
           }
 
+        } while (cur.moveToNext());
+        if (flag == 0) {
+          Toast
+              .makeText(getApplicationContext(),
+                  cur.getString(cur.getColumnIndex(filtertype1)) + " does not exist",
+                  Toast.LENGTH_LONG).show();
         }
 
-      } while (cur.moveToNext());
-      if (flag == 0) {
-        Toast.makeText(getApplicationContext(),
-            cur.getString(cur.getColumnIndex(filtertype1)) + " does not exist", Toast.LENGTH_LONG)
-            .show();
       }
-
+    } catch (Exception e) {
+      OmLogger.write(getApplicationContext(), "Unable to filter on filtername");
     }
-
   }
+
 }
