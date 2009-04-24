@@ -105,8 +105,13 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       }
       ug.writeRecord(HM);
 
-      // Go back to our start page
+   // Added by Pradeep to restart the service to register new IntentFilter
       Intent i = new Intent();
+      i.setAction("OmniRestart");
+      sendBroadcast(i);
+      
+      // Go back to our start page
+      i = new Intent();
       i.setClass(this.getApplicationContext(), Overview.class);
       startActivity(i);
       finish();
