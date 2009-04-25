@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
-import edu.nyu.cs.omnidroid.ui.CheckListViewDemo;
 import edu.nyu.cs.omnidroid.ui.Filters;
 import edu.nyu.cs.omnidroid.ui.PackageLister;
 import edu.nyu.cs.omnidroid.util.AGParser;
