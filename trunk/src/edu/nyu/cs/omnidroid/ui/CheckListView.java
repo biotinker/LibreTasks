@@ -11,7 +11,7 @@
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-*/
+ */
 
 package edu.nyu.cs.omnidroid.ui;
 
@@ -23,28 +23,27 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class CheckListView extends ListView {
-	public CheckListView(Context context) {
-		super(context);
-	}
-	
-	public CheckListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
-									
-	public CheckListView(Context context, AttributeSet attrs,
-												int defStyle) {
-		super(context, attrs, defStyle);
-	}
-	
-	public void setAdapter(ListAdapter adapter) {
-		super.setAdapter(new CheckableWrapper(getContext(), adapter));
-	}
+  public CheckListView(Context context) {
+    super(context);
+  }
+
+  public CheckListView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
+
+  public CheckListView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+  }
+
+  public void setAdapter(ListAdapter adapter) {
+    super.setAdapter(new CheckableWrapper(getContext(), adapter));
+  }
 
   public List getCheckedPositions() {
-    return(((CheckableWrapper)getAdapter()).getCheckedPositions());
+    return (((CheckableWrapper) getAdapter()).getCheckedPositions());
   }
 
   public List getCheckedObjects() {
-    return(((CheckableWrapper)getAdapter()).getCheckedObjects());
+    return (((CheckableWrapper) getAdapter()).getCheckedObjects());
   }
 }

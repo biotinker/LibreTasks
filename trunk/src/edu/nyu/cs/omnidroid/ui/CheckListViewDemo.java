@@ -52,14 +52,14 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
   TextView selection;
   UGParser ug;
   ArrayList<String> items = new ArrayList<String>();
-  
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     // Get a list of our current OmniHandlers
     ug = new UGParser(getApplicationContext());
-    //ArrayList<View> rowList = new ArrayList<View>();
+    // ArrayList<View> rowList = new ArrayList<View>();
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
 
@@ -68,20 +68,20 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
       HashMap<String, String> HM1 = i.next();
       items.add(HM1.get((String) UGParser.KEY_InstanceName));
     }
-    
+
     setListAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, items));
-    selection=(TextView)findViewById(R.id.selection);
+    selection = (TextView) findViewById(R.id.selection);
     registerForContextMenu(getListView());
     setContentView(R.layout.checkboxlistview);
   }
 
-
   /*
    * (non-Javadoc)
-   * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
+   * 
+   * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View,
+   * android.view.ContextMenu.ContextMenuInfo)
    */
-  public void onCreateContextMenu(ContextMenu menu, View v,
-      ContextMenuInfo menuInfo) {
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     menuInfo = new AdapterContextMenuInfo(v, 0, 0);
     super.onCreateContextMenu(menu, v, menuInfo);
     menu.add(0, MENU_EDIT, 0, R.string.edit);
@@ -90,6 +90,7 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
    */
   public boolean onContextItemSelected(MenuItem item) {
@@ -104,28 +105,27 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
       return super.onContextItemSelected(item);
     }
   }
-  
+
   /**
    * @param item
-   *            of the menu item
+   *          of the menu item
    */
   private void deleteHandler(MenuItem item) {
     // TODO (acase): Present delete confirmation dialog
     ContextMenuInfo cmi = item.getMenuInfo();
-    Toast.makeText(this.getBaseContext(),
-        "Delete OmniHandler Selected", 5).show();
+    Toast.makeText(this.getBaseContext(), "Delete OmniHandler Selected", 5).show();
     // TODO (acase): Delete from UGParser
     // TODO (acase): Delete from CP
 
     // Button selected = (Button) view;
     // ug.deleteRecord(selected.getText());
-    
+
     AdapterView.AdapterContextMenuInfo info;
     try {
-        info = (AdapterView.AdapterContextMenuInfo) cmi;
+      info = (AdapterView.AdapterContextMenuInfo) cmi;
     } catch (ClassCastException e) {
-        Log.e(this.getLocalClassName(), "bad menuInfo", e);
-        return;
+      Log.e(this.getLocalClassName(), "bad menuInfo", e);
+      return;
     }
     long id = getListAdapter().getItemId(info.position);
 
@@ -133,29 +133,25 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
 
   /**
    * @param item
-   *            of the menu item
+   *          of the menu item
    */
   private void editHandler(MenuItem item) {
     // TODO (acase): Call next activity
-    Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5)
-        .show();
+    Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
   }
 
   /**
    * Creates the options menu items
    * 
    * @param menu
-   *            - the options menu to create
+   *          - the options menu to create
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_ADD, 0, R.string.add_omnihandler).setIcon(
-        android.R.drawable.ic_menu_add);
-    menu.add(0, MENU_SETTINGS, 0, R.string.settings).setIcon(
-        android.R.drawable.ic_menu_preferences);
-    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
-        android.R.drawable.ic_menu_help);
-    menu.add(0, MENU_TESTS, 0, R.string.tests).setIcon(
-        android.R.drawable.ic_menu_manage);
+    menu.add(0, MENU_ADD, 0, R.string.add_omnihandler).setIcon(android.R.drawable.ic_menu_add);
+    menu.add(0, MENU_SETTINGS, 0, R.string.settings)
+        .setIcon(android.R.drawable.ic_menu_preferences);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_TESTS, 0, R.string.tests).setIcon(android.R.drawable.ic_menu_manage);
     return true;
   }
 
@@ -175,8 +171,7 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
       return true;
     case MENU_TESTS:
       Intent i = new Intent();
-      i.setClass(this.getApplicationContext(),
-          edu.nyu.cs.omnidroid.tests.TestApp.class);
+      i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.tests.TestApp.class);
       startActivity(i);
       return true;
     }
@@ -188,8 +183,7 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
    */
   private void AddOmniHandler() {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(),
-        edu.nyu.cs.omnidroid.ui.EventCatcher.class);
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcher.class);
     startActivity(i);
   }
 
@@ -198,8 +192,7 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
    */
   private void Settings() {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(),
-        edu.nyu.cs.omnidroid.ui.Settings.class);
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Settings.class);
     startActivity(i);
   }
 
@@ -213,45 +206,45 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
   /*
    * (non-Javadoc)
    * 
-   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     Log.i(this.getLocalClassName(), "onListItemClicked");
     Log.d(this.getLocalClassName(), "Classname of v=" + v.getClass().getName());
     selection.setText(items.get(position));
-    //if (v.getClass().getName() == CheckBox.class.getName()) {
-      // Handle "Enable" button clicked
-      String instanceName = (String) v.getTag();
-      CheckBox cb = (CheckBox) v;
-      HashMap<String, String> HM = ug.readRecord(instanceName);
-      if (cb.isChecked()) {
-        Toast.makeText(this.getBaseContext(), "Enabling " + instanceName,
-            5).show();
-        HM.put(UGParser.KEY_EnableInstance, "true");
-      } else {
-        Toast.makeText(this.getBaseContext(), "Disabling " + instanceName,
-            5).show();
-        HM.put(UGParser.KEY_EnableInstance, "false");
-      }
-      ug.updateRecord(HM);
+    // if (v.getClass().getName() == CheckBox.class.getName()) {
+    // Handle "Enable" button clicked
+    String instanceName = (String) v.getTag();
+    CheckBox cb = (CheckBox) v;
+    HashMap<String, String> HM = ug.readRecord(instanceName);
+    if (cb.isChecked()) {
+      Toast.makeText(this.getBaseContext(), "Enabling " + instanceName, 5).show();
+      HM.put(UGParser.KEY_EnableInstance, "true");
+    } else {
+      Toast.makeText(this.getBaseContext(), "Disabling " + instanceName, 5).show();
+      HM.put(UGParser.KEY_EnableInstance, "false");
+    }
+    ug.updateRecord(HM);
 
-      // Restart the service
-      Intent i = new Intent();
-      i.setAction("OmniRestart");
-      sendBroadcast(i);
-    //} else if (v.getClass().getName() == Button.class.getName()) {
-      // TODO (acase): Handle "Edit" button clicked
-    //}
+    // Restart the service
+    Intent i = new Intent();
+    i.setAction("OmniRestart");
+    sendBroadcast(i);
+    // } else if (v.getClass().getName() == Button.class.getName()) {
+    // TODO (acase): Handle "Edit" button clicked
+    // }
   }
 
-
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
     // TODO Auto-generated method stub
-    
+
   }
 
 }

@@ -1,11 +1,7 @@
 package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.util.AGParser;
-import edu.nyu.cs.omnidroid.util.UGParser;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +12,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * Activity used to present a list of Applications which are registered in Omnidroid configuration.
@@ -63,15 +62,11 @@ public class ActionThrower extends ListActivity {
     ArrayList<String> pkgNames;
     pkgNames = ag.readLines(AGParser.KEY_APPLICATION);
 
-/*
-    // TODO(acase): Filter by only apps that contain actions
-    for (pkgNames::location) {
-      if (ag.readActions(pkgName).size < 1) {
-         pkgNames.remove(location);
-      }
-    }
-*/    
-    
+    /*
+     * // TODO(acase): Filter by only apps that contain actions for (pkgNames::location) { if
+     * (ag.readActions(pkgName).size < 1) { pkgNames.remove(location); } }
+     */
+
     // Display possible actions
     setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pkgNames));
     getListView().setTextFilterEnabled(true);
@@ -95,24 +90,25 @@ public class ActionThrower extends ListActivity {
       i.putExtra(UGParser.KEY_FilterData, filterData);
     }
     i.putExtra(UGParser.KEY_ActionApp, tv.getText());
-	startActivityForResult(i, ADD_RESULT);
+    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case ADD_RESULT:
-			switch (resultCode) {
-			case RESULT_ADD_SUCCESS:
-				setResult(resultCode, data);
-                finish();
-                break;
-			}
-			break;
-		}
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case ADD_RESULT:
+      switch (resultCode) {
+      case RESULT_ADD_SUCCESS:
+        setResult(resultCode, data);
+        finish();
+        break;
+      }
+      break;
+    }
   }
 
   /**

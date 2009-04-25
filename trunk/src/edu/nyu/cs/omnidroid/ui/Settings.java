@@ -20,7 +20,7 @@ public class Settings extends Activity {
 
     // Create a base layout to present our settings
     setContentView(R.layout.settings);
-    
+
   }
 
 }

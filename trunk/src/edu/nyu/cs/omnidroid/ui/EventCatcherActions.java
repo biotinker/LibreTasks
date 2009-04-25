@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
@@ -59,11 +58,11 @@ public class EventCatcherActions extends ListActivity {
       HashMap<String, String> HM1 = i1.next();
       HM1.toString();
       String splits[] = HM1.toString().split(",");
-      for (int cnt=0; cnt < splits.length; cnt++) {
+      for (int cnt = 0; cnt < splits.length; cnt++) {
         String pairs[] = splits[cnt].split("=");
-        String key = pairs[0].replaceFirst("\\{","");
-        String entry = pairs[1].replaceFirst("\\}","");
-        stringvalues.add(new StringMap(key,entry));
+        String key = pairs[0].replaceFirst("\\{", "");
+        String entry = pairs[1].replaceFirst("\\}", "");
+        stringvalues.add(new StringMap(key, entry));
       }
     }
 
@@ -77,44 +76,46 @@ public class EventCatcherActions extends ListActivity {
 
   /*
    * (non-Javadoc)
-   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    StringMap sm = (StringMap)l.getAdapter().getItem(position);    
+    StringMap sm = (StringMap) l.getAdapter().getItem(position);
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), Filters.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, sm.getKey());
-	startActivityForResult(i, ADD_RESULT);
+    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case ADD_RESULT:
-			switch (resultCode) {
-			case RESULT_ADD_SUCCESS:
-				setResult(resultCode, data);
-                finish();
-                break;
-			}
-			break;
-		}
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case ADD_RESULT:
+      switch (resultCode) {
+      case RESULT_ADD_SUCCESS:
+        setResult(resultCode, data);
+        finish();
+        break;
+      }
+      break;
+    }
   }
 
   /**
    * Creates the options menu items
    * 
    * @param menu
-   *            - the options menu to create
+   *          - the options menu to create
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
-        android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 

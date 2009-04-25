@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
@@ -95,6 +94,7 @@ public class ActionThrowerActions extends ListActivity {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), ActionThrowerData.class);
+    //i.setClass(this.getApplicationContext(), ActionThrowerURI.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     i.putExtra(UGParser.KEY_EventName, eventName);
     if ((filterType != null) && (filterData != null)) {
@@ -103,24 +103,25 @@ public class ActionThrowerActions extends ListActivity {
     }
     i.putExtra(UGParser.KEY_ActionApp, throwerApp);
     i.putExtra(UGParser.KEY_ActionName, sm.getKey());
-	startActivityForResult(i, ADD_RESULT);
+    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case ADD_RESULT:
-			switch (resultCode) {
-			case RESULT_ADD_SUCCESS:
-				setResult(resultCode, data);
-                finish();
-                break;
-			}
-			break;
-		}
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case ADD_RESULT:
+      switch (resultCode) {
+      case RESULT_ADD_SUCCESS:
+        setResult(resultCode, data);
+        finish();
+        break;
+      }
+      break;
+    }
   }
 
   /**
