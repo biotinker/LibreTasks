@@ -24,17 +24,12 @@ public class BCReceiver extends BroadcastReceiver {
 	    {
 		//this.context = context;
 		//Toast.makeText(context,"Caught by Broadcast Receiver",Toast.LENGTH_LONG).show();
-		try{
-			if (intent.getAction().contains("SMS_RECEIVED"))
-			{
-				readSMS(context,intent);
-			}
-			else
+		try
 			{
 			intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
 			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
-			}
+			
 		Log.i("Received Intent", intent.getAction());
 		}catch(Exception e)
 		{
