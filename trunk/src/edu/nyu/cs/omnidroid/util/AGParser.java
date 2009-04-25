@@ -189,11 +189,14 @@ public class AGParser {
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":", 2);
+        try
+        {
+    	  String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
         }
+        }catch(Exception e){}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
