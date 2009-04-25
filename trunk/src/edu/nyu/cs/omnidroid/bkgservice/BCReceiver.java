@@ -25,9 +25,16 @@ public class BCReceiver extends BroadcastReceiver {
 		//this.context = context;
 		//Toast.makeText(context,"Caught by Broadcast Receiver",Toast.LENGTH_LONG).show();
 		try{
+			if (intent.getAction().contains("SMS_RECEIVED"))
+			{
+				readSMS(context,intent);
+			}
+			else
+			{
 			intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
 			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
+			}
 		Log.i("Received Intent", intent.getAction());
 		}catch(Exception e)
 		{
@@ -35,5 +42,26 @@ public class BCReceiver extends BroadcastReceiver {
 			OmLogger.write(context,"Unable to execute required action");
 		}
 		}
+	
+	public void readSMS(Context context, Intent intent)
+	{
+		Bundle bundle = intent.getExtras();
+	    Toast.makeText(context, intent.getAction() , Toast.LENGTH_SHORT).show();
+	    SmsMessage[] msgs = null;
+	    String str = "";
+	    if (bundle != null) {
+	      Object[] pdus = (Object[])bundle.get("pdus");
+	      msgs = new SmsMessage[pdus.length];
+	      for (int i = 0; i < msgs.length; i++) {
+	        msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+	        str += "SMS from " + msgs[i].getOriginatingAddress();
+	        str += " :";
+	        str += msgs[i].getMessageBody().toString();
+	        str += "\n";
+	      }
+	      Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+
 	    }
+	    }
+}
 	
