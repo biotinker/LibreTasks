@@ -531,15 +531,22 @@ public class AGParser {
     ArrayList<StringMap> contentmap = new ArrayList<StringMap>();
     Boolean found = false;
     try {
+      try{
+        dis.close();
+        bis.close();
+        }catch(Exception e){}
       OpenFileRead();
       String line;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
+        try
+        {
         String[] parts = line.split(":", 2);
         if (parts[1].toString().equalsIgnoreCase(AppName)) {
           found = true;
           break;
         }
+        }catch(Exception e){}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
