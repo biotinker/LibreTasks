@@ -37,10 +37,10 @@ public class CheckableWrapper extends AdapterWrapper {
   private static final int MENU_DELETE = 1;
 
   Context ctxt = null;
-  boolean[] states=null;
- 
-  //FIXME(acase): Allow Context Menu 
-  
+  boolean[] states = null;
+
+  // FIXME(acase): Allow Context Menu
+
   public CheckableWrapper(Context ctxt, ListAdapter delegate) {
     super(delegate);
 
@@ -53,27 +53,27 @@ public class CheckableWrapper extends AdapterWrapper {
   }
 
   public List getCheckedPositions() {
-    List result=new ArrayList();
+    List result = new ArrayList();
 
-    for (int i=0;i<delegate.getCount();i++) {
+    for (int i = 0; i < delegate.getCount(); i++) {
       if (states[i]) {
         result.add(new Integer(i));
       }
     }
 
-    return(result);
+    return (result);
   }
 
   public List getCheckedObjects() {
-    List result=new ArrayList();
+    List result = new ArrayList();
 
-    for (int i=0;i<delegate.getCount();i++) {
+    for (int i = 0; i < delegate.getCount(); i++) {
       if (states[i]) {
         result.add(delegate.getItem(i));
       }
     }
 
-    return(result);
+    return (result);
   }
 
   public View getView(int position, View convertView, ViewGroup parent) {
@@ -98,7 +98,7 @@ public class CheckableWrapper extends AdapterWrapper {
           states[(Integer) btn.getTag()] = checked;
         }
       };
-      
+
       View.OnCreateContextMenuListener cml = new View.OnCreateContextMenuListener() {
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
           menuInfo = new AdapterContextMenuInfo(v, 0, 0);
@@ -106,7 +106,7 @@ public class CheckableWrapper extends AdapterWrapper {
           menu.add(0, MENU_DELETE, 0, R.string.del);
         }
       };
-      
+
       cb.setOnCheckedChangeListener(l);
 
       layout.addView(cb);

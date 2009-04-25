@@ -52,7 +52,9 @@ public class EventCatcher extends ListActivity {
 
   /*
    * (non-Javadoc)
-   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -60,38 +62,40 @@ public class EventCatcher extends ListActivity {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), EventCatcherActions.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
-	startActivityForResult(i, ADD_RESULT);
+    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case ADD_RESULT:
-			switch (resultCode) {
-			case RESULT_ADD_SUCCESS:
-				setResult(resultCode, data);
-                finish();
-                break;
-			}
-			break;
-		}
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case ADD_RESULT:
+      switch (resultCode) {
+      case RESULT_ADD_SUCCESS:
+        setResult(resultCode, data);
+        finish();
+        break;
+      }
+      break;
+    }
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(
-        android.R.drawable.ic_menu_help);
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -105,6 +109,7 @@ public class EventCatcher extends ListActivity {
 
   /**
    * Call our Help dialog
+   * 
    * @return void
    */
   private void Help() {

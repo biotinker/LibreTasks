@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
@@ -29,7 +28,7 @@ public class FiltersAdd extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
-  
+
   // Application Configuration
   private AGParser ag;
 
@@ -38,12 +37,13 @@ public class FiltersAdd extends ListActivity {
   String eventName = null;
 
   // Activity results
-  private static final int ADD_RESULT = 1;
+  //private static final int ADD_RESULT = 1;
   private static final int ADD_FILTER = 2;
   private static final int RESULT_ADD_SUCCESS = 1;
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -61,7 +61,7 @@ public class FiltersAdd extends ListActivity {
     eventName = extras.getString(UGParser.KEY_EventName);
 
     // Getting the list of Filters available from AppConfig
-    //ArrayList<StringMap> contentMap = new ArrayList<StringMap>();
+    // ArrayList<StringMap> contentMap = new ArrayList<StringMap>();
     ArrayList<StringMap> contentMap = ag.readContentMap(appName);
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, contentMap);
@@ -84,24 +84,25 @@ public class FiltersAdd extends ListActivity {
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     i.putExtra(UGParser.KEY_FilterType, sm.getKey());
-	startActivityForResult(i, ADD_FILTER);
+    startActivityForResult(i, ADD_FILTER);
   }
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case ADD_FILTER:
-			switch (resultCode) {
-			case RESULT_ADD_SUCCESS:
-				setResult(resultCode, data);
-                finish();
-                break;
-			}
-			break;
-		}
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case ADD_FILTER:
+      switch (resultCode) {
+      case RESULT_ADD_SUCCESS:
+        setResult(resultCode, data);
+        finish();
+        break;
+      }
+      break;
+    }
   }
 
   /**
