@@ -51,7 +51,7 @@ public class TestAppConfig extends Activity {
     //ag.write("S_Name,SENDER NAME,STRING");
    // ag.write("R_Name,RECEIVER NAME,STRING");
     ag.write("address,SENDER PHONE NUMBER,INT");
-    ag.write("address,RECEIVER PHONE NUMBER,INT");
+    ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
     ag.write("body,Text,STRING");
    // ag.write("Location,SMS Number,INT");
     
