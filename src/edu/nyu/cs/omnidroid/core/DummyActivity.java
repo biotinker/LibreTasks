@@ -224,8 +224,9 @@ public class DummyActivity extends Activity {
     }
     // send_intent.setClass(this.getApplicationContext(), pi.getClass());
     // startActivity(send_intent);
-
+try{
     sendBroadcast(send_intent);
+}catch(Exception e){ e.toString();}
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
 
     // } catch (NameNotFoundException e) {
@@ -261,6 +262,7 @@ public class DummyActivity extends Activity {
         		                getApplicationContext(),
         		                cur.getString(cur.getColumnIndex(filtertype1)) + ":"
         		                    + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
+        			  sendIntent(actiondata1);
                   } 
         		  else
         		  {
