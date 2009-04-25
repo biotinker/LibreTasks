@@ -42,18 +42,18 @@ public class TestAppConfig extends Activity {
     ag.write("PkgName:");
     ag.write("ListenerClass:");
     ag.write("EventName:SMS_RECEIVED,SMS RECEIVED");
-    ag.write("Filters:S_Name,S_Ph_No,Text,Location");
+    ag.write("Filters:address");
     ag.write("EventName:SMS_SENT,SENT SMS");
-    ag.write("Filters:R_Name,R_Ph_no,Text");
+    ag.write("Filters:address,body");
     ag.write("ActionName: SMS_SEND,SEND SMS");
-    ag.write("URIFields:R_NAME,R_Ph_No,Text");
+    ag.write("URIFields:address,body");
     ag.write("ContentMap:");
-    ag.write("S_Name,SENDER NAME,STRING");
-    ag.write("R_Name,RECEIVER NAME,STRING");
-    ag.write("S_Ph_No,SENDER PHONE NUMBER,INT");
-    ag.write("R_Ph_No,RECEIVER PHONE NUMBER,INT");
-    ag.write("Text,Text,STRING");
-    ag.write("Location,SMS Number,INT");
+    //ag.write("S_Name,SENDER NAME,STRING");
+   // ag.write("R_Name,RECEIVER NAME,STRING");
+    ag.write("address,SENDER PHONE NUMBER,INT");
+    ag.write("address,RECEIVER PHONE NUMBER,INT");
+    ag.write("body,Text,STRING");
+   // ag.write("Location,SMS Number,INT");
     
     ag.write("Application:System");
     ag.write("EventName:android.intent.action.TIME_SET,TIME CHANGED");
