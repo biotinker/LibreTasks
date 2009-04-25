@@ -34,5 +34,8 @@
 	<string name="event_catcher">Catcher</string>
 	<string name="about">About</string>
 	<string name="next">Next</string>
+<!--	<string name="help_overview">OmniDroid provides a set of OmniHandlers that allows the user to customize how applications interact with eachother.<br/><br/>This page provides a list of OmniHandlers that are stored in OmniDroid and a checkbox to enable/disable each OmniHandler.<br/><br/><ul><li>Delete an OmniHandler by long-clicking it and selecting the Delete option.</li><li>Add an OmniHandler by selecting the Add option from the Menu.</li></ul></string> -->
+<!-- 	<string name="about_overview">OmniDroid is brought to you in part by the letter G and the number 13.<br/><br/> Contributors include:<ul><li>Andrew Case</li><li>Pradeep Harish Varma</li><li>Rajiv Sharma</li><li>Sucharita Gaat</li></ul><br/><br/> Generous Donations from:<ul><li>Google</li><li>New York University</li></ul>"</string> -->
+	<string name="okay">Okay</string>
 	</resources>
 

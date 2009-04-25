@@ -221,6 +221,7 @@ public class Filters extends Activity implements OnClickListener {
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     startActivity(i);
+    //TODO(acase): Destroy if necessary
   }
 
   /**

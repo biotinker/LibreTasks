@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -53,7 +57,7 @@ public class Overview extends Activity implements OnClickListener {
 	private static UGParser ug;
 
 	// Output to UI
-	TableLayout table_layout;
+	private TableLayout table_layout;
 	
 	/*
 	 * (non-Javadoc)
@@ -125,6 +129,11 @@ public class Overview extends Activity implements OnClickListener {
 		ScrollView scrollPane = new ScrollView(this);
 		scrollPane.addView(table_layout);
 		setContentView(scrollPane);
+
+		// If we don't have any OmniHandlers, throw up our Help Dialog
+		if (userConfigRecords.size() == 0) {
+			Help();
+		}
 	}
 
 	/*
@@ -296,14 +305,52 @@ public class Overview extends Activity implements OnClickListener {
 	 * Call our Help dialog
 	 */
 	private void Help() {
-		// TODO (acase): Create a help dialog for this activity
+        Builder help = new AlertDialog.Builder(this);
+		// TODO(acase): Move to some kind of resource
+        //String help_msg = this.getResources().getString(R.string.help_overview);
+        String help_msg = "OmniDroid provides a set of OmniHandlers that " +
+        	               "allows you to customize how applications interact " +
+        	               "with eachother.\n<br/>" +
+        	               "This page provides a list of OmniHandlers that are " +
+        	               "stored in OmniDroid and a checkbox to enable/disable " +
+        	               "each OmniHandler.\n<br/>" +
+        	               "Actions:\n<br/>" + 
+        	               "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the Add option from the Menu.\n<br/>" +
+        	               "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting the Delete option.\n<br/>";
+        help.setTitle(R.string.help);
+        help.setIcon(android.R.drawable.ic_dialog_info);
+        help.setMessage(Html.fromHtml(help_msg));
+        help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+        });
+        help.show();
 	}
 
 	/**
 	 * Call our About dialog
 	 */
 	private void About() {
-		// TODO (acase): Create an about dialog for our program
+        Builder about = new AlertDialog.Builder(this);
+		// TODO(acase): Move to some kind of resource
+        //String about_msg = this.getResources().getString(R.string.help_overview);
+        String about_msg = "OmniDroid is brought to you in part by the letter G and the number 13.\n<br/>"
+        	             + "Contributors include:\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Andrew Case\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Sucharita Gaat\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Rajiv Sharma\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Pradeep Harish Varma\n<br/>"
+        	             + "Generous Donations from:\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Google\n<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;New York University";
+        about.setTitle(R.string.about);
+        about.setIcon(android.R.drawable.ic_dialog_info);
+        about.setMessage(Html.fromHtml(about_msg));
+        about.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+        });
+        about.show();
 	}
 
 	/*
