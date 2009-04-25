@@ -23,6 +23,12 @@
             </intent-filter>
         </receiver>
         
+        <receiver android:name=".external.catcherapp.SMSCatcher">
+            <intent-filter>
+                <action android:name="SMS_SEND"/>
+            </intent-filter>
+        </receiver>
+        
     
 	
     
@@ -99,6 +105,10 @@
         <activity android:name=".external.catcherapp.CatcherAppActivity"
                   android:label="@string/event_catcher">
 		</activity>
+		
+		<activity android:name=".external.catcherapp.SMSCatcherActivity"
+                  android:label="@string/sms_catcher">
+		</activity>
 
 		<!--  Activity used to by the event catcher to determine
 		      what actions to catch for a given application -->
@@ -169,5 +179,9 @@
     </uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_SMS">
     </uses-permission>
+            <uses-permission android:name="android.permission.READ_SMS">
+            </uses-permission>
+	        <uses-permission android:name="android.permission.WRITE_SMS">
+	        </uses-permission>
 
 </manifest> 
