@@ -16,7 +16,7 @@
 		android:layout_height="wrap_content" android:text="@string/name_data" />
 
 	<EditText android:id="@+id/data" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" />
+		android:layout_height="wrap_content"/>
 
 	<Button android:id="@+id/save" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="Save" />

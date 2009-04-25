@@ -3,10 +3,14 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
+<!--
+ <EditText android:layout_width="fill_parent" android:layout_weight="1"
+		android:layout_height="fill_parent" android:text="cows are cool" />
+-->
 	<ListView android:id="@+id/filterlist" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
+		android:layout_weight="1" android:layout_height="fill_parent" />
 	<Button android:id="@+id/next" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/next" 
-		android:gravity="bottom" />
+		android:layout_weight="0" />
 
 </LinearLayout>

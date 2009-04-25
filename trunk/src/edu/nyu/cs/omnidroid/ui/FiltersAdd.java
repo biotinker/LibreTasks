@@ -39,6 +39,7 @@ public class FiltersAdd extends ListActivity {
 
   // Activity results
   private static final int ADD_RESULT = 1;
+  private static final int ADD_FILTER = 2;
   private static final int RESULT_ADD_SUCCESS = 1;
 
   /*
@@ -83,7 +84,7 @@ public class FiltersAdd extends ListActivity {
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     i.putExtra(UGParser.KEY_FilterType, sm.getKey());
-	startActivityForResult(i, ADD_RESULT);
+	startActivityForResult(i, ADD_FILTER);
   }
 
   /*
@@ -92,7 +93,7 @@ public class FiltersAdd extends ListActivity {
    */
   protected void onActivityResult (int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
-		case ADD_RESULT:
+		case ADD_FILTER:
 			switch (resultCode) {
 			case RESULT_ADD_SUCCESS:
 				setResult(resultCode, data);
