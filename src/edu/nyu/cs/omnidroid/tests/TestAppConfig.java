@@ -39,13 +39,13 @@ public class TestAppConfig extends Activity {
     ag.write("Text,TEXT,STRING");
     
     ag.write("Application:SMS");
-    ag.write("PkgName:");
-    ag.write("ListenerClass:");
+    ag.write("PkgName:edu.nyu.cs.omnidroid");
+    ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSCatcher");
     ag.write("EventName:SMS_RECEIVED,SMS RECEIVED");
     ag.write("Filters:address");
-    ag.write("EventName:SMS_SENT,SENT SMS");
+    ag.write("EventName:SMS_SEND,SENT SMS");
     ag.write("Filters:address,body");
-    ag.write("ActionName: SMS_SEND,SEND SMS");
+    ag.write("ActionName:SMS_SEND,SEND SMS");
     ag.write("URIFields:address,body");
     ag.write("ContentMap:");
     //ag.write("S_Name,SENDER NAME,STRING");
