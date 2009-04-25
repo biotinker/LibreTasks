@@ -10,6 +10,7 @@ import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
+import android.R.string;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -30,17 +31,32 @@ public class DummyActivity extends Activity {
   String filterdata = null;
   String filtertype = null;
   String uridata = null;
-  String uridatatwo=null;
   String actionname = null;
   String actionapp = null;
+  String intentAction = null;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main2);
     this.intent = getIntent();
-
-    this.uri = getURI(intent);
-    matchEventName();
+    if (intent.getAction().contains("SMS_RECEIVED"))
+    {
+    	String id = null;
+    	
+    	this.uri = "content://sms/inbox";
+    	intentAction = "SMS_RECEIVED";
+    	StringBuilder sb = new StringBuilder(uri);
+    	sb.append("/");
+    	sb.append(getLastId(uri));
+    	this.uri = sb.toString();
+    }
+    else
+    {
+    	intentAction = intent.getAction();
+    	this.uri = getURI(intent);
+    
+    }
+    matchEventName(intentAction);
     this.finish();
 
   }
@@ -56,10 +72,10 @@ public class DummyActivity extends Activity {
 
   }
 
-  public void matchEventName() {
+  public void matchEventName(String intentAction) {
     UGParser ug = new UGParser(getApplicationContext());
 
-    ArrayList<HashMap<String, String>> recs = ug.readbyEventName(intent.getAction());
+    ArrayList<HashMap<String, String>> recs = ug.readbyEventName(intentAction);
     // ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = recs.iterator();
     while (i.hasNext()) {
@@ -68,35 +84,19 @@ public class DummyActivity extends Activity {
       if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
         filtertype = HM1.get(ug.KEY_FilterType);
         filterdata = HM1.get(ug.KEY_FilterData);
-        actionname = HM1.get(ug.KEY_ActionName);
+        actionname = HM1.get("ActionName");
         actionapp = HM1.get(ug.KEY_ActionApp);
 
         // added by Pradeep to populate Omniu CP at runtime
-        if(HM1.containsKey(ug.KEY_ActionData))
-        uridata = HM1.get(ug.KEY_ActionData);
-        else uridata="";
-        
-        if(HM1.containsKey(ug.KEY_ActionData2))
-         if (!HM1.get(ug.KEY_ActionData2).equals("True"))
-          uridatatwo=HM1.get(ug.KEY_ActionData2);
-        else uridatatwo="";
+        uridata = HM1.get("ActionData");
         // uridata = "SENDER PHONE NUMBER";
         if (!uridata.contains("content://") && !uridata.equals("")) {
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
-          // SENDER PHONE NO etc. and not the actual URI.
+          // s_ph_no etc. and not the actual URI.
         }
 
-        if (!uridatatwo.contains("content://") && !uridatatwo.equals("")) {
-          uridatatwo = fillURIData(uri, uridatatwo);// Call fillURIData if ActionData contains fields like
-          // TEXT etc. and not the actual URI.
-        }
-        
         // boolean val=checkFilter(uri,filtertype,filterdata);
-        //added by pradeep to check if filters have to be tested.
-        if (filtertype.equals(""))
-          sendIntent(actionapp);
-        else
-          getCols(uri, filtertype, filterdata, actionapp);
+        getCols(uri, filtertype, filterdata, actionapp);
 
       }
     }
@@ -211,7 +211,6 @@ public class DummyActivity extends Activity {
     Intent send_intent = new Intent();
     send_intent.setAction(actionname);
     send_intent.putExtra("uri", uridata);
-    send_intent.putExtra("uri2", uridatatwo);
     // sendBroadcast(send_intent);
     // PackageManager pm = this.getPackageManager();
     // try {
@@ -245,39 +244,65 @@ public class DummyActivity extends Activity {
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
     int flag = 0;
-    try {
 
-      Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-      if (cur.moveToFirst()) {
+    Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+    if (cur.moveToFirst()) {
 
-        do {
+      do {
 
-          int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
+        int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
 
-          if (new_id == id) {
-            if (filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1)))) {
-              Toast.makeText(
-                  getApplicationContext(),
-                  cur.getString(cur.getColumnIndex("s_name")) + ":"
-                      + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
-              sendIntent(actiondata1);
-              flag = 1;
-            }
-
+        if (new_id == id) {
+          if (filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1)))) {
+        	  {
+        		  if(final_uri.contains("sms"))
+                  {
+        			  Toast.makeText(
+        		                getApplicationContext(),
+        		                cur.getString(cur.getColumnIndex(filtertype1)) + ":"
+        		                    + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
+                  } 
+        		  else
+        		  {
+        	  Toast.makeText(
+                getApplicationContext(),
+                cur.getString(cur.getColumnIndex("s_name")) + ":"
+                    + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
+        		  sendIntent(actiondata1);
+        	  }
+        	  }
+            //sendIntent(actiondata1);
+            flag = 1;
           }
 
-        } while (cur.moveToNext());
-        if (flag == 0) {
-          Toast
-              .makeText(getApplicationContext(),
-                  cur.getString(cur.getColumnIndex(filtertype1)) + " does not exist",
-                  Toast.LENGTH_LONG).show();
         }
 
+      } while (cur.moveToNext());
+      if (flag == 0) {
+        Toast.makeText(getApplicationContext(),
+            cur.getString(cur.getColumnIndex(filtertype1)) + " does not exist", Toast.LENGTH_LONG)
+            .show();
       }
-    } catch (Exception e) {
-      OmLogger.write(getApplicationContext(), "Unable to filter on filtername");
-    }
-  }
 
+    }
+
+  }
+  
+  public String getLastId(String smsuri)
+  {
+	  
+	  String id = null;
+	  String lastids = null;
+	  Cursor c = managedQuery(Uri.parse(smsuri), null, null, null, null);
+	  if (c.moveToFirst()) {
+
+	     
+	  id = c.getString(c.getColumnIndex("_id"));
+	  int lastid = Integer.parseInt(id) - 1;
+	  lastids = Integer.toString(lastid);
+	      } 
+	  
+  
+	  return id;
+}
 }
