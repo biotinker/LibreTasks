@@ -12,7 +12,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  */
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.ui.EventCatcher;
+import edu.nyu.cs.omnidroid.ui.Settings;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 public class CheckListViewDemo extends ListActivity implements OnClickListener {

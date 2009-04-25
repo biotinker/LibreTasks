@@ -143,7 +143,7 @@
         </activity>
 
 		<!-- Test fancy list -->
-        <activity android:name=".ui.CheckListViewDemo"
+        <activity android:name=".tests.CheckListViewDemo"
                   android:label="@string/overview_title">
         </activity>
 

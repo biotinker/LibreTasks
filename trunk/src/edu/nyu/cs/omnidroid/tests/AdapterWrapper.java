@@ -12,7 +12,7 @@
 	limitations under the License.
  */
 
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
 import android.database.DataSetObserver;
 import android.widget.ListAdapter;
