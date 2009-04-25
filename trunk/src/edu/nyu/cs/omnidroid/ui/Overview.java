@@ -309,16 +309,15 @@ public class Overview extends Activity implements OnClickListener {
 		// TODO(acase): Move to some kind of resource
         //String help_msg = this.getResources().getString(R.string.help_overview);
         String help_msg = "OmniDroid provides a set of OmniHandlers that " +
-        	               "allows you to customize how applications interact " +
+        	               "allow you to customize how applications interact " +
         	               "with eachother.\n<br/>" +
         	               "This page provides a list of OmniHandlers that are " +
-        	               "stored in OmniDroid and a checkbox to enable/disable " +
-        	               "each OmniHandler.\n<br/>" +
+        	               "saved and a checkbox to enable/disable them.\n<br/>" +
         	               "Actions:\n<br/>" + 
         	               "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the Add option from the Menu.\n<br/>" +
         	               "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting the Delete option.\n<br/>";
         help.setTitle(R.string.help);
-        help.setIcon(android.R.drawable.ic_dialog_info);
+        help.setIcon(android.R.drawable.ic_menu_help);
         help.setMessage(Html.fromHtml(help_msg));
         help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -335,16 +334,17 @@ public class Overview extends Activity implements OnClickListener {
 		// TODO(acase): Move to some kind of resource
         //String about_msg = this.getResources().getString(R.string.help_overview);
         String about_msg = "OmniDroid is brought to you in part by the letter G and the number 13.\n<br/>"
-        	             + "Contributors include:\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;Andrew Case\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;Sucharita Gaat\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;Rajiv Sharma\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;Pradeep Harish Varma\n<br/>"
-        	             + "Generous Donations from:\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;Google\n<br/>"
-        	             + "&nbsp;&nbsp;&nbsp;New York University";
+        	             + "Hacking Contributions:<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Andrew Case<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Sucharita Gaat<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Rajiv Sharma<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Pradeep Harish Varma<br/>"
+        	             + "\n"
+        	             + "Donations from:<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;Google Inc.<br/>"
+        	             + "&nbsp;&nbsp;&nbsp;New York University<br/>";
         about.setTitle(R.string.about);
-        about.setIcon(android.R.drawable.ic_dialog_info);
+        about.setIcon(R.drawable.icon);
         about.setMessage(Html.fromHtml(about_msg));
         about.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
