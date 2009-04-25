@@ -13,12 +13,13 @@ import android.content.Context;
 
 /**
  * Provides functionality to parse the Application Config
+ * 
  * @author: Pradeep Varma
  */
 public class AGParser {
   public static final String KEY_APPLICATION = "Application";
-  public static final String KEY_PkgName="PkgName";
-  public static final String KEY_ListenerClass="ListenerClass";
+  public static final String KEY_PkgName = "PkgName";
+  public static final String KEY_ListenerClass = "ListenerClass";
   public static final String KEY_EventName = "EventName";
   public static final String KEY_Filters = "Filters";
   public static final String KEY_ActionName = "ActionName";
@@ -93,7 +94,7 @@ public class AGParser {
    */
   @SuppressWarnings("finally")
   public boolean deleteApp(String AppName) {
-    boolean deleted=false;
+    boolean deleted = false;
     try {
       // Opeing App Config in Read Mode
       OpenFileRead();
@@ -102,16 +103,19 @@ public class AGParser {
       String[] parts;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          String[] dparts;
-          while ((line = dis.readLine()) != null) {
-            dparts = line.split(":", 2);
-            // Ignore lines of the application to be deleted.
-            if (dparts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
-              // Stop ignoring once the next application map is reached
-              break;
+        try {
+          parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            String[] dparts;
+            while ((line = dis.readLine()) != null) {
+              dparts = line.split(":", 2);
+              // Ignore lines of the application to be deleted.
+              if (dparts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
+                // Stop ignoring once the next application map is reached
+                break;
+            }
           }
+        } catch (Exception e) {
         }
         if (!line.equals(null))
           lines.add(line);
@@ -121,12 +125,11 @@ public class AGParser {
       while (i.hasNext()) {
         write(i.next());// Writing new lines into AppConfig
       }
-      deleted=true;
+      deleted = true;
     } catch (Exception e) {
       OmLogger.write(context, "Could not delete Instance Record");
-      deleted=false;
-    }
-    finally{
+      deleted = false;
+    } finally {
       return deleted;
     }
   }
@@ -145,31 +148,32 @@ public class AGParser {
    */
   @SuppressWarnings("finally")
   public boolean write(String AGLine) {
-    boolean written=false;
+    boolean written = false;
     try {
       final String LineString = new String(AGLine + "\n");
       OpenFileWrite(MODE_APPEND);
       osw.write(LineString);
       osw.flush();
       osw.close();
-      written=true;
+      written = true;
     } catch (Exception e) {
       OmLogger.write(context, "Unable to write line in Application Config");
-     written=false;    
+      written = false;
+    } finally {
+      return written;
     }
-    finally{return written;}
-      
-   }
+
+  }
 
   /**
    * Reads the package name from the App Config
    * 
    * @param AppName
    *          Specify the Application
-   * @return Returns String 
+   * @return Returns String
    */
   public String readPkgName(String AppName) {
-    String PkgName=null;
+    String PkgName = null;
     Boolean found = false;
     try {
 
@@ -177,10 +181,11 @@ public class AGParser {
       String DisplayEvent;
       String line;
 
-      try{
-      dis.close();
-      bis.close();
-      }catch(Exception e){}
+      try {
+        dis.close();
+        bis.close();
+      } catch (Exception e) {
+      }
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
@@ -201,7 +206,7 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_PkgName)) {
-          PkgName=parts[1].toString();
+          PkgName = parts[1].toString();
         }
       }
       dis.close();
@@ -219,28 +224,31 @@ public class AGParser {
    * 
    * @param AppName
    *          Specify the Application
-   * @return Returns String 
+   * @return Returns String
    */
   public String readListenerClass(String AppName) {
-    String ListerClass=null;
+    String ListerClass = null;
     Boolean found = false;
     try {
 
       String ActualEvent;
       String DisplayEvent;
       String line;
-      try
-      {
-      dis.close();
-      bis.close();
-      }catch(Exception e){}
+      try {
+        dis.close();
+        bis.close();
+      } catch (Exception e) {
+      }
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
       }
       if (found == false) {
@@ -254,7 +262,7 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
           break;
         if (parts[0].toString().equalsIgnoreCase(KEY_ListenerClass)) {
-          ListerClass=parts[1].toString();
+          ListerClass = parts[1].toString();
         }
       }
       dis.close();
@@ -267,7 +275,6 @@ public class AGParser {
     }
   }
 
-  
   /**
    * Reads the Events from the App Config
    * 
@@ -278,7 +285,7 @@ public class AGParser {
   // TODO(Pradeep): I don't think this formats the data properly into a data structure.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
-    //ArrayList<StringMap> eArrayList = new ArrayList<StringMap>();
+    // ArrayList<StringMap> eArrayList = new ArrayList<StringMap>();
     Boolean found = false;
     try {
 
@@ -289,14 +296,14 @@ public class AGParser {
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        try{
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
-        } catch(Exception e)
-        {}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
@@ -304,7 +311,7 @@ public class AGParser {
       }
 
       HashMap<String, String> HM = new HashMap<String, String>();
-      //StringMap SM = new StringMap();
+      // StringMap SM = new StringMap();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
@@ -313,9 +320,9 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_EventName)) {
           ActualEvent = parts[1].split(",")[0].toString();
           DisplayEvent = parts[1].split(",")[1].toString();
-          //SM.set(ActualEvent,DisplayEvent);
+          // SM.set(ActualEvent,DisplayEvent);
           // Add Event to HashMap
-          HM.put(ActualEvent, DisplayEvent);      
+          HM.put(ActualEvent, DisplayEvent);
         }
       }
       eArrayList.add(HM);
@@ -328,7 +335,7 @@ public class AGParser {
       return eArrayList;
     }
   }
-  
+
   /**
    * Reads the Actions from the App Config
    * 
@@ -346,15 +353,14 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-       try
-       {
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
-       }catch(Exception e)
-       {}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
@@ -371,7 +377,7 @@ public class AGParser {
           ActualAction = parts[1].split(",")[0].toString();
           DisplayAction = parts[1].split(",")[1].toString();
           HM.put(ActualAction, DisplayAction);
-        
+
         }
       }
       aArrayList.add(HM);
@@ -403,10 +409,13 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
       }
       if (found == false) {
@@ -456,10 +465,13 @@ public class AGParser {
 
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
       }
       if (found == false) {
@@ -507,10 +519,13 @@ public class AGParser {
       String line;
 
       while ((line = dis.readLine()) != null) {
-        String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase(key)) {
-          val = parts[1].toString();
-          cols2.add(val);
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[0].toString().equalsIgnoreCase(key)) {
+            val = parts[1].toString();
+            cols2.add(val);
+          }
+        } catch (Exception e) {
         }
       }
       return cols2;
@@ -531,22 +546,23 @@ public class AGParser {
     ArrayList<StringMap> contentmap = new ArrayList<StringMap>();
     Boolean found = false;
     try {
-      try{
+      try {
         dis.close();
         bis.close();
-        }catch(Exception e){}
+      } catch (Exception e) {
+      }
       OpenFileRead();
       String line;
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        try
-        {
-        String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
-        }catch(Exception e){}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
@@ -559,7 +575,7 @@ public class AGParser {
         if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap)) {
           while ((line = dis.readLine()) != null) {
             String[] fmparts = line.split(",");
-            contentmap.add(new StringMap(fmparts[0],fmparts[1]));
+            contentmap.add(new StringMap(fmparts[0], fmparts[1]));
           }
         }
       }
