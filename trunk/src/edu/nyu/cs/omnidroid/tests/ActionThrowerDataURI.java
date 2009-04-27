@@ -1,6 +1,5 @@
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -25,7 +24,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  * @author acase
  */
-public class ActionThrowerURI extends Activity implements OnClickListener {
+public class ActionThrowerDataURI extends Activity implements OnClickListener {
   // Intent Data
   private EditText appData;
   private String eventApp;
@@ -37,7 +36,6 @@ public class ActionThrowerURI extends Activity implements OnClickListener {
   private EditText instanceName;
 
   // Activity results
-  //private static final int ADD_RESULT = 1;
   private static final int RESULT_ADD_SUCCESS = 1;
 
   // Standard Menu options (Android menus require int, so no enums)
@@ -61,12 +59,6 @@ public class ActionThrowerURI extends Activity implements OnClickListener {
     filterData = extras.getString(UGParser.KEY_FilterData);
     throwerApp = extras.getString(UGParser.KEY_ActionApp);
     throwerName = extras.getString(UGParser.KEY_ActionName);
-
-    // Pull data from Configuration database
-    // FIXME(acase): Build ActionURI filled data
-    AGParser ag = new AGParser(this);
-    ArrayList<String> hm = ag.readURIFields(throwerApp, throwerName);
-    //hm.
 
     // Setup our UI
     Button save = (Button) findViewById(R.id.save);

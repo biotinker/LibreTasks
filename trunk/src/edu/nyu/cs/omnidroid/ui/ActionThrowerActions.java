@@ -94,7 +94,8 @@ public class ActionThrowerActions extends ListActivity {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), ActionThrowerData.class);
-    //i.setClass(this.getApplicationContext(), ActionThrowerURI.class);
+    //i.setClass(this.getApplicationContext(), ActionThrowerData2.class);
+    //i.setClass(this.getApplicationContext(), ActionThrowerDataURI.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     i.putExtra(UGParser.KEY_EventName, eventName);
     if ((filterType != null) && (filterData != null)) {

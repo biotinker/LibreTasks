@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
-import edu.nyu.cs.omnidroid.ui.Filters;
 import edu.nyu.cs.omnidroid.ui.PackageLister;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
@@ -29,7 +28,7 @@ public class TestApp extends ListActivity {
       "Test User Config",
       "Test App Config",
       "Test Exception Handler",
-      "Test Filters"
+      "Test Action Data"
   };
 
   @Override
@@ -78,12 +77,13 @@ public class TestApp extends ListActivity {
       break;
     case 8:
       i.putExtra(AGParser.KEY_APPLICATION, "SMS");
-      i.putExtra(UGParser.KEY_EventName, "SMS RECEIVED");
-      i.setClass(this.getApplicationContext(), Filters.class);
+      i.putExtra(UGParser.KEY_EventName, "SMS_RECEIVED");
+      i.putExtra(UGParser.KEY_ActionApp, "SMS");
+      i.putExtra(UGParser.KEY_ActionName, "SMS_SEND");
+      i.setClass(this.getApplicationContext(), ActionThrowerData.class);
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");
-      // TODO (acase): Catch this as an exception
       break;
     }
     startActivity(i);
