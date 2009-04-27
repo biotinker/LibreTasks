@@ -8,6 +8,7 @@
     <string name="action_thrower_title">Choose an application to throw actions</string>
     <string name="action_thrower_actions_title">Choose the action type to throw</string>
 	<string name="action_thrower_data">Action Thrower Data</string>
+	<string name="action_thrower_uri">Action Thrower Data</string>
 	<string name="filters_add_data_title">Add data to filter by</string>
 	<string name="filters_add_title">Select type of data to filter by</string>
 	<string name="filters_title">List of filters applied to this OmniHandler</string>

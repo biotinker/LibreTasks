@@ -16,23 +16,7 @@
                 <action android:name="OmniRestart"/>
             </intent-filter>
         </receiver>
-		
-	    <receiver android:name=".external.catcherapp.SMSListener">
-            <intent-filter>
-                <action android:name="Display_Contact"/>
-            </intent-filter>
-        </receiver>
         
-        <receiver android:name=".external.catcherapp.SMSCatcher">
-            <intent-filter>
-                <action android:name="SMS_SEND"/>
-            </intent-filter>
-        </receiver>
-        
-    
-	
-    
-
 		<!--  The main UI for our OmniDroid -->
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
@@ -54,24 +38,9 @@
 			-->
 		</activity>
 
-		<!--  Runs all our Test Cases -->
-        <activity android:name=".tests.TestApp"
-                  android:label="@string/test_app">
-		</activity>
-		
-		<!--  Runs all our Test App Config Cases -->
-        <activity android:name=".tests.TestAppConfig"
-                  android:label="@string/test_app">
-		</activity>
-
 		<!--  Settings activity -->
         <activity android:name=".ui.Settings"
                   android:label="@string/settings">
-		</activity>
-
-		<!--  External EventApp testcase -->
-        <activity android:name=".external.eventapp.ExternalCPActivity"
-                  android:label="@string/event_app">
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
@@ -100,19 +69,22 @@
         <activity android:name=".ui.EventCatcherActions"
                   android:label="@string/event_catcher_actions_title">
 		</activity>
+
 		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application -->
-        <activity android:name=".external.catcherapp.CatcherAppActivity"
-                  android:label="@string/event_catcher">
-		</activity>
-		
-		<activity android:name=".external.catcherapp.SMSCatcherActivity"
-                  android:label="@string/sms_catcher">
+		      what data to provide to the application thrown -->
+        <activity android:name=".ui.ActionThrowerData"
+                  android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application -->
-        <activity android:name=".ui.ActionThrowerData"
+		      what data to provide to the application thrown -->
+        <activity android:name=".tests.ActionThrowerData"
+                  android:label="@string/action_thrower_data">
+		</activity>
+
+		<!--  Activity used to by the event catcher to determine
+		      what data to provide to the application thrown -->
+        <activity android:name=".tests.ActionThrowerDataURI"
                   android:label="@string/action_thrower_data">
 		</activity>
 
@@ -133,9 +105,23 @@
                   android:label="@string/action_thrower_actions_title">
 		</activity>
 		
+		<!--  The activity that throws actions to our applications -->
 		<activity android:name=".core.DummyActivity"
                   android:label="@string/dummy_activity">
 		</activity>
+
+		<!--  Service/receiver that runs to catch events -->        
+		<service android:name=".bkgservice.BRService" />
+        <receiver android:name=".bkgservice.BCReceiver"> 
+            <intent-filter> 
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
+            </intent-filter> 
+        </receiver>
+
+		<!--  Our Content Provider that stores data to link between 
+		      the ThrowerApp and the CatcherApp -->
+		 <provider android:name=".core.CP"
+         android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
 
 		<!-- Test our service -->
         <activity android:name=".tests.TestService"
@@ -152,36 +138,58 @@
                   android:label="@string/maincp_name">
         </activity>
 
-		<!--  Service/receiver that runs to catch events -->        
-		<service android:name=".bkgservice.BRService" />
-        <receiver android:name=".bkgservice.BCReceiver"> 
-            <intent-filter> 
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
-            </intent-filter> 
-        </receiver>
-
-		<!--  TODO: The service that runs to throw actions -->
-		<!--
-		<service android:name=".bkgservice.ThrowerService" />
-		 -->
-
-		<!--  Our Content Provider that stores data to link between 
-		      the ThrowerApp and the CatcherApp -->
-		 <provider android:name=".core.CP"
-         android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
+		<!--  Runs all our Test Cases -->
+        <activity android:name=".tests.TestApp"
+                  android:label="@string/test_app">
+		</activity>
+		
+		<!--  Runs all our Test App Config Cases -->
+        <activity android:name=".tests.TestAppConfig"
+                  android:label="@string/test_app">
+		</activity>
 
 		<!--  Thrower Test Provider -->
 		 <provider android:name=".external.eventapp.ExternalCP"
          android:authorities="edu.nyu.cs.omnidroid.external.eventapp.cp" />
 
+		<!--  Activity used to by the event catcher to determine
+		      what actions to catch for a given application -->
+        <activity android:name=".external.catcherapp.CatcherAppActivity"
+                  android:label="@string/event_catcher">
+		</activity>
+		
+		<activity android:name=".external.catcherapp.SMSCatcherActivity"
+                  android:label="@string/sms_catcher">
+		</activity>
+
+		<!--  External EventApp testcase -->
+        <activity android:name=".external.eventapp.ExternalCPActivity"
+                  android:label="@string/event_app">
+		</activity>
+		
+	    <receiver android:name=".external.catcherapp.SMSListener">
+            <intent-filter>
+                <action android:name="Display_Contact"/>
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name=".external.catcherapp.SMSCatcher">
+            <intent-filter>
+                <action android:name="SMS_SEND"/>
+            </intent-filter>
+        </receiver>
+
 	</application>
+
+	<!--  Permissions that OmniDroid registers so it can access 
+	      more complex functionality -->
 	<uses-permission android:name="android.permission.SEND_SMS">
     </uses-permission>
     <uses-permission android:name="android.permission.RECEIVE_SMS">
     </uses-permission>
-            <uses-permission android:name="android.permission.READ_SMS">
-            </uses-permission>
-	        <uses-permission android:name="android.permission.WRITE_SMS">
-	        </uses-permission>
+    <uses-permission android:name="android.permission.READ_SMS">
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_SMS">
+    </uses-permission>
 
-</manifest> 
+</manifest>

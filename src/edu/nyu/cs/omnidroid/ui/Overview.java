@@ -322,6 +322,7 @@ public class Overview extends Activity implements OnClickListener {
     Builder about = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     // String about_msg = this.getResources().getString(R.string.help_overview);
+    // TODO(acase): Display version information
     String about_msg = "OmniDroid is brought to you in part by the letter G and the number 13.\n<br/>"
         + "Hacking Contributions:<br/>"
         + "&nbsp;&nbsp;&nbsp;Andrew Case<br/>"
