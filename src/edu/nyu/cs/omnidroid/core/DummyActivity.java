@@ -50,6 +50,8 @@ public class DummyActivity extends Activity {
     	sb.append(getLastId(uri));
     	this.uri = sb.toString();
     }
+    else if(intent.getAction().contains("PHONE_STATE"))
+    {}
     else
     {
     	intentAction = intent.getAction();
@@ -244,6 +246,7 @@ try{
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
+    new_id = new_id-1;
     int flag = 0;
 
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
@@ -252,9 +255,11 @@ try{
       do {
 
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-
+        
+        String ft = cur.getString(cur.getColumnIndex(filtertype1));
+        
         if (new_id == id) {
-          if (filterdata1.equalsIgnoreCase(cur.getString(cur.getColumnIndex(filtertype1)))) {
+          if (filterdata1.equalsIgnoreCase(ft)) {
         	  {
         		  if(final_uri.contains("sms"))
                   {
