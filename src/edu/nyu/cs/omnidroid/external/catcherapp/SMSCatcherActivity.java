@@ -10,13 +10,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.gsm.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.CP;
+
+
 public class SMSCatcherActivity extends Activity {
     /** Called when the activity is first created.*/ 
   private String uri;
   Intent intent;  
+  
   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,7 @@ public class SMSCatcherActivity extends Activity {
         uri = getURI(intent);
        
        displayAction(uri.toString());
+      // deleteSMS();
      this.finish();
   } 
        
@@ -102,9 +107,15 @@ public class SMSCatcherActivity extends Activity {
    	    SmsManager sms = SmsManager.getDefault();
    	    sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
    	  }
-
-   
-
+       
+      public void deleteSMS()
+      {
+    	  try
+ 	     {
+ 	     getContentResolver().delete(Uri.parse("content://sms/conversations/1"), null, null);
+          Toast.makeText(getBaseContext(),"Messages deleted",Toast.LENGTH_LONG).show();
+ 	     }catch(Exception e){}
+      }
   }
     
 
