@@ -39,7 +39,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
   private String filterData;
   private String throwerApp;
   private String throwerName;
-  private EditText instanceName;
+  private String instanceName;
 
   // Activity results
   private static final int RESULT_ADD_SUCCESS = 1;
@@ -69,7 +69,6 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     // Setup our UI
     Button save = (Button) findViewById(R.id.save);
     appData = (EditText) findViewById(R.id.data);
-    //instanceName = (EditText) findViewById(R.id.Iname);
 
     // Listen for the save button click
     save.setOnClickListener(this);
@@ -94,30 +93,35 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     save_dialog.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
         EditText v = (EditText) textEntryView.findViewById(R.id.save_name);
-        save(v.getText().toString());
+        instanceName = v.getText().toString();
+        save();
       }
     });
     save_dialog.create();
     save_dialog.show();
   }
 
-  private void save(String iName) {
+  // private void save(String iName) {
+  private void save() {
     // Get data from our user
     String aData = appData.getText().toString();
 
     // Add OmniHandler to OmniDroid
-    if (iName.length() > 0 && aData.length() > 0) {
-
+    if (instanceName.length() < 1) {
+      Toast.makeText(getBaseContext(), R.string.missing_name, Toast.LENGTH_SHORT).show();
+    } else if (aData.length() < 1) {
+      Toast.makeText(getBaseContext(), R.string.missing_data, Toast.LENGTH_SHORT).show();
+    } else {
       // Add OmniHandler to the CP
       ContentValues values = new ContentValues();
-      values.put("i_name", iName);
+      values.put("i_name", instanceName);
       values.put("a_data", aData);
       Uri uri = getContentResolver().insert(CP.CONTENT_URI, values);
 
       // Add OmniHandler to the UGConfig
       UGParser ug = new UGParser(getApplicationContext());
       HashMap<String, String> HM = new HashMap<String, String>();
-      HM.put(UGParser.KEY_InstanceName, iName);
+      HM.put(UGParser.KEY_InstanceName, instanceName);
       HM.put(UGParser.KEY_EventName, eventName);
       HM.put(UGParser.KEY_EventApp, eventApp);
       HM.put(UGParser.KEY_ActionName, throwerName);
@@ -143,8 +147,6 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       i = new Intent();
       setResult(RESULT_ADD_SUCCESS, i);
       finish();
-    } else {
-      Toast.makeText(getBaseContext(), "Please enter both an ", Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -176,7 +178,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    */
   private void Help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
+    // FIXME(acase): Move to some kind of resource
     String help_msg = "Select data to pass to the application responding to the event.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
