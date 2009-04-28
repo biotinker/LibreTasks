@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +69,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
     // Setup our UI
     Button save = (Button) findViewById(R.id.save);
     appData = (EditText) findViewById(R.id.data);
-    instanceName = (EditText) findViewById(R.id.Iname);
+    //instanceName = (EditText) findViewById(R.id.Iname);
 
     // Listen for the save button click
     save.setOnClickListener(this);
@@ -80,8 +81,28 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
+    LayoutInflater factory = LayoutInflater.from(this);
+    final View textEntryView = factory.inflate(R.layout.save_dialog, null);
+    Builder save_dialog = new AlertDialog.Builder(this);
+    save_dialog.setIcon(android.R.drawable.ic_dialog_alert);
+    save_dialog.setTitle(R.string.save_as);
+    save_dialog.setView(textEntryView);
+    save_dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    save_dialog.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        EditText v = (EditText) textEntryView.findViewById(R.id.save_name);
+        save(v.getText().toString());
+      }
+    });
+    save_dialog.create();
+    save_dialog.show();
+  }
+
+  private void save(String iName) {
     // Get data from our user
-    String iName = instanceName.getText().toString();
     String aData = appData.getText().toString();
 
     // Add OmniHandler to OmniDroid
@@ -156,8 +177,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
   private void Help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
-    // String help_msg = this.getResources().getString(R.string.help_overview);
-    String help_msg = "TODO(acase): Help Info";
+    String help_msg = "Select data to pass to the application responding to the event.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));
