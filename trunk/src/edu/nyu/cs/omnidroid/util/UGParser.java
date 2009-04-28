@@ -37,6 +37,11 @@ public class UGParser {
   public static final String KEY_ActionData = "ActionData";
   public static final String KEY_ActionData2 = "ActionData2";
   public static final String KEY_EnableInstance = "EnableInstance";
+  public static final String KEY_ENABLE_OMNIDROID = "EnableOmniDroid";
+
+  // String matching constants
+  public static final String TRUE = "True";
+  public static final String FALSE = "False";
 
   // Private class vars
   private ArrayList<String> Schema;
@@ -48,7 +53,7 @@ public class UGParser {
   private Context context;
   private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
   private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
-
+  
   // TODO (acase): We should really ditch this ConfigFile idea and switch to using
   // internal CPs for all this data
 
@@ -109,13 +114,12 @@ public class UGParser {
    */
   public void delete_all() {
     try {
-      // String Enabled = readLine("Enabled");
-      // if (Enabled.equals(null))
-      // Enabled = "True";
-      // String LineString = new String("Enabled" + ":" + Enabled + "\n");
+      String enabled = readLine(KEY_ENABLE_OMNIDROID);
+      if (enabled.equals(null)) enabled = TRUE;
+      // Overwrite file
       OpenFileWrite(MODE_WRITE);
-      osw.write("");
-      // osw.write(LineString);
+      // Keep enabled setting
+      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled);
       osw.flush();
       osw.close();
     } catch (Exception e) {
@@ -123,6 +127,37 @@ public class UGParser {
     }
   }
 
+  public void setEnabled(boolean enabled) {
+    // Store our entries
+    ArrayList<HashMap<String,String>> records = readRecords();
+
+    // Erase all data
+    delete_all();
+
+    try {
+      String strEnabled;
+      if (enabled == true) {
+        strEnabled = TRUE;
+      } else { 
+        strEnabled = FALSE;
+      }
+      OpenFileWrite(MODE_WRITE);
+      //Deleting all lines
+      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled);
+      osw.flush();
+      osw.close();
+    } catch (Exception e) {
+      OmLogger.write(context, "Could not delete Instances");
+    }
+
+    // Write entries back
+//    HashMap<String,String> record;
+    for (HashMap<String,String> record : records) {
+      writeRecord(record);
+    }
+    
+  }
+  
   /**
    * deletes the Record from userConfig.
    * 

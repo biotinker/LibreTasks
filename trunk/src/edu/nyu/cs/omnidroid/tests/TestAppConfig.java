@@ -37,7 +37,8 @@ public class TestAppConfig extends Activity {
     ag.write("S_Name,CONTACT NAME,STRING");
     ag.write("S_Ph_No,CONTACT PHONE NUMBER,INT");
     ag.write("Text,TEXT,STRING");
-    
+
+    // FIXME: This needs to be pulled from the other applications
     ag.write("Application:SMS");
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSCatcher");

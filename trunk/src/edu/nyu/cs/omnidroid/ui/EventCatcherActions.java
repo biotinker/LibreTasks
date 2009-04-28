@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -135,7 +139,17 @@ public class EventCatcherActions extends ListActivity {
    * Call our Help dialog
    */
   private void Help() {
-    // TODO (acase): Create a help dialog for this activity
+    Builder help = new AlertDialog.Builder(this);
+    // TODO(acase): Move to some kind of resource
+    String help_msg = "Select the type of action of the already selected event application that we want to catch.";
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
 }

@@ -3,10 +3,14 @@ package edu.nyu.cs.omnidroid.ui;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -152,6 +156,17 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    * Call our Help dialog
    */
   private void Help() {
-    // TODO (acase): Create a help dialog for this activity
+    Builder help = new AlertDialog.Builder(this);
+    // FIXME(acase): Move to some kind of resource
+    // String help_msg = this.getResources().getString(R.string.help_overview);
+    String help_msg = "TODO(acase): Help Info";
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 }
