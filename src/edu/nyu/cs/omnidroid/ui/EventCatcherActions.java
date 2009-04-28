@@ -141,7 +141,7 @@ public class EventCatcherActions extends ListActivity {
   private void Help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the type of action of the already selected event application that we want to catch.";
+    String help_msg = "Select the type of event that you want to catch.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

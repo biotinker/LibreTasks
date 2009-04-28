@@ -16,6 +16,7 @@
     <string name="name_omnihandler">Name this OmniHandler</string>
     <string name="name_data">Enter the data to be inserted</string>
     <string name="save">Save</string>
+    <string name="save_as">Save as</string>
     <string name="save_dialog">Enter a name to remember this instance by</string>
     <string name="cancel">Cancel</string>
     <string name="enabled">Enabled</string>
@@ -42,5 +43,8 @@
 <!-- 	<string name="about_overview">OmniDroid is brought to you in part by the letter G and the number 13.<br/><br/> Contributors include:<ul><li>Andrew Case</li><li>Pradeep Harish Varma</li><li>Rajiv Sharma</li><li>Sucharita Gaat</li></ul><br/><br/> Generous Donations from:<ul><li>Google</li><li>New York University</li></ul>"</string> -->
 	<string name="okay">Okay</string>
 	<string name="delete_all">Delete All OmniHandlers</string>
+	<string name="missing_data">Data field can not be empty.</string>	
+	<string name="missing_name">OmniHandler name can not be empty.</string>
 	</resources>
+	
 

@@ -8,7 +8,7 @@
 		android:id="@+id/selection"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"/>
-	<edu.nyu.cs.omnidroid.ui.CheckListView
+	<edu.nyu.cs.omnidroid.tests.CheckListView
 		android:id="@android:id/list"
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"

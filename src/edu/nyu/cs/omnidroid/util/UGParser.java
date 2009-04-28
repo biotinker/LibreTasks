@@ -114,12 +114,14 @@ public class UGParser {
    */
   public void delete_all() {
     try {
-      String enabled = readLine(KEY_ENABLE_OMNIDROID);
-      if (enabled.equals(null)) enabled = TRUE;
-      // Overwrite file
+      // FIXME: Allow enabled for global
+      // String Enabled = readLine("Enabled");
+      // if (Enabled.equals(null))
+      // Enabled = "True";
+      // String LineString = new String("Enabled" + ":" + Enabled + "\n");
       OpenFileWrite(MODE_WRITE);
-      // Keep enabled setting
-      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled);
+      osw.write("");
+      // osw.write(LineString);
       osw.flush();
       osw.close();
     } catch (Exception e) {
