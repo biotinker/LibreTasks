@@ -55,6 +55,23 @@ public class TestAppConfig extends Activity {
     ag.write("body,Text,STRING");
    // ag.write("Location,SMS Number,INT");
     
+    ag.write("Application:Calllog");
+    ag.write("PkgName:edu.nyu.cs.omnidroid");
+    ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener");
+    ag.write("EventName:CALL_RECEIVED,CALL RECEIVED");
+    ag.write("Filters:_id");
+    ag.write("EventName:SMS_SEND,SENT SMS");
+    ag.write("Filters:address,body");
+    ag.write("ActionName:SMS_SEND,SEND SMS");
+    ag.write("URIFields:address,body");
+    ag.write("ContentMap:");
+    //ag.write("S_Name,SENDER NAME,STRING");
+   // ag.write("R_Name,RECEIVER NAME,STRING");
+    ag.write("address,SENDER PHONE NUMBER,INT");
+    ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
+    ag.write("body,Text,STRING");
+   // ag.write("Location,SMS Number,INT");
+    
     ag.write("Application:System");
     ag.write("EventName:android.intent.action.TIME_SET,TIME CHANGED");
     ag.write("EventName:android.intent.action.SCREEN_OFF,SCREEN OFF");
