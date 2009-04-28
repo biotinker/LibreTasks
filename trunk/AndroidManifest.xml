@@ -138,6 +138,17 @@
                   android:label="@string/maincp_name">
         </activity>
 
+		<!--  Service/receiver that runs to catch events -->        
+		<service android:name=".bkgservice.BRService" />
+        <receiver android:name=".bkgservice.BCReceiver"> 
+            <intent-filter> 
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
+            </intent-filter>
+            <intent-filter> 
+                <action android:name="android.intent.action.PHONE_STATE" /> 
+            </intent-filter>  
+        </receiver>
+
 		<!--  Runs all our Test Cases -->
         <activity android:name=".tests.TestApp"
                   android:label="@string/test_app">
@@ -191,5 +202,6 @@
     </uses-permission>
     <uses-permission android:name="android.permission.WRITE_SMS">
     </uses-permission>
+	        <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>
