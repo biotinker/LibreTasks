@@ -3,10 +3,14 @@ package edu.nyu.cs.omnidroid.tests;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.CP;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
@@ -86,8 +91,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
       ContentValues values = new ContentValues();
       values.put("i_name", iName);
       values.put("a_data", aData);
-      Uri uri = getContentResolver().insert(
-          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+      Uri uri = getContentResolver().insert(CP.CONTENT_URI, values);
 
       // Add OmniHandler to the UGConfig
       UGParser ug = new UGParser(getApplicationContext());
@@ -116,8 +120,6 @@ public class ActionThrowerData extends Activity implements OnClickListener {
 
       // Go back to our start page
       i = new Intent();
-      // i.setClass(this.getApplicationContext(), Overview.class);
-      // startActivity(i);
       setResult(RESULT_ADD_SUCCESS, i);
       finish();
     } else {
@@ -152,6 +154,17 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    * Call our Help dialog
    */
   private void Help() {
-    // TODO (acase): Create a help dialog for this activity
+    Builder help = new AlertDialog.Builder(this);
+    // TODO(acase): Move to some kind of resource
+    // String help_msg = this.getResources().getString(R.string.help_overview);
+    String help_msg = "TODO(acase): Help Info";
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 }

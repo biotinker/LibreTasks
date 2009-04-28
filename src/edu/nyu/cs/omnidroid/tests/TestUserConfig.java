@@ -1,10 +1,5 @@
 package edu.nyu.cs.omnidroid.tests;
 
-import java.io.IOException;
-
-import android.util.Log;
-
-import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
  * Test Application to Verify Configuration File Functionality

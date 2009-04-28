@@ -3,9 +3,13 @@ package edu.nyu.cs.omnidroid.ui;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -156,7 +160,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    //menu.add(0, MENU_EDIT, 0, R.string.edit);
+    // menu.add(0, MENU_EDIT, 0, R.string.edit);
     menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
@@ -230,7 +234,19 @@ public class Filters extends Activity implements OnClickListener {
    * @return void
    */
   private void Help() {
-    // TODO (acase): Create a help dialog for this activity
+    Builder help = new AlertDialog.Builder(this);
+    // TODO(acase): Move to some kind of resource
+    String help_msg = "Use the 'Menu' button followed by 'Add Filter' to add filters that " +
+        "retrict the events that we want to our OmniHandler to catch.\n" +
+        "When done, select 'Next' to proceed.";
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
   /*
