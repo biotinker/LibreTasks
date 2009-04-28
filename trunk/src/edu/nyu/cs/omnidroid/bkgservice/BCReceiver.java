@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.provider.CallLog;
 import android.telephony.gsm.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +32,8 @@ public class BCReceiver extends BroadcastReceiver {
 			{
 			intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
 			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+			String intentaction = intent.getAction();
+			//Toast.makeText(context,getLastCallLogEntry(context),Toast.LENGTH_LONG).show();
 		context.startActivity(intent);
 			
 		Log.i("Received Intent", intent.getAction());
@@ -58,5 +64,50 @@ public class BCReceiver extends BroadcastReceiver {
 
 	    }
 	    }
+	
+	private String getLastCallLogEntry( Context context ) {
+		  String[] projection = new String[] {
+	    	BaseColumns._ID,
+	    	CallLog.Calls.NUMBER,
+			CallLog.Calls.TYPE
+		  };
+		  ContentResolver resolver = context.getContentResolver();
+	      Cursor cur = resolver.query( 
+						CallLog.Calls.CONTENT_URI,
+	                    projection, 
+	                    null,
+						null,
+	                    CallLog.Calls.DEFAULT_SORT_ORDER );
+	      int numberColumn = cur.getColumnIndex( CallLog.Calls.NUMBER ); 
+	      int typeColumn = cur.getColumnIndex( CallLog.Calls.TYPE );
+		  if( !cur.moveToNext()) {
+			cur.close();
+			return "";
+		  }
+		  String number = cur.getString( numberColumn );
+	      String type = cur.getString( typeColumn );
+		  String dir = null;
+		  try {
+			int dircode = Integer.parseInt( type );
+			switch( dircode ) {
+			  case CallLog.Calls.OUTGOING_TYPE:
+					dir = "OUTGOING";
+					break;
+
+			  case CallLog.Calls.INCOMING_TYPE:
+					dir = "INCOMING";
+					break;
+
+			  case CallLog.Calls.MISSED_TYPE:
+					dir = "MISSED";
+					break;
+			}
+	      } catch( NumberFormatException ex ) {}
+		  if( dir == null )
+				dir = "Unknown, code: "+type;
+		  cur.close();
+		  return dir+","+number;
+	    }
+
 }
 	
