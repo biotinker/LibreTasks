@@ -114,6 +114,8 @@ public class DummyActivity extends Activity {
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
+    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
+      new_id = new_id-1;
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
 
     if (cur.moveToFirst()) {
@@ -197,6 +199,8 @@ public class DummyActivity extends Activity {
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
+    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
+      new_id = new_id-1;
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
     if (cur.moveToPosition(new_id)) {
 
@@ -246,7 +250,9 @@ try{
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
+    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
     new_id = new_id-1;
+    
     int flag = 0;
 
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
@@ -271,12 +277,14 @@ try{
                   } 
         		  else
         		  {
+        		try{
         	  Toast.makeText(
                 getApplicationContext(),
                 cur.getString(cur.getColumnIndex("s_name")) + ":"
                     + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
         		  sendIntent(actiondata1);
-        	  }
+        		}catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to execute action");}
+        		}
         	  }
             //sendIntent(actiondata1);
             flag = 1;
