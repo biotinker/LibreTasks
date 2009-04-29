@@ -145,7 +145,7 @@ public class UGParser {
       }
       OpenFileWrite(MODE_WRITE);
       //Deleting all lines
-      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled);
+      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled+"\n");
       osw.flush();
       osw.close();
     } catch (Exception e) {
