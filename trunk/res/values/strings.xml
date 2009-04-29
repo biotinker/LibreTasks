@@ -19,7 +19,7 @@
     <string name="save_as">Save as</string>
     <string name="save_dialog">Enter a name to remember this instance by</string>
     <string name="cancel">Cancel</string>
-    <string name="enabled">Enabled</string>
+    <string name="omniabled">Turn on/off OmniDroid</string>
     <string name="test_app">OmniDroid TestApp</string>
     <string name="maincp_name">Test CP</string>
 	<string name="package_lister">Package Lister</string>
@@ -45,6 +45,7 @@
 	<string name="delete_all">Delete All OmniHandlers</string>
 	<string name="missing_data">Data field can not be empty.</string>	
 	<string name="missing_name">OmniHandler name can not be empty.</string>
-	</resources>
+	<string name="on_boot">Enable OmniDroid On Boot</string>
+</resources>
 	
 

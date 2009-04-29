@@ -80,7 +80,7 @@ public class TestApp extends ListActivity {
       i.putExtra(UGParser.KEY_EventName, "SMS_RECEIVED");
       i.putExtra(UGParser.KEY_ActionApp, "SMS");
       i.putExtra(UGParser.KEY_ActionName, "SMS_SEND");
-      i.setClass(this.getApplicationContext(), ActionThrowerData.class);
+      i.setClass(this.getApplicationContext(), ActionThrowerDataType.class);
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");
