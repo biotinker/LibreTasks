@@ -358,6 +358,8 @@ public class UGParser {
       String line = "";
 
       while ((line = dis.readLine()) != null) {
+        try
+        {
         HashMap<String, String> HM = new HashMap<String, String>();
         String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase("InstanceName")) {
@@ -372,6 +374,7 @@ public class UGParser {
           }
           UCRecords.add(HM);
         }
+        }catch(Exception e){}
 
       }
       return UCRecords;
