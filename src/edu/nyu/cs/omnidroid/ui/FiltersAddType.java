@@ -28,7 +28,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author acase
  * 
  */
-public class FiltersAdd extends ListActivity {
+public class FiltersAddType extends ListActivity {
 
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;

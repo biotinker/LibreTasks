@@ -62,6 +62,8 @@ public class Filters extends Activity implements OnClickListener {
   private static final int ADD_FILTER = 2;
   private static final int RESULT_ADD_SUCCESS = 1;
 
+  private AGParser ag = new AGParser(this);
+
   /*
    * (non-Javadoc)
    * 
@@ -80,6 +82,7 @@ public class Filters extends Activity implements OnClickListener {
     // See what application we want to handle events for from the
     getIntentData(getIntent());
 
+    // Present an updated list of filters we have applied
     updateList();
   }
 
@@ -110,6 +113,12 @@ public class Filters extends Activity implements OnClickListener {
       eventName = extras.getString(UGParser.KEY_EventName);
       fType = extras.getString(UGParser.KEY_FilterType);
       fData = extras.getString(UGParser.KEY_FilterData);
+    }
+
+    // If there aren't any filters that we can apply ignore the filter page
+    ArrayList<String> filters = ag.readFilters(appName, eventName);
+    if (filters.size() == 0) {
+    	onClick(findViewById(R.id.next));
     }
   }
 
@@ -222,7 +231,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   private void Add_Filter() {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), FiltersAdd.class);
+    i.setClass(this.getApplicationContext(), FiltersAddType.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
     i.putExtra(UGParser.KEY_EventName, eventName);
     startActivityForResult(i, ADD_FILTER);

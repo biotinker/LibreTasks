@@ -2,6 +2,9 @@ package edu.nyu.cs.omnidroid.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ToggleButton;
 import edu.nyu.cs.omnidroid.R;
 
 /**
@@ -20,6 +23,28 @@ public class Settings extends Activity {
 
     // Create a base layout to present our settings
     setContentView(R.layout.settings);
+
+    final ToggleButton omniabled_toggle = (ToggleButton) findViewById(R.id.omniabled_toggle);
+    omniabled_toggle.setOnClickListener(new OnClickListener() {
+        public void onClick(View v) {
+            if (omniabled_toggle.isChecked()) {
+            	//FIXME(acase): Enable OmniDroid
+            } else {
+            	//FIXME(acase): Disable OmniDroid
+            }
+        }
+    });
+
+    final ToggleButton on_boot_toggle = (ToggleButton) findViewById(R.id.on_boot_toggle);
+    on_boot_toggle.setOnClickListener(new OnClickListener() {
+        public void onClick(View v) {
+            if (on_boot_toggle.isChecked()) {
+            	//FIXME(acase): Set OmniDroid to start on boot
+            } else {
+            	//FIXME(acase): Turn off OmniDroid on boot
+            }
+        }
+    });
 
   }
 
