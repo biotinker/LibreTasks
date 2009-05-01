@@ -77,21 +77,28 @@
                   android:label="@string/action_thrower_data">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what data to provide to the application thrown -->
-        <activity android:name=".tests.ActionThrowerData"
+		<!--   -->
+        <activity android:name=".tests.Throwers"
                   android:label="@string/action_thrower_data">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what data to provide to the application thrown -->
-        <activity android:name=".tests.ActionThrowerData"
+		<!--   -->
+        <activity android:name=".tests.ThrowerAdd"
                   android:label="@string/action_thrower_data">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what data to provide to the application thrown -->
-        <activity android:name=".tests.ActionThrowerDataType"
+		<!--   -->
+        <activity android:name=".tests.ThrowerAction"
+                  android:label="@string/action_thrower_data">
+		</activity>
+
+		<!--   -->
+        <activity android:name=".tests.ThrowerData"
+                  android:label="@string/action_thrower_data">
+		</activity>
+
+		<!--   -->
+        <activity android:name=".tests.ThrowerDatumAdd"
                   android:label="@string/action_thrower_data">
 		</activity>
 

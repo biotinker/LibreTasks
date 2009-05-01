@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
+// TODO: Please add Javadocs and remove string instance constants.
 public class DummyActivity extends Activity {
 
   private String uri;
@@ -105,6 +106,7 @@ public class DummyActivity extends Activity {
   }
 
   // Added by Pradeep
+  // TODO: Please recode this, it is absolutely disgusting.
   private String fillURIData(String uri2, String uridata2) {
     int cnt = 1;
     Uri uri_ret = null;
