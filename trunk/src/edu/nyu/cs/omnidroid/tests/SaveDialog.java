@@ -30,7 +30,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  * @author acase
  */
-public class ActionThrowerData extends Activity implements OnClickListener {
+public class SaveDialog extends Activity implements OnClickListener {
   // Intent Data
   private EditText appData;
   private String eventApp;
@@ -80,6 +80,7 @@ public class ActionThrowerData extends Activity implements OnClickListener {
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
+    // TODO: Pull out to it's own Save Dialog class
     LayoutInflater factory = LayoutInflater.from(this);
     final View textEntryView = factory.inflate(R.layout.save_dialog, null);
     Builder save_dialog = new AlertDialog.Builder(this);

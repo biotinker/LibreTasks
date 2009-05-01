@@ -73,6 +73,10 @@ public class CheckListViewDemo extends ListActivity implements OnClickListener {
 
     setListAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, items));
     selection = (TextView) findViewById(R.id.selection);
+// Start testing:
+//    selection.setOnClickListener(this);
+//    registerForContextMenu(selection);
+// :End testing    
     registerForContextMenu(getListView());
     setContentView(R.layout.checklistview);
   }

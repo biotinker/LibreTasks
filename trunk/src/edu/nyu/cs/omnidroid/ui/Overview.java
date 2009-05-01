@@ -302,9 +302,10 @@ public class Overview extends Activity implements OnClickListener {
         + "with eachother.\n<br/>"
         + "This page provides a list of OmniHandlers that are "
         + "saved and a checkbox to enable/disable them.\n<br/>"
-        + "Actions:\n<br/>"
+        + "Possible Actions:\n<br/>"
         + "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the Add option from the Menu.\n<br/>"
-        + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting the Delete option.\n<br/>";
+        + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting the Delete option.\n<br/>"
+        + "For more help, see our webpage: <a href=\"http://omni-droid.com/help\">omni-droid.com/help</a>\n<br/>";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));
@@ -323,7 +324,7 @@ public class Overview extends Activity implements OnClickListener {
     // TODO(acase): Move to some kind of resource
     // String about_msg = this.getResources().getString(R.string.help_overview);
     // TODO(acase): Display version information
-    String about_msg = "OmniDroid is brought to you in part by the letter G and the number 13.\n<br/>"
+    String about_msg = "OmniDroid is brought to you in part by the letter G and the number 1.\n<br/>"
         + "Hacking Contributions:<br/>"
         + "&nbsp;&nbsp;&nbsp;Andrew Case<br/>"
         + "&nbsp;&nbsp;&nbsp;Sucharita Gaat<br/>"
