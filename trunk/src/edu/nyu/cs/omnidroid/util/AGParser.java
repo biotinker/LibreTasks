@@ -491,7 +491,9 @@ public class AGParser {
             && parts[1].toString().split(",")[0].equalsIgnoreCase(ActionName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
-          String[] URIs = fparts[1].split(",");
+          String[] URIs=null;
+          if(fparts[0].equalsIgnoreCase(KEY_URIFields))
+          URIs = fparts[1].split(",");
           for (int i = 0; i < URIs.length; i++) {
             URIList.add(URIs[i]);
           }
