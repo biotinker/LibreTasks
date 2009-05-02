@@ -88,11 +88,13 @@ public class DummyActivity extends Activity {
 
         // added by Pradeep to populate Omniu CP at runtime
         uridata = HM1.get("ActionData");
-        // uridata = "SENDER PHONE NUMBER";
+        uridata = "CONTACT PHONE NUMBER";
         if (!uridata.contains("content://") && !uridata.equals("")) {
+          try{
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
           // s_ph_no etc. and not the actual URI.
-        }
+          }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
+          }
 
         // boolean val=checkFilter(uri,filtertype,filterdata);
         getCols(uri, filtertype, filterdata, actionapp);
@@ -104,6 +106,7 @@ public class DummyActivity extends Activity {
   // Used to populate the action data at Instance time.
   private String fillURIData(String uri2, String uridata2) {
     int cnt = 1;
+    String tempstr=null,aData=null;
     Uri uri_ret = null;
     String str_uri = uri2;
     String[] temp = null;
@@ -127,59 +130,72 @@ public class DummyActivity extends Activity {
             if (sm.get(1).equalsIgnoreCase(uridata2))
               uridata2 = sm.getKey();
           }
-          String aData = cur.getString(cur.getColumnIndex(uridata2));
-          String[] projection = { "i_name", "a_data" };
-          ContentValues values = new ContentValues();
-          values.put("i_name", "tempcnt");// using tempcnt to store count
-          values.put("a_data", "1");
-          Cursor cur1 = getContentResolver().query(
-              Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
-              "i_name='tempcnt'", null, null);
-          if (cur1.getCount() == 0)
-            uri_ret = getContentResolver().insert(
-                Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-          else {
-            cur1.moveToFirst();
-            // Using buffer of size n to store instance information
-            cnt = (Integer.parseInt(cur1.getString(cur1.getColumnIndex("a_data"))) + 1) % 10;
-            getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
-                "i_name='tempcnt'", null);
-            values.clear();
-            values.put("i_name", "tempcnt");// using tempcnt to store buffer count
-            values.put("a_data", cnt);
-            uri_ret = getContentResolver().insert(
-                Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-
-          }
-
+          aData = cur.getString(cur.getColumnIndex(uridata2));
+          cnt=getBufferCount();
           // Generating buffer name
-          String tempstr = "temp" + cnt;
-          values.clear();
-          values.put("i_name", tempstr);// using temp to store the instance data.
-          values.put("a_data", aData);
-
-          cur1 = getContentResolver().query(
-              Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
-              "i_name='" + tempstr + "'", null, null);
-
-          // Checking to see if the temp is populated
-          if (cur1.getCount() == 0)
-            uri_ret = getContentResolver().insert(
-                Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-          else {
-            getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
-                "i_name='temp'", null);
-            uri_ret = getContentResolver().insert(
-                Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-          }
-        }
+          tempstr = "temp" + cnt;
+          break;
+           }
       } while (cur.moveToNext());
 
     }
-
+    uri_ret=populateInstance(tempstr, aData);
     return uri_ret.toString();
   }
 
+  public int getBufferCount()
+  {
+    int cnt=1;
+    String[] projection = { "i_name", "a_data" };
+    ContentValues values = new ContentValues();
+    values.put("i_name", "tempcnt");// using tempcnt to store count
+    values.put("a_data", "1");
+    Cursor cur1 = getContentResolver().query(
+        Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
+        "i_name='tempcnt'", null, null);
+    if (cur1.getCount() == 0)
+      getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+    else {
+      cur1.moveToFirst();
+      // Using buffer of size n to store instance information
+      cnt = (Integer.parseInt(cur1.getString(cur1.getColumnIndex("a_data"))) + 1) % 10;
+      getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
+          "i_name='tempcnt'", null);
+      values.clear();
+      values.put("i_name", "tempcnt");// using tempcnt to store buffer count
+      values.put("a_data", cnt);
+      getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+    }
+return cnt;
+  }
+  
+  public Uri populateInstance(String tempstr,String aData)
+  {
+   Uri uri_ret;
+    ContentValues values = new ContentValues();
+    values.clear();
+    values.put("i_name", tempstr);// using tempstr to store the instance data.
+    values.put("a_data", aData);
+    String[] projection = { "i_name", "a_data" };
+    Cursor cur1 = getContentResolver().query(
+        Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
+        "i_name='" + tempstr + "'", null, null);
+    // Checking to see if the temp is populated
+    if (cur1.getCount() == 0)
+      uri_ret = getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+    else {
+      getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
+          "i_name='temp'", null);
+      uri_ret = getContentResolver().insert(
+          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+    }
+  return uri_ret;
+  }
+  
+  
   public boolean checkFilter(String uri, String filtertype1, String filterdata1) {
 
     String str_uri = uri;
@@ -252,7 +268,8 @@ public class DummyActivity extends Activity {
       do {
 
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-
+        
+        
         String ft = cur.getString(cur.getColumnIndex(filtertype1));
 
         if (new_id == id) {
