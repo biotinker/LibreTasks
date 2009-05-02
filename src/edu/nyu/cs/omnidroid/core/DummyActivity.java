@@ -40,24 +40,20 @@ public class DummyActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main2);
     this.intent = getIntent();
-    if (intent.getAction().contains("SMS_RECEIVED"))
-    {
-    	String id = null;
-    	
-    	this.uri = "content://sms/inbox";
-    	intentAction = "SMS_RECEIVED";
-    	StringBuilder sb = new StringBuilder(uri);
-    	sb.append("/");
-    	sb.append(getLastId(uri));
-    	this.uri = sb.toString();
-    }
-    else if(intent.getAction().contains("PHONE_STATE"))
-    {}
-    else
-    {
-    	intentAction = intent.getAction();
-    	this.uri = getURI(intent);
-    
+    if (intent.getAction().contains("SMS_RECEIVED")) {
+      String id = null;
+
+      this.uri = "content://sms/inbox";
+      intentAction = "SMS_RECEIVED";
+      StringBuilder sb = new StringBuilder(uri);
+      sb.append("/");
+      sb.append(getLastId(uri));
+      this.uri = sb.toString();
+    } else if (intent.getAction().contains("PHONE_STATE")) {
+    } else {
+      intentAction = intent.getAction();
+      this.uri = getURI(intent);
+
     }
     matchEventName(intentAction);
     this.finish();
@@ -105,8 +101,7 @@ public class DummyActivity extends Activity {
     }
   }
 
-  // Added by Pradeep
-  // TODO: Please recode this, it is absolutely disgusting.
+  // Used to populate the action data at Instance time.
   private String fillURIData(String uri2, String uridata2) {
     int cnt = 1;
     Uri uri_ret = null;
@@ -116,18 +111,13 @@ public class DummyActivity extends Activity {
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
-    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
-      new_id = new_id-1;
+    if (actionname.equalsIgnoreCase("SMS_RECEIVED"))
+      new_id = new_id - 1;
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-
     if (cur.moveToFirst()) {
-
       do {
-
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-
         if (new_id == id) {
-
           AGParser ag = new AGParser(getApplicationContext());
           ArrayList<StringMap> cm = ag.readContentMap(actionapp);
           Iterator<StringMap> i = cm.iterator();
@@ -137,34 +127,32 @@ public class DummyActivity extends Activity {
             if (sm.get(1).equalsIgnoreCase(uridata2))
               uridata2 = sm.getKey();
           }
-
           String aData = cur.getString(cur.getColumnIndex(uridata2));
           String[] projection = { "i_name", "a_data" };
-
           ContentValues values = new ContentValues();
-          values.put("i_name", "tempcnt");// using temp to store the instance data.
+          values.put("i_name", "tempcnt");// using tempcnt to store count
           values.put("a_data", "1");
-
           Cursor cur1 = getContentResolver().query(
               Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
               "i_name='tempcnt'", null, null);
-
           if (cur1.getCount() == 0)
             uri_ret = getContentResolver().insert(
                 Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
           else {
             cur1.moveToFirst();
-            cnt = (Integer.parseInt(cur1.getString(cur1.getColumnIndex("a_data"))) + 1) % 3;
+            // Using buffer of size n to store instance information
+            cnt = (Integer.parseInt(cur1.getString(cur1.getColumnIndex("a_data"))) + 1) % 10;
             getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
                 "i_name='tempcnt'", null);
             values.clear();
-            values.put("i_name", "tempcnt");// using temp to store the instance data.
+            values.put("i_name", "tempcnt");// using tempcnt to store buffer count
             values.put("a_data", cnt);
             uri_ret = getContentResolver().insert(
                 Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
 
           }
 
+          // Generating buffer name
           String tempstr = "temp" + cnt;
           values.clear();
           values.put("i_name", tempstr);// using temp to store the instance data.
@@ -183,7 +171,6 @@ public class DummyActivity extends Activity {
                 "i_name='temp'", null);
             uri_ret = getContentResolver().insert(
                 Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
-
           }
         }
       } while (cur.moveToNext());
@@ -201,8 +188,8 @@ public class DummyActivity extends Activity {
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
-    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
-      new_id = new_id-1;
+    if (actionname.equalsIgnoreCase("SMS_RECEIVED"))
+      new_id = new_id - 1;
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
     if (cur.moveToPosition(new_id)) {
 
@@ -232,9 +219,11 @@ public class DummyActivity extends Activity {
     }
     // send_intent.setClass(this.getApplicationContext(), pi.getClass());
     // startActivity(send_intent);
-try{
-    sendBroadcast(send_intent);
-}catch(Exception e){ e.toString();}
+    try {
+      sendBroadcast(send_intent);
+    } catch (Exception e) {
+      e.toString();
+    }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
 
     // } catch (NameNotFoundException e) {
@@ -252,9 +241,9 @@ try{
     String num = temp[temp.length - 1];
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
-    if(actionname.equalsIgnoreCase("SMS_RECEIVED"))
-    new_id = new_id-1;
-    
+    if (actionname.equalsIgnoreCase("SMS_RECEIVED"))
+      new_id = new_id - 1;
+
     int flag = 0;
 
     Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
@@ -263,32 +252,32 @@ try{
       do {
 
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-        
+
         String ft = cur.getString(cur.getColumnIndex(filtertype1));
-        
+
         if (new_id == id) {
           if (filterdata1.equalsIgnoreCase(ft)) {
-        	  {
-        		  if(final_uri.contains("sms"))
-                  {
-        			  Toast.makeText(
-        		                getApplicationContext(),
-        		                cur.getString(cur.getColumnIndex(filtertype1)) + ":"
-        		                    + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
-        			  sendIntent(actiondata1);
-                  } 
-        		  else
-        		  {
-        		try{
-        	  Toast.makeText(
-                getApplicationContext(),
-                cur.getString(cur.getColumnIndex("s_name")) + ":"
-                    + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
-        		  sendIntent(actiondata1);
-        		}catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to execute action");}
-        		}
-        	  }
-            //sendIntent(actiondata1);
+            {
+              if (final_uri.contains("sms")) {
+                Toast.makeText(
+                    getApplicationContext(),
+                    cur.getString(cur.getColumnIndex(filtertype1)) + ":"
+                        + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
+                sendIntent(actiondata1);
+              } else {
+                try {
+                  Toast.makeText(
+                      getApplicationContext(),
+                      cur.getString(cur.getColumnIndex("s_name")) + ":"
+                          + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG)
+                      .show();
+                  sendIntent(actiondata1);
+                } catch (Exception e) {
+                  OmLogger.write(getApplicationContext(), "Unable to execute action");
+                }
+              }
+            }
+            // sendIntent(actiondata1);
             flag = 1;
           }
 
@@ -304,22 +293,19 @@ try{
     }
 
   }
-  
-  public String getLastId(String smsuri)
-  {
-	  
-	  String id = null;
-	  String lastids = null;
-	  Cursor c = managedQuery(Uri.parse(smsuri), null, null, null, null);
-	  if (c.moveToFirst()) {
 
-	     
-	  id = c.getString(c.getColumnIndex("_id"));
-	  int lastid = Integer.parseInt(id) - 1;
-	  lastids = Integer.toString(lastid);
-	      } 
-	  
-  
-	  return id;
-}
+  public String getLastId(String smsuri) {
+
+    String id = null;
+    String lastids = null;
+    Cursor c = managedQuery(Uri.parse(smsuri), null, null, null, null);
+    if (c.moveToFirst()) {
+
+      id = c.getString(c.getColumnIndex("_id"));
+      int lastid = Integer.parseInt(id) - 1;
+      lastids = Integer.toString(lastid);
+    }
+
+    return id;
+  }
 }
