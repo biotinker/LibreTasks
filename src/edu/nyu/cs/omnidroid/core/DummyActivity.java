@@ -88,7 +88,7 @@ public class DummyActivity extends Activity {
 
         // added by Pradeep to populate Omniu CP at runtime
         uridata = HM1.get("ActionData");
-        uridata = "CONTACT PHONE NUMBER";
+        //uridata = "CONTACT PHONE NUMBER";
         if (!uridata.contains("content://") && !uridata.equals("")) {
           try{
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
