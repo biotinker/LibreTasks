@@ -324,7 +324,11 @@ public class UGParser {
    */
   public ArrayList<String> readLines(String key) {
     ArrayList<String> cols2 = new ArrayList<String>();
-
+    try {
+      dis.close();
+      bis.close();
+    } catch (Exception e) {
+    }
     String val;
     try {
       OpenFileRead();
@@ -352,7 +356,11 @@ public class UGParser {
    */
   public ArrayList<HashMap<String, String>> readRecords() {
     ArrayList<HashMap<String, String>> UCRecords = new ArrayList<HashMap<String, String>>();
-
+    try {
+      dis.close();
+      bis.close();
+    } catch (Exception e) {
+    }
     try {
       OpenFileRead();
       String line = "";
@@ -393,7 +401,6 @@ public class UGParser {
    * */
   public HashMap<String, String> readRecord(String Key) {
     HashMap<String, String> HM = new HashMap<String, String>();
-
     try {
       OpenFileRead();
       String line = "";
@@ -474,7 +481,11 @@ public class UGParser {
    * */
   public ArrayList<HashMap<String, String>> readbyEventName(String Key) {
     ArrayList<HashMap<String, String>> UCRecords = new ArrayList<HashMap<String, String>>();
-
+    try {
+      dis.close();
+      bis.close();
+    } catch (Exception e) {
+    }
     try {
       OpenFileRead();
       String line = "";
