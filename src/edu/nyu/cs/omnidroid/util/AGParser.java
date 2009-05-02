@@ -433,7 +433,9 @@ public class AGParser {
             && parts[1].toString().split(",")[0].equalsIgnoreCase(EventName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
-          String[] filters = fparts[1].split(",");
+          String[] filters=null;
+          if(fparts[0].equalsIgnoreCase(KEY_Filters))
+          filters = fparts[1].split(",");
           for (int i = 0; i < filters.length; i++) {
             FilterList.add(filters[i]);
           }
