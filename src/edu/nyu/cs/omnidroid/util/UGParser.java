@@ -293,6 +293,11 @@ public class UGParser {
    * @return Returns value of the key
    */
   public String readLine(String key) {
+    try {
+      dis.close();
+      bis.close();
+    } catch (Exception e) {
+    }
     String col2 = "";
     try {
       OpenFileRead();
@@ -324,6 +329,11 @@ public class UGParser {
    */
   public ArrayList<String> readLines(String key) {
     ArrayList<String> cols2 = new ArrayList<String>();
+    try {
+      dis.close();
+      bis.close();
+    } catch (Exception e) {
+    }
     try {
       dis.close();
       bis.close();
