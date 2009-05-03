@@ -204,7 +204,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   private void deleteFilter(long id) {
     // Remove item from the list
-    filterList.remove(id);
+    filterList.remove((int)id);
 
     // Clear it from our intents
     // TODO(acase): this will need to be changed once we support more than one filter

@@ -203,12 +203,13 @@ public class Actions extends Activity implements OnClickListener {
   /**
    * Delete the thrower from this omnihandler
    * 
-   * @param l
+   * @param id
    *          - the item id selected
    */
   private void deleteThrower(long id) {
     // Remove item from the list
-    throwerList.remove(id);
+    throwerList.remove((int)id);
+
     // Clear it from our intents
     // TODO(acase): this will need to be changed once we support more than one thrower
     throwerApp = null;
