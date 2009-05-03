@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -53,13 +54,22 @@ public class FiltersAddType extends ListActivity {
     eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
 
     // Getting the list of Filters available from AppConfig
-    // FIXME(acase): Store the ContentMap->DisplayName for each filter
     ArrayList<String> filterTypeList = ag.readFilters(eventApp, eventName);
-    //ArrayList<StringMap> contentMap = ag.readContentMap(eventApp);
-    //ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
-    //    android.R.layout.simple_list_item_1, contentMap);
+    
+    // Convert filter to OmniDroid common name
+    ArrayList<StringMap> contentMap = ag.readContentMap(eventApp);
+    ArrayList<String> filterInputs = new ArrayList<String>();
+    for (int cnt=0; cnt<filterTypeList.size(); cnt++) {
+      for (StringMap item: contentMap) {
+        if (item.getKey().equals(filterTypeList.get(cnt))) {
+          filterInputs.add(item.getValue());
+        }
+      }
+    }
+
+    // Setup our list view
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, filterTypeList);
+        android.R.layout.simple_list_item_1, filterInputs);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
   }

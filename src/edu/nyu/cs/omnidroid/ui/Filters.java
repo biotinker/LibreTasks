@@ -46,8 +46,8 @@ public class Filters extends Activity implements OnClickListener {
   // Filters data
   private ArrayList<StringMap> filterList = new ArrayList<StringMap>();
   private ListView filterListView;
-  private String fType;
-  private String fData;
+  private String filterType;
+  private String filterData;
 
   // Maximum number of filters allowed
   // TODO(acase): Allow more than one filter in the future
@@ -62,12 +62,15 @@ public class Filters extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filters);
+    
+    // We want to grab this listview for later usage
     filterListView = (ListView) findViewById(R.id.filters_list);
 
-    // Activate the "Done" button
+    // Setup the "Done" button
     Button done = (Button) findViewById(R.id.filters_done);
     done.setOnClickListener(this);
-    // Activate the "Add" button
+
+    // Setup the "Add" button
     Button add = (Button) findViewById(R.id.filters_add);
     add.setOnClickListener(this);
 
@@ -83,8 +86,8 @@ public class Filters extends Activity implements OnClickListener {
    */
   private void update() {
     // Populate a list of active filters
-    if ((fType != null) && (fData != null)) {
-      filterList.add(new StringMap(fType, fData));
+    if ((filterType != null) && (filterData != null)) {
+      filterList.add(new StringMap(filterType, filterData));
     }
 
     // TODO(acase): If editing, then pull from UGParser
@@ -117,8 +120,8 @@ public class Filters extends Activity implements OnClickListener {
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
       eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
-      fType = extras.getString(UGParser.KEY_FILTER_TYPE);
-      fData = extras.getString(UGParser.KEY_FILTER_DATA);
+      filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      filterData = extras.getString(UGParser.KEY_FILTER_DATA);
     }
 
     // If there aren't any filters that we can apply ignore the filter page
@@ -196,10 +199,20 @@ public class Filters extends Activity implements OnClickListener {
 
   /**
    * FIXME(acase): Allow deletion of already set filters
-   * @param l
+   * @param id
    *          - the item id selected
    */
-  private void deleteFilter(long l) {
+  private void deleteFilter(long id) {
+    // Remove item from the list
+    filterList.remove(id);
+
+    // Clear it from our intents
+    // TODO(acase): this will need to be changed once we support more than one filter
+    filterType = null;
+    filterData = null;
+
+    // Update our UI
+    update();
   }
 
   /**
@@ -231,9 +244,9 @@ public class Filters extends Activity implements OnClickListener {
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
     // TODO(acase): Allow more than one filter
-    if ((fType != null) && (fData != null)) {
-      i.putExtra(UGParser.KEY_FILTER_TYPE, fType);
-      i.putExtra(UGParser.KEY_FILTER_DATA, fData);
+    if ((filterType != null) && (filterData != null)) {
+      i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+      i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     }
     startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
   }

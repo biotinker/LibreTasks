@@ -45,9 +45,12 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
   private String throwerData1;
   private String throwerData2;
 
-  // Data Storage
+  /* Data Storage */
+  // List view to display our data
   private ListView dataListView;
+  // Storage for the listview
   private ArrayList<String> dataList = new ArrayList<String>();
+  // List of data fields needed for the action app
   private ArrayList<String> dataFields;
   private ArrayList<String> dataInputs = new ArrayList<String>();
   int minUriFields;
@@ -73,23 +76,18 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     setContentView(R.layout.action_data);
     dataListView = (ListView) findViewById(R.id.thrower_data_list);
 
-    // Activate the "Done" button
+    // Setup the "Done" button
     Button done = (Button) findViewById(R.id.thrower_data_done);
     done.setOnClickListener(this);
-    // Activate the "Add" button
-    //Button add = (Button) findViewById(R.id.thrower_data_add);
-    //add.setOnClickListener(this);
 
     // Get the data passed to us
     getIntentData(getIntent());
 
-    // Get data from application config
+    // Get a list of data we'll need for our action application
     ag = new AGParser(this);
-    // The types of data this thrower needs
     dataFields = ag.readURIFields(throwerApp, throwerName);
     minUriFields = dataFields.size();
-    // The data mapping for this content provider
-    // FIXME(acase): Make this work better
+    // Get a mapping of data from the app's content provider
     ArrayList<StringMap> contentMap = ag.readContentMap(throwerApp);
     for (int i=0; i<dataFields.size(); i++) {
       for (StringMap item: contentMap) {
@@ -111,7 +109,7 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     dataList.clear();
     int dataCount = 0;
 
-    // Populate the list
+    // Populate the list of data elements
     if (throwerData1 != null) {
       dataCount++;
       dataList.add(throwerData1);
@@ -125,7 +123,7 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
       dataList.add(EMPTY_DATA + dataInputs.get(1));
     }
 
-    // Display a list of active filters
+    // Display a list of our data elements
     ArrayAdapter<String> listadpt = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_1, dataList);
     dataListView.setAdapter(listadpt);
