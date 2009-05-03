@@ -24,7 +24,7 @@ public class SMSListener extends BroadcastReceiver {
       // Bundle bundle = intent.getExtras();
       try{
       intent.setClass(context, edu.nyu.cs.omnidroid.external.catcherapp.CatcherAppActivity.class);
-      intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       context.startActivity(intent);
       Log.i("Received Intent", intent.getAction());
     }catch(Exception e)

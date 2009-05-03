@@ -9,7 +9,6 @@ import java.util.Iterator;
 import android.content.Context;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.AGParser;
-import edu.nyu.cs.omnidroid.util.StringMap;
 
 
 
@@ -27,7 +26,6 @@ public class PopulateAppConfigSetup {
 	
 	public void populate()
 	{
-		boolean ap;
 		ag.delete_all();
 	  ag.write("Application:SMS");
 	  ag.write("EventName:SMS_RECEIVED,RECEIVED SMS");
@@ -66,11 +64,5 @@ public class PopulateAppConfigSetup {
        Toast.makeText(context, filter.toString(), 5).show();
     }
 
-    ArrayList<StringMap> contentmap = ag.readContentMap("SMS");
-    Iterator<StringMap> i4 = contentmap.iterator();
-    while (i4.hasNext()) {
-      StringMap fieldmap = i4.next();
-     // Toast.makeText(a.getBaseContext(), fieldmap.toString(), 5).show();
 	}
-}
 }

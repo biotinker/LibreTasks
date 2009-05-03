@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
 import edu.nyu.cs.omnidroid.ui.PackageLister;
+import edu.nyu.cs.omnidroid.ui.Actions;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
@@ -77,10 +78,10 @@ public class TestApp extends ListActivity {
       break;
     case 8:
       i.putExtra(AGParser.KEY_APPLICATION, "SMS");
-      i.putExtra(UGParser.KEY_EventName, "SMS_RECEIVED");
+      i.putExtra(UGParser.KEY_EVENT_TYPE, "SMS_RECEIVED");
       //i.putExtra(UGParser.KEY_ActionApp, "SMS");
       //i.putExtra(UGParser.KEY_ActionName, "SMS_SEND");
-      i.setClass(this.getApplicationContext(), Throwers.class);
+      i.setClass(this.getApplicationContext(), Actions.class);
       break;
     default:
       Log.i(this.getLocalClassName(), "Invalid Test Selection");

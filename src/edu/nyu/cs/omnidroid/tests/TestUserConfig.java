@@ -8,9 +8,6 @@ package edu.nyu.cs.omnidroid.tests;
  */
 public class TestUserConfig {
 
-  // Configuration file locations for the TM/RM.
-  private static String userConfigFile;
-
   public TestUserConfig() {
     initConfig();
   }

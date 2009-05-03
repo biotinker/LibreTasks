@@ -46,7 +46,7 @@
 
 		<!--  Activity used to by the event catcher to determine
 		      what application's actions to catch -->
-        <activity android:name=".ui.EventCatcher"
+        <activity android:name=".ui.Event"
                   android:label="@string/event_catcher_title">
 		</activity>
 
@@ -67,56 +67,44 @@
 
 		<!--  Activity used to by the event catcher to determine
 		      what actions to catch for a given application -->
-        <activity android:name=".ui.EventCatcherActions"
+        <activity android:name=".ui.EventType"
                   android:label="@string/event_catcher_actions_title">
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
 		      what data to provide to the application thrown -->
-        <activity android:name=".ui.ActionThrowerData"
+        <activity android:name=".ui.ActionData"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".tests.Throwers"
+        <activity android:name=".ui.Actions"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".tests.ThrowerAdd"
+        <activity android:name=".ui.ActionAdd"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".tests.ThrowerAction"
+        <activity android:name=".ui.ActionType"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".tests.ThrowerData"
+        <activity android:name=".ui.ActionData"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".tests.ThrowerDatumAdd"
+        <activity android:name=".ui.ActionDatumAdd"
                   android:label="@string/action_thrower_data">
 		</activity>
 
 		<!--  Activity used to list all the phone application packages -->
         <activity android:name=".ui.PackageLister"
                   android:label="@string/package_lister">
-		</activity>
-
-		<!--  Activity used to by the action thrower to determine
-		      what application's actions to throw -->
-        <activity android:name=".ui.ActionThrower"
-                  android:label="@string/action_thrower_title">
-		</activity>
-
-		<!--  Activity used to by the action thrower to determine
-		      what actions to throw for a given application -->
-        <activity android:name=".ui.ActionThrowerActions"
-                  android:label="@string/action_thrower_actions_title">
 		</activity>
 		
 		<!--  The activity that throws actions to our applications -->

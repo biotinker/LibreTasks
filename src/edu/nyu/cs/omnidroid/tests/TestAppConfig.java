@@ -32,10 +32,10 @@ public class TestAppConfig extends Activity {
     ag.write("EventName:Contact_Updated,Contact Updated");
     ag.write("Filters:S_Name,S_Ph_no,Text");
     ag.write("ActionName:Display_Contact,Display Contact");
-    ag.write("URIFields:CONTACT PHONE NUMBER,TEXT,ActionData");
+    ag.write("URIFields:SENDER PHONE NUMBER,TEXT");
     ag.write("ContentMap:");
     ag.write("S_Name,CONTACT NAME,STRING");
-    ag.write("S_Ph_No,CONTACT PHONE NUMBER,INT");
+    ag.write("S_Ph_No,SENDER PHONE NUMBER,INT");
     ag.write("Text,TEXT,STRING");
 
     // FIXME: This needs to be pulled from the other applications
@@ -47,13 +47,13 @@ public class TestAppConfig extends Activity {
     ag.write("EventName:SMS_SEND,SENT SMS");
     ag.write("Filters:address,body");
     ag.write("ActionName:SMS_SEND,SEND SMS");
-    ag.write("URIFields:address,body");
+    ag.write("URIFields:SENDER PHONE NUMBER,TEXT");
     ag.write("ContentMap:");
     //ag.write("S_Name,SENDER NAME,STRING");
    // ag.write("R_Name,RECEIVER NAME,STRING");
     ag.write("address,SENDER PHONE NUMBER,INT");
     ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
-    ag.write("body,Text,STRING");
+    ag.write("body,TEXT,STRING");
    // ag.write("Location,SMS Number,INT");
     
     ag.write("Application:Calllog");
@@ -64,13 +64,13 @@ public class TestAppConfig extends Activity {
     ag.write("EventName:SMS_SEND,SENT SMS");
     ag.write("Filters:address,body");
     ag.write("ActionName:SMS_SEND,SEND SMS");
-    ag.write("URIFields:address,body");
+    ag.write("URIFields:SENDER PHONE NUMBER,TEXT");
     ag.write("ContentMap:");
     //ag.write("S_Name,SENDER NAME,STRING");
    // ag.write("R_Name,RECEIVER NAME,STRING");
     ag.write("address,SENDER PHONE NUMBER,INT");
     ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
-    ag.write("body,Text,STRING");
+    ag.write("body,TEXT,STRING");
    // ag.write("Location,SMS Number,INT");
     
     ag.write("Application:System");

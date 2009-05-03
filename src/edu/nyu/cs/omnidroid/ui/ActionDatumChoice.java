@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
@@ -31,7 +29,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author acase
  * 
  */
-public class ThrowerDatumAdd extends Activity implements OnItemClickListener {
+public class ActionDatumChoice extends Activity implements OnItemClickListener {
   // Standard Menu options (Android menus require int)
   private static final int MENU_HELP = 0;
 
@@ -51,20 +49,19 @@ public class ThrowerDatumAdd extends Activity implements OnItemClickListener {
    */
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.thrower_datum_add);
+    setContentView(R.layout.action_datum_add);
 
     // See what application we want to handle events for from the
     // intent data passed to us.
     Intent i = getIntent();
     Bundle extras = i.getExtras();
     appName = extras.getString(AGParser.KEY_APPLICATION);
-    eventName = extras.getString(UGParser.KEY_EventName);
-    // TODO(acase): Allow more than one filter
-    filterType = extras.getString(UGParser.KEY_FilterType);
-    filterData = extras.getString(UGParser.KEY_FilterData);
-    throwerApp = extras.getString(UGParser.KEY_ActionApp);
-    throwerName = extras.getString(UGParser.KEY_ActionName);
-    throwerData1 = extras.getString(UGParser.KEY_ActionData);
+    eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+    filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+    filterData = extras.getString(UGParser.KEY_FILTER_DATA);
+    throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
+    throwerName = extras.getString(UGParser.KEY_ACTION_TYPE);
+    throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
 
     // Getting the list of data available from AppConfig ContentMap
     AGParser ag = new AGParser(getApplicationContext());
@@ -97,19 +94,18 @@ public class ThrowerDatumAdd extends Activity implements OnItemClickListener {
     }
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
@@ -141,20 +137,18 @@ public class ThrowerDatumAdd extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> lv, View v, int position, long id) {
     StringMap sm = (StringMap) lv.getAdapter().getItem(position);
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), SaveDialog.class);
     i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    i.putExtra(UGParser.KEY_FilterType, sm.getKey());
-    // TODO(acase): Allow more than one filter
-    i.putExtra(UGParser.KEY_FilterType, filterType);
-    i.putExtra(UGParser.KEY_FilterData, filterData);
-    i.putExtra(UGParser.KEY_ActionApp, throwerApp);
-    i.putExtra(UGParser.KEY_ActionName, throwerName);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    i.putExtra(UGParser.KEY_FILTER_TYPE, sm.getKey());
+    i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+    i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
+    i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
+    i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
     if (throwerData1 == null) {
-      i.putExtra(UGParser.KEY_ActionData, sm.getKey());
+      i.putExtra(UGParser.KEY_ACTION_DATA1, sm.getValue());
     } else {
-      i.putExtra(UGParser.KEY_ActionData, throwerData1);
-      i.putExtra(UGParser.KEY_ActionData2, sm.getKey());
+      i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
+      i.putExtra(UGParser.KEY_ACTION_DATA2, sm.getValue());
     }
     setResult(Constants.RESULT_SUCCESS, i);
     finish();

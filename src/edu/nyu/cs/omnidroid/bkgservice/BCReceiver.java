@@ -1,24 +1,10 @@
 package edu.nyu.cs.omnidroid.bkgservice;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.provider.CallLog;
-import android.telephony.gsm.SmsMessage;
 import android.util.Log;
-import android.widget.Toast;
 import edu.nyu.cs.omnidroid.util.OmLogger;
-import edu.nyu.cs.omnidroid.util.UGParser;
-import edu.nyu.cs.omnidroid.core.*;
 
 public class BCReceiver extends BroadcastReceiver {
 	
@@ -31,8 +17,7 @@ public class BCReceiver extends BroadcastReceiver {
 		try
 			{
 			intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
-			intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-			String intentaction = intent.getAction();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			//Toast.makeText(context,getLastCallLogEntry(context),Toast.LENGTH_LONG).show();
 		context.startActivity(intent);
 			
@@ -44,6 +29,9 @@ public class BCReceiver extends BroadcastReceiver {
 		}
 		}
 	
+/*
+ * This doesn't belong in this class.
+ * As a result, it's been commented out and slated for removal.
 	public void readSMS(Context context, Intent intent)
 	{
 		Bundle bundle = intent.getExtras();
@@ -63,8 +51,11 @@ public class BCReceiver extends BroadcastReceiver {
 	      Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
 
 	    }
-	    }
-	
+    }
+*/
+/*  
+ * This doesn't belong in this class.
+ * As a result, it's been commented out and slated for removal.
 	private String getLastCallLogEntry( Context context ) {
 		  String[] projection = new String[] {
 	    	BaseColumns._ID,
@@ -108,6 +99,6 @@ public class BCReceiver extends BroadcastReceiver {
 		  cur.close();
 		  return dir+","+number;
 	    }
-
+*/
 }
 	

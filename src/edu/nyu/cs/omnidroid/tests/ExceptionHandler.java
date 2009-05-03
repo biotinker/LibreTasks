@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.ui;
+package edu.nyu.cs.omnidroid.tests;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +24,7 @@ public class ExceptionHandler extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     Log.i(this.getLocalClassName(), "onCreate");
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.linear_default);
+    setContentView(R.layout.default_linear);
   }
 
   public void onReceive(Context context, Intent intent) {

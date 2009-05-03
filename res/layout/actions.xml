@@ -5,7 +5,10 @@
 
 	<ListView android:id="@+id/throwers_list" android:layout_width="fill_parent"
 		android:layout_weight="1" android:layout_height="fill_parent" />
-	<Button android:id="@+id/save" android:layout_width="fill_parent"
+	<Button android:id="@+id/throwers_add" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/add_thrower" 
+		android:layout_weight="0" />
+	<Button android:id="@+id/throwers_save" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/save" 
 		android:layout_weight="0" />
 

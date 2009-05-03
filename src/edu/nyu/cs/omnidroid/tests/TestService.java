@@ -15,9 +15,9 @@ public class TestService extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try{
-        	setContentView(R.layout.main);
+        	setContentView(R.layout.test_service);
         	
-        	Button button = (Button)findViewById(R.id.BR);
+        	Button button = (Button)findViewById(R.id.test_service_br);
             button.setOnClickListener(BRListener);
             //OmLogger.write("Starting Backgnd Service");
        //Intent intentBR=new Intent("",null,this,com.OmniBR.BRService.class);\
