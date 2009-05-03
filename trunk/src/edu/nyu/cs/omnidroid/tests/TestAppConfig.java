@@ -20,7 +20,7 @@ public class TestAppConfig extends Activity {
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    // TODO Auto-generated method stub
+    // FIXME: This needs to be pulled from the other applications
     super.onCreate(savedInstanceState);
     AGParser ag = new AGParser(this.getApplicationContext());
     ag.delete_all();
@@ -38,7 +38,6 @@ public class TestAppConfig extends Activity {
     ag.write("S_Ph_No,SENDER PHONE NUMBER,INT");
     ag.write("Text,TEXT,STRING");
 
-    // FIXME: This needs to be pulled from the other applications
     ag.write("Application:SMS");
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSCatcher");
