@@ -3,7 +3,6 @@ package edu.nyu.cs.omnidroid.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,19 +22,13 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  */
 public class FiltersAddData extends Activity implements OnClickListener {
-
-  // Standard Menu options (Android menus require int, so no enums)
+  // Standard Menu options (Android menus require int)
   private static final int MENU_HELP = 0;
 
   // User Selected Data
-  String appName = null;
-  String eventName = null;
-  String filterType = null;
-  Button saveBtn = null;
-  EditText filterData = null;
-
-  // Activity results
-  private static final int RESULT_ADD_SUCCESS = 1;
+  String eventApp;
+  String eventName;
+  String filterType;
 
   /*
    * (non-Javadoc)
@@ -47,22 +40,24 @@ public class FiltersAddData extends Activity implements OnClickListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filters_add_data);
 
-    // See what application we want to handle events for from the
-    // intent data passed to us.
+    // Get data set so far
+    getIntentData();
+
+    // Connect to the "Done" button
+    Button done = (Button) findViewById(R.id.filters_add_done);
+    done.setOnClickListener(this);
+  }
+
+  /**
+   * A wrapper for the getIntent() function to store the appropriate data that should be present:
+   * eventApp, eventName, and filterType.
+   */
+  private void getIntentData() {
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    appName = extras.getString(AGParser.KEY_APPLICATION);
-    eventName = extras.getString(UGParser.KEY_EventName);
-    filterType = extras.getString(UGParser.KEY_FilterType);
-
-    // Connect to our UI layout
-    saveBtn = (Button) findViewById(R.id.save);
-    filterData = (EditText) findViewById(R.id.data);
-
-    // Listen for the save button click
-    saveBtn.setOnClickListener(this);
-
-    Log.i(this.getLocalClassName(), "onCreate exit");
+    eventApp = extras.getString(AGParser.KEY_APPLICATION);
+    eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+    filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
   }
 
   /**
@@ -82,7 +77,7 @@ public class FiltersAddData extends Activity implements OnClickListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_HELP:
-      Help();
+      help();
       return true;
     }
     return false;
@@ -91,24 +86,28 @@ public class FiltersAddData extends Activity implements OnClickListener {
   /**
    * Call our Help dialog
    */
-  private void Help() {
+  private void help() {
     // TODO (acase): Create a help dialog for this activity
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.view.View.OnClickListener#onClick(android.view.View)
+   */
   public void onClick(View v) {
     // Pass the data back to Filters
-    // AutoCompleteTextView data = (AutoCompleteTextView)
-    // findViewById(R.id.data);
-    EditText data = (EditText) findViewById(R.id.data);
+    // TODO(acase): Use auto-complete text instead
+    // AutoCompleteTextView data = (AutoCompleteTextView) findViewById(R.id.filters_add_data);
+    EditText data = (EditText) findViewById(R.id.filters_add_data);
     String filterData = data.getText().toString();
 
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), Filters.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    i.putExtra(UGParser.KEY_FilterType, filterType);
-    i.putExtra(UGParser.KEY_FilterData, filterData);
-    setResult(RESULT_ADD_SUCCESS, i);
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+    i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
+    setResult(Constants.RESULT_SUCCESS, i);
     finish();
   }
 

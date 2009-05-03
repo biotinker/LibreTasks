@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 /**
  * @author pcsupprt
@@ -21,6 +21,7 @@ public interface Constants {
   final int RESULT_ADD_DATUM = 10;
   final int RESULT_DEL_DATUM = 11;
   final int RESULT_EDIT_DATUM = 12;
+  final int RESULT_EDIT_SETTINGS = 13;
   
 
   // Request Result Values

@@ -5,7 +5,7 @@
 	<TableRow>
 		<TextView android:padding="3dip"
 			android:text="@string/omniabled" />
-		<ToggleButton android:id="@+id/omniabled_toggle"
+		<ToggleButton android:id="@+id/settings_omniabled"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"		    
 			android:gravity="right" android:layout_gravity="right"/>
@@ -14,7 +14,7 @@
 	<TableRow>
 		<TextView android:padding="3dip"
 			android:text="@string/on_boot" />
-		<ToggleButton android:id="@+id/on_boot_toggle"
+		<ToggleButton android:id="@+id/settings_onboot"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"		    
 			android:gravity="right"

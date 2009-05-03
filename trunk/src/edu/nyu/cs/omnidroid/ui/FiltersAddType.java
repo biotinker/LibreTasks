@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
-import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -29,21 +27,12 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  */
 public class FiltersAddType extends ListActivity {
-
   // Standard Menu options (Android menus require int, so no enums)
   private static final int MENU_HELP = 0;
 
-  // Application Configuration
-  private AGParser ag;
-
-  // User Selected Data
-  String appName = null;
-  String eventName = null;
-
-  // Activity results
-  //private static final int ADD_RESULT = 1;
-  private static final int ADD_FILTER = 2;
-  private static final int RESULT_ADD_SUCCESS = 1;
+  // Intent passed Data
+  private String eventApp;
+  private String eventName;
 
   /*
    * (non-Javadoc)
@@ -55,23 +44,24 @@ public class FiltersAddType extends ListActivity {
     super.onCreate(savedInstanceState);
 
     // Initialize our AGParser
-    ag = new AGParser(getApplicationContext());
+    AGParser ag = new AGParser(this);
 
-    // See what application we want to handle events for from the
-    // intent data passed to us.
+    // Get data passed to this activity
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    appName = extras.getString(AGParser.KEY_APPLICATION);
-    eventName = extras.getString(UGParser.KEY_EventName);
+    eventApp = extras.getString(AGParser.KEY_APPLICATION);
+    eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
 
     // Getting the list of Filters available from AppConfig
-    // ArrayList<StringMap> contentMap = new ArrayList<StringMap>();
-    ArrayList<StringMap> contentMap = ag.readContentMap(appName);
-    ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
-        android.R.layout.simple_list_item_1, contentMap);
+    // FIXME(acase): Store the ContentMap->DisplayName for each filter
+    ArrayList<String> filterTypeList = ag.readFilters(eventApp, eventName);
+    //ArrayList<StringMap> contentMap = ag.readContentMap(eventApp);
+    //ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
+    //    android.R.layout.simple_list_item_1, contentMap);
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_1, filterTypeList);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
-    Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
   /*
@@ -82,13 +72,15 @@ public class FiltersAddType extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    StringMap sm = (StringMap) l.getAdapter().getItem(position);
+    //StringMap sm = (StringMap) l.getAdapter().getItem(position);
+    String filterType = (String) l.getAdapter().getItem(position);
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    i.putExtra(UGParser.KEY_FilterType, sm.getKey());
-    startActivityForResult(i, ADD_FILTER);
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    //i.putExtra(UGParser.KEY_FilterType, sm.getKey());
+    i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+    startActivityForResult(i, Constants.RESULT_ADD_FILTER);
   }
 
   /*
@@ -98,9 +90,9 @@ public class FiltersAddType extends ListActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ADD_FILTER:
+    case Constants.RESULT_ADD_FILTER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);
         finish();
         break;
@@ -109,24 +101,23 @@ public class FiltersAddType extends ListActivity {
     }
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_HELP:
-      Help();
+      help();
       return true;
     }
     return false;
@@ -135,7 +126,7 @@ public class FiltersAddType extends ListActivity {
   /**
    * Call our Help dialog
    */
-  private void Help() {
+  private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     String help_msg = "Select the type of filter you wish to apply.";

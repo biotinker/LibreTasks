@@ -32,33 +32,23 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 /**
  * Overview is the main UI Launcher for the OmniDroid Application. It presents all the current
  * OmniHandlers as well as a way to add/delete/edit them.
- *
+ * 
  * @author - acase
  * 
  */
 public class Overview extends Activity implements OnClickListener {
-
-  // Context Menu Options (Android menus require int, so no enums)
+  // Menu Options of the Context variety(Android menus require int)
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
-
-  // Standard Menu options (Android menus require int, so no enums)
+  // Menu Options of the Standard variety (Android menus require int)
   private static final int MENU_ADD = 2;
   private static final int MENU_SETTINGS = 3;
   private static final int MENU_HELP = 4;
   private static final int MENU_TESTS = 5;
   private static final int MENU_ABOUT = 6;
 
-  // Return value for our subactivities
-  private static final int RESULT_ADD = 1;
-  private static final int RESULT_SETTING = 2;
-  private static final int RESULT_ADD_SUCCESS = 1;
-
-  // User Config Parser
-  private static UGParser ug;
-
-  // Output to UI
-  private TableLayout table_layout;
+  // Pull data from the UGParser
+  UGParser ug;
 
   /*
    * (non-Javadoc)
@@ -70,14 +60,17 @@ public class Overview extends Activity implements OnClickListener {
     // Debug.startMethodTracing("OmniDroid");
     // Create our Activity
     super.onCreate(savedInstanceState);
-
     update();
   }
 
+  /**
+   * Update the list of OmniHandlers as well as any other things that may
+   * need to get updated after changes occur.
+   */
   private void update() {
     // Get a list of our current OmniHandlers
-    ug = new UGParser(getApplicationContext());
     ArrayList<View> rowList = new ArrayList<View>();
+    ug = new UGParser(getApplicationContext());
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
 
@@ -87,9 +80,9 @@ public class Overview extends Activity implements OnClickListener {
 
       // Build our button
       Button button = new Button(this);
-      button.setText(HM1.get(UGParser.KEY_InstanceName));
+      button.setText(HM1.get(UGParser.KEY_INSTANCE_NAME));
       button.setCursorVisible(true);
-      button.setTag(HM1.get((String) UGParser.KEY_InstanceName));
+      button.setTag(HM1.get((String) UGParser.KEY_INSTANCE_NAME));
       // button.setOnClickListener(this);
 
       // Build our checkbox
@@ -97,10 +90,10 @@ public class Overview extends Activity implements OnClickListener {
       CheckBox checkbox = new CheckBox(this);
       checkbox.setGravity(Gravity.CENTER);
       checkbox.setClickable(true);
-      checkbox.setTag(HM1.get((String) UGParser.KEY_InstanceName));
+      checkbox.setTag(HM1.get((String) UGParser.KEY_INSTANCE_NAME));
       checkbox.setOnClickListener(this);
       checkbox.setEnabled(true);
-      if (HM1.get(UGParser.KEY_EnableInstance).equalsIgnoreCase("True")) {
+      if (HM1.get(UGParser.KEY_ENABLE_INSTANCE).equalsIgnoreCase("True")) {
         Log.d(this.getLocalClassName(), "Enabled=true");
         checkbox.setChecked(true);
       } else {
@@ -119,7 +112,7 @@ public class Overview extends Activity implements OnClickListener {
     }
 
     // Build our OmniHandler display table
-    table_layout = new TableLayout(this);
+    TableLayout table_layout = new TableLayout(this);
     table_layout.setColumnStretchable(0, true);
     for (View rows : rowList) {
       rows.setPadding(2, 2, 2, 2);
@@ -133,13 +126,12 @@ public class Overview extends Activity implements OnClickListener {
 
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
-      Help();
+      welcome();
     }
   }
 
   /*
    * (non-Javadoc)
-   * 
    * @see android.app.Activity#onDestroy()
    */
   public void onDestroy() {
@@ -154,8 +146,6 @@ public class Overview extends Activity implements OnClickListener {
    * android.view.ContextMenu.ContextMenuInfo)
    */
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-    menuInfo = new AdapterContextMenuInfo(v, 0, 0);
-
     super.onCreateContextMenu(menu, v, menuInfo);
     menu.add(0, MENU_EDIT, 0, R.string.edit);
     menu.add(0, MENU_DELETE, 0, R.string.del);
@@ -187,7 +177,7 @@ public class Overview extends Activity implements OnClickListener {
    */
   private void deleteHandler(long l) {
     // TODO (acase): Present delete confirmation dialog
-    //Object data = getIntent().getData();
+    // Object data = getIntent().getData();
 
     Toast.makeText(this.getBaseContext(), "Delete OmniHandler Selected", 5).show();
     // FIXME (acase): Delete from UGParser
@@ -228,19 +218,19 @@ public class Overview extends Activity implements OnClickListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_ADD:
-      AddOmniHandler();
+      addOmniHandler();
       return true;
     case MENU_SETTINGS:
-      Settings();
+      settings();
       return true;
     case MENU_HELP:
-      Help();
+      help();
       return true;
     case MENU_ABOUT:
-      About();
+      about();
       return true;
     case MENU_TESTS:
-      RunTests();
+      runTests();
       return true;
     }
     return false;
@@ -249,7 +239,7 @@ public class Overview extends Activity implements OnClickListener {
   /**
    * Presents the TestApp activity to run any available tests.
    */
-  private void RunTests() {
+  private void runTests() {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.tests.TestApp.class);
     startActivity(i);
@@ -258,10 +248,10 @@ public class Overview extends Activity implements OnClickListener {
   /**
    * Add a new OmniHandler to OmniDroid
    */
-  private void AddOmniHandler() {
+  private void addOmniHandler() {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.EventCatcher.class);
-    startActivityForResult(i, RESULT_ADD);
+    i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Event.class);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
   }
 
   /*
@@ -271,9 +261,9 @@ public class Overview extends Activity implements OnClickListener {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case RESULT_ADD:
+    case Constants.RESULT_ADD_OMNIHANDER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         update();
         break;
       }
@@ -284,16 +274,37 @@ public class Overview extends Activity implements OnClickListener {
   /**
    * Call our Settings Activity
    */
-  private void Settings() {
+  private void settings() {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Settings.class);
-    startActivityForResult(i, RESULT_SETTING);
+    startActivityForResult(i, Constants.RESULT_EDIT_SETTINGS);
+  }
+
+  /**
+   * Call our Welcome dialog
+   */
+  private void welcome() {
+    Builder welcome = new AlertDialog.Builder(this);
+    // TODO(acase): Move to some kind of resource
+    // String welcome_msg = this.getResources().getString(R.string.welcome_overview);
+    String welcome_msg = "OmniDroid provides a way to automate tasks on your device by "
+        + "giving you an interface to customize how applications interact "
+        + "with eachother.\n<br/>" + "To get started, add a new OmniHandler from the Menu.\n<br/>"
+        + "For more information select \"Help\" from the Menu\n<br/>";
+    welcome.setTitle(R.string.welcome);
+    welcome.setIcon(R.drawable.icon);
+    welcome.setMessage(Html.fromHtml(welcome_msg));
+    welcome.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    welcome.show();
   }
 
   /**
    * Call our Help dialog
    */
-  private void Help() {
+  private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     // String help_msg = this.getResources().getString(R.string.help_overview);
@@ -304,10 +315,18 @@ public class Overview extends Activity implements OnClickListener {
         + "saved and a checkbox to enable/disable them.\n<br/>"
         + "Possible Actions:\n<br/>"
         + "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the Add option from the Menu.\n<br/>"
-        + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting the Delete option.\n<br/>"
-        + "For more help, see our webpage: <a href=\"http://omni-droid.com/help\">omni-droid.com/help</a>\n<br/>";
+        + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting "
+        + "the Delete option.\n<br/>"
+        + "For more help, see our webpage: "
+        + "<a href=\"http://omni-droid.com/help\">http://omni-droid.com/help</a>\n<br/>";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
+    // TODO(acase): Link this to the webbrowser
+    //Spanned spanned = Html.fromHtml(help_msg);
+    //spanned.toString()
+    //linked = Linkify.addLinks(spanned, Linkify.WEB_URLS);
+    //help.setMessage(Linkify.addLinks(Spannable(Html.fromHtml(help_msg)),Linkify.WEB_URLS));
+    //help.setMessage(Linkify.addLinks(help_msg, Linkify.WEB_URLS));
     help.setMessage(Html.fromHtml(help_msg));
     help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
@@ -319,12 +338,13 @@ public class Overview extends Activity implements OnClickListener {
   /**
    * Call our About dialog
    */
-  private void About() {
+  private void about() {
     Builder about = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     // String about_msg = this.getResources().getString(R.string.help_overview);
     // TODO(acase): Display version information
     String about_msg = "OmniDroid is brought to you in part by the letter G and the number 1.\n<br/>"
+        + "License:\n<br/>"
         + "Hacking Contributions:<br/>"
         + "&nbsp;&nbsp;&nbsp;Andrew Case<br/>"
         + "&nbsp;&nbsp;&nbsp;Sucharita Gaat<br/>"
@@ -332,7 +352,9 @@ public class Overview extends Activity implements OnClickListener {
         + "&nbsp;&nbsp;&nbsp;Pradeep Harish Varma<br/>"
         + "\n"
         + "Donations from:<br/>"
-        + "&nbsp;&nbsp;&nbsp;Google Inc.<br/>" + "&nbsp;&nbsp;&nbsp;New York University<br/>";
+        + "&nbsp;&nbsp;&nbsp;Google Inc.<br/>"
+        + "&nbsp;&nbsp;&nbsp;New York University\n<br/>"
+        + "Website: <a href=\"http://omni-droid.com\">http://omni-droid.com</a><br/>";
     about.setTitle(R.string.about);
     about.setIcon(R.drawable.icon);
     about.setMessage(Html.fromHtml(about_msg));
@@ -357,10 +379,10 @@ public class Overview extends Activity implements OnClickListener {
     HashMap<String, String> HM = ug.readRecord(instanceName);
     if (cb.isChecked()) {
       Toast.makeText(this.getBaseContext(), "Enabling " + instanceName, 5).show();
-      HM.put(UGParser.KEY_EnableInstance, "true");
+      HM.put(UGParser.KEY_ENABLE_INSTANCE, "true");
     } else {
       Toast.makeText(this.getBaseContext(), "Disabling " + instanceName, 5).show();
-      HM.put(UGParser.KEY_EnableInstance, "false");
+      HM.put(UGParser.KEY_ENABLE_INSTANCE, "false");
     }
     ug.updateRecord(HM);
 

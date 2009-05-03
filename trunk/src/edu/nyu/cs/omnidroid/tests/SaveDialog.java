@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
@@ -53,25 +52,25 @@ public class SaveDialog extends Activity implements OnClickListener {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.action_thrower_data);
+    setContentView(R.layout.save_dialog);
 
     // Get data passed to us
     Intent i = getIntent();
     Bundle extras = i.getExtras();
     eventApp = extras.getString(AGParser.KEY_APPLICATION);
-    eventName = extras.getString(UGParser.KEY_EventName);
+    eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
     // TODO(acase): Allow more than one filter
-    filterType = extras.getString(UGParser.KEY_FilterType);
-    filterData = extras.getString(UGParser.KEY_FilterData);
-    throwerApp = extras.getString(UGParser.KEY_ActionApp);
-    throwerName = extras.getString(UGParser.KEY_ActionName);
+    filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+    filterData = extras.getString(UGParser.KEY_FILTER_DATA);
+    throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
+    throwerName = extras.getString(UGParser.KEY_ACTION_TYPE);
 
     // Setup our UI
-    Button save = (Button) findViewById(R.id.save);
-    appData = (EditText) findViewById(R.id.data);
+    appData = (EditText) findViewById(R.id.save_dialog_name);
+    //Button save = (Button) findViewById(R.id.save_dialog_save);
 
     // Listen for the save button click
-    save.setOnClickListener(this);
+    //save.setOnClickListener(this);
   }
 
   /*
@@ -93,7 +92,7 @@ public class SaveDialog extends Activity implements OnClickListener {
     });
     save_dialog.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
-        EditText v = (EditText) textEntryView.findViewById(R.id.save_name);
+        EditText v = (EditText) textEntryView.findViewById(R.id.save_dialog_name);
         instanceName = v.getText().toString();
         save();
       }
@@ -122,19 +121,19 @@ public class SaveDialog extends Activity implements OnClickListener {
       // Add OmniHandler to the UGConfig
       UGParser ug = new UGParser(getApplicationContext());
       HashMap<String, String> HM = new HashMap<String, String>();
-      HM.put(UGParser.KEY_InstanceName, instanceName);
-      HM.put(UGParser.KEY_EventName, eventName);
-      HM.put(UGParser.KEY_EventApp, eventApp);
-      HM.put(UGParser.KEY_ActionName, throwerName);
-      HM.put(UGParser.KEY_ActionApp, throwerApp);
-      HM.put(UGParser.KEY_EnableInstance, "True");
-      HM.put(UGParser.KEY_ActionData, uri.toString());
+      HM.put(UGParser.KEY_INSTANCE_NAME, instanceName);
+      HM.put(UGParser.KEY_EVENT_TYPE, eventName);
+      HM.put(UGParser.KEY_EVENT_APP, eventApp);
+      HM.put(UGParser.KEY_ACTION_TYPE, throwerName);
+      HM.put(UGParser.KEY_ACTION_APP, throwerApp);
+      HM.put(UGParser.KEY_ENABLE_INSTANCE, "True");
+      HM.put(UGParser.KEY_ACTION_DATA1, uri.toString());
       if ((filterType != null) && (filterData != null)) {
-        HM.put(UGParser.KEY_FilterType, filterType);
-        HM.put(UGParser.KEY_FilterData, filterData);
+        HM.put(UGParser.KEY_FILTER_TYPE, filterType);
+        HM.put(UGParser.KEY_FILTER_DATA, filterData);
       } else {
-        HM.put(UGParser.KEY_FilterType, "");
-        HM.put(UGParser.KEY_FilterData, "");
+        HM.put(UGParser.KEY_FILTER_TYPE, "");
+        HM.put(UGParser.KEY_FILTER_DATA, "");
       }
       ug.writeRecord(HM);
 
@@ -179,7 +178,7 @@ public class SaveDialog extends Activity implements OnClickListener {
    */
   private void Help() {
     Builder help = new AlertDialog.Builder(this);
-    // FIXME(acase): Move to some kind of resource
+    // TODO(acase): Move to some kind of resource
     String help_msg = "Select data to pass to the application responding to the event.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);

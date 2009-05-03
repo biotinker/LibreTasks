@@ -3,12 +3,10 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<ListView android:id="@+id/filters_list" android:layout_width="fill_parent"
+	<ListView android:id="@+id/thrower_data_list" android:layout_width="fill_parent"
 		android:layout_weight="1" android:layout_height="fill_parent" />
-	<Button android:id="@+id/filters_add" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/add_filter" 
-		android:layout_weight="0" />
-	<Button android:id="@+id/filters_done" android:layout_width="fill_parent"
+	<Button android:id="@+id/thrower_data_done"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/done" 
 		android:layout_weight="0" />
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,15 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.core.*;
 import edu.nyu.cs.omnidroid.contprovider.CProvider;
+import edu.nyu.cs.omnidroid.core.CP;
 
 public class TestCP extends Activity {
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main2);
+    setContentView(R.layout.test_cp2);
     Button Store;
     final EditText Adata;
     final EditText ID;
@@ -30,14 +29,13 @@ public class TestCP extends Activity {
     Button Retrieve;
     Button GetAll;
 
-    Store = (Button) findViewById(R.id.Store);
-    Iname = (EditText) findViewById(R.id.Iname);
-    Adata = (EditText) findViewById(R.id.Adata);
-    Retrieve = (Button) findViewById(R.id.Retrieve);
-    ID = (EditText) findViewById(R.id.ID);
-    GetAll = (Button) findViewById(R.id.GetAll);
+    Store = (Button) findViewById(R.id.test_cp2_store);
+    Iname = (EditText) findViewById(R.id.test_cp2_iname);
+    Adata = (EditText) findViewById(R.id.test_cp2_adata);
+    Retrieve = (Button) findViewById(R.id.test_cp2_retrieve);
+    ID = (EditText) findViewById(R.id.test_cp2_id);
+    GetAll = (Button) findViewById(R.id.test_cp2_getAll);
     final CProvider cp = new CProvider(this);
-    Intent intent = new Intent("SMS_RECEIVED");
    
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {

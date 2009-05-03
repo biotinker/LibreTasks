@@ -1,27 +1,22 @@
 package edu.nyu.cs.omnidroid.core;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
-import android.R.string;
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.widget.Toast;
 
 // TODO: Please add Javadocs and remove string instance constants.
 public class DummyActivity extends Activity {
@@ -38,7 +33,7 @@ public class DummyActivity extends Activity {
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main2);
+    setContentView(R.layout.dummy_activity);
     this.intent = getIntent();
     if (intent.getAction().contains("SMS_RECEIVED")) {
       String id = null;
@@ -80,14 +75,11 @@ public class DummyActivity extends Activity {
       HashMap<String, String> HM1 = i.next();
       // Configure the Intent Filter with the Events if Instance in enabled
       if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
-        filtertype = HM1.get(ug.KEY_FilterType);
-        filterdata = HM1.get(ug.KEY_FilterData);
-        actionname = HM1.get("ActionName");
-        actionapp = HM1.get(ug.KEY_ActionApp);
-
-        // added by Pradeep to populate Omniu CP at runtime
-        uridata = HM1.get("ActionData");
-        //uridata = "CONTACT PHONE NUMBER";
+        filtertype = HM1.get(UGParser.KEY_FILTER_TYPE);
+        filterdata = HM1.get(UGParser.KEY_FILTER_DATA);
+        actionname = HM1.get(UGParser.KEY_ACTION_TYPE);
+        actionapp = HM1.get(UGParser.KEY_ACTION_APP);
+        uridata = HM1.get(UGParser.KEY_ACTION_DATA1);
         if (!uridata.contains("content://") && !uridata.equals("")) {
           try{
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
@@ -216,16 +208,10 @@ return cnt;
     // startActivity(send_intent);
     try {
       sendBroadcast(send_intent);
-    } catch (Exception e) {
+    } catch(Exception e) {
       e.toString();
     }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
-
-    // } catch (NameNotFoundException e) {
-    // TODO Auto-generated catch block
-    // OmLogger.write(getApplicationContext(), actiondata1 + "not installed");
-    // e.printStackTrace();
-    // }
   }
 
   public void getCols(String uri, String filtertype1, String filterdata1, String actiondata1) {

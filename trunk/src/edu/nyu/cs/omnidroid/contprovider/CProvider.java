@@ -2,8 +2,6 @@ package edu.nyu.cs.omnidroid.contprovider;
 
 import java.util.ArrayList;
 
-import edu.nyu.cs.omnidroid.core.CP;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;

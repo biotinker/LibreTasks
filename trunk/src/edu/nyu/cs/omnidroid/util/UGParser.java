@@ -27,16 +27,16 @@ import android.content.Context;
 public class UGParser {
   // Public class vars
   // TODO(Pradeep): public static final String KEY_ID = "ID";
-  public static final String KEY_InstanceName = "InstanceName";
-  public static final String KEY_EventName = "EventName";
-  public static final String KEY_EventApp = "EventApp";
-  public static final String KEY_FilterType = "FilterType";
-  public static final String KEY_FilterData = "FilterData";
-  public static final String KEY_ActionApp = "ActionApp";
-  public static final String KEY_ActionName = "ActionName";
-  public static final String KEY_ActionData = "ActionData";
-  public static final String KEY_ActionData2 = "ActionData2";
-  public static final String KEY_EnableInstance = "EnableInstance";
+  public static final String KEY_INSTANCE_NAME = "InstanceName";
+  public static final String KEY_EVENT_APP = "EventApp";
+  public static final String KEY_EVENT_TYPE = "EventName";
+  public static final String KEY_FILTER_TYPE = "FilterType";
+  public static final String KEY_FILTER_DATA = "FilterData";
+  public static final String KEY_ACTION_APP = "ActionApp";
+  public static final String KEY_ACTION_TYPE = "ActionName";
+  public static final String KEY_ACTION_DATA1 = "ActionData";
+  public static final String KEY_ACTION_DATA2 = "ActionData2";
+  public static final String KEY_ENABLE_INSTANCE = "EnableInstance";
   public static final String KEY_ENABLE_OMNIDROID = "EnableOmniDroid";
 
   // String matching constants
@@ -137,6 +137,7 @@ public class UGParser {
     delete_all();
 
     try {
+      // FIXME: Setup enable/disable
       String strEnabled;
       if (enabled == true) {
         strEnabled = TRUE;
@@ -206,7 +207,7 @@ public class UGParser {
       Iterator<HashMap<String, String>> i = UCRecords.iterator();
       while (i.hasNext()) {
         HashMap<String, String> HM1 = i.next();
-        if (HM1.get(KEY_InstanceName).equals(InstanceName))
+        if (HM1.get(KEY_INSTANCE_NAME).equals(InstanceName))
           continue;
         UCRecords_New.add(HM1);
       }
@@ -473,7 +474,7 @@ public class UGParser {
    */
   public boolean updateRecord(HashMap<String, String> HM) {
     try {
-      deleteRecordbyInstance(HM.get(KEY_InstanceName));
+      deleteRecordbyInstance(HM.get(KEY_INSTANCE_NAME));
       writeRecord(HM);
       return true;
     } catch (Exception e) {

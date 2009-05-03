@@ -24,7 +24,7 @@ public class Settings extends Activity {
     // Create a base layout to present our settings
     setContentView(R.layout.settings);
 
-    final ToggleButton omniabled_toggle = (ToggleButton) findViewById(R.id.omniabled_toggle);
+    final ToggleButton omniabled_toggle = (ToggleButton) findViewById(R.id.settings_omniabled);
     omniabled_toggle.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
             if (omniabled_toggle.isChecked()) {
@@ -35,7 +35,7 @@ public class Settings extends Activity {
         }
     });
 
-    final ToggleButton on_boot_toggle = (ToggleButton) findViewById(R.id.on_boot_toggle);
+    final ToggleButton on_boot_toggle = (ToggleButton) findViewById(R.id.settings_onboot);
     on_boot_toggle.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
             if (on_boot_toggle.isChecked()) {

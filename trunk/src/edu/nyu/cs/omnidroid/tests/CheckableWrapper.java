@@ -18,28 +18,17 @@ package edu.nyu.cs.omnidroid.tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nyu.cs.omnidroid.R;
-
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class CheckableWrapper extends AdapterWrapper {
-  // Context Menu Options (Android menus require int, so no enums)
-  private static final int MENU_EDIT = 0;
-  private static final int MENU_DELETE = 1;
-
   Context ctxt = null;
   boolean[] states = null;
-
-  // FIXME(acase): Allow Context Menu
 
   public CheckableWrapper(Context ctxt, ListAdapter delegate) {
     super(delegate);
@@ -52,8 +41,8 @@ public class CheckableWrapper extends AdapterWrapper {
     }
   }
 
-  public List getCheckedPositions() {
-    List result = new ArrayList();
+  public List<Integer> getCheckedPositions() {
+    List<Integer> result = new ArrayList<Integer>();
 
     for (int i = 0; i < delegate.getCount(); i++) {
       if (states[i]) {
@@ -64,12 +53,12 @@ public class CheckableWrapper extends AdapterWrapper {
     return (result);
   }
 
-  public List getCheckedObjects() {
-    List result = new ArrayList();
+  public List<Integer> getCheckedObjects() {
+    List<Integer> result = new ArrayList<Integer>();
 
     for (int i = 0; i < delegate.getCount(); i++) {
       if (states[i]) {
-        result.add(delegate.getItem(i));
+        result.add((Integer) delegate.getItem(i));
       }
     }
 
@@ -96,14 +85,6 @@ public class CheckableWrapper extends AdapterWrapper {
       CheckBox.OnCheckedChangeListener l = new CheckBox.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton btn, boolean checked) {
           states[(Integer) btn.getTag()] = checked;
-        }
-      };
-
-      View.OnCreateContextMenuListener cml = new View.OnCreateContextMenuListener() {
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-          menuInfo = new AdapterContextMenuInfo(v, 0, 0);
-          menu.add(0, MENU_EDIT, 0, R.string.edit);
-          menu.add(0, MENU_DELETE, 0, R.string.del);
         }
       };
 

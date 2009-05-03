@@ -18,13 +18,13 @@ import android.content.Context;
  */
 public class AGParser {
   public static final String KEY_APPLICATION = "Application";
-  public static final String KEY_PkgName = "PkgName";
-  public static final String KEY_ListenerClass = "ListenerClass";
-  public static final String KEY_EventName = "EventName";
-  public static final String KEY_Filters = "Filters";
-  public static final String KEY_ActionName = "ActionName";
-  public static final String KEY_URIFields = "URIFields";
-  public static final String KEY_ContentMap = "ContentMap";
+  public static final String KEY_PACKAGE_NAME = "PkgName";
+  public static final String KEY_LISTENER_CLASS = "ListenerClass";
+  public static final String KEY_EVENT_TYPE = "EventName";
+  public static final String KEY_FILTERS = "Filters";
+  public static final String KEY_ACTION_TYPE = "ActionName";
+  public static final String KEY_URI_FIELDS = "URIFields";
+  public static final String KEY_CONTENT_MAP = "ContentMap";
 
   private FileOutputStream fout;
   private OutputStreamWriter osw;
@@ -177,8 +177,6 @@ public class AGParser {
     Boolean found = false;
     try {
 
-      String ActualEvent;
-      String DisplayEvent;
       String line;
 
       try {
@@ -202,13 +200,12 @@ public class AGParser {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return PkgName;
       }
-      HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_PkgName)) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_PACKAGE_NAME)) {
           PkgName = parts[1].toString();
         }
       }
@@ -234,8 +231,6 @@ public class AGParser {
     Boolean found = false;
     try {
 
-      String ActualEvent;
-      String DisplayEvent;
       String line;
       try {
         dis.close();
@@ -258,13 +253,12 @@ public class AGParser {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return ListerClass;
       }
-      HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_ListenerClass)) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_LISTENER_CLASS)) {
           ListerClass = parts[1].toString();
         }
       }
@@ -318,9 +312,9 @@ public class AGParser {
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
         // Check if the pointer reached the ContentMap Section of the Record
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_EventName)) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_EVENT_TYPE)) {
           ActualEvent = parts[1].split(",")[0].toString();
           DisplayEvent = parts[1].split(",")[1].toString();
           // SM.set(ActualEvent,DisplayEvent);
@@ -374,9 +368,9 @@ public class AGParser {
       HashMap<String, String> HM = new HashMap<String, String>();
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_ACTION_TYPE)) {
           ActualAction = parts[1].split(",")[0].toString();
           DisplayAction = parts[1].split(",")[1].toString();
           HM.put(ActualAction, DisplayAction);
@@ -421,20 +415,22 @@ public class AGParser {
         } catch (Exception e) {
         }
       }
+
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
         return FilterList;
       }
+
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_EventName)
+        if (parts[0].toString().equalsIgnoreCase(KEY_EVENT_TYPE)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(EventName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
           String[] filters=null;
-          if(fparts[0].equalsIgnoreCase(KEY_Filters))
+          if(fparts[0].equalsIgnoreCase(KEY_FILTERS))
           filters = fparts[1].split(",");
           for (int i = 0; i < filters.length; i++) {
             FilterList.add(filters[i]);
@@ -485,14 +481,14 @@ public class AGParser {
       }
       while ((line = dis.readLine()) != null) {
         String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap))
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_ActionName)
+        if (parts[0].toString().equalsIgnoreCase(KEY_ACTION_TYPE)
             && parts[1].toString().split(",")[0].equalsIgnoreCase(ActionName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
           String[] URIs=null;
-          if(fparts[0].equalsIgnoreCase(KEY_URIFields))
+          if(fparts[0].equalsIgnoreCase(KEY_URI_FIELDS))
           URIs = fparts[1].split(",");
           for (int i = 0; i < URIs.length; i++) {
             URIList.add(URIs[i]);
@@ -579,7 +575,7 @@ public class AGParser {
         String[] parts = line.split(":", 2);
         if (parts[0].toString().equalsIgnoreCase(KEY_APPLICATION))
           break;
-        if (parts[0].toString().equalsIgnoreCase(KEY_ContentMap)) {
+        if (parts[0].toString().equalsIgnoreCase(KEY_CONTENT_MAP)) {
           while ((line = dis.readLine()) != null) {
             String[] fmparts = line.split(",");
             contentmap.add(new StringMap(fmparts[0], fmparts[1]));

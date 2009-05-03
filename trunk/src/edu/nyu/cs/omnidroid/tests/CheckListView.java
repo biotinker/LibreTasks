@@ -39,11 +39,11 @@ public class CheckListView extends ListView {
     super.setAdapter(new CheckableWrapper(getContext(), adapter));
   }
 
-  public List getCheckedPositions() {
+  public List<Integer> getCheckedPositions() {
     return (((CheckableWrapper) getAdapter()).getCheckedPositions());
   }
 
-  public List getCheckedObjects() {
+  public List<Integer> getCheckedObjects() {
     return (((CheckableWrapper) getAdapter()).getCheckedObjects());
   }
 }

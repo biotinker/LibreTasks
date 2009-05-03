@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
-import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.CP;
 public class CatcherAppActivity extends Activity {
     /** Called when the activity is first created.*/ 

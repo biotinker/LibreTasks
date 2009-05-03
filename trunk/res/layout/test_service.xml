@@ -4,13 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  android:id="@+id/row_entry"
+<TextView  android:id="@+id/test_service_row_entry"
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content" 
     android:text="Start BroadcastSender"
     />
 
-<Button android:id="@+id/BR"
+<Button android:id="@+id/test_service_br"
         android:layout_width="wrap_content" android:layout_height="wrap_content" 
         android:text="GO">
  

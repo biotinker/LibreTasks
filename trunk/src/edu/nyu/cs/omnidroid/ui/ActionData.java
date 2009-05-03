@@ -1,0 +1,307 @@
+package edu.nyu.cs.omnidroid.ui;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
+import edu.nyu.cs.omnidroid.util.UGParser;
+
+/**
+ * Activity used to present a list of filters to apply to this OmniHandler. Filters allow the user
+ * to only apply this OmniHandler if the filter data matches the data in provided by the Event that
+ * was caught.
+ * 
+ * @author acase
+ * 
+ */
+public class ActionData extends Activity implements OnClickListener, OnItemClickListener {
+  // Menu options of the Standard variety (Android menus require int)
+  private static final int MENU_HELP = 3;
+
+  // Intent data passed along
+  private String eventApp;
+  private String eventName;
+  private String filterType;
+  private String filterData;
+  private String throwerApp;
+  private String throwerName;
+  private String throwerData1;
+  private String throwerData2;
+
+  // Data Storage
+  private ListView dataListView;
+  private ArrayList<String> dataList = new ArrayList<String>();
+  private ArrayList<String> dataFields;
+  private ArrayList<String> dataInputs = new ArrayList<String>();
+  int minUriFields;
+
+  // Application Config Parser
+  private static AGParser ag;
+
+  // A filler to get data to select the appropriate data
+  private static final String EMPTY_DATA = "Set data for: ";
+
+  // Intent data keys
+  public static final String KEY_DATA_ID = "dataId";
+  public static final String KEY_DATA_NAME = "dataName";
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onCreate(android.os.Bundle)
+   */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.action_data);
+    dataListView = (ListView) findViewById(R.id.thrower_data_list);
+
+    // Activate the "Done" button
+    Button done = (Button) findViewById(R.id.thrower_data_done);
+    done.setOnClickListener(this);
+    // Activate the "Add" button
+    //Button add = (Button) findViewById(R.id.thrower_data_add);
+    //add.setOnClickListener(this);
+
+    // Get the data passed to us
+    getIntentData(getIntent());
+
+    // Get data from application config
+    ag = new AGParser(this);
+    // The types of data this thrower needs
+    dataFields = ag.readURIFields(throwerApp, throwerName);
+    minUriFields = dataFields.size();
+    // The data mapping for this content provider
+    // FIXME(acase): Make this work better
+    ArrayList<StringMap> contentMap = ag.readContentMap(throwerApp);
+    for (int i=0; i<dataFields.size(); i++) {
+      for (StringMap item: contentMap) {
+        if (item.getValue().equals(dataFields.get(i))) {
+          dataInputs.add(item.getValue());
+        }
+      }
+    }
+
+    // Update our UI
+    update();
+  }
+
+  /**
+   * Update our UI
+   */
+  private void update() {
+    // Clear the List
+    dataList.clear();
+    int dataCount = 0;
+
+    // Populate the list
+    if (throwerData1 != null) {
+      dataCount++;
+      dataList.add(throwerData1);
+    } else {
+      dataList.add(EMPTY_DATA + dataInputs.get(0));
+    }
+    if (throwerData2 != null) {
+      dataCount++;
+      dataList.add(throwerData2);
+    } else {
+      dataList.add(EMPTY_DATA + dataInputs.get(1));
+    }
+
+    // Display a list of active filters
+    ArrayAdapter<String> listadpt = new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_1, dataList);
+    dataListView.setAdapter(listadpt);
+    dataListView.setTextFilterEnabled(true);
+    dataListView.setOnItemClickListener(this);
+
+    // Disable/Enable the "Done" button depending on if all our data has been entered
+    Button done = (Button) findViewById(R.id.thrower_data_done);
+    if (dataCount == minUriFields) {
+      done.setEnabled(true);
+    } else {
+      done.setEnabled(false);
+    }
+  }
+
+  /**
+   * Get the intent data passed to us.
+   * 
+   * Side effects - stores the data in class variables
+   * 
+   * @param i
+   *          - intent that started this activity
+   */
+  private void getIntentData(Intent i) {
+    Bundle extras = i.getExtras();
+    if (extras != null) {
+      eventApp = extras.getString(AGParser.KEY_APPLICATION);
+      eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+      filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      filterData = extras.getString(UGParser.KEY_FILTER_DATA);
+      throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
+      throwerName = extras.getString(UGParser.KEY_ACTION_TYPE);
+      throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
+      throwerData2 = extras.getString(UGParser.KEY_ACTION_DATA2);
+    }
+  }
+
+  /*
+   * (non-Javadoc) If an item is selected, go to it's edit page.
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
+   */
+  protected void onListItemClick(ListView l, View v, int position, long id) {
+    editDatum(id);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+   */
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
+    return true;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+   */
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_HELP:
+      help();
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Edit the data item selected
+   * 
+   * @param id
+   *          - the item id selected
+   */
+  private void editDatum(long id) {
+    Intent i = new Intent();
+    i.setClass(this.getApplicationContext(), ActionDatumAdd.class);
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+    i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
+    i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
+    i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
+    i.putExtra(KEY_DATA_NAME, dataInputs.get((int)id));
+    i.putExtra(KEY_DATA_ID,id);
+    if (id != 0) { 
+      i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
+    }
+    if (id != 1) {
+      i.putExtra(UGParser.KEY_ACTION_DATA2, throwerData2);
+    }
+    startActivityForResult(i, Constants.RESULT_ADD_DATUM);
+  }
+
+  /**
+   * Call our Help dialog
+   * 
+   * @return void
+   */
+  private void help() {
+    Builder help = new AlertDialog.Builder(this);
+    // TODO(acase): Move to some kind of resource
+    String help_msg = "TODO";
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.view.View.OnClickListener#onClick(android.view.View)
+   */
+  public void onClick(View v) {
+    switch (v.getId()) {
+    case R.id.thrower_data_done:
+      done();
+      break;
+    }
+  }
+
+  /**
+   * If we're done entering data, then go back to the thro
+   */
+  private void done() {
+    // Go back to our start page
+    Intent i = new Intent();
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    if ((filterType != null) && (filterData != null)) {
+      i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+      i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
+    }
+    i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
+    i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
+    if (throwerData1 != null) {
+      i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
+    }
+    if (throwerData2 != null) {
+      i.putExtra(UGParser.KEY_ACTION_DATA2, throwerData2);
+    }
+    setResult(Constants.RESULT_SUCCESS, i);
+    finish();
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case Constants.RESULT_ADD_DATUM:
+      switch (resultCode) {
+      case Constants.RESULT_SUCCESS:
+        getIntentData(data);
+        update();
+        break;
+      }
+      break;
+    }
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
+   */
+  public void onItemClick(AdapterView<?> lv, View v, int position, long id) {
+    editDatum(id);
+  }
+}

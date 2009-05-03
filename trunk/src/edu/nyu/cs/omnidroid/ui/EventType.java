@@ -11,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,34 +27,31 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  * @author acase
  */
-public class EventCatcherActions extends ListActivity {
-  private static AGParser ag;
-  private String appName = null;
-
-  // Standard Menu options (Android menus require int, so no enums)
+public class EventType extends ListActivity {
+  // Menu options of the Standard variety (Android menus require int)
   private static final int MENU_HELP = 0;
 
-  // Activity results
-  private static final int ADD_RESULT = 1;
-  private static final int RESULT_ADD_SUCCESS = 1;
+  // Data provided by intents
+  private String eventApp;
 
-  /** Called when the activity is first created. */
+  // Initialize our AGParser
+  AGParser ag = new AGParser(this);
+
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreate(android.os.Bundle)
+   */
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    // Android Boilerplate
     super.onCreate(savedInstanceState);
 
-    // Initialize our AGParser
-    ag = new AGParser(getApplicationContext());
-
-    // See what application we want to handle events for from the
-    // intent data passed to us.
+    // Get intent data
     Intent i = getIntent();
     Bundle extras = i.getExtras();
-    appName = extras.getString(AGParser.KEY_APPLICATION);
+    eventApp = extras.getString(AGParser.KEY_APPLICATION);
 
     // Getting the Events from AppConfig
-    ArrayList<HashMap<String, String>> eventList = ag.readEvents(appName);
+    ArrayList<HashMap<String, String>> eventList = ag.readEvents(eventApp);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
     ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
     while (i1.hasNext()) {
@@ -70,12 +66,11 @@ public class EventCatcherActions extends ListActivity {
       }
     }
 
+    // Populate our list
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, stringvalues);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
-
-    Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
   /*
@@ -87,11 +82,17 @@ public class EventCatcherActions extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
+    String eventName = sm.getKey();
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), Filters.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, sm.getKey());
-    startActivityForResult(i, ADD_RESULT);
+    // See if filters can be applied, if not skip the filters page
+    if (ag.readFilters(eventApp, eventName).size() > 0) {
+      i.setClass(this.getApplicationContext(), Filters.class);      
+    } else {
+      i.setClass(this.getApplicationContext(), Actions.class);
+    }
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
   }
 
   /*
@@ -101,9 +102,9 @@ public class EventCatcherActions extends ListActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ADD_RESULT:
+    case Constants.RESULT_ADD_OMNIHANDER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);
         finish();
         break;
@@ -112,33 +113,32 @@ public class EventCatcherActions extends ListActivity {
     }
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_HELP:
-      Help();
+      help();
       return true;
     }
     return false;
   }
 
   /**
-   * Call our Help dialog
+   * Call our help dialog
    */
-  private void Help() {
+  private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     String help_msg = "Select the type of event that you want to catch.";

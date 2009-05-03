@@ -7,10 +7,8 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,34 +33,25 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  */
 public class Filters extends Activity implements OnClickListener {
+  // Menu Options of the Context variety (Android menus require int)
+  private static final int MENU_EDIT = 0;
+  private static final int MENU_DELETE = 1;
+  // Menu options of the Standar variety (Android menus require int)
+  private static final int MENU_HELP = 3;
 
   // Intent data passed along
-  private String appName = null;
-  private String eventName = null;
-  private ArrayList<StringMap> filter = new ArrayList<StringMap>();
+  private String eventApp;
+  private String eventName;
+
+  // Filters data
+  private ArrayList<StringMap> filterList = new ArrayList<StringMap>();
+  private ListView filterListView;
   private String fType;
   private String fData;
 
-  // Context Menu Options (Android menus require int, so no enums)
-  private static final int MENU_EDIT = 0;
-  private static final int MENU_DELETE = 1;
-
-  // Standard Menu options (Android menus require int, so no enums)
-  private static final int MENU_ADD = 2;
-  private static final int MENU_HELP = 3;
-
-  // Debugging
-  private static final String TAG = "Filters";
-
-  // List Data
-  private ListView list;
-
-  // Activity results
-  private static final int ADD_RESULT = 1;
-  private static final int ADD_FILTER = 2;
-  private static final int RESULT_ADD_SUCCESS = 1;
-
-  private AGParser ag = new AGParser(this);
+  // Maximum number of filters allowed
+  // TODO(acase): Allow more than one filter in the future
+  private static final int MAX_NUM_FILTERS = 1;
 
   /*
    * (non-Javadoc)
@@ -73,25 +62,29 @@ public class Filters extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filters);
-    list = (ListView) findViewById(R.id.filterlist);
+    filterListView = (ListView) findViewById(R.id.filters_list);
 
-    // Present "Next" button
-    Button next = (Button) findViewById(R.id.next);
-    next.setOnClickListener(this);
+    // Activate the "Done" button
+    Button done = (Button) findViewById(R.id.filters_done);
+    done.setOnClickListener(this);
+    // Activate the "Add" button
+    Button add = (Button) findViewById(R.id.filters_add);
+    add.setOnClickListener(this);
 
-    // See what application we want to handle events for from the
+    // Get data passed to this activity
     getIntentData(getIntent());
 
-    // Present an updated list of filters we have applied
-    updateList();
+    // Update our UI
+    update();
   }
 
-  private void updateList() {
+  /**
+   * Update the UI
+   */
+  private void update() {
     // Populate a list of active filters
     if ((fType != null) && (fData != null)) {
-      filter.add(new StringMap(fType, fData));
-      // filterType[filterType.length] = fType;
-      // filterData[filterData.length] = fData;
+      filterList.add(new StringMap(fType, fData));
     }
 
     // TODO(acase): If editing, then pull from UGParser
@@ -99,26 +92,40 @@ public class Filters extends Activity implements OnClickListener {
 
     // Display a list of active filters
     ArrayAdapter<StringMap> listadpt = new ArrayAdapter<StringMap>(this,
-        android.R.layout.simple_list_item_1, filter);
-    list.setAdapter(listadpt);
-    list.setTextFilterEnabled(true);
-    registerForContextMenu(list);
+        android.R.layout.simple_list_item_1, filterList);
+    filterListView.setAdapter(listadpt);
+    filterListView.setTextFilterEnabled(true);
+    registerForContextMenu(filterListView);
+
+    // Disable/Enable the "Add Filter" button depending on if it's been max'ed out
+    Button add = (Button) findViewById(R.id.filters_add);
+    if (filterList.size() < MAX_NUM_FILTERS) {
+      add.setEnabled(true);
+    } else {
+      add.setEnabled(false);
+    }
+
   }
 
+  /**
+   * Store the intent data passed in
+   * @param i
+   */
   private void getIntentData(Intent i) {
     // intent data passed to us.
     Bundle extras = i.getExtras();
     if (extras != null) {
-      appName = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventName);
-      fType = extras.getString(UGParser.KEY_FilterType);
-      fData = extras.getString(UGParser.KEY_FilterData);
+      eventApp = extras.getString(AGParser.KEY_APPLICATION);
+      eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+      fType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      fData = extras.getString(UGParser.KEY_FILTER_DATA);
     }
 
     // If there aren't any filters that we can apply ignore the filter page
-    ArrayList<String> filters = ag.readFilters(appName, eventName);
+    AGParser ag = new AGParser(this);
+    ArrayList<String> filters = ag.readFilters(eventApp, eventName);
     if (filters.size() == 0) {
-    	onClick(findViewById(R.id.next));
+      onClick(findViewById(R.id.filters_done));
     }
   }
 
@@ -129,33 +136,26 @@ public class Filters extends Activity implements OnClickListener {
    * long)
    */
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    Uri data = getIntent().getData();
-    editFilter(data, id);
+    editFilter(id);
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    // super.onCreateOptionsMenu(menu);
-    menu.add(0, MENU_ADD, 0, R.string.add_filter).setIcon(android.R.drawable.ic_menu_add);
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-    case MENU_ADD:
-      Add_Filter();
-      return true;
     case MENU_HELP:
-      Help();
+      help();
       return true;
     }
     return false;
@@ -169,7 +169,6 @@ public class Filters extends Activity implements OnClickListener {
    */
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    // menu.add(0, MENU_EDIT, 0, R.string.edit);
     menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
@@ -180,20 +179,15 @@ public class Filters extends Activity implements OnClickListener {
    */
   public boolean onContextItemSelected(MenuItem item) {
     AdapterView.AdapterContextMenuInfo info;
-    try {
-      info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-    } catch (ClassCastException e) {
-      Log.e(TAG, "bad menuInfo", e);
-      return false;
-    }
 
-    Uri data = getIntent().getData();
     switch (item.getItemId()) {
     case MENU_EDIT:
-      editFilter(data, info.id);
+      info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+      editFilter(info.id);
       return true;
     case MENU_DELETE:
-      deleteFilter(data, info.id);
+      info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+      deleteFilter(info.id);
       return true;
     default:
       return super.onContextItemSelected(item);
@@ -202,39 +196,46 @@ public class Filters extends Activity implements OnClickListener {
 
   /**
    * FIXME(acase): Allow deletion of already set filters
-   * 
-   * @param data
    * @param l
    *          - the item id selected
-   * @return void
    */
-  private void deleteFilter(Uri data, long l) {
-    // getAdapter().getItem(item.)
-    // item.getItemId(
+  private void deleteFilter(long l) {
   }
 
   /**
    * TODO(acase): Allow edit of already set filters
-   * 
-   * @param data
    * @param l
    *          - the item id selected
-   * @return void
    */
-  private void editFilter(Uri data, long l) {
+  private void editFilter(long l) {
   }
 
   /**
    * Add a new filter to this OmniHandler
-   * 
-   * @return void
    */
-  private void Add_Filter() {
+  private void addFilter() {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddType.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    startActivityForResult(i, ADD_FILTER);
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    startActivityForResult(i, Constants.RESULT_ADD_FILTER);
+  }
+
+  /**
+   * Present the next UI page to the user
+   */
+  private void nextPage() {
+    // Handle "Next" button clicked by passing to the next UI page
+    Intent i = new Intent();
+    i.setClass(this.getApplicationContext(), Actions.class);
+    i.putExtra(AGParser.KEY_APPLICATION, eventApp);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    // TODO(acase): Allow more than one filter
+    if ((fType != null) && (fData != null)) {
+      i.putExtra(UGParser.KEY_FILTER_TYPE, fType);
+      i.putExtra(UGParser.KEY_FILTER_DATA, fData);
+    }
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
   }
 
   /**
@@ -242,12 +243,12 @@ public class Filters extends Activity implements OnClickListener {
    * 
    * @return void
    */
-  private void Help() {
+  private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
-    String help_msg = "Use the 'Menu' button followed by 'Add Filter' to add filters that " +
-        "limit the events caught by this OmniHandler to a subset of events.\n" +
-        "When done adding filters, select 'Next' to proceed.";
+    String help_msg = "Use the 'Menu' button followed by 'Add Filter' to add filters that "
+        + "limit the events caught by this OmniHandler to a subset of events.\n"
+        + "When done adding filters, select 'Next' to proceed.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));
@@ -264,17 +265,14 @@ public class Filters extends Activity implements OnClickListener {
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
-    // Handle "Next" button clicked by passing to the next UI page
-    Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), ActionThrower.class);
-    i.putExtra(AGParser.KEY_APPLICATION, appName);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    // FIXME(acase): Allow more than one filter
-    if ((fType != null) && (fData != null)) {
-      i.putExtra(UGParser.KEY_FilterType, fType);
-      i.putExtra(UGParser.KEY_FilterData, fData);
+    switch (v.getId()) {
+    case R.id.filters_add:
+      addFilter();
+      break;
+    case R.id.filters_done:
+      nextPage();
+      break;
     }
-    startActivityForResult(i, ADD_RESULT);
   }
 
   /*
@@ -284,19 +282,19 @@ public class Filters extends Activity implements OnClickListener {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ADD_RESULT:
+    case Constants.RESULT_ADD_OMNIHANDER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);
         finish();
         break;
       }
       break;
-    case ADD_FILTER:
+    case Constants.RESULT_ADD_FILTER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         getIntentData(data);
-        updateList();
+        update();
         break;
       }
       break;

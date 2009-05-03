@@ -16,21 +16,27 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 
 // TODO (pradeep): Document this class
 public class BRService extends Service {
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Service#onBind(android.content.Intent)
-   */
+  // Debug constant
+  private static final String TAG = "BRService";
+ 
+  // Broadcast variables
   IntentFilter Ifilter = new IntentFilter();
   BroadcastReceiver BR = new BCReceiver();
 
+  /*
+   * (non-Javadoc)
+   * @see android.app.Service#onBind(android.content.Intent)
+   */
   @Override
   public IBinder onBind(Intent arg0) {
     // TODO Auto-generated method stub
     return null;
   }
 
-  /** Called when the activity is first created. */
+  /*
+   * (non-Javadoc)
+   * @see android.app.Service#onCreate()
+   */
   @Override
   public void onCreate() {
     try {
@@ -41,7 +47,7 @@ public class BRService extends Service {
       /* Check the User Config to start OmniDroid */
       //String Enabled = ug.readLine("Enabled");
       //if (Enabled.equalsIgnoreCase("True")) {
-        Toast.makeText(getBaseContext(), "Starting OmniDroid", 5).show();
+        Log.i(TAG, "Starting OmniDroid");
 
         // Get the User Instances in an Arraylist from the User Config
         ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
@@ -52,28 +58,27 @@ public class BRService extends Service {
           if (HM1.get("EnableInstance").equalsIgnoreCase("True"))
             {
             Ifilter.addAction(HM1.get("EventName"));
-            Toast.makeText(getBaseContext(), "REGISTERING: "+HM1.get("EventName"), 5).show();
+            Toast.makeText(getBaseContext(), "REGISTERING: "+HM1.get("EventName"), Toast.LENGTH_SHORT).show();
             
             }
         }
         registerReceiver(BR, Ifilter);
-      //} else {
-        //Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
-        //unregisterReceiver(BR);
-      //}
     } catch (Exception e) {
       Log.i("BRService", e.getLocalizedMessage());
       Log.i("BRService", e.toString());
       OmLogger.write(getApplicationContext(), "Not able to Enable/Diable Omnidroid");
-      // Logger.write("Unable to start BroadcastReceiver");
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * @see android.content.ContextWrapper#stopService(android.content.Intent)
+   */
   @Override
-public boolean stopService(Intent name) {
-    Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
-	return super.stopService(name);
-}
+  public boolean stopService(Intent name) {
+    Log.i(TAG, "Stopping OmniDroid");
+    return super.stopService(name);
+  }
 
 /*
    * (non-Javadoc)
@@ -82,7 +87,7 @@ public boolean stopService(Intent name) {
    */
   @Override
   public void onDestroy() {
-    Toast.makeText(getBaseContext(), "Stopping OmniDroid", 5).show();
+    Log.i(TAG, "Destroying OmniDroid");
     super.onDestroy();
 
   }

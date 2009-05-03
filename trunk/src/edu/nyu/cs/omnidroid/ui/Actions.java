@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,12 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.CP;
 import edu.nyu.cs.omnidroid.util.AGParser;
@@ -38,7 +37,12 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author acase
  * 
  */
-public class Throwers extends Activity implements OnClickListener {
+public class Actions extends Activity implements OnClickListener {
+  // Menu Options of the Context variety (Android menus require int)
+  //TODO: private static final int MENU_EDIT = 0;
+  private static final int MENU_DELETE = 1;
+  // Menu options of the Standard variety (Android menus require int)
+  private static final int MENU_HELP = 3;
 
   // Intent data passed along
   private String eventApp;
@@ -49,16 +53,6 @@ public class Throwers extends Activity implements OnClickListener {
   private String throwerAction;
   private String throwerData1;
   private String throwerData2;
-
-  // Menu Options of the Context variety (Android menus require int)
-  private static final int MENU_EDIT = 0;
-  private static final int MENU_DELETE = 1;
-  // Menu options of the Standard variety (Android menus require int)
-  private static final int MENU_ADD = 2;
-  private static final int MENU_HELP = 3;
-
-  // Debugging
-  private static final String TAG = "Throwers";
 
   // List of applications to notify
   private static final int MAX_NUM_THROWERS = 1;
@@ -76,21 +70,26 @@ public class Throwers extends Activity implements OnClickListener {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.throwers);
+    setContentView(R.layout.actions);
     throwerListView = (ListView) findViewById(R.id.throwers_list);
 
     // Present the save button
-    Button save = (Button) findViewById(R.id.save);
+    Button save = (Button) findViewById(R.id.throwers_save);
     save.setOnClickListener(this);
+    Button add = (Button) findViewById(R.id.throwers_add);
+    add.setOnClickListener(this);
 
     // See what application we want to handle events for from the
     getIntentData(getIntent());
 
     // Present an updated list of filters we have applied
-    updateList();
+    update();
   }
 
-  private void updateList() {
+  private void update() {
+    // Clear the list so that it's empty, then it can be filled
+    throwerList.clear();
+    
     // Populate a list of active filters
     if (throwerApp != null) {
       throwerList.add(throwerApp);
@@ -102,20 +101,41 @@ public class Throwers extends Activity implements OnClickListener {
     throwerListView.setAdapter(listadpt);
     throwerListView.setTextFilterEnabled(true);
     registerForContextMenu(throwerListView);
+
+    // TODO(acase): Allow more than MAX_NUM_DATA
+    // Disable the add button if we've reached the maximum number of thrower apps
+    Button add = (Button) findViewById(R.id.throwers_add);
+    if (throwerList.size() < MAX_NUM_THROWERS) {
+      add.setEnabled(true);
+    } else {
+      add.setEnabled(false);
+    }
+
+    // Disable the save button if haven't added any throwers yet
+    Button save = (Button) findViewById(R.id.throwers_save);
+    if (throwerList.size() > 0 ) {
+      save.setEnabled(true);
+    } else {
+      save.setEnabled(false);
+    }
   }
 
+  /**
+   * Get the data passed in and store it in our class variables
+   * @param i - intent containing data to fill our User Config with.
+   */
   private void getIntentData(Intent i) {
     // intent data passed to us.
     Bundle extras = i.getExtras();
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventName);
-      filterType = extras.getString(UGParser.KEY_FilterType);
-      filterData = extras.getString(UGParser.KEY_FilterData);
-      throwerApp = extras.getString(UGParser.KEY_ActionApp);
-      throwerAction = extras.getString(UGParser.KEY_ActionName);
-      throwerData1 = extras.getString(UGParser.KEY_ActionData);
-      throwerData2 = extras.getString(UGParser.KEY_ActionData2);
+      eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+      filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      filterData = extras.getString(UGParser.KEY_FILTER_DATA);
+      throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
+      throwerAction = extras.getString(UGParser.KEY_ACTION_TYPE);
+      throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
+      throwerData2 = extras.getString(UGParser.KEY_ACTION_DATA2);
     }
   }
 
@@ -130,30 +150,21 @@ public class Throwers extends Activity implements OnClickListener {
     editThrower(data, id);
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
-    // TODO(acase): Allow more than MAX_NUM_DATA
-    if (throwerList.size() < MAX_NUM_THROWERS) {
-      // Don't allow more than MAX_NUM_DATA per thrower for now
-      menu.add(0, MENU_ADD, 0, R.string.add_thrower).setIcon(android.R.drawable.ic_menu_add);
-    }
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-    case MENU_ADD:
-      addThrower();
-      return true;
     case MENU_HELP:
       help();
       return true;
@@ -180,38 +191,33 @@ public class Throwers extends Activity implements OnClickListener {
    * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
    */
   public boolean onContextItemSelected(MenuItem item) {
-    AdapterView.AdapterContextMenuInfo info;
-    try {
-      info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-    } catch (ClassCastException e) {
-      Log.e(TAG, "bad menuInfo", e);
-      return false;
-    }
-
-    Uri data = getIntent().getData();
-    switch (item.getItemId()) {
-    case MENU_EDIT:
-      editThrower(data, info.id);
-      return true;
+    switch(item.getItemId()) {
     case MENU_DELETE:
-      deleteThrower(data, info.id);
-      return true;
-    default:
-      return super.onContextItemSelected(item);
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        deleteThrower(info.id);
+        return true;
     }
+    return super.onContextItemSelected(item);
   }
 
   /**
-   * FIXME(acase): Allow deletion of already set filters
+   * Delete the thrower from this omnihandler
    * 
-   * @param data
    * @param l
    *          - the item id selected
-   * @return void
    */
-  private void deleteThrower(Uri data, long l) {
-    // getAdapter().getItem(item.)
-    // item.getItemId(
+  private void deleteThrower(long id) {
+    // Remove item from the list
+    throwerList.remove(id);
+    // Clear it from our intents
+    // TODO(acase): this will need to be changed once we support more than one thrower
+    throwerApp = null;
+    throwerAction = null;
+    throwerData1 = null;
+    throwerData2 = null;
+
+    // Update our UI
+    update();
   }
 
   /**
@@ -232,11 +238,11 @@ public class Throwers extends Activity implements OnClickListener {
    */
   private void addThrower() {
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), ThrowerAdd.class);
+    i.setClass(this.getApplicationContext(), ActionAdd.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
-    i.putExtra(UGParser.KEY_EventName, eventName);
-    i.putExtra(UGParser.KEY_FilterType, filterType);
-    i.putExtra(UGParser.KEY_FilterData, filterData);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
+    i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+    i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     startActivityForResult(i, Constants.RESULT_ADD_THROWER);
   }
 
@@ -272,6 +278,17 @@ public class Throwers extends Activity implements OnClickListener {
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
+    switch (v.getId()) {
+    case R.id.throwers_add:
+      addThrower();
+      break;
+    case R.id.throwers_save:
+      saveDialog();
+      break;
+    }
+  }
+
+  private void saveDialog() {
     LayoutInflater factory = LayoutInflater.from(this);
     final View textEntryView = factory.inflate(R.layout.save_dialog, null);
     Builder save_dialog = new AlertDialog.Builder(this);
@@ -284,7 +301,7 @@ public class Throwers extends Activity implements OnClickListener {
     });
     save_dialog.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
-        EditText v = (EditText) textEntryView.findViewById(R.id.save_name);
+        EditText v = (EditText) textEntryView.findViewById(R.id.save_dialog_name);
         omniHandlerName = v.getText().toString();
         save();
       }
@@ -334,17 +351,17 @@ public class Throwers extends Activity implements OnClickListener {
     // Add OmniHandler to the UGConfig
     UGParser ug = new UGParser(getApplicationContext());
     HashMap<String, String> HM = new HashMap<String, String>();
-    HM.put(UGParser.KEY_InstanceName, omniHandlerName);
-    HM.put(UGParser.KEY_EventName, eventName);
-    HM.put(UGParser.KEY_EventApp, eventApp);
-    HM.put(UGParser.KEY_ActionApp, throwerApp);
-    HM.put(UGParser.KEY_ActionName, throwerAction);
-    HM.put(UGParser.KEY_EnableInstance, "True");
-    if (uri1 != null) HM.put(UGParser.KEY_ActionData, uri1.toString());
-    if (uri2 != null) HM.put(UGParser.KEY_ActionData2, uri2.toString());
+    HM.put(UGParser.KEY_INSTANCE_NAME, omniHandlerName);
+    HM.put(UGParser.KEY_EVENT_TYPE, eventName);
+    HM.put(UGParser.KEY_EVENT_APP, eventApp);
+    HM.put(UGParser.KEY_ACTION_APP, throwerApp);
+    HM.put(UGParser.KEY_ACTION_TYPE, throwerAction);
+    HM.put(UGParser.KEY_ENABLE_INSTANCE, "True");
+    if (uri1 != null) HM.put(UGParser.KEY_ACTION_DATA1, uri1.toString());
+    if (uri2 != null) HM.put(UGParser.KEY_ACTION_DATA2, uri2.toString());
     if ((filterType != null) && (filterData != null)) {
-      HM.put(UGParser.KEY_FilterType, filterType);
-      HM.put(UGParser.KEY_FilterData, filterData);
+      HM.put(UGParser.KEY_FILTER_TYPE, filterType);
+      HM.put(UGParser.KEY_FILTER_DATA, filterData);
     }
     ug.writeRecord(HM);
 
@@ -371,7 +388,7 @@ public class Throwers extends Activity implements OnClickListener {
       switch (resultCode) {
       case Constants.RESULT_SUCCESS:
         getIntentData(data);
-        updateList();
+        update();
         break;
       }
       break;

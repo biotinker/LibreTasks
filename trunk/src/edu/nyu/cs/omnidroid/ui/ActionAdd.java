@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author acase
  * 
  */
-public class ThrowerAdd extends ListActivity {
+public class ActionAdd extends ListActivity {
 
   // Intent Data provided by the user so far
   private String eventApp;
@@ -50,10 +50,10 @@ public class ThrowerAdd extends ListActivity {
     Bundle extras = i.getExtras();
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventName);
+      eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
       // TODO(acase): Allow more than one filter
-      filterType = extras.getString(UGParser.KEY_FilterType);
-      filterData = extras.getString(UGParser.KEY_FilterData);
+      filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      filterData = extras.getString(UGParser.KEY_FILTER_DATA);
     }
 
     // Getting the Events from AppConfig
@@ -81,14 +81,14 @@ public class ThrowerAdd extends ListActivity {
   protected void onListItemClick(ListView l, View v, int position, long id) {
     TextView tv = (TextView) v;
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), ThrowerAction.class);
+    i.setClass(this.getApplicationContext(), ActionType.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
-    i.putExtra(UGParser.KEY_EventName, eventName);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
     if ((filterType != null) && (filterData != null)) {
-      i.putExtra(UGParser.KEY_FilterType, filterType);
-      i.putExtra(UGParser.KEY_FilterData, filterData);
+      i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+      i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     }
-    i.putExtra(UGParser.KEY_ActionApp, tv.getText());
+    i.putExtra(UGParser.KEY_ACTION_APP, tv.getText());
     startActivityForResult(i, Constants.RESULT_ADD_THROWER);
   }
 

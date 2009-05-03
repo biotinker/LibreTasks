@@ -1,4 +1,4 @@
-package edu.nyu.cs.omnidroid.tests;
+package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,9 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * 
  * @author acase
  */
-public class ThrowerAction extends ListActivity {
+public class ActionType extends ListActivity {
+  // Standard Menu options (Android menus require int)
+  private static final int MENU_HELP = 0;
 
   // Intent Data provided by the user so far
   private String eventApp;
@@ -36,8 +38,8 @@ public class ThrowerAction extends ListActivity {
   private String filterData;
   private String throwerApp;
 
-  // Standard Menu options (Android menus require int)
-  private static final int MENU_HELP = 0;
+  // Application Config Parser 
+  AGParser ag;
 
   /*
    * (non-Javadoc)
@@ -52,15 +54,14 @@ public class ThrowerAction extends ListActivity {
     Bundle extras = i.getExtras();
     if (extras != null) {
       eventApp = extras.getString(AGParser.KEY_APPLICATION);
-      eventName = extras.getString(UGParser.KEY_EventName);
-      // TODO(acase): Allow more than one filter
-      filterType = extras.getString(UGParser.KEY_FilterType);
-      filterData = extras.getString(UGParser.KEY_FilterData);
-      throwerApp = extras.getString(UGParser.KEY_ActionApp);
+      eventName = extras.getString(UGParser.KEY_EVENT_TYPE);
+      filterType = extras.getString(UGParser.KEY_FILTER_TYPE);
+      filterData = extras.getString(UGParser.KEY_FILTER_DATA);
+      throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
     }
 
     // Getting the Actions from AppConfig
-    AGParser ag = new AGParser(getApplicationContext());
+    ag = new AGParser(this);
     ArrayList<HashMap<String, String>> eventList = ag.readActions(throwerApp);
     Iterator<HashMap<String, String>> i1 = eventList.iterator();
     ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
@@ -93,25 +94,24 @@ public class ThrowerAction extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
+    String throwerAction = sm.getKey();
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), ThrowerData.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
-    i.putExtra(UGParser.KEY_EventName, eventName);
+    i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
     if ((filterType != null) && (filterData != null)) {
-      i.putExtra(UGParser.KEY_FilterType, filterType);
-      i.putExtra(UGParser.KEY_FilterData, filterData);
+      i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
+      i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     }
-    i.putExtra(UGParser.KEY_ActionApp, throwerApp);
-    i.putExtra(UGParser.KEY_ActionName, sm.getKey());
+    i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
+    i.putExtra(UGParser.KEY_ACTION_TYPE, throwerAction);
 
-    // If there isn't any data that we can apply then go to the next page
-    AGParser ag = new AGParser(this.getApplicationContext());
-    ArrayList<String> data = ag.readURIFields(throwerApp, sm.getKey());
-    if (data.size() == 0) {
-      i.setClass(this.getApplicationContext(), Throwers.class);
+    // If there isn't any data that can be applied then go back to our caller
+    if (ag.readURIFields(throwerApp, throwerAction).size() == 0) {
+      i.setClass(this.getApplicationContext(), Actions.class);
       setResult(Constants.RESULT_SUCCESS, i);
       finish();
     } else {
+      i.setClass(this.getApplicationContext(), ActionData.class);
       startActivityForResult(i, Constants.RESULT_ADD_THROWER);      
     }
 
@@ -136,19 +136,18 @@ public class ThrowerAction extends ListActivity {
     }
   }
 
-  /**
-   * Creates the options menu items
-   * 
-   * @param menu
-   *          - the options menu to create
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
   }
 
-  /**
-   * Handles menu item selections
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

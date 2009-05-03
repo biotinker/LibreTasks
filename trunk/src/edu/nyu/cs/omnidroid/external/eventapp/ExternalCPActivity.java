@@ -18,7 +18,7 @@ public class ExternalCPActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.main1);
+    setContentView(R.layout.external_event_cp);
     Button Store;
     final EditText text;
     final EditText ID;
@@ -27,13 +27,13 @@ public class ExternalCPActivity extends Activity {
     Button Retrieve;
     Button GetAll;
 
-    Store = (Button) findViewById(R.id.Store);
-    Sname = (EditText) findViewById(R.id.Sname);
-    Sphno = (EditText) findViewById(R.id.Sphno);
-    text = (EditText) findViewById(R.id.text);
-    Retrieve = (Button) findViewById(R.id.Retrieve);
-    ID = (EditText) findViewById(R.id.ID);
-    GetAll = (Button) findViewById(R.id.GetAll);
+    Store = (Button) findViewById(R.id.external_event_cp_store);
+    Sname = (EditText) findViewById(R.id.external_event_cp_sname);
+    Sphno = (EditText) findViewById(R.id.external_event_cp_sphno);
+    text = (EditText) findViewById(R.id.external_event_cp_text);
+    Retrieve = (Button) findViewById(R.id.external_event_cp_retrieve);
+    ID = (EditText) findViewById(R.id.external_event_cp_id);
+    GetAll = (Button) findViewById(R.id.external_event_cp_getAll);
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String text1 = text.getText().toString();

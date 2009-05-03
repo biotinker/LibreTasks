@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,32 +25,26 @@ import edu.nyu.cs.omnidroid.util.AGParser;
  * @author acase
  * 
  */
-public class EventCatcher extends ListActivity {
-
-  // Standard Menu options (Android menus require int, so no enums)
+public class Event extends ListActivity {
+  // Menu options of the Standard variety (Android menus require int)
   private static final int MENU_HELP = 0;
 
-  // Activity results
-  private static final int ADD_RESULT = 1;
-  private static final int RESULT_ADD_SUCCESS = 1;
-
-  /**
-   * Creates the activity
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    AGParser ag = new AGParser(getApplicationContext());
     super.onCreate(savedInstanceState);
 
     // Getting the Events from AppConfig
-    ArrayList<String> appNames;
-    appNames = ag.readLines(AGParser.KEY_APPLICATION);
+    AGParser ag = new AGParser(getApplicationContext());
+    ArrayList<String> appNames = ag.readLines(AGParser.KEY_APPLICATION);
 
     // Populate our layout with applications
     setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, appNames));
     getListView().setTextFilterEnabled(true);
-
-    Log.i(this.getLocalClassName(), "onCreate exit");
   }
 
   /*
@@ -64,9 +57,9 @@ public class EventCatcher extends ListActivity {
   protected void onListItemClick(ListView l, View v, int position, long id) {
     TextView tv = (TextView) v;
     Intent i = new Intent();
-    i.setClass(this.getApplicationContext(), EventCatcherActions.class);
+    i.setClass(this.getApplicationContext(), EventType.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
-    startActivityForResult(i, ADD_RESULT);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
   }
 
   /*
@@ -76,9 +69,9 @@ public class EventCatcher extends ListActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ADD_RESULT:
+    case Constants.RESULT_ADD_OMNIHANDER:
       switch (resultCode) {
-      case RESULT_ADD_SUCCESS:
+      case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);
         finish();
         break;
@@ -105,18 +98,16 @@ public class EventCatcher extends ListActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_HELP:
-      Help();
+      help();
       return true;
     }
     return false;
   }
 
   /**
-   * Call our Help dialog
-   * 
-   * @return void
+   * Call our help dialog
    */
-  private void Help() {
+  private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
     String help_msg = "Select the application whose events you want to catch using this OmniHandler.";

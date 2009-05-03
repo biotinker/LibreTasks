@@ -10,9 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.gsm.SmsManager;
-import android.util.Log;
 import android.widget.Toast;
-import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.CP;
 
 
