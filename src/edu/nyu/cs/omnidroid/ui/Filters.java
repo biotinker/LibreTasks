@@ -198,7 +198,8 @@ public class Filters extends Activity implements OnClickListener {
   }
 
   /**
-   * FIXME(acase): Allow deletion of already set filters
+   * Deletion of already set filters from list
+   * 
    * @param id
    *          - the item id selected
    */
