@@ -17,6 +17,7 @@ import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
+import android.provider.CallLog;
 
 // TODO: Please add Javadocs and remove string instance constants.
 public class DummyActivity extends Activity {
@@ -44,7 +45,15 @@ public class DummyActivity extends Activity {
       sb.append("/");
       sb.append(getLastId(uri));
       this.uri = sb.toString();
-    } else {
+    } else 
+    if(intent.getAction().contains("PHONE_STATE"))
+    {	this.uri = CallLog.Calls.CONTENT_URI.toString();
+    	intentAction = "PHONE_STATE";
+    	StringBuilder sb = new StringBuilder(uri);
+        sb.append("/");
+        sb.append(getLastId(uri));
+        this.uri = sb.toString();}
+    else{
       intentAction = intent.getAction();
       this.uri = getURI(intent);
 
@@ -95,7 +104,7 @@ public class DummyActivity extends Activity {
           }
         
         // boolean val=checkFilter(uri,filtertype,filterdata);
-        getCols(uri, filtertype, filterdata, actionapp);
+        checkFilter(uri, filtertype, filterdata, actionapp);
         
         
       }
@@ -221,7 +230,7 @@ return cnt;
     }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
   }
-  public void getCols(String uri, String filtertype1, String filterdata1, String actiondata1) {
+  public void checkFilter(String uri, String filtertype1, String filterdata1, String actiondata1) {
     String[] cols = null;
     String str_uri = uri;
     String[] temp = null;
@@ -233,7 +242,7 @@ return cnt;
     int flag = 0;
     // new_id=new_id-1;
 
-    if (!filterdata.equalsIgnoreCase(null) || !filterdata.equalsIgnoreCase(""))
+    if (filterdata.equalsIgnoreCase(null) || filterdata.equalsIgnoreCase("") || intentAction.contains("PHONE_STATE"))
 
       sendIntent(actiondata1);
 
