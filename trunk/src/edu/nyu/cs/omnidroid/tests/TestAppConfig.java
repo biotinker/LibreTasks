@@ -58,7 +58,7 @@ public class TestAppConfig extends Activity {
     ag.write("Application:Calllog");
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener");
-    ag.write("EventName:CALL_RECEIVED,CALL RECEIVED");
+    ag.write("EventName:PHONE_STATE,CALL RECEIVED");
     ag.write("Filters:_id");
     ag.write("EventName:SMS_SEND,SENT SMS");
     ag.write("Filters:address,body");
