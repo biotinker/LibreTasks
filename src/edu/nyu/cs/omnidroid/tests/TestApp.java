@@ -25,7 +25,8 @@ public class TestApp extends ListActivity {
       "Test Service",
       "PackageLister",
       "External Event App",
-      "Test Fancy List",
+      "Checkable List",
+      "Fancy List",
       "Test User Config",
       "Test App Config",
       "Test Exception Handler",
@@ -52,6 +53,7 @@ public class TestApp extends ListActivity {
     Intent i = new Intent();
 
     switch (position) {
+
     case 0:
       i.setClass(this.getApplicationContext(), TestCP.class);
       break;
@@ -65,18 +67,21 @@ public class TestApp extends ListActivity {
       i.setClass(this.getApplicationContext(), ExternalCPActivity.class);
       break;
     case 4:
-      i.setClass(this.getApplicationContext(), CheckListViewDemo.class);
+      i.setClass(this.getApplicationContext(), CheckableList.class);
       break;
     case 5:
-      i.setClass(this.getApplicationContext(), TestUserConfig.class);
+      i.setClass(this.getApplicationContext(), CheckListViewDemo.class);
       break;
     case 6:
-      i.setClass(this.getApplicationContext(), TestAppConfig.class);
+      i.setClass(this.getApplicationContext(), TestUserConfig.class);
       break;
     case 7:
-      i.setClass(this.getApplicationContext(), TestExceptionHandler.class);
+      i.setClass(this.getApplicationContext(), TestAppConfig.class);
       break;
     case 8:
+      i.setClass(this.getApplicationContext(), TestExceptionHandler.class);
+      break;
+    case 9:
       i.putExtra(AGParser.KEY_APPLICATION, "SMS");
       i.putExtra(UGParser.KEY_EVENT_TYPE, "SMS_RECEIVED");
       //i.putExtra(UGParser.KEY_ActionApp, "SMS");

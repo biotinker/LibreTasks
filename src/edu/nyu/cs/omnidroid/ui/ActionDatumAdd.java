@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +21,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.core.CP;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
@@ -40,7 +36,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class ActionDatumAdd extends Activity implements OnItemClickListener, OnClickListener {
   // Standard Menu options (Android menus require int)
   private static final int MENU_HELP = 0;
-
+  
   // User Selected Data
   private String eventApp;
   private String eventName;
@@ -50,6 +46,8 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
   private String throwerName;
   private String throwerData1;
   private String throwerData2;
+  private int throwerData1Type;
+  private int throwerData2Type;
   private String dataName;
   private int dataSelection;
 
@@ -71,6 +69,8 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
     filterData = extras.getString(UGParser.KEY_FILTER_DATA);
     throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
     throwerName = extras.getString(UGParser.KEY_ACTION_TYPE);
+    throwerData1Type = extras.getInt(ActionData.KEY_DATA1_TYPE);
+    throwerData2Type = extras.getInt(ActionData.KEY_DATA2_TYPE);
     throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
     throwerData2 = extras.getString(UGParser.KEY_ACTION_DATA2);
     dataSelection = (int) extras.getLong(ActionData.KEY_DATA_ID);
@@ -158,15 +158,19 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
     i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
     i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
     if (dataSelection == 0) {
+      i.putExtra(ActionData.KEY_DATA1_TYPE, ActionData.DATA_TYPE_SELECT);
       i.putExtra(UGParser.KEY_ACTION_DATA1, sm.getValue());
       if (throwerData2 != null) {
+        i.putExtra(ActionData.KEY_DATA2_TYPE, throwerData2Type);
         i.putExtra(UGParser.KEY_ACTION_DATA2, throwerData2);
       }
     } else if (dataSelection == 1) {
+      i.putExtra(ActionData.KEY_DATA2_TYPE, ActionData.DATA_TYPE_SELECT);
+      i.putExtra(UGParser.KEY_ACTION_DATA2, sm.getValue());
       if (throwerData1 != null) {
+        i.putExtra(ActionData.KEY_DATA1_TYPE, throwerData1Type);
         i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
       }
-      i.putExtra(UGParser.KEY_ACTION_DATA2, sm.getValue());
     } else {
       Toast.makeText(this, "Invalid selection", Toast.LENGTH_SHORT).show();
     }
@@ -180,8 +184,11 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
   private void done() {
     // Data to store
     EditText manualEntry = (EditText) findViewById(R.id.thrower_datum_add_manual);
-    Uri uri = null;
+    String throwerData = manualEntry.getText().toString();
     
+    /* Save on the Actions save() function
+    Uri uri = null;
+
     // Store the data in the ContentProvider
     String data = manualEntry.getText().toString();
     if (data.length() > 0) {
@@ -194,7 +201,8 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
       Toast.makeText(getBaseContext(), "Must enter some data, or select from the list",
           Toast.LENGTH_LONG).show();
     }
-
+    */
+    
     // Send back the result to the caller
     Intent i = new Intent();
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
@@ -205,15 +213,19 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
     i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
     // Determine which field were storing data for and provide the appropriate data
     if (dataSelection == 0) {
-      i.putExtra(UGParser.KEY_ACTION_DATA1, uri.toString());
+      i.putExtra(ActionData.KEY_DATA1_TYPE, ActionData.DATA_TYPE_MANUAL);
+      i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData);
       if (throwerData2 != null) {
+        i.putExtra(ActionData.KEY_DATA2_TYPE, throwerData2Type);
         i.putExtra(UGParser.KEY_ACTION_DATA2, throwerData2);
       }
     } else if (dataSelection == 1) {
+      i.putExtra(ActionData.KEY_DATA2_TYPE, ActionData.DATA_TYPE_MANUAL);
+      i.putExtra(UGParser.KEY_ACTION_DATA2, throwerData);
       if (throwerData1 != null) {
+        i.putExtra(ActionData.KEY_DATA1_TYPE, throwerData1Type);
         i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
       }
-      i.putExtra(UGParser.KEY_ACTION_DATA2, uri.toString());
     } else {
       Toast.makeText(this, "Invalid selection", Toast.LENGTH_SHORT).show();
     }

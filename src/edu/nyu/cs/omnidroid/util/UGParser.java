@@ -25,8 +25,8 @@ import android.content.Context;
  *          Specify UC for UserConfig and AC for Application Config
  */
 public class UGParser {
-  // Public class vars
-  // TODO(Pradeep): public static final String KEY_ID = "ID";
+  // Key strings to lookup/store data
+  // TODO(Pradeep): Add an ID key to lookup by ID
   public static final String KEY_INSTANCE_NAME = "InstanceName";
   public static final String KEY_EVENT_APP = "EventApp";
   public static final String KEY_EVENT_TYPE = "EventName";
@@ -43,7 +43,8 @@ public class UGParser {
   public static final String TRUE = "True";
   public static final String FALSE = "False";
 
-  // Private class vars
+  // Storage data
+  private static final String FILENAME = "UserConfig.txt";
   private ArrayList<String> Schema;
   private FileOutputStream fout;
   private OutputStreamWriter osw;
@@ -53,7 +54,7 @@ public class UGParser {
   private Context context;
   private static final int MODE_WRITE = android.content.Context.MODE_WORLD_WRITEABLE;
   private static final int MODE_APPEND = android.content.Context.MODE_APPEND;
-  
+
   // TODO (acase): We should really ditch this ConfigFile idea and switch to using
   // internal CPs for all this data
 
@@ -64,21 +65,20 @@ public class UGParser {
    *          Specify the context of the Application
    */
   public UGParser(Context context) {
-
-    // Defining the User Config Schema in ArrayList
-    Schema = new ArrayList<String>();
-    // TODO(Pradeep): Schema.add("ID");
-    Schema.add("InstanceName");
-    Schema.add("EventName");
-    Schema.add("EventApp");
-    Schema.add("FilterType");
-    Schema.add("FilterData");
-    Schema.add("ActionApp");
-    Schema.add("ActionName");
-    Schema.add("ActionData");
-    Schema.add("ActionData2");
-    Schema.add("EnableInstance");
     this.context = context;
+    // Defining the User Config Schema in ArrayList
+    // TODO(Pradeep): Add an id
+    Schema = new ArrayList<String>();
+    Schema.add(KEY_INSTANCE_NAME);
+    Schema.add(KEY_EVENT_APP);
+    Schema.add(KEY_EVENT_TYPE);
+    Schema.add(KEY_FILTER_TYPE);
+    Schema.add(KEY_FILTER_DATA);
+    Schema.add(KEY_ACTION_APP);
+    Schema.add(KEY_ACTION_TYPE);
+    Schema.add(KEY_ACTION_DATA1);
+    Schema.add(KEY_ACTION_DATA2);
+    Schema.add(KEY_ENABLE_INSTANCE);
   }
 
   /**
@@ -87,7 +87,7 @@ public class UGParser {
    */
   private void OpenFileWrite(int mode) {
     try {
-      fout = context.openFileOutput("UserConfig.txt", mode);
+      fout = context.openFileOutput(FILENAME, mode);
       osw = new OutputStreamWriter(fout);
     } catch (FileNotFoundException e) {
       OmLogger.write(context, "Unable to Open User Config to write");
@@ -100,7 +100,7 @@ public class UGParser {
    */
   private void OpenFileRead() {
     try {
-      FIn = context.openFileInput("UserConfig.txt");
+      FIn = context.openFileInput(FILENAME);
       bis = new BufferedInputStream(FIn);
       dis = new DataInputStream(bis);
     } catch (FileNotFoundException e) {
@@ -119,9 +119,10 @@ public class UGParser {
       // if (Enabled.equals(null))
       // Enabled = "True";
       // String LineString = new String("Enabled" + ":" + Enabled + "\n");
+
+      // Overwrite config with empty data
       OpenFileWrite(MODE_WRITE);
       osw.write("");
-      // osw.write(LineString);
       osw.flush();
       osw.close();
     } catch (Exception e) {
@@ -131,7 +132,7 @@ public class UGParser {
 
   public void setEnabled(boolean enabled) {
     // Store our entries
-    ArrayList<HashMap<String,String>> records = readRecords();
+    ArrayList<HashMap<String, String>> records = readRecords();
 
     // Erase all data
     delete_all();
@@ -141,12 +142,12 @@ public class UGParser {
       String strEnabled;
       if (enabled == true) {
         strEnabled = TRUE;
-      } else { 
+      } else {
         strEnabled = FALSE;
       }
       OpenFileWrite(MODE_WRITE);
-      //Deleting all lines
-      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled+"\n");
+      // Deleting all lines
+      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled + "\n");
       osw.flush();
       osw.close();
     } catch (Exception e) {
@@ -154,13 +155,13 @@ public class UGParser {
     }
 
     // Write entries back
-//    HashMap<String,String> record;
-    for (HashMap<String,String> record : records) {
+    // HashMap<String,String> record;
+    for (HashMap<String, String> record : records) {
       writeRecord(record);
     }
-    
+
   }
-  
+
   /**
    * deletes the Record from userConfig.
    * 
@@ -377,23 +378,23 @@ public class UGParser {
       String line = "";
 
       while ((line = dis.readLine()) != null) {
-        try
-        {
-        HashMap<String, String> HM = new HashMap<String, String>();
-        String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase("InstanceName")) {
+        try {
+          HashMap<String, String> HM = new HashMap<String, String>();
+          String[] parts = line.split(":", 2);
+          if (parts[0].toString().equalsIgnoreCase("InstanceName")) {
 
-          Iterator<String> i = Schema.iterator();
-          String key;
-          while (i.hasNext()) {
-            key = i.next();
-            HM.put(key, line.split(":", 2)[1].toString());
-            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
-              line = dis.readLine();
+            Iterator<String> i = Schema.iterator();
+            String key;
+            while (i.hasNext()) {
+              key = i.next();
+              HM.put(key, line.split(":", 2)[1].toString());
+              if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
+                line = dis.readLine();
+            }
+            UCRecords.add(HM);
           }
-          UCRecords.add(HM);
+        } catch (Exception e) {
         }
-        }catch(Exception e){}
 
       }
       return UCRecords;
@@ -449,13 +450,9 @@ public class UGParser {
    */
   public int writeRecord(HashMap<String, String> HM) {
     try {
-      Iterator<String> i = Schema.iterator();
-      String key;
-      while (i.hasNext()) {
-        key = i.next();
-        if(HM.containsKey(key))
-        write(key, HM.get(key).toString());
-      
+      for (String s : Schema) {
+        if (HM.containsKey(s))
+          write(s, HM.get(s).toString());
       }
       return 1;
     } catch (Exception e) {

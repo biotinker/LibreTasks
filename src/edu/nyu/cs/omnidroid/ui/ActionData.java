@@ -35,6 +35,11 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
   // Menu options of the Standard variety (Android menus require int)
   private static final int MENU_HELP = 3;
 
+  public static String KEY_DATA1_TYPE = "Data1Type";
+  public static String KEY_DATA2_TYPE = "Data2Type";
+  public static int DATA_TYPE_SELECT = 1;
+  public static int DATA_TYPE_MANUAL = 2; 
+
   // Intent data passed along
   private String eventApp;
   private String eventName;
@@ -44,6 +49,8 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
   private String throwerName;
   private String throwerData1;
   private String throwerData2;
+  private int throwerData1Type;
+  private int throwerData2Type;
 
   /* Data Storage */
   // List view to display our data
@@ -156,6 +163,8 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
       filterData = extras.getString(UGParser.KEY_FILTER_DATA);
       throwerApp = extras.getString(UGParser.KEY_ACTION_APP);
       throwerName = extras.getString(UGParser.KEY_ACTION_TYPE);
+      throwerData1Type = extras.getInt(KEY_DATA1_TYPE);
+      throwerData2Type = extras.getInt(KEY_DATA2_TYPE);
       throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
       throwerData2 = extras.getString(UGParser.KEY_ACTION_DATA2);
     }
@@ -210,6 +219,8 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
     i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
+    i.putExtra(KEY_DATA1_TYPE, throwerData1Type);
+    i.putExtra(KEY_DATA2_TYPE, throwerData2Type);
     i.putExtra(KEY_DATA_NAME, dataInputs.get((int)id));
     i.putExtra(KEY_DATA_ID,id);
     if (id != 0) { 
@@ -267,6 +278,8 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     }
     i.putExtra(UGParser.KEY_ACTION_APP, throwerApp);
     i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
+    i.putExtra(KEY_DATA1_TYPE, throwerData1Type);
+    i.putExtra(KEY_DATA2_TYPE, throwerData2Type);
     if (throwerData1 != null) {
       i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
     }

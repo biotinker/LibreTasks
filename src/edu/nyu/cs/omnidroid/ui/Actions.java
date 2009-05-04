@@ -53,6 +53,8 @@ public class Actions extends Activity implements OnClickListener {
   private String throwerAction;
   private String throwerData1;
   private String throwerData2;
+  private int throwerData1Type;
+  private int throwerData2Type;
 
   // List of applications to notify
   private static final int MAX_NUM_THROWERS = 1;
@@ -136,6 +138,8 @@ public class Actions extends Activity implements OnClickListener {
       throwerAction = extras.getString(UGParser.KEY_ACTION_TYPE);
       throwerData1 = extras.getString(UGParser.KEY_ACTION_DATA1);
       throwerData2 = extras.getString(UGParser.KEY_ACTION_DATA2);
+      throwerData1Type = extras.getInt(ActionData.KEY_DATA1_TYPE);
+      throwerData2Type = extras.getInt(ActionData.KEY_DATA2_TYPE);
     }
   }
 
@@ -333,20 +337,25 @@ public class Actions extends Activity implements OnClickListener {
     Uri uri1 = null;
     Uri uri2 = null;
     
+    //FIXME(acase): This is already being stored by ActionsAddDatum
     if (throwerData1 != null) {
-      // Add OmniHandler Data1 to the CP
-      values = new ContentValues();
-      values.put(CP.INSTANCE_NAME, omniHandlerName);
-      values.put(CP.ACTION_DATA, throwerData1.toString());
-      uri1 = getContentResolver().insert(CP.CONTENT_URI, values);
+      if (throwerData1Type == ActionData.DATA_TYPE_MANUAL) {
+        // Add OmniHandler Data1 to the CP
+        values = new ContentValues();
+        values.put(CP.INSTANCE_NAME, omniHandlerName);
+        values.put(CP.ACTION_DATA, throwerData1.toString());
+        uri1 = getContentResolver().insert(CP.CONTENT_URI, values);
+      }
     }
     
     if (throwerData2 != null) {
-      // Add OmniHandler Data1 to the CP
-      values = new ContentValues();
-      values.put(CP.INSTANCE_NAME, omniHandlerName);
-      values.put(CP.ACTION_DATA, throwerData1.toString());
-      uri2 = getContentResolver().insert(CP.CONTENT_URI, values);
+      if (throwerData2Type == ActionData.DATA_TYPE_MANUAL) {
+        // Add OmniHandler Data1 to the CP
+        values = new ContentValues();
+        values.put(CP.INSTANCE_NAME, omniHandlerName);
+        values.put(CP.ACTION_DATA, throwerData1.toString());
+        uri2 = getContentResolver().insert(CP.CONTENT_URI, values);
+      }
     }
 
     // Add OmniHandler to the UGConfig
@@ -358,8 +367,16 @@ public class Actions extends Activity implements OnClickListener {
     HM.put(UGParser.KEY_ACTION_APP, throwerApp);
     HM.put(UGParser.KEY_ACTION_TYPE, throwerAction);
     HM.put(UGParser.KEY_ENABLE_INSTANCE, "True");
-    if (uri1 != null) HM.put(UGParser.KEY_ACTION_DATA1, uri1.toString());
-    if (uri2 != null) HM.put(UGParser.KEY_ACTION_DATA2, uri2.toString());
+    if (uri1 != null) {
+      HM.put(UGParser.KEY_ACTION_DATA1, uri1.toString());
+    } else {
+      HM.put(UGParser.KEY_ACTION_DATA1, throwerData1);
+    }
+    if (uri2 != null) {
+      HM.put(UGParser.KEY_ACTION_DATA2, uri2.toString());
+    } else {
+      HM.put(UGParser.KEY_ACTION_DATA1, throwerData1);
+    }
     if ((filterType != null) && (filterData != null)) {
       HM.put(UGParser.KEY_FILTER_TYPE, filterType);
       HM.put(UGParser.KEY_FILTER_DATA, filterData);

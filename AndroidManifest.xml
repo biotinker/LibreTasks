@@ -135,6 +135,11 @@
                   android:label="@string/overview_title">
         </activity>
 
+		<!-- Test fancy list -->
+        <activity android:name=".tests.CheckableList"
+                  android:label="@string/overview_title">
+        </activity>
+
         <!-- Test the CP -->
         <activity android:name=".tests.TestCP"
                   android:label="@string/maincp_name">
@@ -155,10 +160,15 @@
         <activity android:name=".tests.TestApp"
                   android:label="@string/test_app">
 		</activity>
-		
-		<!--  Runs all our Test App Config Cases -->
+
+		<!--  Runs all our App Config Test Cases -->
         <activity android:name=".tests.TestAppConfig"
-                  android:label="@string/test_app">
+                  android:label="@string/test_app_cfg">
+		</activity>
+
+		<!--  Runs all our User Config Test Cases -->
+        <activity android:name=".tests.TestUserConfig"
+                  android:label="@string/test_user_cfg">
 		</activity>
 
 		<!--  Thrower Test Provider -->
