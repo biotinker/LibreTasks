@@ -31,6 +31,7 @@ public class DummyActivity extends Activity {
   String actionname = null;
   String actionapp = null;
   String intentAction = null;
+  
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -81,6 +82,7 @@ public class DummyActivity extends Activity {
         actionname = HM1.get(UGParser.KEY_ACTION_TYPE);
         actionapp = HM1.get(UGParser.KEY_ACTION_APP);
         uridata = HM1.get(UGParser.KEY_ACTION_DATA1);
+        uridata2 = HM1.get(UGParser.KEY_ACTION_DATA2);
         if (!uridata.contains("content://") && !uridata.equals("")) {
           try{
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
