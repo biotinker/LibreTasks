@@ -133,9 +133,10 @@ public class CP extends ContentProvider {
     Context context = getContext();
     DatabaseHelper dbHelper = new DatabaseHelper(context);
     OmniMainDB = dbHelper.getWritableDatabase();
+    // We shouldn't destroy OmniHandlers on CP start
     UGParser ug=new UGParser(getContext());
-    ug.write(UGParser.KEY_ENABLE_OMNIDROID, "True");
-    ug.delete_all();
+    ug.setEnabled(true);
+    //ug.deleteAll();
     return (OmniMainDB == null) ? false : true;
 
   }
