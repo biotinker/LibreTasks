@@ -27,11 +27,10 @@ public class DummyActivity extends Activity {
   String filterdata = null;
   String filtertype = null;
   String uridata = null;
-  String uridata2 = null;
+  String uridataa2 = null;
   String actionname = null;
   String actionapp = null;
   String intentAction = null;
-  
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -82,16 +81,16 @@ public class DummyActivity extends Activity {
         actionname = HM1.get(UGParser.KEY_ACTION_TYPE);
         actionapp = HM1.get(UGParser.KEY_ACTION_APP);
         uridata = HM1.get(UGParser.KEY_ACTION_DATA1);
-        uridata2 = HM1.get(UGParser.KEY_ACTION_DATA2);
+        uridataa2 = HM1.get(UGParser.KEY_ACTION_DATA2);
         if (!uridata.contains("content://") && !uridata.equals("")) {
           try{
           uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
           // s_ph_no etc. and not the actual URI.
           }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
           }
-        if (!uridata2.contains("content://") && !uridata2.equals("")) {
+        if (!uridataa2.contains("content://") && !uridataa2.equals("")) {
           try{
-          uridata2 = fillURIData(uri, uridata2);// Call fillURIData if ActionData contains fields like
+          uridataa2 = fillURIData(uri, uridataa2);// Call fillURIData if ActionData contains fields like
           // s_ph_no etc. and not the actual URI.
           }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
           }
@@ -202,7 +201,7 @@ return cnt;
     Intent send_intent = new Intent();
     send_intent.setAction(actionname);
     send_intent.putExtra("uri", uridata);
-    send_intent.putExtra("uri2", uridata2);
+    send_intent.putExtra("uri2", uridataa2);
     // sendBroadcast(send_intent);
     // PackageManager pm = this.getPackageManager();
     // try {

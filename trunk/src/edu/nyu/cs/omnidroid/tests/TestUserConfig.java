@@ -58,14 +58,14 @@ public class TestUserConfig extends Activity {
 
   public void populateUserConfig() {
     UGParser ug = new UGParser(this.getApplicationContext());
-    ug.delete_all();
+    ug.deleteAll();
 
     HashMap<String, String> HM = new HashMap<String, String>();
     HM.put(UGParser.KEY_INSTANCE_NAME, "AutoReply DND");
-    HM.put(UGParser.KEY_EVENT_TYPE, "SMS");
-    HM.put(UGParser.KEY_EVENT_APP, "SMS_RECEIVED");
-    //HM.put(UGParser.KEY_FILTER_TYPE, "");
-    //HM.put(UGParser.KEY_FILTER_DATA, "");
+    HM.put(UGParser.KEY_EVENT_APP, "SMS");
+    HM.put(UGParser.KEY_EVENT_TYPE, "SMS_RECEIVED");
+    HM.put(UGParser.KEY_FILTER_TYPE, "");
+    HM.put(UGParser.KEY_FILTER_DATA, "");
     HM.put(UGParser.KEY_ACTION_APP, "SMS");
     HM.put(UGParser.KEY_ACTION_TYPE, "SMS_SEND");
     HM.put(UGParser.KEY_ENABLE_INSTANCE, "True");

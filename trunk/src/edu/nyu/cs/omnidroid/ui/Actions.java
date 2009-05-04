@@ -336,8 +336,8 @@ public class Actions extends Activity implements OnClickListener {
     ContentValues values;
     Uri uri1 = null;
     Uri uri2 = null;
-    
-    //FIXME(acase): This is already being stored by ActionsAddDatum
+
+    // Store in CP if necessary
     if (throwerData1 != null) {
       if (throwerData1Type == ActionData.DATA_TYPE_MANUAL) {
         // Add OmniHandler Data1 to the CP
@@ -347,7 +347,8 @@ public class Actions extends Activity implements OnClickListener {
         uri1 = getContentResolver().insert(CP.CONTENT_URI, values);
       }
     }
-    
+
+    // Store in CP if necessary
     if (throwerData2 != null) {
       if (throwerData2Type == ActionData.DATA_TYPE_MANUAL) {
         // Add OmniHandler Data1 to the CP
@@ -380,11 +381,13 @@ public class Actions extends Activity implements OnClickListener {
     if ((filterType != null) && (filterData != null)) {
       HM.put(UGParser.KEY_FILTER_TYPE, filterType);
       HM.put(UGParser.KEY_FILTER_DATA, filterData);
+    } else {
+      HM.put(UGParser.KEY_FILTER_TYPE, "");
+      HM.put(UGParser.KEY_FILTER_DATA, "");
     }
     ug.writeRecord(HM);
 
-    // Added by Pradeep to restart the service to register new
-    // IntentFilter
+    // We've added a new OmniHandler so we need to restart our service to register it
     Intent i = new Intent();
     i.setAction("OmniRestart");
     sendBroadcast(i);

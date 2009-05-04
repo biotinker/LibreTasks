@@ -85,7 +85,7 @@ public class UGParser {
    * Opens User Config for writing
    * 
    */
-  private void OpenFileWrite(int mode) {
+  private void openFileWrite(int mode) {
     try {
       fout = context.openFileOutput(FILENAME, mode);
       osw = new OutputStreamWriter(fout);
@@ -98,7 +98,7 @@ public class UGParser {
    * Opens User Config for reading
    * 
    */
-  private void OpenFileRead() {
+  private void openFileRead() {
     try {
       FIn = context.openFileInput(FILENAME);
       bis = new BufferedInputStream(FIn);
@@ -112,7 +112,7 @@ public class UGParser {
    * deletes the entire userConfig except the Enabled Field.
    * 
    */
-  public void delete_all() {
+  public void deleteAll() {
     try {
       // FIXME: Allow enabled for global
       // String Enabled = readLine("Enabled");
@@ -121,7 +121,7 @@ public class UGParser {
       // String LineString = new String("Enabled" + ":" + Enabled + "\n");
 
       // Overwrite config with empty data
-      OpenFileWrite(MODE_WRITE);
+      openFileWrite(MODE_WRITE);
       osw.write("");
       osw.flush();
       osw.close();
@@ -135,7 +135,7 @@ public class UGParser {
     ArrayList<HashMap<String, String>> records = readRecords();
 
     // Erase all data
-    delete_all();
+    deleteAll();
 
     try {
       // FIXME: Setup enable/disable
@@ -145,20 +145,20 @@ public class UGParser {
       } else {
         strEnabled = FALSE;
       }
-      OpenFileWrite(MODE_WRITE);
+      openFileWrite(MODE_WRITE);
       // Deleting all lines
-      osw.write(KEY_ENABLE_OMNIDROID + ":" + enabled + "\n");
+      osw.write(KEY_ENABLE_OMNIDROID + ":" + strEnabled + "\n");
       osw.flush();
       osw.close();
+
+      // Write entries back
+      for (HashMap<String, String> record : records) {
+        writeRecord(record);
+      }
     } catch (Exception e) {
       OmLogger.write(context, "Could not delete Instances");
     }
 
-    // Write entries back
-    // HashMap<String,String> record;
-    for (HashMap<String, String> record : records) {
-      writeRecord(record);
-    }
 
   }
 
@@ -180,7 +180,7 @@ public class UGParser {
           continue;
         UCRecords_New.add(HM1);
       }
-      delete_all();
+      deleteAll();
 
       Iterator<HashMap<String, String>> i1 = UCRecords_New.iterator();
       while (i1.hasNext()) {
@@ -200,7 +200,7 @@ public class UGParser {
    * @param InstanceName
    *          InstanceName of the record to be deleted.
    */
-  public boolean deleteRecordbyInstance(String InstanceName) {
+  public boolean deleteRecord(String InstanceName) {
     try {
       ArrayList<HashMap<String, String>> UCRecords = readRecords();
       ArrayList<HashMap<String, String>> UCRecords_New = new ArrayList<HashMap<String, String>>();
@@ -212,7 +212,7 @@ public class UGParser {
           continue;
         UCRecords_New.add(HM1);
       }
-      delete_all();
+      deleteAll();
 
       Iterator<HashMap<String, String>> i1 = UCRecords_New.iterator();
 
@@ -236,10 +236,10 @@ public class UGParser {
    *          Specify the Value to be written
    * @return Returns true if successful
    */
-  public boolean write(String key, String val) {
+  private boolean write(String key, String val) {
     try {
       final String LineString = new String(key + ":" + val + "\n");
-      OpenFileWrite(MODE_APPEND);
+      openFileWrite(MODE_APPEND);
       osw.write(LineString);
       osw.flush();
       osw.close();
@@ -261,7 +261,7 @@ public class UGParser {
    */
   public boolean update(String key, String val) {
     try {
-      OpenFileRead();
+      openFileRead();
       String line;
       ArrayList<String> lines = new ArrayList<String>();
       while ((line = dis.readLine()) != null) {
@@ -271,7 +271,7 @@ public class UGParser {
         }
 
       }
-      OpenFileWrite(MODE_WRITE);
+      openFileWrite(MODE_WRITE);
       String LineString = new String(key + ":" + val + "\n");
       osw.write(LineString);
       Iterator<String> i = lines.iterator();
@@ -302,7 +302,7 @@ public class UGParser {
     }
     String col2 = "";
     try {
-      OpenFileRead();
+      openFileRead();
       String line;
 
       while ((line = dis.readLine()) != null) {
@@ -343,7 +343,7 @@ public class UGParser {
     }
     String val;
     try {
-      OpenFileRead();
+      openFileRead();
       String line;
 
       while ((line = dis.readLine()) != null) {
@@ -374,21 +374,22 @@ public class UGParser {
     } catch (Exception e) {
     }
     try {
-      OpenFileRead();
+      openFileRead();
       String line = "";
 
       while ((line = dis.readLine()) != null) {
         try {
           HashMap<String, String> HM = new HashMap<String, String>();
           String[] parts = line.split(":", 2);
-          if (parts[0].toString().equalsIgnoreCase("InstanceName")) {
+          if (parts[0].toString().equalsIgnoreCase(KEY_INSTANCE_NAME)) {
 
             Iterator<String> i = Schema.iterator();
             String key;
             while (i.hasNext()) {
               key = i.next();
-              HM.put(key, line.split(":", 2)[1].toString());
-              if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
+              String value = line.split(":", 2)[1].toString();
+              HM.put(key, value);
+              if (!line.split(":", 2)[0].toString().equalsIgnoreCase(KEY_ENABLE_INSTANCE))
                 line = dis.readLine();
             }
             UCRecords.add(HM);
@@ -414,20 +415,20 @@ public class UGParser {
   public HashMap<String, String> readRecord(String Key) {
     HashMap<String, String> HM = new HashMap<String, String>();
     try {
-      OpenFileRead();
+      openFileRead();
       String line = "";
 
       while ((line = dis.readLine()) != null) {
 
         String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase("InstanceName")
+        if (parts[0].toString().equalsIgnoreCase(KEY_INSTANCE_NAME)
             && parts[1].toString().equalsIgnoreCase(Key)) {
           Iterator<String> i = Schema.iterator();
           String key;
           while (i.hasNext()) {
             key = i.next();
             HM.put(key, line.split(":", 2)[1].toString());
-            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
+            if (!line.split(":", 2)[0].toString().equalsIgnoreCase(KEY_ENABLE_INSTANCE))
               line = dis.readLine();
           }
         }
@@ -450,6 +451,18 @@ public class UGParser {
    */
   public int writeRecord(HashMap<String, String> HM) {
     try {
+      /*
+      Iterator<String> i = Schema.iterator();
+      String key;
+      while (i.hasNext()) {
+        key = i.next();
+        if(HM.containsKey(key)) {
+          String value = HM.get(key).toString();
+          write(key, value);
+        }
+      }
+      return 1;
+*/
       for (String s : Schema) {
         if (HM.containsKey(s))
           write(s, HM.get(s).toString());
@@ -471,7 +484,7 @@ public class UGParser {
    */
   public boolean updateRecord(HashMap<String, String> HM) {
     try {
-      deleteRecordbyInstance(HM.get(KEY_INSTANCE_NAME));
+      deleteRecord(HM.get(KEY_INSTANCE_NAME));
       writeRecord(HM);
       return true;
     } catch (Exception e) {
@@ -487,21 +500,30 @@ public class UGParser {
    *          EventName to be passed.
    * @return Returns ArrayList.
    * */
-  public ArrayList<HashMap<String, String>> readbyEventName(String Key) {
-    ArrayList<HashMap<String, String>> UCRecords = new ArrayList<HashMap<String, String>>();
+  public ArrayList<HashMap<String, String>> readbyEventName(String eventName) {
+    ArrayList<HashMap<String, String>> allRecords = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> matchingRecords = new ArrayList<HashMap<String, String>>();
+    allRecords = readRecords();
+    for (HashMap<String,String> entry : allRecords) {
+      if (entry.get(KEY_EVENT_TYPE).equals(eventName)) {
+        matchingRecords.add(entry);
+      }
+    }
+    return matchingRecords;
+    /*    
     try {
       dis.close();
       bis.close();
     } catch (Exception e) {
     }
     try {
-      OpenFileRead();
+      openFileRead();
       String line = "";
 
       while ((line = dis.readLine()) != null) {
         HashMap<String, String> HM = new HashMap<String, String>();
         String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase("EventName")
+        if (parts[0].toString().equalsIgnoreCase(KEY_INSTANCE_NAME)
             && parts[1].toString().equalsIgnoreCase(Key)) {
           Iterator<String> i = Schema.iterator();
           i.next();// Ignoring Instance Name
@@ -522,6 +544,7 @@ public class UGParser {
       OmLogger.write(context, "Unable to read Line from User Config");
       return UCRecords;
     }
+*/
   }
 
   /**

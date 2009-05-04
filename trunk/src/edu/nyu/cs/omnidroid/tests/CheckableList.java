@@ -3,8 +3,8 @@ package edu.nyu.cs.omnidroid.tests;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +30,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author - acase
  * 
  */
-public class CheckableList extends ListActivity {
+public class CheckableList extends Activity {
   // Menu Options of the Context variety(Android menus require int)
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
@@ -54,6 +54,7 @@ public class CheckableList extends ListActivity {
     // Debug.startMethodTracing("OmniDroid");
     // Create our Activity
     super.onCreate(savedInstanceState);
+
     update();
   }
 
@@ -72,12 +73,16 @@ public class CheckableList extends ListActivity {
       items.add(hm.get((String) UGParser.KEY_INSTANCE_NAME));
     }
 
+    //ListView clv = new CheckedListView();
+    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+    //    android.R.layout.simple_list_item_1, items);
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-        android.R.layout.simple_list_item_1, items);
-    setListAdapter(arrayAdapter);
-    registerForContextMenu(getListView());
-    getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-    //setContentView(R.layout.test_checkablelist);
+        android.R.layout.simple_list_item_multiple_choice, items);
+    ListView lv = (ListView) findViewById(R.id.checkable_list);
+    lv.setAdapter(arrayAdapter);
+    registerForContextMenu(lv);
+    lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    setContentView(R.layout.test_checkablelist);
 
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
