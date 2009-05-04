@@ -69,9 +69,7 @@ public class ActionDatumChoice extends Activity implements OnItemClickListener {
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, contentMap);
     ListView lv = (ListView) findViewById(R.id.simple_list_view_01);
-    //lv.setOnItemSelectedListener(this);
     lv.setOnItemClickListener(this);
-    lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     lv.setAdapter(arrayAdapter);
     lv.setTextFilterEnabled(true);
   }
