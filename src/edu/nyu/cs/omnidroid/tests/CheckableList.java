@@ -3,8 +3,8 @@ package edu.nyu.cs.omnidroid.tests;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +30,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author - acase
  * 
  */
-public class CheckableList extends Activity {
+public class CheckableList extends ListActivity {
   // Menu Options of the Context variety(Android menus require int)
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
@@ -78,11 +78,16 @@ public class CheckableList extends Activity {
     //    android.R.layout.simple_list_item_1, items);
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_multiple_choice, items);
-    ListView lv = (ListView) findViewById(R.id.checkable_list);
-    lv.setAdapter(arrayAdapter);
+
+    final ListView lv = getListView();
+    
+    //ListView lv = (ListView) findViewById(R.id.checkable_list);
+    //lv.setAdapter(arrayAdapter);
+    setListAdapter(arrayAdapter);
     registerForContextMenu(lv);
     lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-    setContentView(R.layout.test_checkablelist);
+    lv.setItemsCanFocus(false);
+    //setContentView(R.layout.test_checkablelist);
 
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
@@ -132,12 +137,15 @@ public class CheckableList extends Activity {
   }
 
   /**
-   * @param l
+   * @param id
    *          of the menu item
    */
-  private void deleteHandler(long l) {
-    // FIXME (acase): Delete from UGParser
+  private void deleteHandler(long id) {
     // FIXME (acase): Delete from CP
+    // Delete from User Config
+    String instance = (String) this.getListAdapter().getItem((int) id);
+    ug.deleteRecord(instance);
+    update();
     // Object data = getIntent().getData();
     // Button selected = (Button) view;
     // ug.deleteRecord(selected.getText());
