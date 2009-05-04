@@ -28,6 +28,7 @@ public class CP extends ContentProvider {
   public static final String ACTION_DATA = "a_data";
   public static final String INSTANCE_NAME = "i_name";
   
+  static UGParser ug;
   private static final int DESC = 1;
   private static final int DESC_ID = 2;
   private static final UriMatcher uriMatcher;
@@ -41,13 +42,12 @@ public class CP extends ContentProvider {
   private SQLiteDatabase OmniMainDB;
   private static final String DATABASE_NAME = "Omnidroid";
   private static final String DATABASE_TABLE = "Main";
-  private static final int DATABASE_VERSION = 2;
+  private static final int DATABASE_VERSION = 4;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
   /**
-   * 
-   * @author 
+   * @author Rajiv
    *
    */
   private static class DatabaseHelper extends SQLiteOpenHelper {
@@ -70,11 +70,13 @@ public class CP extends ContentProvider {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      // TODO: Don't drop the table, instead convert it to new version.
       Log.d("OmniDroid database", "On Upgrade");
-      db.execSQL("DROP TABLE IF EXISTS Main");
-      onCreate(db);
-
+      if (oldVersion < newVersion) {
+        // FIXME: Don't drop the table, instead convert it to new version.
+        db.execSQL("DROP TABLE IF EXISTS Main");
+        ug.deleteAll();
+        onCreate(db);
+      }
     }
   }
 
@@ -84,7 +86,7 @@ public class CP extends ContentProvider {
    */
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
-    // TODO Auto-generated method stub
+    // TODO: Allow delete of content
     return 0;
   }
   
@@ -111,8 +113,7 @@ public class CP extends ContentProvider {
    */
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    // TODO:: Allow UI to insert a value
-    // Link the module with Andrew's code
+    // Insert row into the DB
     long row = OmniMainDB.insert(DATABASE_TABLE, "", values);
     if (row > 0) {
       Uri _uri = ContentUris.withAppendedId(CONTENT_URI, row);
@@ -129,16 +130,16 @@ public class CP extends ContentProvider {
    */
   @Override
   public boolean onCreate() {
-    // TODO:: Open the connection to the database
+    // Get our application context
     Context context = getContext();
+
+    // Set this so the DB can access the UserConfig if necessary 
+    ug=new UGParser(context);
+
+    // Connect to the DB
     DatabaseHelper dbHelper = new DatabaseHelper(context);
     OmniMainDB = dbHelper.getWritableDatabase();
-    // We shouldn't destroy OmniHandlers on CP start
-    UGParser ug=new UGParser(getContext());
-    ug.setEnabled(true);
-    //ug.deleteAll();
     return (OmniMainDB == null) ? false : true;
-
   }
 
   /*
@@ -148,7 +149,6 @@ public class CP extends ContentProvider {
   @Override
   public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
       String sortOrder) {
-    // TODO:: Allow UI to retrieve the information
 
     SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
     sqlBuilder.setTables(DATABASE_TABLE);
@@ -167,7 +167,7 @@ public class CP extends ContentProvider {
    */
   @Override
   public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-    // TODO :: Allow UI to update information in the CP
+    // TODO: Allow updates to the content
     return 0;
   }
 
