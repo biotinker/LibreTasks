@@ -58,17 +58,17 @@ public class FiltersAddType extends ListActivity {
     
     // Convert filter to OmniDroid common name
     ArrayList<StringMap> contentMap = ag.readContentMap(eventApp);
-    ArrayList<String> filterInputs = new ArrayList<String>();
+    ArrayList<StringMap> filterInputs = new ArrayList<StringMap>();
     for (int cnt=0; cnt<filterTypeList.size(); cnt++) {
       for (StringMap item: contentMap) {
         if (item.getKey().equals(filterTypeList.get(cnt))) {
-          filterInputs.add(item.getValue());
+          filterInputs.add(new StringMap(item.getValue(), item.getKey()));
         }
       }
     }
 
     // Setup our list view
-    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+    ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
         android.R.layout.simple_list_item_1, filterInputs);
     setListAdapter(arrayAdapter);
     getListView().setTextFilterEnabled(true);
@@ -83,7 +83,7 @@ public class FiltersAddType extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     //StringMap sm = (StringMap) l.getAdapter().getItem(position);
-    String filterType = (String) l.getAdapter().getItem(position);
+    String filterType = l.getAdapter().getItem(position).toString();
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
