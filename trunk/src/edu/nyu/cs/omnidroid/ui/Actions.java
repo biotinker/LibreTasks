@@ -376,7 +376,7 @@ public class Actions extends Activity implements OnClickListener {
     if (uri2 != null) {
       HM.put(UGParser.KEY_ACTION_DATA2, uri2.toString());
     } else {
-      HM.put(UGParser.KEY_ACTION_DATA1, throwerData1);
+      HM.put(UGParser.KEY_ACTION_DATA2, throwerData2);
     }
     if ((filterType != null) && (filterData != null)) {
       HM.put(UGParser.KEY_FILTER_TYPE, filterType);

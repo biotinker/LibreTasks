@@ -61,6 +61,7 @@ public class CP extends ContentProvider {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+      db.setVersion(DATABASE_VERSION);
       db.execSQL(DATABASE_CREATE);
     }
 

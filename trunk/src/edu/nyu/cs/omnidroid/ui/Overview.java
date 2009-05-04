@@ -2,31 +2,29 @@ package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
@@ -36,7 +34,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  * @author - acase
  * 
  */
-public class Overview extends Activity implements OnClickListener {
+public class Overview extends ListActivity {
   // Menu Options of the Context variety(Android menus require int)
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
@@ -69,60 +67,29 @@ public class Overview extends Activity implements OnClickListener {
    */
   private void update() {
     // Get a list of our current OmniHandlers
-    ArrayList<View> rowList = new ArrayList<View>();
     ug = new UGParser(getApplicationContext());
     ArrayList<HashMap<String, String>> userConfigRecords = ug.readRecords();
-    Iterator<HashMap<String, String>> i = userConfigRecords.iterator();
+    ArrayList<String> items = new ArrayList<String>();
 
     // Add current OmniHandlers to our list
-    while (i.hasNext()) {
-      HashMap<String, String> HM1 = i.next();
-
-      // Build our button
-      Button button = new Button(this);
-      button.setText(HM1.get(UGParser.KEY_INSTANCE_NAME));
-      button.setCursorVisible(true);
-      button.setTag(HM1.get((String) UGParser.KEY_INSTANCE_NAME));
-      // button.setOnClickListener(this);
-
-      // Build our checkbox
-      Log.i(this.getLocalClassName().toString(), "Adding a checkbox");
-      CheckBox checkbox = new CheckBox(this);
-      checkbox.setGravity(Gravity.CENTER);
-      checkbox.setClickable(true);
-      checkbox.setTag(HM1.get((String) UGParser.KEY_INSTANCE_NAME));
-      checkbox.setOnClickListener(this);
-      checkbox.setEnabled(true);
-      if (HM1.get(UGParser.KEY_ENABLE_INSTANCE).equalsIgnoreCase("True")) {
-        Log.d(this.getLocalClassName(), "Enabled=true");
-        checkbox.setChecked(true);
-      } else {
-        Log.d(this.getLocalClassName(), "Enabled=false");
-        checkbox.setChecked(false);
-      }
-
-      // Add a context menu for the row
-      registerForContextMenu(button);
-
-      // Build our table row
-      TableRow row = new TableRow(this);
-      row.addView(button);
-      row.addView(checkbox);
-      rowList.add(row);
+    for (HashMap<String, String> hm : userConfigRecords) {
+      items.add(hm.get((String) UGParser.KEY_INSTANCE_NAME));
     }
 
-    // Build our OmniHandler display table
-    TableLayout table_layout = new TableLayout(this);
-    table_layout.setColumnStretchable(0, true);
-    for (View rows : rowList) {
-      rows.setPadding(2, 2, 2, 2);
-      table_layout.addView(rows);
-    }
+    //ListView clv = new CheckedListView();
+    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+    //    android.R.layout.simple_list_item_1, items);
+    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        android.R.layout.simple_list_item_multiple_choice, items);
 
-    // Add our table to a scrollpane
-    ScrollView scrollPane = new ScrollView(this);
-    scrollPane.addView(table_layout);
-    setContentView(scrollPane);
+    final ListView lv = getListView();
+    
+    //ListView lv = (ListView) findViewById(R.id.checkable_list);
+    //lv.setAdapter(arrayAdapter);
+    setListAdapter(arrayAdapter);
+    registerForContextMenu(lv);
+    lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    lv.setItemsCanFocus(false);
 
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
@@ -170,14 +137,43 @@ public class Overview extends Activity implements OnClickListener {
       return super.onContextItemSelected(item);
     }
   }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
+   * long)
+   */
+  @Override
+  protected void onListItemClick(ListView l, View v, int position, long id) {
+    String instanceName = (String) l.getAdapter().getItem(position);
+    HashMap<String, String> HM = ug.readRecord(instanceName);
+
+    SparseBooleanArray checked = l.getCheckedItemPositions();
+    if (checked.get(position)) {
+      Toast.makeText(this.getBaseContext(), "Enabling " + instanceName, 5).show();
+      HM.put(UGParser.KEY_ENABLE_INSTANCE, "true");
+    } else {
+      Toast.makeText(this.getBaseContext(), "Disabling " + instanceName, 5).show();
+      HM.put(UGParser.KEY_ENABLE_INSTANCE, "false");
+    }
+    ug.updateRecord(HM);
+
+    // Restart the service
+    Intent i = new Intent();
+    i.setAction("OmniRestart");
+    sendBroadcast(i);
+  }
 
   /**
-   * @param l
+   * @param id
    *          of the menu item
    */
-  private void deleteHandler(long l) {
-    // FIXME (acase): Delete from UGParser
+  private void deleteHandler(long id) {
     // FIXME (acase): Delete from CP
+    // Delete from User Config
+    String instance = (String) this.getListAdapter().getItem((int) id);
+    ug.deleteRecord(instance);
+    update();
     // Object data = getIntent().getData();
     // Button selected = (Button) view;
     // ug.deleteRecord(selected.getText());
