@@ -34,7 +34,6 @@ public class DummyActivity extends Activity {
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.dummy_activity);
     this.intent = getIntent();
     if (intent.getAction().contains("SMS_RECEIVED")) {
       String id = null;
@@ -222,7 +221,6 @@ return cnt;
     }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
   }
-
   public void getCols(String uri, String filtertype1, String filterdata1, String actiondata1) {
     String[] cols = null;
     String str_uri = uri;
@@ -233,61 +231,58 @@ return cnt;
     int new_id = Integer.parseInt(num);
 
     int flag = 0;
+    // new_id=new_id-1;
 
-    Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-    if (cur.moveToFirst()) {
+    if (!filterdata.equalsIgnoreCase(null) || !filterdata.equalsIgnoreCase(""))
 
-      do {
+      sendIntent(actiondata1);
 
+    else {
+      Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+      cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+      // String id = cur.getString(cur.getColumnIndex("_id"));
+
+      if (cur.moveToFirst()) {
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-        
-        
-        String ft = cur.getString(cur.getColumnIndex(filtertype1));
 
+        // do {
+        // new_id+=1;
+        // id-=1;
         if (new_id == id) {
+          // cur.moveToPrevious();
+
+          String ft = cur.getString(cur.getColumnIndex(filtertype1));
           if (filterdata1.equalsIgnoreCase(ft)) {
 
-        	  {
-        		  if(final_uri.contains("sms"))
-                  {
-        			  Toast.makeText(
-        		                getApplicationContext(),
-        		                cur.getString(cur.getColumnIndex(filtertype1)) + ":"
-        		                    + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
-        			  
-                  } 
-        		  else
-        		  {
-        		try{
-        	  Toast.makeText(
-                getApplicationContext(),
-                cur.getString(cur.getColumnIndex("s_name")) + ":"
-                    + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG).show();
-        		}catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to execute action");}
-        		}
-        	      sendIntent(actiondata1);
-        	      break;
-        	  }
-           
+            {
+              if (final_uri.contains("sms")) {
+                Toast.makeText(
+                    getApplicationContext(),
+                    cur.getString(cur.getColumnIndex(filtertype1)) + "--->"
+                        + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
 
-           
+              } else {
+                try {
+                  Toast.makeText(
+                      getApplicationContext(),
+                      cur.getString(cur.getColumnIndex("s_name")) + ":"
+                          + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG)
+                      .show();
+                } catch (Exception e) {
+                  OmLogger.write(getApplicationContext(), "Unable to execute action");
+                }
+              }
             }
-           
+            sendIntent(actiondata1);
 
-            
           }
 
-        
-
-      } while (cur.moveToNext());
-      
+        }
+      }
+      // } while (cur.moveToNext());
     }
+  }
 
-    }
-
-  
-
-  
   public String getLastId(String smsuri)
   {
 	  

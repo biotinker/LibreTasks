@@ -42,7 +42,7 @@ public class CP extends ContentProvider {
   private SQLiteDatabase OmniMainDB;
   private static final String DATABASE_NAME = "Omnidroid";
   private static final String DATABASE_TABLE = "Main";
-  private static final int DATABASE_VERSION = 4;
+  private static final int DATABASE_VERSION = 5;
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
