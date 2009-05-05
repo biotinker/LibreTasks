@@ -32,6 +32,7 @@ public class DummyActivity extends Activity {
   String actionname = null;
   String actionapp = null;
   String intentAction = null;
+  String eventapp=null;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -87,6 +88,7 @@ public class DummyActivity extends Activity {
         filtertype = HM1.get(UGParser.KEY_FILTER_TYPE);
         filterdata = HM1.get(UGParser.KEY_FILTER_DATA);
         actionname = HM1.get(UGParser.KEY_ACTION_TYPE);
+        eventapp= HM1.get(UGParser.KEY_EVENT_APP);
         actionapp = HM1.get(UGParser.KEY_ACTION_APP);
         uridata = HM1.get(UGParser.KEY_ACTION_DATA1);
         uridataa2 = HM1.get(UGParser.KEY_ACTION_DATA2);
@@ -128,7 +130,7 @@ public class DummyActivity extends Activity {
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
         if (new_id == id) {
           AGParser ag = new AGParser(getApplicationContext());
-          ArrayList<StringMap> cm = ag.readContentMap(actionapp);
+          ArrayList<StringMap> cm = ag.readContentMap(eventapp);
           Iterator<StringMap> i = cm.iterator();
           StringMap sm = new StringMap();
           while (i.hasNext()) {
