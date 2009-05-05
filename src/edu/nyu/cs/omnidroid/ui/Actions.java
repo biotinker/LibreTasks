@@ -354,7 +354,7 @@ public class Actions extends Activity implements OnClickListener {
         // Add OmniHandler Data1 to the CP
         values = new ContentValues();
         values.put(CP.INSTANCE_NAME, omniHandlerName);
-        values.put(CP.ACTION_DATA, throwerData1.toString());
+        values.put(CP.ACTION_DATA, throwerData2.toString());
         uri2 = getContentResolver().insert(CP.CONTENT_URI, values);
       }
     }
