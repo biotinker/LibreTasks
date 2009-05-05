@@ -61,7 +61,7 @@ public class CP extends ContentProvider {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-      db.setVersion(DATABASE_VERSION);
+      //db.setVersion(DATABASE_VERSION);
       db.execSQL(DATABASE_CREATE);
     }
 
@@ -72,10 +72,10 @@ public class CP extends ContentProvider {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
       Log.d("OmniDroid database", "On Upgrade");
+      ug.deleteAll();
       if (oldVersion < newVersion) {
         // FIXME: Don't drop the table, instead convert it to new version.
         db.execSQL("DROP TABLE IF EXISTS Main");
-        ug.deleteAll();
         onCreate(db);
       }
     }
