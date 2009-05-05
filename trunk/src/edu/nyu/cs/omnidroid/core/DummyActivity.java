@@ -195,7 +195,7 @@ return cnt;
           Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
     else {
       getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
-          "i_name='temp'", null);
+          "i_name='"+tempstr+"'", null);
       uri_ret = getContentResolver().insert(
           Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
     }
