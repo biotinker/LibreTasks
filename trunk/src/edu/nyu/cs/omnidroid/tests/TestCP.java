@@ -88,10 +88,10 @@ public class TestCP extends Activity {
 
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-          Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
+         // Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
 
-    	  ArrayList<String> al=cp.displayRecords(OmniURI.toString());
-    	  /*
+    	 // ArrayList<String> al=cp.displayRecords(OmniURI.toString());
+    	  
         Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP");
         Cursor c = managedQuery(OmniURI, null, null, null, null);
         if (c.moveToFirst()) {
@@ -103,7 +103,7 @@ public class TestCP extends Activity {
                     + c.getString(c.getColumnIndex(CP.ACTION_DATA)), Toast.LENGTH_LONG).show();
           } while (c.moveToNext());
         }
-*/
+
       }
 
     });
