@@ -62,7 +62,7 @@ public class FiltersAddType extends ListActivity {
     for (int cnt=0; cnt<filterTypeList.size(); cnt++) {
       for (StringMap item: contentMap) {
         if (item.getKey().equals(filterTypeList.get(cnt))) {
-          filterInputs.add(new StringMap(item.getValue(), item.getKey()));
+          filterInputs.add(new StringMap(filterTypeList.get(cnt),item.getValue()));
         }
       }
     }
@@ -82,8 +82,9 @@ public class FiltersAddType extends ListActivity {
    */
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
-    //StringMap sm = (StringMap) l.getAdapter().getItem(position);
-    String filterType = l.getAdapter().getItem(position).toString();
+    StringMap sm = (StringMap) l.getAdapter().getItem(position);
+    //String filterType = (StringMap)(l.getAdapter().getItem(position)).getKey();
+    String filterType = sm.getKey();
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
