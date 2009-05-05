@@ -242,7 +242,9 @@ return cnt;
     int flag = 0;
     // new_id=new_id-1;
 
+
     if (filterdata.equalsIgnoreCase(null) || filterdata.equalsIgnoreCase("") || intentAction.contains("PHONE_STATE"))
+
 
       sendIntent(actiondata1);
 
