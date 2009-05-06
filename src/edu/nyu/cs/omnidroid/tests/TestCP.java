@@ -1,7 +1,5 @@
 package edu.nyu.cs.omnidroid.tests;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
