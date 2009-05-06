@@ -239,8 +239,7 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "TODO";
+    String help_msg = this.getResources().getString(R.string.help_action_data);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

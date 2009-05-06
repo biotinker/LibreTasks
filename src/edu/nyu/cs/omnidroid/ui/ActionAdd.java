@@ -139,7 +139,7 @@ public class ActionAdd extends ListActivity {
   private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the application which will be used to respond for the given event.";
+    String help_msg = this.getResources().getString(R.string.help_action_add);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

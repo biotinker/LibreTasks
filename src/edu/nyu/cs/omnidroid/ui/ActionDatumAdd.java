@@ -130,8 +130,7 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the type of filter you wish to apply.";
+    String help_msg = this.getResources().getString(R.string.help_action_datum_add);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

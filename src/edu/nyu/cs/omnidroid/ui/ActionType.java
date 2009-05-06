@@ -163,8 +163,7 @@ public class ActionType extends ListActivity {
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the action that you want the selected catcher application to respond with.";
+    String help_msg = this.getResources().getString(R.string.help_action_type);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

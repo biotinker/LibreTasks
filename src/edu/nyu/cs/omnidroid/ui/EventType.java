@@ -140,8 +140,8 @@ public class EventType extends ListActivity {
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the type of event that you want to catch.";
+    String help_msg = this.getResources().getString(R.string.help_event_intro) + "\n<br/>"
+    + this.getResources().getString(R.string.help_event_type);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));
