@@ -1,8 +1,12 @@
 package edu.nyu.cs.omnidroid.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,9 +89,20 @@ public class FiltersAddData extends Activity implements OnClickListener {
 
   /**
    * Call our Help dialog
+   * 
+   * @return void
    */
   private void help() {
-    // TODO (acase): Create a help dialog for this activity
+    Builder help = new AlertDialog.Builder(this);
+    String help_msg = this.getResources().getString(R.string.help_filters_add_data);
+    help.setTitle(R.string.help);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setMessage(Html.fromHtml(help_msg));
+    help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
   /*

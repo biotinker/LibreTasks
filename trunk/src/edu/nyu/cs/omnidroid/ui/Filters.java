@@ -259,10 +259,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "Use the 'Menu' button followed by 'Add Filter' to add filters that "
-        + "limit the events caught by this OmniHandler to a subset of events.\n"
-        + "When done adding filters, select 'Next' to proceed.";
+    String help_msg = this.getResources().getString(R.string.help_filters);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

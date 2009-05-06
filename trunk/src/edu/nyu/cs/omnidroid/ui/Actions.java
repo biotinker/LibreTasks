@@ -258,10 +258,7 @@ public class Actions extends Activity implements OnClickListener {
    */
   private void help() {
     Builder help = new AlertDialog.Builder(this);
-    // TODO(acase): Move to some kind of resource
-    String help_msg = "Use the 'Menu' button followed by 'Add Thrower' to add throwers that "
-        + "the OmniHandler will fire of when the previously selected event occurs.\n"
-        + "When done adding throwers, select 'Next' to proceed.";
+    String help_msg = this.getResources().getString(R.string.help_actions);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));
