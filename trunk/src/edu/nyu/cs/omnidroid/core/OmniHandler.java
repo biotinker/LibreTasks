@@ -1,8 +1,8 @@
 package edu.nyu.cs.omnidroid.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
-// TODO (acase): Replace the HashMap used in UGParser with this
+import java.util.List;
 
 /**
  * <code>OmniHandler</code>s provide the mapping and configuration that OmniDroid uses to connect
@@ -11,46 +11,66 @@ import java.util.HashMap;
  * @author acase
  */
 public class OmniHandler {
-  public static final String KEY_FilterType = "FilterType";
-  public static final String KEY_FilterData = "FilterData";
-  public static final String KEY_ActionApp = "ActionApp";
-  public static final String KEY_ActionName = "ActionName";
-  public static final String KEY_ActionData = "ActionData";
+  // Strings that are stored in Config Files
+  public static final String KEY_EVENT_APP = "EventApp";
+  public static final String KEY_EVENT_TYPE = "EventType";
+  public static final String KEY_FILTER_TYPE = "FilterType";
+  public static final String KEY_FILTER_DATA = "FilterData";
+  public static final String KEY_ACTION_APP = "ActionApp";
+  public static final String KEY_ACTION_TYPE = "ActionType";
+  public static final String KEY_ACTION_DATA1 = "ActionData1";
+  public static final String KEY_ACTION_DATA2 = "ActionData2";
 
   // One per OmniHandler
   private boolean isEnabled = true;
-  private String instanceName = "";
+  private String omniHandlerName = "";
   private String eventApp = "";
-  private String eventName = "";
+  private String eventType = "";
 
   // Multiple per OmniHandler
-  private HashMap<String, String> filterType;
-  private HashMap<String, String> filterData;
-  private HashMap<String, String> actionApp;
-  private HashMap<String, String> actionName;
-  private HashMap<String, String> actionData;
+  private List<String> filterType;
+  private List<String> filterData;
+  private List<String> actionApp;
+  private List<String> actionType;
+  private List<String> actionData;
 
   public OmniHandler() {
-    // TODO: Initialize
+    filterType = new ArrayList<String>();
+    filterData = new ArrayList<String>();
+    actionApp = new ArrayList<String>();
+    actionType = new ArrayList<String>();
+    actionData = new ArrayList<String>();
   }
 
   public OmniHandler(OmniHandler oh) {
-    // TODO: Copy Constructor
+    isEnabled = oh.isEnabled;
+    omniHandlerName = oh.omniHandlerName;
+    eventApp = oh.eventApp;
+    eventType = oh.eventType;
+    filterType = oh.filterType;
+    filterData = oh.filterData;
+    actionApp = oh.actionApp;
+    actionType = oh.actionType;
+    actionData = oh.actionData;
   }
 
-  public void setOmniHandler(String m_isEnabled, String m_instanceName, String m_eventApp,
-      String m_eventName, HashMap<String, String> m_filterType,
-      HashMap<String, String> m_filterData, HashMap<String, String> m_actionApp,
-      HashMap<String, String> m_actionName, HashMap<String, String> m_actionData) {
-    // TODO: Initialize
+  public OmniHandler(HashMap<String,String> hm) {
+    // TODO (acase): Replace the HashMap used in UGParser with this
   }
 
-  public void setInstance(String s) {
-    instanceName = s;
+  /**
+   * @param name
+   *          set the name for this omniHandler
+   */
+  public void setName(String name) {
+    omniHandlerName = name;
   }
 
-  public String getInstance() {
-    return instanceName;
+  /**
+   * @return the name for this omnihandler
+   */
+  public String getName() {
+    return omniHandlerName;
   }
 
   /**
@@ -87,90 +107,89 @@ public class OmniHandler {
    * @param eventName
    *          the eventName to set
    */
-  public void setEventName(String eventName) {
-    this.eventName = eventName;
+  public void setEventType(String eventType) {
+    this.eventType = eventType;
   }
 
   /**
    * @return the eventName
    */
-  public String getEventName() {
-    return eventName;
+  public String getEventType() {
+    return eventType;
   }
 
   /**
    * @param filterType
    *          the filterType to set
    */
-  public void setFilterType(HashMap<String, String> filterType) {
-    this.filterType = filterType;
+  public void setFilterType(int location, String filterType) {
+    this.filterType.set(location, filterType);
   }
 
   /**
    * @return the filterType
    */
-  public HashMap<String, String> getFilterType() {
-    return filterType;
+  public String getFilterType(int location) {
+    return filterType.get(location);
   }
 
   /**
    * @param filterData
    *          the filterData to set
    */
-  public void setFilterData(HashMap<String, String> filterData) {
-    this.filterData = filterData;
+  public void setFilterData(int location, String filterData) {
+    this.filterData.set(location, filterData);
   }
 
   /**
    * @return the filterData
    */
-  public HashMap<String, String> getFilterData() {
-    return filterData;
+  public String getFilterData(int location) {
+    return filterData.get(location);
   }
 
   /**
    * @param actionApp
    *          the actionApp to set
    */
-  public void setActionApp(HashMap<String, String> actionApp) {
-    this.actionApp = actionApp;
+  public void setActionApp(int location, String actionApp) {
+    this.actionApp.set(location, actionApp);
   }
 
   /**
    * @return the actionApp
    */
-  public HashMap<String, String> getActionApp() {
-    return actionApp;
+  public String getActionApp(int location) {
+    return actionApp.get(location);
   }
 
   /**
    * @param actionName
    *          the actionName to set
    */
-  public void setActionName(HashMap<String, String> actionName) {
-    this.actionName = actionName;
+  public void setActionType(int location, String actionType) {
+   this.actionType.set(location, actionType);
   }
 
   /**
    * @return the actionName
    */
-  public HashMap<String, String> getActionName() {
-    return actionName;
+  public String getActionType(int location) {
+    return actionType.get(location);
   }
 
   /**
    * @param actionData
    *          the actionData to set
    */
-  public void setActionData(HashMap<String, String> actionData) {
-    this.actionData = actionData;
+  public void setActionData(int location, String actionData) {
+    this.actionData.set(location, actionData);
   }
 
   /**
    * @return the actionData
    */
-  public HashMap<String, String> getActionData() {
-    return actionData;
+  public String getActionData(int location) {
+    return actionData.get(location);
   }
-
 }
