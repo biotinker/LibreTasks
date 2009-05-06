@@ -7,7 +7,7 @@
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
 
-		<!--  We need to start our service on bootup -->
+		<!--  We need to start our service on boot-up -->
 		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	    <receiver android:name=".bkgservice.Starter">
             <intent-filter>
@@ -47,7 +47,7 @@
 		<!--  Activity used to by the event catcher to determine
 		      what application's actions to catch -->
         <activity android:name=".ui.Event"
-                  android:label="@string/event_catcher_title">
+                  android:label="@string/event_title">
 		</activity>
 
 		<!--  Activity used to setup filters for OmniHandlers -->
@@ -68,49 +68,47 @@
 		<!--  Activity used to by the event catcher to determine
 		      what actions to catch for a given application -->
         <activity android:name=".ui.EventType"
-                  android:label="@string/event_catcher_actions_title">
+                  android:label="@string/event_type_title">
 		</activity>
 
 		<!--  Activity used to by the event catcher to determine
 		      what data to provide to the application thrown -->
         <activity android:name=".ui.ActionData"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/action_data_title">
 		</activity>
 
 		<!--   -->
         <activity android:name=".ui.Actions"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/actions_title">
 		</activity>
 
 		<!--   -->
         <activity android:name=".ui.ActionAdd"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/action_add_title">
 		</activity>
 
 		<!--   -->
         <activity android:name=".ui.ActionType"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/action_type_title">
 		</activity>
 
 		<!--   -->
         <activity android:name=".ui.ActionData"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/action_data_title">
 		</activity>
 
 		<!--   -->
         <activity android:name=".ui.ActionDatumAdd"
-                  android:label="@string/action_thrower_data">
+                  android:label="@string/action_datum_add_title">
 		</activity>
 
 		<!--  Activity used to list all the phone application packages -->
-        <activity android:name=".ui.PackageLister"
+        <activity android:name=".tests.PackageLister"
                   android:label="@string/package_lister">
 		</activity>
 		
 		<!--  The activity that throws actions to our applications -->
-		<activity android:name=".core.DummyActivity"
-                  android:label="@string/dummy_activity">
-		</activity>
+		<activity android:name=".core.DummyActivity"></activity>
 
 		<!--  Service/receiver that runs to catch events -->        
 		<service android:name=".bkgservice.BRService" />
@@ -126,18 +124,7 @@
          android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
 
 		<!-- Test our service -->
-        <activity android:name=".tests.TestService"
-                  android:label="@string/service_name">
-        </activity>
-
-		<!-- Test fancy list -->
-        <activity android:name=".tests.CheckListViewDemo"
-                  android:label="@string/overview_title">
-        </activity>
-
-		<!-- Test fancy list -->
-        <activity android:name=".tests.CheckableList"
-                  android:label="@string/overview_title">
+        <activity android:name=".tests.TestService">
         </activity>
 
         <!-- Test the CP -->

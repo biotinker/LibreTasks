@@ -110,7 +110,9 @@ public class Event extends ListActivity {
   private void help() {
     Builder help = new AlertDialog.Builder(this);
     // TODO(acase): Move to some kind of resource
-    String help_msg = "Select the application whose events you want to catch using this OmniHandler.";
+    String help_msg = this.getResources().getString(R.string.help_event_intro) + "\n<br/>"
+      + "Select the name of the application whose events you want to catch using this "
+      + "OmniHandler.";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

@@ -1,11 +1,10 @@
-/**
- * 
- */
 package edu.nyu.cs.omnidroid.ui;
 
 /**
- * @author pcsupprt
- *
+ * This class simply stores some constants that are used between all the UI classes
+ * 
+ * @author acase
+ * 
  */
 public interface Constants {
   // Activity Request Codes
@@ -22,7 +21,6 @@ public interface Constants {
   final int RESULT_DEL_DATUM = 11;
   final int RESULT_EDIT_DATUM = 12;
   final int RESULT_EDIT_SETTINGS = 13;
-  
 
   // Request Result Values
   final int RESULT_SUCCESS = 1;

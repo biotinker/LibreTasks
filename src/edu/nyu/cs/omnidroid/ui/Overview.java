@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.OmniHandler;
 import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
@@ -62,8 +63,8 @@ public class Overview extends ListActivity {
   }
 
   /**
-   * Update the list of OmniHandlers as well as any other things that may
-   * need to get updated after changes occur.
+   * Update the list of OmniHandlers as well as any other things that may need to get updated after
+   * changes occur.
    */
   private void update() {
     // Get a list of our current OmniHandlers
@@ -74,23 +75,35 @@ public class Overview extends ListActivity {
     // Add current OmniHandlers to our list
     for (HashMap<String, String> hm : userConfigRecords) {
       items.add(hm.get((String) UGParser.KEY_INSTANCE_NAME));
+      
     }
 
-    //ListView clv = new CheckedListView();
-    //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-    //    android.R.layout.simple_list_item_1, items);
+    // ListView clv = new CheckedListView();
+    // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+    // android.R.layout.simple_list_item_1, items);
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
         android.R.layout.simple_list_item_multiple_choice, items);
 
     final ListView lv = getListView();
-    
-    //ListView lv = (ListView) findViewById(R.id.checkable_list);
-    //lv.setAdapter(arrayAdapter);
+
+    // ListView lv = (ListView) findViewById(R.id.checkable_list);
+    // lv.setAdapter(arrayAdapter);
     setListAdapter(arrayAdapter);
     registerForContextMenu(lv);
     lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     lv.setItemsCanFocus(false);
 
+    // Update checkboxes
+    for (String omniHandlerName : items) {
+      HashMap<String, String> s = ug.readRecord(omniHandlerName);
+      String enabled = s.get(UGParser.KEY_ENABLE_INSTANCE);
+      if (enabled.compareToIgnoreCase(UGParser.TRUE) == 0) {
+        lv.setItemChecked(items.indexOf(omniHandlerName), true);
+      } else {
+        lv.setItemChecked(items.indexOf(omniHandlerName), false);
+      }
+    }
+    
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
       welcome();
@@ -99,6 +112,7 @@ public class Overview extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onDestroy()
    */
   public void onDestroy() {
@@ -114,7 +128,7 @@ public class Overview extends ListActivity {
    */
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    menu.add(0, MENU_EDIT, 0, R.string.edit);
+    //menu.add(0, MENU_EDIT, 0, R.string.edit);
     menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
@@ -137,6 +151,7 @@ public class Overview extends ListActivity {
       return super.onContextItemSelected(item);
     }
   }
+
   /*
    * (non-Javadoc)
    * 
@@ -170,21 +185,24 @@ public class Overview extends ListActivity {
    */
   private void deleteHandler(long id) {
     // FIXME (acase): Delete from CP
+    String instanceName = (String) this.getListAdapter().getItem((int) id);
+    HashMap<String,String> instance = ug.readRecord(instanceName);
+
     // Delete from User Config
-    String instance = (String) this.getListAdapter().getItem((int) id);
     ug.deleteRecord(instance);
     update();
-    // Object data = getIntent().getData();
-    // Button selected = (Button) view;
-    // ug.deleteRecord(selected.getText());
-    Toast.makeText(this.getBaseContext(), "Delete OmniHandler Selected", 5).show();
+    Toast.makeText(this.getBaseContext(), "Deleted " + instanceName, Toast.LENGTH_LONG).show();
   }
 
   /**
-   * @param l
+   * @param id
    *          of the menu item
    */
-  private void editHandler(long l) {
+  private void editHandler(long id) {
+    //String instanceName = (String) this.getListAdapter().getItem((int) id);
+    //HashMap<String,String> instance = ug.readRecord(instanceName);
+    //OmniHandler oh = new OmniHandler(instance);
+    
     // TODO (acase): Call next activity
     Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
   }
@@ -281,9 +299,10 @@ public class Overview extends ListActivity {
     // TODO(acase): Move to some kind of resource
     // String welcome_msg = this.getResources().getString(R.string.welcome_overview);
     String welcome_msg = "OmniDroid provides a way to automate tasks on your device by "
-        + "giving you an interface to customize how applications interact "
-        + "with eachother.\n<br/>" + "To get started, add a new OmniHandler from the Menu.\n<br/>"
-        + "For more information select \"Help\" from the Menu\n<br/>";
+        + "giving you an interface to customize and automate how applications interact "
+        + "with each other.\n<br/>"
+        + "<b>To get started, select <i>Add OmniHandler</i> from the <i>Menu</i></b>.\n<br/>"
+        + "For more information select <i>Help</i> from the <i>Menu</i>.";
     welcome.setTitle(R.string.welcome);
     welcome.setIcon(R.drawable.icon);
     welcome.setMessage(Html.fromHtml(welcome_msg));
@@ -302,24 +321,27 @@ public class Overview extends ListActivity {
     // TODO(acase): Move to some kind of resource
     // String help_msg = this.getResources().getString(R.string.help_overview);
     String help_msg = "OmniDroid provides a set of OmniHandlers that "
-        + "allow you to customize how applications interact "
-        + "with eachother.\n<br/>"
+        + "allow you to customize and automate how applications interact with each other.\n<br/>"
         + "This page provides a list of OmniHandlers that are "
-        + "saved and a checkbox to enable/disable them.\n<br/>"
+        + "stored in OmniDroid and a checkbox to enable/disable them individually.\n<br/>"
         + "Possible Actions:\n<br/>"
-        + "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the Add option from the Menu.\n<br/>"
+        + "&nbsp;&nbsp;&nbsp;Add an OmniHandler by selecting the <i>Add OmniHandler</i> "
+        + "option from the <i>Menu</i>.\n<br/>"
         + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting "
         + "the Delete option.\n<br/>"
+        //+ "&nbsp;&nbsp;&nbsp;Edit an OmniHandler by long-clicking it and selecting "
+        //+ "the Edit option.\n<br/>"
+        + "&nbsp;&nbsp;&nbsp;Enable/Disable an OmniHandler by selecting its checkbox.\n<br/>"
         + "For more help, see our webpage: "
-        + "<a href=\"http://omni-droid.com/help\">http://omni-droid.com/help</a>\n<br/>";
+        + "&nbsp;&nbsp;&nbsp;<a href=\"http://omni-droid.com/help\">http://omni-droid.com/help</a>\n<br/>";
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     // TODO(acase): Link this to the webbrowser
-    //Spanned spanned = Html.fromHtml(help_msg);
-    //spanned.toString()
-    //linked = Linkify.addLinks(spanned, Linkify.WEB_URLS);
-    //help.setMessage(Linkify.addLinks(Spannable(Html.fromHtml(help_msg)),Linkify.WEB_URLS));
-    //help.setMessage(Linkify.addLinks(help_msg, Linkify.WEB_URLS));
+    // Spanned spanned = Html.fromHtml(help_msg);
+    // spanned.toString()
+    // linked = Linkify.addLinks(spanned, Linkify.WEB_URLS);
+    // help.setMessage(Linkify.addLinks(Spannable(Html.fromHtml(help_msg)),Linkify.WEB_URLS));
+    // help.setMessage(Linkify.addLinks(help_msg, Linkify.WEB_URLS));
     help.setMessage(Html.fromHtml(help_msg));
     help.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
@@ -333,11 +355,9 @@ public class Overview extends ListActivity {
    */
   private void about() {
     Builder about = new AlertDialog.Builder(this);
+
     // TODO(acase): Move to some kind of resource
-    // String about_msg = this.getResources().getString(R.string.help_overview);
-    // TODO(acase): Display version information
     String about_msg = "OmniDroid is brought to you in part by the letter G and the number 1.\n<br/>"
-        + "License:\n<br/>"
         + "Hacking Contributions:<br/>"
         + "&nbsp;&nbsp;&nbsp;Andrew Case<br/>"
         + "&nbsp;&nbsp;&nbsp;Sucharita Gaat<br/>"
@@ -346,9 +366,14 @@ public class Overview extends ListActivity {
         + "\n"
         + "Donations from:<br/>"
         + "&nbsp;&nbsp;&nbsp;Google Inc.<br/>"
-        + "&nbsp;&nbsp;&nbsp;New York University\n<br/>"
+        + "&nbsp;&nbsp;&nbsp;New York University<br/>"
+        + "\n"
+        + "License: Apache License (2.0)\n<br/>"
         + "Website: <a href=\"http://omni-droid.com\">http://omni-droid.com</a><br/>";
-    about.setTitle(R.string.about);
+    String title = this.getResources().getString(R.string.about)
+        + " " + this.getResources().getString(R.string.app_name)
+        + " v" + this.getResources().getString(R.string.version);
+    about.setTitle(title);
     about.setIcon(R.drawable.icon);
     about.setMessage(Html.fromHtml(about_msg));
     about.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
@@ -356,35 +381,5 @@ public class Overview extends ListActivity {
       }
     });
     about.show();
-  }
-
-  /*
-   * (non-Javadoc) Add OmniHandler to OmniDroid if appropriate
-   * 
-   * @see android.view.View.OnClickListener#onClick(android.view.View)
-   */
-  public void onClick(View v) {
-    Log.d(this.getLocalClassName(), "Classname of v=" + v.getClass().getName());
-    // if (v.getClass().getName() == CheckBox.class.getName()) {
-    // Handle "Enable" button clicked
-    String instanceName = (String) v.getTag();
-    CheckBox cb = (CheckBox) v;
-    HashMap<String, String> HM = ug.readRecord(instanceName);
-    if (cb.isChecked()) {
-      Toast.makeText(this.getBaseContext(), "Enabling " + instanceName, 5).show();
-      HM.put(UGParser.KEY_ENABLE_INSTANCE, "true");
-    } else {
-      Toast.makeText(this.getBaseContext(), "Disabling " + instanceName, 5).show();
-      HM.put(UGParser.KEY_ENABLE_INSTANCE, "false");
-    }
-    ug.updateRecord(HM);
-
-    // Restart the service
-    Intent i = new Intent();
-    i.setAction("OmniRestart");
-    sendBroadcast(i);
-    // } else if (v.getClass().getName() == Button.class.getName()) {
-    // TODO (acase): Handle "Edit" button clicked
-    // }
   }
 }

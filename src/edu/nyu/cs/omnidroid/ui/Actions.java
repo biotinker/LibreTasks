@@ -73,12 +73,12 @@ public class Actions extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.actions);
-    throwerListView = (ListView) findViewById(R.id.throwers_list);
+    throwerListView = (ListView) findViewById(R.id.actions_list);
 
     // Present the save button
-    Button save = (Button) findViewById(R.id.throwers_save);
+    Button save = (Button) findViewById(R.id.actions_save);
     save.setOnClickListener(this);
-    Button add = (Button) findViewById(R.id.throwers_add);
+    Button add = (Button) findViewById(R.id.actions_add);
     add.setOnClickListener(this);
 
     // See what application we want to handle events for from the
@@ -106,7 +106,7 @@ public class Actions extends Activity implements OnClickListener {
 
     // TODO(acase): Allow more than MAX_NUM_DATA
     // Disable the add button if we've reached the maximum number of thrower apps
-    Button add = (Button) findViewById(R.id.throwers_add);
+    Button add = (Button) findViewById(R.id.actions_add);
     if (throwerList.size() < MAX_NUM_THROWERS) {
       add.setEnabled(true);
     } else {
@@ -114,7 +114,7 @@ public class Actions extends Activity implements OnClickListener {
     }
 
     // Disable the save button if haven't added any throwers yet
-    Button save = (Button) findViewById(R.id.throwers_save);
+    Button save = (Button) findViewById(R.id.actions_save);
     if (throwerList.size() > 0 ) {
       save.setEnabled(true);
     } else {
@@ -273,21 +273,16 @@ public class Actions extends Activity implements OnClickListener {
   }
 
   /*
-   * (non-Javadoc)
-   * 
-   * @see android.view.View.OnClickListener#onClick(android.view.View)
-   */
-  /*
    * (non-Javadoc) Add OmniHandler to OmniDroid if appropriate
    * 
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {
     switch (v.getId()) {
-    case R.id.throwers_add:
+    case R.id.actions_add:
       addThrower();
       break;
-    case R.id.throwers_save:
+    case R.id.actions_save:
       saveDialog();
       break;
     }
@@ -326,10 +321,6 @@ public class Actions extends Activity implements OnClickListener {
     // Add OmniHandler to OmniDroid
     if (omniHandlerName.length() < 1) {
       Toast.makeText(getBaseContext(), R.string.missing_name, Toast.LENGTH_LONG).show();
-      return;
-    }
-    if (throwerApp == null) {
-      Toast.makeText(getBaseContext(), R.string.missing_thrower, Toast.LENGTH_LONG).show();
       return;
     }
 

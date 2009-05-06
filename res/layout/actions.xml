@@ -3,12 +3,12 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<ListView android:id="@+id/throwers_list" android:layout_width="fill_parent"
+	<ListView android:id="@+id/actions_list" android:layout_width="fill_parent"
 		android:layout_weight="1" android:layout_height="fill_parent" />
-	<Button android:id="@+id/throwers_add" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/add_thrower" 
+	<Button android:id="@+id/actions_add" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/add_action" 
 		android:layout_weight="0" />
-	<Button android:id="@+id/throwers_save" android:layout_width="fill_parent"
+	<Button android:id="@+id/actions_save" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/save" 
 		android:layout_weight="0" />
 
