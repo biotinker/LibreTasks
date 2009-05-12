@@ -10,7 +10,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * @author Rajiv
+ * This receiver catches the intent thrown by the OmniDroid Application.
+ * 
+ * @author Rajiv Sharma
  * 
  */
 
