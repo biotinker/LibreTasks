@@ -1,5 +1,6 @@
 /**
- * 
+ * Catches the SMS_SEND intent broadcasted by OmniDroid.
+ * Starts the SMSCatcherActivity. 
  */
 package edu.nyu.cs.omnidroid.external.catcherapp;
 
@@ -21,7 +22,6 @@ public class SMSCatcher extends BroadcastReceiver {
     this.context = context;
     Toast.makeText(context, intent.getAction(), 5).show();
     if (intent.getAction().contains("SMS_SEND")) {
-      // Bundle bundle = intent.getExtras();
       try{
     	  Toast.makeText(context, "Caught!", Toast.LENGTH_LONG).show();
       intent.setClass(context, edu.nyu.cs.omnidroid.external.catcherapp.SMSCatcherActivity.class);
