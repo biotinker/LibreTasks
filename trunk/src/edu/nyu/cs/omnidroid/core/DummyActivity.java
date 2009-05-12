@@ -3,7 +3,6 @@ package edu.nyu.cs.omnidroid.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -17,13 +16,22 @@ import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
-
-// TODO: Please add Javadocs and remove string instance constants.
+/**
+ * 
+ * @author Sucharita
+ *
+ */
+/**
+ * This class is the heart of OmniDroid. It picks up the intent received by
+ * the Broadcast Receiver and picks up relevant data from the User Config File.
+ * It then matches it with the data fetched by querying the content provider of
+ * the application that broadcasted the intent, and if there is a match it 
+ * throws the corresponding intent.
+ */
 public class DummyActivity extends Activity {
 
   private String uri;
   Intent intent;
-  // Activity a;
   String filterdata = null;
   String filtertype = null;
   String uridata = null;
@@ -38,7 +46,6 @@ public class DummyActivity extends Activity {
     this.intent = getIntent();
     if (intent.getAction().contains("SMS_RECEIVED")) {
       String id = null;
-
       this.uri = "content://sms/inbox";
       intentAction = "SMS_RECEIVED";
       StringBuilder sb = new StringBuilder(uri);
@@ -64,9 +71,7 @@ public class DummyActivity extends Activity {
   }
 
   public String getURI(Intent intent1) {
-    /*
-     * bundle=intent.getExtras(); Set<String> keys = bundle.keySet();
-     */
+   
     Bundle b = intent1.getExtras();
     Object c = b.get("uri");
     String uri = c.toString();
@@ -78,7 +83,6 @@ public class DummyActivity extends Activity {
     UGParser ug = new UGParser(getApplicationContext());
 
     ArrayList<HashMap<String, String>> recs = ug.readbyEventName(intentAction);
-    // ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
     Iterator<HashMap<String, String>> i = recs.iterator();
     while (i.hasNext()) {
       HashMap<String, String> HM1 = i.next();
@@ -103,8 +107,6 @@ public class DummyActivity extends Activity {
           // s_ph_no etc. and not the actual URI.
           }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
           }
-        
-        // boolean val=checkFilter(uri,filtertype,filterdata);
         checkFilter(uri, filtertype, filterdata, actionapp);
         
         
@@ -205,16 +207,12 @@ return cnt;
   
   
   
-
+//Broadcasts the intent corresponding to the actiondata in the UserConfig file
   public void sendIntent(String actiondata1) {
     Intent send_intent = new Intent();
     send_intent.setAction(actionname);
     send_intent.putExtra("uri", uridata);
     send_intent.putExtra("uri2", uridataa2);
-    // sendBroadcast(send_intent);
-    // PackageManager pm = this.getPackageManager();
-    // try {
-    // PackageInfo pi = pm.getPackageInfo(actiondata1, 0);
     AGParser ag = new AGParser(getApplicationContext());
     String pkgname = ag.readPkgName(actiondata1);
     String listener = ag.readListenerClass(actiondata1);
@@ -222,8 +220,6 @@ return cnt;
       ComponentName comp = new ComponentName(pkgname, listener);
       send_intent.setComponent(comp);
     }
-    // send_intent.setClass(this.getApplicationContext(), pi.getClass());
-    // startActivity(send_intent);
     try {
       sendBroadcast(send_intent);
     } catch(Exception e) {
@@ -231,8 +227,11 @@ return cnt;
     }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
   }
+  
+  /*matches the filter data from the UserConfig file with the last record from the
+  content provider*/
   public void checkFilter(String uri, String filtertype1, String filterdata1, String actiondata1) {
-    String[] cols = null;
+    
     String str_uri = uri;
     String[] temp = null;
     temp = str_uri.split("/");
@@ -240,30 +239,19 @@ return cnt;
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
 
-    int flag = 0;
-    // new_id=new_id-1;
-
-
     if (filterdata.equalsIgnoreCase(null) || filterdata.equalsIgnoreCase("") || intentAction.contains("PHONE_STATE"))
-
-
       sendIntent(actiondata1);
 
     else {
+    	try
+    	{
       Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
       cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-      // String id = cur.getString(cur.getColumnIndex("_id"));
-
       if (cur.moveToFirst()) {
         int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-
-        // do {
-        // new_id+=1;
-        // id-=1;
         if (new_id == id) {
-          // cur.moveToPrevious();
-
           String ft = cur.getString(cur.getColumnIndex(filtertype1));
+        
           if (filterdata1.equalsIgnoreCase(ft)) {
 
             {
@@ -291,10 +279,11 @@ return cnt;
 
         }
       }
-      // } while (cur.moveToNext());
+    }catch(Exception ex){ex.toString();}
     }
   }
 
+//Retrieve the id of the latest updated row of the content provider
   public String getLastId(String smsuri)
   {
 	  
@@ -307,9 +296,7 @@ return cnt;
 		  int lastid = Integer.parseInt(id) - 1;
 		  lastids = Integer.toString(lastid);
 	  } 
-	  return id;
-
-
+	  return lastids;
 
 }
 }
