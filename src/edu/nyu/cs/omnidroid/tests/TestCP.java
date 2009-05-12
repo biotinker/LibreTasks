@@ -14,12 +14,20 @@ import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.contprovider.CProvider;
 import edu.nyu.cs.omnidroid.core.CP;
 
+/**
+ * Activity used to test the contents of the OmniDroid Content Provider.
+ * 
+ * @author Rajiv Sharma
+ * 
+ */
 public class TestCP extends Activity {
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.test_cp2);
+    
+    //Button and text boxes displayed on the UI.
     Button Store;
     final EditText Adata;
     final EditText ID;
@@ -34,7 +42,9 @@ public class TestCP extends Activity {
     ID = (EditText) findViewById(R.id.test_cp2_id);
     GetAll = (Button) findViewById(R.id.test_cp2_getAll);
     final CProvider cp = new CProvider(this);
-   
+    
+    //Event listener for the Store button. Stores the values in the content provider
+    
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String iname = Iname.getText().toString();
@@ -60,7 +70,7 @@ public class TestCP extends Activity {
 
       }
     });
-
+    //Event listener for the Retrieve button. Gets the values associated particular ID. 
     Retrieve.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String id = ID.getText().toString();
@@ -83,7 +93,7 @@ public class TestCP extends Activity {
 
       }
     });
-
+    //Event listener for the Get All button. Toasts all the records in the content provider.
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
          // Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
