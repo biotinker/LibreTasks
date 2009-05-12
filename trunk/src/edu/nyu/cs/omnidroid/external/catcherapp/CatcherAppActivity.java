@@ -1,6 +1,12 @@
 package edu.nyu.cs.omnidroid.external.catcherapp;
 
-
+/**The Catcher Application is presently in the application itself. However it can be pulled out of the application and treated as a standalone third party application. It needs to have the following structure:
+*
+*-	A Broadcast Receiver that catches the intents broadcasted by OmniDroid. 
+*-	The Broadcast Receiver can then point to an activity that can perform any relevant operations on the intent. 
+*-	It also needs to have a mechanism that allows it to query the content provider of OmniDroid
+* 
+*/
 /**
  * Activity used to fetch data from the content provider based on the 
  * URI's received.
