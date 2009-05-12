@@ -20,6 +20,10 @@ import edu.nyu.cs.omnidroid.core.CP;
  * @author Rajiv Sharma/Sucharita Gaat
  * 
  */
+/**
+ * The SMSCatcherActivity needs to have permissions defined to read and write 
+ * SMSes in the Android Manifest file, in order to be able to send smses.
+ */
 public class SMSCatcherActivity extends Activity {
     /** Called when the activity is first created.*/ 
   
