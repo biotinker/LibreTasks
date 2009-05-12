@@ -12,12 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity used to create the UI screen for the External Event Application.
+ * 
+ * @author Rajiv Sharma
+ * 
+ */
 public class ExternalCPActivity extends Activity {
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
+ // UI buttons and text boxes
     Button Store;
     final EditText text;
     final EditText ID;
@@ -33,6 +40,7 @@ public class ExternalCPActivity extends Activity {
     Retrieve = (Button) findViewById(R.id.Retrieve);
     ID = (EditText) findViewById(R.id.ID);
     GetAll = (Button) findViewById(R.id.GetAll);
+  //Event listener for the Store button. Stores the value in the external event application content provider.
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String text1 = text.getText().toString();
@@ -63,6 +71,7 @@ public class ExternalCPActivity extends Activity {
       }
     });
 
+ // Listener for the Retrieve button. Returns a record from the content provider based on the ID.
     Retrieve.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String id = ID.getText().toString();
@@ -87,6 +96,7 @@ public class ExternalCPActivity extends Activity {
       }
     });
 
+  //Listener for the Get All button. Toasts all the records in the content provider. 
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Uri OmniURI = Uri.parse("content://com.external.cp/CP");
