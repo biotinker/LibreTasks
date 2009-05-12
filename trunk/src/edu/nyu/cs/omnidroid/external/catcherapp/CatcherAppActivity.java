@@ -1,5 +1,13 @@
 package edu.nyu.cs.omnidroid.external.catcherapp;
 
+
+/**
+ * Activity used to fetch data from the content provider based on the 
+ * URI's received.
+ * 
+ * @author Rajiv Sharma
+ * 
+ */
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,7 +40,10 @@ public class CatcherAppActivity extends Activity {
     return uri;
     
   }
-
+       /**
+        * Queries the OmniDroid Content Provider to retrieve the Action Data.
+        * @author Rajiv Sharma
+        */
    
 public void displayAction(String uri) {
   String[] cols = null;
