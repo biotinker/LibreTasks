@@ -1,0 +1,12 @@
+Directory descriptions:
+
+branches - trunk branches that aren't ready for the mainline release
+docs - presentation documents for the project
+examples - sample applications that make use of OmniDroid
+icons - source for the icon image
+sandbox - test development environment for developers
+tags - releases
+tools - tools for development including build scripts, style formatters, etc.
+trunk - OmniDroid development source
+vendor - development resources from vendors that are used in the project
+
