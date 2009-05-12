@@ -19,6 +19,16 @@ import android.util.Log;
  *  
  * @author      Rajiv Sharma
  */
+/**
+ * The external thrower app should have the following structure:
+*
+*-	A content provider of its own, which is basically a SQLite database, from which OmniDroid can pull relevant data.
+*-	A mechanism to broadcast intents
+*-	It also needs to have an application config file in a field in its content provider, which can be retrieved 
+*by OmniDroid and appended to its own Appconfig file every time a new 
+*OmniDroid-aware application is setup on the system.
+*
+ */
 
 
 
@@ -89,8 +99,6 @@ public class ExternalCP extends ContentProvider {
 
   @Override
   public Uri insert(Uri uri, ContentValues values) {
-    // TODO:: Allow UI to insert a value
-    // Link the module with Andrew's code
     long row = OmniDB.insert(DATABASE_TABLE, "", values);
     if (row > 0) {
       Uri _uri = ContentUris.withAppendedId(CONTENT_URI, row);
@@ -114,7 +122,6 @@ public class ExternalCP extends ContentProvider {
   @Override
   public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
       String sortOrder) {
-    // TODO:: Allow UI to retrieve the information
 
     SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
     sqlBuilder.setTables(DATABASE_TABLE);
