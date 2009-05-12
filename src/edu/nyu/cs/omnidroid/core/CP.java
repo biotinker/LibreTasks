@@ -18,12 +18,17 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- * @author Rajiv
+ * Class to create a content provider for the OmniDroid application.
+ * 
+ * @author Rajiv Sharma
  * 
  */
 public class CP extends ContentProvider {
+  //Content provider name.
   public static final String CP_Name = "edu.nyu.cs.omnidroid.core.maincp";
+  //Content provider location
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
+  //Content provider fields
   public static final String _ID = "_id";
   public static final String ACTION_DATA = "a_data";
   public static final String INSTANCE_NAME = "i_name";
@@ -46,11 +51,7 @@ public class CP extends ContentProvider {
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
-  /**
-   * @author Rajiv
-   *
-   */
-  private static class DatabaseHelper extends SQLiteOpenHelper {
+    private static class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context) {
       super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
