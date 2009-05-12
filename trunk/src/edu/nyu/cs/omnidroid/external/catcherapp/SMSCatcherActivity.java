@@ -13,9 +13,16 @@ import android.telephony.gsm.SmsManager;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.core.CP;
 
-
+/**
+ * Activity used to fetch data from the OmniDroid content provider based on the 
+ * URI's received from DummyActivity.
+ * 
+ * @author Rajiv Sharma/Sucharita Gaat
+ * 
+ */
 public class SMSCatcherActivity extends Activity {
     /** Called when the activity is first created.*/ 
+  
   private String uri;
   private String uri2;
   private String text;
@@ -27,15 +34,23 @@ public class SMSCatcherActivity extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.main2);
         this.intent=getIntent();
+        //First URI in the Extras.
         uri = getURI(intent);
+        //Second URI in the Extras
         uri2 = getURI2(intent);
+        //Retrieving the reply message by querying the OmniDroid Content provider.
         text= retrieveURI2(uri2.toString());
         
        displayAction(uri.toString(),text);
       // deleteSMS();
      this.finish();
   } 
-       
+  /**
+   * Gets the first URI from the extras.
+   * 
+   * @param i
+   *          - intent that started this activity
+   */
        public String getURI(Intent intent1)
   {
     Bundle b = intent1.getExtras();
@@ -44,6 +59,12 @@ public class SMSCatcherActivity extends Activity {
     return uri;
     
   }
+       /**
+        * Gets the second URI from the extras.
+        * 
+        * @param i
+        *          - intent that started this activity
+        */
        public String getURI2(Intent intent1)
        {
          Bundle b = intent1.getExtras();
@@ -51,6 +72,11 @@ public class SMSCatcherActivity extends Activity {
          String uri22=c.toString();
          return uri22;
        }
+       /**
+        * Retrieves the message out of the second URI by querying the OmniDriod Content Provider.
+        * @param uri2
+        *          - URI retrieved from the getURI2() function.
+        */
        public String retrieveURI2(String uri2) 
        {
          String[] cols = null;
@@ -85,7 +111,14 @@ public class SMSCatcherActivity extends Activity {
            }
        
        
-       
+       /**
+        * Processes the first URI. Queries the content provider and sends the text message.
+        * 
+        * @param uri
+        * @param txtmsg
+        *          - First URI from the extras
+        *          - txtmsg retrieved from the retrieveURI2() function.
+        */
        public void displayAction(String uri, String txtmsg) 
        {
     	   String[] cols = null;
@@ -126,7 +159,14 @@ public class SMSCatcherActivity extends Activity {
     	     
     	      
     	     }
-
+       /**
+        * Sends the SMS message.
+        * 
+        * @param phoneNumber
+        * @param message
+        *          - phone number where the message is to be sent
+        *          - Message to be sent
+        */
        private void sendSMS(String phoneNumber, String message) {
    	    String SENT = "SMS_SENT";
    	    String DELIVERED = "SMS_DELIVERED";
@@ -153,7 +193,11 @@ public class SMSCatcherActivity extends Activity {
    	    SmsManager sms = SmsManager.getDefault();
    	    sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
    	  }
-       
+       /**
+        * Deletes the SMS from the Inbox
+        * 
+        * 
+        */
       public void deleteSMS()
       {
     	  try
