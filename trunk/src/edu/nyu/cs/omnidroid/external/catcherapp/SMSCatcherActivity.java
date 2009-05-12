@@ -32,7 +32,6 @@ public class SMSCatcherActivity extends Activity {
   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main2);
         this.intent=getIntent();
         //First URI in the Extras.
         uri = getURI(intent);
@@ -141,11 +140,8 @@ public class SMSCatcherActivity extends Activity {
     	          if (new_id==id)
     	          {
     	            String number = cur.getString(cur.getColumnIndex(CP.ACTION_DATA));
-    	           // String txtmsg = cur.getString(cur.getColumnIndex(CP.));
     	            Toast.makeText(
-    	                getBaseContext(),
-    	                /*cur.getString(cur.getColumnIndex(CP._ID)) + ","
-    	                +*/ number, Toast.LENGTH_LONG).show();
+    	                getBaseContext(),number, Toast.LENGTH_LONG).show();
     	            try
     	            {
     	            	sendSMS(number,txtmsg);
@@ -194,7 +190,7 @@ public class SMSCatcherActivity extends Activity {
    	    sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
    	  }
        /**
-        * Deletes the SMS from the Inbox
+        * Deletes all SMSes from the Inbox
         * 
         * 
         */
