@@ -1,7 +1,4 @@
 /**
- * TODO (pradeep): Use OmniHandler as the public interface instead of Hashmap.  You
- * can do this by moving the HashMap structure inside the OmniHandler class
- * 
  * @author: Pradeep Varma
  */
 package edu.nyu.cs.omnidroid.util;
@@ -19,10 +16,7 @@ import java.util.Iterator;
 import android.content.Context;
 
 /**
- * Used to Specify the User Config schema
- * 
- * @param ParserType
- *          Specify UC for UserConfig and AC for Application Config
+ * Provides functionality to parse the User Config
  */
 public class UGParser {
   // Key strings to lookup/store data
