@@ -114,6 +114,7 @@ public class DummyActivity extends Activity {
     }
   }
 
+  //Added by Pradeep
   // Used to populate the action data at Instance time.
   private String fillURIData(String uri2, String uridata2) {
     int cnt = 1;
@@ -152,7 +153,8 @@ public class DummyActivity extends Activity {
     return uri_ret.toString();
   }
 
-
+//Added by Pradeep
+//Retrieves the Buffer Count to generate Buffer for temporarily storing Event Data
   public int getBufferCount()
   {
     int cnt=1;
@@ -180,7 +182,9 @@ public class DummyActivity extends Activity {
     }
 return cnt;
   }
-  
+
+//Added by Pradeep
+//Used to populate temporary event data(aData) in our temporary buffer(tempstr)
   public Uri populateInstance(String tempstr,String aData)
   {
    Uri uri_ret;
