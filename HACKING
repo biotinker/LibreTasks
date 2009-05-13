@@ -1,0 +1,54 @@
+                            OmniDroid - Hacking
+
+      TABLE OF CONTENTS
+
+   I. ARCHITECTURE
+     i) Application Registration
+     ii) User Setup/Configuration
+     iii) Event Handling
+   II. DEFINITIONS
+
+I. ARCHITECTURE
+
+OmniDroid presents a simple event handler system.  OmniDroid processes data on three levels: Application Registration; User Setup/Configuration; Event Handling.
+
+  i) Application Registration
+  In order for OmniDroid to handle events, it needs to have applications register with it.  This can either be a passive registration where OmniDroid has built-in support for a specific application, or active registration where an application is Omni-aware and provides the necessary information to OmniDroid.
+
+  Application registration occurs at two times.  First when OmniDroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are Omni-compatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is Omni-compatible and register it if possible.  When applications are registered with OmniDroid it populates the Application Configuration File.
+
+
+  ii) User Setup/Configuration
+  The user can customize OmniDroid by providing customized OmniHandlers and also by customizing the OmniDroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user perference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
+
+
+  iii) Event Handling
+  Event handling is probably the most complex of the processing levels.  The data flow for event handling is seen below:
+
+ ------------     ---------     --------     ---------     -----------
+| App Events |-->| Catcher |-->| Engine |-->| Thrower |-->|App Actions|
+ ------------     ---------     --------     ---------     -----------
+
+Applications cause events.  OmniDroid catches these events using a Catcher based on what events have registered with OmniDroid.  The Catcher then hands this event off the Engine.  The engine then checks to see if the event matches a given OmniHandler set in the User Configuration File.  If it does, it then gathers the data needed based on the Application Configuration File in combination with the User Configuration File and hands this data over to the Thrower part of the application.  The Thrower then sends other applications the data they need to perform the action requested by the OmniHandler.
+
+
+
+II. DEFINITIONS
+
+Omni-aware - applications which provide an OmniDroid Application Configuration
+   File for their app.
+ 
+Omni-compatibile - applications which are either Omni-aware or have built-in
+   OmniDroid support.
+
+OmniHandler - An event handler that is configured and stored for use in
+   OmniDroid.
+
+Application Configuration File - Lists of applications that are Omni-aware
+   which includes a list of events that application triggers and a list of
+   actions that application can perform along with what filters can be
+   applied for it and how to map data for each of these items.
+
+User Configuration File - List of OmniDroid global settings as well as the set
+   of OmniHandlers currently configured.
+

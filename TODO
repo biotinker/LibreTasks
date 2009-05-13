@@ -1,0 +1,25 @@
+                              OmniDroid - TODO
+
+ENGINE:
+  Off-By-One Data Error Solution:
+    1) Have a separate "SMS plug in" which understands our framework.
+    2) This plug in will generate EVENTS as required to interact with
+       OmniDroid.(ie Event containing the URI pointing to the exact record). At
+       the moment we do not get the exact URI from the SMS application; so we
+       query the last record in the CP. This causes the "off by one" bug.
+       Our suggested SMS plugin will have a "CONTENT PROVIDER OBSERVER" with
+       generates OmniDroid events only when the SMS CP is updated with the
+       required record.
+    3) These plug ins could be provided for all important applications; till
+       they interact in the way we would like them to. ie. Once applications
+       adapt to our framework we can get rid of the plugins.
+    4) These plug ins could have their own CP if there is no CP for the
+       original application.
+
+UI:
+  Feature request: Edit OmniHandler
+  Feature request: Edit Filter
+  Feature request: Edit Action
+  Feature request: Allow multiple filters
+  Feature request: Allow multiple actions
+
