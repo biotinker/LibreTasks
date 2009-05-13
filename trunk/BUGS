@@ -2,9 +2,9 @@
 
 UI:
 * Deleting one OmniHandler sometimes removes them all
-* Flipping the phone closed on the filter/data pages erases any currently added filters
+* Flipping the phone closed on the filter/data pages erases any currently
+added filters
 
 ENGINE:
 * Last entry in CP is sent pulled from event data instead of current entry
-
 
