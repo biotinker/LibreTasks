@@ -22,4 +22,13 @@ UI:
   Feature request: Edit Action
   Feature request: Allow multiple filters
   Feature request: Allow multiple actions
+  
+Third Party Applications:
+    To join the OmniDroid pool of applications, third party applications need
+    to provide their application configuration file in their APP_COFIG_SPACE.
+    OmniDroid functionality: Need to provide functionality in OmniDroid to parse
+    the APP_CONFIG_SPACE of all applications on the phone and add their configuration
+    to the OMNIDORID application configuration file; to enable OmniDroid to understand 
+    their behavior.
+    
 
