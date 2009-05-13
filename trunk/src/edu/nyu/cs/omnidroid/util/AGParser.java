@@ -1,3 +1,7 @@
+/*
+ * TODO: Use OmniHandler as the public interface instead of Hashmap.  You
+ * can do this by moving the HashMap structure inside the OmniHandler class
+ */
 package edu.nyu.cs.omnidroid.util;
 
 import java.io.BufferedInputStream;
