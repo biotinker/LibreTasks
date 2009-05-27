@@ -64,7 +64,9 @@ III. DEVELOPING OMNIDROID
     Contributing Code:
         All code must comply with the "Code Requirements/Style Guidelines".
         Patches should be submitted to the mailing list in unified diff format.
-        
+
+    Architecture and Hacking Documentation:
+        See the HACKING file for more information.
 
 
 IV. HELP
