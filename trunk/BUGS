@@ -8,3 +8,11 @@ added filters
 ENGINE:
 * Last entry in CP is sent pulled from event data instead of current entry
 
+Broadcast Receiver Service:
+* The Broadcast Receiver Service restarts randomly. Perhaps need to research the OnBind method of the Service.
+
+URI passing:
+* Unable to pass URI in the data field of the intent. Currently using extras to pass URIs.
+
+OmniDroid Content Provider:
+* Need to retain the Content Provider data on Application Re-installation.
