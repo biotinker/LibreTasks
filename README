@@ -9,4 +9,4 @@ tags - releases
 tools - tools for development including build scripts, style formatters, etc.
 trunk - OmniDroid development source
 vendor - development resources from vendors that are used in the project
-
+www - static data for webpages
