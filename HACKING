@@ -6,7 +6,8 @@
      i) Application Registration
      ii) User Setup/Configuration
      iii) Event Handling
-   II. DEFINITIONS
+   II. CONFIG SPECIFICATIONS
+   III. DEFINITIONS
 
 I. ARCHITECTURE
 
@@ -56,9 +57,42 @@ Event Handling.
   Thrower part of the application.  The Thrower then sends other applications
   the data they need to perform the action requested by the OmniHandler.
 
+II. CONFIG SPECIFICATIONS
+
+Subject to change, here are the Application and User Configuration specification examples:
+
+=== Sample Plain-Text AppCfg ===
+  Application:SMS 
+  PkgName:edu.nyu.cs.omnidroid
+  ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener
+  EventName:SMS_RECEIVED,RECEIVED SMS 
+  Filters:S_Name,S_Ph_No,Text,Location 
+  EventName:SMS_SENT,SENT SMS 
+  Filters:R_Name,R_Ph_no,Text 
+  ActionName: SMS_SEND,SEND SMS 
+  URIFields:R_NAME,R_Ph_No,Text 
+  ContentMap: 
+  S_Name,SENDER NAME,STRING 
+  R_Name,RECEIVER NAME,STRING 
+  S_Ph_No,SENDER PHONE NUMBER,INT 
+  R_Ph_No,RECEIVER PHONE NUMBER,INT 
+  Text,Text,STRING 
+  Location,SMS Number,INT
+
+=== Sample Plain-Text UsrCfg ===
+  Enabled:True
+  InstanceName:SMS_Email
+  EventName:SMS_RECEIVED  
+  EventApp:SMS 
+  FilterType:S_PhoneNum
+  FilterData:212-555-1234
+  AvtionName:SEND_EMAIL
+  ActionApp:EMAIL /*One Event will have only one action. Make new record for another action.*/
+  ActionData:ContentProvider_URI
+  EnableInstance:True
 
 
-II. DEFINITIONS
+III. DEFINITIONS
 
 Omni-aware - applications which provide an OmniDroid Application Configuration
    File for their app.
