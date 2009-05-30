@@ -28,7 +28,7 @@ public class TestAppConfig extends Activity {
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener");
     ag.write("EventName:Contact_Saved,Contact Saved");
-    ag.write("Filters:S_Name,S_Ph_No,Text");    
+    ag.write("Filters:S_Name,S_Ph_No,Text");
     ag.write("EventName:Contact_Updated,Contact Updated");
     ag.write("Filters:S_Name,S_Ph_no,Text");
     ag.write("ActionName:Display_Contact,Display Contact");
@@ -48,13 +48,13 @@ public class TestAppConfig extends Activity {
     ag.write("ActionName:SMS_SEND,SEND SMS");
     ag.write("URIFields:SENDER PHONE NUMBER,TEXT");
     ag.write("ContentMap:");
-    //ag.write("S_Name,SENDER NAME,STRING");
-   // ag.write("R_Name,RECEIVER NAME,STRING");
+    // ag.write("S_Name,SENDER NAME,STRING");
+    // ag.write("R_Name,RECEIVER NAME,STRING");
     ag.write("address,SENDER PHONE NUMBER,INT");
     ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
     ag.write("body,TEXT,STRING");
-   // ag.write("Location,SMS Number,INT");
-    
+    // ag.write("Location,SMS Number,INT");
+
     ag.write("Application:Calllog");
     ag.write("PkgName:edu.nyu.cs.omnidroid");
     ag.write("ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener");
@@ -65,13 +65,13 @@ public class TestAppConfig extends Activity {
     ag.write("ActionName:SMS_SEND,SEND SMS");
     ag.write("URIFields:SENDER PHONE NUMBER,TEXT");
     ag.write("ContentMap:");
-    //ag.write("S_Name,SENDER NAME,STRING");
-   // ag.write("R_Name,RECEIVER NAME,STRING");
+    // ag.write("S_Name,SENDER NAME,STRING");
+    // ag.write("R_Name,RECEIVER NAME,STRING");
     ag.write("address,SENDER PHONE NUMBER,INT");
     ag.write("r_phone_no,RECEIVER PHONE NUMBER,INT");
     ag.write("body,TEXT,STRING");
-   // ag.write("Location,SMS Number,INT");
-    
+    // ag.write("Location,SMS Number,INT");
+
     ag.write("Application:System");
     ag.write("EventName:android.intent.action.TIME_SET,TIME CHANGED");
     ag.write("EventName:android.intent.action.SCREEN_OFF,SCREEN OFF");
@@ -89,7 +89,7 @@ public class TestAppConfig extends Activity {
     ag.write("ActionName:android.intent.action.WALLPAPER_CHANGED,WALLPAPER CHANGED");
     ag.write("ActionName:android.intent.action.CAMERA_BUTTON,CAMERA CLICK");
     ag.write("ActionName:android.intent.action.REBOOT,REBOOT ");
-    
+
     Toast.makeText(getApplicationContext(), "Population Test App Config File", 5).show();
     this.finish();
 

@@ -9,7 +9,7 @@ public class OmnidroidRuntimeException extends RuntimeException {
    * Generated SerialID
    */
   private static final long serialVersionUID = -8228112559537220446L;
-  
+
   // The code for an exception instance.
   private int code;
 

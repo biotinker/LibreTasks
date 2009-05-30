@@ -26,24 +26,24 @@ public class Settings extends Activity {
 
     final ToggleButton omniabled_toggle = (ToggleButton) findViewById(R.id.settings_omniabled);
     omniabled_toggle.setOnClickListener(new OnClickListener() {
-        public void onClick(View v) {
-            if (omniabled_toggle.isChecked()) {
-            	//FIXME(acase): Enable OmniDroid
-            } else {
-            	//FIXME(acase): Disable OmniDroid
-            }
+      public void onClick(View v) {
+        if (omniabled_toggle.isChecked()) {
+          // FIXME(acase): Enable OmniDroid
+        } else {
+          // FIXME(acase): Disable OmniDroid
         }
+      }
     });
 
     final ToggleButton on_boot_toggle = (ToggleButton) findViewById(R.id.settings_onboot);
     on_boot_toggle.setOnClickListener(new OnClickListener() {
-        public void onClick(View v) {
-            if (on_boot_toggle.isChecked()) {
-            	//FIXME(acase): Set OmniDroid to start on boot
-            } else {
-            	//FIXME(acase): Turn off OmniDroid on boot
-            }
+      public void onClick(View v) {
+        if (on_boot_toggle.isChecked()) {
+          // FIXME(acase): Set OmniDroid to start on boot
+        } else {
+          // FIXME(acase): Turn off OmniDroid on boot
         }
+      }
     });
 
   }

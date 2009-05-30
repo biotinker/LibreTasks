@@ -107,6 +107,7 @@ public class FiltersAddData extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.view.View.OnClickListener#onClick(android.view.View)
    */
   public void onClick(View v) {

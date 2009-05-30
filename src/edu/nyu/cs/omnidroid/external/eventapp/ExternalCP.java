@@ -14,13 +14,10 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- *  ExternalCP class is used to create a content provider for the 
- *  external event application.
- *  
- * @author      Rajiv Sharma
+ * ExternalCP class is used to create a content provider for the external event application.
+ * 
+ * @author Rajiv Sharma
  */
-
-
 
 public class ExternalCP extends ContentProvider {
   public static final String CP_Name = "edu.nyu.cs.omnidroid.external.eventapp.cp";

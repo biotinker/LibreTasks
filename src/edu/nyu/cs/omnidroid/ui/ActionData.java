@@ -38,7 +38,7 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
   public static String KEY_DATA1_TYPE = "Data1Type";
   public static String KEY_DATA2_TYPE = "Data2Type";
   public static int DATA_TYPE_SELECT = 1;
-  public static int DATA_TYPE_MANUAL = 2; 
+  public static int DATA_TYPE_MANUAL = 2;
 
   // Intent data passed along
   private String eventApp;
@@ -96,8 +96,8 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     minUriFields = dataFields.size();
     // Get a mapping of data from the app's content provider
     ArrayList<StringMap> contentMap = ag.readContentMap(throwerApp);
-    for (int i=0; i<dataFields.size(); i++) {
-      for (StringMap item: contentMap) {
+    for (int i = 0; i < dataFields.size(); i++) {
+      for (StringMap item : contentMap) {
         if (item.getValue().equals(dataFields.get(i))) {
           dataInputs.add(item.getValue());
         }
@@ -221,9 +221,9 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
     i.putExtra(UGParser.KEY_ACTION_TYPE, throwerName);
     i.putExtra(KEY_DATA1_TYPE, throwerData1Type);
     i.putExtra(KEY_DATA2_TYPE, throwerData2Type);
-    i.putExtra(KEY_DATA_NAME, dataInputs.get((int)id));
-    i.putExtra(KEY_DATA_ID,id);
-    if (id != 0) { 
+    i.putExtra(KEY_DATA_NAME, dataInputs.get((int) id));
+    i.putExtra(KEY_DATA_ID, id);
+    if (id != 0) {
       i.putExtra(UGParser.KEY_ACTION_DATA1, throwerData1);
     }
     if (id != 1) {
@@ -309,7 +309,9 @@ public class ActionData extends Activity implements OnClickListener, OnItemClick
 
   /*
    * (non-Javadoc)
-   * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView, android.view.View, int, long)
+   * 
+   * @see android.widget.AdapterView.OnItemClickListener#onItemClick(android.widget.AdapterView,
+   * android.view.View, int, long)
    */
   public void onItemClick(AdapterView<?> lv, View v, int position, long id) {
     editDatum(id);

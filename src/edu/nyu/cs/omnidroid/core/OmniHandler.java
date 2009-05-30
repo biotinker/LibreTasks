@@ -54,7 +54,7 @@ public class OmniHandler {
     actionData = oh.actionData;
   }
 
-  public OmniHandler(HashMap<String,String> hm) {
+  public OmniHandler(HashMap<String, String> hm) {
     // TODO (acase): Replace the HashMap used in UGParser with this
   }
 
@@ -168,7 +168,7 @@ public class OmniHandler {
    *          the actionName to set
    */
   public void setActionType(int location, String actionType) {
-   this.actionType.set(location, actionType);
+    this.actionType.set(location, actionType);
   }
 
   /**

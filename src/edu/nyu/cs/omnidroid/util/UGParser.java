@@ -153,7 +153,6 @@ public class UGParser {
       OmLogger.write(context, "Could not delete Instances");
     }
 
-
   }
 
   /**
@@ -446,17 +445,10 @@ public class UGParser {
   public int writeRecord(HashMap<String, String> HM) {
     try {
       /*
-      Iterator<String> i = Schema.iterator();
-      String key;
-      while (i.hasNext()) {
-        key = i.next();
-        if(HM.containsKey(key)) {
-          String value = HM.get(key).toString();
-          write(key, value);
-        }
-      }
-      return 1;
-*/
+       * Iterator<String> i = Schema.iterator(); String key; while (i.hasNext()) { key = i.next();
+       * if(HM.containsKey(key)) { String value = HM.get(key).toString(); write(key, value); } }
+       * return 1;
+       */
       for (String s : Schema) {
         if (HM.containsKey(s))
           write(s, HM.get(s).toString());
@@ -498,47 +490,30 @@ public class UGParser {
     ArrayList<HashMap<String, String>> allRecords = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> matchingRecords = new ArrayList<HashMap<String, String>>();
     allRecords = readRecords();
-    for (HashMap<String,String> entry : allRecords) {
+    for (HashMap<String, String> entry : allRecords) {
       if (entry.get(KEY_EVENT_TYPE).equals(eventName)) {
         matchingRecords.add(entry);
       }
     }
     return matchingRecords;
-    /*    
-    try {
-      dis.close();
-      bis.close();
-    } catch (Exception e) {
-    }
-    try {
-      openFileRead();
-      String line = "";
-
-      while ((line = dis.readLine()) != null) {
-        HashMap<String, String> HM = new HashMap<String, String>();
-        String[] parts = line.split(":", 2);
-        if (parts[0].toString().equalsIgnoreCase(KEY_INSTANCE_NAME)
-            && parts[1].toString().equalsIgnoreCase(Key)) {
-          Iterator<String> i = Schema.iterator();
-          i.next();// Ignoring Instance Name
-          String key;
-          while (i.hasNext()) {
-            key = i.next();
-            HM.put(key, line.split(":", 2)[1].toString());
-            if (!line.split(":", 2)[0].toString().equalsIgnoreCase("EnableInstance"))
-              line = dis.readLine();
-          }
-          UCRecords.add(HM);
-        }
-
-      }
-
-      return UCRecords;
-    } catch (Exception e) {
-      OmLogger.write(context, "Unable to read Line from User Config");
-      return UCRecords;
-    }
-*/
+    /*
+     * try { dis.close(); bis.close(); } catch (Exception e) { } try { openFileRead(); String line =
+     * "";
+     * 
+     * while ((line = dis.readLine()) != null) { HashMap<String, String> HM = new HashMap<String,
+     * String>(); String[] parts = line.split(":", 2); if
+     * (parts[0].toString().equalsIgnoreCase(KEY_INSTANCE_NAME) &&
+     * parts[1].toString().equalsIgnoreCase(Key)) { Iterator<String> i = Schema.iterator();
+     * i.next();// Ignoring Instance Name String key; while (i.hasNext()) { key = i.next();
+     * HM.put(key, line.split(":", 2)[1].toString()); if (!line.split(":",
+     * 2)[0].toString().equalsIgnoreCase("EnableInstance")) line = dis.readLine(); }
+     * UCRecords.add(HM); }
+     * 
+     * }
+     * 
+     * return UCRecords; } catch (Exception e) { OmLogger.write(context,
+     * "Unable to read Line from User Config"); return UCRecords; }
+     */
   }
 
   /**

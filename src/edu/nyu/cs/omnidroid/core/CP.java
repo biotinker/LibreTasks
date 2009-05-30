@@ -24,15 +24,15 @@ import android.util.Log;
  * 
  */
 public class CP extends ContentProvider {
-  //Content provider name.
+  // Content provider name.
   public static final String CP_Name = "edu.nyu.cs.omnidroid.core.maincp";
-  //Content provider location
+  // Content provider location
   public static final Uri CONTENT_URI = Uri.parse("content://" + CP_Name + "/CP");
-  //Content provider fields
+  // Content provider fields
   public static final String _ID = "_id";
   public static final String ACTION_DATA = "a_data";
   public static final String INSTANCE_NAME = "i_name";
-  
+
   static UGParser ug;
   private static final int DESC = 1;
   private static final int DESC_ID = 2;
@@ -51,24 +51,29 @@ public class CP extends ContentProvider {
   private static final String DATABASE_CREATE = "create table " + DATABASE_TABLE
       + " (_id integer primary key autoincrement, " + "i_name text, a_data text);";
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
+  private static class DatabaseHelper extends SQLiteOpenHelper {
     DatabaseHelper(Context context) {
       super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /*
      * (non-Javadoc)
-     * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
+     * 
+     * @see
+     * android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-      //db.setVersion(DATABASE_VERSION);
+      // db.setVersion(DATABASE_VERSION);
       db.execSQL(DATABASE_CREATE);
     }
 
     /*
      * (non-Javadoc)
-     * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase, int, int)
+     * 
+     * @see
+     * android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase,
+     * int, int)
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -84,16 +89,19 @@ public class CP extends ContentProvider {
 
   /*
    * (non-Javadoc)
-   * @see android.content.ContentProvider#delete(android.net.Uri, java.lang.String, java.lang.String[])
+   * 
+   * @see android.content.ContentProvider#delete(android.net.Uri, java.lang.String,
+   * java.lang.String[])
    */
   @Override
   public int delete(Uri uri, String selection, String[] selectionArgs) {
     // TODO: Allow delete of content
     return 0;
   }
-  
+
   /*
    * (non-Javadoc)
+   * 
    * @see android.content.ContentProvider#getType(android.net.Uri)
    */
   @Override
@@ -111,6 +119,7 @@ public class CP extends ContentProvider {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.content.ContentProvider#insert(android.net.Uri, android.content.ContentValues)
    */
   @Override
@@ -128,6 +137,7 @@ public class CP extends ContentProvider {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.content.ContentProvider#onCreate()
    */
   @Override
@@ -135,8 +145,8 @@ public class CP extends ContentProvider {
     // Get our application context
     Context context = getContext();
 
-    // Set this so the DB can access the UserConfig if necessary 
-    ug=new UGParser(context);
+    // Set this so the DB can access the UserConfig if necessary
+    ug = new UGParser(context);
 
     // Connect to the DB
     DatabaseHelper dbHelper = new DatabaseHelper(context);
@@ -146,7 +156,9 @@ public class CP extends ContentProvider {
 
   /*
    * (non-Javadoc)
-   * @see android.content.ContentProvider#query(android.net.Uri, java.lang.String[], java.lang.String, java.lang.String[], java.lang.String)
+   * 
+   * @see android.content.ContentProvider#query(android.net.Uri, java.lang.String[],
+   * java.lang.String, java.lang.String[], java.lang.String)
    */
   @Override
   public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
@@ -165,7 +177,9 @@ public class CP extends ContentProvider {
 
   /*
    * (non-Javadoc)
-   * @see android.content.ContentProvider#update(android.net.Uri, android.content.ContentValues, java.lang.String, java.lang.String[])
+   * 
+   * @see android.content.ContentProvider#update(android.net.Uri, android.content.ContentValues,
+   * java.lang.String, java.lang.String[])
    */
   @Override
   public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {

@@ -70,7 +70,7 @@ public class Overview extends ListActivity {
     // Add current OmniHandlers to our list
     for (HashMap<String, String> hm : userConfigRecords) {
       items.add(hm.get((String) UGParser.KEY_INSTANCE_NAME));
-      
+
     }
 
     // ListView clv = new CheckedListView();
@@ -98,7 +98,7 @@ public class Overview extends ListActivity {
         lv.setItemChecked(items.indexOf(omniHandlerName), false);
       }
     }
-    
+
     // If we don't have any OmniHandlers, throw up our Help Dialog
     if (userConfigRecords.size() == 0) {
       welcome();
@@ -123,7 +123,7 @@ public class Overview extends ListActivity {
    */
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
-    //menu.add(0, MENU_EDIT, 0, R.string.edit);
+    // menu.add(0, MENU_EDIT, 0, R.string.edit);
     menu.add(0, MENU_DELETE, 0, R.string.del);
   }
 
@@ -181,7 +181,7 @@ public class Overview extends ListActivity {
   private void deleteHandler(long id) {
     // FIXME (acase): Delete from CP
     String instanceName = (String) this.getListAdapter().getItem((int) id);
-    HashMap<String,String> instance = ug.readRecord(instanceName);
+    HashMap<String, String> instance = ug.readRecord(instanceName);
 
     // Delete from User Config
     ug.deleteRecord(instance);
@@ -194,10 +194,10 @@ public class Overview extends ListActivity {
    *          of the menu item
    */
   private void editHandler(long id) {
-    //String instanceName = (String) this.getListAdapter().getItem((int) id);
-    //HashMap<String,String> instance = ug.readRecord(instanceName);
-    //OmniHandler oh = new OmniHandler(instance);
-    
+    // String instanceName = (String) this.getListAdapter().getItem((int) id);
+    // HashMap<String,String> instance = ug.readRecord(instanceName);
+    // OmniHandler oh = new OmniHandler(instance);
+
     // TODO (acase): Call next activity
     Toast.makeText(this.getBaseContext(), "Edit OmniHandler Selected", 5).show();
   }
@@ -324,8 +324,8 @@ public class Overview extends ListActivity {
         + "option from the <i>Menu</i>.\n<br/>"
         + "&nbsp;&nbsp;&nbsp;Delete an OmniHandler by long-clicking it and selecting "
         + "the Delete option.\n<br/>"
-        //+ "&nbsp;&nbsp;&nbsp;Edit an OmniHandler by long-clicking it and selecting "
-        //+ "the Edit option.\n<br/>"
+        // + "&nbsp;&nbsp;&nbsp;Edit an OmniHandler by long-clicking it and selecting "
+        // + "the Edit option.\n<br/>"
         + "&nbsp;&nbsp;&nbsp;Enable/Disable an OmniHandler by selecting its checkbox.\n<br/>"
         + "For more help, see our webpage: "
         + "&nbsp;&nbsp;&nbsp;<a href=\"http://omni-droid.com/help\">http://omni-droid.com/help</a>\n<br/>";
@@ -365,9 +365,9 @@ public class Overview extends ListActivity {
         + "\n"
         + "License: Apache License (2.0)\n<br/>"
         + "Website: <a href=\"http://omni-droid.com\">http://omni-droid.com</a><br/>";
-    String title = this.getResources().getString(R.string.about)
-        + " " + this.getResources().getString(R.string.app_name)
-        + " v" + this.getResources().getString(R.string.version);
+    String title = this.getResources().getString(R.string.about) + " "
+        + this.getResources().getString(R.string.app_name) + " v"
+        + this.getResources().getString(R.string.version);
     about.setTitle(title);
     about.setIcon(R.drawable.icon);
     about.setMessage(Html.fromHtml(about_msg));

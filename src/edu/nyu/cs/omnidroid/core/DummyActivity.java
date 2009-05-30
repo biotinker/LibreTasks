@@ -16,17 +16,17 @@ import edu.nyu.cs.omnidroid.util.AGParser;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
+
 /**
  * 
  * @author Sucharita
  *
  */
 /**
- * This class is the heart of OmniDroid. It picks up the intent received by
- * the Broadcast Receiver and picks up relevant data from the User Config File.
- * It then matches it with the data fetched by querying the content provider of
- * the application that broadcasted the intent, and if there is a match it 
- * throws the corresponding intent.
+ * This class is the heart of OmniDroid. It picks up the intent received by the Broadcast Receiver
+ * and picks up relevant data from the User Config File. It then matches it with the data fetched by
+ * querying the content provider of the application that broadcasted the intent, and if there is a
+ * match it throws the corresponding intent.
  */
 public class DummyActivity extends Activity {
 
@@ -39,7 +39,7 @@ public class DummyActivity extends Activity {
   String actionname = null;
   String actionapp = null;
   String intentAction = null;
-  String eventapp=null;
+  String eventapp = null;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -52,15 +52,14 @@ public class DummyActivity extends Activity {
       sb.append("/");
       sb.append(getLastId(uri));
       this.uri = sb.toString();
-    } else 
-    if(intent.getAction().contains("PHONE_STATE"))
-    {	this.uri = CallLog.Calls.CONTENT_URI.toString();
-    	intentAction = "PHONE_STATE";
-    	StringBuilder sb = new StringBuilder(uri);
-        sb.append("/");
-        sb.append(getLastId(uri));
-        this.uri = sb.toString();}
-    else{
+    } else if (intent.getAction().contains("PHONE_STATE")) {
+      this.uri = CallLog.Calls.CONTENT_URI.toString();
+      intentAction = "PHONE_STATE";
+      StringBuilder sb = new StringBuilder(uri);
+      sb.append("/");
+      sb.append(getLastId(uri));
+      this.uri = sb.toString();
+    } else {
       intentAction = intent.getAction();
       this.uri = getURI(intent);
 
@@ -71,7 +70,7 @@ public class DummyActivity extends Activity {
   }
 
   public String getURI(Intent intent1) {
-   
+
     Bundle b = intent1.getExtras();
     Object c = b.get("uri");
     String uri = c.toString();
@@ -91,34 +90,39 @@ public class DummyActivity extends Activity {
         filtertype = HM1.get(UGParser.KEY_FILTER_TYPE);
         filterdata = HM1.get(UGParser.KEY_FILTER_DATA);
         actionname = HM1.get(UGParser.KEY_ACTION_TYPE);
-        eventapp= HM1.get(UGParser.KEY_EVENT_APP);
+        eventapp = HM1.get(UGParser.KEY_EVENT_APP);
         actionapp = HM1.get(UGParser.KEY_ACTION_APP);
         uridata = HM1.get(UGParser.KEY_ACTION_DATA1);
         uridataa2 = HM1.get(UGParser.KEY_ACTION_DATA2);
         if (!uridata.contains("content://") && !uridata.equals("")) {
-          try{
-          uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields like
-          // s_ph_no etc. and not the actual URI.
-          }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
+          try {
+            uridata = fillURIData(uri, uridata);// Call fillURIData if ActionData contains fields
+                                                // like
+            // s_ph_no etc. and not the actual URI.
+          } catch (Exception e) {
+            OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");
           }
+        }
         if (!uridataa2.contains("content://") && !uridataa2.equals("")) {
-          try{
-          uridataa2 = fillURIData(uri, uridataa2);// Call fillURIData if ActionData contains fields like
-          // s_ph_no etc. and not the actual URI.
-          }catch(Exception e){OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");}
+          try {
+            uridataa2 = fillURIData(uri, uridataa2);// Call fillURIData if ActionData contains
+                                                    // fields like
+            // s_ph_no etc. and not the actual URI.
+          } catch (Exception e) {
+            OmLogger.write(getApplicationContext(), "Unable to retrieve information from thrower");
           }
+        }
         checkFilter(uri, filtertype, filterdata, actionapp);
-        
-        
+
       }
     }
   }
 
-  //Added by Pradeep
+  // Added by Pradeep
   // Used to populate the action data at Instance time.
   private String fillURIData(String uri2, String uridata2) {
     int cnt = 1;
-    String tempstr=null,aData=null;
+    String tempstr = null, aData = null;
     Uri uri_ret = null;
     String str_uri = uri2;
     String[] temp = null;
@@ -141,33 +145,32 @@ public class DummyActivity extends Activity {
               uridata2 = sm.getKey();
           }
           aData = cur.getString(cur.getColumnIndex(uridata2));
-          cnt=getBufferCount();
+          cnt = getBufferCount();
           // Generating buffer name
           tempstr = "temp" + cnt;
           break;
-           }
+        }
       } while (cur.moveToNext());
 
     }
-    uri_ret=populateInstance(tempstr, aData);
+    uri_ret = populateInstance(tempstr, aData);
     return uri_ret.toString();
   }
 
-//Added by Pradeep
-//Retrieves the Buffer Count to generate Buffer for temporarily storing Event Data
-  public int getBufferCount()
-  {
-    int cnt=1;
+  // Added by Pradeep
+  // Retrieves the Buffer Count to generate Buffer for temporarily storing Event Data
+  public int getBufferCount() {
+    int cnt = 1;
     String[] projection = { "i_name", "a_data" };
     ContentValues values = new ContentValues();
     values.put("i_name", "tempcnt");// using tempcnt to store count
     values.put("a_data", "1");
     Cursor cur1 = getContentResolver().query(
-        Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection,
-        "i_name='tempcnt'", null, null);
+        Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), projection, "i_name='tempcnt'",
+        null, null);
     if (cur1.getCount() == 0)
-      getContentResolver().insert(
-          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+      getContentResolver().insert(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
+          values);
     else {
       cur1.moveToFirst();
       // Using buffer of size n to store instance information
@@ -177,17 +180,16 @@ public class DummyActivity extends Activity {
       values.clear();
       values.put("i_name", "tempcnt");// using tempcnt to store buffer count
       values.put("a_data", cnt);
-      getContentResolver().insert(
-          Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
+      getContentResolver().insert(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
+          values);
     }
-return cnt;
+    return cnt;
   }
 
-//Added by Pradeep
-//Used to populate temporary event data(aData) in our temporary buffer(tempstr)
-  public Uri populateInstance(String tempstr,String aData)
-  {
-   Uri uri_ret;
+  // Added by Pradeep
+  // Used to populate temporary event data(aData) in our temporary buffer(tempstr)
+  public Uri populateInstance(String tempstr, String aData) {
+    Uri uri_ret;
     ContentValues values = new ContentValues();
     values.clear();
     values.put("i_name", tempstr);// using tempstr to store the instance data.
@@ -202,16 +204,14 @@ return cnt;
           Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
     else {
       getContentResolver().delete(Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"),
-          "i_name='"+tempstr+"'", null);
+          "i_name='" + tempstr + "'", null);
       uri_ret = getContentResolver().insert(
           Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP"), values);
     }
-  return uri_ret;
+    return uri_ret;
   }
-  
-  
-  
-//Broadcasts the intent corresponding to the actiondata in the UserConfig file
+
+  // Broadcasts the intent corresponding to the actiondata in the UserConfig file
   public void sendIntent(String actiondata1) {
     Intent send_intent = new Intent();
     send_intent.setAction(actionname);
@@ -226,16 +226,17 @@ return cnt;
     }
     try {
       sendBroadcast(send_intent);
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.toString();
     }
     Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
   }
-  
-  /*matches the filter data from the UserConfig file with the last record from the
-  content provider*/
+
+  /*
+   * matches the filter data from the UserConfig file with the last record from the content provider
+   */
   public void checkFilter(String uri, String filtertype1, String filterdata1, String actiondata1) {
-    
+
     String str_uri = uri;
     String[] temp = null;
     temp = str_uri.split("/");
@@ -243,64 +244,64 @@ return cnt;
     String final_uri = str_uri.substring(0, str_uri.length() - num.length() - 1);
     int new_id = Integer.parseInt(num);
 
-    if (filterdata.equalsIgnoreCase(null) || filterdata.equalsIgnoreCase("") || intentAction.contains("PHONE_STATE"))
+    if (filterdata.equalsIgnoreCase(null) || filterdata.equalsIgnoreCase("")
+        || intentAction.contains("PHONE_STATE"))
       sendIntent(actiondata1);
 
     else {
-    	try
-    	{
-      Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-      cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
-      if (cur.moveToFirst()) {
-        int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
-        if (new_id == id) {
-          String ft = cur.getString(cur.getColumnIndex(filtertype1));
-        
-          if (filterdata1.equalsIgnoreCase(ft)) {
+      try {
+        Cursor cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+        cur = managedQuery(Uri.parse(final_uri), null, null, null, null);
+        if (cur.moveToFirst()) {
+          int id = Integer.parseInt(cur.getString(cur.getColumnIndex("_id")));
+          if (new_id == id) {
+            String ft = cur.getString(cur.getColumnIndex(filtertype1));
 
-            {
-              if (final_uri.contains("sms")) {
-                Toast.makeText(
-                    getApplicationContext(),
-                    cur.getString(cur.getColumnIndex(filtertype1)) + "--->"
-                        + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
+            if (filterdata1.equalsIgnoreCase(ft)) {
 
-              } else {
-                try {
+              {
+                if (final_uri.contains("sms")) {
                   Toast.makeText(
                       getApplicationContext(),
-                      cur.getString(cur.getColumnIndex("s_name")) + ":"
-                          + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG)
-                      .show();
-                } catch (Exception e) {
-                  OmLogger.write(getApplicationContext(), "Unable to execute action");
+                      cur.getString(cur.getColumnIndex(filtertype1)) + "--->"
+                          + cur.getString(cur.getColumnIndex("body")), Toast.LENGTH_LONG).show();
+
+                } else {
+                  try {
+                    Toast.makeText(
+                        getApplicationContext(),
+                        cur.getString(cur.getColumnIndex("s_name")) + ":"
+                            + cur.getString(cur.getColumnIndex(filtertype1)), Toast.LENGTH_LONG)
+                        .show();
+                  } catch (Exception e) {
+                    OmLogger.write(getApplicationContext(), "Unable to execute action");
+                  }
                 }
               }
+              sendIntent(actiondata1);
+
             }
-            sendIntent(actiondata1);
 
           }
-
         }
+      } catch (Exception ex) {
+        ex.toString();
       }
-    }catch(Exception ex){ex.toString();}
     }
   }
 
-//Retrieve the id of the latest updated row of the content provider
-  public String getLastId(String smsuri)
-  {
-	  
-	  String id = null;
-	  String lastids = null;
-	  Cursor c = managedQuery(Uri.parse(smsuri), null, null, null, null);
-	  if (c.moveToFirst()) 
-	  {
-		  id = c.getString(c.getColumnIndex("_id"));
-		  int lastid = Integer.parseInt(id) - 1;
-		  lastids = Integer.toString(lastid);
-	  } 
-	  return lastids;
+  // Retrieve the id of the latest updated row of the content provider
+  public String getLastId(String smsuri) {
 
-}
+    String id = null;
+    String lastids = null;
+    Cursor c = managedQuery(Uri.parse(smsuri), null, null, null, null);
+    if (c.moveToFirst()) {
+      id = c.getString(c.getColumnIndex("_id"));
+      int lastid = Integer.parseInt(id) - 1;
+      lastids = Integer.toString(lastid);
+    }
+    return lastids;
+
+  }
 }

@@ -38,11 +38,12 @@ public class ActionType extends ListActivity {
   private String filterData;
   private String throwerApp;
 
-  // Application Config Parser 
+  // Application Config Parser
   AGParser ag;
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -112,10 +113,9 @@ public class ActionType extends ListActivity {
       finish();
     } else {
       i.setClass(this.getApplicationContext(), ActionData.class);
-      startActivityForResult(i, Constants.RESULT_ADD_THROWER);      
+      startActivityForResult(i, Constants.RESULT_ADD_THROWER);
     }
 
-    
   }
 
   /*
@@ -138,6 +138,7 @@ public class ActionType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,6 +148,7 @@ public class ActionType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {

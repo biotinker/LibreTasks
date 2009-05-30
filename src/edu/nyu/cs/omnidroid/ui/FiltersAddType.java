@@ -55,14 +55,14 @@ public class FiltersAddType extends ListActivity {
 
     // Getting the list of Filters available from AppConfig
     ArrayList<String> filterTypeList = ag.readFilters(eventApp, eventName);
-    
+
     // Convert filter to OmniDroid common name
     ArrayList<StringMap> contentMap = ag.readContentMap(eventApp);
     ArrayList<StringMap> filterInputs = new ArrayList<StringMap>();
-    for (int cnt=0; cnt<filterTypeList.size(); cnt++) {
-      for (StringMap item: contentMap) {
+    for (int cnt = 0; cnt < filterTypeList.size(); cnt++) {
+      for (StringMap item : contentMap) {
         if (item.getKey().equals(filterTypeList.get(cnt))) {
-          filterInputs.add(new StringMap(filterTypeList.get(cnt),item.getValue()));
+          filterInputs.add(new StringMap(filterTypeList.get(cnt), item.getValue()));
         }
       }
     }
@@ -83,13 +83,13 @@ public class FiltersAddType extends ListActivity {
   @Override
   protected void onListItemClick(ListView l, View v, int position, long id) {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
-    //String filterType = (StringMap)(l.getAdapter().getItem(position)).getKey();
+    // String filterType = (StringMap)(l.getAdapter().getItem(position)).getKey();
     String filterType = sm.getKey();
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), FiltersAddData.class);
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
-    //i.putExtra(UGParser.KEY_FilterType, sm.getKey());
+    // i.putExtra(UGParser.KEY_FilterType, sm.getKey());
     i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
     startActivityForResult(i, Constants.RESULT_ADD_FILTER);
   }
@@ -114,6 +114,7 @@ public class FiltersAddType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,6 +124,7 @@ public class FiltersAddType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
