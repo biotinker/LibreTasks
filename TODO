@@ -15,7 +15,15 @@ ENGINE:
        adapt to our framework we can get rid of the plugins.
     4) These plug ins could have their own CP if there is no CP for the
        original application.
-
+       
+  Automatic Application Registration:
+    When OmniDroid is first installed/updated, it should register all supported
+    applications with itself.  This means, it should register any built-in
+    supported applications, as well as query all the installed applications
+    to see if any of them are omni-aware and load the application config for
+    those apps.  Also, when other applications are installed/updated, it should
+    be queried to see if it is Omni-Aware and load the config for it as well.
+  
 UI:
   Feature request: Edit OmniHandler
   Feature request: Edit Filter
