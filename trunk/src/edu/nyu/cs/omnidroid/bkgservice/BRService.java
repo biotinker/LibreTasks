@@ -18,13 +18,14 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class BRService extends Service {
   // Debug constant
   private static final String TAG = "BRService";
- 
+
   // Broadcast variables
   IntentFilter Ifilter = new IntentFilter();
   BroadcastReceiver BR = new BCReceiver();
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Service#onBind(android.content.Intent)
    */
   @Override
@@ -35,6 +36,7 @@ public class BRService extends Service {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Service#onCreate()
    */
   @Override
@@ -45,24 +47,24 @@ public class BRService extends Service {
       UGParser ug = new UGParser(getApplicationContext());
 
       /* Check the User Config to start OmniDroid */
-      //String Enabled = ug.readLine("Enabled");
-      //if (Enabled.equalsIgnoreCase("True")) {
-        Log.i(TAG, "Starting OmniDroid");
+      // String Enabled = ug.readLine("Enabled");
+      // if (Enabled.equalsIgnoreCase("True")) {
+      Log.i(TAG, "Starting OmniDroid");
 
-        // Get the User Instances in an Arraylist from the User Config
-        ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
-        Iterator<HashMap<String, String>> i = UCRecords.iterator();
-        while (i.hasNext()) {
-          HashMap<String, String> HM1 = i.next();
-          // Configure the Intent Filter with the Events if Instance in enabled
-          if (HM1.get("EnableInstance").equalsIgnoreCase("True"))
-            {
-            Ifilter.addAction(HM1.get("EventName"));
-            Toast.makeText(getBaseContext(), "REGISTERING: "+HM1.get("EventName"), Toast.LENGTH_SHORT).show();
-            
-            }
+      // Get the User Instances in an Arraylist from the User Config
+      ArrayList<HashMap<String, String>> UCRecords = ug.readRecords();
+      Iterator<HashMap<String, String>> i = UCRecords.iterator();
+      while (i.hasNext()) {
+        HashMap<String, String> HM1 = i.next();
+        // Configure the Intent Filter with the Events if Instance in enabled
+        if (HM1.get("EnableInstance").equalsIgnoreCase("True")) {
+          Ifilter.addAction(HM1.get("EventName"));
+          Toast.makeText(getBaseContext(), "REGISTERING: " + HM1.get("EventName"),
+              Toast.LENGTH_SHORT).show();
+
         }
-        registerReceiver(BR, Ifilter);
+      }
+      registerReceiver(BR, Ifilter);
     } catch (Exception e) {
       Log.i("BRService", e.getLocalizedMessage());
       Log.i("BRService", e.toString());
@@ -72,6 +74,7 @@ public class BRService extends Service {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.content.ContextWrapper#stopService(android.content.Intent)
    */
   @Override
@@ -80,7 +83,7 @@ public class BRService extends Service {
     return super.stopService(name);
   }
 
-/*
+  /*
    * (non-Javadoc)
    * 
    * @see android.app.Service#onDestroy()

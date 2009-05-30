@@ -36,7 +36,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 public class ActionDatumAdd extends Activity implements OnItemClickListener, OnClickListener {
   // Standard Menu options (Android menus require int)
   private static final int MENU_HELP = 0;
-  
+
   // User Selected Data
   private String eventApp;
   private String eventName;
@@ -184,24 +184,19 @@ public class ActionDatumAdd extends Activity implements OnItemClickListener, OnC
     // Data to store
     EditText manualEntry = (EditText) findViewById(R.id.thrower_datum_add_manual);
     String throwerData = manualEntry.getText().toString();
-    
-    /* Save on the Actions save() function
-    Uri uri = null;
 
-    // Store the data in the ContentProvider
-    String data = manualEntry.getText().toString();
-    if (data.length() > 0) {
-      ContentValues values = new ContentValues();
-      // values.put("i_name", iname);
-      values.put("a_data", data);
-      uri = getContentResolver().insert(Uri.parse(CP.CONTENT_URI.toString()), values);
-      Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
-    } else {
-      Toast.makeText(getBaseContext(), "Must enter some data, or select from the list",
-          Toast.LENGTH_LONG).show();
-    }
-    */
-    
+    /*
+     * Save on the Actions save() function Uri uri = null;
+     * 
+     * // Store the data in the ContentProvider String data = manualEntry.getText().toString(); if
+     * (data.length() > 0) { ContentValues values = new ContentValues(); // values.put("i_name",
+     * iname); values.put("a_data", data); uri =
+     * getContentResolver().insert(Uri.parse(CP.CONTENT_URI.toString()), values);
+     * Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show(); } else {
+     * Toast.makeText(getBaseContext(), "Must enter some data, or select from the list",
+     * Toast.LENGTH_LONG).show(); }
+     */
+
     // Send back the result to the caller
     Intent i = new Intent();
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);

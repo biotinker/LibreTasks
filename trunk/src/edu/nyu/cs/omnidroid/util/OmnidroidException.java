@@ -4,12 +4,12 @@ package edu.nyu.cs.omnidroid.util;
  * Base exception for Omnidroid specific exceptions.
  */
 public class OmnidroidException extends Exception {
-  
+
   /**
-   * Generated SerialID 
+   * Generated SerialID
    */
   private static final long serialVersionUID = -4127262962368059843L;
-  
+
   // The code for an exception instance.
   private int code;
 

@@ -22,32 +22,32 @@ import java.util.Map;
  * The error types are:
  * 
  * <ul>
- * <li> 00 -- Standard Java exceptions caused by malformed or invalid method parameters </li>
- * <li> 02 -- All other standard Java exceptions </li>
- * <li> 10 -- General {@code OmniException}s from the UI </li>
- * <li> 11 -- General {@code OmniException}s from the Event Catcher </li>
- * <li> 12 -- General {@code OmniException}s from the Action Thrower</li>
- * <li> 13 -- General {@code OmniException}s from the Application API </li>
- * <li> 20 -- IO related {@code OmniException}s </li>
+ * <li>00 -- Standard Java exceptions caused by malformed or invalid method parameters</li>
+ * <li>02 -- All other standard Java exceptions</li>
+ * <li>10 -- General {@code OmniException}s from the UI</li>
+ * <li>11 -- General {@code OmniException}s from the Event Catcher</li>
+ * <li>12 -- General {@code OmniException}s from the Action Thrower</li>
+ * <li>13 -- General {@code OmniException}s from the Application API</li>
+ * <li>20 -- IO related {@code OmniException}s</li>
  * </ul>
  * 
  * How to use the codes and messages:
  * 
  * <ul>
- * <li> All exceptions thrown from within Omnidroid should contain a code and a message, even exceptions
- * thrown using standard Java exceptions. </li>
- * <li> When creating a new exception code and message, start the message with the code like so:
- * "000001: " </li>
- * <li> When throwing an <code>OmniException</code>, the code and the message must be supplied to
- * the constructor. </li>
- * <li> When throwing a standard Java exception (ex. <code>NullPointerException</code>), just
- * supply the message since the code is already included in the message. </li>
- * <li> The message retrieved from the <code>ExceptionMessageMap</code> can be treated like a base
+ * <li>All exceptions thrown from within Omnidroid should contain a code and a message, even
+ * exceptions thrown using standard Java exceptions.</li>
+ * <li>When creating a new exception code and message, start the message with the code like so:
+ * "000001: "</li>
+ * <li>When throwing an <code>OmniException</code>, the code and the message must be supplied to the
+ * constructor.</li>
+ * <li>When throwing a standard Java exception (ex. <code>NullPointerException</code>), just supply
+ * the message since the code is already included in the message.</li>
+ * <li>The message retrieved from the <code>ExceptionMessageMap</code> can be treated like a base
  * message. If additional information is required in the message, append that information to the
- * base message. </li>
- * <li> If the value of a variable must be included in the message, list the variable names and
- * their values at the end of the message in the following format: "{ varName1=[varVal1],
- * varName2=[varVal2], ... }" </li>
+ * base message.</li>
+ * <li>If the value of a variable must be included in the message, list the variable names and their
+ * values at the end of the message in the following format: "{ varName1=[varVal1],
+ * varName2=[varVal2], ... }"</li>
  * </ul>
  * 
  * TODO (acase): Load the exception message mapping from a properties bundle.

@@ -39,6 +39,7 @@ public class EventType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -86,7 +87,7 @@ public class EventType extends ListActivity {
     Intent i = new Intent();
     // See if filters can be applied, if not skip the filters page
     if (ag.readFilters(eventApp, eventName).size() > 0) {
-      i.setClass(this.getApplicationContext(), Filters.class);      
+      i.setClass(this.getApplicationContext(), Filters.class);
     } else {
       i.setClass(this.getApplicationContext(), Actions.class);
     }
@@ -115,6 +116,7 @@ public class EventType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,6 +126,7 @@ public class EventType extends ListActivity {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,7 +144,7 @@ public class EventType extends ListActivity {
   private void help() {
     Builder help = new AlertDialog.Builder(this);
     String help_msg = this.getResources().getString(R.string.help_event_intro) + "\n<br/>"
-    + this.getResources().getString(R.string.help_event_type);
+        + this.getResources().getString(R.string.help_event_type);
     help.setTitle(R.string.help);
     help.setIcon(android.R.drawable.ic_menu_help);
     help.setMessage(Html.fromHtml(help_msg));

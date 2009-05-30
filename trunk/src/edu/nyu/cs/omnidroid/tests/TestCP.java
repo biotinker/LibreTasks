@@ -26,8 +26,8 @@ public class TestCP extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.test_cp2);
-    
-    //Button and text boxes displayed on the UI.
+
+    // Button and text boxes displayed on the UI.
     Button Store;
     final EditText Adata;
     final EditText ID;
@@ -42,9 +42,9 @@ public class TestCP extends Activity {
     ID = (EditText) findViewById(R.id.test_cp2_id);
     GetAll = (Button) findViewById(R.id.test_cp2_getAll);
     final CProvider cp = new CProvider(this);
-    
-    //Event listener for the Store button. Stores the values in the content provider
-    
+
+    // Event listener for the Store button. Stores the values in the content provider
+
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String iname = Iname.getText().toString();
@@ -60,17 +60,16 @@ public class TestCP extends Activity {
           Log.d("Insert Complete", "This is a log");
           Toast.makeText(getBaseContext(), "Good Job", Toast.LENGTH_SHORT).show();
 
-        /*  // SENDING THE INTENT
-          Intent intent = new Intent(text1);
-          sendBroadcast(intent);k
-*/
+          /*
+           * // SENDING THE INTENT Intent intent = new Intent(text1); sendBroadcast(intent);k
+           */
         } else
 
           Toast.makeText(getBaseContext(), "No Value", Toast.LENGTH_SHORT).show();
 
       }
     });
-    //Event listener for the Retrieve button. Gets the values associated particular ID. 
+    // Event listener for the Retrieve button. Gets the values associated particular ID.
     Retrieve.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String id = ID.getText().toString();
@@ -93,13 +92,13 @@ public class TestCP extends Activity {
 
       }
     });
-    //Event listener for the Get All button. Toasts all the records in the content provider.
+    // Event listener for the Get All button. Toasts all the records in the content provider.
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-         // Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
+        // Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
 
-    	 // ArrayList<String> al=cp.displayRecords(OmniURI.toString());
-    	  
+        // ArrayList<String> al=cp.displayRecords(OmniURI.toString());
+
         Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP");
         Cursor c = managedQuery(OmniURI, null, null, null, null);
         if (c.moveToFirst()) {

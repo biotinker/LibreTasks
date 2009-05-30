@@ -39,7 +39,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
  */
 public class Actions extends Activity implements OnClickListener {
   // Menu Options of the Context variety (Android menus require int)
-  //TODO: private static final int MENU_EDIT = 0;
+  // TODO: private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
   // Menu options of the Standard variety (Android menus require int)
   private static final int MENU_HELP = 3;
@@ -58,7 +58,7 @@ public class Actions extends Activity implements OnClickListener {
 
   // List of applications to notify
   private static final int MAX_NUM_THROWERS = 1;
-  private ListView throwerListView;  
+  private ListView throwerListView;
   private ArrayList<String> throwerList = new ArrayList<String>();
 
   // Name to save this OmniHandler as
@@ -91,7 +91,7 @@ public class Actions extends Activity implements OnClickListener {
   private void update() {
     // Clear the list so that it's empty, then it can be filled
     throwerList.clear();
-    
+
     // Populate a list of active filters
     if (throwerApp != null) {
       throwerList.add(throwerApp);
@@ -115,7 +115,7 @@ public class Actions extends Activity implements OnClickListener {
 
     // Disable the save button if haven't added any throwers yet
     Button save = (Button) findViewById(R.id.actions_save);
-    if (throwerList.size() > 0 ) {
+    if (throwerList.size() > 0) {
       save.setEnabled(true);
     } else {
       save.setEnabled(false);
@@ -124,7 +124,9 @@ public class Actions extends Activity implements OnClickListener {
 
   /**
    * Get the data passed in and store it in our class variables
-   * @param i - intent containing data to fill our User Config with.
+   * 
+   * @param i
+   *          - intent containing data to fill our User Config with.
    */
   private void getIntentData(Intent i) {
     // intent data passed to us.
@@ -156,6 +158,7 @@ public class Actions extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,6 +168,7 @@ public class Actions extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -195,11 +199,11 @@ public class Actions extends Activity implements OnClickListener {
    * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
    */
   public boolean onContextItemSelected(MenuItem item) {
-    switch(item.getItemId()) {
+    switch (item.getItemId()) {
     case MENU_DELETE:
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-        deleteThrower(info.id);
-        return true;
+      AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+      deleteThrower(info.id);
+      return true;
     }
     return super.onContextItemSelected(item);
   }
@@ -212,7 +216,7 @@ public class Actions extends Activity implements OnClickListener {
    */
   private void deleteThrower(long id) {
     // Remove item from the list
-    throwerList.remove((int)id);
+    throwerList.remove((int) id);
 
     // Clear it from our intents
     // TODO(acase): this will need to be changed once we support more than one thrower
@@ -310,9 +314,7 @@ public class Actions extends Activity implements OnClickListener {
   /**
    * Save this OmniHandler.
    * 
-   * Side effects:
-   *   + Adds data to Content Provider
-   *   + Adds data to UGParser 
+   * Side effects: + Adds data to Content Provider + Adds data to UGParser
    */
   private void save() {
     // Add OmniHandler to OmniDroid

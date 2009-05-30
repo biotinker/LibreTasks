@@ -62,7 +62,7 @@ public class Filters extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filters);
-    
+
     // We want to grab this listview for later usage
     filterListView = (ListView) findViewById(R.id.filters_list);
 
@@ -112,6 +112,7 @@ public class Filters extends Activity implements OnClickListener {
 
   /**
    * Store the intent data passed in
+   * 
    * @param i
    */
   private void getIntentData(Intent i) {
@@ -144,6 +145,7 @@ public class Filters extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,6 +155,7 @@ public class Filters extends Activity implements OnClickListener {
 
   /*
    * (non-Javadoc)
+   * 
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -205,7 +208,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   private void deleteFilter(long id) {
     // Remove item from the list
-    filterList.remove((int)id);
+    filterList.remove((int) id);
 
     // Clear it from our intents
     // TODO(acase): this will need to be changed once we support more than one filter
@@ -218,6 +221,7 @@ public class Filters extends Activity implements OnClickListener {
 
   /**
    * TODO(acase): Allow edit of already set filters
+   * 
    * @param l
    *          - the item id selected
    */

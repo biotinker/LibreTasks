@@ -191,14 +191,14 @@ public class AGParser {
       OpenFileRead();
       // Navigate to the Application Record
       while ((line = dis.readLine()) != null) {
-        try
-        {
-    	  String[] parts = line.split(":", 2);
-        if (parts[1].toString().equalsIgnoreCase(AppName)) {
-          found = true;
-          break;
+        try {
+          String[] parts = line.split(":", 2);
+          if (parts[1].toString().equalsIgnoreCase(AppName)) {
+            found = true;
+            break;
+          }
+        } catch (Exception e) {
         }
-        }catch(Exception e){}
       }
       if (found == false) {
         OmLogger.write(context, "Application: " + AppName + " not present in App Config");
@@ -433,9 +433,9 @@ public class AGParser {
             && parts[1].toString().split(",")[0].equalsIgnoreCase(EventName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
-          String[] filters=null;
-          if(fparts[0].equalsIgnoreCase(KEY_FILTERS))
-          filters = fparts[1].split(",");
+          String[] filters = null;
+          if (fparts[0].equalsIgnoreCase(KEY_FILTERS))
+            filters = fparts[1].split(",");
           for (int i = 0; i < filters.length; i++) {
             FilterList.add(filters[i]);
           }
@@ -491,9 +491,9 @@ public class AGParser {
             && parts[1].toString().split(",")[0].equalsIgnoreCase(ActionName)) {
           line = dis.readLine();
           String[] fparts = line.split(":", 2);
-          String[] URIs=null;
-          if(fparts[0].equalsIgnoreCase(KEY_URI_FIELDS))
-          URIs = fparts[1].split(",");
+          String[] URIs = null;
+          if (fparts[0].equalsIgnoreCase(KEY_URI_FIELDS))
+            URIs = fparts[1].split(",");
           for (int i = 0; i < URIs.length; i++) {
             URIList.add(URIs[i]);
           }

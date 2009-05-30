@@ -26,7 +26,7 @@ public class ExternalCPActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.external_event_cp);
     // UI buttons and text boxes
-    
+
     Button Store;
     final EditText text;
     final EditText ID;
@@ -42,7 +42,8 @@ public class ExternalCPActivity extends Activity {
     Retrieve = (Button) findViewById(R.id.external_event_cp_retrieve);
     ID = (EditText) findViewById(R.id.external_event_cp_id);
     GetAll = (Button) findViewById(R.id.external_event_cp_getAll);
-    //Event listener for the Store button. Stores the value in the external event application content provider.
+    // Event listener for the Store button. Stores the value in the external event application
+    // content provider.
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         String text1 = text.getText().toString();
@@ -65,7 +66,6 @@ public class ExternalCPActivity extends Activity {
           intent.putExtra("uri", uri.toString());
           sendBroadcast(intent);
 
-          
         } else
 
           Toast.makeText(getBaseContext(), "No Value", Toast.LENGTH_SHORT).show();
@@ -96,7 +96,7 @@ public class ExternalCPActivity extends Activity {
 
       }
     });
-    //Listener for the Get All button. Toasts all the records in the content provider. 
+    // Listener for the Get All button. Toasts all the records in the content provider.
     GetAll.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.external.eventapp.cp/CP");

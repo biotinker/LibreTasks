@@ -67,10 +67,10 @@ public class SaveDialog extends Activity implements OnClickListener {
 
     // Setup our UI
     appData = (EditText) findViewById(R.id.save_dialog_name);
-    //Button save = (Button) findViewById(R.id.save_dialog_save);
+    // Button save = (Button) findViewById(R.id.save_dialog_save);
 
     // Listen for the save button click
-    //save.setOnClickListener(this);
+    // save.setOnClickListener(this);
   }
 
   /*

@@ -5,10 +5,9 @@ import java.util.HashMap;
 // TODO (acase): Replace the HashMap used in AGParser with this
 
 /**
- * <code>RegisteredApp</code>s are applications that OmniDroid can interact with.
- * These appplications are stored using the AGParser into a backend configuration file.
- * This is an accessor method that provides an interface into each application's
- * configuration.
+ * <code>RegisteredApp</code>s are applications that OmniDroid can interact with. These
+ * appplications are stored using the AGParser into a backend configuration file. This is an
+ * accessor method that provides an interface into each application's configuration.
  * 
  * @author acase
  */
@@ -46,7 +45,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param appName the appName to set
+   * @param appName
+   *          the appName to set
    */
   public void setAppName(String appName) {
     this.appName = appName;
@@ -60,7 +60,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param events the events to set
+   * @param events
+   *          the events to set
    */
   public void setEvents(HashMap<String, String> events) {
     this.events = events;
@@ -74,7 +75,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param actions the actions to set
+   * @param actions
+   *          the actions to set
    */
   public void setActions(HashMap<String, String> actions) {
     this.actions = actions;
@@ -88,7 +90,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param contentMaps the contentMaps to set
+   * @param contentMaps
+   *          the contentMaps to set
    */
   public void setContentMaps(HashMap<String, String> contentMaps) {
     this.contentMaps = contentMaps;
@@ -102,7 +105,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param filters the filters to set
+   * @param filters
+   *          the filters to set
    */
   public void setFilters(HashMap<String, String> filters) {
     this.filters = filters;
@@ -116,7 +120,8 @@ public class RegisteredApp {
   }
 
   /**
-   * @param uris the uris to set
+   * @param uris
+   *          the uris to set
    */
   public void setUris(HashMap<String, String> uris) {
     this.uris = uris;

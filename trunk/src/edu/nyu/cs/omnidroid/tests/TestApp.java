@@ -16,15 +16,8 @@ import edu.nyu.cs.omnidroid.external.eventapp.ExternalCPActivity;
  */
 public class TestApp extends ListActivity {
 
-  static final String[] TESTS = new String[] {
-      "Content Provider",
-      "Service",
-      "External Event App",
-      "User Config",
-      "App Config",
-      "PackageLister",
-      "Exception Handler"
-  };
+  static final String[] TESTS = new String[] { "Content Provider", "Service", "External Event App",
+      "User Config", "App Config", "PackageLister", "Exception Handler" };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

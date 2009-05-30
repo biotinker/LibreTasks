@@ -23,7 +23,8 @@ ENGINE:
     to see if any of them are omni-aware and load the application config for
     those apps.  Also, when other applications are installed/updated, it should
     be queried to see if it is Omni-Aware and load the config for it as well.
-  
+
+    
 UI:
   Feature request: Edit OmniHandler
   Feature request: Edit Filter
