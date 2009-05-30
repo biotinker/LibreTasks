@@ -16,8 +16,7 @@ I. GETTING OMNIDROID
         * Subversion
 
     Download the source:
-        Download the source code from our Subversion repository
-        (https://subversive.cims.nyu.edu/itp/sp09-google/trunk)
+        svn checkout http://omnidroid.googlecode.com/svn/trunk/ omnidroid-read-only
 
 
 
@@ -31,7 +30,7 @@ II. BUILDING/RUNNING OMNIDROID
 
     Building from inside Eclipse:
         1) Install the ADT Plugin for Eclipse (see 
-           http://developer.android.com/sdk/1.5_r1/installing.html#installingplugin)
+           http://developer.android.com/sdk/1.5_r2/installing.html#installingplugin)
         2) Set the path to the Android SDK in the Eclipse prefencense
            configuration.
         3) Create a new Android project from already excisting source (use the
@@ -58,7 +57,7 @@ III. DEVELOPING OMNIDROID
 
          Note: An Eclipse Code Style Formatter file is available from the the
                repository's tools directory 
-               (https://subversive.cims.nyu.edu/itp/sp09-google/tools/Eclipse_Formatter-ITP_Conventions.xml),
+				  http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml  
                which can be imported into Eclipse.
 
     Contributing Code:
@@ -78,9 +77,11 @@ IV. HELP
 
 V. INFORMATION
    License: Apache 2.0 License
-   Repository: https://subversive.cims.nyu.edu/itp/sp09-google/
-   Website: http://omni-droid.com
-   MailingList: itp-sp09-google@cs.nyu.edu
+   Repository: http://omnidroid.googlecode.com/svn/
+   Website: http://code.google.com/p/omnidroid
+   MailingLists: 
+     http://groups.google.com/group/omnidroid-users
+     http://groups.google.com/group/omnidroid-devel
    Maintainers:
         Andrew Case (acase@cims.nyu.edu)
         Pradeep Varma (phv204@nyu.edu)
