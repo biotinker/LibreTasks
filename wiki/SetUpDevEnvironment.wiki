@@ -1,0 +1,48 @@
+#labels Phase-Implementation
+== I - How to setup Android development environment ==
+1. [http://developer.android.com/sdk/1.5_r1/installing.html How to install the Android SDK]<br />
+2. [http://developer.android.com/guide/tutorials/hello-world.html Hello World Tutorial] (To verify your environment)<br /><br />
+
+== II - How to get omnidroid running in emulator ==
+'''1. Prerequisite'''<br/> 
+Make sure you have Android SDK, Eclipse(with Android plugin) installed.<br /><br/>
+
+'''2. Create a Android Virtual Device''' (If you already create a 1.5 AVD, skip this step.) <br/>
+In Eclipse: Windows -> Android AVD Manager 
+    Name = Whatever you like
+    Target = Android 1.5 - 1.5
+    Skin = Default
+    Click on "Create AVD"
+<br />
+
+'''3a. Manually checkout source codes''' (If you wanna use subclipse, skip to 3b)<br />
+Make sure you have SVN command tools installed.<br />
+Go to the [http://code.google.com/p/omnidroid/source/checkout project site] and checkout the source code.<br />
+In Eclipse: File -> New -> Other -> Android Project <br />
+    Select "Create project from existing code", with the local svn folder you just checked out.
+    Project name = Whatever you like
+    Build Target = "Android 1.5"
+    Application name = Whatever you like
+    Min SDK Version = 2
+<br/>
+
+'''3b. checkout source code with subclipse''' (This is not necessary if you use svn command manually)<br/>
+Install [http://subclipse.tigris.org/ subclipse]<br />
+In Eclipse: Window -> Show View -> other-> SVN Repositories
+    Click on the "+" sign
+    url: http://omnidroid.googlecode.com/svn -> Finish
+    Right click url -> Checkout.... Use the defaults and click Finish.
+<br/>
+
+'''4. Run the application''' <br/>
+In Eclipse: <br/>
+    Project -> Build All
+    Run -> Android Application
+
+In Emulator: Launch omnidroid <br />
+    Menu -> Run Tests -> User Config
+    Menu -> Run Tests -> App Config
+Notes: This registers applications that we've been working on with OmniDroid. OmniDroid should eventually do this on Install itself.<br /><br />
+
+== III - Understanding Android ==
+1. [http://developer.android.com/guide/topics/fundamentals.html Android Fundamentals] (Very good article, should be read first.)<br />
