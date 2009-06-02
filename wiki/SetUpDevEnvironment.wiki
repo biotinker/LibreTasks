@@ -1,5 +1,5 @@
 #labels Phase-Implementation,Featured
-= Setting up Your environment to Develop & Test OmniDroid =
+= Setting up Your environment to Develop & Test Omnidroid =
 == Setup Android development environment ==
  # [http://developer.android.com/sdk/1.5_r1/installing.html How to install the Android SDK]<br />
  # [http://developer.android.com/guide/tutorials/hello-world.html Hello World Tutorial] (To verify your environment)<br /><br />
