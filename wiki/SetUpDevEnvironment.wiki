@@ -1,4 +1,4 @@
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 == I - How to setup Android development environment ==
 1. [http://developer.android.com/sdk/1.5_r1/installing.html How to install the Android SDK]<br />
 2. [http://developer.android.com/guide/tutorials/hello-world.html Hello World Tutorial] (To verify your environment)<br /><br />
