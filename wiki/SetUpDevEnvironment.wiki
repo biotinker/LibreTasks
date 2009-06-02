@@ -33,10 +33,10 @@
     * url: http://omnidroid.googlecode.com/svn -> Finish<br />
     * Right click url -> Checkout.... Use the defaults and click Finish.<br />
 ===  Run the application === 
-  * In Eclipse:
+==== In Eclipse ====
    *  Project -> Build All
    *  Run -> Android Application
-  * In Emulator: Launch omnidroid <br />
+==== In Emulator: Launch omnidroid==== 
    * Menu -> Run Tests -> User Config
    * Menu -> Run Tests -> App Config
    * _Notes: This registers applications that we've been working on with OmniDroid. OmniDroid should eventually do this on Install itself._
