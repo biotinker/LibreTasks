@@ -8,7 +8,7 @@ DATE=`date +%Y.%m.%d_%T`
 BUILD_DIR="$HOME/projects/omnidroid/build"
 BUILD_SCRIPT="$BUILD_DIR/bin/ant-build.sh"
 BUILD_FLAG="$BUILD_DIR/.NEEDS_REBUILD"
-REPO_URL="http://omnidroid.googlecode.com/svn/trunk"
+REPO_URL="http://omnidroid.googlecode.com/svn"
 TMPFILE="$BUILD_DIR/var/tmp/check-build"
 EMAIL_HEAD="$BUILD_DIR/share/templates/email_header"
 EMAIL_FOOT="$BUILD_DIR/share/templates/email_footer"
@@ -19,7 +19,7 @@ REV_OLD_FILE="$BUILD_DIR/.REV_OLD"
 REV_NEW_FILE="$BUILD_DIR/.REV_NEW"
 REV_OLD=""
 REV_NEW=""
-SUBJECT="Rev#"
+SUBJECT="[omnidroid-build] Rev#"
 
 update_version() {
     mv $REV_NEW_FILE $REV_OLD_FILE
@@ -60,13 +60,14 @@ build() {
 
 # Email success/failure email
 email_results() {
+    let REV_OLD_PP="$REV_OLD"+1
     echo "to: $TO" >> ${TMPFILE}
     echo "subject: $SUBJECT" >> ${TMPFILE}
     cat ${EMAIL_HEAD} >> ${TMPFILE}
     echo "== OLD REVISION: ${REV_OLD}" >> ${TMPFILE}
     echo "== NEW REVISION: ${REV_NEW}" >> ${TMPFILE}
     echo "== REVISION COMMIT LOG =============================" >> ${TMPFILE}
-    svn log ${REPO_URL} -v -r ${REV_OLD}:${REV_NEW} >> ${TMPFILE}
+    svn log ${REPO_URL} -v -r ${REV_OLD_PP}:${REV_NEW} >> ${TMPFILE}
     echo "== /REVISION COMMIT LOG ============================" >> ${TMPFILE}
     echo "== BUILD LOG =======================================" >> ${TMPFILE}
     cat $LOG >> ${TMPFILE}
