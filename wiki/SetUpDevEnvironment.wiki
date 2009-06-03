@@ -1,13 +1,14 @@
 #labels Phase-Implementation,Featured
 = Setting up Your environment to Develop & Test Omnidroid =
-== Setup Android development environment ==
+<br />
+== I - Setup Android development environment ==
  # [http://developer.android.com/sdk/1.5_r1/installing.html How to install the Android SDK]<br />
  # [http://developer.android.com/guide/tutorials/hello-world.html Hello World Tutorial] (To verify your environment)<br /><br />
 
-== Understanding Android ==
- # [http://developer.android.com/guide/topics/fundamentals.html Android Fundamentals] (Very good article, should be read first.)<br />
+== II - Understanding Android ==
+ # [http://developer.android.com/guide/topics/fundamentals.html Android Fundamentals] (Very good article, should be read first.)<br /><br />
 
-== Getting omnidroid to run in emulator ==
+== III - Getting omnidroid to run in emulator ==
 === Prerequisite ===
   * Make sure you have Android SDK, Eclipse(with Android plugin) installed.
 === Create a Android Virtual Device (If you already create a 1.5 AVD, skip this step.) === 
@@ -36,7 +37,7 @@
 ==== In Eclipse ====
    *  Project -> Build All
    *  Run -> Android Application
-==== In Emulator: Launch omnidroid==== 
+==== In Emulator: Launch omnidroid ==== 
    * Menu -> Run Tests -> User Config
    * Menu -> Run Tests -> App Config
    * _Notes: This registers applications that we've been working on with OmniDroid. OmniDroid should eventually do this on Install itself._
