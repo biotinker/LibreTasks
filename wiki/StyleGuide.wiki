@@ -1,0 +1,17 @@
+#labels Featured
+Code submitted to the project should follow the following guidelines.
+
+= Code Style Guidelines =
+
+== Comments ==
+  * All functions must be prefaced with comments.
+  * All classes must be prefaced with javadocs.
+  * No @author tags in javadocs
+
+== Whitespace ==
+  * Indention: 2 spaces (no tabs)
+  * Line Length: 100 characters
+  * Braces: Same line starting, new line ending
+
+== Autoformatters: ==
+  * Eclipse: http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml
