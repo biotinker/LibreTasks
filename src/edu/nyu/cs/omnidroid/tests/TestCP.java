@@ -11,14 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.contprovider.CProvider;
 import edu.nyu.cs.omnidroid.core.CP;
 
 /**
  * Activity used to test the contents of the OmniDroid Content Provider.
- * 
+ *
  * @author Rajiv Sharma
- * 
+ *
  */
 public class TestCP extends Activity {
   /** Called when the activity is first created. */
@@ -29,26 +28,24 @@ public class TestCP extends Activity {
 
     // Button and text boxes displayed on the UI.
     Button Store;
-    final EditText Adata;
-    final EditText ID;
-    final EditText Iname;
-    Button Retrieve;
-    Button GetAll;
+    final EditText dataTextField;
+    final EditText idTextField;
+    final EditText nameTextField;
+    Button retrieveButton;
+    Button getAllButton;
 
     Store = (Button) findViewById(R.id.test_cp2_store);
-    Iname = (EditText) findViewById(R.id.test_cp2_iname);
-    Adata = (EditText) findViewById(R.id.test_cp2_adata);
-    Retrieve = (Button) findViewById(R.id.test_cp2_retrieve);
-    ID = (EditText) findViewById(R.id.test_cp2_id);
-    GetAll = (Button) findViewById(R.id.test_cp2_getAll);
-    final CProvider cp = new CProvider(this);
+    nameTextField = (EditText) findViewById(R.id.test_cp2_iname);
+    dataTextField = (EditText) findViewById(R.id.test_cp2_adata);
+    retrieveButton = (Button) findViewById(R.id.test_cp2_retrieve);
+    idTextField = (EditText) findViewById(R.id.test_cp2_id);
+    getAllButton = (Button) findViewById(R.id.test_cp2_getAll);
 
     // Event listener for the Store button. Stores the values in the content provider
-
     Store.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        String iname = Iname.getText().toString();
-        String adata = Adata.getText().toString();
+        String iname = nameTextField.getText().toString();
+        String adata = dataTextField.getText().toString();
 
         if (iname.length() > 0 && adata.length() > 0) {
           ContentValues values = new ContentValues();
@@ -60,19 +57,16 @@ public class TestCP extends Activity {
           Log.d("Insert Complete", "This is a log");
           Toast.makeText(getBaseContext(), "Good Job", Toast.LENGTH_SHORT).show();
 
-          /*
-           * // SENDING THE INTENT Intent intent = new Intent(text1); sendBroadcast(intent);k
-           */
-        } else
-
+           //SENDING THE INTENT Intent intent = new Intent(text1); sendBroadcast(intent);
+        } else {
           Toast.makeText(getBaseContext(), "No Value", Toast.LENGTH_SHORT).show();
-
+        }
       }
     });
     // Event listener for the Retrieve button. Gets the values associated particular ID.
-    Retrieve.setOnClickListener(new View.OnClickListener() {
+    retrieveButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        String id = ID.getText().toString();
+        String id = idTextField.getText().toString();
         if (id.length() > 0) {
           Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP");
           Cursor c = managedQuery(OmniURI, null, null, null, null);
@@ -93,7 +87,7 @@ public class TestCP extends Activity {
       }
     });
     // Event listener for the Get All button. Toasts all the records in the content provider.
-    GetAll.setOnClickListener(new View.OnClickListener() {
+    getAllButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // Uri OmniURI = Uri.parse("content://edu.nyu.cs.omnidroid.core.maincp/CP/2");
 

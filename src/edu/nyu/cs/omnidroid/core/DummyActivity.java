@@ -18,7 +18,7 @@ import edu.nyu.cs.omnidroid.util.StringMap;
 import edu.nyu.cs.omnidroid.util.UGParser;
 
 /**
- * 
+ *
  * @author Sucharita
  *
  */
@@ -45,7 +45,6 @@ public class DummyActivity extends Activity {
     super.onCreate(savedInstanceState);
     this.intent = getIntent();
     if (intent.getAction().contains("SMS_RECEIVED")) {
-      String id = null;
       this.uri = "content://sms/inbox";
       intentAction = "SMS_RECEIVED";
       StringBuilder sb = new StringBuilder(uri);
