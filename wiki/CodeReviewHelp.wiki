@@ -5,7 +5,7 @@
 http://codereview.appspot.com/static/upload.py (make sure you have python 2.5+ installed, and include it in your path)
 <br/><br/>
 
-2. Here is a sample from Michael:<br/>
+2. Here is a sample from Michael to send invitations:<br/>
 upload.py -r omnidroid-devel@googlegroups.com --send_mail -m "Removed workspace warnings and added svn:ignore values. Fixes issue #4." 
 <br/><br/>
 
