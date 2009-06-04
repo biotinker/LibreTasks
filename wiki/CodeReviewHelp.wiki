@@ -1,0 +1,14 @@
+= How to do code review =
+
+== Short Answer ==
+1. Download this file: <br/>
+http://codereview.appspot.com/static/upload.py (make sure you have python 2.5+ installed, and include it in your path)
+<br/><br/>
+
+2. Here is a sample from Michael:<br/>
+upload.py -r omnidroid-devel@googlegroups.com --send_mail -m "Removed workspace warnings and added svn:ignore values. Fixes issue #4." 
+<br/><br/>
+
+== Long Answer ==
+Here is a more concrete document: http://code.google.com/p/rietveld/wiki/CodeReviewHelp
+<br/><br/>
