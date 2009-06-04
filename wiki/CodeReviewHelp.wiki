@@ -10,6 +10,17 @@ http://codereview.appspot.com/static/upload.py (make sure you have python 2.5+ i
 upload.py -r omnidroid-devel@googlegroups.com --send_mail -m "Removed workspace warnings and added svn:ignore values. Fixes issue #4." 
 <br/><br/>
 
+3. Reviewers come and mark it up with suggestions.
+
+4. Coder then addresses those comments in the code, runs upload.py again (this time
+including -i ##### so it patches an existing code review and doesn't create a new
+one), and then address EACH comment in the codereview tool.  Most of them
+will probably just be "done" but sometimes the coder might disagree so they'll reply
+with my opinion.
+
+5. The reviewers either point out more issues to address, in which case the coder
+repeats the patch cycle, or they give the coder the go ahead to submit.  Once the coder has addressed all the reviewers comments and has at least one approval from a reviewer, the coder can do an svn update (in case anything has changed) and then a commit.
+
 == Long Answer ==
 Here is a long document: http://code.google.com/p/rietveld/wiki/CodeReviewHelp
 <br/><br/>
