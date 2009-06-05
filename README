@@ -2,88 +2,33 @@
 
       TABLE OF CONTENTS
 
-   I. GETTING OMNIDROID
-  II. BUILDING/RUNNING OMNIDROID
- III. DEVELOPING OMNIDROID
-  IV. HELP
-   V. INFORMATION
+  I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
+ II. DEVELOPING OMNIDROID
+III. MORE INFORMATION
 
 
-I. GETTING OMNIDROID
+I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
 
-    Requirements:
-        * Android SDK (http://developer.android.com/sdk)
-        * Subversion
+    OmniDroid is currently only available in source form for development.
 
-    Download the source:
-        svn checkout http://omnidroid.googlecode.com/svn/trunk/ omnidroid-read-only
+    See Setup Dev Environment for details:
+        http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
 
 
+II. DEVELOPING OMNIDROID
 
-II. BUILDING/RUNNING OMNIDROID
-
-    OmniDroid is currently only available in source form for development.  To
-    use OmniDroid in developing your application, you will need to check the
-    source out of the source repository (see "GETTING OMNIDROID") and build
-    the apk file.  Once you have the apk file, you can add it to your
-    development device or emulator.
-
-    Building from inside Eclipse:
-        1) Install the ADT Plugin for Eclipse (see 
-           http://developer.android.com/sdk/1.5_r2/installing.html#installingplugin)
-        2) Set the path to the Android SDK in the Eclipse prefencense
-           configuration.
-        3) Create a new Android project from already excisting source (use the
-           trunk folder you checked out from the repository)
-        4) Compile and run using the android SDK tools (see
-           http://developer.android.com/guide/developing/eclipse-adt.html#Running
-           for instructions)
-
-    For other IDE's or commandline usage, refer to the android website for
-    documentaiton specifically these two pages:
-        http://developer.android.com/guide/developing/device.html
-        http://developer.android.com/guide/developing/other-ide.html
-
-
-
-III. DEVELOPING OMNIDROID
-
-     Code Requirements/Style Guidelines:
-         All functions must be prefaced with comments.
-         All classes must be prefaced with javadocs.
-         Indention: 2 spaces (no tabs)
-         Line Length: 80 characters
-         Braces: Same line starting, new line ending
-
-         Note: An Eclipse Code Style Formatter file is available from the the
-               repository's tools directory 
-				  http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml  
-               which can be imported into Eclipse.
+    Style Guidelines see: http://code.google.com/p/omnidroid/wiki/StyleGuide
 
     Contributing Code:
-        All code must comply with the "Code Requirements/Style Guidelines".
+        All code must comply with the "Style Guidelines".
         Patches should be submitted to the mailing list in unified diff format.
 
     Architecture and Hacking Documentation:
         See the HACKING file for more information.
 
+III. MORE INFORMATION
 
-IV. HELP
-
-    For help, try looking on our website (see "INFORMATION") or email our
-    mailing list (see "INFORMATION").
-
-
-
-V. INFORMATION
    License: Apache 2.0 License
-   Repository: http://omnidroid.googlecode.com/svn/
    Website: http://code.google.com/p/omnidroid
-   MailingLists: 
-     http://groups.google.com/group/omnidroid-users
-     http://groups.google.com/group/omnidroid-devel
-   Maintainers:
-        Andrew Case (acase@cims.nyu.edu)
-        Pradeep Varma (phv204@nyu.edu)
-        Rajiv Sharma (rajiv.sharma@nyu.edu)
-        Sucharita Gaat (ssg292@nyu.edu)
+   MailingLists: See Website
+   Maintainers: See Website
