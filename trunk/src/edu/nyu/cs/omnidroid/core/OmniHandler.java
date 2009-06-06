@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * <code>OmniHandler</code>s provide the mapping and configuration that OmniDroid uses to connect
- * <code>EventCatcher</code>s to <code>ActionThrower</code>s.
- * 
+ * Provides the mapping and configuration used to connect <code>EventCatcher</code>s to
+ * <code>ActionThrower</code>s.
+ *
  * @author acase
  */
 public class OmniHandler {
