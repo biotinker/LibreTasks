@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ *     
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ *******************************************************************************/
 package edu.nyu.cs.omnidroid.external.catcherapp;
 
 /**The Catcher Application is presently in the application itself. However it can be pulled out of the application and treated as a standalone third party application. It needs to have the following structure:
@@ -10,8 +25,6 @@ package edu.nyu.cs.omnidroid.external.catcherapp;
 /**
  * Activity used to fetch data from the content provider based on the
  * URI's received.
- *
- * @author Rajiv Sharma
  *
  */
 import android.app.Activity;
