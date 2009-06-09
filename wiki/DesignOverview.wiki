@@ -15,7 +15,7 @@ Application registration occurs at two times.  First when OmniDroid is first ins
 
 
 == User Setup/Configuration ==
-The user can customize OmniDroid by providing customized OmniHandlers and also by customizing the OmniDroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user perference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
+The user can customize OmniDroid by providing customized OmniHandlers and also by customizing the OmniDroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user preference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
 
 
 == Event Handling ==
@@ -69,7 +69,7 @@ Subject to change, here are the Application and User Configuration specification
 
 Omni-aware - applications which provide an OmniDroid Application Configuration File for their app.
 
-Omni-compatibile - applications which are either Omni-aware or have built-in OmniDroid support.
+Omni-compatible - applications which are either Omni-aware or have built-in OmniDroid support.
 
 OmniHandler - An event handler that is configured and stored for use in OmniDroid.
 
