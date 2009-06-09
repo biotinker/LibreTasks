@@ -1,7 +1,8 @@
 #labels Phase-Support
 = General Problems =
 
-I get this error:
+== Emulator instances cannot see each others ==
+I get this error when I am trying to send SMS to (or call) other running emulator: <br />
 emulator: could not connect client socket to :::::::00001:5556: Invalid argument.
 
 Workarounds:
