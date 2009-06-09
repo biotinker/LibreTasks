@@ -1,0 +1,10 @@
+#labels Phase-Support
+= General Problems =
+
+I get this error:
+emulator: could not connect client socket to :::::::00001:5556: Invalid argument.
+
+Workarounds:
+Disable IPv6 (use IPv4), or wait for the next release of Android.
+
+See Issue 6 for more information.
