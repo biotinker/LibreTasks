@@ -17,14 +17,13 @@ I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
 
 II. DEVELOPING OMNIDROID
 
-    Style Guidelines see: http://code.google.com/p/omnidroid/wiki/StyleGuide
+    Style Guide see: http://code.google.com/p/omnidroid/wiki/StyleGuide
 
     Contributing Code:
         All code must comply with the "Style Guidelines".
         Patches should be submitted to the mailing list in unified diff format.
 
-    Architecture and Hacking Documentation:
-        See the HACKING file for more information.
+    Design Overview see: http://code.google.com/p/omnidroid/wiki/DesignOverview
 
 III. MORE INFORMATION
 
