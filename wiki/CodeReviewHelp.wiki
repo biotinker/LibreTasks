@@ -24,3 +24,34 @@ repeats the patch cycle, or they give the coder the go ahead to submit.  Once th
 == Long Answer ==
 Here is a long document: http://code.google.com/p/rietveld/wiki/CodeReviewHelp
 <br/><br/>
+
+== Extra Help, Step By Step ==
+This is a sample walk through on windows, if it helps:
+
+1) Pull out the source code using svn to some folder, say C:\omnidroid\
+
+2) Make your changes to the source files.
+
+3) Now you're ready to do a code review, make sure you have upload.py, I have mine in C:\lib\python\upload.py
+
+4) Open up a cmd prompt, navigate to the folder that contains the files you changed. For instance, I may have edited only Test.java in this folder:
+
+    C:\omnidroid\a\b\c\Test.java
+
+so I will do:
+
+    > cd C:\omnidroid\a\b\c\
+
+5) Run svn stat here to see what diffs exist in your working directory:
+
+    > svn stat
+
+you want to only have diffs that relate to the issue you're interested in doing a code review for. If you have also edited Test2.java, but it has nothing to do with your edits for Test.java, you probably want to revert Test2.java so as not to unintentionally mix diffs from different issues.
+
+6) Now you can run upload.py here. It will automatically use the diffs in your working directory to associate with the code review (this is why we did a preliminary check in #5):
+
+    > C:\lib\python\upload.py -r omnidroid-devel@googlegroups.com --send_mail -m "My description about these changes, related to issue #123"
+
+7) The python script will make a new code review entry for you. It should generate a new code review ID number (this is not the same number as the issue #). When you make subsequent changes for this code review, then you use the -i flag and pass in that code review ID number to upload.py in order to keep all the changes organized.
+
+8) An email should go out to the dev group, wait for others to reply. 
