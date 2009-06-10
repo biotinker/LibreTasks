@@ -15,3 +15,6 @@ Code submitted to the project should follow the following guidelines.
 
 == Autoformatters: ==
   * Eclipse: http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml
+
+== Other Conventions ==
+  * For anything not specified above, follow Sun's [http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html Java code convention document].
