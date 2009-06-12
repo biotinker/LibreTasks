@@ -110,14 +110,6 @@
 		<!--  The activity that throws actions to our applications -->
 		<activity android:name=".core.DummyActivity"></activity>
 
-		<!--  Service/receiver that runs to catch events -->        
-		<service android:name=".bkgservice.BRService" />
-        <receiver android:name=".bkgservice.BCReceiver"> 
-            <intent-filter> 
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
-            </intent-filter> 
-        </receiver>
-
 		<!--  Our Content Provider that stores data to link between 
 		      the ThrowerApp and the CatcherApp -->
 		 <provider android:name=".core.CP"
