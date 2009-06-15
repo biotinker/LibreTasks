@@ -1,23 +1,23 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
- *  
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- *  
- *     http://www.apache.org/licenses/LICENSE-2.0 
- *     
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -39,7 +39,7 @@ import edu.nyu.cs.omnidroid.util.UGParser;
 /**
  * Presents a list of possible actions that the selected <code>EventCatcher</code> could have
  * performed that we want to hook an OmniHandler onto.
- * 
+ *
  */
 public class EventType extends ListActivity {
   // Menu options of the Standard variety (Android menus require int)
@@ -51,10 +51,9 @@ public class EventType extends ListActivity {
   // Initialize our AGParser
   AGParser ag = new AGParser(this);
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onCreate(android.os.Bundle)
+  /**
+   * Sets up the list of events, getting the application out of the intent, and the actual events
+   * out of the AGParser.
    */
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -66,20 +65,7 @@ public class EventType extends ListActivity {
     eventApp = extras.getString(AGParser.KEY_APPLICATION);
 
     // Getting the Events from AppConfig
-    ArrayList<HashMap<String, String>> eventList = ag.readEvents(eventApp);
-    Iterator<HashMap<String, String>> i1 = eventList.iterator();
-    ArrayList<StringMap> stringvalues = new ArrayList<StringMap>();
-    while (i1.hasNext()) {
-      HashMap<String, String> HM1 = i1.next();
-      HM1.toString();
-      String splits[] = HM1.toString().split(",");
-      for (int cnt = 0; cnt < splits.length; cnt++) {
-        String pairs[] = splits[cnt].split("=");
-        String key = pairs[0].replaceFirst("\\{", "");
-        String entry = pairs[1].replaceFirst("\\}", "");
-        stringvalues.add(new StringMap(key, entry));
-      }
-    }
+    ArrayList<StringMap> stringvalues = transformEventsList(ag.readEvents(eventApp));
 
     // Populate our list
     ArrayAdapter<StringMap> arrayAdapter = new ArrayAdapter<StringMap>(this,
@@ -88,9 +74,30 @@ public class EventType extends ListActivity {
     getListView().setTextFilterEnabled(true);
   }
 
+  /**
+   * Converts the list of events from AGParser's return value to the form needed for an
+   * ArrayAdapter.
+   *
+   * @param eventList AGParser form of event list, where each HashMap has a single entry with the
+   *                  key being the event, and the value being the human-readable event.
+   * @return ArrayAdapter form of event list, where each StringMap has the same key and value
+   *         semantics as the eventList
+   */
+  /* Visible for testing. */
+  static ArrayList<StringMap> transformEventsList(ArrayList<HashMap<String, String>> eventList) {
+    ArrayList<StringMap> newList = new ArrayList<StringMap>(eventList.size());
+    for (HashMap<String, String> map : eventList) {
+      Set<String> keys = map.keySet();
+      for (String key : keys) {
+        newList.add(new StringMap(key, map.get(key)));
+      }
+    }
+    return newList;
+  }
+
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int,
    * long)
    */
@@ -98,6 +105,17 @@ public class EventType extends ListActivity {
   protected void onListItemClick(ListView l, View v, int position, long id) {
     StringMap sm = (StringMap) l.getAdapter().getItem(position);
     String eventName = sm.getKey();
+    Intent i = createIntent(eventName);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDLER);
+  }
+
+  /**
+   * Creates an intent with two extras: this instance's eventApp and the given eventName.
+   * @param eventName to populate the EventName value of one of the Intent's extra
+   * @return the new Intent
+   */
+  /* Visible for testing. */
+  Intent createIntent(String eventName) {
     Intent i = new Intent();
     // See if filters can be applied, if not skip the filters page
     if (ag.readFilters(eventApp, eventName).size() > 0) {
@@ -107,32 +125,28 @@ public class EventType extends ListActivity {
     }
     i.putExtra(AGParser.KEY_APPLICATION, eventApp);
     i.putExtra(UGParser.KEY_EVENT_TYPE, eventName);
-    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
+    return i;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
+  @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-    case Constants.RESULT_ADD_OMNIHANDER:
-      switch (resultCode) {
-      case Constants.RESULT_SUCCESS:
-        setResult(resultCode, data);
-        finish();
-        break;
-      }
-      break;
+    if (Constants.RESULT_ADD_OMNIHANDLER == requestCode && Constants.RESULT_SUCCESS == resultCode) {
+      setResult(resultCode, data);
+      finish();
     }
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
+  @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(0, MENU_HELP, 0, R.string.help).setIcon(android.R.drawable.ic_menu_help);
     return true;
@@ -140,9 +154,10 @@ public class EventType extends ListActivity {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
     case MENU_HELP:

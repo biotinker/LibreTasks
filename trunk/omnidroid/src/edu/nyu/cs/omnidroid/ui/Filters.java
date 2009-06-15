@@ -266,7 +266,7 @@ public class Filters extends Activity implements OnClickListener {
       i.putExtra(UGParser.KEY_FILTER_TYPE, filterType);
       i.putExtra(UGParser.KEY_FILTER_DATA, filterData);
     }
-    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDLER);
   }
 
   /**
@@ -310,7 +310,7 @@ public class Filters extends Activity implements OnClickListener {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case Constants.RESULT_ADD_OMNIHANDER:
+    case Constants.RESULT_ADD_OMNIHANDLER:
       switch (resultCode) {
       case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);

@@ -270,7 +270,7 @@ public class Overview extends ListActivity {
   private void addOmniHandler() {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), edu.nyu.cs.omnidroid.ui.Event.class);
-    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDLER);
   }
 
   /*
@@ -280,7 +280,7 @@ public class Overview extends ListActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case Constants.RESULT_ADD_OMNIHANDER:
+    case Constants.RESULT_ADD_OMNIHANDLER:
       switch (resultCode) {
       case Constants.RESULT_SUCCESS:
         update();

@@ -72,7 +72,7 @@ public class Event extends ListActivity {
     Intent i = new Intent();
     i.setClass(this.getApplicationContext(), EventType.class);
     i.putExtra(AGParser.KEY_APPLICATION, tv.getText());
-    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDER);
+    startActivityForResult(i, Constants.RESULT_ADD_OMNIHANDLER);
   }
 
   /*
@@ -82,7 +82,7 @@ public class Event extends ListActivity {
    */
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case Constants.RESULT_ADD_OMNIHANDER:
+    case Constants.RESULT_ADD_OMNIHANDLER:
       switch (resultCode) {
       case Constants.RESULT_SUCCESS:
         setResult(resultCode, data);
