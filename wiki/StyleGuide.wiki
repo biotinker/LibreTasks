@@ -18,3 +18,9 @@ Code submitted to the project should follow the following guidelines.
 
 == Other Conventions ==
   * For anything not specified above, follow Sun's [http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html Java code convention document].
+
+== Best Practice for Android Development ==
+  * [http://developer.android.com/guide/practices/design/performance.html Designing for Performance]
+  * [http://developer.android.com/guide/practices/ui_guidelines/index.html User Interface Guidelines]
+  * [http://developer.android.com/guide/practices/design/responsiveness.html Designing for Responsiveness]
+  * [http://developer.android.com/guide/practices/design/seamlessness.html Designing for Seamlessness]
