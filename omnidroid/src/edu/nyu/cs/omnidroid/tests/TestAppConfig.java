@@ -37,6 +37,15 @@ public class TestAppConfig extends Activity {
     // FIXME: This needs to be pulled from the other applications
     super.onCreate(savedInstanceState);
     AGParser ag = new AGParser(this.getApplicationContext());
+    writeConfig(ag);
+
+    Toast.makeText(getApplicationContext(), "Population Test App Config File", 5).show();
+    this.finish();
+
+  }
+
+  /* Visible for testing */
+  public static void writeConfig(AGParser ag) {
     ag.delete_all();
     ag.write("Application:Test Application");
     ag.write("PkgName:edu.nyu.cs.omnidroid");
@@ -103,9 +112,5 @@ public class TestAppConfig extends Activity {
     ag.write("ActionName:android.intent.action.WALLPAPER_CHANGED,WALLPAPER CHANGED");
     ag.write("ActionName:android.intent.action.CAMERA_BUTTON,CAMERA CLICK");
     ag.write("ActionName:android.intent.action.REBOOT,REBOOT ");
-
-    Toast.makeText(getApplicationContext(), "Population Test App Config File", 5).show();
-    this.finish();
-
   }
 }

@@ -13,33 +13,20 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.core;
+package edu.nyu.cs.omnidroid;
 
-import junit.framework.TestCase;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import android.test.suitebuilder.TestSuiteBuilder;
 
 /**
- * Unit tests for {@link RegisteredApp} class.
+ * A test suite containing all tests for omnidroid-test.
  */
-public class RegisteredAppTest extends TestCase {
-  private RegisteredApp app;
+public class AllTests extends TestSuite {
 
-  @Override
-  public void setUp() {
-    app = new RegisteredApp();
-  }
-
-  /** Tests that default {@code appName} is null. */
-  public void testDefaultGetAppName() {
-    assertNull(app.getAppName());
-  }
-
-  /** Tests that {@code appName} is stored and retrieved correctly. */
-  public void testAppName() {
-    String name = "foo";
-    app.setAppName(name);
-    assertEquals(name, app.getAppName());
-  }
-
-  // TODO(ksjohnson3): Add tests for the rest of the methods on RegisteredApp when it is actually
-  // used.
+    public static Test suite() {
+        return new TestSuiteBuilder(AllTests.class)
+                .includeAllPackagesUnderHere()
+                .build();
+    }
 }

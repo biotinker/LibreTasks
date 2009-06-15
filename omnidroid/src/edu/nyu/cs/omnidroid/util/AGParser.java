@@ -298,6 +298,8 @@ public class AGParser {
    * @return Returns ArrayList of Hashmaps containing Actual Name and Display Name
    */
   // TODO(Pradeep): I don't think this formats the data properly into a data structure.
+  // TODO(ksjohnson3): Return List<Map<String, String>> instead of implementation classes like
+  //                   ArrayList or HashMap.
   public ArrayList<HashMap<String, String>> readEvents(String AppName) {
     ArrayList<HashMap<String, String>> eArrayList = new ArrayList<HashMap<String, String>>();
     // ArrayList<StringMap> eArrayList = new ArrayList<StringMap>();
