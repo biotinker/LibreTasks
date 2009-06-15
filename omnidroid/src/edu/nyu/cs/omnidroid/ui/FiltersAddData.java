@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -46,6 +47,11 @@ public class FiltersAddData extends Activity implements OnClickListener {
   String eventApp;
   String eventName;
   String filterType;
+  
+  /**
+   * For storing Activity context state between onDestroy()/onCreate() calls.
+   */
+  private SharedPreferences prefs;
 
   /*
    * (non-Javadoc)
@@ -53,7 +59,7 @@ public class FiltersAddData extends Activity implements OnClickListener {
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.filters_add_data);
 
@@ -63,6 +69,26 @@ public class FiltersAddData extends Activity implements OnClickListener {
     // Connect to the "Done" button
     Button done = (Button) findViewById(R.id.filters_add_done);
     done.setOnClickListener(this);
+    
+    // Restore UI control values if possible, otherwise leave blank.
+    prefs = super.getPreferences(MODE_PRIVATE);
+    EditText edit = (EditText)findViewById(R.id.filters_add_data);
+    edit.setText(prefs.getString(R.id.filters_add_data + "", ""));
+  }
+  
+  /*
+   * (non-Javadoc)
+   * @see android.app.Activity#onPause()
+   */
+  protected void onPause() {
+	  
+    super.onPause();
+
+    // Save UI values.
+    String addData = ((EditText)findViewById(R.id.filters_add_data)).getText().toString();
+    SharedPreferences.Editor prefsEditor = prefs.edit();
+    prefsEditor.putString(R.id.filters_add_data + "", addData);
+    prefsEditor.commit(); 
   }
 
   /**
