@@ -1,0 +1,39 @@
+#summary Sketch of possible UI
+
+= Introduction =
+
+This is just a sample UI we could implement for Omnidroid. An intro splash screen has not been created - this would probably include:
+  * View saved rules
+  * Create new rule
+  * Help
+  * About
+
+These sketches start from the context of creating a new rule. Some pros and cons listed at the end.
+<br /><br />
+We should also investigate a UI made of pure Android components, as an alternate to one made with custom drawing code.
+<br />
+<br />
+
+== Screens ==
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/4/49/Ui00pic00.png
+<br/>
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/a/a6/Ui00pic01.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/9/99/Ui00pic02.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/b/be/Ui00pic03.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/4/4c/Ui00pic04.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/9/90/Ui00pic05.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/b/b4/Ui00pic06.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/a/a4/Ui00pic07.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/6/6a/Ui00pic08.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/c/ce/Ui00pic09.png
+<br />
+https://cs.nyu.edu/~michaels/courses/summer09/osp/wiki/images/1/1e/Ui00pic10.png
+<br />
