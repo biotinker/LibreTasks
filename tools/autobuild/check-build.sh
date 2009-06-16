@@ -13,8 +13,8 @@ TMPFILE="$BUILD_DIR/var/tmp/check-build"
 EMAIL_HEAD="$BUILD_DIR/share/templates/email_header"
 EMAIL_FOOT="$BUILD_DIR/share/templates/email_footer"
 LOG="$BUILD_DIR/logs/omnidroid.build.log.$DATE"
-TO="omnidroid-build@googlegroups.com"
-#TO="acase@cims.nyu.edu"
+#TO="omnidroid-build@googlegroups.com"
+TO="acase@cims.nyu.edu"
 REV_OLD_FILE="$BUILD_DIR/.REV_OLD"
 REV_NEW_FILE="$BUILD_DIR/.REV_NEW"
 REV_OLD=""
@@ -70,6 +70,8 @@ build() {
 
 # Email success/failure email
 email_results() {
+    # Some SVN commands take oldrevision+1 as a param
+    # while others take oldrevision as a param.
     let REV_OLD_PP="$REV_OLD"+1
     echo "to: $TO" >> ${TMPFILE}
     echo "subject: $SUBJECT" >> ${TMPFILE}
@@ -78,6 +80,7 @@ email_results() {
     echo "== NEW REVISION: ${REV_NEW}" >> ${TMPFILE}
     echo "== REVISION COMMIT LOG =============================" >> ${TMPFILE}
     svn log ${REPO_URL} -v -r ${REV_OLD_PP}:${REV_NEW} >> ${TMPFILE}
+    svn diff ${REPO_URL} -r ${REV_OLD}:${REV_NEW} >> ${TMPFILE}
     echo "== /REVISION COMMIT LOG ============================" >> ${TMPFILE}
     echo "== BUILD LOG =======================================" >> ${TMPFILE}
     cat $LOG >> ${TMPFILE}
