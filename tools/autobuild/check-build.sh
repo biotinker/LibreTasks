@@ -19,30 +19,40 @@ REV_OLD_FILE="$BUILD_DIR/.REV_OLD"
 REV_NEW_FILE="$BUILD_DIR/.REV_NEW"
 REV_OLD=""
 REV_NEW=""
-SUBJECT="[omnidroid-build] Rev#"
+SUBJECT="Rev#"
 
 update_version() {
-    mv $REV_NEW_FILE $REV_OLD_FILE
-    svn info $REPO_URL | grep ^Rev | awk '{print $2}' > $REV_NEW_FILE
+    new_version=`svn info $REPO_URL | grep ^Rev | awk '{print $2}'`
+    if [ $new_version -gt 0 ]; then
+        mv $REV_NEW_FILE $REV_OLD_FILE
+        echo "$new_version" > $REV_NEW_FILE
+    else
+        exit "Failed to pull from $REPO_URL"
+    fi
 }
 
 initialize() {
+    touch $LOG
+    # If this script is already running, then don't build
     if [ -f $TMPFILE ]; then
-        # If this script is already running, then don't build
+        echo "$TMPFILE found, build probably already in progress." >> $LOG
         exit 1;
     fi
-    update_version
-    if [ ! `cat ${REV_NEW_FILE}` -gt `cat ${REV_OLD_FILE}` ]; then
-        # If no update has been made, then don't build
-        exit 2;
-    else
-        # Otherwise, it's off to the races!
-        /bin/touch ${TMPFILE}
-        REV_NEW=`cat ${REV_NEW_FILE}`
-        REV_OLD=`cat ${REV_OLD_FILE}`
 
+    # Upon exit, cleanup locks
+    trap "{ rm -f $TMPFILE ; exit 255; }" EXIT
+    /bin/touch ${TMPFILE}
+
+    # See if we have a new repo version
+    update_version
+    REV_NEW=`cat ${REV_NEW_FILE}`
+    REV_OLD=`cat ${REV_OLD_FILE}`
+    if [ ! $REV_NEW -gt $REV_OLD ]; then
+        # If no update has been made, then don't build
+        echo "Old Revision=$REV_OLD, New Revision=$REV_NEW." >> $LOG
+        echo "Old >= New.  Skipping build." >> $LOG
+        exit 2;
     fi
-    touch $LOG
 }
 
 # Build our software
