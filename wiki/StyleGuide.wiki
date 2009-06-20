@@ -14,12 +14,25 @@ Code submitted to the project should follow the following guidelines.
   * Braces: Same line starting, new line ending
 
 == Autoformatters: ==
+Download the below xml file and save it to your local disk. Import this formatter in eclipse with Window --> Preferences --> Java --> Code Style --> Formatter and choose "Import..." and find this file on disk. Now, when you select code in eclipse, Ctrl + Shift + F will auto format it. Avoid auto-formatting entire classes if you're touching small parts, since it makes the code review unnecessarily large.
   * Eclipse: http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml
+
+== Testing ==
+Tests go in the omnidroid-test project that is a sibling project to the main omnidroid project. A test class should go in the same package as the class under test. For testing FooClass, the test class should be name FooClassTest.
+
+When possible, extend jUnit's TestCase instead of an Android class. jUnit tests run an order of magnitude faster than Android tests. It is appropriate to write two separate test classes for the same class under test, one Android test and one jUnit test, if there are significant portions of the class that can be tested without Android infrastructure.
+
+When naming test methods, the name must begin with "test" and, for testing method doFoo(), should be approximately "testDoFoo". If you have several tests for different code paths in doFoo(), differentiate your test methods with names that describe their differences: testDoFoo_rejectNull, testDoFoo_invalidArgument, testDoFoo_emptyString, etc.
+
+Testing resources and general guidelines:
+  * [http://junit.sourceforge.net/doc/cookstour/cookstour.htm jUnit - A Cook's Tour] - a great getting started guide for jUnit
+  * [http://www.artima.com/weblogs/viewpost.jsp?thread=203994 The Way of Testivus: Unit Testing Wisdom From An Ancient Software Start-up] - a fun (and valuable) take on testing best practices
+
 
 == Other Conventions ==
   * For anything not specified above, follow Sun's [http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html Java code convention document].
 
-== Best Practice for Android Development ==
+== Best Practices for Android Development ==
   * [http://developer.android.com/guide/practices/design/performance.html Designing for Performance]
   * [http://developer.android.com/guide/practices/ui_guidelines/index.html User Interface Guidelines]
   * [http://developer.android.com/guide/practices/design/responsiveness.html Designing for Responsiveness]
