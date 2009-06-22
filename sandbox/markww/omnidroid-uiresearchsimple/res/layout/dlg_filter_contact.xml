@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dlg_filtercontact_ll"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+	    
+   	<TextView android:id="@+id/dlg_filtercontact_tv_info1"
+       	android:layout_width="fill_parent" 
+       	android:layout_height="wrap_content"  
+       	android:layout_weight="0"
+       	android:paddingTop="10px"
+       	android:paddingBottom="10px"
+       	android:text="These are just sample controls and will be changing once we finalize what data should be captured for each filter type." />
+    
+    <TextView android:id="@+id/dlg_filtercontact_tv_info2"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"  
+        android:layout_weight="0"
+        android:paddingTop="10px"
+        android:paddingBottom="10px"
+        android:text="For instance, we could ask for a contact's name here:" />
+      	
+    <EditText android:id="@+id/dlg_filtercontact_edit" 
+        android:maxLines="1" 
+        android:layout_marginTop="2dip"
+        android:layout_width="wrap_content"
+        android:ems="25"
+        android:layout_height="wrap_content" 
+        android:scrollHorizontally="true" 
+        android:selectAllOnFocus="true"
+        android:text="" />
+    
+   	<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+            
+        <Button android:id="@+id/dlg_filtercontact_btnOk"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_gravity="center"
+            android:text="OK" />
+            
+        <Button android:id="@+id/dlg_filtercontact_btnInfo"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_gravity="center"
+            android:text="Info" />
+            
+        <Button android:id="@+id/dlg_filtercontact_btnCancel"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_gravity="center"
+            android:text="Cancel" />
+    </LinearLayout>
+    
+</LinearLayout>
