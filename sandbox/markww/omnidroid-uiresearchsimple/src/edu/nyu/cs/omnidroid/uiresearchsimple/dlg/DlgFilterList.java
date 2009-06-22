@@ -84,9 +84,9 @@ public class DlgFilterList extends Dialog
         			v.getContext(), 
         			filtersAdapter.getItemDlgClassName(selectedEventPosition));
         		dlg.setOnDismissListener(new OnDismissListener() {
-					@Override
+        			//@Override (commented out because of compatibility issues btwn mac & win)
 					public void onDismiss(DialogInterface arg0) {
-						// We can asl the dying dialog if it was able to build a filter
+						// We can ask the dying dialog if it was able to build a filter
 						// instance. If so, we can dismiss ourselves to propagate back
 						// up to our own parent. Otherwise we do nothing, maybe the user
 						// picked the wrong filter and wants to try again.
@@ -135,7 +135,7 @@ public class DlgFilterList extends Dialog
             return DatabaseMemCache.instance().getFilters().size();
         }
         
-        @Override
+        //@Override (commented out because of compatibility issues btwn mac & win)
         public Object getItem(int position) {
         	return DatabaseMemCache.instance().getFilters().get(position);
         }
