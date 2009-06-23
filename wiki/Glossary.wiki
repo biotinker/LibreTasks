@@ -9,21 +9,14 @@ Refers to component that listens for Android Intents that we have active rules f
 === Event === 
 An intent that is being received by OmniDroid Intent Handler.
 
-=== Event Parameters ===
-
-=== Event Filter ===
-
 === Action ===
 An intent that OmniDroid initiates as a result of an OmniDroid rule.
 
 === Rule ===
 A correlation between events and actions.
 
+=== Event Attributes ===
+Data that is received along with the event.
+
 === Action Parameters ===
-
-=== Action Filter ===
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Data that must be sent along with the action.
