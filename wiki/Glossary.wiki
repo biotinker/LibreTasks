@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary The purpose of the glossary is to eliminate ambiguous terms and their usage.
 
 = Introduction =
 The purpose of the glossary is to eliminate ambiguous terms and their usage. 
