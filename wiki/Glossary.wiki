@@ -9,15 +9,15 @@ An intent that is being received by OmniDroid intent handler.
 
 === Event Filter ===
 
-== Action ==
+=== Action ===
 An intent that OmniDroid initiates as a result of an OmniDroid rule.
 
-== Rule ==
+=== Rule ===
 A correlation between events and actions.
 
-== Action Parameters ==
+=== Action Parameters ===
 
-== Action Filter ==
+=== Action Filter ===
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
