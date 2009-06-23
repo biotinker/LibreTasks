@@ -7,8 +7,7 @@ package edu.nyu.cs.omnidroid.uiresearchsimple.model;
  */
 public abstract class ModelFilter extends ModelItem
 {
-	public ModelFilter(String typeName)
-	{
+	public ModelFilter(String typeName) {
 		super(typeName);
 	}
 }

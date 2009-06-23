@@ -27,11 +27,18 @@
     </FrameLayout>
    
    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_choosefilters_llBottomButtons"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:gravity="center"
     >
+    
+    <LinearLayout 
+     android:orientation="horizontal"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     >
     
 		<Button 
 		    android:text="+Filter" 
@@ -58,20 +65,14 @@
         </Button>
         
         <Button 
-            android:text="Done" 
-            android:id="@+id/activity_choosefilters_btnDone" 
+            android:text="Tasks ->" 
+            android:id="@+id/activity_choosefilters_btnTasks" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center">
         </Button>
-        
-		<Button 
-		    android:text="Quit" 
-		    android:id="@+id/activity_choosefilters_btnCancel" 
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center">
-		</Button>
+
+      </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

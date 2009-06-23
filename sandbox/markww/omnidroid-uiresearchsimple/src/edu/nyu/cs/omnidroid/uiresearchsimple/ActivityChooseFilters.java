@@ -3,10 +3,10 @@ package edu.nyu.cs.omnidroid.uiresearchsimple;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -38,7 +38,7 @@ import edu.nyu.cs.omnidroid.uiresearchsimple.model.Rule;
  * filters into a rule.
  */
 public class ActivityChooseFilters extends Activity 
-{	
+{
 	private ListView listView;
 	private RulesetAdapter rulesetAdapter;
 	private Handler mHandler = new Handler();
@@ -68,11 +68,11 @@ public class ActivityChooseFilters extends Activity
         Button btnEditFilter = (Button)findViewById(R.id.activity_choosefilters_btnEditFilter);
         btnEditFilter.setOnClickListener(listenerBtnClickEditFilter);
         
-        Button btnDone= (Button)findViewById(R.id.activity_choosefilters_btnDone);
-        btnDone.setOnClickListener(listenerBtnClickDone);
+        Button btnTasks= (Button)findViewById(R.id.activity_choosefilters_btnTasks);
+        btnTasks.setOnClickListener(listenerBtnClickTasks);
         
-        Button btnCancel = (Button)findViewById(R.id.activity_choosefilters_btnCancel);
-        btnCancel.setOnClickListener(listenerBtnClickCancel);
+        LinearLayout llBottomButtons = (LinearLayout)findViewById(R.id.activity_choosefilters_llBottomButtons);
+        llBottomButtons.setBackgroundColor(0xFFBBBBBB);
     }
     
     private OnClickListener listenerBtnClickAddFilter = new OnClickListener() {
@@ -144,39 +144,15 @@ public class ActivityChooseFilters extends Activity
         }
     };
     
-    private OnClickListener listenerBtnClickDone = new OnClickListener() {
+    private OnClickListener listenerBtnClickTasks = new OnClickListener() {
         public void onClick(View v) {
-        	// TODO: Now let the user add tasks to be executed if the rule is true.
-        	Util.showAlert(v.getContext(), "Sorry!", "After adding filters, we'll take the user to another Activity where they can add tasks.");
-        }
+        	// User wants to now pick some filters, move along to that Activity.
+        	//Intent intent = new Intent();
+            //intent.setClass(getApplicationContext(), ActivityChooseTasks.class);
+            //startActivity(intent);
+        	Util.showAlert(v.getContext(), "Sorry!", "Switching to adding tasks coming soon.");
+       }
     };
-    
-    private OnClickListener listenerBtnClickCancel = new OnClickListener() {
-        public void onClick(View v) {
-        	// Warn the user that their rule data will be lost if exiting.
-        	new AlertDialog.Builder(v.getContext()).setTitle("Warning!")
-    	    .setIcon(0)
-    	    .setMessage("Your rule data will be lost, are you sure you continue?")
-    	    .setCancelable(true)
-    	    .setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialoginterface, int i) {
-                    	// Reset the global rule.
-                    	RuleBuilder.instance().reset();
-                  	    finish();
-                    }
-                }
-    	    )
-    	    .setNegativeButton("No", 
-    	    	new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialoginterface, int i) {
-              	    }
-            	}
-    	    )
-    	    .show();
-        }
-    };
-    
 	
 	/**
 	 * Our rule has a tree hierarchy to it, and we want to

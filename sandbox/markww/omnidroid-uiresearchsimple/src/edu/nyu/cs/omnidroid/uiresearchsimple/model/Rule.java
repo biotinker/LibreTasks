@@ -29,6 +29,10 @@ public class Rule
 		return mNode;
 	}
 	
+	public boolean getHasAnyFilters() {
+		return mNode.getChildren().size() > 0;
+	}
+	
 	public String getNaturalLanguageString() {
 		// TODO: Generate natural language string for current rule.
 		return "Not yet implemented!";

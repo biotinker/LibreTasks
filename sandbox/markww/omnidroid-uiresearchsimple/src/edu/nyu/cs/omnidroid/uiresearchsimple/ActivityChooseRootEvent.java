@@ -52,7 +52,10 @@ public class ActivityChooseRootEvent extends Activity {
         btnViewRules.setOnClickListener(listenerBtnClickCancel);
         
         Button btnHelp = (Button)findViewById(R.id.activity_chooserootevent_btnHelp);
-        btnHelp.setOnClickListener(listenerBtnClickHelp);     
+        btnHelp.setOnClickListener(listenerBtnClickHelp); 
+        
+        LinearLayout llBottomButtons = (LinearLayout)findViewById(R.id.activity_chooserootevent_llBottomButtons);
+        llBottomButtons.setBackgroundColor(0xFFBBBBBB);
     }
     
     private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
