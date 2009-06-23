@@ -1,9 +1,13 @@
 #summary The purpose of the glossary is to eliminate ambiguous terms and their usage.
 
-=== Intent ===
+=== Intent (_or Android Intent_) ===
+Refers to a Android Intent.
+
+=== OmniDroid Intent Handler ===
+Refers to component that listens for Android Intents that we have active rules for.
 
 === Event === 
-An intent that is being received by OmniDroid intent handler.
+An intent that is being received by OmniDroid Intent Handler.
 
 === Event Parameters ===
 
