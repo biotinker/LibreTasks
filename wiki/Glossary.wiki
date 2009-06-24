@@ -6,6 +6,9 @@ Refers to a Android Intent.
 === OmniDroid Intent Listener ===
 Refers to component that listens for Android Intents that we have active rules for.
 
+=== OmniDroid Intent Parser ===
+Parses the intent according to it's type and creates properly formated Event.
+
 === OmniDroid Event Processor ===
 Refers to component that processes events and performs required action, based on given rules.
 
