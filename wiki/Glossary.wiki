@@ -26,3 +26,6 @@ Data that is received along with the event.
 
 === Action Parameters ===
 Data that must be sent along with the action.
+
+=== Global Attributes ===
+A system or third party attribute that provides additional data.
