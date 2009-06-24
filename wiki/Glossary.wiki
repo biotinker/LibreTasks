@@ -3,11 +3,11 @@
 === Intent (_or Android Intent_) ===
 Refers to a Android Intent.
 
-=== OmniDroid Intent Handler ===
+=== OmniDroid Intent Listener ===
 Refers to component that listens for Android Intents that we have active rules for.
 
 === Event === 
-An intent that is being received by OmniDroid Intent Handler.
+An intent that is being received by OmniDroid Intent Listener.
 
 === Action ===
 An intent that OmniDroid initiates as a result of an OmniDroid rule.
