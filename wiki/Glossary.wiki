@@ -6,6 +6,9 @@ Refers to a Android Intent.
 === OmniDroid Intent Listener ===
 Refers to component that listens for Android Intents that we have active rules for.
 
+=== OmniDroid Event Processor ===
+Refers to component that listens for Android Intents that we have active rules for.
+
 === Event === 
 An intent that is being received by OmniDroid Intent Listener.
 
