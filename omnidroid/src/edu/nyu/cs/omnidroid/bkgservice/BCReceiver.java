@@ -34,9 +34,9 @@ public class BCReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     try {
-      intent.setClass(context, edu.nyu.cs.omnidroid.core.DummyActivity.class);
+      intent.setClass(context, edu.nyu.cs.omnidroid.core.HandlerService.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      context.startActivity(intent);
+      context.startService(intent);
       Log.i("Received Intent", intent.getAction());
     } catch (Exception e) {
       Log.i("Exception in Intent", e.getLocalizedMessage());

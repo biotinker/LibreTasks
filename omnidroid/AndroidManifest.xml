@@ -4,8 +4,6 @@
 	      android:versionCode="1"
 	      android:versionName="1.0">
 
-    <!-- Specify what version of the SDK is needed -->
-    <uses-sdk android:minSdkVersion="3" />
 
     <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
 
@@ -109,8 +107,8 @@
                   android:label="@string/package_lister">
 		</activity>
 		
-		<!--  The activity that throws actions to our applications -->
-		<activity android:name=".core.DummyActivity"></activity>
+		<!--  The service that throws actions to our applications -->
+		<service android:name=".core.HandlerService"></service>
 
 		<!--  Our Content Provider that stores data to link between 
 		      the ThrowerApp and the CatcherApp -->
