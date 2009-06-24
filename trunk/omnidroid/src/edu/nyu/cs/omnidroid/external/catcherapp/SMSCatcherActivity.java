@@ -30,7 +30,7 @@ import edu.nyu.cs.omnidroid.core.CP;
 
 /**
  * Activity used to fetch data from the OmniDroid content provider based on the
- * URI's received from DummyActivity.
+ * URI's received from {@link HandlerService}.
  * The SMSCatcherActivity needs to have permissions defined to read and write
  * SMSes in the Android Manifest file, in order to be able to send smses.
  *
