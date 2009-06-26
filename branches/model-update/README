@@ -1,0 +1,33 @@
+                            OmniDroid - Read Me
+
+      TABLE OF CONTENTS
+
+  I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
+ II. DEVELOPING OMNIDROID
+III. MORE INFORMATION
+
+
+I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
+
+    OmniDroid is currently only available in source form for development.
+
+    See Setup Dev Environment for details:
+        http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
+
+
+II. DEVELOPING OMNIDROID
+
+    Style Guide see: http://code.google.com/p/omnidroid/wiki/StyleGuide
+
+    Contributing Code:
+        All code must comply with the "Style Guidelines".
+        Patches should be submitted to the mailing list in unified diff format.
+
+    Design Overview see: http://code.google.com/p/omnidroid/wiki/DesignOverview
+
+III. MORE INFORMATION
+
+   License: Apache 2.0 License
+   Website: http://code.google.com/p/omnidroid
+   MailingLists: See Website
+   Maintainers: See Website
