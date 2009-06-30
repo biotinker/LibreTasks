@@ -15,38 +15,36 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
-import android.content.Intent;
 import edu.nyu.cs.omnidroid.tests.TestData;
 
 /**
- * Unit tests for {@link SMS} class.
+ * Unit tests for {@link Rule} class.
  */
-public class SMSTest extends TestCase {
-  private SMS sms;
-  Intent intent;
+public class RuleTest extends TestCase {
+  Rule rule;
+  Event event;
 
-  @Override
   public void setUp() {
-    sms = TestData.getSMSEvent();
-  }
-    
-  /** Tests the lookup of the sender's phone number */
-  public void testGetData_Phone() {
-    String field = SMS.ATTRIB_PHONE_NO;
-    assertEquals(TestData.TEST_PHONE_NO, sms.getAttribute(field));
+    rule = TestData.getRule();
+    event = TestData.getSMSEvent();
   }
   
-  /** Tests the lookup of the message text */
-  public void testGetData_Text() {
-    String field = SMS.ATTRIB_MESSAGE_TEXT;
-    assertEquals(TestData.TEST_MESSAGE_TEXT, sms.getAttribute(field));
+  public void testCheckFilters_True() {
+    assertTrue(rule.checkFilters(event));
   }
   
-  /** Tests an invalid lookup */
-  public void testGetInvalidField() {
-    String field = "Bad fieldname";
-    assertNull(sms.getAttribute(field));
+  public void testCheckFilters_False() {
+    rule.filterData[0] = "Some other message";
+    assertFalse(rule.checkFilters(event));
   }
-
+  
+  public void testGetActions() {
+    ArrayList<Action> actions = new ArrayList<Action>();
+    Action action = new Action();
+    actions.add(action);
+    assertEquals(actions.size(),rule.getActions(event).size());
+  }
 }

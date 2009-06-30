@@ -1,19 +1,24 @@
 package edu.nyu.cs.omnidroid.core;
 
 import android.content.Intent;
+import android.os.Bundle;
 
-public class SMS {
-  /** Stores the intent that triggered this event, which contains data associated with it */
-  private final Intent intent;
-
+/**
+ * This class encapsulates an SMS event. It wraps the intent that triggered this event and provides
+ * access to any attribute data associated with it.
+ */
+public class SMS extends Event {
+  /** Event name (to match record in database) */
+  public static final String EVENT_NAME = "SMS";
+  
   /** Attribute field names */
   public static final String ATTRIB_PHONE_NO = "Phone Number";
   public static final String ATTRIB_MESSAGE_TEXT = "Message Text";
-  
+
   /** Cache any values that are requested because it is likely they will be asked for again */
   private String phoneNumber = null;
   private String messageText = null;
-  
+
   /**
    * Constructs a new SMS object that holds an SMS event fired intent. This intent holds the data
    * needed to check the event against user defined rules.
@@ -22,7 +27,7 @@ public class SMS {
    *          the intent received when the SMS received event was fired by and external app
    */
   public SMS(Intent intent) {
-    this.intent = intent;
+    super(EVENT_NAME, intent);
   }
 
   /**
@@ -32,46 +37,49 @@ public class SMS {
    *          the name of the attribute associated with this event
    * @return the data associated with the attribute
    */
-  public String getData(String attributeName) {
+  @Override
+  public String getAttribute(String attributeName) {
     if (attributeName.equals(ATTRIB_PHONE_NO)) {
       return getPhoneNumber();
     } else if (attributeName.equals(ATTRIB_MESSAGE_TEXT)) {
       return getMessageText();
+    } else {
+      return null;
     }
-    return null;
+    // TODO(londinop): Add exception for invalid data field name
   }
 
   /**
-   * Gets the phone number from the SMS intent <br>
-   * TODO(londinop) Replace with intent-specific code that retrieves the phone number
+   * Gets the phone number from the SMS intent
    * 
    * @return the phone number of the sender of the SMS
    * 
    */
   private String getPhoneNumber() {
+    // TODO(londinop) Replace with intent-specific code that retrieves the phone number
     if (phoneNumber != null) {
       return phoneNumber;
-    }
-    else {
-      phoneNumber = "908-220-2280";
+    } else {
+      Bundle b = intent.getExtras();
+      phoneNumber = b.getString(ATTRIB_PHONE_NO);
       return phoneNumber;
     }
   }
 
   /**
-   * Gets the message text from the SMS intent <br>
-   * TODO(londinop) Replace with intent-specific code that retrieves the message text
+   * Gets the message text from the SMS intent
    * 
    * @return the phone number of the sender of the SMS
    * 
    */
   private String getMessageText() {
+    // TODO(londinop) Replace with intent-specific code that retrieves the message text
     if (messageText != null) {
       return messageText;
-    }
-    else {
-      messageText = "The moon in June is a big, big balloon.";
+    } else {
+      Bundle b = intent.getExtras();
+      messageText = b.getString(ATTRIB_MESSAGE_TEXT);
       return messageText;
-    }    
+    }
   }
 }

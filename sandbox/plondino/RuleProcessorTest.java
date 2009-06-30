@@ -15,38 +15,40 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
-import android.content.Intent;
 import edu.nyu.cs.omnidroid.tests.TestData;
 
 /**
- * Unit tests for {@link SMS} class.
+ * Unit tests for {@link RuleProcessor} class.
  */
-public class SMSTest extends TestCase {
-  private SMS sms;
-  Intent intent;
+public class RuleProcessorTest extends TestCase {
+  Rule rule;
+  Event event;
 
-  @Override
   public void setUp() {
-    sms = TestData.getSMSEvent();
-  }
+    event = TestData.getSMSEvent();
     
-  /** Tests the lookup of the sender's phone number */
-  public void testGetData_Phone() {
-    String field = SMS.ATTRIB_PHONE_NO;
-    assertEquals(TestData.TEST_PHONE_NO, sms.getAttribute(field));
-  }
-  
-  /** Tests the lookup of the message text */
-  public void testGetData_Text() {
-    String field = SMS.ATTRIB_MESSAGE_TEXT;
-    assertEquals(TestData.TEST_MESSAGE_TEXT, sms.getAttribute(field));
-  }
-  
-  /** Tests an invalid lookup */
-  public void testGetInvalidField() {
-    String field = "Bad fieldname";
-    assertNull(sms.getAttribute(field));
   }
 
+  /**
+   * Tests that the rule processor correctly retrieves an action if the event passes all rule
+   * filters
+   */
+  public void testRuleProcessor_pass() {
+    ArrayList<Action> actions = new ArrayList<Action>();
+    Action action = new Action();
+    actions.add(action);
+    assertEquals(actions.size(), RuleProcessor.getActions(event).size());
+  }
+
+  /**
+   * Tests that the rule processor does not retrieve an action if the event does not pass all rule
+   * filters
+   */
+  public void testRuleProcessor_noPass() {
+    event = TestData.getAnotherSMSEvent();
+    assertEquals(0, RuleProcessor.getActions(event).size());
+  }
 }

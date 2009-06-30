@@ -15,38 +15,25 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
+import edu.nyu.cs.omnidroid.tests.TestData;
 import junit.framework.TestCase;
 import android.content.Intent;
-import edu.nyu.cs.omnidroid.tests.TestData;
 
 /**
- * Unit tests for {@link SMS} class.
+ * Unit tests for {@link IntentParser} class.
  */
-public class SMSTest extends TestCase {
-  private SMS sms;
+public class IntentParserTest extends TestCase {
   Intent intent;
-
-  @Override
+  Event event;
+  
   public void setUp() {
-    sms = TestData.getSMSEvent();
-  }
-    
-  /** Tests the lookup of the sender's phone number */
-  public void testGetData_Phone() {
-    String field = SMS.ATTRIB_PHONE_NO;
-    assertEquals(TestData.TEST_PHONE_NO, sms.getAttribute(field));
+    intent = TestData.getIntent(TestData.TEST_PHONE_NO, TestData.TEST_MESSAGE_TEXT);
+    intent.setAction("SMS_RECEIVED");
+    event = new SMS(intent);
   }
   
-  /** Tests the lookup of the message text */
-  public void testGetData_Text() {
-    String field = SMS.ATTRIB_MESSAGE_TEXT;
-    assertEquals(TestData.TEST_MESSAGE_TEXT, sms.getAttribute(field));
+  /** Tests that the name of a created SMS event is correct */
+  public void testGetEvent() {
+    assertEquals(IntentParser.getEvent(intent).getName(), event.getName());
   }
-  
-  /** Tests an invalid lookup */
-  public void testGetInvalidField() {
-    String field = "Bad fieldname";
-    assertNull(sms.getAttribute(field));
-  }
-
 }
