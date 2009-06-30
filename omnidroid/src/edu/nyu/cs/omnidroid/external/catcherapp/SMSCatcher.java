@@ -25,28 +25,37 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Registered with Android to catch "SMS_SEND" intents, this class launches SMSCatcherActivity to
+ * send an SMS message as a user-programmed action.
+ */
 public class SMSCatcher extends BroadcastReceiver {
-  Context context;
+  private static final String SMS_SEND = "SMS_SEND";
+
+  private static final String TAG = SMSCatcher.class.getCanonicalName();
+  
+  // Visible for testing.
+  Toast actionToast;
+  Toast smsToast;
+  
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    this.context = context;
-    Toast.makeText(context, intent.getAction(), 5).show();
-    if (intent.getAction().contains("SMS_SEND")) {
+    actionToast = Toast.makeText(context, intent.getAction(), Toast.LENGTH_LONG);
+    actionToast.show();
+    if (intent.getAction().contains(SMS_SEND)) {
+      smsToast = Toast.makeText(context, "Caught!", Toast.LENGTH_LONG);
+      smsToast.show();
       try {
-        Toast.makeText(context, "Caught!", Toast.LENGTH_LONG).show();
-        intent.setClass(context, edu.nyu.cs.omnidroid.external.catcherapp.SMSCatcherActivity.class);
+        intent.setClass(context, SMSCatcherActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-        Log.i("Received Intent", intent.getAction());
+        Log.i(TAG, "Received and acted on intent: " + intent.getAction());
       } catch (Exception e) {
-        Log.i("Exception in Intent", e.getLocalizedMessage());
-
+        Log.w(TAG, e);
       }
-
     } else {
-      Log.i("Intent Not Received", "Fail");
+      Log.i(TAG, "Intent Not " + SMS_SEND + ", taking no action.");
     }
   }
-
 }
