@@ -21,20 +21,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * This class extends SQLiteOpenHelper to handle creating/open/close database, 
- * creating/deleting tables and migrations.
+ * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
+ * tables and migrations.
  */
 public class DbHelper extends SQLiteOpenHelper {
-  
+
   private static final String TAG = DbHelper.class.getName();
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 2;
   private static final String DATABASE_NAME = "omnidroid";
 
   DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
-  
+
   @Override
   public void onCreate(SQLiteDatabase db) {
 
@@ -51,6 +51,11 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
 
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_CREATE);
+
+    db.execSQL(RuleDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleFilterDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleActionDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleActionParameterDbAdapter.DATABASE_CREATE);
   }
 
   @Override
@@ -75,10 +80,15 @@ public class DbHelper extends SQLiteOpenHelper {
 
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_DROP);
 
+    db.execSQL(RuleDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleFilterDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
+
     // Then create all tables.
     onCreate(db);
   }
-  
+
   // TODO(ehotou) Database backup and restore methods here.
-  
+
 }

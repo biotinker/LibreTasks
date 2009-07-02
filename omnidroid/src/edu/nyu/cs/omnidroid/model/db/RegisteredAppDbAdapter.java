@@ -22,45 +22,53 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the RegisteredApps table. Defines basic CRUD methods. 
+ * 
  * TODO(ehotou) document about this table.
  */
 public class RegisteredAppDbAdapter extends DbAdapter {
-  
+
   /* Column names */
   public static final String KEY_APPID = "AppID";
   public static final String KEY_APPNAME = "AppName";
   public static final String KEY_PKGNAME = "PkgName";
   public static final String KEY_ENABLED = "Enabled";
-  
+
   /* An array of all column names */
-  public static final String[] KEYS = {KEY_APPID, KEY_APPNAME, KEY_PKGNAME, KEY_ENABLED};
-  
+  public static final String[] KEYS = { KEY_APPID, KEY_APPNAME, KEY_PKGNAME, KEY_ENABLED };
+
   /* Table name */
   private static final String DATABASE_TABLE = "RegisteredApps";
-  
+
   /* Create and drop statement. */
-  protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " (" +
-      KEY_APPID + " integer primary key autoincrement, " + 
-      KEY_APPNAME + " text not null, " +
-      KEY_PKGNAME + " text not null, " +
-      KEY_ENABLED + " integer);";
+  protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
+      + KEY_APPID + " integer primary key autoincrement, " 
+      + KEY_APPNAME + " text not null, "
+      + KEY_PKGNAME + " text not null, " 
+      + KEY_ENABLED + " integer);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
-  
+
   /**
    * Constructor.
-   * @param database is the database object to work within.
+   * 
+   * @param database
+   *          is the database object to work within.
    */
   public RegisteredAppDbAdapter(SQLiteDatabase database) {
     super(database);
   }
-  
+
   /**
    * Insert a new RegisteredApp record.
-   * @param appName is the name of the application.
-   * @param pkgName is the package name of the application.
-   * @param enabled is whether the application is activated.
+   * 
+   * @param appName
+   *          is the name of the application.
+   * @param pkgName
+   *          is the package name of the application.
+   * @param enabled
+   *          is whether the application is activated.
    * @return appID or -1 if creation failed.
-   * @throw IllegalArgumentException if there is null within parameters
+   * @throws IllegalArgumentException
+   *           if there is null within parameters
    */
   public long insert(String appName, String pkgName, Boolean enabled) {
     if (appName == null || pkgName == null || enabled == null) {
@@ -73,12 +81,15 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
-  
+
   /**
    * Delete a RegisteredApp record.
-   * @param appID is the id of the record.
+   * 
+   * @param appID
+   *          is the id of the record.
    * @return true if success, or false otherwise.
-   * @throw IllegalArgumentException if appID is null
+   * @throws IllegalArgumentException
+   *           if appID is null
    */
   public boolean delete(Long appID) {
     if (appID == null) {
@@ -87,35 +98,39 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     // Set the whereArgs to null here.
     return database.delete(DATABASE_TABLE, KEY_APPID + "=" + appID, null) > 0;
   }
-  
+
   /**
    * Delete all RegisteredApp records.
+   * 
    * @return true if success, or false if failed or nothing to be deleted.
    */
   public boolean deleteAll() {
     // Set where and whereArgs to null here.
     return database.delete(DATABASE_TABLE, null, null) > 0;
   }
-  
+
   /**
-   * Return a Cursor pointing to the record matches the appID. 
-   * @param appID is the id of the record to be fetched.
+   * Return a Cursor pointing to the record matches the appID.
+   * 
+   * @param appID
+   *          is the id of the record to be fetched.
    * @return a Cursor pointing to the found record.
-   * @throw IllegalArgumentException if appID is null
+   * @throws IllegalArgumentException
+   *           if appID is null
    */
   public Cursor fetch(Long appID) {
     if (appID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
-    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_APPID + "=" + appID, 
-        null, null, null, null, null);
+    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_APPID + "=" + appID, null,
+        null, null, null, null);
     if (mCursor != null) {
       mCursor.moveToFirst();
     }
     return mCursor;
   }
-  
+
   /**
    * @return a Cursor that contains all RegisteredApp records.
    */
@@ -123,41 +138,51 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
     return database.query(DATABASE_TABLE, KEYS, null, null, null, null, null);
   }
-  
+
   /**
    * Return a Cursor that contains all RegisteredApp records which matches the parameters.
-   * @param appName is the application name or null to fetch any appName.
-   * @param pkgName is the package name or null to fetch any pkgName. 
-   * @param enabled is whether the application is activated or null to fetch any enabled status.
+   * 
+   * @param appName
+   *          is the application name or null to fetch any appName.
+   * @param pkgName
+   *          is the package name or null to fetch any pkgName.
+   * @param enabled
+   *          is whether the application is activated or null to fetch any enabled status.
    * @return a Cursor that contains all RegisteredApp records which matches the parameters.
    */
   public Cursor fetchAll(String appName, String pkgName, Boolean enabled) {
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     qb.setTables(DATABASE_TABLE);
     qb.appendWhere("1=1");
-    if(appName != null) {
+    if (appName != null) {
       qb.appendWhere(" AND " + KEY_APPNAME + " = ");
       qb.appendWhereEscapeString(appName);
     }
-    if(pkgName != null) {
+    if (pkgName != null) {
       qb.appendWhere(" AND " + KEY_PKGNAME + " = ");
       qb.appendWhereEscapeString(pkgName);
     }
-    if(enabled != null) {
+    if (enabled != null) {
       qb.appendWhere(" AND " + KEY_ENABLED + " = " + (enabled ? 1 : 0));
     }
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
   }
-  
+
   /**
    * Update a RegisteredApp record with specific parameters.
-   * @param appID is the id of the record to be updated.
-   * @param appName is the application name or null if not updating it.
-   * @param pkgName is the package name or null if not updating it.
-   * @param enabled is whether the application is activated or null if not updating it.
+   * 
+   * @param appID
+   *          is the id of the record to be updated.
+   * @param appName
+   *          is the application name or null if not updating it.
+   * @param pkgName
+   *          is the package name or null if not updating it.
+   * @param enabled
+   *          is whether the application is activated or null if not updating it.
    * @return true if success, or false otherwise.
-   * @throw IllegalArgumentException if appID is null
+   * @throws IllegalArgumentException
+   *           if appID is null
    */
   public boolean update(Long appID, String appName, String pkgName, Boolean enabled) {
     if (appID == null) {
@@ -173,12 +198,12 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     if (enabled != null) {
       args.put(KEY_ENABLED, enabled);
     }
-    
+
     if (args.size() > 0) {
       // Set whereArg to null here
       return database.update(DATABASE_TABLE, args, KEY_APPID + "=" + appID, null) > 0;
     }
     return false;
   }
- 
+
 }
