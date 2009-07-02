@@ -58,7 +58,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
     long id2 = dbAdapter.insert(attributeNames[1], eventIDs[1], dataTypeIDs[1]);
     assertTrue(id1 != id2);
   }
-  
+
   public void testInsert_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -67,7 +67,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     expected = null;
     try {
       dbAdapter.insert(attributeNames[0], null, dataTypeIDs[0]);
@@ -75,7 +75,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     try {
       dbAdapter.insert(attributeNames[0], eventIDs[0], null);
     } catch (IllegalArgumentException e) {
@@ -108,7 +108,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
     }
     assertNotNull(expected);
   }
-  
+
   public void testDelete() {
     long id = dbAdapter.insert(attributeNames[0], eventIDs[0], dataTypeIDs[0]);
     assertTrue(dbAdapter.delete(id));
@@ -121,7 +121,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
     assertTrue(dbAdapter.delete(id));
     assertFalse(dbAdapter.delete(id));
   }
-  
+
   public void testDelete_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -153,7 +153,7 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, attributeNames[0], eventIDs[0], dataTypeIDs[0]);
   }
-  
+
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -186,17 +186,18 @@ public class RegisteredEventAttributeDbAdapterTest extends AndroidTestCase {
   }
 
   /**
-   * Helper method to assert a cursor pointing to a attribute record that
-   * matches the parameters
+   * Helper method to assert a cursor pointing to a attribute record that matches the parameters
    */
-  private void assertCursorEquals(Cursor cursor, String attributeName, 
-      Long eventID, Long dataTypeID) {
-    assertEquals(cursor.getString(cursor.getColumnIndex(
-        RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), attributeName);
-    assertEquals(cursor.getInt(cursor.getColumnIndex(
-        RegisteredEventAttributeDbAdapter.KEY_EVENTID)), eventID.intValue());
-    assertEquals(cursor.getInt(cursor.getColumnIndex(
-        RegisteredEventAttributeDbAdapter.KEY_DATATYPEID)), dataTypeID.intValue());
+  private void assertCursorEquals(Cursor cursor, String attributeName, Long eventID, 
+      Long dataTypeID) {
+    
+    assertEquals(cursor.getString(cursor
+        .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), attributeName);
+    assertEquals(cursor
+        .getInt(cursor.getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTID)), eventID
+        .intValue());
+    assertEquals(cursor.getInt(cursor
+        .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_DATATYPEID)), dataTypeID.intValue());
   }
 
 }
