@@ -57,7 +57,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
     long id2 = dbAdapter.insert(dataTypeNames[0], dataTypeClassNames[0]);
     assertTrue(id1 != id2);
   }
-  
+
   public void testInsert_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -66,7 +66,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     expected = null;
     try {
       dbAdapter.insert(dataTypeNames[0], null);
@@ -90,7 +90,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id + 1);
     assertEquals(cursor.getCount(), 0);
   }
-  
+
   public void testFetch_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -114,7 +114,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
     assertTrue(dbAdapter.delete(id));
     assertFalse(dbAdapter.delete(id));
   }
-  
+
   public void testDelete_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -146,7 +146,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, dataTypeNames[0], dataTypeClassNames[0]);
   }
-  
+
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -166,7 +166,7 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
     assertEquals(cursor.getCount(), 3);
   }
 
-  public void testFetchAllWithParameters() {
+  public void testFetchAll_withParameters() {
     dbAdapter.insert(dataTypeNames[0], dataTypeClassNames[0]);
     dbAdapter.insert(dataTypeNames[1], dataTypeClassNames[0]);
     dbAdapter.insert(dataTypeNames[2], dataTypeClassNames[2]);
@@ -178,13 +178,12 @@ public class DataTypeDbAdapterTest extends AndroidTestCase {
   }
 
   /**
-   * Helper method to assert a cursor pointing to a filter record that matches
-   * the parameters
+   * Helper method to assert a cursor pointing to a filter record that matches the parameters
    */
   private void assertCursorEquals(Cursor cursor, String dataTypeName, String dataTypeClassName) {
-    assertEquals(cursor.getString(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPENAME)), 
+    assertEquals(cursor.getString(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPENAME)),
         dataTypeName);
-    assertEquals(cursor.getString(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPECLASSNAME)), 
+    assertEquals(cursor.getString(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPECLASSNAME)),
         dataTypeClassName);
   }
 

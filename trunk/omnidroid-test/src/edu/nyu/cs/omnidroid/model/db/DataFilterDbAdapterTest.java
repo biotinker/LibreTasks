@@ -166,7 +166,7 @@ public class DataFilterDbAdapterTest extends AndroidTestCase {
     assertEquals(cursor.getCount(), 3);
   }
 
-  public void testFetchAllWithParameters() {
+  public void testFetchAll_withParameters() {
     dbAdapter.insert(dataFilterNames[0], DataTypeIDs[0]);
     dbAdapter.insert(dataFilterNames[1], DataTypeIDs[0]);
     dbAdapter.insert(dataFilterNames[2], DataTypeIDs[2]);

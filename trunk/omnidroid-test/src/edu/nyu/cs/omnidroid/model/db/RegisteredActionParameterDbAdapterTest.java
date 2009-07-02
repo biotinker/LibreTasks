@@ -67,7 +67,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     expected = null;
     try {
       dbAdapter.insert(parameterNames[0], null, dataTypeIDs[0]);
@@ -75,7 +75,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     try {
       dbAdapter.insert(parameterNames[0], actionIDs[0], null);
     } catch (IllegalArgumentException e) {
@@ -83,7 +83,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
     }
     assertNotNull(expected);
   }
-  
+
   public void testFetch() {
     long id = dbAdapter.insert(parameterNames[0], actionIDs[0], dataTypeIDs[0]);
     Cursor cursor = dbAdapter.fetch(id);
@@ -98,7 +98,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id + 1);
     assertEquals(cursor.getCount(), 0);
   }
-  
+
   public void testFetch_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -122,7 +122,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
     assertTrue(dbAdapter.delete(id));
     assertFalse(dbAdapter.delete(id));
   }
-  
+
   public void testDelete_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -154,7 +154,7 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, parameterNames[0], actionIDs[0], dataTypeIDs[0]);
   }
-  
+
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -187,17 +187,17 @@ public class RegisteredActionParameterDbAdapterTest extends AndroidTestCase {
   }
 
   /**
-   * Helper method to assert a cursor pointing to a record which contains
-   * corresponding parameters.
+   * Helper method to assert a cursor pointing to a record which contains corresponding parameters.
    */
   private void assertCursorEquals(Cursor cursor, String parameterName, Long actionID,
       Long dataTypeID) {
-    assertEquals(cursor.getString(cursor.getColumnIndex(
-        RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME)), parameterName);
-    assertEquals(cursor.getInt(cursor.getColumnIndex(
-        RegisteredActionParameterDbAdapter.KEY_ACTIONID)), actionID.intValue());
-    assertEquals(cursor.getInt(cursor.getColumnIndex(
-        RegisteredActionParameterDbAdapter.KEY_DATATYPEID)), dataTypeID.intValue());
+    assertEquals(cursor.getString(cursor
+        .getColumnIndex(RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME)), 
+        parameterName);
+    assertEquals(cursor.getInt(cursor
+        .getColumnIndex(RegisteredActionParameterDbAdapter.KEY_ACTIONID)), actionID.intValue());
+    assertEquals(cursor.getInt(cursor
+        .getColumnIndex(RegisteredActionParameterDbAdapter.KEY_DATATYPEID)), dataTypeID.intValue());
   }
 
 }

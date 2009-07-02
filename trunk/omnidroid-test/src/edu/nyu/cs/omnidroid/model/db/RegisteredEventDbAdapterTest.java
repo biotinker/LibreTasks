@@ -57,7 +57,7 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     long id2 = dbAdapter.insert(eventNames[1], appIDs[1]);
     assertTrue(id1 != id2);
   }
-  
+
   public void testInsert_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -66,7 +66,7 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     expected = null;
     try {
       dbAdapter.insert(eventNames[0], null);
@@ -90,7 +90,7 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id + 1);
     assertEquals(cursor.getCount(), 0);
   }
-  
+
   public void testFetch_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -113,7 +113,7 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     assertTrue(dbAdapter.delete(id));
     assertFalse(dbAdapter.delete(id));
   }
-  
+
   public void testDelete_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -155,7 +155,7 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     }
     assertNotNull(expected);
   }
-  
+
   public void testFetchAll() {
     dbAdapter.insert(eventNames[0], appIDs[0]);
     dbAdapter.insert(eventNames[1], appIDs[1]);
@@ -177,14 +177,13 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
   }
 
   /**
-   * Helper method to assert a cursor pointing to a attribute record that
-   * matches the parameters
+   * Helper method to assert a cursor pointing to a attribute record that matches the parameters
    */
   private void assertCursorEquals(Cursor cursor, String eventName, Long appID) {
-    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTNAME)), 
+    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTNAME)),
         eventName);
-    assertEquals(cursor.getInt(cursor.getColumnIndex(RegisteredEventDbAdapter.KEY_APPID)), 
-        appID.intValue());
+    assertEquals(cursor.getInt(cursor.getColumnIndex(RegisteredEventDbAdapter.KEY_APPID)), appID
+        .intValue());
   }
 
 }

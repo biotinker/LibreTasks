@@ -22,42 +22,49 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the RegisteredEvents table. Defines basic CRUD methods. 
+ * 
  * TODO(ehotou) document about this table.
  */
 public class RegisteredEventDbAdapter extends DbAdapter {
-  
+
   /* Column names */
   public static final String KEY_EVENTID = "EventID";
   public static final String KEY_EVENTNAME = "EventName";
   public static final String KEY_APPID = "FK_AppID";
-  
+
   /* An array of all column names */
-  public static final String[] KEYS = {KEY_EVENTID, KEY_EVENTNAME, KEY_APPID};
-  
+  public static final String[] KEYS = { KEY_EVENTID, KEY_EVENTNAME, KEY_APPID };
+
   /* Table name */
   private static final String DATABASE_TABLE = "RegisteredEvents";
-  
+
   /* Create and drop statement. */
-  protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " (" +
-      KEY_EVENTID + " integer primary key autoincrement, " + 
-      KEY_EVENTNAME + " text not null, " +
-      KEY_APPID + " integer);";
+  protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
+      + KEY_EVENTID + " integer primary key autoincrement, " 
+      + KEY_EVENTNAME + " text not null, "
+      + KEY_APPID + " integer);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
-  
+
   /**
    * Constructor.
-   * @param database is the database object to work within.
+   * 
+   * @param database
+   *          is the database object to work within.
    */
   public RegisteredEventDbAdapter(SQLiteDatabase database) {
     super(database);
   }
-    
+
   /**
    * Insert a new RegisteredEvent record
-   * @param eventName is the event name
-   * @param appID is the application id
+   * 
+   * @param eventName
+   *          is the event name
+   * @param appID
+   *          is the application id
    * @return eventID or -1 if creation failed.
-   * @throw IllegalArgumentException if there is null within parameters
+   * @throws IllegalArgumentException
+   *           if there is null within parameters
    */
   public long insert(String eventName, Long appID) {
     if (eventName == null || appID == null) {
@@ -69,12 +76,15 @@ public class RegisteredEventDbAdapter extends DbAdapter {
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
-  
+
   /**
    * Delete a RegisteredEvent record
-   * @param eventID is the id of the record.
+   * 
+   * @param eventID
+   *          is the id of the record.
    * @return true if success, or false otherwise.
-   * @throw IllegalArgumentException if eventID is null
+   * @throws IllegalArgumentException
+   *           if eventID is null
    */
   public boolean delete(Long eventID) {
     if (eventID == null) {
@@ -83,35 +93,39 @@ public class RegisteredEventDbAdapter extends DbAdapter {
     // Set the whereArgs to null here.
     return database.delete(DATABASE_TABLE, KEY_EVENTID + "=" + eventID, null) > 0;
   }
-  
+
   /**
    * Delete all RegisteredEvent records.
+   * 
    * @return true if success, or false if failed or nothing to be deleted.
    */
   public boolean deleteAll() {
     // Set where and whereArgs to null here.
     return database.delete(DATABASE_TABLE, null, null) > 0;
   }
-  
+
   /**
    * Return a Cursor pointing to the record matches the eventID.
-   * @param eventID is the event id
+   * 
+   * @param eventID
+   *          is the event id
    * @return a Cursor pointing to the found record.
-   * @throw IllegalArgumentException if eventID is null
+   * @throws IllegalArgumentException
+   *           if eventID is null
    */
   public Cursor fetch(Long eventID) {
     if (eventID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
-    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_EVENTID + "=" + eventID, 
-        null, null, null, null, null);
+    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_EVENTID + "=" + eventID, null,
+        null, null, null, null);
     if (mCursor != null) {
       mCursor.moveToFirst();
     }
     return mCursor;
   }
-  
+
   /**
    * @return a Cursor that contains all RegisteredEvent records.
    */
@@ -119,53 +133,61 @@ public class RegisteredEventDbAdapter extends DbAdapter {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
     return database.query(DATABASE_TABLE, KEYS, null, null, null, null, null);
   }
-  
+
   /**
    * Return a Cursor that contains all RegisteredEvent records which matches the parameters.
-   * @param eventName is the event name, or null to fetch any eventName
-   * @param appID is the application id, or null to fetch any appID
+   * 
+   * @param eventName
+   *          is the event name, or null to fetch any eventName
+   * @param appID
+   *          is the application id, or null to fetch any appID
    * @return a Cursor that contains all RegisteredEvent records which matches the parameters.
    */
   public Cursor fetchAll(String eventName, Long appID) {
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     qb.setTables(DATABASE_TABLE);
     qb.appendWhere("1=1");
-    if(eventName != null) {
+    if (eventName != null) {
       qb.appendWhere(" AND " + KEY_EVENTNAME + " = ");
       qb.appendWhereEscapeString(eventName);
     }
-    if(appID != null) {
+    if (appID != null) {
       qb.appendWhere(" AND " + KEY_APPID + " = " + appID);
     }
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
   }
-  
+
   /**
    * Update a RegisteredEvent record with specific parameters.
-   * @param eventID is the id of the record to be updated.
-   * @param eventName is the event name, or null if not updating it.
-   * @param appID is the application id, or null if not updating it.
+   * 
+   * @param eventID
+   *          is the id of the record to be updated.
+   * @param eventName
+   *          is the event name, or null if not updating it.
+   * @param appID
+   *          is the application id, or null if not updating it.
    * @return true if success, or false otherwise.
-   * @throw IllegalArgumentException if eventID is null
+   * @throws IllegalArgumentException
+   *           if eventID is null
    */
   public boolean update(Long eventID, String eventName, Long appID) {
     if (eventID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     ContentValues args = new ContentValues();
-    if (eventName != null)  {
+    if (eventName != null) {
       args.put(KEY_EVENTNAME, eventName);
     }
     if (appID != null) {
       args.put(KEY_APPID, appID);
     }
-    
+
     if (args.size() > 0) {
       // Set whereArg to null here
       return database.update(DATABASE_TABLE, args, KEY_EVENTID + "=" + eventID, null) > 0;
     }
-    return false; 
+    return false;
   }
-  
+
 }

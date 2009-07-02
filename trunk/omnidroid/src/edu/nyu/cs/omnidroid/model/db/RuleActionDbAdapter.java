@@ -21,31 +21,28 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
- * Database helper class for the RegisteredActionParameters table. Defines basic CRUD methods.
+ * Database helper class for the RuleActions table. Defines basic CRUD methods. 
  * 
  * TODO(ehotou) document about this table.
  */
-public class RegisteredActionParameterDbAdapter extends DbAdapter {
+public class RuleActionDbAdapter extends DbAdapter {
 
   /* Column names */
-  public static final String KEY_ACTIONPARAMETERID = "ActionParameterID";
-  public static final String KEY_ACTIONPARAMETERNAME = "ActionParameterName";
+  public static final String KEY_RULEACTIONID = "RuleActionID";
+  public static final String KEY_RULEID = "FK_RuleID";
   public static final String KEY_ACTIONID = "FK_ActionID";
-  public static final String KEY_DATATYPEID = "FK_DataTypeID";
 
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_ACTIONPARAMETERID, KEY_ACTIONPARAMETERNAME,
-      KEY_ACTIONID, KEY_DATATYPEID };
+  public static final String[] KEYS = { KEY_RULEID, KEY_ACTIONID };
 
   /* Table name */
-  private static final String DATABASE_TABLE = "RegisteredActionParameters";
+  private static final String DATABASE_TABLE = "RuleActions";
 
   /* Create and drop statement. */
   protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
-      + KEY_ACTIONPARAMETERID + " integer primary key autoincrement, " 
-      + KEY_ACTIONPARAMETERNAME + " text not null, " 
-      + KEY_ACTIONID + " integer, " 
-      + KEY_DATATYPEID + " integer);";
+      + KEY_RULEACTIONID + " integer primary key autoincrement, " 
+      + KEY_RULEID + " integer not null, " 
+      + KEY_ACTIONID + " integer not null);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
   /**
@@ -54,54 +51,51 @@ public class RegisteredActionParameterDbAdapter extends DbAdapter {
    * @param database
    *          is the database object to work within.
    */
-  public RegisteredActionParameterDbAdapter(SQLiteDatabase database) {
+  public RuleActionDbAdapter(SQLiteDatabase database) {
     super(database);
   }
 
   /**
-   * Insert a new RegisteredActionParameter record.
+   * Insert a new RuleAction record
    * 
-   * @param parameterName
-   *          is the name of the parameter.
+   * @param ruleID
+   *          is id of the rule it belongs to
    * @param actionID
-   *          is the id of the action it belongs to.
-   * @param dataTypeID
-   *          is the id of data type it has.
-   * @return attribute id or -1 if creation failed.
+   *          is id of its action type
+   * @return RuleActionID or -1 if creation failed.
    * @throws IllegalArgumentException
    *           if there is null within parameters
    */
-  public long insert(String parameterName, Long actionID, Long dataTypeID) {
-    if (parameterName == null || actionID == null || dataTypeID == null) {
+  public long insert(Long ruleID, Long actionID) {
+    if (ruleID == null || actionID == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
     ContentValues initialValues = new ContentValues();
-    initialValues.put(KEY_ACTIONPARAMETERNAME, parameterName);
+    initialValues.put(KEY_RULEID, ruleID);
     initialValues.put(KEY_ACTIONID, actionID);
-    initialValues.put(KEY_DATATYPEID, dataTypeID);
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
 
   /**
-   * Delete a RegisteredActionParameter record
+   * Delete a RuleAction record.
    * 
-   * @param parameterID
+   * @param ruleActionID
    *          is the id of the record.
    * @return true if success, or false otherwise.
    * @throws IllegalArgumentException
-   *           if parameterID is null
+   *           if ruleActionID is null
    */
-  public boolean delete(Long parameterID) {
-    if (parameterID == null) {
+  public boolean delete(Long ruleActionID) {
+    if (ruleActionID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     // Set the whereArgs to null here.
-    return database.delete(DATABASE_TABLE, KEY_ACTIONPARAMETERID + "=" + parameterID, null) > 0;
+    return database.delete(DATABASE_TABLE, KEY_RULEACTIONID + "=" + ruleActionID, null) > 0;
   }
 
   /**
-   * Delete all RegisteredActionParameter records.
+   * Delete all RuleAction records.
    * 
    * @return true if success, or false if failed or nothing to be deleted.
    */
@@ -111,21 +105,21 @@ public class RegisteredActionParameterDbAdapter extends DbAdapter {
   }
 
   /**
-   * Return a Cursor pointing to the record matches the parameterID.
+   * Return a Cursor pointing to the record matches the ruleActionID.
    * 
-   * @param parameterID
-   *          is the parameter id
+   * @param ruleActionID
+   *          is the id of the record to be fetched.
    * @return a Cursor pointing to the found record.
    * @throws IllegalArgumentException
-   *           if parameterID is null
+   *           if ruleActionID is null
    */
-  public Cursor fetch(Long parameterID) {
-    if (parameterID == null) {
+  public Cursor fetch(Long ruleActionID) {
+    if (ruleActionID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
-    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_ACTIONPARAMETERID + "="
-        + parameterID, null, null, null, null, null);
+    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_RULEACTIONID + "="
+        + ruleActionID, null, null, null, null, null);
     if (mCursor != null) {
       mCursor.moveToFirst();
     }
@@ -133,7 +127,7 @@ public class RegisteredActionParameterDbAdapter extends DbAdapter {
   }
 
   /**
-   * @return a Cursor that contains all RegisteredActionParameter records.
+   * @return a Cursor that contains all RuleAction records.
    */
   public Cursor fetchAll() {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
@@ -141,68 +135,57 @@ public class RegisteredActionParameterDbAdapter extends DbAdapter {
   }
 
   /**
-   * Return a Cursor contains all RegisteredActionParameter records which matches the parameters.
+   * Return a Cursor that contains all RuleAction records which matches the parameters.
    * 
-   * @param parameterName
-   *          is the parameter name, or null to fetch any parameterName.
+   * @param ruleID
+   *          is id of the rule it belongs to, or null to fetch any.
    * @param actionID
-   *          is the action id, or null to fetch any actionID.
-   * @param dataTypeID
-   *          is the dataType id, or null to fetch any dataTypeID.
-   * @return a Cursor contains all RegisteredActionParameter records which matches the parameters.
+   *          is id of its action type, or null to fetch any.
+   * @return a Cursor that contains all RuleAction records which matches the parameters.
    */
-  public Cursor fetchAll(String parameterName, Long actionID, Long dataTypeID) {
+  public Cursor fetchAll(Long ruleID, Long actionID) {
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     qb.setTables(DATABASE_TABLE);
     qb.appendWhere("1=1");
-    if (parameterName != null) {
-      qb.appendWhere(" AND " + KEY_ACTIONPARAMETERNAME + " = ");
-      qb.appendWhereEscapeString(parameterName);
+    if (ruleID != null) {
+      qb.appendWhere(" AND " + KEY_RULEID + " = " + ruleID);
     }
     if (actionID != null) {
       qb.appendWhere(" AND " + KEY_ACTIONID + " = " + actionID);
     }
-    if (dataTypeID != null) {
-      qb.appendWhere(" AND " + KEY_DATATYPEID + " = " + dataTypeID);
-    }
+
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
   }
 
   /**
-   * Update a RegisteredActionParameter record with specific parameters.
+   * Update a RuleAction record with specific parameters.
    * 
-   * @param parameterID
-   *          is the id of the record to be updated.
-   * @param parameterName
-   *          is the parameter name, or null if not updating it.
+   * @param ruleActionID
+   *          is id of the record to be updated.
+   * @param ruleID
+   *          is id of the rule it belongs to, or null if not updating it.
    * @param actionID
-   *          is the action id, or null if not updating it.
-   * @param dataTypeID
-   *          is the dataType id, or null if not updating it.
+   *          is id of its action type, or null if not updating it.
    * @return true if success, or false otherwise.
    * @throws IllegalArgumentException
-   *           if parameterID is null
+   *           if ruleActionID is null
    */
-  public boolean update(Long parameterID, String parameterName, Long actionID, Long dataTypeID) {
-    if (parameterID == null) {
+  public boolean update(Long ruleActionID, Long ruleID, Long actionID) {
+    if (ruleActionID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
     ContentValues args = new ContentValues();
-    if (parameterName != null) {
-      args.put(KEY_ACTIONPARAMETERNAME, parameterName);
+    if (ruleID != null) {
+      args.put(KEY_RULEID, ruleID);
     }
     if (actionID != null) {
       args.put(KEY_ACTIONID, actionID);
     }
-    if (dataTypeID != null) {
-      args.put(KEY_DATATYPEID, dataTypeID);
-    }
 
     if (args.size() > 0) {
       // Set whereArg to null here
-      return database.update(DATABASE_TABLE, args, KEY_ACTIONPARAMETERID + "=" + 
-          parameterID, null) > 0;
+      return database.update(DATABASE_TABLE, args, KEY_RULEACTIONID + "=" + ruleActionID, null) > 0;
     }
     return false;
   }
