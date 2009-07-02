@@ -21,24 +21,48 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * This class extends SQLiteOpenHelper to handle creating/open/close database, 
- * creating/deleting tables and migrations.
+ * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
+ * tables and migrations.
  */
 public class DbHelper extends SQLiteOpenHelper {
-  
+
   private static final String TAG = DbHelper.class.getName();
-  private static final int DATABASE_VERSION = 1;
+  private static final int DATABASE_VERSION = 2;
   private static final String DATABASE_NAME = "omnidroid";
 
   DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
-  
+
   @Override
   public void onCreate(SQLiteDatabase db) {
 
     // Create all tables when new database instance is created.
+    createTables(db);
+
+  }
+
+  @Override
+  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
+        + ", which will destroy all old data");
+
+    // TODO(ehotou) Future migration codes here.
+
+    // Default migration operations, drop all tables and recreate databases
+    dropTables(db);
+    onCreate(db);
+  }
+
+  /**
+   * Create all necessary tables in the database
+   * 
+   * @param db
+   *          SQLiteDatabase object to deal with
+   */
+  private void createTables(SQLiteDatabase db) {
     db.execSQL(RegisteredAppDbAdapter.DATABASE_CREATE);
 
     db.execSQL(RegisteredEventDbAdapter.DATABASE_CREATE);
@@ -51,17 +75,20 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
 
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_CREATE);
+
+    db.execSQL(RuleDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleFilterDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleActionDbAdapter.DATABASE_CREATE);
+    db.execSQL(RuleActionParameterDbAdapter.DATABASE_CREATE);
   }
 
-  @Override
-  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
-        + ", which will destroy all old data");
-
-    // TODO(ehotou) Future migration codes here.
-
-    // Drop all tables when migrating.
+  /**
+   * Drop all table in the database
+   * 
+   * @param db
+   *          SQLiteDatabase object to deal with
+   */
+  private void dropTables(SQLiteDatabase db) {
     db.execSQL(RegisteredAppDbAdapter.DATABASE_DROP);
 
     db.execSQL(RegisteredEventDbAdapter.DATABASE_DROP);
@@ -75,10 +102,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_DROP);
 
-    // Then create all tables.
-    onCreate(db);
+    db.execSQL(RuleDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleFilterDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
+    db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
   }
-  
+
   // TODO(ehotou) Database backup and restore methods here.
-  
+
 }

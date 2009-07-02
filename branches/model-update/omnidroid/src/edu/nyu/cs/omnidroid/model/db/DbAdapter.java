@@ -21,15 +21,17 @@ import android.database.sqlite.SQLiteDatabase;
  * A generic class of all database adapter of Omnidroid.
  */
 public class DbAdapter {
-  
+
   protected SQLiteDatabase database;
-  
+
   /**
    * Constructor.
-   * @param database is the database object to work within.
+   * 
+   * @param database
+   *          is the database object to work within.
    */
   public DbAdapter(SQLiteDatabase database) {
     this.database = database;
   }
-  
+
 }

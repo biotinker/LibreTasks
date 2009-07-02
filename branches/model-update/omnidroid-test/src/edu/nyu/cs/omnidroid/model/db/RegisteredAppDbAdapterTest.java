@@ -57,7 +57,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
     long id2 = dbAdapter.insert(appNames[1], pkgNames[1], true);
     assertTrue(id1 != id2);
   }
-  
+
   public void testInsert_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -66,7 +66,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
     expected = null;
     try {
       dbAdapter.insert(appNames[0], null, true);
@@ -74,7 +74,8 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
       expected = e;
     }
     assertNotNull(expected);
-    
+
+    expected = null;
     try {
       dbAdapter.insert(appNames[0], pkgNames[0], null);
     } catch (IllegalArgumentException e) {
@@ -97,7 +98,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id + 1);
     assertEquals(cursor.getCount(), 0);
   }
-  
+
   public void testFetch_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -121,7 +122,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
     assertTrue(dbAdapter.delete(id));
     assertFalse(dbAdapter.delete(id));
   }
-  
+
   public void testDelete_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -153,7 +154,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, appNames[0], pkgNames[0], true);
   }
-  
+
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
@@ -173,7 +174,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
     assertEquals(cursor.getCount(), 3);
   }
 
-  public void testFetchAllWithParameters() {
+  public void testFetchAll_withParameters() {
     dbAdapter.insert(appNames[0], pkgNames[0], true);
     dbAdapter.insert(appNames[1], pkgNames[1], true);
     dbAdapter.insert(appNames[2], pkgNames[2], false);
@@ -185,15 +186,14 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
   }
 
   /**
-   * Helper method to assert a cursor pointing to a action record that matches
-   * the parameters
+   * Helper method to assert a cursor pointing to a action record that matches the parameters
    */
   private void assertCursorEquals(Cursor cursor, String appName, String pkgName, boolean enabled) {
-    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_APPNAME)), 
+    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_APPNAME)),
         appName);
-    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_PKGNAME)), 
+    assertEquals(cursor.getString(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_PKGNAME)),
         pkgName);
-    assertEquals(cursor.getInt(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_ENABLED)) == 1, 
+    assertEquals(cursor.getInt(cursor.getColumnIndex(RegisteredAppDbAdapter.KEY_ENABLED)) == 1,
         enabled);
   }
 
