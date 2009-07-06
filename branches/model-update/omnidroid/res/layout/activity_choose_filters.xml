@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+   <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Select an item from the list below, then add filters:"
+	android:layout_marginBottom="10px"
+    />
+   
+   <FrameLayout
+        android:id="@+id/activity_choosefilters_frame_list"
+        android:layout_width="fill_parent" 
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    
+       <ListView
+        android:id="@+id/activity_choosefilters_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+       />
+         
+    </FrameLayout>
+   
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_choosefilters_llBottomButtons"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >
+    
+    <LinearLayout 
+     android:id="@+id/activity_choosefilters_llButtonsFilter"
+     android:orientation="horizontal"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     >
+    
+		<Button 
+		    android:text="+Filter" 
+		    android:id="@+id/activity_choosefilters_btnAddFilter" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+		    android:text="-Filter" 
+		    android:id="@+id/activity_choosefilters_btnRemoveFilter" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+            android:text="~Filter" 
+            android:id="@+id/activity_choosefilters_btnEditFilter" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+        <Button 
+            android:text="Tasks ->" 
+            android:id="@+id/activity_choosefilters_btnTasks" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+
+      </LinearLayout>
+      
+      
+      <LinearLayout 
+        android:id="@+id/activity_choosefilters_llButtonsTask"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+    
+		<Button 
+		    android:text="+Task" 
+		    android:id="@+id/activity_choosefilters_btnAddTask" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+		    android:text="-Task" 
+		    android:id="@+id/activity_choosefilters_btnRemoveTask" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+            android:text="~Task" 
+            android:id="@+id/activity_choosefilters_btnEditTask" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+        <Button 
+            android:text="Filters ->" 
+            android:id="@+id/activity_choosefilters_btnFilters" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+
+      </LinearLayout>
+      
+    </LinearLayout>
+
+</LinearLayout>
