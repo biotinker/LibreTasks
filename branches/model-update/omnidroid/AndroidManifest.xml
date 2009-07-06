@@ -18,13 +18,47 @@
             </intent-filter>
         </receiver>
         
+        
+        <activity android:name=".ui.simple.ActivityMain"
+                  android:label="@string/app_name">
+            <intent-filter>
+            	<!--  
+            	If you want to use the 'old' UI, just comment out
+            	the next two lines, and add them to the definition
+            	for the ui.Overview Activity down below.
+            	-->
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.simple.ActivityChooseRootEvent"
+                  android:label="Choose a root event">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.simple.ActivityChooseFilters"
+                  android:label="Add filters and actions to your rule!">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        
+        
 		<!--  The main UI for our OmniDroid -->
         <activity android:name=".ui.Overview"
                   android:label="@string/overview_title">
             <intent-filter>
             	<!-- Create an application launder from the application menu  -->
+            	<!--  
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                -->
             </intent-filter>
             <!-- Associate our application with omnidroid data types  -->
 			<!--  We don't need this yet, but we might at one point
