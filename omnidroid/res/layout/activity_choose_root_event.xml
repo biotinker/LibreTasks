@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+   <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Pick a root event from the list below to start buidling your rule:"
+	android:layout_marginBottom="10px"
+    />
+   
+   <FrameLayout
+        android:id="@+id/activity_chooserootevent_frame_list"
+        android:layout_width="fill_parent" 
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    
+       <ListView
+        android:id="@+id/activity_chooserootevent_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+       />
+         
+    </FrameLayout>
+   
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_chooserootevent_llBottomButtons"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >
+    
+    <LinearLayout 
+     android:orientation="horizontal"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     >
+    
+		<Button 
+		    android:text="OK" 
+		    android:id="@+id/activity_chooserootevent_btnOk" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+				
+		<Button 
+		    android:text="Help" 
+		    android:id="@+id/activity_chooserootevent_btnHelp" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+      </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
