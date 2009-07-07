@@ -116,11 +116,7 @@ public class DbHelper extends SQLiteOpenHelper {
    */
   private void populateDefaultData(SQLiteDatabase db) {
     
-    // TODO(ehotou) The exact data to be populated is under discussion. 
-    
-    // Populate registered apps
-    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
-    registeredAppDbAdapter.insert("SMS", "", true);
+    // TODO(ehotou) The exact data to be populated is under discussion.
     
     // Populate data types
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
@@ -132,9 +128,33 @@ public class DbHelper extends SQLiteOpenHelper {
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     dataFilterDbAdapter.insert("equals", dataType_id_text);
     dataFilterDbAdapter.insert("contains", dataType_id_text);
+    dataFilterDbAdapter.insert("equals", dataType_id_phone);
     dataFilterDbAdapter.insert("before", dataType_id_date);
     dataFilterDbAdapter.insert("after", dataType_id_date);
-    dataFilterDbAdapter.insert("equals", dataType_id_phone);
+    
+    // Populate registered apps
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
+    long app_id_sms = registeredAppDbAdapter.insert("SMS", "", true);
+    long app_id_dial = registeredAppDbAdapter.insert("DIAL", "", true);
+    
+    // Populate registered events
+    RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
+    long event_id_sms_rec = registeredEventDbAdapter.insert("SMS Received", app_id_sms);
+    long event_id_phone_rec = registeredEventDbAdapter.insert("Phone Call Received", app_id_dial);
+    
+    // Populate registered actions
+    RegisteredActionDbAdapter registeredActionDbAdapter = new RegisteredActionDbAdapter(db);
+    registeredActionDbAdapter.insert("SMS Send", app_id_sms);
+    
+    // Populate registered event attributes
+    RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter = 
+        new RegisteredEventAttributeDbAdapter(db);
+    registeredEventAttributeDbAdapter.insert(
+        "SMS Phonenumber", event_id_sms_rec, dataType_id_phone);
+    registeredEventAttributeDbAdapter.insert(
+        "SMS Text", event_id_sms_rec, dataType_id_phone);
+    registeredEventAttributeDbAdapter.insert(
+        "Phonenumber", event_id_phone_rec, dataType_id_phone);
   }
 
   /**
