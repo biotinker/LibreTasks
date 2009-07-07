@@ -23,7 +23,7 @@ import edu.nyu.cs.omnidroid.tests.TestData;
  * Unit tests for {@link SMS} class.
  */
 public class SMSTest extends TestCase {
-  private SMS sms;
+  private SMSReceivedEvent sms;
   Intent intent;
 
   @Override
@@ -33,20 +33,23 @@ public class SMSTest extends TestCase {
     
   /** Tests the lookup of the sender's phone number */
   public void testGetData_Phone() {
-    String field = SMS.ATTRIB_PHONE_NO;
+    String field = SMSReceivedEvent.ATTRIB_PHONE_NO;
     assertEquals(TestData.TEST_PHONE_NO, sms.getAttribute(field));
   }
   
   /** Tests the lookup of the message text */
   public void testGetData_Text() {
-    String field = SMS.ATTRIB_MESSAGE_TEXT;
+    String field = SMSReceivedEvent.ATTRIB_MESSAGE_TEXT;
     assertEquals(TestData.TEST_MESSAGE_TEXT, sms.getAttribute(field));
   }
   
   /** Tests an invalid lookup */
   public void testGetInvalidField() {
     String field = "Bad fieldname";
-    assertNull(sms.getAttribute(field));
+    try {
+      sms.getAttribute(field);
+      fail("Should raise an ArrayIndexOutOfBoundsException");
+    } catch (IllegalArgumentException e) {
+    } 
   }
-
 }

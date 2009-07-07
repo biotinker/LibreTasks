@@ -38,7 +38,7 @@ public class RuleProcessorTest extends TestCase {
    */
   public void testRuleProcessor_pass() {
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action();
+    Action action = new Action(SMSReceivedEvent.EVENT_NAME, TestData.TEST_MESSAGE_TEXT, "Do not disturb");
     actions.add(action);
     assertEquals(actions.size(), RuleProcessor.getActions(event).size());
   }
