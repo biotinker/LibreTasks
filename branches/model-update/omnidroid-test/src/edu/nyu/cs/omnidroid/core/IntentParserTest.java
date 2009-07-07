@@ -28,8 +28,8 @@ public class IntentParserTest extends TestCase {
   
   public void setUp() {
     intent = TestData.getIntent(TestData.TEST_PHONE_NO, TestData.TEST_MESSAGE_TEXT);
-    intent.setAction("SMS_RECEIVED");
-    event = new SMS(intent);
+    intent.setAction(IntentParser.SMS_INTENT);
+    event = new SMSReceivedEvent(intent);
   }
   
   /** Tests that the name of a created SMS event is correct */
