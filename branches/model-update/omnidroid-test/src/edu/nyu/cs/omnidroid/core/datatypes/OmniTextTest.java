@@ -1,0 +1,87 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ *******************************************************************************/
+/**
+ * 
+ */
+package edu.nyu.cs.omnidroid.core.datatypes;
+
+import junit.framework.TestCase;
+
+/**
+ *
+ */
+public class OmniTextTest extends TestCase {
+  private OmniText omniText;
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see junit.framework.TestCase#setUp()
+   */
+  protected void setUp() throws Exception {
+    omniText = new OmniText("test");
+  }
+
+  /**
+   * Test method for {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#OmniText(java.lang.Object)}
+   * .
+   */
+  public void testOmniTextObject() {
+    omniText = new OmniText(Double.valueOf("1234.45"));
+  }
+
+  /**
+   * Test method for
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#matchFilter(java.lang.String, java.lang.String)}
+   * .
+   */
+  public void testMatchFilter() {
+    assertTrue(omniText.matchFilter("equals", "TEST"));
+    assertTrue(omniText.matchFilter("contains", "ES"));
+    assertTrue(omniText.matchFilter("contains", ""));
+    assertFalse(omniText.matchFilter("contains", "KT"));
+    omniText = new OmniText("");
+    assertTrue(omniText.matchFilter("equals", ""));
+  }
+
+  /**
+   * Test method for
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#validateUserDefinedValue(java.lang.String, java.lang.String)}
+   * .
+   */
+  public void testValidateUserDefinedValue() {
+    try {
+      omniText.validateUserDefinedValue("contains", null);
+    } catch (IllegalArgumentException e) {
+      return;
+    } catch (DataTypeValidationException e) {
+      return;
+    }
+
+    fail("Should of have thrown an exception.");
+  }
+
+  /**
+   * Test method for
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#isValidFilter(java.lang.String)}.
+   */
+  public void testIsValidFilter() {
+    assertTrue(OmniText.isValidFilter("equals"));
+    assertTrue(OmniText.isValidFilter("contains"));
+    assertFalse(OmniText.isValidFilter("Invalid Filter"));
+  }
+
+}
