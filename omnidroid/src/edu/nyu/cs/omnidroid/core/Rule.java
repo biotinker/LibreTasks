@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
@@ -10,14 +25,10 @@ import java.util.ArrayList;
 public class Rule {
 
   /** Rule parameters */
-  String ruleName;
-  String eventAppName;
-  String[] filterTypes;
-  String[] filterData;
-  // TODO(londinop): support multiple actions in a rule and multiple parameters/rule
-  String actionAppName;
-  String[] actionParameterNames;
-  String[] actionParameterData;
+  public final String ruleName;
+  public final String eventAppName;
+  public final ArrayList<Filter> filters;
+  public final ArrayList<Action> actions;
 
   /**
    * Constructs a rule from all rule parameters
@@ -26,26 +37,25 @@ public class Rule {
    *          user-defined name of the rule
    * @param eventAppName
    *          event that triggers this rule
-   * @param filterTypes
-   *          OmniDroid data types of the filters associated with this rule
-   * @param filterData
-   *          user-defined data for the filters associated with this rule
-   * @param actionAppName
-   *          the action to perform on a match for this rule
-   * @param actionParameterNames
-   *          field names of the parameters for the action to perform
-   * @param actionParameterData
-   *          parameter data for the action to perform
+   * @param filters
+   *          any filters on the event attributes, can be null if there are no filters
+   * @param actions
+   *          the actions that are triggered by this event
    */
-  public Rule(String ruleName, String eventAppName, String[] filterTypes, String[] filterData,
-      String actionAppName, String[] actionParameterNames, String[] actionParameterData) {
+  public Rule(String ruleName, String eventAppName, ArrayList<Filter> filters,
+      ArrayList<Action> actions) throws IllegalArgumentException {
+
+    if (ruleName == null) {
+      throw new IllegalArgumentException("ruleName cannot be null");
+    } else if (eventAppName == null) {
+      throw new IllegalArgumentException("eventAppName cannot be null");
+    } else if (actions.size() < 1) {
+      throw new IllegalArgumentException("must provide at least one action");
+    }
     this.ruleName = ruleName;
     this.eventAppName = eventAppName;
-    this.filterTypes = filterTypes;
-    this.filterData = filterData;
-    this.actionAppName = actionAppName;
-    this.actionParameterNames = actionParameterNames;
-    this.actionParameterData = actionParameterData;
+    this.filters = filters;
+    this.actions = actions;
   }
 
   /**
@@ -57,8 +67,8 @@ public class Rule {
    */
   public boolean checkFilters(Event event) {
     // TODO(londinop): Support "and/or" structure of filters
-    for (int i = 0; i < filterTypes.length; i++) {
-      if (!event.getAttribute(filterTypes[i]).equals(filterData[i])) {
+    for (Filter currentFilter : filters) {
+      if (!event.getAttribute(currentFilter.type).equals(currentFilter.data)) {
         return false;
       }
     }
@@ -74,19 +84,13 @@ public class Rule {
    * @return the action(s) fired by this rule
    */
   public ArrayList<Action> getActions(Event event) {
-    // Fill in action parameter names
     /*
-     * TODO(londinop): We need a method for distinguishing variables we need to look up in the event
-     * data from predefined parameters stored as part of the rule
+     * TODO(londinop): This is where we should fill in blank action parameter data that is dependent
+     * on event attributes
+     * 
+     * for (Action currentAction : actions) { }
      */
-    ArrayList<Action> actions = new ArrayList<Action>();
 
-    for (int i = 0; i < actionParameterNames.length; i++) {
-      // replace with action parameter fetching code
-    }
-    // Temporary code to simulate returning an action
-    Action action = new Action();
-    actions.add(action);
     return actions;
   }
 }

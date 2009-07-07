@@ -16,18 +16,27 @@
 package edu.nyu.cs.omnidroid.core;
 
 /**
- * This class represents an action that will be fired by OmniDroid if an event passes a rule's
- * filters
+ * This class contains a user defined filter, which will be checked against an event's attribute
+ * data to see if the event matches the user defined rule.
  */
-public class Action {
-  // TODO(londinop): replace with Rutvij's Action class
-  public final String actionName;
-  public final String parameterName;
-  public final String parameterData;
+public class Filter {
+  /**
+   * The type and data to filter.
+   */
+  public final String type;
+  public final String data;
 
-  public Action(String actionName, String parameterName, String parameterData) {
-    this.actionName = actionName;
-    this.parameterName = parameterName;
-    this.parameterData = parameterData;
+  /**
+   * Create a new filter for a specific data field
+   * 
+   * @param type
+   *          The type of the filter, which should match either an event attribute or a system or
+   *          global attribute
+   * @param data
+   *          The value of the filter data type, defined during rule creation
+   */
+  public Filter(String type, String data) {
+    this.type = type;
+    this.data = data;
   }
 }
