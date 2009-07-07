@@ -19,6 +19,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.util.IOUtil;
 
 /**
  * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
@@ -29,10 +30,17 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
   private static final int DATABASE_VERSION = 2;
   private static final String DATABASE_NAME = "omnidroid";
+  private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
+  private static final String DATABASE_FOLDER = "/databases/";
+  private static final String PKG_ROOT = "/data/data/";
+
+  private Context context;
 
   DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+    this.context = context;
   }
 
   @Override
@@ -40,7 +48,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Create all tables when new database instance is created.
     createTables(db);
-
+    
+    // Pre-populate data after installation.
+    populateDefaultData(db);
   }
 
   @Override
@@ -60,22 +70,17 @@ public class DbHelper extends SQLiteOpenHelper {
    * Create all necessary tables in the database
    * 
    * @param db
-   *          SQLiteDatabase object to deal with
+   *          SQLiteDatabase object to work with
    */
   private void createTables(SQLiteDatabase db) {
     db.execSQL(RegisteredAppDbAdapter.DATABASE_CREATE);
-
     db.execSQL(RegisteredEventDbAdapter.DATABASE_CREATE);
     db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_CREATE);
-
     db.execSQL(RegisteredActionDbAdapter.DATABASE_CREATE);
     db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_CREATE);
-
     db.execSQL(DataFilterDbAdapter.DATABASE_CREATE);
     db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
-
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_CREATE);
-
     db.execSQL(RuleDbAdapter.DATABASE_CREATE);
     db.execSQL(RuleFilterDbAdapter.DATABASE_CREATE);
     db.execSQL(RuleActionDbAdapter.DATABASE_CREATE);
@@ -86,28 +91,81 @@ public class DbHelper extends SQLiteOpenHelper {
    * Drop all table in the database
    * 
    * @param db
-   *          SQLiteDatabase object to deal with
+   *          SQLiteDatabase object to work with
    */
   private void dropTables(SQLiteDatabase db) {
     db.execSQL(RegisteredAppDbAdapter.DATABASE_DROP);
-
     db.execSQL(RegisteredEventDbAdapter.DATABASE_DROP);
     db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_DROP);
-
     db.execSQL(RegisteredActionDbAdapter.DATABASE_DROP);
     db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_DROP);
-
     db.execSQL(DataFilterDbAdapter.DATABASE_DROP);
     db.execSQL(DataTypeDbAdapter.DATABASE_DROP);
-
     db.execSQL(ExternalAttributeDbAdapter.DATABASE_DROP);
-
     db.execSQL(RuleDbAdapter.DATABASE_DROP);
     db.execSQL(RuleFilterDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
   }
+  
+  /**
+   * Pre-populate data into the database
+   * 
+   * @param db
+   *          SQLiteDatabase object to work with
+   */
+  private void populateDefaultData(SQLiteDatabase db) {
+    
+    // TODO(ehotou) The exact data to be populated is under discussion. 
+    
+    // Populate registered apps
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
+    registeredAppDbAdapter.insert("SMS", "", true);
+    
+    // Populate data types
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    long dataType_id_text = dataTypeDbAdapter.insert("Text", "OmniText");
+    long dataType_id_date = dataTypeDbAdapter.insert("Date", "OmniDate");
+    long dataType_id_phone = dataTypeDbAdapter.insert("PhoneNumber", "OmniPhoneNumber");
+    
+    // Populate data filters
+    DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
+    dataFilterDbAdapter.insert("equals", dataType_id_text);
+    dataFilterDbAdapter.insert("contains", dataType_id_text);
+    dataFilterDbAdapter.insert("before", dataType_id_date);
+    dataFilterDbAdapter.insert("after", dataType_id_date);
+    dataFilterDbAdapter.insert("equals", dataType_id_phone);
+  }
 
-  // TODO(ehotou) Database backup and restore methods here.
+  /**
+   * Back up the database by backing up the sqlite file.
+   */
+  public void backup() {
+    Log.w(TAG, "Backing up" + DATABASE_NAME);
+    IOUtil.copy(databaseDir() + DATABASE_NAME, databaseDir() + DATABASE_NAME_BACKUP);
+  }
+
+  /**
+   * Restore the database by using the sqlite file backed up.
+   */
+  public void restore() {
+    Log.w(TAG, "Restoring " + DATABASE_NAME);
+    IOUtil.remove(databaseDir() + DATABASE_NAME);
+    IOUtil.move(databaseDir() + DATABASE_NAME_BACKUP, databaseDir() + DATABASE_NAME);
+  }
+
+  /**
+   * @return whether the database backup file exists.
+   */
+  public boolean isBackedUp() {
+    return IOUtil.exist(databaseDir() + DATABASE_NAME_BACKUP);
+  }
+
+  /**
+   * @return the directory of the database file.
+   */
+  private String databaseDir() {
+    return PKG_ROOT + context.getPackageName() + DATABASE_FOLDER;
+  }
 
 }
