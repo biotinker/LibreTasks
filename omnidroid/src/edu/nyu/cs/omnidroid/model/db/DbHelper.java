@@ -36,7 +36,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
   private Context context;
 
-  DbHelper(Context context) {
+  public DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
