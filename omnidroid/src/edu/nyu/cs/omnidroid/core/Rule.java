@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
 
+
 /**
  * This class represents a user defined rule. It consists of the name of the event that will trigger
  * the rule, the filters that apply to the event, and the actions that will be performed if the

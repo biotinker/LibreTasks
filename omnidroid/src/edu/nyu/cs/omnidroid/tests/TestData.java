@@ -13,7 +13,7 @@ import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
 public class TestData {
   public static final String TEST_PHONE_NO = "5556";
   public static final String TEST_MESSAGE_TEXT = "The moon in June is a big, big balloon";
-  
+
   public static Rule getRule() {
     String name = "Auto-Reply DND";
     String eventName = "SMS";
@@ -21,12 +21,14 @@ public class TestData {
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, TEST_PHONE_NO);
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO, "Do not disturb.");
-    actions.add(action);
+    // TODO(Rohit) - add send SMS action here
+    // Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO,
+    // "Do not disturb.");
+    // actions.add(action);
 
     return new Rule(name, eventName, filters, actions);
   }
-  
+
   public static Rule getAnotherRule() {
     String name = "Auto-Reply DND";
     String eventName = "SMS";
@@ -34,8 +36,10 @@ public class TestData {
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, "555-555-5555");
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO, "Do not disturb.");
-    actions.add(action);
+    // TODO(Rohit) - add send SMS action here
+    // Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO,
+    // "Do not disturb.");
+    // actions.add(action);
 
     return new Rule(name, eventName, filters, actions);
   }
@@ -45,26 +49,26 @@ public class TestData {
     rules.add(getRule());
     return rules;
   }
-  
+
   public static SMSReceivedEvent getSMSEvent() {
-    return new SMSReceivedEvent(getIntent(TEST_PHONE_NO, TEST_MESSAGE_TEXT));    
+    return new SMSReceivedEvent(getIntent(TEST_PHONE_NO, TEST_MESSAGE_TEXT));
   }
-  
+
   public static SMSReceivedEvent getAnotherSMSEvent() {
     return new SMSReceivedEvent(getIntent("555-555-5555", TEST_MESSAGE_TEXT));
   }
-  
+
   public static Intent getIntent(String phone, String text) {
     Intent intent = new Intent();
     intent.putExtra(SMSReceivedEvent.ATTRIB_PHONE_NO, phone);
     intent.putExtra(SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, text);
     return intent;
   }
-  
+
   public static String getHexString(byte[] b) throws Exception {
     String result = "";
     for (int i = 0; i < b.length; i++) {
-      result += Integer.toString( (b[i] & 0xff) + 0x100, 16).substring(1);
+      result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
     }
     return result;
   }

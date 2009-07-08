@@ -15,19 +15,61 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
-/**
- * This class represents an action that will be fired by OmniDroid if an event passes a rule's
- * filters
- */
-public class Action {
-  // TODO(londinop): replace with Rutvij's Action class
-  public final String actionName;
-  public final String parameterName;
-  public final String parameterData;
+import android.content.Intent;
 
-  public Action(String actionName, String parameterName, String parameterData) {
+/**
+ * Action provides a general wrapper for the intent to be fired. Classes that implement Action
+ * should provide the intent to be fired and execution method used to fire the intent.
+ */
+public abstract class Action {
+
+  /** Execution Methods */
+  public static final String BY_ACTIVITY = "action.execution.ByActivity";
+  public static final String BY_SERVICE = "action.execution.ByService";
+  public static final String BY_BROADCAST = "action.execution.ByBroadcast";
+
+  /** Action name to be used in the intent */
+  private final String actionName;
+
+  /** The execution method used to fire an intent */
+  private final String executionMethod;
+
+  /**
+   * Create a new Action.
+   * 
+   * @param actionName
+   *          Action name to be used in the intent
+   * @param executionMethod
+   *          The execution method used to fire an intent
+   */
+  public Action(String actionName, String executionMethod) {
     this.actionName = actionName;
-    this.parameterName = parameterName;
-    this.parameterData = parameterData;
+    this.executionMethod = executionMethod;
   }
+
+  /**
+   * Returns an intent that can be fired to perform this action.
+   * 
+   * @return Intent to be fired
+   */
+  public abstract Intent getIntent();
+
+  /**
+   * Returns the execution method used to fire an intent.
+   * 
+   * @return Execution Method for the intent
+   */
+  public String getExecutionMethod() {
+    return executionMethod;
+  }
+
+  /**
+   * Returns the action name used in the intent.
+   * 
+   * @return Action name used in the intents
+   */
+  public String getActionName() {
+    return actionName;
+  }
+
 }

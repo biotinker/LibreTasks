@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.nyu.cs.omnidroid"
-	      android:versionCode="1"
-	      android:versionName="1.0">
+	package="edu.nyu.cs.omnidroid" android:versionCode="1"
+	android:versionName="1.0">
 
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:debuggable="true">
 
 		<!--  We need to start our service on boot-up -->
 		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	    <receiver android:name=".bkgservice.Starter">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="OmniRestart"/>
-            </intent-filter>
-        </receiver>
-        
+		<receiver android:name=".bkgservice.Starter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="OmniRestart" />
+			</intent-filter>
+		</receiver>
+
         
         <activity android:name=".ui.simple.ActivityMain"
                   android:label="@string/app_name">
@@ -74,159 +74,149 @@
 		</activity>
 
 		<!--  Settings activity -->
-        <activity android:name=".ui.Settings"
-                  android:label="@string/settings">
+		<activity android:name=".ui.Settings" android:label="@string/settings">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what application's actions to catch -->
-        <activity android:name=".ui.Event"
-                  android:label="@string/event_title">
+		<!--
+			Activity used to by the event catcher to determine what application's
+			actions to catch
+		-->
+		<activity android:name=".ui.Event" android:label="@string/event_title">
 		</activity>
 
 		<!--  Activity used to setup filters for OmniHandlers -->
-        <activity android:name=".ui.Filters"
-                  android:label="@string/filters_title">
+		<activity android:name=".ui.Filters" android:label="@string/filters_title">
 		</activity>
 
 		<!--  Activity used to add a filter to an OmniHandler -->
-        <activity android:name=".ui.FiltersAddType"
-                  android:label="@string/filters_add_title">
+		<activity android:name=".ui.FiltersAddType" android:label="@string/filters_add_title">
 		</activity>
 
 		<!--  Activity used to add data to an OmniHandler filter -->
-        <activity android:name=".ui.FiltersAddData"
-                  android:label="@string/filters_add_data_title">
+		<activity android:name=".ui.FiltersAddData" android:label="@string/filters_add_data_title">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application -->
-        <activity android:name=".ui.EventType"
-                  android:label="@string/event_type_title">
+		<!--
+			Activity used to by the event catcher to determine what actions to
+			catch for a given application
+		-->
+		<activity android:name=".ui.EventType" android:label="@string/event_type_title">
 		</activity>
 
-		<!--  Activity used to by the event catcher to determine
-		      what data to provide to the application thrown -->
-        <activity android:name=".ui.ActionData"
-                  android:label="@string/action_data_title">
-		</activity>
-
-		<!--   -->
-        <activity android:name=".ui.Actions"
-                  android:label="@string/actions_title">
+		<!--
+			Activity used to by the event catcher to determine what data to
+			provide to the application thrown
+		-->
+		<activity android:name=".ui.ActionData" android:label="@string/action_data_title">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".ui.ActionAdd"
-                  android:label="@string/action_add_title">
+		<activity android:name=".ui.Actions" android:label="@string/actions_title">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".ui.ActionType"
-                  android:label="@string/action_type_title">
+		<activity android:name=".ui.ActionAdd" android:label="@string/action_add_title">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".ui.ActionData"
-                  android:label="@string/action_data_title">
+		<activity android:name=".ui.ActionType" android:label="@string/action_type_title">
 		</activity>
 
 		<!--   -->
-        <activity android:name=".ui.ActionDatumAdd"
-                  android:label="@string/action_datum_add_title">
+		<activity android:name=".ui.ActionData" android:label="@string/action_data_title">
+		</activity>
+
+		<!--   -->
+		<activity android:name=".ui.ActionDatumAdd" android:label="@string/action_datum_add_title">
 		</activity>
 
 		<!--  Activity used to list all the phone application packages -->
-        <activity android:name=".tests.PackageLister"
-                  android:label="@string/package_lister">
+		<activity android:name=".tests.PackageLister" android:label="@string/package_lister">
 		</activity>
-		
+
 		<!--  The service that throws actions to our applications -->
 		<service android:name=".core.HandlerService"></service>
 
-		<!--  Our Content Provider that stores data to link between 
-		      the ThrowerApp and the CatcherApp -->
-		 <provider android:name=".core.CP"
-         android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
+		<!--
+			Our Content Provider that stores data to link between the ThrowerApp
+			and the CatcherApp
+		-->
+		<provider android:name=".core.CP" android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
 
 		<!-- Test our service -->
-        <activity android:name=".tests.TestService">
-        </activity>
+		<activity android:name=".tests.TestService">
+		</activity>
 
-        <!-- Test the CP -->
-        <activity android:name=".tests.TestCP"
-                  android:label="@string/maincp_name">
-        </activity>
+		<!-- Test the CP -->
+		<activity android:name=".tests.TestCP" android:label="@string/maincp_name">
+		</activity>
 
-		<!--  Service/receiver that runs to catch events -->        
+		<!--  Service/receiver that runs to catch events -->
 		<service android:name=".bkgservice.BRService" />
-        <receiver android:name=".bkgservice.BCReceiver"> 
-            <intent-filter> 
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
-            </intent-filter>
-            <intent-filter> 
-                <action android:name="android.intent.action.PHONE_STATE" /> 
-            </intent-filter>  
-        </receiver>
+		<receiver android:name=".bkgservice.BCReceiver">
+			<intent-filter>
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.PHONE_STATE" />
+			</intent-filter>
+		</receiver>
 
 		<!--  Runs all our Test Cases -->
-        <activity android:name=".tests.TestApp"
-                  android:label="@string/test_app">
+		<activity android:name=".tests.TestApp" android:label="@string/test_app">
 		</activity>
 
 		<!--  Runs all our App Config Test Cases -->
-        <activity android:name=".tests.TestAppConfig"
-                  android:label="@string/test_app_cfg">
+		<activity android:name=".tests.TestAppConfig" android:label="@string/test_app_cfg">
 		</activity>
 
 		<!--  Runs all our User Config Test Cases -->
-        <activity android:name=".tests.TestUserConfig"
-                  android:label="@string/test_user_cfg">
+		<activity android:name=".tests.TestUserConfig" android:label="@string/test_user_cfg">
 		</activity>
 
 		<!--  Thrower Test Provider -->
-		 <provider android:name=".external.eventapp.ExternalCP"
-         android:authorities="edu.nyu.cs.omnidroid.external.eventapp.cp" />
+		<provider android:name=".external.eventapp.ExternalCP"
+			android:authorities="edu.nyu.cs.omnidroid.external.eventapp.cp" />
 
-		<!--  Activity used to by the event catcher to determine
-		      what actions to catch for a given application -->
-        <activity android:name=".external.catcherapp.CatcherAppActivity"
-                  android:label="@string/event_catcher">
+		<!--
+			Activity used to by the event catcher to determine what actions to
+			catch for a given application
+		-->
+		<activity android:name=".external.catcherapp.CatcherAppActivity"
+			android:label="@string/event_catcher">
 		</activity>
-		
+
 		<activity android:name=".external.catcherapp.SMSCatcherActivity"
-                  android:label="@string/sms_catcher">
+			android:label="@string/sms_catcher">
 		</activity>
 
 		<!--  External EventApp testcase -->
-        <activity android:name=".external.eventapp.ExternalCPActivity"
-                  android:label="@string/event_app">
+		<activity android:name=".external.eventapp.ExternalCPActivity"
+			android:label="@string/event_app">
 		</activity>
-		
-	    <receiver android:name=".external.catcherapp.SMSListener">
-            <intent-filter>
-                <action android:name="Display_Contact"/>
-            </intent-filter>
-        </receiver>
-        
-        <receiver android:name=".external.catcherapp.SMSCatcher">
-            <intent-filter>
-                <action android:name="SMS_SEND"/>
-            </intent-filter>
-        </receiver>
+
+		<receiver android:name=".external.catcherapp.SMSListener">
+			<intent-filter>
+				<action android:name="Display_Contact" />
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name=".external.catcherapp.SMSCatcher">
+			<intent-filter>
+				<action android:name="SMS_SEND" />
+			</intent-filter>
+		</receiver>
 
 	</application>
 
-	<!--  Permissions that OmniDroid registers so it can access 
-	      more complex functionality -->
-	<uses-permission android:name="android.permission.SEND_SMS">
-    </uses-permission>
-    <uses-permission android:name="android.permission.RECEIVE_SMS">
-    </uses-permission>
-    <uses-permission android:name="android.permission.READ_SMS">
-    </uses-permission>
-    <uses-permission android:name="android.permission.WRITE_SMS">
-    </uses-permission>
-	        <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+	<!--
+		Permissions that OmniDroid registers so it can access more complex
+		functionality
+	-->
+	<uses-permission android:name="android.permission.SEND_SMS"/>
+	<uses-permission android:name="android.permission.RECEIVE_SMS"/>
+	<uses-permission android:name="android.permission.READ_SMS"/>
+	<uses-permission android:name="android.permission.WRITE_SMS"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+	<uses-permission android:name="android.permission.CALL_PHONE"/>
 </manifest>
