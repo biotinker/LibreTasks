@@ -15,6 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
+import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+
 /**
  * UI representation of a filter. We'll modify this to match the database model. Filters are
  * associated with an attribute.
@@ -23,7 +25,7 @@ public class ModelFilter extends ModelItem {
 
   private final int mDatabaseId;
   private final ModelAttribute mAttribute;
-  private final OmniDataType mFilterData;
+  private final DataType mFilterData;
 
   /**
    * filterData may be null.
@@ -33,7 +35,7 @@ public class ModelFilter extends ModelItem {
                      String description, 
                      int iconResId,
                      ModelAttribute attribute, 
-                     OmniDataType filterData) 
+                     DataType filterData) 
   {
     super(typeName, description, iconResId);
     mDatabaseId = databaseId;
@@ -49,7 +51,7 @@ public class ModelFilter extends ModelItem {
     return mAttribute;
   }
 
-  public OmniDataType getFilterData() {
+  public DataType getFilterData() {
     return mFilterData;
   }
 
@@ -59,7 +61,7 @@ public class ModelFilter extends ModelItem {
     } 
     else {
       return getAttribute().getDescriptionShort() + " " + getTypeName() + ": "
-          + getFilterData().getDescription();
+          + getFilterData().getValue();
     }
   }
 }

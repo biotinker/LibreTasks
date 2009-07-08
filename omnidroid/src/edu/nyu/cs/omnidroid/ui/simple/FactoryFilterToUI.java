@@ -22,11 +22,11 @@ import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
-import edu.nyu.cs.omnidroid.ui.simple.model.OmniDataType;
-import edu.nyu.cs.omnidroid.ui.simple.model.OmniPhoneNumber;
-import edu.nyu.cs.omnidroid.ui.simple.model.OmniText;
 
 /**
  * Static factory class for setting up a dynamic UI for every filter type that should be supported.
@@ -90,7 +90,7 @@ public class FactoryFilterToUI {
    *          it.
    */
   public static void buildUIForFilter(IDlgFilterInput dlg, final ModelAttribute attribute,
-      final ModelFilter filter, OmniDataType dataOld) {
+      final ModelFilter filter, DataType dataOld) {
     dlg.setTitle(attribute.getDescriptionShort() + " " + filter.getTypeName());
 
     LinearLayout ll = new LinearLayout(dlg.getContext());
@@ -106,7 +106,7 @@ public class FactoryFilterToUI {
 
       final EditText edit = new EditText(dlg.getContext());
       if (dataOld != null) {
-        edit.setText(((OmniPhoneNumber) dataOld).getPhoneNumber());
+        edit.setText(((OmniPhoneNumber) dataOld).getValue());
       }
       ll.addView(edit);
 
@@ -146,7 +146,7 @@ public class FactoryFilterToUI {
 
       final EditText edit = new EditText(dlg.getContext());
       if (dataOld != null) {
-        edit.setText(((OmniText) dataOld).getText());
+        edit.setText(((OmniText) dataOld).getValue());
       }
       ll.addView(edit);
 
@@ -185,7 +185,7 @@ public class FactoryFilterToUI {
 
       final EditText edit = new EditText(dlg.getContext());
       if (dataOld != null) {
-        edit.setText(((OmniText) dataOld).getText());
+        edit.setText(((OmniText) dataOld).getValue());
       }
       ll.addView(edit);
 

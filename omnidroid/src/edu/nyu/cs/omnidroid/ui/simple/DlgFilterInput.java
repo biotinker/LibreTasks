@@ -22,9 +22,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
-import edu.nyu.cs.omnidroid.ui.simple.model.OmniDataType;
 
 /**
  * This dialog is a shell to contain UI elements specific to different filters. Given a filter ID,
@@ -54,8 +54,11 @@ public class DlgFilterInput extends Dialog implements FactoryFilterToUI.IDlgFilt
    */
   private boolean mPreserveStateOnClose;
 
-  public DlgFilterInput(Context context, ModelAttribute attribute, ModelFilter filter,
-      OmniDataType dataOld) {
+  public DlgFilterInput(Context context, 
+                        ModelAttribute attribute, 
+                        ModelFilter filter,
+                        DataType dataOld) 
+  {
     super(context);
     setContentView(R.layout.dlg_filter_input);
 
