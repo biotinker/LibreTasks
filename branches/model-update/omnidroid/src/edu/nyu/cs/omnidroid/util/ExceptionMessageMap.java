@@ -90,6 +90,7 @@ public class ExceptionMessageMap {
     MESSAGE_MAP.put("110000", "110000: Error starting EventCatcher.");
 
     MESSAGE_MAP.put("120000", "120000: Error starting ActionThrower.");
+    MESSAGE_MAP.put("120001", "120001: Illegal execution method for action.");
 
     MESSAGE_MAP.put("130000", "130000: Error starting Application API.");
 
