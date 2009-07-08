@@ -73,4 +73,8 @@ public class OmniPhoneNumber implements DataType {
     return value;
   }
 
+  public String getValue() {
+    return this.value;
+  }
+
 }

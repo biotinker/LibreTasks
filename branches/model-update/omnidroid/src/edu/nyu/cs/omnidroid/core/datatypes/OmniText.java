@@ -72,4 +72,11 @@ public class OmniText implements DataType {
     return false;
   }
 
+  public String getValue() {
+    return this.value;
+  }
+  
+  public String toString(){
+    return this.value;
+  }
 }

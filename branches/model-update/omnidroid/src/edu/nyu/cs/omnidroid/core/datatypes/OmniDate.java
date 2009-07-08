@@ -136,4 +136,8 @@ public class OmniDate implements DataType {
     return dateFormat.format(this.value);
   }
 
+  public String getValue() {
+    return dateFormat.format(this.value);
+  }
+
 }
