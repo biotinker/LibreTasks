@@ -40,5 +40,10 @@ public interface DataType {
    */
   public void validateUserDefinedValue(String filterName, String userInput)
       throws DataTypeValidationException, IllegalArgumentException;
-
+  
+  /**
+   * 
+   * @return user friendly string representation of the data type.
+   */
+  public String getValue();
 }
