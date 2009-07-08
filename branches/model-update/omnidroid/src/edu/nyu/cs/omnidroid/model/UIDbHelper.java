@@ -23,10 +23,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
-import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
-import edu.nyu.cs.omnidroid.model.db.RegisteredAppDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventAttributeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventDbAdapter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
@@ -36,9 +34,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 
 public class UIDbHelper {
   
-  private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
-  private RegisteredAppDbAdapter registeredAppDbAdapter;
   private RegisteredEventDbAdapter registeredEventDbAdapter;
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter;
@@ -48,12 +44,14 @@ public class UIDbHelper {
     omnidroidDbHelper = new DbHelper(context);
     SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
     
-    dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataFilterDbAdapter = new DataFilterDbAdapter(database);
-    registeredAppDbAdapter = new RegisteredAppDbAdapter(database);
     registeredEventDbAdapter = new RegisteredEventDbAdapter(database);
     registeredActionDbAdapter = new RegisteredActionDbAdapter(database);
     registeredEventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(database);
+  }
+  
+  public void close() {
+    omnidroidDbHelper.close();
   }
   
   public ArrayList<ModelEvent> getEvents() {
@@ -66,6 +64,7 @@ public class UIDbHelper {
           cursor.getString(cursor.getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTNAME))
           , "", R.drawable.icon_event_unknown));
     }
+    cursor.close();
     return events;
   }
   
@@ -78,6 +77,7 @@ public class UIDbHelper {
           cursor.getString(cursor.getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONNAME)), 
           "", R.drawable.icon_action_unknown));
     }
+    cursor.close();
     return actions;
   }
   
@@ -95,6 +95,7 @@ public class UIDbHelper {
               .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), "",
           R.drawable.icon_attribute_unknown));
     }
+    cursor.close();
     return attributes;
   }
   
@@ -108,6 +109,7 @@ public class UIDbHelper {
           cursor.getString(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERNAME)), 
           "", R.drawable.icon_filter_unknown, attribute, null));
     }
+    cursor.close();
     return filters;
   }
 }
