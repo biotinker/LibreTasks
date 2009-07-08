@@ -95,7 +95,7 @@ public class UIDbHelper {
               .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), "",
           R.drawable.icon_attribute_unknown));
     }
-    return null;
+    return attributes;
   }
   
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {

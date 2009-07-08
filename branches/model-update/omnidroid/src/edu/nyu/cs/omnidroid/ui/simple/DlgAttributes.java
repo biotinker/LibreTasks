@@ -168,7 +168,7 @@ public class DlgAttributes extends Dialog {
 
       // Fetch all available attributes for the root event from the
       // database.
-      mAttributes = DummyDatabase.getAttributesForEvent(eventRoot);
+      mAttributes = DbInterfaceUI.instance().db().getAttributesForEvent(eventRoot);
     }
 
     public int getCount() {

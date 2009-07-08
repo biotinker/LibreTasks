@@ -36,6 +36,9 @@ public class ActivityMain extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    // Initialize database interface.
+    DbInterfaceUI.init(this);
+    
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_dummyui_btnCreateRule);
     btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
