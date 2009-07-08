@@ -89,8 +89,11 @@ public class FactoryFilterToUI {
    *          If we're modifying an existing filter, then this is the data the user had last set for
    *          it.
    */
-  public static void buildUIForFilter(IDlgFilterInput dlg, final ModelAttribute attribute,
-      final ModelFilter filter, DataType dataOld) {
+  public static void buildUIForFilter(IDlgFilterInput dlg, 
+                                      final ModelAttribute attribute,
+                                      final ModelFilter filter, 
+                                      DataType dataOld) 
+  {
     dlg.setTitle(attribute.getDescriptionShort() + " " + filter.getTypeName());
 
     LinearLayout ll = new LinearLayout(dlg.getContext());
@@ -98,7 +101,7 @@ public class FactoryFilterToUI {
         LayoutParams.FILL_PARENT));
     ll.setOrientation(LinearLayout.VERTICAL);
 
-    if (filter.getDatabaseId() == DummyDatabase.FILTER_ID_PHONE_NUMBER_EQUALS) {
+    if (filter.getDatabaseId() == DbInterfaceUI.FILTER_ID_PHONENUMBER_EQUALS) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phone number to match below:");
@@ -138,7 +141,7 @@ public class FactoryFilterToUI {
           }
         }
       });
-    } else if (filter.getDatabaseId() == DummyDatabase.FILTER_ID_TEXT_EQUALS) {
+    } else if (filter.getDatabaseId() == DbInterfaceUI.FILTER_ID_TEXT_EQUALS) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter an exact text string to match below:");
@@ -177,7 +180,7 @@ public class FactoryFilterToUI {
           }
         }
       });
-    } else if (filter.getDatabaseId() == DummyDatabase.FILTER_ID_TEXT_CONTAINS) {
+    } else if (filter.getDatabaseId() == DbInterfaceUI.FILTER_ID_TEXT_CONTAINS) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phrase in the text body to match below:");

@@ -168,7 +168,7 @@ public class DlgFilters extends Dialog {
       mContext = c;
 
       // Fetch all available filters for this attribute, from the database.
-      mFilters = DummyDatabase.getFiltersForAttribute(attribute);
+      mFilters = DbInterfaceUI.instance().db().getFiltersForAttribute(attribute);
     }
 
     public int getCount() {
