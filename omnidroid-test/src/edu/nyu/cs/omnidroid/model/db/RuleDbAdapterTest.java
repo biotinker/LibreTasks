@@ -37,12 +37,19 @@ public class RuleDbAdapterTest extends AndroidTestCase {
     super.setUp();
     omnidroidDbHelper = new DbHelper(this.getContext());
     dbAdapter = new RuleDbAdapter(omnidroidDbHelper.getWritableDatabase());
+    omnidroidDbHelper.backup();
     dbAdapter.deleteAll();
   }
 
   @Override
   protected void tearDown() throws Exception {
     dbAdapter.deleteAll();
+    
+    // Try to restore the database
+    if(omnidroidDbHelper.isBackedUp()) {
+      omnidroidDbHelper.restore();
+    }
+    
     omnidroidDbHelper.close();
     super.tearDown();
   }
