@@ -212,6 +212,10 @@ public class FactoryFilterToUI {
         }
       });
     }
+    else {
+    	System.out.println("Filter ID: " + filter.getDatabaseId());
+    	throw new IllegalArgumentException("Unknown filter ID[" + filter.getDatabaseId() + "] passed to FactoryFilterToUI::buildUIForFilter()!");
+    }
     dlg.addDynamicLayout(ll);
   }
 }

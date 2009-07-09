@@ -16,11 +16,11 @@ public class DbInterfaceUI {
 	/** We need to know all the filter IDs as they'll appear in
 	 *  the database for FactoryFilterToUI to work.
 	 */
-	public static final int FILTER_ID_TEXT_EQUALS        = 0;
-	public static final int FILTER_ID_TEXT_CONTAINS      = 1;
-	public static final int FILTER_ID_PHONENUMBER_EQUALS = 2;
-	public static final int FILTER_ID_DATE_BEFORE        = 3;
-	public static final int FILTER_ID_DATE_AFTER         = 4;
+	public static final int FILTER_ID_TEXT_EQUALS        = 1;
+	public static final int FILTER_ID_TEXT_CONTAINS      = 2;
+	public static final int FILTER_ID_PHONENUMBER_EQUALS = 3;
+	public static final int FILTER_ID_DATE_BEFORE        = 4;
+	public static final int FILTER_ID_DATE_AFTER         = 5;
 	
 	
 	private DbInterfaceUI(Context context) {
