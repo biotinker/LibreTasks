@@ -87,14 +87,14 @@ public class ActivityChooseFilters extends Activity {
     Button btnTasks = (Button) findViewById(R.id.activity_choosefilters_btnTasks);
     btnTasks.setOnClickListener(listenerBtnClickTasks);
 
-    Button btnAddTask = (Button) findViewById(R.id.activity_choosefilters_btnAddTask);
-    btnAddTask.setOnClickListener(listenerBtnClickAddTask);
+    Button btnAddAction = (Button) findViewById(R.id.activity_choosefilters_btnAddAction);
+    btnAddAction.setOnClickListener(listenerBtnClickAddAction);
 
-    Button btnRemoveTask = (Button) findViewById(R.id.activity_choosefilters_btnRemoveTask);
-    btnRemoveTask.setOnClickListener(listenerBtnClickRemoveTask);
+    Button btnRemoveAction = (Button) findViewById(R.id.activity_choosefilters_btnRemoveAction);
+    btnRemoveAction.setOnClickListener(listenerBtnClickRemoveAction);
 
-    Button btnEditTask = (Button) findViewById(R.id.activity_choosefilters_btnEditTask);
-    btnEditTask.setOnClickListener(listenerBtnClickEditTask);
+    Button btnEditAction = (Button) findViewById(R.id.activity_choosefilters_btnEditAction);
+    btnEditAction.setOnClickListener(listenerBtnClickEditAction);
 
     Button btnFilters = (Button) findViewById(R.id.activity_choosefilters_btnFilters);
     btnFilters.setOnClickListener(listenerBtnClickFilters);
@@ -191,26 +191,27 @@ public class ActivityChooseFilters extends Activity {
     }
   };
 
-  private OnClickListener listenerBtnClickAddTask = new OnClickListener() {
+  private OnClickListener listenerBtnClickAddAction = new OnClickListener() {
     public void onClick(View v) {
-      UtilUI.showAlert(v.getContext(), "Sorry!", "Adding tasks has not yet been implemented!");
+      UtilUI.showAlert(v.getContext(), "Sorry!", "Adding actions has not yet been implemented!");
+      // TODO: Get a list of applications, each of which will have an associated list of actions.
     }
   };
 
-  private OnClickListener listenerBtnClickEditTask = new OnClickListener() {
+  private OnClickListener listenerBtnClickEditAction = new OnClickListener() {
     public void onClick(View v) {
       int position = mListview.getCheckedItemPosition();
       ModelItem selectedItem = mAdapterRule.getItem(position);
       if (selectedItem instanceof ModelAction) {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Editing tasks has not yet been implemented!");
+        UtilUI.showAlert(v.getContext(), "Sorry!", "Editing actions has not yet been implemented!");
       } 
       else {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a task from the list for editing.");
+        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an action from the list for editing.");
       }
     }
   };
 
-  private OnClickListener listenerBtnClickRemoveTask = new OnClickListener() {
+  private OnClickListener listenerBtnClickRemoveAction = new OnClickListener() {
     public void onClick(View v) {
       int position = mListview.getCheckedItemPosition();
       ModelItem selectedItem = mAdapterRule.getItem(position);
@@ -218,7 +219,7 @@ public class ActivityChooseFilters extends Activity {
 
       } 
       else {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a task from the list to delete.");
+        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an action from the list to delete.");
       }
     }
   };
