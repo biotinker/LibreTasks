@@ -34,13 +34,13 @@ Parses the intent according to it's type and creates properly formated Event.
 Applications which provide an OmniDroid? Application Configuration File for their app.
 
 === OmniCompatible ===
-Applications which are either Omni-aware or have built-in OmniDroid? support.
+Applications which are either Omni-aware or have built-in OmniDroid support.
 
 === OmniHandler ===
-An event handler that is configured and stored for use in OmniDroid?.
+An event handler that is configured and stored for use in OmniDroid.  It represents a user specified correlation between events and actions.
 
 === Rule ===
-A correlation between events and actions.
+See OmniHandler.
 
 === User Configuration File ===
  List of OmniDroid global settings as well as the set of OmniHandlers currently configured. 
