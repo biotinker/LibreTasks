@@ -1,6 +1,7 @@
 package edu.nyu.cs.omnidroid.ui.simple;
 
 import android.content.Context;
+import edu.nyu.cs.omnidroid.model.FilterIDLookup;
 import edu.nyu.cs.omnidroid.model.UIDbHelper;
 
 /**
@@ -12,19 +13,12 @@ public class DbInterfaceUI {
 	
 	private static DbInterfaceUI mInstance;
 	private UIDbHelper mHelper;
-	
-	/** We need to know all the filter IDs as they'll appear in
-	 *  the database for FactoryFilterToUI to work.
-	 */
-	public static final int FILTER_ID_TEXT_EQUALS        = 1;
-	public static final int FILTER_ID_TEXT_CONTAINS      = 2;
-	public static final int FILTER_ID_PHONENUMBER_EQUALS = 3;
-	public static final int FILTER_ID_DATE_BEFORE        = 4;
-	public static final int FILTER_ID_DATE_AFTER         = 5;
+	private FilterIDLookup mFilterLookup;
 	
 	
 	private DbInterfaceUI(Context context) {
 		mHelper = new UIDbHelper(context);
+		mFilterLookup = new FilterIDLookup(context);
 	}
 	
 	public static void init(Context context) {
@@ -39,5 +33,9 @@ public class DbInterfaceUI {
 	
 	public UIDbHelper db() {
 		return mHelper;
+	}
+	
+	public FilterIDLookup getFilterLookup() {
+		return mFilterLookup;
 	}
 }
