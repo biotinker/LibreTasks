@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
@@ -28,9 +27,11 @@ import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventAttributeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventDbAdapter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 
 public class UIDbHelper {
   
@@ -67,20 +68,7 @@ public class UIDbHelper {
     cursor.close();
     return events;
   }
-  
-  public ArrayList<ModelAction> getActions() {
-    ArrayList<ModelAction> actions = new ArrayList<ModelAction>();
-    Cursor cursor = registeredActionDbAdapter.fetchAll();
-    for (int i = 0; i < cursor.getCount(); i++) {
-      cursor.moveToNext();
-      actions.add(new ModelAction(
-          cursor.getString(cursor.getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONNAME)), 
-          "", R.drawable.icon_action_unknown));
-    }
-    cursor.close();
-    return actions;
-  }
-  
+
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     ArrayList<ModelAttribute> attributes = new ArrayList<ModelAttribute>();
     Cursor cursor = registeredEventAttributeDbAdapter.fetchAll(
@@ -111,5 +99,38 @@ public class UIDbHelper {
     }
     cursor.close();
     return filters;
+  }
+  
+  public ArrayList<ModelApplication> getApplications() {
+	  // TODO: Return all applications that have usable actions.
+	  return null;
+  }
+  
+  public ArrayList<ModelAction> getActions(ModelApplication application) {
+	// TODO: Given a ModelApplication, return all ModelAction associated with it.
+	/*
+    ArrayList<ModelAction> actions = new ArrayList<ModelAction>();
+    Cursor cursor = registeredActionDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+      actions.add(new ModelAction(
+          cursor.getString(cursor.getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONNAME)), 
+          "", R.drawable.icon_action_unknown, application));
+    }
+    cursor.close();
+    return actions;
+    */
+	return null;
+  }
+  
+  public ArrayList<Rule> getRules() {
+	  // TODO: Return a list of all rules saved in the datbase.
+	  return null;
+  }
+  
+  public void saveRule(Rule rule) throws Exception {
+	  // TODO: Given a rule, try to save it to the database.
+	  // First check if the rule has a valid ID - if so, delete all preexisting
+	  // records associated with this rule before saving.
   }
 }
