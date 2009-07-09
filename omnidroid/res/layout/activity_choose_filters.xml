@@ -66,7 +66,7 @@
         </Button>
         
         <Button 
-            android:text="Tasks ->" 
+            android:text="Actions ->" 
             android:id="@+id/activity_choosefilters_btnTasks" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
@@ -85,24 +85,24 @@
         >
     
 		<Button 
-		    android:text="+Task" 
-		    android:id="@+id/activity_choosefilters_btnAddTask" 
+		    android:text="+Action" 
+		    android:id="@+id/activity_choosefilters_btnAddAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center">
 		</Button>
 		
 		<Button 
-		    android:text="-Task" 
-		    android:id="@+id/activity_choosefilters_btnRemoveTask" 
+		    android:text="-Action" 
+		    android:id="@+id/activity_choosefilters_btnRemoveAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center">
 		</Button>
 		
 		<Button 
-            android:text="~Task" 
-            android:id="@+id/activity_choosefilters_btnEditTask" 
+            android:text="~Action" 
+            android:id="@+id/activity_choosefilters_btnEditAction" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center">
