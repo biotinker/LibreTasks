@@ -9,9 +9,9 @@ OmniDroid presents a simple event handler system.  OmniDroid processes data on t
   * Event Handling.
 
 == Application Registration ==
-In order for OmniDroid to handle events, it needs to have applications register with it.  This can either be a passive registration where OmniDroid has built-in support for a specific application, or active registration where an application is Omni-aware and provides the necessary information to OmniDroid.
+In order for OmniDroid to handle events, it needs to have applications register with it.  This can either be a passive registration where OmniDroid has built-in support for a specific application, or active registration where an application is OmniAware and provides the necessary information to OmniDroid.
 
-Application registration occurs at two times.  First when OmniDroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are Omni-compatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is Omni-compatible and register it if possible.  When applications are registered with OmniDroid it populates the Application Configuration File.
+Application registration occurs at two times.  First when OmniDroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with OmniDroid it populates the Application Configuration File.
 
 
 == User Setup/Configuration ==
@@ -67,12 +67,4 @@ Subject to change, here are the Application and User Configuration specification
 
 = DEFINITIONS =
 
-Omni-aware - applications which provide an OmniDroid Application Configuration File for their app.
-
-Omni-compatible - applications which are either Omni-aware or have built-in OmniDroid support.
-
-OmniHandler - An event handler that is configured and stored for use in OmniDroid.
-
-Application Configuration File - Lists of applications that are Omni-aware which includes a list of events that application triggers and a list of actions that application can perform along with what filters can be applied for it and how to map data for each of these items.
-
-User Configuration File - List of OmniDroid global settings as well as the set of OmniHandlers currently configured.
+See [Glossary]
