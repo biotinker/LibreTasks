@@ -21,26 +21,16 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  * this to match the database model. These are 
  * actions to perform if a user's rule is true.
  */
-public class ModelAction extends ModelItem {
+public class ModelApplication extends ModelItem {
 	
-  /** An action always has a parent application. */
-  private final ModelApplication mApplication;
-	
-  
-  public ModelAction(String typeName, 
-                     String description, 
-                     int iconResId,
-                     ModelApplication application) 
+  public ModelApplication(String typeName, 
+                          String description, 
+                          int iconResId) 
   {
 	  super(typeName, description, iconResId);
-	  mApplication = application;
   }
 	
   public String getDescriptionShort() {
-    return mApplication.getTypeName() + " " + getTypeName();
-  }
-  
-  public ModelApplication getApplication() {
-	  return mApplication;
+    return getTypeName();
   }
 }
