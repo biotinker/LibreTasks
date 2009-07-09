@@ -1,31 +1,46 @@
 #summary The purpose of the glossary is to eliminate ambiguous terms and their usage.
 
-=== Intent (_or Android Intent_) ===
-Refers to a Android Intent.
-
-=== OmniDroid Intent Listener ===
-Refers to component that listens for Android Intents that we have active rules for.
-
-=== OmniDroid Intent Parser ===
-Parses the intent according to it's type and creates properly formated Event.
-
-=== OmniDroid Event Processor ===
-Refers to component that processes events and performs required action, based on given rules.
-
-=== Event === 
-An intent that is being received by OmniDroid Intent Listener.
-
 === Action ===
 An intent that OmniDroid initiates as a result of an OmniDroid rule.
-
-=== Rule ===
-A correlation between events and actions.
-
-=== Event Attributes ===
-Data that is received along with the event.
 
 === Action Parameters ===
 Data that must be sent along with the action.
 
+=== Application Configuration File ===
+Lists of applications that are Omni-aware which includes a list of events that application triggers and a list of actions that application can perform along with what filters can be applied for it and how to map data for each of these items.
+
+=== Event === 
+An intent that is being received by OmniDroid Intent Listener.
+
+=== Event Attributes ===
+Data that is received along with the event.
+
+=== Event Processor ===
+Refers to component that processes events and performs required action, based on given rules.
+
 === Global Attributes ===
 A system or third party attribute that provides additional data.
+
+=== Intent (_or Android Intent_) ===
+Refers to a Android Intent.
+
+=== Intent Listener ===
+Refers to component that listens for Android Intents that we have active rules for.
+
+=== Intent Parser ===
+Parses the intent according to it's type and creates properly formated Event.
+
+=== OmniAware ===
+Applications which provide an OmniDroid? Application Configuration File for their app.
+
+=== OmniCompatible ===
+Applications which are either Omni-aware or have built-in OmniDroid? support.
+
+=== OmniHandler ===
+An event handler that is configured and stored for use in OmniDroid?.
+
+=== Rule ===
+A correlation between events and actions.
+
+=== User Configuration File ===
+ List of OmniDroid global settings as well as the set of OmniHandlers currently configured. 
