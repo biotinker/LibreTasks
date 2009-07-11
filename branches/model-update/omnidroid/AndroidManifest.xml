@@ -206,6 +206,13 @@
 				<action android:name="SMS_SEND" />
 			</intent-filter>
 		</receiver>
+		
+		<service android:name=".external.actions.SMSService">
+          <intent-filter>
+             <action
+                android:name="omnidroid.intent.action.SMS_SEND" />
+          </intent-filter>
+        </service>
 
 	</application>
 
