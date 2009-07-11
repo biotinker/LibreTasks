@@ -60,6 +60,20 @@ public class Rule {
     return mNode.getChildren().size() > 0;
   }
 
+  public ArrayList<RuleNode> getFilterBranches() {
+    ArrayList<RuleNode> filters = new ArrayList<RuleNode>();
+    
+    int indexAction = getFirstActionPosition();
+    for (int i = 0; i < getRootNode().getChildren().size(); i++) {
+    	if (i >= indexAction) {
+    		break;
+    	}
+    	filters.add(getRootNode().getChildren().get(i));
+    }
+    
+    return filters;
+  }
+  
   /**
    * Extract all <code>ModelAction</code> instances out of the tree form and add them to the a list.
    * 

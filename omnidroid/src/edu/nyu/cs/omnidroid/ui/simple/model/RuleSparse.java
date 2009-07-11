@@ -17,28 +17,31 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 
 
 /**
- * UI representation of an action. We'll modify
- * this to match the database model. These are 
- * actions to perform if a user's rule is true.
+ * This is a simple representation of a Rule for when we need to display 
+ * a master list of all Rules from the database. When a user wants more
+ * info about a Rule, we load the full Rule instance from the database.
  */
-public class ModelApplication extends ModelItem {
+public class RuleSparse {
 
-  private final int mDatabaseId;
-	  
-  public ModelApplication(int databaseId,
-		                  String typeName, 
-                          String description, 
-                          int iconResId) 
-  {
-	  super(typeName, description, iconResId);
+  private int mDatabaseId;
+  private String mName;
+  private boolean mIsActive;
+  
+  public RuleSparse(int databaseId, String name, boolean isActive) {
 	  mDatabaseId = databaseId;
+	  mName = name;
+	  mIsActive = isActive;
   }
-	
+  
   public int getDatabaseId() {
 	  return mDatabaseId;
   }
   
-  public String getDescriptionShort() {
-    return getTypeName();
+  public String getName() {
+	  return mName;
+  }
+  
+  public boolean getIsActive() {
+	  return mIsActive;
   }
 }
