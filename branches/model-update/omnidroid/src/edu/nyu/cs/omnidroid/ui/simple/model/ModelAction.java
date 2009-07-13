@@ -25,15 +25,19 @@ public class ModelAction extends ModelItem {
 	
   /** An action always has a parent application. */
   private final ModelApplication mApplication;
-	
   
-  public ModelAction(String typeName, 
-                     String description, 
-                     int iconResId,
-                     ModelApplication application) 
+  private final int mDatabaseId;
+  
+  public ModelAction(int databaseId, String typeName, String description, int iconResId, 
+      ModelApplication application) 
   {
 	  super(typeName, description, iconResId);
 	  mApplication = application;
+	  mDatabaseId = databaseId;
+  }
+  
+  public int getDatabaseId() {
+    return mDatabaseId;
   }
 	
   public String getDescriptionShort() {

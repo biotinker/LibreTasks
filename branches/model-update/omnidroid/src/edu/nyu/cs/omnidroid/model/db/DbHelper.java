@@ -152,7 +152,7 @@ public class DbHelper extends SQLiteOpenHelper {
     registeredEventAttributeDbAdapter.insert(
         "SMS Phonenumber", event_id_sms_rec, dataType_id_phone);
     registeredEventAttributeDbAdapter.insert(
-        "SMS Text", event_id_sms_rec, dataType_id_phone);
+        "SMS Text", event_id_sms_rec, dataType_id_text);
     registeredEventAttributeDbAdapter.insert(
         "Phonenumber", event_id_phone_rec, dataType_id_phone);
   }
