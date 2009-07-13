@@ -134,7 +134,7 @@ public class ActivityChooseRootEvent extends Activity {
 
       // We will most likely cache the list of all events we get from
       // the 'real' database.
-      mEvents = DbInterfaceUI.instance().db().getEvents();
+      mEvents = DbInterfaceUI.instance().db().getAllEvents();
     }
 
     public int getCount() {
