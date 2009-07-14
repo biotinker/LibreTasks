@@ -19,16 +19,8 @@ public class DataAccessLayerTestActivity extends Activity {
         setContentView(R.layout.main);
         */
         
-        RegisteredApplication.LoadRegisteredApplication();
-        List<String> appNames = RegisteredApplication.getAllNames();
-        String temp = new String();
+        String temp;
    	
-        /*
-        for(int i=0; i<appNames.size(); i++) {
-        	if (temp.length() > 0) temp+=("\n");
-        	temp+=(appNames.get(i));
-        }
-        */
         temp = runTest();
         
         TextView tv = new TextView(this);

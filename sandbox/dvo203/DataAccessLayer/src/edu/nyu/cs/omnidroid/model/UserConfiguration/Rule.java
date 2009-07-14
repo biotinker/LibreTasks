@@ -10,7 +10,7 @@ import java.util.List;
  * @author user
  *
  */
-public class OmniHandler {
+public class Rule {
 	private int id;
 	private String name;
 	private int eventID;
@@ -71,7 +71,7 @@ public class OmniHandler {
 	 * 
 	 * @return
 	 */
-	public List<OmniHandlerFilter> getFilters() {
+	public List<RuleFilter> getFilters() {
 		return null;
 	}
 
@@ -79,7 +79,7 @@ public class OmniHandler {
 	 * 
 	 * @return
 	 */
-	public List<OmniHandlerAction> getActions() {
+	public List<RuleAction> getActions() {
 		return null;
 	}
 }

@@ -7,7 +7,7 @@ package edu.nyu.cs.omnidroid.model.UserConfiguration;
  * @author user
  *
  */
-public class OmniHandlerFilter {
+public class RuleFilter {
 	private int id;
 	private int handlerID;
 	private int eventAttributeID;

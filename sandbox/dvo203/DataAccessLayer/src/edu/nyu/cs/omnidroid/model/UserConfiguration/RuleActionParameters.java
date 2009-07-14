@@ -7,7 +7,7 @@ package edu.nyu.cs.omnidroid.model.UserConfiguration;
  * @author user
  *
  */
-public class OmniHandlerActionParameters {
+public class RuleActionParameters {
 	private int id;
 	private int handerActionID;
 	private int registeredActionParameterID;

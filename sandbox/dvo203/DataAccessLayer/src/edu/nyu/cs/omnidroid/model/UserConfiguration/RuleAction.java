@@ -9,7 +9,7 @@ import java.util.List;
  * @author user
  *
  */
-public class OmniHandlerAction {
+public class RuleAction {
 	private int id;
 	private int handlerID;
 	private int actionID;
@@ -39,7 +39,7 @@ public class OmniHandlerAction {
 	 * 
 	 * @return
 	 */
-	public List<OmniHandlerActionParameters> getParameters() {
+	public List<RuleActionParameters> getParameters() {
 		return null;
 	}
 }
