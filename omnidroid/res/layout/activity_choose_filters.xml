@@ -77,7 +77,7 @@
       
       
       <LinearLayout 
-        android:id="@+id/activity_choosefilters_llButtonsTask"
+        android:id="@+id/activity_choosefilters_llButtonsAction"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

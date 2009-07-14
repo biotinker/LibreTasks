@@ -15,6 +15,10 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
+import java.util.ArrayList;
+
+import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+
 
 /**
  * UI representation of an action. We'll modify
@@ -28,20 +32,38 @@ public class ModelAction extends ModelItem {
   
   private final int mDatabaseId;
   
+  /** An action can have multiple data fields. */
+  private final ArrayList<DataType> mData;
+  
+  
   public ModelAction(int databaseId, String typeName, String description, int iconResId, 
       ModelApplication application) 
   {
 	  super(typeName, description, iconResId);
 	  mApplication = application;
 	  mDatabaseId = databaseId;
+	  mData = null;
+  }
+  
+  public ModelAction(int databaseId, String typeName, String description, int iconResId, 
+      ModelApplication application, ArrayList<DataType> data) 
+  {
+	  super(typeName, description, iconResId);
+	  mApplication = application;
+	  mDatabaseId = databaseId;
+	  mData = data;
   }
   
   public int getDatabaseId() {
     return mDatabaseId;
   }
+  
+  public ArrayList<DataType> getData() {
+	  return mData;
+  }
 	
   public String getDescriptionShort() {
-    return mApplication.getTypeName() + " " + getTypeName();
+    return getTypeName();
   }
   
   public ModelApplication getApplication() {

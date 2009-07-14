@@ -54,6 +54,7 @@ public class ActivityChooseFilters extends Activity {
   private LinearLayout mLayoutButtonsTask;
   private mAdapterRule mAdapterRule;
   private boolean mDlgAttributesIsOpen;
+  private boolean mDlgApplicationsIsOpen;
   private SharedPreferences mState;
 
   public static final String KEY_STATE = "StateActivityChooseFilters";
@@ -110,6 +111,9 @@ public class ActivityChooseFilters extends Activity {
     if (mState.getBoolean("mDlgAttributesIsOpen", false)) {
       showDlgAttributes();
     }
+    if (mState.getBoolean("mDlgApplicationsIsOpen", false)) {
+      showDlgApplications();
+    }
   }
 
   protected void onPause() {
@@ -119,6 +123,7 @@ public class ActivityChooseFilters extends Activity {
     SharedPreferences.Editor prefsEditor = mState.edit();
     prefsEditor.putInt("selectedRuleItem", mListview.getCheckedItemPosition());
     prefsEditor.putBoolean("mDlgAttributesIsOpen", mDlgAttributesIsOpen);
+    prefsEditor.putBoolean("mDlgApplicationsIsOpen", mDlgApplicationsIsOpen);
     prefsEditor.commit();
   }
 
@@ -134,7 +139,7 @@ public class ActivityChooseFilters extends Activity {
 
         // Reset our filter builder, which we can query for the final
         // constructed filter if the user sets one up ok.
-        FilterBuilder.instance().reset();
+        DlgItemBuilderStore.instance().reset();
 
         // Now we present the user with a list of attributes they can
         // filter on for their chosen root event.
@@ -193,39 +198,41 @@ public class ActivityChooseFilters extends Activity {
 
   private OnClickListener listenerBtnClickAddAction = new OnClickListener() {
     public void onClick(View v) {
-      UtilUI.showAlert(v.getContext(), "Sorry!", "Adding actions has not yet been implemented!");
-      /*
-      int position = mListview.getCheckedItemPosition();
-      if (position > -1 && position < mAdapterRule.getCount()) {
-    	  // For actions, we can simply ignore what item they have selected and 
-    	  // add the action directly to the root event. We may want to move 
-    	  // action additions to a separate activity later on anyway.
+      // For actions, we can simply ignore what item they have selected and 
+      // add the action directly to the root event. We may want to move 
+      // action additions to a separate activity later on anyway.
           
-          // Reset our filter builder, which we can query for the final
-          // constructed filter if the user sets one up ok.
-          //ActionBuilder.instance().reset();
+      // Reset our filter builder, which we can query for the final
+      // constructed filter if the user sets one up ok.
+      //ActionBuilder.instance().reset();
 
-          // Now we present the user with a list of attributes they can
-          // filter on for their chosen root event.
-          //showDlgApplications();
-        } 
-        else {
-          UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an item from the list before adding an action!");
-        }
-        */
+      // Now we present the user with a list of attributes they can
+      // filter on for their chosen root event.
+      showDlgApplications();
     }
   };
 
   private OnClickListener listenerBtnClickEditAction = new OnClickListener() {
     public void onClick(View v) {
+      /*
       int position = mListview.getCheckedItemPosition();
-      ModelItem selectedItem = mAdapterRule.getItem(position);
-      if (selectedItem instanceof ModelAction) {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Editing actions has not yet been implemented!");
+      if (position == 0) {
+        UtilUI.showAlert(v.getContext(), "Sorry!", "The root event cannot be modified!");
+      } 
+      else if (position > 0 && position < mAdapterRule.getCount()) {
+        ModelItem item = mAdapterRule.getItem(position);
+        if (item instanceof ModelFilter) {
+          editFilter(position, (ModelFilter) item);
+        } 
+        else {
+          UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a filter to edit!");
+        }
       } 
       else {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an action from the list for editing.");
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+            "Please select an action from the list for editing!");
       }
+      */
     }
   };
 
@@ -261,14 +268,14 @@ public class ActivityChooseFilters extends Activity {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // Did the user construct a valid filter?
-        ModelFilter filter = FilterBuilder.instance().getFilter();
+        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           // Add the filter to the rule builder and the UI tree.
           mAdapterRule.addItemToParentPosition(mListview.getCheckedItemPosition(), filter);
         }
 
         // Reset the filter builder for next time.
-        FilterBuilder.instance().reset();
+        DlgItemBuilderStore.instance().reset();
 
         // The attributes dialog is no longer open.
         mDlgAttributesIsOpen = false;
@@ -290,7 +297,7 @@ public class ActivityChooseFilters extends Activity {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed the filter ok, then replace the old
         // filter instance, otherwise do nothing.
-        ModelFilter filter = FilterBuilder.instance().getFilter();
+        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           mAdapterRule.replaceItem(position, filter);
         }
@@ -298,6 +305,38 @@ public class ActivityChooseFilters extends Activity {
     });
     dlg.show();
   }
+  
+  private void showDlgApplications() {
+
+    // Create the attributes dialog using the root event as the parent.
+    // When the dialog is killed, we check if the user successfully
+    // finished the entire process of setting up a filter. If so, we
+    // can add it to our rule builder.
+    DlgApplications dlg = new DlgApplications(this);
+    dlg.setOnDismissListener(new OnDismissListener() {
+      public void onDismiss(DialogInterface dialog) {
+
+        // Did the user construct a valid action?
+        ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+        if (action != null) {
+          // Add the filter to the rule builder and the UI tree.
+          mAdapterRule.addItemToParentPosition(0, action);
+        }
+
+        // Reset the filter builder for next time.
+        DlgItemBuilderStore.instance().reset();
+
+        // The attributes dialog is no longer open.
+        mDlgApplicationsIsOpen = false;
+      }
+    });
+    dlg.show();
+
+    // The applications dialog is now open.
+    mDlgApplicationsIsOpen = true;
+  }
+  
+  
 
   /**
    * Our rule has a tree hierarchy to it, we want to display is as a tree in our UI too. Rendering
@@ -455,7 +494,7 @@ public class ActivityChooseFilters extends Activity {
           // Force adding of actions as siblings directly under the root event.
           RuleNode nodeParent = getNodeWrapper(0).getNode();
           nodeParent.addChild(item);
-          positionNew = mFlat.size() - 1;
+          positionNew = mFlat.size();
         } 
         else {
           throw new IllegalArgumentException("Couldn't add unknown item type to node!");

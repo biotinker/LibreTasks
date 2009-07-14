@@ -139,7 +139,7 @@ public class DlgFilters extends Dialog {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed a valid filter, also kill ourselves.
-        ModelFilter filter = FilterBuilder.instance().getFilter();
+        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           resetUI();
           dismiss();
