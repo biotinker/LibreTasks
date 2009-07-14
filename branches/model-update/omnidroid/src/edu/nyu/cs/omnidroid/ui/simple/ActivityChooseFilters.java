@@ -73,7 +73,7 @@ public class ActivityChooseFilters extends Activity {
 
     // Link up bottom button panel areas.
     mLayoutButtonsFilter = (LinearLayout) findViewById(R.id.activity_choosefilters_llButtonsFilter);
-    mLayoutButtonsTask = (LinearLayout) findViewById(R.id.activity_choosefilters_llButtonsTask);
+    mLayoutButtonsTask = (LinearLayout) findViewById(R.id.activity_choosefilters_llButtonsAction);
 
     Button btnAddFilter = (Button) findViewById(R.id.activity_choosefilters_btnAddFilter);
     btnAddFilter.setOnClickListener(listenerBtnClickAddFilter);
@@ -194,7 +194,25 @@ public class ActivityChooseFilters extends Activity {
   private OnClickListener listenerBtnClickAddAction = new OnClickListener() {
     public void onClick(View v) {
       UtilUI.showAlert(v.getContext(), "Sorry!", "Adding actions has not yet been implemented!");
-      // TODO: Get a list of applications, each of which will have an associated list of actions.
+      /*
+      int position = mListview.getCheckedItemPosition();
+      if (position > -1 && position < mAdapterRule.getCount()) {
+    	  // For actions, we can simply ignore what item they have selected and 
+    	  // add the action directly to the root event. We may want to move 
+    	  // action additions to a separate activity later on anyway.
+          
+          // Reset our filter builder, which we can query for the final
+          // constructed filter if the user sets one up ok.
+          //ActionBuilder.instance().reset();
+
+          // Now we present the user with a list of attributes they can
+          // filter on for their chosen root event.
+          //showDlgApplications();
+        } 
+        else {
+          UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an item from the list before adding an action!");
+        }
+        */
     }
   };
 
