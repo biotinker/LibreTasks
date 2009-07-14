@@ -15,60 +15,55 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
+
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.util.DualKeyHashMap;
-import edu.nyu.cs.omnidroid.util.DualKeyMap;
 
 /**
- * This class can be used to query the database for dataFilterID efficiently.
+ * This class can be used to query the database for dataTypeID efficiently.
  */
-public class DataFilterIDLookup {
-
+public class DataTypeIDLookup {
+  
   private DataTypeDbAdapter dataTypeDbAdapter;
-  private DataFilterDbAdapter dataFilterDbAdapter;
   private DbHelper omnidroidDbHelper;
-  private DualKeyMap<String, String, Long> dataFilterIDMap;
-
-  public DataFilterIDLookup(Context context) {
+  private Map<String, Long> dataTypeIDMap;
+  
+  public DataTypeIDLookup(Context context){
     omnidroidDbHelper = new DbHelper(context);
     SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
-    dataFilterDbAdapter = new DataFilterDbAdapter(database);
-    dataFilterIDMap = new DualKeyHashMap<String, String, Long>();
+    dataTypeIDMap= new HashMap<String, Long>();
   }
-
+  
   public void close() {
     omnidroidDbHelper.close();
   }
   
   /**
-   * Query the dataFilterID with dataTypeName and dataFilterNames. This method is caching the result
-   * into filterIDMap.
+   * Query the dataTypeID with dataTypeName. This method is caching the result into dataTypeIDMap.
    * 
    * @param dataTypeName
    *          is name of the dataType
-   * 
-   * @param dataFilterName
-   *          is name of the dataFilter
-   * 
-   * @return filterID that matches dataTypeName and dataFilterName or -1 if no match
+   *          
+   * @return dataTypeID that matches dataTypeName or -1 if no match
    */
-  public long getDataFilterID(String dataTypeName, String dataFilterName) {
-    if (dataTypeName == null || dataFilterName == null) {
+  public long getDataTypeID(String dataTypeName) {
+    if (dataTypeName == null) {
       throw new IllegalArgumentException("Arguments null.");
     }
     
     // Return it if the id is already cached.
-    Long cachedDataFilterID = dataFilterIDMap.get(dataTypeName, dataFilterName);
-    if (cachedDataFilterID != null) {
-      return cachedDataFilterID;
+    Long cachedDataTypeID = dataTypeIDMap.get(dataTypeName);
+    if (cachedDataTypeID != null) {
+      return cachedDataTypeID;
     }
-
+    
     // Try to find dataTypeID
     long dataTypeID = -1;
     Cursor cursor = dataTypeDbAdapter.fetchAll(dataTypeName, null);
@@ -77,21 +72,12 @@ public class DataFilterIDLookup {
       dataTypeID = cursor.getLong(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID));
     }
     cursor.close();
-
-    // Try to find dataFilterID
-    long dataFilterID = -1;
-    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID);
-    if (cursor.getCount() > 0) {
-      cursor.moveToFirst();
-      dataFilterID = cursor.getLong(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));
-    }
-    cursor.close();
     
     // Cache it if the id is valid
-    if(dataFilterID > 0) {
-      dataFilterIDMap.put(dataTypeName, dataFilterName, dataFilterID);
+    if (dataTypeID > 0) {
+      dataTypeIDMap.put(dataTypeName, dataTypeID);
     }
     
-    return dataFilterID;
+    return dataTypeID;
   }
 }
