@@ -147,6 +147,9 @@ public class DlgFilters extends Dialog {
       }
     });
     dlg.show();
+
+    // The filter input dialog is now open.
+    mDlgFilterInputIsOpen = true;
   }
 
   private void resetUI() {

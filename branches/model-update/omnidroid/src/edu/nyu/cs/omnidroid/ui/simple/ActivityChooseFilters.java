@@ -55,6 +55,8 @@ public class ActivityChooseFilters extends Activity {
   private mAdapterRule mAdapterRule;
   private boolean mDlgAttributesIsOpen;
   private boolean mDlgApplicationsIsOpen;
+  private boolean mDlgEditFilterIsOpen;
+  private boolean mDlgEditActionIsOpen;
   private SharedPreferences mState;
 
   public static final String KEY_STATE = "StateActivityChooseFilters";
@@ -114,6 +116,12 @@ public class ActivityChooseFilters extends Activity {
     if (mState.getBoolean("mDlgApplicationsIsOpen", false)) {
       showDlgApplications();
     }
+    if (mState.getBoolean("mDlgEditFilterIsOpen", false)) {
+        editFilter(mListview.getCheckedItemPosition(), (ModelFilter)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
+    }
+    if (mState.getBoolean("mDlgEditActionIsOpen", false)) {
+        editAction(mListview.getCheckedItemPosition(), (ModelAction)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
+    }
   }
 
   protected void onPause() {
@@ -124,6 +132,8 @@ public class ActivityChooseFilters extends Activity {
     prefsEditor.putInt("selectedRuleItem", mListview.getCheckedItemPosition());
     prefsEditor.putBoolean("mDlgAttributesIsOpen", mDlgAttributesIsOpen);
     prefsEditor.putBoolean("mDlgApplicationsIsOpen", mDlgApplicationsIsOpen);
+    prefsEditor.putBoolean("mDlgEditFilterIsOpen", mDlgEditFilterIsOpen);
+    prefsEditor.putBoolean("mDlgEditActionIsOpen", mDlgEditActionIsOpen);
     prefsEditor.commit();
   }
 
@@ -291,9 +301,15 @@ public class ActivityChooseFilters extends Activity {
         if (filter != null) {
           mAdapterRule.replaceItem(position, filter);
         }
+        
+        // The edit filter dialog is now closed.
+        mDlgEditFilterIsOpen = false;
       }
     });
     dlg.show();
+
+    // The attributes dialog is now open.
+    mDlgEditFilterIsOpen = true;
   }
   
   private void editAction(final int position, ModelAction action) {
@@ -309,9 +325,15 @@ public class ActivityChooseFilters extends Activity {
 	    if (action != null) {
 	      mAdapterRule.replaceItem(position, action);
 	    }
+
+        // The edit action dialog is now closed.
+        mDlgEditActionIsOpen = false;
 	  }
 	});
     dlg.show();
+
+    // The edit action dialog is now open.
+    mDlgEditActionIsOpen = true;
   }
   
   private void showDlgApplications() {

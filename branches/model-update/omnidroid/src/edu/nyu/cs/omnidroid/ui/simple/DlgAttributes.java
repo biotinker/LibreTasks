@@ -94,7 +94,7 @@ public class DlgAttributes extends Dialog {
     // Save UI state.
     SharedPreferences.Editor prefsEditor = mState.edit();
     prefsEditor.putInt("selectedAttribute", mListView.getCheckedItemPosition());
-    prefsEditor.putBoolean("mDlgAttributesIsOpen", mDlgFiltersIsOpen);
+    prefsEditor.putBoolean("mDlgFiltersIsOpen", mDlgFiltersIsOpen);
     prefsEditor.commit();
   }
 
@@ -146,6 +146,7 @@ public class DlgAttributes extends Dialog {
     });
     dlg.show();
 
+    // The filters dialog is now open.
     mDlgFiltersIsOpen = true;
   }
 
