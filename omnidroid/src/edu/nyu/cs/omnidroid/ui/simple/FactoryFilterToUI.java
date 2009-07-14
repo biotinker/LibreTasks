@@ -102,7 +102,7 @@ public class FactoryFilterToUI {
     ll.setOrientation(LinearLayout.VERTICAL);
 
     DbInterfaceUI dbi = DbInterfaceUI.instance();
-    if (filter.getDatabaseId() == dbi.getFilterLookup().getFilterID("PhoneNumber", "equals")) {
+    if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("PhoneNumber", "equals")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phone number to match below:");
@@ -143,7 +143,7 @@ public class FactoryFilterToUI {
         }
       });
     }
-    else if (filter.getDatabaseId() == dbi.getFilterLookup().getFilterID("Text", "equals")) {
+    else if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "equals")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter an exact text string to match below:");
@@ -183,7 +183,7 @@ public class FactoryFilterToUI {
         }
       });
     } 
-    else if (filter.getDatabaseId() == dbi.getFilterLookup().getFilterID("Text", "contains")) {
+    else if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "contains")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phrase in the text body to match below:");
