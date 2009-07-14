@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -264,13 +265,26 @@ public class UIDbHelper {
   public Rule loadRule(int databaseId) {
 	  Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
 	  
+	  // Create a new empty rule instance.
+	  Rule rule = new Rule();
+	  
+	  // Fetch the root event.
 	  ModelEvent event = events.get(cursorRule.getInt(cursorRule.getColumnIndex(
 	      RuleDbAdapter.KEY_EVENTID)));
-	  ArrayList<ModelFilter> filters = getFiltersForRule(databaseId);
+	  // Construct a node for it, it's our root.
+	  rule.setRootEvent(event);
+	  
+	  // Add all filters for this rule to the root node in a tree format.
+	  getFiltersForRule(databaseId, rule.getRootNode()); 
+	  
+	  // Get all actions associated with this rule.
 	  ArrayList<ModelAction> actions = getActionForRule(databaseId);
+	  // Add each of them to the tree.
+	  for (int i = 0; i < actions.size(); i++) {
+		  rule.getRootNode().addChild(actions.get(i));
+	  }
 	  
 	  // TODO: reconstruct rule from filters and actions
-	  Rule rule = new Rule();
 	  return rule;
   }
   
@@ -284,7 +298,7 @@ public class UIDbHelper {
           cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
               RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
       
-      // TODO needs to deal with datatype later, right now just set them to null
+      // TODO needs to deal with data type later, right now just set them to null
       ModelFilter filter = new ModelFilter(
           cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
               RuleFilterDbAdapter.KEY_RULEFILTERID)),
@@ -294,6 +308,72 @@ public class UIDbHelper {
     }
     cursorRuleFilters.close();
     return filters;
+  }
+  
+  /**
+   * Adds all filters to a root node in tree form.
+   * @param ruleId
+   */
+  private void getFiltersForRule(int ruleId, RuleNode rootEvent) {
+	  
+	// Map<filterId, filterParentId>, for all filters of the rule.
+	HashMap<Integer, Integer> parentIds = new HashMap<Integer, Integer>();
+	// All filters keyed by filterId for quick lookup below.
+	HashMap<Integer, ModelFilter> filtersUnlinked = new HashMap<Integer, ModelFilter>();
+	  
+	Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, 
+        null, null, null);
+    for (int i = 0; i < cursorRuleFilters.getCount(); i++) {
+    
+      ModelAttribute attribute = attributes.get(
+          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
+              RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
+      
+      // TODO needs to deal with data type later, right now just set them to null
+      ModelFilter filter = new ModelFilter(
+          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
+              RuleFilterDbAdapter.KEY_RULEFILTERID)),
+          "", "", R.drawable.icon_event_unknown, attribute, null);
+    
+      // Insert filterId, filterParentId
+      parentIds.put(
+        filter.getDatabaseId(),
+        cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
+              RuleFilterDbAdapter.KEY_RULEFILTERID)));
+      // Store the filter instance itself.
+      filtersUnlinked.put(filter.getDatabaseId(), filter);
+    }
+    cursorRuleFilters.close();
+    
+    // Keep iterating over all filters until we link each instance. This can be
+    // improved if we know we'll get the filter records ordered in a tree hierarchy,
+    // otherwise we can stick with this - we just keep passing over all the records
+    // until we reconstruct each parent-child relationship.
+    HashMap<Integer, RuleNode> filtersLinked = new HashMap<Integer, RuleNode>();
+    Iterator<Integer> it = filtersUnlinked.keySet().iterator();
+    while (it.hasNext()) {
+      Integer filterId = it.next();
+      ModelFilter filter = filtersUnlinked.get(filterId);
+      Integer parentFilterId = parentIds.get(filterId);
+         
+      if (parentFilterId.intValue() < 1) {
+ 			// This is a top-level filter, its parent is the root node.
+ 			RuleNode node = rootEvent.addChild(filter);
+ 			filtersLinked.put(filterId, node);
+ 			filtersUnlinked.remove(filterId);
+ 		}
+ 		else {
+ 			// Add this filter to its parent node. The node may not have 
+ 			// been constructed yet, so we have to skip it and handle it
+ 			// on a subsequent iteration.
+ 			RuleNode nodeParent = filtersLinked.get(parentFilterId);
+ 			if (nodeParent != null) {
+ 				RuleNode nodeChild  = nodeParent.addChild(filter);
+ 				filtersLinked.put(filterId, nodeChild);
+     			filtersUnlinked.remove(filterId);
+ 			}
+ 		}
+    }
   }
   
   private ArrayList<ModelAction> getActionForRule(int ruleId) {

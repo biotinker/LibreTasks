@@ -40,10 +40,11 @@ public class Rule {
    * OK, instead of treating it as a straight list of tasks to be performed.
    */
   private RuleNode mNode;
+  
 
   public Rule() {
   }
-
+  
   public void setRootEvent(ModelEvent event) {
     if (mNode == null) {
       mNode = new RuleNode(null, event);

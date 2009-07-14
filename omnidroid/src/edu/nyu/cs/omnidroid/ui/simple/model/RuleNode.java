@@ -49,14 +49,16 @@ public class RuleNode {
     return mChildren;
   }
 
-  public void addChild(ModelItem item) {
+  public RuleNode addChild(ModelItem item) {
     RuleNode it = new RuleNode(this, item);
     mChildren.add(it);
+    return it;
   }
 
-  public void addChild(ModelItem item, int insertionIndex) throws IndexOutOfBoundsException {
+  public RuleNode addChild(ModelItem item, int insertionIndex) throws IndexOutOfBoundsException {
     RuleNode it = new RuleNode(this, item);
     mChildren.add(insertionIndex, it);
+    return it;
   }
 
   public void removeChild(RuleNode child) {
