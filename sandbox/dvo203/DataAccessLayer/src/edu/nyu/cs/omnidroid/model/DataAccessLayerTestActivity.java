@@ -1,25 +1,42 @@
-/**
- * 
- */
-package Tester;
+package edu.nyu.cs.omnidroid.model;
+
 
 import java.util.List;
 
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredAction;
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredApplication;
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredEvent;
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.TextView;
 
-
-/**
- * @author user
- *
- */
-public class Tester {
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+public class DataAccessLayerTestActivity extends Activity {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*
+        setContentView(R.layout.main);
+        */
+        
+        RegisteredApplication.LoadRegisteredApplication();
+        List<String> appNames = RegisteredApplication.getAllNames();
+        String temp = new String();
+   	
+        /*
+        for(int i=0; i<appNames.size(); i++) {
+        	if (temp.length() > 0) temp+=("\n");
+        	temp+=(appNames.get(i));
+        }
+        */
+        temp = runTest();
+        
+        TextView tv = new TextView(this);
+        tv.setText(temp);
+        setContentView(tv);
+    }
+    
+	public static String runTest() {
 		// TODO Auto-generated method stub
         RegisteredApplication.LoadRegisteredApplication();
         List<String> appNames = RegisteredApplication.getAllNames();
@@ -47,8 +64,9 @@ public class Tester {
         	}
         }
         
-        System.out.println(temp);
-        System.out.println("OK");
+        temp += "OK";
+        
+		return temp;
 	}
 
 }
