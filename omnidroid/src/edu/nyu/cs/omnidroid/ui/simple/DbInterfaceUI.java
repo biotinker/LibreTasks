@@ -1,7 +1,7 @@
 package edu.nyu.cs.omnidroid.ui.simple;
 
 import android.content.Context;
-import edu.nyu.cs.omnidroid.model.FilterIDLookup;
+import edu.nyu.cs.omnidroid.model.DataFilterIDLookup;
 import edu.nyu.cs.omnidroid.model.UIDbHelper;
 
 /**
@@ -13,12 +13,12 @@ public class DbInterfaceUI {
 	
 	private static DbInterfaceUI mInstance;
 	private UIDbHelper mHelper;
-	private FilterIDLookup mFilterLookup;
+	private DataFilterIDLookup mFilterLookup;
 	
 	
 	private DbInterfaceUI(Context context) {
 		mHelper = new UIDbHelper(context);
-		mFilterLookup = new FilterIDLookup(context);
+		mFilterLookup = new DataFilterIDLookup(context);
 	}
 	
 	public static void init(Context context) {
@@ -35,7 +35,7 @@ public class DbInterfaceUI {
 		return mHelper;
 	}
 	
-	public FilterIDLookup getFilterLookup() {
+	public DataFilterIDLookup getFilterLookup() {
 		return mFilterLookup;
 	}
 }
