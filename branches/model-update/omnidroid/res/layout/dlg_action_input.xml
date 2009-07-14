@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dlg_action_input_ll_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="300px"
+    >
+    
+    <!-- ************************************************************ -->
+    <!-- UI content added dynamically here based on ModelAction type. -->
+    <!-- ************************************************************ -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/dlg_action_input_llDynamicContent"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="10px"
+      android:paddingRight="10px"
+      >
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" 
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+        android:paddingTop="10px"
+        android:paddingBottom="10px">
+    
+        <Button 
+            android:text="OK" 
+            android:id="@+id/dlg_action_input_btnOk" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+                
+        <Button 
+            android:text="Help" 
+            android:id="@+id/dlg_action_input_btnHelp" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+        <Button 
+            android:text="Cancel" 
+            android:id="@+id/dlg_action_input_btnCancel" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+    </LinearLayout>
+    
+</LinearLayout>

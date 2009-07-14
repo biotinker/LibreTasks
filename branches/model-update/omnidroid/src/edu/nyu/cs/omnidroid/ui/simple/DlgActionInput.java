@@ -15,6 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple;
 
+import java.util.ArrayList;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,14 +25,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 
 /**
- * This dialog is a shell to contain UI elements specific to different filters. Given a filter ID,
- * we can construct the inner UI elements using <code>FactoryFilterToUI</code>.
+ * This dialog is a shell to contain UI elements specific to different actions. 
+ * Given an action ID, we can construct the inner UI elements using <code>FactoryActionToUI</code>.
  */
-public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynamicInput {
+public class DlgActionInput extends Dialog implements FactoryDynamicUI.IDlgDynamicInput {
   /**
    * When the user hits the OK button, we interpret it to mean that they entered valid filter info,
    * and we can try to construct a filter from it. In the OK handler, we execute the one function of
@@ -54,28 +55,24 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
    */
   private boolean mPreserveStateOnClose;
 
-  public DlgFilterInput(Context context, 
-                        ModelAttribute attribute, 
-                        ModelFilter filter,
-                        DataType dataOld) 
+  public DlgActionInput(Context context, 
+                        ModelAction action,
+                        ArrayList<DataType> dataOld) 
   {
     super(context);
-    setContentView(R.layout.dlg_filter_input);
+    setContentView(R.layout.dlg_action_input);
 
-    Button btnOk = (Button) findViewById(R.id.dlg_filter_input_btnOk);
+    Button btnOk = (Button) findViewById(R.id.dlg_action_input_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
 
-    Button btnHelp = (Button) findViewById(R.id.dlg_filter_input_btnHelp);
+    Button btnHelp = (Button) findViewById(R.id.dlg_action_input_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickInfo);
 
-    Button btnCancel = (Button) findViewById(R.id.dlg_filter_input_btnCancel);
+    Button btnCancel = (Button) findViewById(R.id.dlg_action_input_btnCancel);
     btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     // Add dynamic content now based on our filter type.
-    FactoryDynamicUI.buildUIForFilter(this, attribute, filter, dataOld);
-
-    // Maximize ourselves.
-    // UtilUI.inflateDialog((LinearLayout)findViewById(R.id.dlg_filter_input_ll_main));
+    FactoryDynamicUI.buildUIForAction(this, action, dataOld);
 
     // Restore our UI state.
     mState = context.getSharedPreferences("StateDlgFilterInput", Context.MODE_PRIVATE);
@@ -106,18 +103,18 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
     public void onClick(View v) {
       // Have the listener try to construct a full ModelFilter for us now
       // based on our dynamic UI content.
-      ModelFilter filter;
+      ModelAction action;
       try {
-        filter = (ModelFilter)mHandlerInputDone.onInputDone();
+        action = (ModelAction)mHandlerInputDone.onInputDone();
       } catch (Exception ex) {
         UtilUI.showAlert(v.getContext(), "Sorry!",
-            "There was an error creating your filter, your input was probably bad!:\n"
+            "There was an error creating your action, your input was probably bad!:\n"
                 + ex.toString());
         return;
       }
 
       // Set our constructed filter so the parent activity can pick it up.
-      DlgItemBuilderStore.instance().setBuiltItem(filter);
+      DlgItemBuilderStore.instance().setBuiltItem(action);
 
       // We can now dismiss ourselves. Our parent listeners can pick up the
       // constructed filter once we unwind the dialog stack using the
@@ -131,7 +128,7 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
   private android.view.View.OnClickListener listenerBtnClickInfo = new android.view.View.OnClickListener() {
     public void onClick(View v) {
       UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about this filter soon!");
+          "We'll implement an info dialog about action soon!");
     }
   };
 
@@ -152,7 +149,7 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
 
   /** Implements FactoryFilterToUI.IDlgFilterInput. */
   public void addDynamicLayout(LinearLayout ll) {
-    LinearLayout llContent = (LinearLayout) findViewById(R.id.dlg_filter_input_llDynamicContent);
+    LinearLayout llContent = (LinearLayout) findViewById(R.id.dlg_action_input_llDynamicContent);
     llContent.addView(ll);
   }
 
