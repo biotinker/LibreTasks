@@ -75,7 +75,7 @@ public class DlgActionInput extends Dialog implements FactoryDynamicUI.IDlgDynam
     FactoryDynamicUI.buildUIForAction(this, action, dataOld);
 
     // Restore our UI state.
-    mState = context.getSharedPreferences("StateDlgFilterInput", Context.MODE_PRIVATE);
+    mState = context.getSharedPreferences("StateDlgActionInput", Context.MODE_PRIVATE);
     mHandlerStatePreserver.loadState(mState);
 
     // By default, we want to save UI state on close.

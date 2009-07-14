@@ -204,7 +204,7 @@ public class ActivityChooseFilters extends Activity {
           
       // Reset our filter builder, which we can query for the final
       // constructed filter if the user sets one up ok.
-      //ActionBuilder.instance().reset();
+      DlgItemBuilderStore.instance().reset();
 
       // Now we present the user with a list of attributes they can
       // filter on for their chosen root event.
@@ -214,25 +214,15 @@ public class ActivityChooseFilters extends Activity {
 
   private OnClickListener listenerBtnClickEditAction = new OnClickListener() {
     public void onClick(View v) {
-      /*
       int position = mListview.getCheckedItemPosition();
-      if (position == 0) {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "The root event cannot be modified!");
+      if (position > -1) {
+    	  ModelItem item = mAdapterRule.getItem(position);
+    	  if (item instanceof ModelAction) {
+    		  editAction(position, (ModelAction)item);
+    		  return;
+    	  }
       } 
-      else if (position > 0 && position < mAdapterRule.getCount()) {
-        ModelItem item = mAdapterRule.getItem(position);
-        if (item instanceof ModelFilter) {
-          editFilter(position, (ModelFilter) item);
-        } 
-        else {
-          UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a filter to edit!");
-        }
-      } 
-      else {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select an action from the list for editing!");
-      }
-      */
+      UtilUI.showAlert(v.getContext(), "Sorry!", "Please select an action to edit!");
     }
   };
 
@@ -303,6 +293,24 @@ public class ActivityChooseFilters extends Activity {
         }
       }
     });
+    dlg.show();
+  }
+  
+  private void editAction(final int position, ModelAction action) {
+    DlgActionInput dlg = 
+	  new DlgActionInput(this, 
+	                     action, 
+	                     action.getData());
+	  dlg.setOnDismissListener(new OnDismissListener() {
+	  public void onDismiss(DialogInterface dialog) {
+	    // If the user constructed the action ok, then replace the old
+	    // action instance, otherwise do nothing.
+	    ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+	    if (action != null) {
+	      mAdapterRule.replaceItem(position, action);
+	    }
+	  }
+	});
     dlg.show();
   }
   
