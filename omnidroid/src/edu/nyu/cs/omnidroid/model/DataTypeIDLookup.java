@@ -16,8 +16,6 @@
 package edu.nyu.cs.omnidroid.model;
 
 import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,7 +30,7 @@ public class DataTypeIDLookup {
   
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DbHelper omnidroidDbHelper;
-  private Map<String, Long> dataTypeIDMap;
+  private HashMap<String, Long> dataTypeIDMap;
   
   public DataTypeIDLookup(Context context){
     omnidroidDbHelper = new DbHelper(context);
