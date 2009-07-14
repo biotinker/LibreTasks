@@ -147,6 +147,9 @@ public class DlgApplications extends Dialog {
       }
     });
     dlg.show();
+
+    // The actions dialog is now open.
+    mDlgActionsIsOpen = true;
   }
 
   private void resetUI() {
