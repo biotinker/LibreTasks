@@ -38,7 +38,8 @@ import java.util.Set;
  * 
  * <pre>
  * // To create a map
- * DualKeyHashMap&lt;String, Double, Integer&gt; map = new DualKeyHashMap&lt;String, Double, Integer&gt;();
+ * DualKeyHashMap&lt;String, Double, Integer&gt; map = new DualKeyHashMap&lt;String, Double, 
+ * Integer&gt;();
  * 
  * // To put a mapping
  * map.put(&quot;Apple&quot;, 90.05, 100);
@@ -49,10 +50,13 @@ import java.util.Set;
  * 
  * @param <K1>
  *          is the type of the first key
+ * 
  * @param <K2>
  *          is the type of the second key
+ * 
  * @param <V>
  *          is the type of the value
+ * 
  * @see DualKeyMap
  */
 public class DualKeyHashMap<K1, K2, V> implements DualKeyMap<K1, K2, V> {
