@@ -245,7 +245,7 @@ public class FactoryDynamicUI {
 	    ll.addView(tv0);
 
 	    final EditText edit0 = new EditText(dlg.getContext());
-	    if (dataOld != null) {
+	    if (dataOld != null && dataOld.size() > 0) {
 	      edit0.setText(((OmniPhoneNumber) dataOld.get(0)).getValue());
 	    }
 	    ll.addView(edit0);
@@ -255,7 +255,7 @@ public class FactoryDynamicUI {
 	    ll.addView(tv1);
 
 	    final EditText edit1 = new EditText(dlg.getContext());
-	    if (dataOld != null) {
+	    if (dataOld != null && dataOld.size() > 1) {
 	      edit1.setText(((OmniText) dataOld.get(1)).getValue());
 	    }
 	    ll.addView(edit1);
@@ -266,7 +266,7 @@ public class FactoryDynamicUI {
             // Actions can have multiple data parameters.
             ArrayList<DataType> data = new ArrayList<DataType>();
             data.add(new OmniPhoneNumber(edit0.getText().toString()));
-            data.add(new OmniPhoneNumber(edit1.getText().toString()));
+            data.add(new OmniText(edit1.getText().toString()));
 
             // The entered text was valid, return a completely constructed
             // filter, with its associated data.

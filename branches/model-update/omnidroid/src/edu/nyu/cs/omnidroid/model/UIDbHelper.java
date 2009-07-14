@@ -128,7 +128,7 @@ public class UIDbHelper {
               RegisteredAppDbAdapter.KEY_APPID)),
           cursorApplications.getString(cursorApplications.getColumnIndex(
               RegisteredAppDbAdapter.KEY_APPNAME)), "",
-          R.drawable.icon_event_unknown);
+          R.drawable.icon_application_unknown);
       applications.put(application.getDatabaseId(), application);
     }
     cursorApplications.close();
@@ -160,7 +160,7 @@ public class UIDbHelper {
               RegisteredActionDbAdapter.KEY_ACTIONID)), 
           cursorActions.getString(cursorActions.getColumnIndex(
               RegisteredActionDbAdapter.KEY_ACTIONNAME)), 
-          "", R.drawable.icon_event_unknown, application);
+          "", R.drawable.icon_action_unknown, application);
       
       actions.put(cursorActions.getInt(cursorActions.getColumnIndex(
               RegisteredActionDbAdapter.KEY_ACTIONID)), action);
