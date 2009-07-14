@@ -44,7 +44,7 @@ public class DataTypeIDLookupTest extends AndroidTestCase {
     
     dataTypeDbAdapter.deleteAll();
     
-    prePopulate1();
+    prePopulate();
   }
   
   @Override
@@ -60,7 +60,7 @@ public class DataTypeIDLookupTest extends AndroidTestCase {
     super.tearDown();
   }
   
-  private void prePopulate1() {
+  private void prePopulate() {
     dataTypeIDs = new Long[2];
     
     dataTypeIDs[0] = dataTypeDbAdapter.insert(dataTypeNames[0], "");
@@ -72,10 +72,5 @@ public class DataTypeIDLookupTest extends AndroidTestCase {
     assertEquals(dataTypeIDs[0].longValue(), dataTypeIDLookup.getDataTypeID(dataTypeNames[0]));
   }
   
-  public void testGetDataFilterID_cache() {
-    for (int i=0;i<1000;i++){
-      assertEquals(dataTypeIDs[0].longValue(), dataTypeIDLookup.getDataTypeID(dataTypeNames[0]));
-      assertEquals(dataTypeIDs[0].longValue(), dataTypeIDLookup.getDataTypeID(dataTypeNames[0]));
-    }
-  }
+  // TODO(ehotou) create test for caching performance.
 }

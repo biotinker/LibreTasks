@@ -15,14 +15,14 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
+import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.util.DualKeyHashMap;
-import edu.nyu.cs.omnidroid.util.DualKeyMap;
+import edu.nyu.cs.omnidroid.util.DualKey;
 
 /**
  * This class can be used to query the database for dataFilterID efficiently.
@@ -32,14 +32,14 @@ public class DataFilterIDLookup {
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private DbHelper omnidroidDbHelper;
-  private DualKeyMap<String, String, Long> dataFilterIDMap;
+  private HashMap<DualKey<String, String>, Long> dataFilterIDMap;
 
   public DataFilterIDLookup(Context context) {
     omnidroidDbHelper = new DbHelper(context);
     SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataFilterDbAdapter = new DataFilterDbAdapter(database);
-    dataFilterIDMap = new DualKeyHashMap<String, String, Long>();
+    dataFilterIDMap = new HashMap<DualKey<String, String>, Long>();
   }
 
   public void close() {
@@ -63,8 +63,10 @@ public class DataFilterIDLookup {
       throw new IllegalArgumentException("Arguments null.");
     }
     
+    DualKey<String, String> key = new DualKey<String, String>(dataTypeName, dataFilterName);
+    
     // Return it if the id is already cached.
-    Long cachedDataFilterID = dataFilterIDMap.get(dataTypeName, dataFilterName);
+    Long cachedDataFilterID = dataFilterIDMap.get(key);
     if (cachedDataFilterID != null) {
       return cachedDataFilterID;
     }
@@ -89,7 +91,7 @@ public class DataFilterIDLookup {
     
     // Cache it if the id is valid
     if(dataFilterID > 0) {
-      dataFilterIDMap.put(dataTypeName, dataFilterName, dataFilterID);
+      dataFilterIDMap.put(key, dataFilterID);
     }
     
     return dataFilterID;
