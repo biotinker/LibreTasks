@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
@@ -5,9 +20,13 @@ import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import android.test.AndroidTestCase;
 
-public class FilterIdLookupTest extends AndroidTestCase {
 
-  private FilterIDLookup filterIDLookup;
+/**
+ * Android Unit Test for {@link DataFilterIDLookup} class.
+ */
+public class DataFilterIDLookupTest extends AndroidTestCase {
+
+  private DataFilterIDLookup dataFilterIDLookup;
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private DbHelper omnidroidDbHelper;
@@ -22,7 +41,7 @@ public class FilterIdLookupTest extends AndroidTestCase {
   protected void setUp() throws Exception {
     super.setUp();
     omnidroidDbHelper = new DbHelper(this.getContext());
-    filterIDLookup = new FilterIDLookup(this.getContext());
+    dataFilterIDLookup = new DataFilterIDLookup(this.getContext());
 
     dataTypeDbAdapter = new DataTypeDbAdapter(omnidroidDbHelper.getWritableDatabase());
     dataFilterDbAdapter = new DataFilterDbAdapter(omnidroidDbHelper.getWritableDatabase());
@@ -31,12 +50,12 @@ public class FilterIdLookupTest extends AndroidTestCase {
 
     dataTypeDbAdapter.deleteAll();
     dataFilterDbAdapter.deleteAll();
+    
+    prePopulate1();
   }
 
   @Override
   protected void tearDown() throws Exception {
-    dataTypeIDs = null;
-    dataFilterIDs = null;
     dataTypeDbAdapter.deleteAll();
     dataFilterDbAdapter.deleteAll();
 
@@ -65,38 +84,36 @@ public class FilterIdLookupTest extends AndroidTestCase {
     dataFilterIDs[5] = dataFilterDbAdapter.insert(dataFilterNames[2], dataTypeIDs[1]);
   }
 
-  public void testGetFilterID() {
-    prePopulate1();
-    assertEquals(dataFilterIDs[0].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+  public void testGetDataFilterID() {
+    assertEquals(dataFilterIDs[0].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
         dataFilterNames[0]));
-    assertEquals(dataFilterIDs[1].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+    assertEquals(dataFilterIDs[1].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
         dataFilterNames[1]));
-    assertEquals(dataFilterIDs[2].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+    assertEquals(dataFilterIDs[2].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
         dataFilterNames[2]));
     
-    assertEquals(dataFilterIDs[3].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+    assertEquals(dataFilterIDs[3].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
         dataFilterNames[0]));
-    assertEquals(dataFilterIDs[4].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+    assertEquals(dataFilterIDs[4].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
         dataFilterNames[1]));
-    assertEquals(dataFilterIDs[5].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+    assertEquals(dataFilterIDs[5].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
         dataFilterNames[2]));
   }
   
-  public void testGetFilterID_cache() {
-    prePopulate1();
+  public void testGetDataFilterID_cache() {
     for (int i=0;i<1000;i++){
-      assertEquals(dataFilterIDs[0].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+      assertEquals(dataFilterIDs[0].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
           dataFilterNames[0]));
-      assertEquals(dataFilterIDs[1].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+      assertEquals(dataFilterIDs[1].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
           dataFilterNames[1]));
-      assertEquals(dataFilterIDs[2].longValue(), filterIDLookup.getFilterID(dataTypeNames[0],
+      assertEquals(dataFilterIDs[2].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
           dataFilterNames[2]));
       
-      assertEquals(dataFilterIDs[3].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+      assertEquals(dataFilterIDs[3].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
           dataFilterNames[0]));
-      assertEquals(dataFilterIDs[4].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+      assertEquals(dataFilterIDs[4].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
           dataFilterNames[1]));
-      assertEquals(dataFilterIDs[5].longValue(), filterIDLookup.getFilterID(dataTypeNames[1],
+      assertEquals(dataFilterIDs[5].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
           dataFilterNames[2]));
     }
   }
