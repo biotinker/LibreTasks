@@ -36,8 +36,11 @@ public class ModelAction extends ModelItem {
   private final ArrayList<DataType> mData;
   
   
-  public ModelAction(int databaseId, String typeName, String description, int iconResId, 
-      ModelApplication application) 
+  public ModelAction(int databaseId, 
+		             String typeName, 
+		             String description, 
+		             int iconResId, 
+		             ModelApplication application) 
   {
 	  super(typeName, description, iconResId);
 	  mApplication = application;
@@ -45,8 +48,12 @@ public class ModelAction extends ModelItem {
 	  mData = null;
   }
   
-  public ModelAction(int databaseId, String typeName, String description, int iconResId, 
-      ModelApplication application, ArrayList<DataType> data) 
+  public ModelAction(int databaseId, 
+		             String typeName, 
+		             String description, 
+		             int iconResId, 
+                     ModelApplication application, 
+                     ArrayList<DataType> data) 
   {
 	  super(typeName, description, iconResId);
 	  mApplication = application;
