@@ -187,7 +187,6 @@ public class UIDbHelper {
     }
     cursorAttributes.close();
     
-    // TODO load others
   }
   
   public ArrayList<ModelApplication> getAllApplications() {
@@ -275,7 +274,7 @@ public class UIDbHelper {
 	  rule.setRootEvent(event);
 	  
 	  // Add all filters for this rule to the root node in a tree format.
-	  getFiltersForRule(databaseId, rule.getRootNode()); 
+	  addFiltersToRuleNode(databaseId, rule.getRootNode()); 
 	  
 	  // Get all actions associated with this rule.
 	  ArrayList<ModelAction> actions = getActionForRule(databaseId);
@@ -284,37 +283,14 @@ public class UIDbHelper {
 		  rule.getRootNode().addChild(actions.get(i));
 	  }
 	  
-	  // TODO: reconstruct rule from filters and actions
 	  return rule;
-  }
-  
-  private ArrayList<ModelFilter> getFiltersForRule(int ruleId) {
-    Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, 
-        null, null, null);
-    ArrayList<ModelFilter> filters = new ArrayList<ModelFilter>();
-    for (int i = 0; i < cursorRuleFilters.getCount(); i++) {
-      
-      ModelAttribute attribute = attributes.get(
-          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-              RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
-      
-      // TODO needs to deal with data type later, right now just set them to null
-      ModelFilter filter = new ModelFilter(
-          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-              RuleFilterDbAdapter.KEY_RULEFILTERID)),
-          "", "", R.drawable.icon_event_unknown, attribute, null);
-      
-      filters.add(filter);
-    }
-    cursorRuleFilters.close();
-    return filters;
   }
   
   /**
    * Adds all filters to a root node in tree form.
    * @param ruleId
    */
-  private void getFiltersForRule(int ruleId, RuleNode rootEvent) {
+  private void addFiltersToRuleNode(int ruleId, RuleNode rootEvent) {
 	  
 	// Map<filterId, filterParentId>, for all filters of the rule.
 	HashMap<Integer, Integer> parentIds = new HashMap<Integer, Integer>();
@@ -376,6 +352,9 @@ public class UIDbHelper {
     }
   }
   
+  /**
+   * Get all actions associated with a rule
+   */
   private ArrayList<ModelAction> getActionForRule(int ruleId) {
     Cursor cursorRuleActions = ruleActionDbAdpater.fetchAll(Long.valueOf(ruleId), null);
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>();
@@ -392,7 +371,7 @@ public class UIDbHelper {
   }
   
   /**
-   * Given a rule, try to save it to the database.
+   * Given a rule, save it to the database.
    */
   public void saveRule(Rule rule) throws Exception {
 	  ModelEvent event = (ModelEvent)rule.getRootNode().getItem();
@@ -423,7 +402,7 @@ public class UIDbHelper {
 	  
 	  long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
 	      Long.valueOf(filter.getAttribute().getDatabaseId()), Long.valueOf(-1), 
-	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, "");
+	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, filter.getFilterData().toString());
 	  
 	  // Now all our children filters:
 	  for (int i = 0; i < node.getChildren().size(); i++) {
