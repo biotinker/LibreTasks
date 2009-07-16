@@ -18,19 +18,23 @@ package edu.nyu.cs.omnidroid.core.datatypes;
 import java.lang.reflect.Constructor;
 
 /**
- *
+ * The class acts as a factory for instantiation of the Omnidroid data types.
+ * 
  */
 public class FactoryDataType {
 	
-	private final String packageName = "edu.nyu.cs.omnidroid.core.datatypes";
+	/* TODO: The package name is temporary measure, as requested by other developers, once all the packages are settled and defined, it should be removed.
+	 *       The complete package name and class should be stored in the database.
+	*/       
+	private static final String packageName = "edu.nyu.cs.omnidroid.core.datatypes";
 
 	/**
-	 * 
-	 * @param className
-	 * @param value
+	 * Factory method that creates the object of className type and initialized with provided value
+	 * @param className - string representing Omnidroid class name. Must implement DataType.
+	 * @param value - the string value to initialize object with. Note: if value is not valid, no object will be created and null will be returned.
 	 * @return the DataType object if object was successfully created, or null if failed.
 	 */
-	public DataType createObject(String className, String value) {
+	public static DataType createObject(String className, String value) {
         try {
 			Class<?> theClass  = Class.forName(packageName + "." + className);
 			
