@@ -28,7 +28,7 @@ public class FactoryDataType {
 	 * 
 	 * @param className
 	 * @param value
-	 * @return the DataType object if object was successfully created, or null if failed
+	 * @return the DataType object if object was successfully created, or null if failed.
 	 */
 	public DataType createObject(String className, String value) {
         try {
