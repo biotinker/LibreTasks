@@ -36,6 +36,7 @@ import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * This dialog displays a list of filters associated with a parent <code>ModelAttribute</code>. If
@@ -49,13 +50,12 @@ public class DlgFilters extends Dialog {
   private AdapterFilters mAdapterFilters;
   private boolean mDlgFilterInputIsOpen;
   private SharedPreferences mState;
-  private ModelAttribute mAttribute;
+
 
   public DlgFilters(Context context, ModelAttribute attribute) {
     super(context);
     setContentView(R.layout.dlg_filters);
     setTitle("Filters");
-    mAttribute = attribute;
 
     mAdapterFilters = new AdapterFilters(getContext(), attribute);
 
@@ -130,16 +130,16 @@ public class DlgFilters extends Dialog {
     }
 
     // This is the filter they want to use.
-    ModelFilter filter = (ModelFilter) mAdapterFilters.getItem(position);
-
+    ModelFilter modelFilter = (ModelFilter) mAdapterFilters.getItem(position);
+ 
     // Now we construct a blank DlgFilterInput dialog, and let the UI
     // factory class generate its content to capture the info needed for
     // this particular filter.
-    DlgFilterInput dlg = new DlgFilterInput(getContext(), mAttribute, filter, null);
+    DlgFilterInput dlg = new DlgFilterInput(getContext(), modelFilter, null);
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed a valid filter, also kill ourselves.
-        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleFilter filter = (ModelRuleFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           resetUI();
           dismiss();

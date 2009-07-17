@@ -16,15 +16,20 @@
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
 /**
- * UI representation of a base class for Event/Filter/ Attribute/Action. We'll modify this to match
- * the database model. These should be lightweight representation of these objects.
+ * Base class for a representation of core model items in the UI.
  */
 public abstract class ModelItem {
 
+  /** Simple name of class for presentation to the user in the UI. */
   protected final String mTypeName;
+  
+  /** Description of the instance for use with a help button in the UI. */
   protected final String mDescription;
+  
+  /** Icon resource ID to use in the UI for this instance (may switch to path). */
   protected final int mIconResId;
 
+  
   public ModelItem(String typeName, 
                    String description, 
                    int iconResId) 
@@ -46,6 +51,13 @@ public abstract class ModelItem {
     return mIconResId;
   }
 
+  /**
+   * Each derived class should build a short description of themselves
+   * here using their type name and any other relevant class data. This
+   * string will be used to describe the item in the tree listview which
+   * has very limited screen space.
+   * @return Short description of this instance for use in the UI.
+   */
   public abstract String getDescriptionShort();
 
   public String toString() {

@@ -16,8 +16,7 @@
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
 /**
- * UI representation of an Event. We'll modify
- * this to match the database model.
+ * UI representation of an Event. 
  */
 public class ModelEvent extends ModelItem {
 

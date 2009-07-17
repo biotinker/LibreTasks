@@ -17,18 +17,16 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 
 
 /**
- * UI representation of an action. We'll modify
- * this to match the database model. These are 
- * actions to perform if a user's rule is true.
+ * UI representation of an application.
  */
 public class ModelApplication extends ModelItem {
 
   private final int mDatabaseId;
 	  
-  public ModelApplication(int databaseId,
-		                  String typeName, 
+  public ModelApplication(String typeName, 
                           String description, 
-                          int iconResId) 
+                          int iconResId,
+                          int databaseId) 
   {
 	  super(typeName, description, iconResId);
 	  mDatabaseId = databaseId;

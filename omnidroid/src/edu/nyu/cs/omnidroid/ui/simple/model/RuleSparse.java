@@ -23,8 +23,13 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class RuleSparse {
 
+  /** Database ID for the rule. */
   private int mDatabaseId;
+  
+  /** Name the user gave to the rule. */
   private String mName;
+  
+  /** Is the rule on or off. */
   private boolean mIsActive;
   
   public RuleSparse(int databaseId, String name, boolean isActive) {

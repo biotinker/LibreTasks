@@ -18,15 +18,19 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 import java.util.ArrayList;
 
 /**
- * A rule is a collection of <code>RuleNode</code> nodes. Each RuleNode instance has a single
- * associated <code>ModelItem</code> and a list of zero or more child <code>RuleNode</code> items.
- * This structure allows us to nest filters within other filters etc.
+ * A rule is a collection of <code>RuleNode</code> nodes. Each RuleNode 
+ * instance has a single <code>ModelItem</code> and a list of zero or more 
+ * child <code>RuleNode</code> items. This structure allows us to nest filters 
+ * within other filters.
+ * 
+ * The root node <code>mNode</code> is the root event. Action nodes are always
+ * appended to the end of the root node's child array, it may be convenient to
+ * move them to their own separate array.
  */
 public class Rule {
 
   /**
-   * The root node will always represent the root event, and will turn out to be a tree looking like
-   * this: 
+   * The rule tree can look like:
    * RootEvent 
    *   |- Filter1 
    *   |- Filter2 
@@ -34,10 +38,6 @@ public class Rule {
    *   |    |- Filter4 
    *   |- Action1 
    *   |- Action2
-   * 
-   * I thought about making Actions a separate array on their own, but in the future maybe we want
-   * to support nesting actions so that a branch is performed only if all parent nodes were executed
-   * OK, instead of treating it as a straight list of tasks to be performed.
    */
   private RuleNode mNode;
   
@@ -45,6 +45,11 @@ public class Rule {
   public Rule() {
   }
   
+  /**
+   * Set the root event for the rule. This will clear all previous rule
+   * data since filters do not always make sense for all the rule types.
+   * @param event  The root event to use.
+   */
   public void setRootEvent(ModelEvent event) {
     if (mNode == null) {
       mNode = new RuleNode(null, event);
@@ -57,10 +62,20 @@ public class Rule {
     return mNode;
   }
 
+  /**
+   * Check if any filters have been added to the tree.
+   * @return  True if one or more filters exist.
+   */
   public boolean getHasAnyFilters() {
-    return mNode.getChildren().size() > 0;
+    int firstActionPos = getFirstActionPosition();
+	return mNode.getChildren().size() > 0 && 
+	  (firstActionPos < 0 || firstActionPos != 0);
   }
 
+  /**
+   * Builds a list of nodes which are top-level filter branches.
+   * @return  An ArrayList of node branches containing filters.
+   */
   public ArrayList<RuleNode> getFilterBranches() {
     ArrayList<RuleNode> filters = new ArrayList<RuleNode>();
     
@@ -76,8 +91,8 @@ public class Rule {
   }
   
   /**
-   * Extract all <code>ModelAction</code> instances out of the tree form and add them to the a list.
-   * 
+   * Extract all <code>ModelAction</code> instances out of the tree 
+   * and add them to the a list.
    * @return All actions that are part of the rule.
    */
   public ArrayList<ModelAction> getActions() {
@@ -88,6 +103,10 @@ public class Rule {
     return actions;
   }
 
+  /**
+   * Find the first index of the root node that is an action.
+   * @return  The first index of an action, or -1 if no actions present.
+   */
   public int getFirstActionPosition() {
     // Actions are stored as siblings under the root event.
     // This is enforced by the user interface.
@@ -98,13 +117,23 @@ public class Rule {
     }
     return -1;
   }
-
+  
+  /**
+   * Will build a natural language string of the entire rule.
+   * @return A natural language string of the entire rule.
+   */
   public String getNaturalLanguageString() {
     StringBuilder sb = new StringBuilder();
     buildNaturalLanguageString(mNode, sb);
     return sb.toString();
   }
 
+  /**
+   * Recursively works on each node to get their natural language
+   * representation.
+   * @param node  The current node to work on.
+   * @param sb  The string builder to append new text to.
+   */
   private void buildNaturalLanguageString(RuleNode node, StringBuilder sb) {
     sb.append(node.getItem().getDescriptionShort());
     sb.append(", ");
