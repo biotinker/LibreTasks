@@ -25,6 +25,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+import edu.nyu.cs.omnidroid.core.datatypes.FactoryDataType;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
@@ -58,6 +60,7 @@ public class UIDbHelper {
   private DbHelper omnidroidDbHelper;
   
   private Map<Integer, String> dataTypeNames;
+  private Map<Integer, String> dataTypeClassNames;
   private Map<Integer, String> dataFilterNames;
   private Map<Integer, ModelApplication> applications;
   private Map<Integer, ModelEvent> events;
@@ -79,6 +82,7 @@ public class UIDbHelper {
     
     // Initialize db cache
     dataTypeNames = new HashMap<Integer, String>();
+    dataTypeClassNames = new HashMap<Integer, String>();
     dataFilterNames = new HashMap<Integer, String>();
     applications = new HashMap<Integer, ModelApplication>();
     events = new HashMap<Integer, ModelEvent>();
@@ -89,10 +93,16 @@ public class UIDbHelper {
     loadDbCache();
   }
   
+  /**
+   * Close the UIHelper
+   */
   public void close() {
     omnidroidDbHelper.close();
   }
   
+  /**
+   * Load cached data into hash maps
+   */
   private void loadDbCache() {
     
     // Load DataTypes
@@ -104,6 +114,11 @@ public class UIDbHelper {
               DataTypeDbAdapter.KEY_DATATYPEID)), 
           cursorDataTypes.getString(cursorDataTypes.getColumnIndex(
               DataTypeDbAdapter.KEY_DATATYPENAME)));
+      dataTypeClassNames.put(
+          cursorDataTypes.getInt(cursorDataTypes.getColumnIndex(
+              DataTypeDbAdapter.KEY_DATATYPEID)), 
+          cursorDataTypes.getString(cursorDataTypes.getColumnIndex(
+              DataTypeDbAdapter.KEY_DATATYPECLASSNAME)));
     }
     cursorDataTypes.close();
     
@@ -189,6 +204,9 @@ public class UIDbHelper {
     
   }
   
+  /**
+   * @return all applications as an ArrayList
+   */
   public ArrayList<ModelApplication> getAllApplications() {
     ArrayList<ModelApplication> applicationList = new ArrayList<ModelApplication>();
     for(Entry<Integer, ModelApplication> entry : applications.entrySet() ) {
@@ -197,6 +215,9 @@ public class UIDbHelper {
     return applicationList;
   }
   
+  /**
+   * @return all events as an ArrayList
+   */
   public ArrayList<ModelEvent> getAllEvents() {
     ArrayList<ModelEvent> eventList = new ArrayList<ModelEvent>();
     for(Entry<Integer, ModelEvent> entry : events.entrySet()) {
@@ -205,6 +226,10 @@ public class UIDbHelper {
     return eventList;
   }
 
+  /**
+   * @param application is a ModelApplication object
+   * @return all actions associated with one application as an ArrayList
+    */
   public ArrayList<ModelAction> getActionsForApplication(ModelApplication application) {
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>();
     for(Entry<Integer, ModelAction> entry : actions.entrySet()){
@@ -215,6 +240,10 @@ public class UIDbHelper {
     return actionList;
   }
 
+  /**
+   * @param event is a ModelEvent object
+   * @return all attributes associated with one event as an ArrayList
+   */
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>();
     
@@ -232,8 +261,15 @@ public class UIDbHelper {
     return attributesList;
   }
   
+  /**
+   * @param attribute is a ModelAttribute object
+   * @return all filters associated with one attribute as an ArrayList
+   */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>();
+    
+    DataType dataType = getEmptyDataTypeForAttribute(attribute);
+    
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()));
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
@@ -242,12 +278,26 @@ public class UIDbHelper {
       String filterName = dataFilterNames.get(filterID);
       
       filterList.add(new ModelFilter(
-          filterID, filterName, "", R.drawable.icon_filter_unknown, attribute, null));
+          filterID, filterName, "", R.drawable.icon_filter_unknown, attribute, dataType));
     }
     cursor.close();
     return filterList;
   }
   
+  /**
+   * Get an empty dataType object from a attribute object
+   * @param attribute is the attribute object
+   * @return an dataType object of the attribute type and with an empty string in it
+   */
+  private DataType getEmptyDataTypeForAttribute(ModelAttribute attribute) {
+    Integer dataTypeID = attribute.getDatatype();
+    String dataTypeClassName = dataTypeClassNames.get(dataTypeID);
+    return FactoryDataType.createObject(dataTypeClassName, "");
+  }
+  
+  /**
+   * @return all rules as an ArrayList
+   */
   public ArrayList<RuleSparse> getRules() {
 	  ArrayList<RuleSparse> rules = new ArrayList<RuleSparse>();
 	  Cursor cursor = ruleDbAdapter.fetchAll();
@@ -261,6 +311,10 @@ public class UIDbHelper {
 	  return rules;
   }
   
+  /**
+   * @param databaseId is the rule id
+   * @return a fully loaded ModelRule object with databaseId
+   */
   public Rule loadRule(int databaseId) {
 	  Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
 	  
@@ -270,7 +324,8 @@ public class UIDbHelper {
 	  // Fetch the root event.
 	  ModelEvent event = events.get(cursorRule.getInt(cursorRule.getColumnIndex(
 	      RuleDbAdapter.KEY_EVENTID)));
-	  // Construct a node for it, it's our root.
+	  
+	  // Construct a node for it, set it to be the root of the rule
 	  rule.setRootEvent(event);
 	  
 	  // Add all filters for this rule to the root node in a tree format.
@@ -278,6 +333,7 @@ public class UIDbHelper {
 	  
 	  // Get all actions associated with this rule.
 	  ArrayList<ModelAction> actions = getActionForRule(databaseId);
+	  
 	  // Add each of them to the tree.
 	  for (int i = 0; i < actions.size(); i++) {
 		  rule.getRootNode().addChild(actions.get(i));
@@ -305,11 +361,12 @@ public class UIDbHelper {
           cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
               RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
       
-      // TODO needs to deal with data type later, right now just set them to null
+      DataType dataType = getEmptyDataTypeForAttribute(attribute);
+      
       ModelFilter filter = new ModelFilter(
           cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
               RuleFilterDbAdapter.KEY_RULEFILTERID)),
-          "", "", R.drawable.icon_event_unknown, attribute, null);
+          "", "", R.drawable.icon_event_unknown, attribute, dataType);
     
       // Insert filterId, filterParentId
       parentIds.put(
@@ -389,14 +446,14 @@ public class UIDbHelper {
 	  
 	  // Save all rule filters
 	  for (int i = 0; i < filterList.size(); i++) {
-		  saveRuleNode(ruleID, -1, filterList.get(i));
+		  saveFilterRuleNode(ruleID, -1, filterList.get(i));
 	  }
   }
   
   /**
    * Recursively write each node of the filter branches to the database.
    */
-  private void saveRuleNode(long ruleID, long parentRuleNodeID, RuleNode node) {
+  private void saveFilterRuleNode(long ruleID, long parentRuleNodeID, RuleNode node) {
     
 	  ModelFilter filter = (ModelFilter)node.getItem();
 	  
@@ -404,9 +461,9 @@ public class UIDbHelper {
 	      Long.valueOf(filter.getAttribute().getDatabaseId()), Long.valueOf(-1), 
 	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, filter.getFilterData().toString());
 	  
-	  // Now all our children filters:
+	  // insert all children filters recursively:
 	  for (int i = 0; i < node.getChildren().size(); i++) {
-		  saveRuleNode(ruleID, thisRuleNodeID, node.getChildren().get(i));
+		  saveFilterRuleNode(ruleID, thisRuleNodeID, node.getChildren().get(i));
 	  }
   }
 }
