@@ -26,9 +26,6 @@ package edu.nyu.cs.omnidroid.util;
  */
 public class DualKey<T1, T2> {
 
-  /* The hash code */
-  private final int hashCode;
-
   /* Dual Keys */
   private final T1 key1;
   private final T2 key2;
@@ -43,12 +40,6 @@ public class DualKey<T1, T2> {
 
     this.key1 = key1;
     this.key2 = key2;
-
-    int total = 0;
-    total ^= key1.hashCode();
-    total ^= key2.hashCode();
-
-    this.hashCode = total;
   }
 
   /**
@@ -67,7 +58,10 @@ public class DualKey<T1, T2> {
 
   @Override
   public int hashCode() {
-    return hashCode;
+    int total = 17;
+    total = 31 * total + key1.hashCode();
+    total = 31 * total + key2.hashCode();
+    return total;
   }
 
   @Override
