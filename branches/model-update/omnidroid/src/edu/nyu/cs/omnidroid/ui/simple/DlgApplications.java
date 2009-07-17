@@ -34,8 +34,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
 /**
  * This dialog displays a list of filters associated with a parent <code>ModelAttribute</code>. If
@@ -138,7 +138,7 @@ public class DlgApplications extends Dialog {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed a valid action, also kill ourselves.
-        ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleAction action = (ModelRuleAction)DlgItemBuilderStore.instance().getBuiltItem();
         if (action != null) {
           // Be sure to wipe our UI state, otherwise the onStop will save it!
           resetUI();

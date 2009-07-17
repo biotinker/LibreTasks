@@ -36,7 +36,7 @@ import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * This dialog takes a <code>ModelEvent</code> as input, and generates a list of
@@ -136,7 +136,7 @@ public class DlgAttributes extends Dialog {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed a valid filter, also kill ourselves.
-        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleFilter filter = (ModelRuleFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           // Be sure to wipe our UI state, otherwise the onStop will save it!
           resetUI();

@@ -42,6 +42,8 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelItem;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 
 /**
@@ -117,10 +119,10 @@ public class ActivityChooseFilters extends Activity {
       showDlgApplications();
     }
     if (mState.getBoolean("mDlgEditFilterIsOpen", false)) {
-        editFilter(mListview.getCheckedItemPosition(), (ModelFilter)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
+        editFilter(mListview.getCheckedItemPosition(), (ModelRuleFilter)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
     }
     if (mState.getBoolean("mDlgEditActionIsOpen", false)) {
-        editAction(mListview.getCheckedItemPosition(), (ModelAction)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
+        editAction(mListview.getCheckedItemPosition(), (ModelRuleAction)mAdapterRule.getItem(mListview.getCheckedItemPosition()));
     }
   }
 
@@ -185,8 +187,8 @@ public class ActivityChooseFilters extends Activity {
       } 
       else if (position > 0 && position < mAdapterRule.getCount()) {
         ModelItem item = mAdapterRule.getItem(position);
-        if (item instanceof ModelFilter) {
-          editFilter(position, (ModelFilter) item);
+        if (item instanceof ModelRuleFilter) {
+          editFilter(position, (ModelRuleFilter)item);
         } 
         else {
           UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a filter to edit!");
@@ -227,8 +229,8 @@ public class ActivityChooseFilters extends Activity {
       int position = mListview.getCheckedItemPosition();
       if (position > -1) {
     	  ModelItem item = mAdapterRule.getItem(position);
-    	  if (item instanceof ModelAction) {
-    		  editAction(position, (ModelAction)item);
+    	  if (item instanceof ModelRuleAction) {
+    		  editAction(position, (ModelRuleAction)item);
     		  return;
     	  }
       } 
@@ -268,7 +270,7 @@ public class ActivityChooseFilters extends Activity {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // Did the user construct a valid filter?
-        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleFilter filter = (ModelRuleFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           // Add the filter to the rule builder and the UI tree.
           mAdapterRule.addItemToParentPosition(mListview.getCheckedItemPosition(), filter);
@@ -287,17 +289,13 @@ public class ActivityChooseFilters extends Activity {
     mDlgAttributesIsOpen = true;
   }
 
-  private void editFilter(final int position, ModelFilter filter) {
-    DlgFilterInput dlg = 
-      new DlgFilterInput(this, 
-                         filter.getAttribute(), 
-                         filter, 
-                         filter.getFilterData());
+  private void editFilter(final int position, ModelRuleFilter filter) {
+    DlgFilterInput dlg = new DlgFilterInput(this, filter.getModelFilter(), filter.getData());
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed the filter ok, then replace the old
         // filter instance, otherwise do nothing.
-        ModelFilter filter = (ModelFilter)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleFilter filter = (ModelRuleFilter)DlgItemBuilderStore.instance().getBuiltItem();
         if (filter != null) {
           mAdapterRule.replaceItem(position, filter);
         }
@@ -312,16 +310,14 @@ public class ActivityChooseFilters extends Activity {
     mDlgEditFilterIsOpen = true;
   }
   
-  private void editAction(final int position, ModelAction action) {
+  private void editAction(final int position, ModelRuleAction action) {
     DlgActionInput dlg = 
-	  new DlgActionInput(this, 
-	                     action, 
-	                     action.getData());
+	  new DlgActionInput(this, action.getModelAction(), action.getDatas());
 	  dlg.setOnDismissListener(new OnDismissListener() {
 	  public void onDismiss(DialogInterface dialog) {
 	    // If the user constructed the action ok, then replace the old
 	    // action instance, otherwise do nothing.
-	    ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+	    ModelRuleAction action = (ModelRuleAction)DlgItemBuilderStore.instance().getBuiltItem();
 	    if (action != null) {
 	      mAdapterRule.replaceItem(position, action);
 	    }
@@ -347,7 +343,7 @@ public class ActivityChooseFilters extends Activity {
       public void onDismiss(DialogInterface dialog) {
 
         // Did the user construct a valid action?
-        ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+        ModelRuleAction action = (ModelRuleAction)DlgItemBuilderStore.instance().getBuiltItem();
         if (action != null) {
           // Add the filter to the rule builder and the UI tree.
           mAdapterRule.addItemToParentPosition(0, action);
@@ -504,7 +500,7 @@ public class ActivityChooseFilters extends Activity {
         }
       } 
       else {
-        if (item instanceof ModelFilter) {
+        if (item instanceof ModelRuleFilter) {
           // If the user is adding a filter to the root event, we want to make
           // sure it gets added as a child before any actions.
           RuleNode nodeParent = getNodeWrapper(position).getNode();
@@ -520,7 +516,7 @@ public class ActivityChooseFilters extends Activity {
             positionNew = position + nodeParent.getChildren().size();
           }
         } 
-        else if (item instanceof ModelAction) {
+        else if (item instanceof ModelRuleAction) {
           // Force adding of actions as siblings directly under the root event.
           RuleNode nodeParent = getNodeWrapper(0).getNode();
           nodeParent.addChild(item);

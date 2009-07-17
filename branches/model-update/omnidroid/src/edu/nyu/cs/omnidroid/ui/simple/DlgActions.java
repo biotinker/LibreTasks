@@ -36,6 +36,7 @@ import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
 /**
  * This dialog displays a list of filters associated with a parent <code>ModelAttribute</code>. If
@@ -54,7 +55,7 @@ public class DlgActions extends Dialog {
   public DlgActions(Context context, ModelApplication application) {
     super(context);
     setContentView(R.layout.dlg_actions);
-    setTitle("Applications");
+    setTitle(application.getTypeName() + " Actions");
 
     mAdapterActions = new AdapterActions(getContext(), application);
 
@@ -138,7 +139,7 @@ public class DlgActions extends Dialog {
     dlg.setOnDismissListener(new OnDismissListener() {
       public void onDismiss(DialogInterface dialog) {
         // If the user constructed a valid filter, also kill ourselves.
-        ModelAction action = (ModelAction)DlgItemBuilderStore.instance().getBuiltItem();
+    	ModelRuleAction action = (ModelRuleAction)DlgItemBuilderStore.instance().getBuiltItem();
         if (action != null) {
           resetUI();
           dismiss();

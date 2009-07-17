@@ -18,15 +18,21 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 import java.util.ArrayList;
 
 /**
- * A node that has an associated <code>ModelItem</code> then a list of zero or more
- * <code>RuleNodes</code> children.
+ * A node that has an associated <code>ModelItem</code> and a list 
+ * of zero or more <code>RuleNodes</code> children.
  */
 public class RuleNode {
 
+  /** The associated rule item for this node. */
   private ModelItem mItem;
+  
+  /** Reference to our parent node, if any. */
   private RuleNode mParent;
+  
+  /** Our child nodes, may be empty. */
   private ArrayList<RuleNode> mChildren;
 
+  
   public RuleNode(RuleNode parent, ModelItem item) {
     mParent = parent;
     mItem = item;

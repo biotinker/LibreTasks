@@ -42,6 +42,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleSparse;
@@ -139,11 +140,13 @@ public class UIDbHelper {
     for (int i = 0; i < cursorApplications.getCount(); i++) {
       cursorApplications.moveToNext();
       ModelApplication application = new ModelApplication(
-          cursorApplications.getInt(cursorApplications.getColumnIndex(
-              RegisteredAppDbAdapter.KEY_APPID)),
-          cursorApplications.getString(cursorApplications.getColumnIndex(
-              RegisteredAppDbAdapter.KEY_APPNAME)), "",
-          R.drawable.icon_application_unknown);
+		cursorApplications.getString(cursorApplications.getColumnIndex(
+          RegisteredAppDbAdapter.KEY_APPNAME)), 
+        "",
+        R.drawable.icon_application_unknown,
+        cursorApplications.getInt(cursorApplications.getColumnIndex(
+          RegisteredAppDbAdapter.KEY_APPID))
+        );
       applications.put(application.getDatabaseId(), application);
     }
     cursorApplications.close();
@@ -168,14 +171,16 @@ public class UIDbHelper {
       cursorActions.moveToNext();
       
       ModelApplication application = applications.get(
-          cursorActions.getInt(cursorActions.getColumnIndex(RegisteredActionDbAdapter.KEY_APPID))); 
+        cursorActions.getInt(cursorActions.getColumnIndex(RegisteredActionDbAdapter.KEY_APPID))); 
       
       ModelAction action = new ModelAction(
-          cursorActions.getInt(cursorActions.getColumnIndex(
-              RegisteredActionDbAdapter.KEY_ACTIONID)), 
-          cursorActions.getString(cursorActions.getColumnIndex(
-              RegisteredActionDbAdapter.KEY_ACTIONNAME)), 
-          "", R.drawable.icon_action_unknown, application);
+        cursorActions.getString(cursorActions.getColumnIndex(
+    	  RegisteredActionDbAdapter.KEY_ACTIONNAME)),
+        "",
+        R.drawable.icon_action_unknown,
+        cursorActions.getInt(cursorActions.getColumnIndex(
+          RegisteredActionDbAdapter.KEY_ACTIONID)), 
+        application);
       
       actions.put(cursorActions.getInt(cursorActions.getColumnIndex(
               RegisteredActionDbAdapter.KEY_ACTIONID)), action);
@@ -201,7 +206,6 @@ public class UIDbHelper {
       attributes.put(attribute.getDatabaseId(), attribute);
     }
     cursorAttributes.close();
-    
   }
   
   /**
@@ -268,8 +272,6 @@ public class UIDbHelper {
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>();
     
-    DataType dataType = getEmptyDataTypeForAttribute(attribute);
-    
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()));
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
@@ -278,7 +280,7 @@ public class UIDbHelper {
       String filterName = dataFilterNames.get(filterID);
       
       filterList.add(new ModelFilter(
-          filterID, filterName, "", R.drawable.icon_filter_unknown, attribute, dataType));
+        filterName, "", R.drawable.icon_filter_unknown, filterID, attribute));
     }
     cursor.close();
     return filterList;
@@ -351,7 +353,7 @@ public class UIDbHelper {
 	// Map<filterId, filterParentId>, for all filters of the rule.
 	HashMap<Integer, Integer> parentIds = new HashMap<Integer, Integer>();
 	// All filters keyed by filterId for quick lookup below.
-	HashMap<Integer, ModelFilter> filtersUnlinked = new HashMap<Integer, ModelFilter>();
+	HashMap<Integer, ModelRuleFilter> filtersUnlinked = new HashMap<Integer, ModelRuleFilter>();
 	  
 	Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, 
         null, null, null);
@@ -361,12 +363,24 @@ public class UIDbHelper {
           cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
               RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
       
-      DataType dataType = getEmptyDataTypeForAttribute(attribute);
+      // TODO: Where do we get the class name for the associated data type?
+      String filterInputFromUser = cursorRuleFilters.getString(
+        cursorRuleFilters.getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERDATA));
+      DataType filterData = FactoryDataType.createObject(
+        "edu.nyu.cs.omnidroid.core.datatypes.OmniText",  // replace this part.
+        filterInputFromUser);
       
-      ModelFilter filter = new ModelFilter(
-          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-              RuleFilterDbAdapter.KEY_RULEFILTERID)),
-          "", "", R.drawable.icon_event_unknown, attribute, dataType);
+      // For filters, first load up the model filter, then supply it to
+      // the model rule filter instance.
+      int filterID = cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(RuleFilterDbAdapter.KEY_DATAFILTERID));
+      String filterName = dataFilterNames.get(filterID);
+      ModelFilter modelFilter = new ModelFilter(
+        filterName, "", R.drawable.icon_filter_unknown, filterID, attribute);
+      
+      ModelRuleFilter filter = new ModelRuleFilter(
+        cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
+          RuleFilterDbAdapter.KEY_RULEFILTERID)),
+        modelFilter, filterData);
     
       // Insert filterId, filterParentId
       parentIds.put(
@@ -386,7 +400,7 @@ public class UIDbHelper {
     Iterator<Integer> it = filtersUnlinked.keySet().iterator();
     while (it.hasNext()) {
       Integer filterId = it.next();
-      ModelFilter filter = filtersUnlinked.get(filterId);
+      ModelRuleFilter filter = filtersUnlinked.get(filterId);
       Integer parentFilterId = parentIds.get(filterId);
          
       if (parentFilterId.intValue() < 1) {
@@ -455,11 +469,11 @@ public class UIDbHelper {
    */
   private void saveFilterRuleNode(long ruleID, long parentRuleNodeID, RuleNode node) {
     
-	  ModelFilter filter = (ModelFilter)node.getItem();
-	  
+	  ModelRuleFilter filter = (ModelRuleFilter)node.getItem();
+
 	  long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
-	      Long.valueOf(filter.getAttribute().getDatabaseId()), Long.valueOf(-1), 
-	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, filter.getFilterData().toString());
+	      Long.valueOf(filter.getModelFilter().getAttribute().getDatabaseId()), Long.valueOf(-1), 
+	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, filter.getData().toString());
 	  
 	  // insert all children filters recursively:
 	  for (int i = 0; i < node.getChildren().size(); i++) {

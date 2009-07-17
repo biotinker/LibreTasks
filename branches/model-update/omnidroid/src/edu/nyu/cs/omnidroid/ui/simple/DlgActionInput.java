@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
 /**
  * This dialog is a shell to contain UI elements specific to different actions. 
@@ -103,9 +104,9 @@ public class DlgActionInput extends Dialog implements FactoryDynamicUI.IDlgDynam
     public void onClick(View v) {
       // Have the listener try to construct a full ModelFilter for us now
       // based on our dynamic UI content.
-      ModelAction action;
+      ModelRuleAction action;
       try {
-        action = (ModelAction)mHandlerInputDone.onInputDone();
+        action = (ModelRuleAction)mHandlerInputDone.onInputDone();
       } catch (Exception ex) {
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "There was an error creating your action, your input was probably bad!:\n"

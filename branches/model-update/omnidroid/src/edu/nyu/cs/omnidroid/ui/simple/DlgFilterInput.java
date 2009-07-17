@@ -23,8 +23,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * This dialog is a shell to contain UI elements specific to different filters. Given a filter ID,
@@ -54,9 +54,8 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
    */
   private boolean mPreserveStateOnClose;
 
-  public DlgFilterInput(Context context, 
-                        ModelAttribute attribute, 
-                        ModelFilter filter,
+  public DlgFilterInput(Context context,  
+                        ModelFilter modelFilter,
                         DataType dataOld) 
   {
     super(context);
@@ -72,7 +71,7 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
     btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     // Add dynamic content now based on our filter type.
-    FactoryDynamicUI.buildUIForFilter(this, attribute, filter, dataOld);
+    FactoryDynamicUI.buildUIForFilter(this, modelFilter, dataOld);
 
     // Maximize ourselves.
     // UtilUI.inflateDialog((LinearLayout)findViewById(R.id.dlg_filter_input_ll_main));
@@ -106,9 +105,9 @@ public class DlgFilterInput extends Dialog implements FactoryDynamicUI.IDlgDynam
     public void onClick(View v) {
       // Have the listener try to construct a full ModelFilter for us now
       // based on our dynamic UI content.
-      ModelFilter filter;
+      ModelRuleFilter filter;
       try {
-        filter = (ModelFilter)mHandlerInputDone.onInputDone();
+        filter = (ModelRuleFilter)mHandlerInputDone.onInputDone();
       } catch (Exception ex) {
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "There was an error creating your filter, your input was probably bad!:\n"

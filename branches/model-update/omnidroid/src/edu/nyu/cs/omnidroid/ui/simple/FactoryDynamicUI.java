@@ -28,9 +28,10 @@ import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelItem;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * Static factory class for setting up a dynamic UI for every filter/action 
@@ -94,12 +95,11 @@ public class FactoryDynamicUI {
    *          If we're modifying an existing filter, then this is the data the user had last set for
    *          it.
    */
-  public static void buildUIForFilter(IDlgDynamicInput dlg, 
-                                      final ModelAttribute attribute,
-                                      final ModelFilter filter, 
-                                      DataType dataOld) 
+  public static void buildUIForFilter(IDlgDynamicInput dlg,
+                                      final ModelFilter modelFilter, 
+                                      final DataType dataOld) 
   {
-    dlg.setTitle(attribute.getDescriptionShort() + " " + filter.getTypeName());
+    dlg.setTitle(modelFilter.getAttribute().getDescriptionShort() + " " + modelFilter.getTypeName());
 
     LinearLayout ll = new LinearLayout(dlg.getContext());
     ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
@@ -107,7 +107,7 @@ public class FactoryDynamicUI {
     ll.setOrientation(LinearLayout.VERTICAL);
 
     DbInterfaceUI dbi = DbInterfaceUI.instance();
-    if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("PhoneNumber", "equals")) {
+    if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("PhoneNumber", "equals")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phone number to match below:");
@@ -128,9 +128,9 @@ public class FactoryDynamicUI {
           OmniPhoneNumber data = new OmniPhoneNumber(edit.getText().toString());
 
           // The entered text was valid, return a completely constructed
-          // filter, with its associated data.
-          return new ModelFilter(filter.getDatabaseId(), filter.getTypeName(), filter
-              .getDescription(), filter.getIconResId(), attribute, data);
+          // rule filter with an invalid database ID, along with the new
+          // associated omni data.
+          return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
       // Also implement the UI state preservation handlers.
@@ -148,7 +148,7 @@ public class FactoryDynamicUI {
         }
       });
     }
-    else if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "equals")) {
+    else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "equals")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter an exact text string to match below:");
@@ -163,15 +163,8 @@ public class FactoryDynamicUI {
       // Add the handler for when the user is done with their input.
       dlg.setHandlerOnFilterInputDone(new IInputDone() {
         public ModelItem onInputDone() throws Exception {
-          // Try to construct an OmniText from what the user
-          // entered in the edit field. If no good, let its
-          // exception be thrown up.
           OmniText data = new OmniText(edit.getText().toString());
-
-          // The entered text was valid, return a completely constructed
-          // filter, with its associated data.
-          return new ModelFilter(filter.getDatabaseId(), filter.getTypeName(), filter
-              .getDescription(), filter.getIconResId(), attribute, data);
+          return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
       // Also implement the UI state preservation handlers.
@@ -188,7 +181,7 @@ public class FactoryDynamicUI {
         }
       });
     } 
-    else if (filter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "contains")) {
+    else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text", "contains")) {
 
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phrase in the text body to match below:");
@@ -203,8 +196,7 @@ public class FactoryDynamicUI {
       dlg.setHandlerOnFilterInputDone(new IInputDone() {
         public ModelItem onInputDone() throws Exception {
           OmniText data = new OmniText(edit.getText().toString());
-          return new ModelFilter(filter.getDatabaseId(), filter.getTypeName(), filter
-              .getDescription(), filter.getIconResId(), attribute, data);
+          return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
       dlg.setHandlerPreserveState(new IDlgPreserveState() {
@@ -221,32 +213,32 @@ public class FactoryDynamicUI {
       });
     }
     else {
-    	System.out.println("Filter ID: " + filter.getDatabaseId());
-    	throw new IllegalArgumentException("Unknown filter ID[" + filter.getDatabaseId() + "] passed to FactoryFilterToUI::buildUIForFilter()!");
+    	System.out.println("Filter ID: " + modelFilter.getDatabaseId());
+    	throw new IllegalArgumentException("Unknown filter ID[" + modelFilter.getDatabaseId() + "] passed to FactoryDynamicUI::buildUIForFilter()!");
     }
     dlg.addDynamicLayout(ll);
   }
   
   public static void buildUIForAction(IDlgDynamicInput dlg, 
- 		  							  final ModelAction action, 
-		  							  ArrayList<DataType> dataOld) 
+ 		  							  final ModelAction modelAction, 
+		  							  final ArrayList<DataType> datasOld) 
   {
-	  dlg.setTitle(action.getDescriptionShort());
+	  dlg.setTitle(modelAction.getDescriptionShort());
 
 	  LinearLayout ll = new LinearLayout(dlg.getContext());
 	  ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
 	        LayoutParams.FILL_PARENT));
 	  ll.setOrientation(LinearLayout.VERTICAL);
 
-	  if (action.getDatabaseId() != 999999) { // TODO: Replace with real ID lookup.
+	  if (modelAction.getDatabaseId() != 999999) { // TODO: Replace with real ID lookup.
 
 	    TextView tv0 = new TextView(dlg.getContext());
 	    tv0.setText("Enter a phone number to send the SMS to:");
 	    ll.addView(tv0);
 
 	    final EditText edit0 = new EditText(dlg.getContext());
-	    if (dataOld != null && dataOld.size() > 0) {
-	      edit0.setText(((OmniPhoneNumber) dataOld.get(0)).getValue());
+	    if (datasOld != null && datasOld.size() > 0) {
+	      edit0.setText(((OmniPhoneNumber)datasOld.get(0)).getValue());
 	    }
 	    ll.addView(edit0);
 	    
@@ -255,8 +247,8 @@ public class FactoryDynamicUI {
 	    ll.addView(tv1);
 
 	    final EditText edit1 = new EditText(dlg.getContext());
-	    if (dataOld != null && dataOld.size() > 1) {
-	      edit1.setText(((OmniText) dataOld.get(1)).getValue());
+	    if (datasOld != null && datasOld.size() > 1) {
+	      edit1.setText(((OmniText)datasOld.get(1)).getValue());
 	    }
 	    ll.addView(edit1);
 
@@ -264,15 +256,13 @@ public class FactoryDynamicUI {
         dlg.setHandlerOnFilterInputDone(new IInputDone() {
           public ModelItem onInputDone() throws Exception {
             // Actions can have multiple data parameters.
-            ArrayList<DataType> data = new ArrayList<DataType>();
-            data.add(new OmniPhoneNumber(edit0.getText().toString()));
-            data.add(new OmniText(edit1.getText().toString()));
+            ArrayList<DataType> datas = new ArrayList<DataType>();
+            datas.add(new OmniPhoneNumber(edit0.getText().toString()));
+            datas.add(new OmniText(edit1.getText().toString()));
 
             // The entered text was valid, return a completely constructed
-            // filter, with its associated data.
-            // TODO: Figure out how we want to pass in application pointer.
-            return new ModelAction(action.getDatabaseId(), action.getTypeName(), action
-              .getDescription(), action.getIconResId(), null, data);
+            // action, with its associated data.
+            return new ModelRuleAction(-1, modelAction, datas);
           }
         });
         // Also implement the UI state preservation handlers.

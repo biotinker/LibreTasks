@@ -17,9 +17,8 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 
 
 /**
- * UI representation of an attribute. We'll modify
- * this to match the database model. Attributes are 
- * associated with an event.
+ * UI representation of an attribute. Attributes are associated
+ * with an event.
  */
 public class ModelAttribute extends ModelItem {
 	
