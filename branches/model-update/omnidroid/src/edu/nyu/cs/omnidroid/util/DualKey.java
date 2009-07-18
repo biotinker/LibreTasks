@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.util;
 
 /**
  * This class can be used to hold two object to form a HashMap key.
+ * TODO(ehotou) To replace StringMap throughout the application with this more generic version.
  * 
  * @param <T1>
  *          is the type of first object
