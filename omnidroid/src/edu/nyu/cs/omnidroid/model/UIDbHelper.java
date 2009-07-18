@@ -48,18 +48,19 @@ import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleSparse;
 
 public class UIDbHelper {
-  
+
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private RegisteredAppDbAdapter registeredAppDbAdapter;
   private RegisteredEventDbAdapter registeredEventDbAdapter;
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter;
-  private RuleFilterDbAdapter ruleFilterDbAdpater; 
-  private RuleActionDbAdapter ruleActionDbAdpater; 
+  private RuleFilterDbAdapter ruleFilterDbAdpater;
+  private RuleActionDbAdapter ruleActionDbAdpater;
   private RuleDbAdapter ruleDbAdapter;
   private DbHelper omnidroidDbHelper;
-  
+
+  // Hash maps for storing cached data for quick lookup
   private Map<Integer, String> dataTypeNames;
   private Map<Integer, String> dataTypeClassNames;
   private Map<Integer, String> dataFilterNames;
@@ -67,11 +68,11 @@ public class UIDbHelper {
   private Map<Integer, ModelEvent> events;
   private Map<Integer, ModelAction> actions;
   private Map<Integer, ModelAttribute> attributes;
-  
+
   public UIDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
     SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
-    
+
     // Initialize db adapters
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataFilterDbAdapter = new DataFilterDbAdapter(database);
@@ -80,7 +81,7 @@ public class UIDbHelper {
     registeredActionDbAdapter = new RegisteredActionDbAdapter(database);
     registeredEventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(database);
     ruleDbAdapter = new RuleDbAdapter(database);
-    
+
     // Initialize db cache
     dataTypeNames = new HashMap<Integer, String>();
     dataTypeClassNames = new HashMap<Integer, String>();
@@ -89,309 +90,306 @@ public class UIDbHelper {
     events = new HashMap<Integer, ModelEvent>();
     actions = new HashMap<Integer, ModelAction>();
     attributes = new HashMap<Integer, ModelAttribute>();
-    
+
     // Load db cache maps
     loadDbCache();
   }
-  
+
   /**
    * Close the UIHelper
    */
   public void close() {
     omnidroidDbHelper.close();
   }
-  
+
   /**
    * Load cached data into hash maps
    */
   private void loadDbCache() {
-    
+
     // Load DataTypes
     Cursor cursorDataTypes = dataTypeDbAdapter.fetchAll();
     for (int i = 0; i < cursorDataTypes.getCount(); i++) {
       cursorDataTypes.moveToNext();
-      dataTypeNames.put(
-          cursorDataTypes.getInt(cursorDataTypes.getColumnIndex(
-              DataTypeDbAdapter.KEY_DATATYPEID)), 
-          cursorDataTypes.getString(cursorDataTypes.getColumnIndex(
-              DataTypeDbAdapter.KEY_DATATYPENAME)));
-      dataTypeClassNames.put(
-          cursorDataTypes.getInt(cursorDataTypes.getColumnIndex(
-              DataTypeDbAdapter.KEY_DATATYPEID)), 
-          cursorDataTypes.getString(cursorDataTypes.getColumnIndex(
-              DataTypeDbAdapter.KEY_DATATYPECLASSNAME)));
+      dataTypeNames.put(cursorDataTypes.getInt(cursorDataTypes
+          .getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID)), cursorDataTypes
+          .getString(cursorDataTypes.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPENAME)));
+      dataTypeClassNames.put(cursorDataTypes.getInt(cursorDataTypes
+          .getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID)), cursorDataTypes
+          .getString(cursorDataTypes.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPECLASSNAME)));
     }
     cursorDataTypes.close();
-    
+
     // Load Filters
     Cursor cursorDataFilters = dataFilterDbAdapter.fetchAll();
     for (int i = 0; i < cursorDataFilters.getCount(); i++) {
       cursorDataFilters.moveToNext();
-      dataFilterNames.put(
-          cursorDataFilters.getInt(cursorDataFilters.getColumnIndex(
-              DataFilterDbAdapter.KEY_DATAFILTERID)), 
-          cursorDataFilters.getString(cursorDataFilters.getColumnIndex(
-              DataFilterDbAdapter.KEY_DATAFILTERNAME)));
+      dataFilterNames.put(cursorDataFilters.getInt(cursorDataFilters
+          .getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID)), cursorDataFilters
+          .getString(cursorDataFilters.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERNAME)));
     }
     cursorDataFilters.close();
-    
+
     // Load applications
     Cursor cursorApplications = registeredAppDbAdapter.fetchAll();
     for (int i = 0; i < cursorApplications.getCount(); i++) {
       cursorApplications.moveToNext();
-      ModelApplication application = new ModelApplication(
-		cursorApplications.getString(cursorApplications.getColumnIndex(
-          RegisteredAppDbAdapter.KEY_APPNAME)), 
-        "",
-        R.drawable.icon_application_unknown,
-        cursorApplications.getInt(cursorApplications.getColumnIndex(
-          RegisteredAppDbAdapter.KEY_APPID))
-        );
+      ModelApplication application = new ModelApplication(cursorApplications
+          .getString(cursorApplications.getColumnIndex(RegisteredAppDbAdapter.KEY_APPNAME)), "",
+          R.drawable.icon_application_unknown, cursorApplications.getInt(cursorApplications
+              .getColumnIndex(RegisteredAppDbAdapter.KEY_APPID)));
       applications.put(application.getDatabaseId(), application);
     }
     cursorApplications.close();
-    
+
     // Load Events
     Cursor cursorEvents = registeredEventDbAdapter.fetchAll();
     for (int i = 0; i < cursorEvents.getCount(); i++) {
       cursorEvents.moveToNext();
-      ModelEvent event = new ModelEvent(
-          cursorEvents.getInt(cursorEvents.getColumnIndex(
-              RegisteredEventDbAdapter.KEY_EVENTID)), 
-          cursorEvents.getString(cursorEvents.getColumnIndex(
-              RegisteredEventDbAdapter.KEY_EVENTNAME))
-          , "", R.drawable.icon_event_unknown);
+      ModelEvent event = new ModelEvent(cursorEvents.getInt(cursorEvents
+          .getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTID)), cursorEvents
+          .getString(cursorEvents.getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTNAME)), "",
+          R.drawable.icon_event_unknown);
       events.put(event.getDatabaseId(), event);
     }
     cursorEvents.close();
-    
+
     // Load Actions
     Cursor cursorActions = registeredActionDbAdapter.fetchAll();
     for (int i = 0; i < cursorActions.getCount(); i++) {
       cursorActions.moveToNext();
-      
-      ModelApplication application = applications.get(
-        cursorActions.getInt(cursorActions.getColumnIndex(RegisteredActionDbAdapter.KEY_APPID))); 
-      
-      ModelAction action = new ModelAction(
-        cursorActions.getString(cursorActions.getColumnIndex(
-    	  RegisteredActionDbAdapter.KEY_ACTIONNAME)),
-        "",
-        R.drawable.icon_action_unknown,
-        cursorActions.getInt(cursorActions.getColumnIndex(
-          RegisteredActionDbAdapter.KEY_ACTIONID)), 
-        application);
-      
-      actions.put(cursorActions.getInt(cursorActions.getColumnIndex(
-              RegisteredActionDbAdapter.KEY_ACTIONID)), action);
+
+      ModelApplication application = applications.get(cursorActions.getInt(cursorActions
+          .getColumnIndex(RegisteredActionDbAdapter.KEY_APPID)));
+
+      ModelAction action = new ModelAction(cursorActions.getString(cursorActions
+          .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONNAME)), "",
+          R.drawable.icon_action_unknown, cursorActions.getInt(cursorActions
+              .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONID)), application);
+
+      actions.put(cursorActions.getInt(cursorActions
+          .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONID)), action);
     }
     cursorActions.close();
-    
+
     // Load Attributes
     Cursor cursorAttributes = registeredEventAttributeDbAdapter.fetchAll();
     for (int i = 0; i < cursorAttributes.getCount(); i++) {
       cursorAttributes.moveToNext();
-      
-      ModelAttribute attribute = new ModelAttribute(
-          cursorAttributes.getInt(cursorAttributes.getColumnIndex(
-              RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)), 
-          cursorAttributes.getInt(cursorAttributes.getColumnIndex(
-              RegisteredEventAttributeDbAdapter.KEY_EVENTID)), 
-          cursorAttributes.getInt(cursorAttributes.getColumnIndex(
-              RegisteredEventAttributeDbAdapter.KEY_DATATYPEID)), 
-          cursorAttributes.getString(cursorAttributes.getColumnIndex(
-              RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), 
-          "", R.drawable.icon_attribute_unknown);
-      
+
+      ModelAttribute attribute = new ModelAttribute(cursorAttributes.getInt(cursorAttributes
+          .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)),
+          cursorAttributes.getInt(cursorAttributes
+              .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTID)), cursorAttributes
+              .getInt(cursorAttributes
+                  .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_DATATYPEID)),
+          cursorAttributes.getString(cursorAttributes
+              .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), "",
+          R.drawable.icon_attribute_unknown);
+
       attributes.put(attribute.getDatabaseId(), attribute);
     }
     cursorAttributes.close();
   }
-  
+
+  /**
+   * Get an dataType object
+   * 
+   * @param attribute
+   *          is the attribute object
+   * @param data
+   *          is the content of the data within the dataType object
+   * @return an dataType object
+   */
+  private DataType getDataType(int dataTypeID, String data) {
+    String dataTypeClassName = dataTypeClassNames.get(dataTypeID);
+    return FactoryDataType.createObject(dataTypeClassName, data);
+  }
+
   /**
    * @return all applications as an ArrayList
    */
   public ArrayList<ModelApplication> getAllApplications() {
     ArrayList<ModelApplication> applicationList = new ArrayList<ModelApplication>();
-    for(Entry<Integer, ModelApplication> entry : applications.entrySet() ) {
+    for (Entry<Integer, ModelApplication> entry : applications.entrySet()) {
       applicationList.add(entry.getValue());
     }
     return applicationList;
   }
-  
+
   /**
    * @return all events as an ArrayList
    */
   public ArrayList<ModelEvent> getAllEvents() {
     ArrayList<ModelEvent> eventList = new ArrayList<ModelEvent>();
-    for(Entry<Integer, ModelEvent> entry : events.entrySet()) {
+    for (Entry<Integer, ModelEvent> entry : events.entrySet()) {
       eventList.add(entry.getValue());
     }
     return eventList;
   }
 
   /**
-   * @param application is a ModelApplication object
+   * @param application
+   *          is a ModelApplication object
+   *          
    * @return all actions associated with one application as an ArrayList
-    */
+   */
   public ArrayList<ModelAction> getActionsForApplication(ModelApplication application) {
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>();
-    for(Entry<Integer, ModelAction> entry : actions.entrySet()){
-      if(entry.getValue().getApplication().getDatabaseId() == application.getDatabaseId()) {
-        actionList.add(entry.getValue());  
+    for (Entry<Integer, ModelAction> entry : actions.entrySet()) {
+      if (entry.getValue().getApplication().getDatabaseId() == application.getDatabaseId()) {
+        actionList.add(entry.getValue());
       }
     }
     return actionList;
   }
 
   /**
-   * @param event is a ModelEvent object
+   * @param event
+   *          is a ModelEvent object
+   *          
    * @return all attributes associated with one event as an ArrayList
    */
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>();
-    
-    Cursor cursorAttribute = registeredEventAttributeDbAdapter.fetchAll(null, 
-        Long.valueOf(event.getDatabaseId()), null);
-    
+
+    Cursor cursorAttribute = registeredEventAttributeDbAdapter.fetchAll(null, Long.valueOf(event
+        .getDatabaseId()), null);
+
     for (int i = 0; i < cursorAttribute.getCount(); i++) {
       cursorAttribute.moveToNext();
-      ModelAttribute attribute = attributes.get(cursorAttribute.getInt(
-          cursorAttribute.getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)));
+      ModelAttribute attribute = attributes.get(cursorAttribute.getInt(cursorAttribute
+          .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)));
       attributesList.add(attribute);
     }
-    
+
     cursorAttribute.close();
     return attributesList;
   }
-  
+
   /**
-   * @param attribute is a ModelAttribute object
+   * @param attribute
+   *          is a ModelAttribute object
+   *          
    * @return all filters associated with one attribute as an ArrayList
    */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>();
-    
+
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()));
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
-      
+
       int filterID = cursor.getInt(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));
       String filterName = dataFilterNames.get(filterID);
-      
-      filterList.add(new ModelFilter(
-        filterName, "", R.drawable.icon_filter_unknown, filterID, attribute));
+
+      filterList.add(new ModelFilter(filterName, "", R.drawable.icon_filter_unknown, filterID,
+          attribute));
     }
     cursor.close();
     return filterList;
   }
-  
-  /**
-   * Get an empty dataType object from a attribute object
-   * @param attribute is the attribute object
-   * @return an dataType object of the attribute type and with an empty string in it
-   */
-  private DataType getEmptyDataTypeForAttribute(ModelAttribute attribute) {
-    Integer dataTypeID = attribute.getDatatype();
-    String dataTypeClassName = dataTypeClassNames.get(dataTypeID);
-    return FactoryDataType.createObject(dataTypeClassName, "");
-  }
-  
+
   /**
    * @return all rules as an ArrayList
    */
   public ArrayList<RuleSparse> getRules() {
-	  ArrayList<RuleSparse> rules = new ArrayList<RuleSparse>();
-	  Cursor cursor = ruleDbAdapter.fetchAll();
-	  for (int i = 0; i < cursor.getCount(); i++) {
-	    rules.add(new RuleSparse(
-	        cursor.getInt(cursor.getColumnIndex(RuleDbAdapter.KEY_RULEID)),
-	        cursor.getString(cursor.getColumnIndex(RuleDbAdapter.KEY_RULENAME)),
-	        cursor.getInt(cursor.getColumnIndex(RuleDbAdapter.KEY_ENABLED)) == 1 ));
-	  }
-	  cursor.close();
-	  return rules;
+    ArrayList<RuleSparse> rules = new ArrayList<RuleSparse>();
+    Cursor cursor = ruleDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+
+      rules.add(new RuleSparse(cursor.getInt(cursor.getColumnIndex(RuleDbAdapter.KEY_RULEID)),
+          cursor.getString(cursor.getColumnIndex(RuleDbAdapter.KEY_RULENAME)), cursor.getInt(cursor
+              .getColumnIndex(RuleDbAdapter.KEY_ENABLED)) == 1));
+    }
+    cursor.close();
+    return rules;
   }
-  
+
   /**
-   * @param databaseId is the rule id
+   * @param databaseId
+   *          is the rule id
    * @return a fully loaded ModelRule object with databaseId
    */
   public Rule loadRule(int databaseId) {
-	  Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
-	  
-	  // Create a new empty rule instance.
-	  Rule rule = new Rule();
-	  
-	  // Fetch the root event.
-	  ModelEvent event = events.get(cursorRule.getInt(cursorRule.getColumnIndex(
-	      RuleDbAdapter.KEY_EVENTID)));
-	  
-	  // Construct a node for it, set it to be the root of the rule
-	  rule.setRootEvent(event);
-	  
-	  // Add all filters for this rule to the root node in a tree format.
-	  addFiltersToRuleNode(databaseId, rule.getRootNode()); 
-	  
-	  // Get all actions associated with this rule.
-	  ArrayList<ModelAction> actions = getActionForRule(databaseId);
-	  
-	  // Add each of them to the tree.
-	  for (int i = 0; i < actions.size(); i++) {
-		  rule.getRootNode().addChild(actions.get(i));
-	  }
-	  
-	  return rule;
+    Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
+
+    // Create a new empty rule instance.
+    Rule rule = new Rule();
+
+    // Fetch the root event.
+    ModelEvent event = events.get(cursorRule.getInt(cursorRule
+        .getColumnIndex(RuleDbAdapter.KEY_EVENTID)));
+
+    // Construct a node for it, set it to be the root of the rule
+    rule.setRootEvent(event);
+
+    // Add all filters for this rule to the root node in a tree format.
+    addFiltersToRuleNode(databaseId, rule.getRootNode());
+
+    // Get all actions associated with this rule.
+    ArrayList<ModelAction> actions = getActionForRule(databaseId);
+
+    // Add each of them to the tree.
+    for (int i = 0; i < actions.size(); i++) {
+      rule.getRootNode().addChild(actions.get(i));
+    }
+
+    return rule;
   }
-  
+
   /**
    * Adds all filters to a root node in tree form.
+   * 
    * @param ruleId
    */
   private void addFiltersToRuleNode(int ruleId, RuleNode rootEvent) {
-	  
-	// Map<filterId, filterParentId>, for all filters of the rule.
-	HashMap<Integer, Integer> parentIds = new HashMap<Integer, Integer>();
-	// All filters keyed by filterId for quick lookup below.
-	HashMap<Integer, ModelRuleFilter> filtersUnlinked = new HashMap<Integer, ModelRuleFilter>();
-	  
-	Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, 
-        null, null, null);
-    for (int i = 0; i < cursorRuleFilters.getCount(); i++) {
+
+    // Map<filterId, filterParentId>, for all filters of the rule.
+    HashMap<Integer, Integer> parentIds = new HashMap<Integer, Integer>();
     
-      ModelAttribute attribute = attributes.get(
-          cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-              RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
-      
-      // TODO: Where do we get the class name for the associated data type?
-      String filterInputFromUser = cursorRuleFilters.getString(
-        cursorRuleFilters.getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERDATA));
-      DataType filterData = FactoryDataType.createObject(
-        "edu.nyu.cs.omnidroid.core.datatypes.OmniText",  // replace this part.
-        filterInputFromUser);
-      
+    // All filters keyed by filterId for quick lookup below.
+    HashMap<Integer, ModelRuleFilter> filtersUnlinked = new HashMap<Integer, ModelRuleFilter>();
+
+    Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, null,
+        null, null);
+
+    for (int i = 0; i < cursorRuleFilters.getCount(); i++) {
+      cursorRuleFilters.moveToNext();
+
+      // Get attribute that this ruleFilter associated with
+      ModelAttribute attribute = attributes.get(cursorRuleFilters.getInt(cursorRuleFilters
+          .getColumnIndex(RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
+
+      // Load the user defined data within this rule filter
+      String filterInputFromUser = cursorRuleFilters.getString(cursorRuleFilters
+          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERDATA));
+
+      // Construct a data type object
+      DataType filterData = getDataType(attribute.getDatatype(), filterInputFromUser);
+
       // For filters, first load up the model filter, then supply it to
       // the model rule filter instance.
-      int filterID = cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(RuleFilterDbAdapter.KEY_DATAFILTERID));
+      int filterID = cursorRuleFilters.getInt(cursorRuleFilters
+          .getColumnIndex(RuleFilterDbAdapter.KEY_DATAFILTERID));
+
       String filterName = dataFilterNames.get(filterID);
-      ModelFilter modelFilter = new ModelFilter(
-        filterName, "", R.drawable.icon_filter_unknown, filterID, attribute);
-      
-      ModelRuleFilter filter = new ModelRuleFilter(
-        cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-          RuleFilterDbAdapter.KEY_RULEFILTERID)),
-        modelFilter, filterData);
-    
+      ModelFilter modelFilter = new ModelFilter(filterName, "", R.drawable.icon_filter_unknown,
+          filterID, attribute);
+
+      ModelRuleFilter filter = new ModelRuleFilter(cursorRuleFilters.getInt(cursorRuleFilters
+          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERID)), modelFilter, filterData);
+
       // Insert filterId, filterParentId
-      parentIds.put(
-        filter.getDatabaseId(),
-        cursorRuleFilters.getInt(cursorRuleFilters.getColumnIndex(
-              RuleFilterDbAdapter.KEY_RULEFILTERID)));
+      parentIds.put(filter.getDatabaseId(), cursorRuleFilters.getInt(cursorRuleFilters
+          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERID)));
+      
       // Store the filter instance itself.
       filtersUnlinked.put(filter.getDatabaseId(), filter);
     }
     cursorRuleFilters.close();
-    
+
     // Keep iterating over all filters until we link each instance. This can be
     // improved if we know we'll get the filter records ordered in a tree hierarchy,
     // otherwise we can stick with this - we just keep passing over all the records
@@ -402,82 +400,82 @@ public class UIDbHelper {
       Integer filterId = it.next();
       ModelRuleFilter filter = filtersUnlinked.get(filterId);
       Integer parentFilterId = parentIds.get(filterId);
-         
+
       if (parentFilterId.intValue() < 1) {
- 			// This is a top-level filter, its parent is the root node.
- 			RuleNode node = rootEvent.addChild(filter);
- 			filtersLinked.put(filterId, node);
- 			filtersUnlinked.remove(filterId);
- 		}
- 		else {
- 			// Add this filter to its parent node. The node may not have 
- 			// been constructed yet, so we have to skip it and handle it
- 			// on a subsequent iteration.
- 			RuleNode nodeParent = filtersLinked.get(parentFilterId);
- 			if (nodeParent != null) {
- 				RuleNode nodeChild  = nodeParent.addChild(filter);
- 				filtersLinked.put(filterId, nodeChild);
-     			filtersUnlinked.remove(filterId);
- 			}
- 		}
+        // This is a top-level filter, its parent is the root node.
+        RuleNode node = rootEvent.addChild(filter);
+        filtersLinked.put(filterId, node);
+        filtersUnlinked.remove(filterId);
+      } else {
+        // Add this filter to its parent node. The node may not have
+        // been constructed yet, so we have to skip it and handle it
+        // on a subsequent iteration.
+        RuleNode nodeParent = filtersLinked.get(parentFilterId);
+        if (nodeParent != null) {
+          RuleNode nodeChild = nodeParent.addChild(filter);
+          filtersLinked.put(filterId, nodeChild);
+          filtersUnlinked.remove(filterId);
+        }
+      }
     }
   }
-  
+
   /**
    * Get all actions associated with a rule
    */
   private ArrayList<ModelAction> getActionForRule(int ruleId) {
     Cursor cursorRuleActions = ruleActionDbAdpater.fetchAll(Long.valueOf(ruleId), null);
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>();
-    for (int i = 0; i< cursorRuleActions.getCount(); i++) {
+    
+    for (int i = 0; i < cursorRuleActions.getCount(); i++) {
+      cursorRuleActions.moveToNext();
       
-      ModelAction action = actions.get(
-          cursorRuleActions.getInt(cursorRuleActions.getColumnIndex(
-              RuleActionDbAdapter.KEY_ACTIONID)));
-      
+      ModelAction action = actions.get(cursorRuleActions.getInt(cursorRuleActions
+          .getColumnIndex(RuleActionDbAdapter.KEY_ACTIONID)));
+
       actionList.add(action);
     }
     cursorRuleActions.close();
     return actionList;
   }
-  
+
   /**
    * Given a rule, save it to the database.
    */
   public void saveRule(Rule rule) throws Exception {
-	  ModelEvent event = (ModelEvent)rule.getRootNode().getItem();
-	  ArrayList<RuleNode> filterList = rule.getFilterBranches();
-	  ArrayList<ModelAction> actionList = rule.getActions();
-	  
-	  // Save the rule record
-	  long ruleID = ruleDbAdapter.insert(
-	      Long.valueOf(event.getDatabaseId()), "RuleName", "RuleDesc", true);
-	  
-	  // Save all rule actions
-	  for (int i = 0; i < actionList.size(); i++) {
-	    ruleActionDbAdpater.insert(ruleID, Long.valueOf(actionList.get(i).getDatabaseId()));
-	  }
-	  
-	  // Save all rule filters
-	  for (int i = 0; i < filterList.size(); i++) {
-		  saveFilterRuleNode(ruleID, -1, filterList.get(i));
-	  }
+    ModelEvent event = (ModelEvent) rule.getRootNode().getItem();
+    ArrayList<RuleNode> filterList = rule.getFilterBranches();
+    ArrayList<ModelAction> actionList = rule.getActions();
+
+    // Save the rule record
+    long ruleID = ruleDbAdapter.insert(Long.valueOf(event.getDatabaseId()), "RuleName", "RuleDesc",
+        true);
+
+    // Save all rule actions
+    for (int i = 0; i < actionList.size(); i++) {
+      ruleActionDbAdpater.insert(ruleID, Long.valueOf(actionList.get(i).getDatabaseId()));
+    }
+
+    // Save all rule filters
+    for (int i = 0; i < filterList.size(); i++) {
+      saveFilterRuleNode(ruleID, -1, filterList.get(i));
+    }
   }
-  
+
   /**
    * Recursively write each node of the filter branches to the database.
    */
   private void saveFilterRuleNode(long ruleID, long parentRuleNodeID, RuleNode node) {
-    
-	  ModelRuleFilter filter = (ModelRuleFilter)node.getItem();
 
-	  long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
-	      Long.valueOf(filter.getModelFilter().getAttribute().getDatabaseId()), Long.valueOf(-1), 
-	      Long.valueOf(filter.getDatabaseId()), parentRuleNodeID, filter.getData().toString());
-	  
-	  // insert all children filters recursively:
-	  for (int i = 0; i < node.getChildren().size(); i++) {
-		  saveFilterRuleNode(ruleID, thisRuleNodeID, node.getChildren().get(i));
-	  }
+    ModelRuleFilter filter = (ModelRuleFilter) node.getItem();
+
+    long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, Long.valueOf(filter.getModelFilter()
+        .getAttribute().getDatabaseId()), Long.valueOf(-1), Long.valueOf(filter.getDatabaseId()),
+        parentRuleNodeID, filter.getData().toString());
+
+    // insert all children filters recursively:
+    for (int i = 0; i < node.getChildren().size(); i++) {
+      saveFilterRuleNode(ruleID, thisRuleNodeID, node.getChildren().get(i));
+    }
   }
 }
