@@ -1,6 +1,5 @@
 package edu.nyu.cs.omnidroid.core;
 
-import edu.nyu.cs.omnidroid.tests.TestData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.gsm.SmsMessage;

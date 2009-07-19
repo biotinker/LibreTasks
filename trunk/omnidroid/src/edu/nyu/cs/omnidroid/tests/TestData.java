@@ -39,10 +39,8 @@ public class TestData {
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, TEST_PHONE_NO);
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO,
-        "Do not disturb.");
-    actions.add(action);
-
+    // TODO(Rohit) - add send SMS action here
+    
     return new Rule(name, eventName, filters, actions);
   }
 
@@ -53,10 +51,8 @@ public class TestData {
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, "555-555-5555");
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action(SMSReceivedEvent.EVENT_NAME, SMSReceivedEvent.ATTRIB_PHONE_NO,
-        "Do not disturb.");
-    actions.add(action);
-
+    // TODO(Rohit) - add send SMS action here
+    
     return new Rule(name, eventName, filters, actions);
   }
 
