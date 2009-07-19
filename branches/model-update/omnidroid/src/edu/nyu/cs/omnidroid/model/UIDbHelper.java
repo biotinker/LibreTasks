@@ -101,6 +101,36 @@ public class UIDbHelper {
   public void close() {
     omnidroidDbHelper.close();
   }
+  
+  /**
+   * Helper method to get integer column value from cursor.
+   * 
+   * @param cursor
+   *          is the cursor to get value from
+   *          
+   * @param columnName
+   *          is name of the column to get
+   *          
+   * @return integer value of the specific column within the cursor
+   */
+  private int getIntFromCursor(Cursor cursor, String columnName) {
+    return cursor.getInt(cursor.getColumnIndex(columnName));
+  }
+  
+  /**
+   * Helper method to get integer column value from cursor.
+   * 
+   * @param cursor
+   *          is the cursor to get value from
+   *          
+   * @param columnName
+   *          is name of the column to get
+   *          
+   * @return integer value of the specific column within the cursor
+   */
+  private String getStringFromCursor(Cursor cursor, String columnName) {
+    return cursor.getString(cursor.getColumnIndex(columnName));
+  }
 
   /**
    * Load cached data into hash maps
@@ -108,88 +138,85 @@ public class UIDbHelper {
   private void loadDbCache() {
 
     // Load DataTypes
-    Cursor cursorDataTypes = dataTypeDbAdapter.fetchAll();
-    for (int i = 0; i < cursorDataTypes.getCount(); i++) {
-      cursorDataTypes.moveToNext();
-      dataTypeNames.put(cursorDataTypes.getInt(cursorDataTypes
-          .getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID)), cursorDataTypes
-          .getString(cursorDataTypes.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPENAME)));
-      dataTypeClassNames.put(cursorDataTypes.getInt(cursorDataTypes
-          .getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID)), cursorDataTypes
-          .getString(cursorDataTypes.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPECLASSNAME)));
+    Cursor cursor = dataTypeDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+      dataTypeNames.put(getIntFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID),
+          getStringFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPENAME));
+      dataTypeClassNames.put(getIntFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID), 
+          getStringFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPECLASSNAME));
     }
-    cursorDataTypes.close();
+    cursor.close();
 
     // Load Filters
-    Cursor cursorDataFilters = dataFilterDbAdapter.fetchAll();
-    for (int i = 0; i < cursorDataFilters.getCount(); i++) {
-      cursorDataFilters.moveToNext();
-      dataFilterNames.put(cursorDataFilters.getInt(cursorDataFilters
-          .getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID)), cursorDataFilters
-          .getString(cursorDataFilters.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERNAME)));
+    cursor = dataFilterDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+      dataFilterNames.put(getIntFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERID),
+          getStringFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERNAME));
     }
-    cursorDataFilters.close();
+    cursor.close();
 
     // Load applications
-    Cursor cursorApplications = registeredAppDbAdapter.fetchAll();
-    for (int i = 0; i < cursorApplications.getCount(); i++) {
-      cursorApplications.moveToNext();
-      ModelApplication application = new ModelApplication(cursorApplications
-          .getString(cursorApplications.getColumnIndex(RegisteredAppDbAdapter.KEY_APPNAME)), "",
-          R.drawable.icon_application_unknown, cursorApplications.getInt(cursorApplications
-              .getColumnIndex(RegisteredAppDbAdapter.KEY_APPID)));
+    cursor = registeredAppDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+      ModelApplication application = new ModelApplication(
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME), 
+            "", //TODO(ehotou) After implementing desc for app, load it here
+            R.drawable.icon_application_unknown, 
+            getIntFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID));
       applications.put(application.getDatabaseId(), application);
     }
-    cursorApplications.close();
+    cursor.close();
 
     // Load Events
-    Cursor cursorEvents = registeredEventDbAdapter.fetchAll();
-    for (int i = 0; i < cursorEvents.getCount(); i++) {
-      cursorEvents.moveToNext();
-      ModelEvent event = new ModelEvent(cursorEvents.getInt(cursorEvents
-          .getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTID)), cursorEvents
-          .getString(cursorEvents.getColumnIndex(RegisteredEventDbAdapter.KEY_EVENTNAME)), "",
+    cursor = registeredEventDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
+      ModelEvent event = new ModelEvent(
+          getIntFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTID),
+          getStringFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTNAME), 
+          "", //TODO(ehotou) After implementing desc for event, load it here
           R.drawable.icon_event_unknown);
       events.put(event.getDatabaseId(), event);
     }
-    cursorEvents.close();
+    cursor.close();
 
     // Load Actions
-    Cursor cursorActions = registeredActionDbAdapter.fetchAll();
-    for (int i = 0; i < cursorActions.getCount(); i++) {
-      cursorActions.moveToNext();
+    cursor = registeredActionDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
 
-      ModelApplication application = applications.get(cursorActions.getInt(cursorActions
-          .getColumnIndex(RegisteredActionDbAdapter.KEY_APPID)));
+      ModelApplication application = applications.get(
+          getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID));
 
-      ModelAction action = new ModelAction(cursorActions.getString(cursorActions
-          .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONNAME)), "",
-          R.drawable.icon_action_unknown, cursorActions.getInt(cursorActions
-              .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONID)), application);
+      ModelAction action = new ModelAction(
+          getStringFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONNAME), 
+          "", //TODO(ehotou) After implementing desc for action, load it here
+          R.drawable.icon_action_unknown,
+          getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID), application);
 
-      actions.put(cursorActions.getInt(cursorActions
-          .getColumnIndex(RegisteredActionDbAdapter.KEY_ACTIONID)), action);
+      actions.put(action.getDatabaseId(), action);
     }
-    cursorActions.close();
+    cursor.close();
 
     // Load Attributes
-    Cursor cursorAttributes = registeredEventAttributeDbAdapter.fetchAll();
-    for (int i = 0; i < cursorAttributes.getCount(); i++) {
-      cursorAttributes.moveToNext();
+    cursor = registeredEventAttributeDbAdapter.fetchAll();
+    for (int i = 0; i < cursor.getCount(); i++) {
+      cursor.moveToNext();
 
-      ModelAttribute attribute = new ModelAttribute(cursorAttributes.getInt(cursorAttributes
-          .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)),
-          cursorAttributes.getInt(cursorAttributes
-              .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTID)), cursorAttributes
-              .getInt(cursorAttributes
-                  .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_DATATYPEID)),
-          cursorAttributes.getString(cursorAttributes
-              .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME)), "",
+      ModelAttribute attribute = new ModelAttribute(getIntFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID), getIntFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTID), getIntFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME), 
+          "", //TODO(ehotou) After implementing desc for attribute, load it here
           R.drawable.icon_attribute_unknown);
-
+      
       attributes.put(attribute.getDatabaseId(), attribute);
     }
-    cursorAttributes.close();
+    cursor.close();
   }
 
   /**
@@ -197,8 +224,10 @@ public class UIDbHelper {
    * 
    * @param attribute
    *          is the attribute object
+   *          
    * @param data
    *          is the content of the data within the dataType object
+   *          
    * @return an dataType object
    */
   private DataType getDataType(int dataTypeID, String data) {
@@ -253,13 +282,14 @@ public class UIDbHelper {
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>();
 
-    Cursor cursorAttribute = registeredEventAttributeDbAdapter.fetchAll(null, Long.valueOf(event
-        .getDatabaseId()), null);
+    // Fetch all attribute associated with this event, set attributeName and its dataTypeId to null
+    Cursor cursorAttribute = registeredEventAttributeDbAdapter.fetchAll(
+        null, Long.valueOf(event.getDatabaseId()), null);
 
     for (int i = 0; i < cursorAttribute.getCount(); i++) {
       cursorAttribute.moveToNext();
-      ModelAttribute attribute = attributes.get(cursorAttribute.getInt(cursorAttribute
-          .getColumnIndex(RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID)));
+      ModelAttribute attribute = attributes.get(getIntFromCursor(cursorAttribute, 
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID));
       attributesList.add(attribute);
     }
 
@@ -275,16 +305,21 @@ public class UIDbHelper {
    */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>();
-
+  
+    // Fetch all filter associated with this attribute's dataType id, set filterName to null
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()));
+    
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
 
-      int filterID = cursor.getInt(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));
+      int filterID = getIntFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERID);
       String filterName = dataFilterNames.get(filterID);
 
-      filterList.add(new ModelFilter(filterName, "", R.drawable.icon_filter_unknown, filterID,
-          attribute));
+      filterList.add(
+          new ModelFilter(filterName, 
+              "" // TODO(ehotou) After implementing desc for filter, load it here 
+              , R.drawable.icon_filter_unknown, filterID,
+              attribute));
     }
     cursor.close();
     return filterList;
@@ -298,10 +333,13 @@ public class UIDbHelper {
     Cursor cursor = ruleDbAdapter.fetchAll();
     for (int i = 0; i < cursor.getCount(); i++) {
       cursor.moveToNext();
-
-      rules.add(new RuleSparse(cursor.getInt(cursor.getColumnIndex(RuleDbAdapter.KEY_RULEID)),
-          cursor.getString(cursor.getColumnIndex(RuleDbAdapter.KEY_RULENAME)), cursor.getInt(cursor
-              .getColumnIndex(RuleDbAdapter.KEY_ENABLED)) == 1));
+      
+      RuleSparse ruleSparse = new RuleSparse(
+          getIntFromCursor(cursor, RuleDbAdapter.KEY_RULEID),
+          getStringFromCursor(cursor, RuleDbAdapter.KEY_RULENAME), 
+          getIntFromCursor(cursor, RuleDbAdapter.KEY_ENABLED) == 1);
+      
+      rules.add(ruleSparse);
     }
     cursor.close();
     return rules;
@@ -319,8 +357,7 @@ public class UIDbHelper {
     Rule rule = new Rule();
 
     // Fetch the root event.
-    ModelEvent event = events.get(cursorRule.getInt(cursorRule
-        .getColumnIndex(RuleDbAdapter.KEY_EVENTID)));
+    ModelEvent event = events.get(getIntFromCursor(cursorRule, RuleDbAdapter.KEY_EVENTID));
 
     // Construct a node for it, set it to be the root of the rule
     rule.setRootEvent(event);
@@ -352,6 +389,7 @@ public class UIDbHelper {
     // All filters keyed by filterId for quick lookup below.
     HashMap<Integer, ModelRuleFilter> filtersUnlinked = new HashMap<Integer, ModelRuleFilter>();
 
+    // Fetch all ruleFilter associated with this rule, set other parameters to be null
     Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, null,
         null, null);
 
@@ -359,31 +397,33 @@ public class UIDbHelper {
       cursorRuleFilters.moveToNext();
 
       // Get attribute that this ruleFilter associated with
-      ModelAttribute attribute = attributes.get(cursorRuleFilters.getInt(cursorRuleFilters
-          .getColumnIndex(RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID)));
+      ModelAttribute attribute = attributes.get(
+          getIntFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID));
 
       // Load the user defined data within this rule filter
-      String filterInputFromUser = cursorRuleFilters.getString(cursorRuleFilters
-          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERDATA));
+      String filterInputFromUser = getStringFromCursor(
+          cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERDATA);
 
       // Construct a data type object
       DataType filterData = getDataType(attribute.getDatatype(), filterInputFromUser);
 
       // For filters, first load up the model filter, then supply it to
       // the model rule filter instance.
-      int filterID = cursorRuleFilters.getInt(cursorRuleFilters
-          .getColumnIndex(RuleFilterDbAdapter.KEY_DATAFILTERID));
+      int filterID = getIntFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_DATAFILTERID);
 
       String filterName = dataFilterNames.get(filterID);
-      ModelFilter modelFilter = new ModelFilter(filterName, "", R.drawable.icon_filter_unknown,
-          filterID, attribute);
+      
+      ModelFilter modelFilter = new ModelFilter(filterName, 
+          "", // TODO(ehotou) After implementing desc for filter, load it here.
+          R.drawable.icon_filter_unknown, filterID, attribute);
 
-      ModelRuleFilter filter = new ModelRuleFilter(cursorRuleFilters.getInt(cursorRuleFilters
-          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERID)), modelFilter, filterData);
+      ModelRuleFilter filter = new ModelRuleFilter(
+          getIntFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERID), 
+          modelFilter, filterData);
 
       // Insert filterId, filterParentId
-      parentIds.put(filter.getDatabaseId(), cursorRuleFilters.getInt(cursorRuleFilters
-          .getColumnIndex(RuleFilterDbAdapter.KEY_RULEFILTERID)));
+      parentIds.put(filter.getDatabaseId(), 
+          getIntFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERID));
       
       // Store the filter instance itself.
       filtersUnlinked.put(filter.getDatabaseId(), filter);
@@ -430,8 +470,8 @@ public class UIDbHelper {
     for (int i = 0; i < cursorRuleActions.getCount(); i++) {
       cursorRuleActions.moveToNext();
       
-      ModelAction action = actions.get(cursorRuleActions.getInt(cursorRuleActions
-          .getColumnIndex(RuleActionDbAdapter.KEY_ACTIONID)));
+      ModelAction action = actions.get(
+          getIntFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_ACTIONID));
 
       actionList.add(action);
     }
@@ -448,6 +488,7 @@ public class UIDbHelper {
     ArrayList<ModelAction> actionList = rule.getActions();
 
     // Save the rule record
+    // TODO(ehotou) need to specify rule name and desc after we implement them
     long ruleID = ruleDbAdapter.insert(Long.valueOf(event.getDatabaseId()), "RuleName", "RuleDesc",
         true);
 
@@ -469,9 +510,12 @@ public class UIDbHelper {
 
     ModelRuleFilter filter = (ModelRuleFilter) node.getItem();
 
-    long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, Long.valueOf(filter.getModelFilter()
-        .getAttribute().getDatabaseId()), Long.valueOf(-1), Long.valueOf(filter.getDatabaseId()),
-        parentRuleNodeID, filter.getData().toString());
+    long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
+        Long.valueOf(filter.getModelFilter().getAttribute().getDatabaseId()), 
+        Long.valueOf(-1), // TODO(ehotou) after implementing external, insert it here
+        Long.valueOf(filter.getDatabaseId()),
+        parentRuleNodeID, 
+        filter.getData().toString());
 
     // insert all children filters recursively:
     for (int i = 0; i < node.getChildren().size(); i++) {
