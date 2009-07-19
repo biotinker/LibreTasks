@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import junit.framework.TestCase;
 import edu.nyu.cs.omnidroid.tests.TestData;
@@ -37,9 +38,11 @@ public class RuleProcessorTest extends TestCase {
    * filters
    */
   public void testRuleProcessor_pass() {
+    // Parameters provided to the CallPhoneAction
+    HashMap<String, String> phoneCallParameters = new HashMap<String, String>();
+    phoneCallParameters.put(CallPhoneAction.PARAM_PHONE_NO, "5556");
     ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new Action(SMSReceivedEvent.EVENT_NAME, TestData.TEST_MESSAGE_TEXT,
-        "Do not disturb");
+    Action action = new CallPhoneAction(phoneCallParameters);
     actions.add(action);
     assertEquals(actions.size(), RuleProcessor.getActions(event).size());
   }
