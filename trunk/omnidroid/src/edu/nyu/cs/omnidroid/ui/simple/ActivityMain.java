@@ -16,6 +16,9 @@
 package edu.nyu.cs.omnidroid.ui.simple;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,9 +60,6 @@ public class ActivityMain extends Activity {
       // root event activity cannot tell if its onDestroy() method is being
       // called in response to the user going back here, or just due to a
       // rotation. So we let this parent activity wipe state.
-      
-      // TODO: Reenable once all UI classes are added to trunk:
-      /*
       SharedPreferences state = v.getContext().getSharedPreferences(
           ActivityChooseRootEvent.KEY_STATE,
           Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
@@ -70,7 +70,6 @@ public class ActivityMain extends Activity {
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityChooseRootEvent.class);
       startActivity(intent);
-      */
     }
   };
 
