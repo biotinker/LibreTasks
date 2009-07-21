@@ -16,22 +16,11 @@
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
 /**
- * UI representation of an Event. 
+ * UI representation of an Event.
  */
 public class ModelEvent extends ModelItem {
 
-  private final int mDatabaseId;
-
   public ModelEvent(int databaseId, String typeName, String description, int iconResId) {
-    super(typeName, description, iconResId);
-    mDatabaseId = databaseId;
-  }
-
-  public int getDatabaseId() {
-    return mDatabaseId;
-  }
-
-  public String getDescriptionShort() {
-    return getTypeName();
+    super(typeName, description, iconResId, databaseId);
   }
 }

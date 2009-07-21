@@ -20,50 +20,38 @@ import java.util.ArrayList;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 
 /**
- * An instance of an action whose data has been set by the end-user.
- * When a user picks a <code>ModelAction</code> to be executed by a
- * rule, we prompt them for input data about how to execute the action. 
- * Their supplied information is stored in <code>mActionDatas</code>
- * and the original action type is stored in <code>mModelAction</code>.
+ * An instance of an action whose data has been set by the end-user. When a user picks a
+ * <code>ModelAction</code> to be executed by a rule, we prompt them for input data about how to
+ * execute the action. Their supplied information is stored in <code>mActionDatas</code> and the
+ * original action type is stored in <code>mModelAction</code>.
  * 
- * So this class contains the action template, and whatever data the
- * user supplied for it.
+ * So this class contains the action template, and whatever data the user supplied for it.
  */
 public class ModelRuleAction extends ModelItem {
 
-  /** Our database instance ID, set when our parent rule is saved in the database. */
-  private final int mDatabaseId;
-  
   /** Our filter type. */
-  private final ModelAction mModelAction;
-  
+  private final ModelAction modelAction;
+
   /** Action data entered by the end user. */
-  private ArrayList<DataType> mActionDatas;
+  private final ArrayList<DataType> actionDatas;
 
-  
-  public ModelRuleAction(int databaseId, 
-                         ModelAction modelAction,
-                         ArrayList<DataType> actionDatas) 
-  {
-    super(modelAction.getTypeName(), modelAction.getDescription(), modelAction.getIconResId());
-    mDatabaseId = databaseId;
-    mModelAction = modelAction;
-    mActionDatas = actionDatas;
+  public ModelRuleAction(int databaseId, ModelAction modelAction, ArrayList<DataType> actionDatas) {
+    super(modelAction.getTypeName(), modelAction.getDescription(), modelAction.getIconResId(),
+        databaseId);
+    this.modelAction = modelAction;
+    this.actionDatas = actionDatas;
   }
 
-  public int getDatabaseId() {
-    return mDatabaseId;
-  }
-  
   public ModelAction getModelAction() {
-	  return mModelAction;
+    return modelAction;
   }
 
   public ArrayList<DataType> getDatas() {
-    return mActionDatas;
+    return actionDatas;
   }
 
+  @Override
   public String getDescriptionShort() {
-    return mModelAction.getDescriptionShort();
+    return modelAction.getDescriptionShort();
   }
 }

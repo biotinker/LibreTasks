@@ -15,28 +15,12 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
-
 /**
  * UI representation of an application.
  */
 public class ModelApplication extends ModelItem {
 
-  private final int mDatabaseId;
-	  
-  public ModelApplication(String typeName, 
-                          String description, 
-                          int iconResId,
-                          int databaseId) 
-  {
-	  super(typeName, description, iconResId);
-	  mDatabaseId = databaseId;
-  }
-	
-  public int getDatabaseId() {
-	  return mDatabaseId;
-  }
-  
-  public String getDescriptionShort() {
-    return getTypeName();
+  public ModelApplication(String typeName, String description, int iconResId, int databaseId) {
+    super(typeName, description, iconResId, databaseId);
   }
 }

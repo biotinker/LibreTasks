@@ -18,65 +18,64 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 import java.util.ArrayList;
 
 /**
- * A node that has an associated <code>ModelItem</code> and a list 
- * of zero or more <code>RuleNodes</code> children.
+ * A node that has an associated <code>ModelItem</code> and a list of zero or more
+ * <code>RuleNodes</code> children.
  */
 public class RuleNode {
 
   /** The associated rule item for this node. */
-  private ModelItem mItem;
-  
-  /** Reference to our parent node, if any. */
-  private RuleNode mParent;
-  
-  /** Our child nodes, may be empty. */
-  private ArrayList<RuleNode> mChildren;
+  private ModelItem item;
 
-  
+  /** Reference to our parent node, if any. */
+  private RuleNode parent;
+
+  /** Our child nodes, may be empty. */
+  private ArrayList<RuleNode> children;
+
   public RuleNode(RuleNode parent, ModelItem item) {
-    mParent = parent;
-    mItem = item;
-    mChildren = new ArrayList<RuleNode>();
+    this.parent = parent;
+    this.item = item;
+    this.children = new ArrayList<RuleNode>();
   }
 
   public RuleNode getParent() {
-    return mParent;
+    return parent;
   }
 
   public ModelItem getItem() {
-    return mItem;
+    return item;
   }
 
   public void setItem(ModelItem item) {
-    mItem = item;
+    this.item = item;
   }
 
   public ArrayList<RuleNode> getChildren() {
-    return mChildren;
+    return children;
   }
 
   public RuleNode addChild(ModelItem item) {
     RuleNode it = new RuleNode(this, item);
-    mChildren.add(it);
+    children.add(it);
     return it;
   }
 
   public RuleNode addChild(ModelItem item, int insertionIndex) throws IndexOutOfBoundsException {
     RuleNode it = new RuleNode(this, item);
-    mChildren.add(insertionIndex, it);
+    children.add(insertionIndex, it);
     return it;
   }
 
   public void removeChild(RuleNode child) {
-    mChildren.remove(child);
+    children.remove(child);
   }
 
   public void removeAllChildren() {
-    mChildren.clear();
+    children.clear();
   }
 
   public boolean getIsLastChild(RuleNode node) {
-    if (mChildren.size() > 0 && mChildren.get(mChildren.size() - 1) == node) {
+    if (children.size() > 0 && children.get(children.size() - 1) == node) {
       return true;
     }
     return false;

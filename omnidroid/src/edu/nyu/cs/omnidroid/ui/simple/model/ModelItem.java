@@ -20,48 +20,54 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public abstract class ModelItem {
 
-  /** Simple name of class for presentation to the user in the UI. */
-  protected final String mTypeName;
-  
-  /** Description of the instance for use with a help button in the UI. */
-  protected final String mDescription;
-  
-  /** Icon resource ID to use in the UI for this instance (may switch to path). */
-  protected final int mIconResId;
+  /** Database ID. */
+  private final int databaseId;
 
-  
-  public ModelItem(String typeName, 
-                   String description, 
-                   int iconResId) 
-  {
-    mTypeName = typeName;
-    mDescription = description;
-    mIconResId = iconResId;
+  /** Simple name of class for presentation to the user in the UI. */
+  protected final String typeName;
+
+  /** Description of the instance for use with a help button in the UI. */
+  protected final String description;
+
+  /** Icon resource ID to use in the UI for this instance (may switch to path). */
+  protected final int iconResId;
+
+  public ModelItem(String typeName, String description, int iconResId, int databaseId) {
+    this.typeName = typeName;
+    this.description = description;
+    this.iconResId = iconResId;
+    this.databaseId = databaseId;
   }
 
   public String getTypeName() {
-    return mTypeName;
+    return typeName;
   }
 
   public String getDescription() {
-    return mDescription;
+    return description;
   }
 
   public int getIconResId() {
-    return mIconResId;
+    return iconResId;
+  }
+
+  public int getDatabaseId() {
+    return databaseId;
   }
 
   /**
-   * Each derived class should build a short description of themselves
-   * here using their type name and any other relevant class data. This
-   * string will be used to describe the item in the tree listview which
-   * has very limited screen space.
+   * Each derived class should build a short description of themselves here using their type name
+   * and any other relevant class data. This string will be used to describe the item in the tree
+   * listview which has very limited screen space.
+   * 
    * @return Short description of this instance for use in the UI.
    */
-  public abstract String getDescriptionShort();
+  public String getDescriptionShort() {
+    return typeName;
+  }
 
   public String toString() {
-    String str = mTypeName + ", " + mDescription + ", " + mIconResId;
+    String str = typeName + ", " + description + ", " + iconResId;
     return str;
   }
 }

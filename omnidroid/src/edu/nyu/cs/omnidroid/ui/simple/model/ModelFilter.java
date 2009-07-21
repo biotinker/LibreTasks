@@ -15,38 +15,26 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
-
 /**
- * UI representation of a filter. 
+ * UI representation of a filter.
  */
 public class ModelFilter extends ModelItem {
 
-  private final int mDatabaseId;
-  
   /** The attribute this filter is associated with. */
-  private final ModelAttribute mAttribute;
+  private final ModelAttribute attribute;
 
-  
-  public ModelFilter(String typeName, 
-                     String description, 
-                     int iconResId,
-                     int databaseId,
-                     ModelAttribute attribute) 
-  {
-    super(typeName, description, iconResId);
-    mDatabaseId = databaseId;
-    mAttribute = attribute;
-  }
-
-  public int getDatabaseId() {
-    return mDatabaseId;
+  public ModelFilter(String typeName, String description, int iconResId, int databaseId,
+      ModelAttribute attribute) {
+    super(typeName, description, iconResId, databaseId);
+    this.attribute = attribute;
   }
 
   public ModelAttribute getAttribute() {
-    return mAttribute;
+    return attribute;
   }
 
+  @Override
   public String getDescriptionShort() {
-    return getAttribute().getDescriptionShort() + " " + getTypeName();
+    return attribute.getDescriptionShort() + " " + typeName;
   }
 }

@@ -15,44 +15,26 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
-
 /**
- * UI representation of an attribute. Attributes are associated
- * with an event.
+ * UI representation of an attribute. Attributes are associated with an event.
  */
 public class ModelAttribute extends ModelItem {
-	
-  private final int mDatabaseId;
-  private final int mForeignKeyEventId;
-  private final int mDatatype;
-	
-	
-  public ModelAttribute(int databaseId,
-                        int foreignKeyEventId,
-                        int datatype,
-                        String typeName, 
-                        String description, 
-                        int iconResId) 
-  {
-    super(typeName, description, iconResId);
-    mDatabaseId = databaseId;
-    mForeignKeyEventId = foreignKeyEventId;
-    mDatatype = datatype;
+
+  private final int foreignKeyEventId;
+  private final int datatype;
+
+  public ModelAttribute(int databaseId, int foreignKeyEventId, int datatype, String typeName,
+      String description, int iconResId) {
+    super(typeName, description, iconResId, databaseId);
+    this.foreignKeyEventId = foreignKeyEventId;
+    this.datatype = datatype;
   }
 
-  public int getDatabaseId() { 
-    return mDatabaseId;
-  }
-	
   public int getForeignKeyEventId() {
-    return mForeignKeyEventId;
+    return foreignKeyEventId;
   }
-	
+
   public int getDatatype() {
-    return mDatatype;
-  }
-	
-  public String getDescriptionShort() {
-    return getTypeName();
+    return datatype;
   }
 }
