@@ -36,6 +36,10 @@ public class ActivityMain extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    
+    // Initialize singleton instance of UIDbHelperStore, which is
+    // our connection to the omnidroid database.
+    UIDbHelperStore.init(this);
 
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_main_btnCreateRule);
