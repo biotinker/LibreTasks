@@ -15,41 +15,21 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
-
-
 /**
- * UI representation of an action. Actions always have an associated
- * parent application. 
+ * UI representation of an action. Actions always have an associated parent application.
  */
 public class ModelAction extends ModelItem {
-	
+
   /** An action always has a parent application. */
-  private final ModelApplication mApplication;
-  
-  /** This action's database ID. */
-  private final int mDatabaseId;
-  
-  
-  public ModelAction(String typeName, 
-		             String description, 
-		             int iconResId, 
-		             int databaseId, 
-		             ModelApplication application) 
-  {
-	  super(typeName, description, iconResId);
-	  mApplication = application;
-	  mDatabaseId = databaseId;
+  private final ModelApplication application;
+
+  public ModelAction(String typeName, String description, int iconResId, int databaseId,
+      ModelApplication application) {
+    super(typeName, description, iconResId, databaseId);
+    this.application = application;
   }
-  
-  public int getDatabaseId() {
-    return mDatabaseId;
-  }
-  
-  public String getDescriptionShort() {
-    return getTypeName();
-  }
-  
+
   public ModelApplication getApplication() {
-	  return mApplication;
+    return application;
   }
 }

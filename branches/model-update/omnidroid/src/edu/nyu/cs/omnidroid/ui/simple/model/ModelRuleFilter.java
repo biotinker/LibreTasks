@@ -18,52 +18,39 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 
 /**
- * An instance of a filter whose data has been set by the end-user.
- * When a user picks a <code>ModelFilter</code> filter to apply to
- * an attribute, we prompt them for input data about how to use the
- * filter. Their supplied information is stored in <code>mFilterData</code>
- * and the original filter type is stored in <code>mModemFilter</code>.
+ * An instance of a filter whose data has been set by the end-user. When a user picks a
+ * <code>ModelFilter</code> filter to apply to an attribute, we prompt them for input data about how
+ * to use the filter. Their supplied information is stored in <code>mFilterData</code> and the
+ * original filter type is stored in <code>mModemFilter</code>.
  * 
- * So this class contains the filter template, and whatever data the
- * user supplied for it.
+ * So this class contains the filter template, and whatever data the user supplied for it.
  */
 public class ModelRuleFilter extends ModelItem {
 
-  /** Our database instance ID, set when our parent rule is saved in the database. */
-  private final int mDatabaseId;
-  
   /** Our filter type. */
-  private final ModelFilter mModelFilter;
-  
+  private final ModelFilter modelFilter;
+
   /** Filter data entered by the end user. */
-  private DataType mFilterData;
+  private final DataType filterData;
 
-
-  public ModelRuleFilter(int databaseId, 
-                         ModelFilter modelFilter,
-                         DataType filterData) 
-  {
-    super(modelFilter.getTypeName(), modelFilter.getDescription(), modelFilter.getIconResId());
-    mDatabaseId = databaseId;
-    mModelFilter = modelFilter;
-    mFilterData = filterData;
+  public ModelRuleFilter(int databaseId, ModelFilter modelFilter, DataType filterData) {
+    super(modelFilter.getTypeName(), modelFilter.getDescription(), modelFilter.getIconResId(),
+        databaseId);
+    this.modelFilter = modelFilter;
+    this.filterData = filterData;
   }
 
-  public int getDatabaseId() {
-    return mDatabaseId;
-  }
-  
   public ModelFilter getModelFilter() {
-	  return mModelFilter;
+    return modelFilter;
   }
 
   public DataType getData() {
-    return mFilterData;
+    return filterData;
   }
 
+  @Override
   public String getDescriptionShort() {
-    return mModelFilter.getAttribute().getDescriptionShort() 
-      + " " + mModelFilter.getTypeName() 
-      + ": " + getData().getValue();
+    return modelFilter.getAttribute().getDescriptionShort() + " " + modelFilter.getTypeName()
+        + ": " + filterData.getValue();
   }
 }

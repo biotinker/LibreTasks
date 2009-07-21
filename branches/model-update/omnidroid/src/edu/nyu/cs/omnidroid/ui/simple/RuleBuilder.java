@@ -18,37 +18,32 @@ package edu.nyu.cs.omnidroid.ui.simple;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 
-
-
 /**
- * This is a singleton class used to store elements of a new rule
- * between <code>ActivityChooseRootEvent</code> and <code>ActivityChooseFilters</code>.
- * Using singletons is how the Android team recommends passing this type
- * of data between activities.
+ * This is a singleton class used to store elements of a new rule between
+ * <code>ActivityChooseRootEvent</code> and <code>ActivityChooseFilters</code>. Using singletons is
+ * how the Android team recommends passing this type of data between activities.
  */
 public class RuleBuilder {
-	
-	private static RuleBuilder mInstance;
-	private Rule mRule;
-	
-	
-	private RuleBuilder() {
-	}
-	
-	public static RuleBuilder instance() {
-		if (mInstance == null) {
-			mInstance = new RuleBuilder();
-		}
-		return mInstance;
-	}
-	
-	public void reset(ModelEvent event) {
-		mRule = null;
-		mRule = new Rule();
-		mRule.setRootEvent(event);
-	}
-	
-	public Rule getRule() {
-		return mRule;
-	}
+
+  private static RuleBuilder instance;
+  private Rule rule;
+
+  private RuleBuilder() {
+  }
+
+  public static RuleBuilder instance() {
+    if (instance == null) {
+      instance = new RuleBuilder();
+    }
+    return instance;
+  }
+
+  public void reset(ModelEvent event) {
+    rule = new Rule(-1);
+    rule.setRootEvent(event);
+  }
+
+  public Rule getRule() {
+    return rule;
+  }
 }

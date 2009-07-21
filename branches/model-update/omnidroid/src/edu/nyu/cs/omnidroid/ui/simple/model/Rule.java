@@ -18,126 +18,154 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 import java.util.ArrayList;
 
 /**
- * A rule is a collection of <code>RuleNode</code> nodes. Each RuleNode 
- * instance has a single <code>ModelItem</code> and a list of zero or more 
- * child <code>RuleNode</code> items. This structure allows us to nest filters 
- * within other filters.
+ * A rule is a collection of <code>RuleNode</code> nodes. Each RuleNode instance has a single
+ * <code>ModelItem</code> and a list of zero or more child <code>RuleNode</code> items. This
+ * structure allows us to nest filters within other filters.
  * 
- * The root node <code>mNode</code> is the root event. Action nodes are always
- * appended to the end of the root node's child array, it may be convenient to
- * move them to their own separate array.
+ * The root node <code>mNode</code> is the root event. Action nodes are always appended to the end
+ * of the root node's child array. TODO: it may be convenient to move actions to their own separate
+ * array.
  */
 public class Rule {
 
+  /** Database ID for this rule. */
+  private final int databaseId;
+
+  /** Name given to rule by user. */
+  private String name;
+
   /**
-   * The rule tree can look like:
+   * The rule tree can look like: 
    * RootEvent 
    *   |- Filter1 
    *   |- Filter2 
-   *   |    |- Filter3 
-   *   |    |- Filter4 
+   *   |   |- Filter3 
+   *   |   |- Filter4 
    *   |- Action1 
    *   |- Action2
    */
-  private RuleNode mNode;
-  
+  private RuleNode node;
 
-  public Rule() {
+  public Rule(int databaseId) {
+    this.databaseId = databaseId;
   }
-  
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getDatabaseId() {
+    return databaseId;
+  }
+
   /**
-   * Set the root event for the rule. This will clear all previous rule
-   * data since filters do not always make sense for all the rule types.
-   * @param event  The root event to use.
+   * Set the root event for the rule. This will clear all previous rule data since filters do not
+   * always make sense for all the rule types.
+   * 
+   * @param event
+   *          The root event to use.
    */
   public void setRootEvent(ModelEvent event) {
-    if (mNode == null) {
-      mNode = new RuleNode(null, event);
+    if (node == null) {
+      node = new RuleNode(null, event);
     } else {
-      mNode.setItem(event);
+      node.setItem(event);
     }
   }
 
   public RuleNode getRootNode() {
-    return mNode;
+    return node;
   }
 
   /**
    * Check if any filters have been added to the tree.
-   * @return  True if one or more filters exist.
+   * 
+   * @return True if one or more filters exist.
    */
   public boolean getHasAnyFilters() {
     int firstActionPos = getFirstActionPosition();
-	return mNode.getChildren().size() > 0 && 
-	  (firstActionPos < 0 || firstActionPos != 0);
+    return node.getChildren().size() > 0 && (firstActionPos < 0 || firstActionPos != 0);
   }
 
   /**
    * Builds a list of nodes which are top-level filter branches.
-   * @return  An ArrayList of node branches containing filters.
+   * 
+   * @return An ArrayList of node branches containing filters.
    */
   public ArrayList<RuleNode> getFilterBranches() {
     ArrayList<RuleNode> filters = new ArrayList<RuleNode>();
-    
+
     int indexAction = getFirstActionPosition();
-    for (int i = 0; i < getRootNode().getChildren().size(); i++) {
-    	if (i >= indexAction) {
-    		break;
-    	}
-    	filters.add(getRootNode().getChildren().get(i));
+    int numChildren = node.getChildren().size();
+    for (int i = 0; i < numChildren; i++) {
+      if (i >= indexAction) {
+        break;
+      }
+      filters.add(node.getChildren().get(i));
     }
-    
+
     return filters;
   }
-  
+
   /**
-   * Extract all <code>ModelAction</code> instances out of the tree 
-   * and add them to the a list.
+   * Extract all <code>ModelAction</code> instances out of the tree and add them to the a list.
+   * 
    * @return All actions that are part of the rule.
    */
   public ArrayList<ModelAction> getActions() {
     ArrayList<ModelAction> actions = new ArrayList<ModelAction>();
-    for (int i = getFirstActionPosition(); i < mNode.getChildren().size(); i++) {
-      actions.add((ModelAction) mNode.getChildren().get(i).getItem());
+    int numChildren = node.getChildren().size();
+    for (int i = getFirstActionPosition(); i < numChildren; i++) {
+      actions.add((ModelAction) node.getChildren().get(i).getItem());
     }
     return actions;
   }
 
   /**
    * Find the first index of the root node that is an action.
-   * @return  The first index of an action, or -1 if no actions present.
+   * 
+   * @return The first index of an action, or -1 if no actions present.
    */
   public int getFirstActionPosition() {
     // Actions are stored as siblings under the root event.
     // This is enforced by the user interface.
-    for (int i = mNode.getChildren().size() - 1; i > -1; i--) {
-      if (mNode.getChildren().get(i).getItem() instanceof ModelAction) {
+    for (int i = node.getChildren().size() - 1; i > -1; i--) {
+      if (node.getChildren().get(i).getItem() instanceof ModelAction) {
         return i;
       }
     }
     return -1;
   }
-  
+
   /**
    * Will build a natural language string of the entire rule.
+   * 
    * @return A natural language string of the entire rule.
    */
   public String getNaturalLanguageString() {
-    StringBuilder sb = new StringBuilder();
-    buildNaturalLanguageString(mNode, sb);
+    // TODO: Consider using visitor pattern here instead.
+    StringBuilder sb = new StringBuilder(500);
+    buildNaturalLanguageString(node, sb);
     return sb.toString();
   }
 
   /**
-   * Recursively works on each node to get their natural language
-   * representation.
-   * @param node  The current node to work on.
-   * @param sb  The string builder to append new text to.
+   * Recursively works on each node to get their natural language representation.
+   * 
+   * @param node
+   *          The current node to work on.
+   * @param sb
+   *          The string builder to append new text to.
    */
   private void buildNaturalLanguageString(RuleNode node, StringBuilder sb) {
     sb.append(node.getItem().getDescriptionShort());
     sb.append(", ");
-    for (int i = 0; i < node.getChildren().size(); i++) {
+    int numChildren = node.getChildren().size();
+    for (int i = 0; i < numChildren; i++) {
       buildNaturalLanguageString(node.getChildren().get(i), sb);
     }
   }
