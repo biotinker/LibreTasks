@@ -136,11 +136,8 @@ public class ActivityChooseRootEvent extends Activity {
     public AdapterEvents(Context c) {
       context = c;
 
-      // TODO: Reenable when DbInterfaceUI is added to trunk.
       // Get a list of all possible events from the database.
-      /*
-       * events = DbInterfaceUI.instance().db().getAllEvents();
-       */
+      events = UIDbHelperStore.instance().db().getAllEvents();
     }
 
     public int getCount() {
