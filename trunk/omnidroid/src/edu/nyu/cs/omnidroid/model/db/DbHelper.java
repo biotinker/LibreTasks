@@ -116,25 +116,46 @@ public class DbHelper extends SQLiteOpenHelper {
    */
   private void populateDefaultData(SQLiteDatabase db) {
     
-    // TODO(ehotou) The exact data to be populated is under discussion. 
-    
-    // Populate registered apps
-    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
-    registeredAppDbAdapter.insert("SMS", "", true);
-    
     // Populate data types
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
-    long dataType_id_text = dataTypeDbAdapter.insert("Text", "OmniText");
-    long dataType_id_date = dataTypeDbAdapter.insert("Date", "OmniDate");
-    long dataType_id_phone = dataTypeDbAdapter.insert("PhoneNumber", "OmniPhoneNumber");
+    long dataTypeIdText = dataTypeDbAdapter.insert("Text", "OmniText");
+    long dataTypeIdDate = dataTypeDbAdapter.insert("Date", "OmniDate");
+    long dataTypeIdPhone = dataTypeDbAdapter.insert("PhoneNumber", "OmniPhoneNumber");
     
     // Populate data filters
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
-    dataFilterDbAdapter.insert("equals", dataType_id_text);
-    dataFilterDbAdapter.insert("contains", dataType_id_text);
-    dataFilterDbAdapter.insert("before", dataType_id_date);
-    dataFilterDbAdapter.insert("after", dataType_id_date);
-    dataFilterDbAdapter.insert("equals", dataType_id_phone);
+    dataFilterDbAdapter.insert("equals", dataTypeIdText);
+    dataFilterDbAdapter.insert("contains", dataTypeIdText);
+    dataFilterDbAdapter.insert("equals", dataTypeIdPhone);
+    dataFilterDbAdapter.insert("before", dataTypeIdDate);
+    dataFilterDbAdapter.insert("after", dataTypeIdDate);
+    
+    // Populate registered apps
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
+    long appIdSms = registeredAppDbAdapter.insert("SMS", "", true);
+    long appIdDial = registeredAppDbAdapter.insert("DIAL", "", true);
+    
+    // Populate registered events
+    RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
+    long eventIdSmsRec = registeredEventDbAdapter.insert("SMS Received", appIdSms);
+    long eventIdPhoneRec = registeredEventDbAdapter.insert("Phone Call Received", appIdDial);
+    
+    // Populate registered actions
+    RegisteredActionDbAdapter registeredActionDbAdapter = new RegisteredActionDbAdapter(db);
+    long actionIdSmsSend = registeredActionDbAdapter.insert("SMS Send", appIdSms);
+    
+    // Populate registered event attributes
+    RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter = 
+        new RegisteredEventAttributeDbAdapter(db);
+    registeredEventAttributeDbAdapter.insert("SMS Phonenumber", eventIdSmsRec, dataTypeIdPhone);
+    registeredEventAttributeDbAdapter.insert("SMS Text", eventIdSmsRec, dataTypeIdText);
+    registeredEventAttributeDbAdapter.insert("Phonenumber", eventIdPhoneRec, dataTypeIdPhone);
+    
+    // Populate registered action parameters
+    RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter = 
+        new RegisteredActionParameterDbAdapter(db);
+    registeredActionParameterDbAdapter.insert("Phone Number", actionIdSmsSend, dataTypeIdPhone);
+    registeredActionParameterDbAdapter.insert("Text Message", actionIdSmsSend, dataTypeIdText);
   }
 
   /**
