@@ -61,7 +61,7 @@ public class FactoryDynamicUI {
    */
   public interface DlgPreserveState {
     /** Called when the dynamic dialog should save its state. */
-    public void saveState(SharedPreferences state);
+    public void saveState(SharedPreferences.Editor prefsEditor);
 
     /** Called to restore the dynamic dialog to its saved state. */
     public void loadState(SharedPreferences state);
@@ -220,8 +220,7 @@ public class FactoryDynamicUI {
       // Also implement the UI state preservation handlers, again specific to the
       // UI created for this filter.
       dlg.setHandlerPreserveState(new DlgPreserveState() {
-        public void saveState(SharedPreferences state) {
-          SharedPreferences.Editor prefsEditor = state.edit();
+        public void saveState(SharedPreferences.Editor prefsEditor) {
           String phoneNumber = edit.getText().toString();
           prefsEditor.putString("phoneNumber", phoneNumber);
         }
@@ -257,8 +256,7 @@ public class FactoryDynamicUI {
       });
       // Also implement the UI state preservation handlers.
       dlg.setHandlerPreserveState(new DlgPreserveState() {
-        public void saveState(SharedPreferences state) {
-          SharedPreferences.Editor prefsEditor = state.edit();
+        public void saveState(SharedPreferences.Editor prefsEditor) {
           prefsEditor.putString("smstext", edit.getText().toString());
         }
 
@@ -291,8 +289,7 @@ public class FactoryDynamicUI {
         }
       });
       dlg.setHandlerPreserveState(new DlgPreserveState() {
-        public void saveState(SharedPreferences state) {
-          SharedPreferences.Editor prefsEditor = state.edit();
+        public void saveState(SharedPreferences.Editor prefsEditor) {
           prefsEditor.putString("smsphrase", edit.getText().toString());
         }
 
@@ -343,8 +340,7 @@ public class FactoryDynamicUI {
       });
       // Also implement the UI state preservation handlers.
       dlg.setHandlerPreserveState(new DlgPreserveState() {
-        public void saveState(SharedPreferences state) {
-          SharedPreferences.Editor prefsEditor = state.edit();
+        public void saveState(SharedPreferences.Editor prefsEditor) {
           String txt0 = edit0.getText().toString();
           prefsEditor.putString("txt0", txt0);
           String txt1 = edit1.getText().toString();

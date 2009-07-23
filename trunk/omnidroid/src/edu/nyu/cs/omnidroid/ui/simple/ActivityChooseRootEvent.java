@@ -119,6 +119,7 @@ public class ActivityChooseRootEvent extends Activity {
 
   private OnClickListener listenerBtnClickHelp = new OnClickListener() {
     public void onClick(View v) {
+      // TODO: (markww) Add help info about event.
       UtilUI.showAlert(v.getContext(), "Sorry!",
           "Help is not yet available for events. Eventually this would "
               + "show details about each event type.");
@@ -186,7 +187,7 @@ public class ActivityChooseRootEvent extends Activity {
       tv.setPadding(10, 0, 0, 0);
       tv.setTextSize(14.0f);
       tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-      tv.setTextColor(R.color.list_element_text);
+      tv.setTextColor(context.getResources().getColor(R.color.list_element_text));
       tv.setMinHeight(46);
 
       ll.addView(iv);

@@ -17,7 +17,7 @@ package edu.nyu.cs.omnidroid.ui;
 
 /**
  * This class simply stores some constants that are used between all the UI classes
- *
+ * TODO: (markww) Remove unused constants after done switching to new UI.
  */
 public interface Constants {
   // Activity Request Codes
@@ -38,4 +38,17 @@ public interface Constants {
   // Request Result Values
   final int RESULT_SUCCESS = 1;
   final int RESULT_FAILURE = 2;
+  
+
+  /** Return code for filter building activities. */
+  public static final int ACTIVITY_RESULT_ADD_FILTER = 0;
+
+  /** Return code for action building activities. */
+  public static final int ACTIVITY_RESULT_ADD_ACTION = 1;
+
+  /** Return code for filter editing activities. */
+  public static final int ACTIVITY_RESULT_EDIT_FILTER = 2;
+
+  /** Return code for action editing activities. */
+  public static final int ACTIVITY_RESULT_EDIT_ACTION = 3;
 }
