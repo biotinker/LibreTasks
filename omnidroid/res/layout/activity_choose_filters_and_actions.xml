@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+   <TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Select an item from the list below, then add filters:"
+	android:layout_marginBottom="10px"
+    />
+   
+   <FrameLayout
+        android:id="@+id/activity_choosefiltersandactions_frame_list"
+        android:layout_width="fill_parent" 
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    
+       <ListView
+        android:id="@+id/activity_choosefiltersandactions_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+       />
+         
+    </FrameLayout>
+   
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_choosefiltersandactions_llBottomButtons"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >
+    
+    <LinearLayout 
+     android:id="@+id/activity_choosefiltersandactions_llButtonsFilter"
+     android:orientation="horizontal"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     >
+    
+		<Button 
+		    android:text="+Filter" 
+		    android:id="@+id/activity_choosefiltersandactions_btnAddFilter" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+		    android:text="-Filter" 
+		    android:id="@+id/activity_choosefiltersandactions_btnRemoveFilter" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+            android:text="~Filter" 
+            android:id="@+id/activity_choosefiltersandactions_btnEditFilter" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+        <Button 
+            android:text="Actions ->" 
+            android:id="@+id/activity_choosefiltersandactions_btnTasks" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+
+      </LinearLayout>
+      
+      
+      <LinearLayout 
+        android:id="@+id/activity_choosefiltersandactions_llButtonsAction"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+    
+		<Button 
+		    android:text="+Action" 
+		    android:id="@+id/activity_choosefiltersandactions_btnAddAction" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+		    android:text="-Action" 
+		    android:id="@+id/activity_choosefiltersandactions_btnRemoveAction" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+            android:text="~Action" 
+            android:id="@+id/activity_choosefiltersandactions_btnEditAction" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+        
+        <Button 
+            android:text="Filters ->" 
+            android:id="@+id/activity_choosefiltersandactions_btnFilters" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        </Button>
+
+      </LinearLayout>
+      
+    </LinearLayout>
+
+</LinearLayout>
