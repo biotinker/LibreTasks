@@ -52,4 +52,19 @@ public class CursorHelper{
     return cursor.getString(cursor.getColumnIndex(columnName));
   }
   
+  /**
+   * Helper method to get long column value from cursor.
+   * 
+   * @param cursor
+   *          is the cursor to get value from
+   *          
+   * @param columnName
+   *          is name of the column to get
+   * 
+   * @return long value of the specific column within the cursor
+   */
+  public static long getLongFromCursor(Cursor cursor, String columnName) {
+    return cursor.getLong(cursor.getColumnIndex(columnName));
+  }
+  
 }
