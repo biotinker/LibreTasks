@@ -38,8 +38,6 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 public class ActivityChooseFiltersAndActions extends Activity {
 
   private ListView listview;
-  private LinearLayout layoutButtonsFilter;
-  private LinearLayout layoutButtonsTask;
   private AdapterRule adapterRule;
   private SharedPreferences state;
 
@@ -131,68 +129,32 @@ public class ActivityChooseFiltersAndActions extends Activity {
   }
   
   private void initializeButtonPanel() {
-    layoutButtonsFilter = (LinearLayout) findViewById(
-      R.id.activity_choosefiltersandactions_llButtonsFilter);
-    layoutButtonsTask = (LinearLayout) findViewById(
-      R.id.activity_choosefiltersandactions_llButtonsAction);
 
     Button btnAddFilter = (Button) findViewById(
       R.id.activity_choosefiltersandactions_btnAddFilter);
     btnAddFilter.setOnClickListener(listenerBtnClickAddFilter);
 
-    Button btnRemoveFilter = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnRemoveFilter);
-    btnRemoveFilter.setOnClickListener(listenerBtnClickRemoveFilter);
-
-    Button btnEditFilter = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnEditFilter);
-    btnEditFilter.setOnClickListener(listenerBtnClickEditFilter);
-
-    Button btnTasks = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnTasks);
-    btnTasks.setOnClickListener(listenerBtnClickTasks);
-
     Button btnAddAction = (Button) findViewById(
       R.id.activity_choosefiltersandactions_btnAddAction);
     btnAddAction.setOnClickListener(listenerBtnClickAddAction);
 
-    Button btnRemoveAction = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnRemoveAction);
-    btnRemoveAction.setOnClickListener(listenerBtnClickRemoveAction);
+    Button btnDeleteItem = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnDeleteItem);
+    btnDeleteItem.setOnClickListener(listenerBtnClickDeleteItem);
 
-    Button btnEditAction = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnEditAction);
-    btnEditAction.setOnClickListener(listenerBtnClickEditAction);
+    Button btnEditItem = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnEditItem);
+    btnEditItem.setOnClickListener(listenerBtnClickEditItem);
 
-    Button btnFilters = (Button) findViewById(
-      R.id.activity_choosefiltersandactions_btnFilters);
-    btnFilters.setOnClickListener(listenerBtnClickFilters);
+    Button btnSaveRule = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnSaveRule);
+    btnSaveRule.setOnClickListener(listenerBtnClickSaveRule);
 
     LinearLayout llBottomButtons = (LinearLayout) findViewById(
       R.id.activity_choosefiltersandactions_llBottomButtons);
     llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
   }
   
-  /**
-   * Show filters button set.
-   */
-  private OnClickListener listenerBtnClickTasks = new OnClickListener() {
-    public void onClick(View v) {
-      layoutButtonsFilter.setVisibility(View.GONE);
-      layoutButtonsTask.setVisibility(View.VISIBLE);
-    }
-  };
-
-  /**
-   * Show actions button set.
-   */
-  private OnClickListener listenerBtnClickFilters = new OnClickListener() {
-    public void onClick(View v) {
-      layoutButtonsTask.setVisibility(View.GONE);
-      layoutButtonsFilter.setVisibility(View.VISIBLE);
-    }
-  };
-
   private OnClickListener listenerBtnClickAddFilter = new OnClickListener() {
     public void onClick(View v) {
       ModelItem selectedItem = adapterRule.getItem(listview.getCheckedItemPosition());
@@ -202,33 +164,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
         showDlgAttributes();
       } else {
         UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Filters can only be added to the root event and other filters!");
+          "Filters can only be added to the root event and other filters!");
         return;
-      }
-    }
-  };
-
-  private OnClickListener listenerBtnClickRemoveFilter = new OnClickListener() {
-    public void onClick(View v) {
-      int position = listview.getCheckedItemPosition();
-      if (position == 0) {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "The root event cannot be removed!");
-      } else if (position > 0 && position < adapterRule.getCount()) {
-        adapterRule.removeItem(position);
-      } else {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select a filter from the list for removal!");
-      }
-    }
-  };
-
-  private OnClickListener listenerBtnClickEditFilter = new OnClickListener() {
-    public void onClick(View v) {
-      ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
-      if (item instanceof ModelRuleFilter) {
-        editFilter(listview.getCheckedItemPosition(), (ModelRuleFilter) item);
-      } else {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "Please select a filter from the list to edit!");
       }
     }
   };
@@ -240,31 +177,49 @@ public class ActivityChooseFiltersAndActions extends Activity {
       showDlgApplications();
     }
   };
-
-  private OnClickListener listenerBtnClickEditAction = new OnClickListener() {
+  
+  private OnClickListener listenerBtnClickDeleteItem = new OnClickListener() {
     public void onClick(View v) {
+      // TODO: (markww) Prompt user 'are you sure you want to delete this item?'.
       ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
-      if (item instanceof ModelRuleAction) {
-        editAction(listview.getCheckedItemPosition(), (ModelRuleAction) item);
+      if ((item instanceof ModelRuleFilter) || (item instanceof ModelRuleAction)) {
+        adapterRule.removeItem(listview.getCheckedItemPosition());
       } else {
-        UtilUI
-            .showAlert(v.getContext(), "Sorry!", "Please select an action from the list to edit!");
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+            "Please select a filter or action from the list to delete!");
       }
     }
   };
 
-  private OnClickListener listenerBtnClickRemoveAction = new OnClickListener() {
+  private OnClickListener listenerBtnClickEditItem = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) Clean up action deletion.
-      int position = listview.getCheckedItemPosition();
-      if (position == 0) {
-        UtilUI.showAlert(v.getContext(), "Sorry!", "The root event cannot be removed!");
-      } else if (position > 0 && position < adapterRule.getCount()) {
-        adapterRule.removeItem(position);
+      ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
+      if (item instanceof ModelRuleFilter) {
+        editFilter(listview.getCheckedItemPosition(), (ModelRuleFilter) item);
+      } else if (item instanceof ModelRuleAction) {
+        editAction(listview.getCheckedItemPosition(), (ModelRuleAction) item);
       } else {
         UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select an action from the list for removal!");
+          "Please select a filter or action from the list to edit!");
       }
+    }
+  };
+
+  private OnClickListener listenerBtnClickSaveRule = new OnClickListener() {
+    public void onClick(View v) {
+      // TODO: (markww) Prompt user for rule name and description here too.
+      try {
+        UIDbHelperStore.instance().db().saveRule(
+          RuleBuilder.instance().getRule());
+      }
+      catch (Exception ex) {
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+          "There was an error saving your rule!:\n" + ex.toString());
+        return;
+      }
+      
+      UtilUI.showAlert(v.getContext(), "Sorry!",
+          "Rule saved ok!");
     }
   };
 
