@@ -35,85 +35,55 @@
     >
     
     <LinearLayout 
-     android:id="@+id/activity_choosefiltersandactions_llButtonsFilter"
+     android:id="@+id/activity_choosefiltersandactions_llButtons"
      android:orientation="horizontal"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      >
     
 		<Button 
-		    android:text="+Filter" 
+		    android:text="+F" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddFilter" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
-		    android:layout_gravity="center">
+		    android:layout_gravity="center"
+		    android:minWidth="40px">
 		</Button>
 		
 		<Button 
-		    android:text="-Filter" 
-		    android:id="@+id/activity_choosefiltersandactions_btnRemoveFilter" 
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center">
-		</Button>
-		
-		<Button 
-            android:text="~Filter" 
-            android:id="@+id/activity_choosefiltersandactions_btnEditFilter" 
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-        </Button>
-        
-        <Button 
-            android:text="Actions ->" 
-            android:id="@+id/activity_choosefiltersandactions_btnTasks" 
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-        </Button>
-
-      </LinearLayout>
-      
-      
-      <LinearLayout 
-        android:id="@+id/activity_choosefiltersandactions_llButtonsAction"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        >
-    
-		<Button 
-		    android:text="+Action" 
+		    android:text="+A" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
-		    android:layout_gravity="center">
+		    android:layout_gravity="center"
+		    android:minWidth="40px">
 		</Button>
 		
 		<Button 
-		    android:text="-Action" 
-		    android:id="@+id/activity_choosefiltersandactions_btnRemoveAction" 
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center">
-		</Button>
-		
-		<Button 
-            android:text="~Action" 
-            android:id="@+id/activity_choosefiltersandactions_btnEditAction" 
+            android:text="D" 
+            android:id="@+id/activity_choosefiltersandactions_btnDeleteItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:minWidth="40px">
         </Button>
         
         <Button 
-            android:text="Filters ->" 
-            android:id="@+id/activity_choosefiltersandactions_btnFilters" 
+            android:text="E" 
+            android:id="@+id/activity_choosefiltersandactions_btnEditItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:minWidth="40px">
+        </Button>
+        
+        <Button 
+            android:text="S" 
+            android:id="@+id/activity_choosefiltersandactions_btnSaveRule" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minWidth="40px">
         </Button>
 
       </LinearLayout>
