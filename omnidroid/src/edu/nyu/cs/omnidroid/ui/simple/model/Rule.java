@@ -33,7 +33,7 @@ public class Rule {
 
   /** Name given to rule by user. */
   private String name;
-
+  
   /**
    * The rule tree can look like: 
    * RootEvent 
@@ -112,15 +112,15 @@ public class Rule {
   }
 
   /**
-   * Extract all <code>ModelAction</code> instances out of the tree and add them to the a list.
+   * Extract all {@link ModelRuleAction} instances out of the tree and add them to the a list.
    * 
    * @return All actions that are part of the rule.
    */
-  public ArrayList<ModelAction> getActions() {
-    ArrayList<ModelAction> actions = new ArrayList<ModelAction>();
+  public ArrayList<ModelRuleAction> getActions() {
+    ArrayList<ModelRuleAction> actions = new ArrayList<ModelRuleAction>();
     int numChildren = node.getChildren().size();
     for (int i = getFirstActionPosition(); i < numChildren; i++) {
-      actions.add((ModelAction) node.getChildren().get(i).getItem());
+      actions.add((ModelRuleAction) node.getChildren().get(i).getItem());
     }
     return actions;
   }
@@ -134,7 +134,7 @@ public class Rule {
     // Actions are stored as siblings under the root event.
     // This is enforced by the user interface.
     for (int i = node.getChildren().size() - 1; i > -1; i--) {
-      if (node.getChildren().get(i).getItem() instanceof ModelAction) {
+      if (node.getChildren().get(i).getItem() instanceof ModelRuleAction) {
         return i;
       }
     }
