@@ -97,11 +97,23 @@ public class ActivityChooseFiltersAndActions extends Activity {
       break;
 
     case Constants.ACTIVITY_RESULT_ADD_ACTION:
-      // TODO: (markww) Just like above, try to build action from user input.
+      // Did the user construct a valid action? If so add it to the rule.
+      if (RuleBuilder.instance().getChosenRuleAction() != null) {
+        // Add the action to the rule builder and the UI tree.
+        adapterRule.addItemToParentPosition(listview.getCheckedItemPosition(), RuleBuilder
+            .instance().getChosenRuleAction());
+      }
+      RuleBuilder.instance().resetActionPath();
       break;
 
     case Constants.ACTIVITY_RESULT_EDIT_ACTION:
-      // TODO: (markww) Just like above, try to edit action from user input.
+      // Did the user modify a valid action? If so replace it in the rule.
+      if (RuleBuilder.instance().getChosenRuleAction() != null) {
+        // Add the action to the rule builder and the UI tree.
+        adapterRule.replaceItem(listview.getCheckedItemPosition(), RuleBuilder.instance()
+            .getChosenRuleAction());
+      }
+      RuleBuilder.instance().resetActionPath();
       break;
     }
   }
@@ -109,13 +121,13 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private void initializeListView() {
     listview = (ListView) findViewById(R.id.activity_choosefiltersandactions_listview);
     
-    // After creating our adapter, have it render itself from the RuleBuilder data.
     adapterRule = new AdapterRule(this, listview);
 
     listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listview.setAdapter(adapterRule);
 
-    adapterRule.restoreFromRule();
+    // Set the adapter to render the rule stored in RuleBuilder.
+    adapterRule.setRule(RuleBuilder.instance().getRule());
   }
   
   private void initializeButtonPanel() {
@@ -223,20 +235,21 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
   private OnClickListener listenerBtnClickAddAction = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) Re-enable adding actions.
-      // For actions, we can simply ignore what item they have selected and
-      // add the action directly to the root event. We may want to move
-      // action additions to a separate activity later on anyway.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-        "Adding actions is not yet implemented!");
+      // For actions, we don't check what node the user has selected since they must always go to
+      // the end of the rule tree.
+      showDlgApplications();
     }
   };
 
   private OnClickListener listenerBtnClickEditAction = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) re-enable editing of actions.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-        "Editing actions is not yet implemented!");
+      ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
+      if (item instanceof ModelRuleAction) {
+        editAction(listview.getCheckedItemPosition(), (ModelRuleAction) item);
+      } else {
+        UtilUI
+            .showAlert(v.getContext(), "Sorry!", "Please select an action from the list to edit!");
+      }
     }
   };
 
@@ -269,14 +282,24 @@ public class ActivityChooseFiltersAndActions extends Activity {
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTER);
   }
 
+  /**
+   * Starts up the initial activity for adding a new action.
+   */
   private void showDlgApplications() {
-    // TODO: (markww) Add support for showing the applications dlg, works same way as filters.
+    // Reset the chosen action data if left over from a previous run.
+    RuleBuilder.instance().resetActionPath();
+
+    // Launch the activity chain for adding an action. We check if the user completed an
+    // action in onActivityResult.
+    Intent intent = new Intent();
+    intent.setClass(getApplicationContext(), ActivityDlgApplications.class);
+    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
   }
 
   /**
-   * Starts up the one and only activity required to edit a filter.
+   * Shortcuts directly to {@link ActivityDlgFilterInput} for editing an existing filter.
    */
-  private void editFilter(final int position, ModelRuleFilter filter) {
+  private void editFilter(int position, ModelRuleFilter filter) {
     // Set the filter data from the existing rule filter instance.
     RuleBuilder.instance().resetFilterPath();
     RuleBuilder.instance().setChosenModelFilter(filter.getModelFilter());
@@ -286,8 +309,18 @@ public class ActivityChooseFiltersAndActions extends Activity {
     intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_EDIT_FILTER);
   }
+  
+  /**
+   * Shortcuts directly to {@link ActivityDlgActionInput} for editing an existing action.
+   */
+  private void editAction(int position, ModelRuleAction action) {
+    // Set the action data from the existing rule action instance.
+    RuleBuilder.instance().resetFilterPath();
+    RuleBuilder.instance().setChosenModelAction(action.getModelAction());
+    RuleBuilder.instance().setChosenRuleActionDataOld(action.getDatas());
 
-  private void editAction(final int position, ModelRuleAction action) {
-    // TODO: (markww) Add support for editing an action instance.
+    Intent intent = new Intent();
+    intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
+    startActivityForResult(intent, Constants.ACTIVITY_RESULT_EDIT_ACTION);
   }
 }

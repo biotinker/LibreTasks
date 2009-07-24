@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 
 /**
  * This activity gives users a chance to pick a root event for a new rule. After a user chooses a
- * root event, we move them to <code>ActivityChooseFilters</code> to continue building their rule.
+ * root event, we move them to {@link ActivityChooseFilters} to continue building their rule.
  */
 public class ActivityChooseRootEvent extends Activity {
 
@@ -72,7 +73,7 @@ public class ActivityChooseRootEvent extends Activity {
 
     LinearLayout llBottomButtons = (LinearLayout) findViewById(
       R.id.activity_chooserootevent_llBottomButtons);
-    llBottomButtons.setBackgroundColor(R.color.layout_button_panel);
+    llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
 
     // Restore UI control values if possible.
     state = getSharedPreferences(ActivityChooseRootEvent.KEY_STATE, Context.MODE_WORLD_READABLE
@@ -97,19 +98,16 @@ public class ActivityChooseRootEvent extends Activity {
         // in the global RuleBuilder.
         RuleBuilder.instance().reset(adapterEvents.getItem(selectedEventPosition));
 
-        // TODO: Reenable when ActivityChooseFilters is added to trunk.
-        /*
         // Wipe UI state for the activity.
         SharedPreferences state = v.getContext().getSharedPreferences(
-            ActivityChooseFilters.KEY_STATE, Context.MODE_PRIVATE);
+            ActivityChooseFiltersAndActions.KEY_STATE, Context.MODE_PRIVATE);
         state.edit().clear().commit();
 
         // Move them along to the ActivityChooseFilters activity where
         // they can start adding some filters.
         Intent intent = new Intent();
-        intent.setClass(getApplicationContext(), ActivityChooseFilters.class);
+        intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
         startActivity(intent);
-        */
       } else {
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "Please select an event from the list, then hit OK.");
@@ -127,8 +125,7 @@ public class ActivityChooseRootEvent extends Activity {
   };
 
   /**
-   * Handles rendering of individual event items for our ListView. For now, we get our
-   * <code>ModelEvent</code> list from our dummy database in <code>DummyDatabase</code>.
+   * Handles rendering of individual event items for our ListView.
    */
   private class AdapterEvents extends BaseAdapter {
     private Context context;

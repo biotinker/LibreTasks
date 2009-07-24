@@ -20,17 +20,19 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelItem;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 
 /**
  * Our rule has a tree hierarchy to it, we want to display is as a tree in our UI too. Rendering as
- * a pure tree would be slow, so we have an internal representation of the rule tree as a flat list.
+ * a pure tree would be slow, so we have an internal representation of the rule tree as a flat 
+ * list.
  * 
  * Android has a hierarchical list-tree widget, but it only handles a depth of one (1), while we
  * could have unlimited depth in our application. We could nest several list-trees inside one
- * another, but this might be overkill for our purposes. We also will probably want to custom render
- * the tree links depending on AND/OR relationship, which we couldn't do using the built-in
- * list-tree widget.
+ * another, but this might be overkill for our purposes. We also will probably want to custom 
+ * render the tree links depending on AND/OR relationship, which we couldn't do using the 
+ * built-in list-tree widget.
  * 
  * On each add/delete/replace, the whole dataset is iterated to build the flat-list representation.
  * This would be awful for large datasets, but we'll probably never have more than twenty items.
@@ -42,16 +44,20 @@ public class AdapterRule extends BaseAdapter {
 
   private Context context;
   private ListView listView;
-
+  
+  /** The rule we're supposed to be rendering. */
+  private Rule rule;
+  
   /**
-   * This is a 'flat' representation of our rule tree. The key is the integer index of a leaf, as if
-   * you were counting from the top of the tree.
+   * This is a 'flat' representation of our rule tree. The key is the integer index of a leaf, as 
+   * if you were counting from the top of the tree.
    */
   private HashMap<Integer, NodeWrapper> flat;
 
   public AdapterRule(Context context, ListView listView) {
     this.context  = context;
     this.listView = listView;
+    this.flat = new HashMap<Integer, NodeWrapper>();
   }
 
   public int getCount() {
@@ -137,11 +143,12 @@ public class AdapterRule extends BaseAdapter {
   }
 
   /**
-   * Build ourselves from the current Rule state.
+   * Set the rule we should render, causes the adapter to redraw itself.
    */
-  public void restoreFromRule() {
-    flat = (new TreeToFlatArray()).convert(RuleBuilder.instance().getRule().getRootNode());
-    notifyDataSetChanged();
+  public void setRule(Rule rule) {
+      this.rule = rule;
+      flat = (new TreeToFlatArray()).convert(rule.getRootNode());
+      notifyDataSetChanged();
   }
 
   /**
@@ -155,7 +162,7 @@ public class AdapterRule extends BaseAdapter {
     int positionNew;
     if (position < 0) {
       if (item instanceof ModelEvent) {
-        RuleBuilder.instance().getRule().setRootEvent((ModelEvent) item);
+        rule.setRootEvent((ModelEvent) item);
         positionNew = 0;
       } else {
         throw new IllegalArgumentException(
@@ -166,8 +173,8 @@ public class AdapterRule extends BaseAdapter {
         // If the user is adding a filter to the root event, we want to make
         // sure it gets added as a child before any actions.
         RuleNode nodeParent = getNodeWrapper(position).getNode();
-        if (position == 0 && RuleBuilder.instance().getRule().getFirstActionPosition() > -1) {
-          int insertionIndex = RuleBuilder.instance().getRule().getFirstActionPosition();
+        if (position == 0 && rule.getFirstActionPosition() > -1) {
+          int insertionIndex = rule.getFirstActionPosition();
           nodeParent.addChild(item, insertionIndex);
           positionNew = insertionIndex;
         } else {
@@ -186,7 +193,7 @@ public class AdapterRule extends BaseAdapter {
       }
     }
     // Flatten the rule again, we can improve this later if we need to.
-    flat = (new TreeToFlatArray()).convert(RuleBuilder.instance().getRule().getRootNode());
+    flat = (new TreeToFlatArray()).convert(rule.getRootNode());
 
     // Notify that we need a redraw.
     notifyDataSetChanged();
@@ -209,7 +216,7 @@ public class AdapterRule extends BaseAdapter {
     RuleNode child = flat.get(position).getNode();
     parent.removeChild(child);
     // Flatten again.
-    flat = (new TreeToFlatArray()).convert(RuleBuilder.instance().getRule().getRootNode());
+    flat = (new TreeToFlatArray()).convert(rule.getRootNode());
     notifyDataSetChanged();
   }
 
@@ -225,7 +232,7 @@ public class AdapterRule extends BaseAdapter {
   }
 
   public void removeAllFiltersAndActions() {
-    RuleBuilder.instance().getRule().getRootNode().removeAllChildren();
+    rule.getRootNode().removeAllChildren();
   }
   
   
