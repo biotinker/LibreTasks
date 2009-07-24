@@ -42,24 +42,58 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * This dialog shows a list of attributes linked to the selected root event. After the user selects
- * an attribute to filter on, we move them to the <code>ActivityDlgFilters</code> dialog.
+ * an attribute to filter on, we move them to the {@link ActivityDlgFilters} dialog.
  */
 public class ActivityDlgAttributes extends Activity {
 
+  private static final String KEY_STATE = "StateDlgAttributes";
+  
   private ListView listView;
   private AdapterAttributes adapterAttributes;
   private SharedPreferences state;
 
-  private static final String KEY_STATE = "StateDlgAttributes";
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+ 
+    // Link up controls from the xml layout resource file.
+    initializeUI();
+    
+    // Restore UI state.
+    state = getSharedPreferences(ActivityDlgAttributes.KEY_STATE, Context.MODE_WORLD_READABLE
+        | Context.MODE_WORLD_WRITEABLE);
+    listView.setItemChecked(state.getInt("selectedAttribute", -1), true);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+
+    // Save UI state.
+    SharedPreferences.Editor prefsEditor = state.edit();
+    prefsEditor.putInt("selectedAttribute", listView.getCheckedItemPosition());
+    prefsEditor.commit();
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // If the user constructed a valid filter, also kill ourselves.
+    ModelRuleFilter filter = RuleBuilder.instance().getChosenRuleFilter();
+    if (filter != null) {
+      // Be sure to wipe our UI state, otherwise the onPause will save it!
+      resetUI();
+      finish();
+    }
+  }
+
+  private void initializeUI() {
     setContentView(R.layout.activity_dlg_attributes);
-    // setTitle("Attributes");
 
     ModelEvent event = RuleBuilder.instance().getChosenEvent();
     adapterAttributes = new AdapterAttributes(this, event);
+
+    setTitle(event.getTypeName() + " Attributes");
 
     listView = (ListView) findViewById(R.id.activity_dlg_attributes_listview);
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -76,48 +110,13 @@ public class ActivityDlgAttributes extends Activity {
     btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_attributes_ll_main));
-
-    // Restore UI state.
-    state = getSharedPreferences(ActivityDlgAttributes.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedAttribute", -1), true);
-  }
-
-  @Override
-  protected void onPause() {
-
-    super.onPause();
-
-    // Save UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedAttribute", listView.getCheckedItemPosition());
-    prefsEditor.commit();
-  }
-
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    // If the user constructed a valid filter, also kill ourselves.
-    ModelRuleFilter filter = RuleBuilder.instance().getChosenRuleFilter();
-    if (filter != null) {
-      // Be sure to wipe our UI state, otherwise the onStop will save it!
-      resetUI();
-      finish();
-    }
   }
 
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       // The user has chosen an attribute, now get a list of filters associated
       // with that attribute, from the database.
-      int position = listView.getCheckedItemPosition();
-      if (position < 0) {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select an attribute from the list above to filter on!");
-        return;
-      }
-
-      // Show a dialog with only these filters listed.
-      showDlgFilters();
+      showDlgFilters(listView.getCheckedItemPosition());
     }
   };
 
@@ -140,15 +139,14 @@ public class ActivityDlgAttributes extends Activity {
   /**
    * Start the filters activity, which will show all possible filters for the selected attribute.
    */
-  private void showDlgFilters() {
-    int position = listView.getCheckedItemPosition();
-    if (position < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select a filter from the list above, then hit OK!");
+  private void showDlgFilters(int selectedItemPosition) {
+    if (selectedItemPosition < 0) {
+      UtilUI.showAlert(this, "Sorry!", "Please select an attribute from the list, then hit OK!");
       return;
     }
 
     // Store the selected attribute in the RuleBuilder so the next activity can pick it up.
-    ModelAttribute attribute = (ModelAttribute) adapterAttributes.getItem(position);
+    ModelAttribute attribute = (ModelAttribute) adapterAttributes.getItem(selectedItemPosition);
     RuleBuilder.instance().setChosenAttribute(attribute);
 
     Intent intent = new Intent();
@@ -156,6 +154,12 @@ public class ActivityDlgAttributes extends Activity {
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTER);
   }
 
+  /**
+   * Deselects any item selected by the user in the attributes listview. We call this before the 
+   * user closes the dialog so the UI state-saving mechanism does not record any item as being 
+   * selected. Otherwise the next time the user opens this dialog, they would see their last picked
+   * item as selected, which may be confusing.
+   */
   private void resetUI() {
     if (listView.getCheckedItemPosition() > -1) {
       listView.setItemChecked(listView.getCheckedItemPosition(), false);
@@ -165,7 +169,7 @@ public class ActivityDlgAttributes extends Activity {
   /**
    * Here we display attributes associated with our parent root event.
    */
-  public class AdapterAttributes extends BaseAdapter {
+  private class AdapterAttributes extends BaseAdapter {
     private Context context;
     private ArrayList<ModelAttribute> attributes;
 

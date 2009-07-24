@@ -15,7 +15,10 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple;
 
+import java.util.ArrayList;
+
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
@@ -44,7 +47,9 @@ public class RuleBuilder {
   private DataType ruleFilterDataOld;
   
   private ModelApplication application;
-  private ModelRuleAction action;
+  private ModelAction modelAction;
+  private ModelRuleAction ruleAction;
+  private ArrayList<DataType> ruleActionDataOld;
 
 
   private RuleBuilder() {
@@ -108,16 +113,32 @@ public class RuleBuilder {
     return application;
   }
   
-  public void setModelApplication(ModelApplication application) {
+  public void setChosenApplication(ModelApplication application) {
     this.application = application;
   }
   
-  public ModelRuleAction getChosenAction() {
-    return action;
+  public ModelAction getChosenModelAction() {
+    return modelAction;
   }
   
-  public void setModelAction(ModelRuleAction action) {
-    this.action = action;
+  public void setChosenModelAction(ModelAction modelAction) {
+    this.modelAction = modelAction;
+  }
+	  
+  public ModelRuleAction getChosenRuleAction() {
+    return ruleAction;
+  }
+  
+  public void setChosenRuleAction(ModelRuleAction ruleAction) {
+    this.ruleAction = ruleAction;
+  }
+  
+  public ArrayList<DataType> getChosenRuleActionDataOld() {
+	return ruleActionDataOld;
+  }
+  
+  public void setChosenRuleActionDataOld(ArrayList<DataType> ruleActionDataOld) {
+    this.ruleActionDataOld = ruleActionDataOld;
   }
   
   /**
@@ -135,6 +156,8 @@ public class RuleBuilder {
    */
   public void resetActionPath() {
     application = null;
-    action = null;
+    modelAction = null;
+    ruleAction = null;
+    ruleActionDataOld = null;
   }
 }
