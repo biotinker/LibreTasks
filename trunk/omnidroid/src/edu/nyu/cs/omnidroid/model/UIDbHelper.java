@@ -15,9 +15,13 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getIntFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,11 +43,10 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getIntFromCursor;
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 
 /**
  * This class serves as a access layer of the database for Omnidroid's UI data model representation.
@@ -461,7 +464,7 @@ public class UIDbHelper {
   public void saveRule(Rule rule) throws Exception {
     ModelEvent event = (ModelEvent) rule.getRootNode().getItem();
     ArrayList<RuleNode> filterList = rule.getFilterBranches();
-    ArrayList<ModelAction> actionList = rule.getActions();
+    ArrayList<ModelRuleAction> actionList = rule.getActions();
 
     // Save the rule record
     // TODO(ehotou) need to specify rule name and desc after we implement them
@@ -469,8 +472,9 @@ public class UIDbHelper {
         true);
 
     // Save all rule actions
-    for (ModelAction action : actionList) {
-      ruleActionDbAdpater.insert(ruleID, Long.valueOf(action.getDatabaseId()));
+    for (ModelRuleAction action : actionList) {
+      // TODO: (ehotou) Save action data(s) here too.
+      ruleActionDbAdpater.insert(ruleID, Long.valueOf(action.getModelAction().getDatabaseId()));
     }
 
     // Save all rule filters
@@ -489,7 +493,8 @@ public class UIDbHelper {
     long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
         Long.valueOf(filter.getModelFilter().getAttribute().getDatabaseId()), 
         Long.valueOf(-1), // TODO(ehotou) after implementing external, insert it here
-        Long.valueOf(filter.getDatabaseId()),
+        // TODO: (ehotou) verify ModelFilter id is what we want here (not ModelRuleFilter):
+        Long.valueOf(filter.getModelFilter().getDatabaseId()), 
         parentRuleNodeID, 
         filter.getData().toString());
 
