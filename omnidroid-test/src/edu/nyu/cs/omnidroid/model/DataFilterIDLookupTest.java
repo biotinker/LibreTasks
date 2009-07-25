@@ -32,7 +32,7 @@ public class DataFilterIDLookupTest extends AndroidTestCase {
   private DbHelper omnidroidDbHelper;
 
   // Data for testing
-  private static String[] dataTypeNames = { "Type1", "Type2" };
+  private static String[] dataTypeNames = { "Type11", "Type12" };
   private Long[] dataTypeIDs;
   private static String[] dataFilterNames = { "Filter1", "Filter2", "Filter3" };
   private Long[] dataFilterIDs;
@@ -75,29 +75,46 @@ public class DataFilterIDLookupTest extends AndroidTestCase {
     dataTypeIDs[0] = dataTypeDbAdapter.insert(dataTypeNames[0], "");
     dataTypeIDs[1] = dataTypeDbAdapter.insert(dataTypeNames[1], "");
 
-    dataFilterIDs[0] = dataFilterDbAdapter.insert(dataFilterNames[0], dataTypeIDs[0]);
-    dataFilterIDs[1] = dataFilterDbAdapter.insert(dataFilterNames[1], dataTypeIDs[0]);
-    dataFilterIDs[2] = dataFilterDbAdapter.insert(dataFilterNames[2], dataTypeIDs[0]);
+    /*
+     * DataFilterIDLookup only support filters with the same filterOn and compareWith datatypes now.
+     */
+    dataFilterIDs[0] = dataFilterDbAdapter.insert(
+        dataFilterNames[0], dataTypeIDs[0], dataTypeIDs[0]);
+    
+    dataFilterIDs[1] = dataFilterDbAdapter.insert(
+        dataFilterNames[1], dataTypeIDs[0], dataTypeIDs[0]);
+    
+    dataFilterIDs[2] = dataFilterDbAdapter.insert(
+        dataFilterNames[2], dataTypeIDs[0], dataTypeIDs[0]);
 
-    dataFilterIDs[3] = dataFilterDbAdapter.insert(dataFilterNames[0], dataTypeIDs[1]);
-    dataFilterIDs[4] = dataFilterDbAdapter.insert(dataFilterNames[1], dataTypeIDs[1]);
-    dataFilterIDs[5] = dataFilterDbAdapter.insert(dataFilterNames[2], dataTypeIDs[1]);
+    dataFilterIDs[3] = dataFilterDbAdapter.insert(
+        dataFilterNames[0], dataTypeIDs[1], dataTypeIDs[1]);
+    
+    dataFilterIDs[4] = dataFilterDbAdapter.insert(
+        dataFilterNames[1], dataTypeIDs[1], dataTypeIDs[1]);
+    
+    dataFilterIDs[5] = dataFilterDbAdapter.insert(
+        dataFilterNames[2], dataTypeIDs[1], dataTypeIDs[1]);
   }
 
   public void testGetDataFilterID() {
-    assertEquals(dataFilterIDs[0].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
-        dataFilterNames[0]));
-    assertEquals(dataFilterIDs[1].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
-        dataFilterNames[1]));
-    assertEquals(dataFilterIDs[2].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[0],
-        dataFilterNames[2]));
+    assertEquals(dataFilterIDs[0].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[0], dataFilterNames[0]));
     
-    assertEquals(dataFilterIDs[3].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
-        dataFilterNames[0]));
-    assertEquals(dataFilterIDs[4].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
-        dataFilterNames[1]));
-    assertEquals(dataFilterIDs[5].longValue(), dataFilterIDLookup.getDataFilterID(dataTypeNames[1],
-        dataFilterNames[2]));
+    assertEquals(dataFilterIDs[1].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[0], dataFilterNames[1]));
+    
+    assertEquals(dataFilterIDs[2].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[0], dataFilterNames[2]));
+    
+    assertEquals(dataFilterIDs[3].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[1], dataFilterNames[0]));
+    
+    assertEquals(dataFilterIDs[4].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[1], dataFilterNames[1]));
+    
+    assertEquals(dataFilterIDs[5].longValue(), 
+        dataFilterIDLookup.getDataFilterID(dataTypeNames[1], dataFilterNames[2]));
   }
   
   // TODO(ehotou) create test for caching performance.
