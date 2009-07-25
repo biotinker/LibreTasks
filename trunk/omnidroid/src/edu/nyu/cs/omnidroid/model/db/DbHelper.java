@@ -28,7 +28,10 @@ import edu.nyu.cs.omnidroid.util.IOUtil;
 public class DbHelper extends SQLiteOpenHelper {
 
   private static final String TAG = DbHelper.class.getName();
-  private static final int DATABASE_VERSION = 2;
+  
+  // This version number needs to increase whenever a data schema change is made
+  private static final int DATABASE_VERSION = 3;
+  
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
   private static final String DATABASE_FOLDER = "/databases/";
@@ -124,11 +127,11 @@ public class DbHelper extends SQLiteOpenHelper {
     
     // Populate data filters
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
-    dataFilterDbAdapter.insert("equals", dataTypeIdText);
-    dataFilterDbAdapter.insert("contains", dataTypeIdText);
-    dataFilterDbAdapter.insert("equals", dataTypeIdPhone);
-    dataFilterDbAdapter.insert("before", dataTypeIdDate);
-    dataFilterDbAdapter.insert("after", dataTypeIdDate);
+    dataFilterDbAdapter.insert("equals", dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert("contains", dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert("equals", dataTypeIdPhone, dataTypeIdPhone);
+    dataFilterDbAdapter.insert("before", dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert("after", dataTypeIdDate, dataTypeIdDate);
     
     // Populate registered apps
     RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);

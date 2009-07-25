@@ -30,10 +30,12 @@ public class DataFilterDbAdapter extends DbAdapter {
   /* Column names */
   public static final String KEY_DATAFILTERID = "DataFilterID";
   public static final String KEY_DATAFILTERNAME = "DataFilterName";
-  public static final String KEY_DATATYPEID = "FK_DataTypeID";
+  public static final String KEY_FILTERONDATATYPEID = "FK_FilterOnDataTypeID";
+  public static final String KEY_COMPAREWITHDATATYPEID = "FK_CompareWithDataTypeID";
 
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_DATAFILTERID, KEY_DATAFILTERNAME, KEY_DATATYPEID };
+  public static final String[] KEYS = { KEY_DATAFILTERID, KEY_DATAFILTERNAME, 
+      KEY_FILTERONDATATYPEID, KEY_COMPAREWITHDATATYPEID };
 
   /* Table name */
   private static final String DATABASE_TABLE = "DataFilters";
@@ -42,7 +44,8 @@ public class DataFilterDbAdapter extends DbAdapter {
   protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
       + KEY_DATAFILTERID + " integer primary key autoincrement, " 
       + KEY_DATAFILTERNAME + " text not null, " 
-      + KEY_DATATYPEID + " integer);";
+      + KEY_FILTERONDATATYPEID + " integer, " 
+      + KEY_COMPAREWITHDATATYPEID + " integer);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
   /**
@@ -60,19 +63,26 @@ public class DataFilterDbAdapter extends DbAdapter {
    * 
    * @param dataFilterName
    *          is the name of the filter.
-   * @param dataTypeID
-   *          is the id of data type it belongs to.
+   * 
+   * @param filterOnDataTypeID
+   *          is the id of data type it filters on.
+   * 
+   * @param compareWithDataTypeID
+   *          is the id of data type it compares to
+   *          
    * @return dataFilterID or -1 if creation failed.
+   * 
    * @throws IllegalArgumentException
    *           if there is null within parameters
    */
-  public long insert(String dataFilterName, Long dataTypeID) {
-    if (dataFilterName == null || dataTypeID == null) {
+  public long insert(String dataFilterName, Long filterOnDataTypeID, Long compareWithDataTypeID) {
+    if (dataFilterName == null || filterOnDataTypeID == null || compareWithDataTypeID == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
     ContentValues initialValues = new ContentValues();
     initialValues.put(KEY_DATAFILTERNAME, dataFilterName);
-    initialValues.put(KEY_DATATYPEID, dataTypeID);
+    initialValues.put(KEY_FILTERONDATATYPEID, filterOnDataTypeID);
+    initialValues.put(KEY_COMPAREWITHDATATYPEID, compareWithDataTypeID);
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
@@ -139,11 +149,17 @@ public class DataFilterDbAdapter extends DbAdapter {
    * 
    * @param dataFilterName
    *          is the filter name or null to fetch any filter name.
-   * @param dataTypeID
-   *          is id of the data type it belongs to, or null to fetch any dataTypeID.
+   *          
+   * @param filterOnDataTypeID
+   *          is the id of data type it filters on, or null to fetch any.
+   *          
+   * @param compareWithDataTypeID
+   *          is the id of data type it compares to, or null to fetch any.      
+   *          
    * @return a Cursor that contains all DataFilter records which matches the parameters.
    */
-  public Cursor fetchAll(String dataFilterName, Long dataTypeID) {
+  public Cursor fetchAll(String dataFilterName, Long filterOnDataTypeID, 
+      Long compareWithDataTypeID) {
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     qb.setTables(DATABASE_TABLE);
     qb.appendWhere("1=1");
@@ -151,8 +167,11 @@ public class DataFilterDbAdapter extends DbAdapter {
       qb.appendWhere(" AND " + KEY_DATAFILTERNAME + " = ");
       qb.appendWhereEscapeString(dataFilterName);
     }
-    if (dataTypeID != null) {
-      qb.appendWhere(" AND " + KEY_DATATYPEID + " = " + dataTypeID);
+    if (filterOnDataTypeID != null) {
+      qb.appendWhere(" AND " + KEY_FILTERONDATATYPEID + " = " + filterOnDataTypeID);
+    }
+    if (compareWithDataTypeID != null) {
+      qb.appendWhere(" AND " + KEY_COMPAREWITHDATATYPEID + " = " + compareWithDataTypeID);
     }
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
@@ -163,15 +182,23 @@ public class DataFilterDbAdapter extends DbAdapter {
    * 
    * @param dataFilterID
    *          is the id of the record to be updated.
+   * 
    * @param dataFilterName
    *          is the application name or null if not updating it.
-   * @param dataTypeID
-   *          is the package name or null if not updating it.
+   * 
+   * @param filterOnDataTypeID
+   *          is the id of data type it filters on, or null if not updating it.
+   * 
+   * @param compareWithDataTypeID
+   *          is the id of data type it compares to, or null if not updating it.
+   * 
    * @return true if success, or false otherwise.
+   * 
    * @throws IllegalArgumentException
    *           if dataFilterID is null
    */
-  public boolean update(Long dataFilterID, String dataFilterName, Long dataTypeID) {
+  public boolean update(Long dataFilterID, String dataFilterName, Long filterOnDataTypeID,
+      Long compareWithDataTypeID) {
     if (dataFilterID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
@@ -179,8 +206,11 @@ public class DataFilterDbAdapter extends DbAdapter {
     if (dataFilterName != null) {
       args.put(KEY_DATAFILTERNAME, dataFilterName);
     }
-    if (dataTypeID != null) {
-      args.put(KEY_DATATYPEID, dataTypeID);
+    if (filterOnDataTypeID != null) {
+      args.put(KEY_FILTERONDATATYPEID, filterOnDataTypeID);
+    }
+    if (compareWithDataTypeID != null) {
+      args.put(KEY_COMPAREWITHDATATYPEID, compareWithDataTypeID);
     }
 
     if (args.size() > 0) {

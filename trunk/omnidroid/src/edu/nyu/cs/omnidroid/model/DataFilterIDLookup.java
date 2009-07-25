@@ -45,13 +45,13 @@ public class DataFilterIDLookup {
   public void close() {
     omnidroidDbHelper.close();
   }
-  
+
   /**
    * Query the dataFilterID with dataTypeName and dataFilterNames. This method is caching the result
    * into filterIDMap.
    * 
    * @param dataTypeName
-   *          is name of the dataType
+   *          is name of the dataType it filters on
    * 
    * @param dataFilterName
    *          is name of the dataFilter
@@ -62,9 +62,9 @@ public class DataFilterIDLookup {
     if (dataTypeName == null || dataFilterName == null) {
       throw new IllegalArgumentException("Arguments null.");
     }
-    
+
     DualKey<String, String> key = new DualKey<String, String>(dataTypeName, dataFilterName);
-    
+
     // Return it if the id is already cached.
     Long cachedDataFilterID = dataFilterIDMap.get(key);
     if (cachedDataFilterID != null) {
@@ -82,18 +82,21 @@ public class DataFilterIDLookup {
 
     // Try to find dataFilterID
     long dataFilterID = -1;
-    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID);
+    /* TODO(ehotou) now only support filters that have the same filterOn and compareWith 
+    *  datatypes, need to change the second one when we support actually compareWithDataType.
+    */
+    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID, dataTypeID);
     if (cursor.getCount() > 0) {
       cursor.moveToFirst();
       dataFilterID = cursor.getLong(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));
     }
     cursor.close();
-    
+
     // Cache it if the id is valid
-    if(dataFilterID > 0) {
+    if (dataFilterID > 0) {
       dataFilterIDMap.put(key, dataFilterID);
     }
-    
+
     return dataFilterID;
   }
 }

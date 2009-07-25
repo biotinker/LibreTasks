@@ -33,7 +33,7 @@ public class RuleActionDbAdapter extends DbAdapter {
   public static final String KEY_ACTIONID = "FK_ActionID";
 
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_RULEID, KEY_ACTIONID };
+  public static final String[] KEYS = { KEY_RULEACTIONID, KEY_RULEID, KEY_ACTIONID };
 
   /* Table name */
   private static final String DATABASE_TABLE = "RuleActions";

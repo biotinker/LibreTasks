@@ -271,8 +271,9 @@ public class UIDbHelper {
    * @return all filters associated with one attribute as an ArrayList
    */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
-    // Fetch all filter associated with this attribute's dataType id, set filterName to null
-    Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()));
+    // Fetch all filter that filters on this attribute's dataType, set filterName to null, 
+    // set compareWithDatatypeID to null
+    Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()), null);
     
     int count = cursor.getCount();
     
