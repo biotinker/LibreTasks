@@ -16,6 +16,8 @@
 package edu.nyu.cs.omnidroid.core.datatypes;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * The class acts as a factory for instantiation of the Omnidroid data types.
@@ -61,5 +63,34 @@ public class FactoryDataType {
     }
 
     return null;
+  }
+
+  /**
+   * Factory method that creates the object of Filter type given the omni data type that & name.
+   * 
+   * @param className
+   *          Omni data type that the filter belongs to.
+   * @param filter
+   * @return filter object represented by the classname & filter name if found.  Null otherwise.
+   */
+  public static DataType.Filter getFilterFromString(String className, String filter) {
+    Class<?> theClass;
+    try {
+      theClass = Class.forName(packageName + "." + className);
+      Method method = theClass.getMethod("getFilterFromString", String.class);
+      return (DataType.Filter) method.invoke(null, filter);
+    } catch (ClassNotFoundException e) {
+      return null;
+    } catch (SecurityException e) {
+      return null;
+    } catch (NoSuchMethodException e) {
+      return null;
+    } catch (IllegalArgumentException e) {
+      return null;
+    } catch (IllegalAccessException e) {
+      return null;
+    } catch (InvocationTargetException e) {
+      return null;
+    }
   }
 }

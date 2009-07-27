@@ -22,9 +22,12 @@ import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 /**
  * Provides data type that can be used to provide text filters.
  */
-public class OmniText implements DataType {
+public class OmniText extends DataType {
   private String value;
-  private static String[] filters = { "contains", "equals" };
+
+  public enum Filter implements DataType.Filter {
+    CONTAINS, EQUALS;
+  }
 
   public OmniText(String str) {
     this.value = str;
@@ -34,20 +37,45 @@ public class OmniText implements DataType {
     this.value = obj.toString();
   }
 
+  /**
+   * 
+   * @param str
+   *          the filter name.
+   * @return Filter
+   * @throws IllegalArgumentException
+   *           when the filter with the given name does not exist.
+   */
+  public static Filter getFilterFromString(String str) throws IllegalArgumentException {
+    return Filter.valueOf(str.toUpperCase());
+  }
+
   /*
    * (non-Javadoc)
    * 
-   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#matchFilter(java.lang.String,
-   * java.lang.String)
+   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#matchFilter(DataType.Filter, DataType)
    */
-  public boolean matchFilter(String filterType, String userDefinedValue)
+  public boolean matchFilter(DataType.Filter filter, DataType userDefinedValue)
       throws IllegalArgumentException {
-    if (filterType.equals("contains")) {
-      return value.matches("(?i:.*" + Pattern.quote(userDefinedValue) + ".*)");
-    } else if (filterType.equals("equals")) {
-      return value.equalsIgnoreCase(userDefinedValue);
+    if (!(filter instanceof Filter)) {
+      throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
+          + "' provided.");
     }
-    throw new IllegalArgumentException("Invalid filter type '" + filterType + "' provided.");
+    if(userDefinedValue instanceof OmniText){
+      return matchFilter((Filter) filter, (OmniText) userDefinedValue);
+    }
+    throw new IllegalArgumentException("Matching filter not found for the datatype " + 
+        userDefinedValue.getClass().toString()+ ". ");
+  }
+
+  public boolean matchFilter(Filter filter, OmniText comparisonValue) {
+    switch (filter) {
+    case CONTAINS:
+      return value.toLowerCase().contains(comparisonValue.toString().toLowerCase());
+    case EQUALS:
+      return value.equalsIgnoreCase(comparisonValue.toString());
+    default:
+      return false;
+    }
   }
 
   /*
@@ -56,10 +84,11 @@ public class OmniText implements DataType {
    * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(java.lang.String,
    * java.lang.String)
    */
-  public void validateUserDefinedValue(String filterName, String userInput)
+  public static void validateUserDefinedValue(DataType.Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
-    if (!isValidFilter(filterName)) {
-      throw new IllegalArgumentException("Invalid filter type '" + filterName + "' provided.");
+    if (filter instanceof Filter) {
+      throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
+          + "' provided.");
     }
     if (userInput == null) {
       throw new DataTypeValidationException("The user input cannot be null.");
@@ -73,18 +102,19 @@ public class OmniText implements DataType {
    * @return true if the filter is supported, false otherwise.
    */
   public static boolean isValidFilter(String filter) {
-    for (String s : filters) {
-      if (s.equals(filter))
-        return true;
+    try {
+      getFilterFromString(filter);
+    } catch (IllegalArgumentException e) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   public String getValue() {
     return this.value;
   }
-  
-  public String toString(){
+
+  public String toString() {
     return this.value;
   }
 }

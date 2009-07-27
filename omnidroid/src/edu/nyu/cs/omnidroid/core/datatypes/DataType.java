@@ -18,9 +18,12 @@ package edu.nyu.cs.omnidroid.core.datatypes;
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
- * Interface provides methods that will be supported by all "Omni" data types. 
+ * Abstract class provides methods that will be supported by all "Omni" data types.
  */
-public interface DataType {
+public abstract class DataType {
+  public interface Filter {
+  };
+
   /**
    * Given the filter type & compare value, returns boolean indicating whether or not it matches.
    * 
@@ -30,31 +33,45 @@ public interface DataType {
    * @throws IllegalArgumentException
    *           when the provided arguments are invalid.
    */
-  public boolean matchFilter(String filterType, String userDefinedValue)
+  public abstract boolean matchFilter(Filter filter, DataType userDefinedValue)
       throws IllegalArgumentException;
 
   /**
    * Validates whether or not the given userInput is valid for the given filter.
    * 
-   * @param filterName
+   * @param filter
    * @param userInput
    * @throws DataTypeValidationException
    *           when the validation fails.
    * @throws IllegalArgumentException
    *           when the provided argument are invalid.
    */
-  public void validateUserDefinedValue(String filterName, String userInput)
-      throws DataTypeValidationException, IllegalArgumentException;
-  
+  public static void validateUserDefinedValue(Filter filter, String userInput)
+      throws DataTypeValidationException, IllegalArgumentException {
+  }
+
   /**
    * 
    * @return user friendly string representation of the data type.
    */
-  public String getValue();
-  
+  public abstract String getValue();
+
   /**
    * 
-   * @return string representation of the data type than can be stored and used to initialize the object.
+   * @return string representation of the data type than can be stored and used to initialize the
+   *         object.
    */
-  public String toString();
+  public abstract String toString();
+
+  /**
+   * 
+   * @param filterString
+   *          string representing the filter value.
+   * @return Filter represented by the string.
+   * @throws IllegalArgumentException
+   *           when the passed in string is not a valid filter.
+   */
+  public static Filter getFilterFromString(String filterString) throws IllegalArgumentException {
+    return null;
+  }
 }

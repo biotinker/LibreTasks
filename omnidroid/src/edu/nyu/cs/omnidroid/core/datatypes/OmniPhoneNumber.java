@@ -19,17 +19,33 @@
 package edu.nyu.cs.omnidroid.core.datatypes;
 
 import static android.telephony.PhoneNumberUtils.*;
+
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
  * Provides filtering capabilities for phone number.
  */
-public class OmniPhoneNumber implements DataType {
+public class OmniPhoneNumber extends DataType {
   private String value;
-  private static String[] filters = { "equals" };
+
+  public enum Filter implements DataType.Filter {
+    EQUALS;
+  }
 
   public OmniPhoneNumber(String phoneNumber) throws DataTypeValidationException {
     value = formatNumber(phoneNumber);
+  }
+
+  /**
+   * 
+   * @param str
+   *          the filter name.
+   * @return Filter
+   * @throws IllegalArgumentException
+   *           when the filter with the given name does not exist.
+   */
+  public static Filter getFilterFromString(String str) throws IllegalArgumentException {
+    return Filter.valueOf(str.toUpperCase());
   }
 
   /*
@@ -38,12 +54,27 @@ public class OmniPhoneNumber implements DataType {
    * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#matchFilter(java.lang.String,
    * java.lang.String)
    */
-  public boolean matchFilter(String filterType, String userDefinedValue)
+  public boolean matchFilter(DataType.Filter filter, DataType userDefinedValue)
       throws IllegalArgumentException {
-    if (filterType.equals("equals")) {
-      return compare(value, userDefinedValue);
+    if (!(filter instanceof Filter)) {
+      throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
+          + "' provided.");
     }
-    throw new IllegalArgumentException("Invalid filter type '" + filterType + "' provided.");
+    if(userDefinedValue instanceof OmniPhoneNumber){
+      return matchFilter((Filter) filter, (OmniPhoneNumber) userDefinedValue);
+    } else {
+      throw new IllegalArgumentException("Matching filter not found for the datatype " + 
+          userDefinedValue.getClass().toString()+ ". ");
+    }
+  }
+
+  public boolean matchFilter(Filter filter, OmniPhoneNumber comparisonValue) {
+    switch (filter) {
+    case EQUALS:
+      return compare(value, comparisonValue.value);
+    default:
+      return false;
+    }
   }
 
   /*
@@ -52,14 +83,12 @@ public class OmniPhoneNumber implements DataType {
    * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(java.lang.String,
    * java.lang.String)
    */
-  public void validateUserDefinedValue(String filterName, String userInput)
+  public static void validateUserDefinedValue(Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
-    if (!isValidFilter(filterName)) {
-      throw new IllegalArgumentException("Invalid filter type '" + filterName + "' provided.");
-    }
     if (userInput == null) {
       throw new DataTypeValidationException("The user input cannot be null.");
     }
+    new OmniPhoneNumber(userInput);
   }
 
   /**
@@ -69,11 +98,12 @@ public class OmniPhoneNumber implements DataType {
    * @return true if the filter is supported, false otherwise.
    */
   public static boolean isValidFilter(String filter) {
-    for (String s : filters) {
-      if (s.equals(filter))
-        return true;
+    try {
+      getFilterFromString(filter);
+    } catch (IllegalArgumentException e) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   /**
@@ -87,5 +117,4 @@ public class OmniPhoneNumber implements DataType {
   public String getValue() {
     return this.value;
   }
-
 }
