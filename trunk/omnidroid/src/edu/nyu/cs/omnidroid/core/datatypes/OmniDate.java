@@ -18,19 +18,35 @@ package edu.nyu.cs.omnidroid.core.datatypes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
  * Provides date & time filter functionality.
  */
-public class OmniDate implements DataType {
+public class OmniDate extends DataType {
   private Date value;
-  private static String[] filters = { "before", "after" };
-  private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+  public enum Filter implements DataType.Filter {
+    BEFORE, AFTER, ISDAYOFWEEK;
+  }
 
   public OmniDate(Date date) {
     this.value = date;
+  }
+
+  /**
+   * 
+   * @param str
+   *          the filter name.
+   * @return Filter
+   * @throws IllegalArgumentException
+   *           when the filter with the given name does not exist.
+   */
+  public static Filter getFilterFromString(String str) throws IllegalArgumentException {
+    return Filter.valueOf(str.toUpperCase());
   }
 
   /**
@@ -41,7 +57,7 @@ public class OmniDate implements DataType {
    *           when the string format is invalid.
    */
   public OmniDate(String date) throws DataTypeValidationException {
-    this.value = getDate(date);
+    value = getDate(date);
   }
 
   /**
@@ -62,20 +78,24 @@ public class OmniDate implements DataType {
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#matchFilter(java.lang.String,
-   * java.lang.String)
-   */
-  public boolean matchFilter(String filterType, String userDefinedValue)
-      throws IllegalArgumentException {
-    if (filterType.equals("before")) {
-      return this.before(userDefinedValue);
-    } else if (filterType.equals("after")) {
-      return this.after(userDefinedValue);
+  public boolean matchFilter(Filter filter, OmniDate compareValue) {
+    switch (filter) {
+    case AFTER:
+      return after(compareValue);
+    case BEFORE:
+      return before(compareValue);
+    default:
+      return false;
     }
-    throw new IllegalArgumentException("Invalid filter type '" + filterType + "' provided.");
+  }
+
+  public boolean matchFilter(Filter filter, OmniDayOfWeek compareValue) {
+    switch (filter) {
+    case ISDAYOFWEEK:
+      return isDayOfWeek(compareValue);
+    default:
+      return false;
+    }
   }
 
   /**
@@ -87,41 +107,42 @@ public class OmniDate implements DataType {
    */
   public boolean before(String userDefinedValue) throws IllegalArgumentException {
     try {
-      return this.value.before(getDate(userDefinedValue));
+      return value.before(getDate(userDefinedValue));
     } catch (DataTypeValidationException e) {
       throw new IllegalArgumentException(e.getMessage());
     }
   }
 
-  /**
-   * Indicates whether or not provided value is after.
-   * 
-   * @param userDefinedValue
-   * @return true if the value is after, false otherwise
-   * @throws IllegalArgumentException
-   */
-  public boolean after(String userDefinedValue) throws IllegalArgumentException {
-    try {
-      return this.value.after(getDate(userDefinedValue));
-    } catch (DataTypeValidationException e) {
-      throw new IllegalArgumentException(e.getMessage());
-    }
+  public boolean before(OmniDate compareDate) {
+    return value.before(compareDate.getDate());
+  }
+
+  public boolean after(OmniDate compareDate) {
+    return value.after(compareDate.getDate());
+  }
+
+  public boolean isDayOfWeek(OmniDayOfWeek compareValue) {
+    GregorianCalendar calendar = new GregorianCalendar();
+    calendar.setTime(value);
+    return calendar.get(GregorianCalendar.DAY_OF_WEEK) == compareValue.getDayOfWeek();
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(java.lang.String,
+   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(DataType.Filter,
    * java.lang.String)
    */
-  public void validateUserDefinedValue(String filterName, String userInput)
+  public static void validateUserDefinedValue(DataType.Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
-    if (!isValidFilter(filterName)) {
-      throw new IllegalArgumentException("Invalid filter type '" + filterName + "' provided.");
+    if (filter instanceof Filter) {
+      throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
+          + "' provided.");
     }
     if (userInput == null) {
       throw new DataTypeValidationException("The user input cannot be null.");
     }
+
     getDate(userInput);
   }
 
@@ -132,24 +153,45 @@ public class OmniDate implements DataType {
    * @return true if the filter is supported, false otherwise.
    */
   public static boolean isValidFilter(String filter) {
-    for (String s : filters) {
-      if (s.equals(filter))
-        return true;
+    try {
+      getFilterFromString(filter);
+    } catch (IllegalArgumentException e) {
+      return false;
     }
-    return false;
+
+    return true;
   }
 
   /**
-   * Provides string representation of OmniDate object. The format for the string is 'yyyy-MM-dd
-   * HH:mm:ss'.
+   * @return string representation of OmniDate object. The format for the string is 'yyyy-MM-dd
+   *         HH:mm:ss'.
    * 
    */
   public String toString() {
-    return dateFormat.format(this.value);
+    return dateFormat.format(value);
   }
 
   public String getValue() {
-    return dateFormat.format(this.value);
+    return dateFormat.format(value);
+  }
+
+  public Date getDate() {
+    return value;
+  }
+
+  @Override
+  public boolean matchFilter(DataType.Filter filter, DataType userDefinedValue)
+      throws IllegalArgumentException {
+    if(!(filter instanceof Filter)){
+      throw new IllegalArgumentException("Invalid filter "+filter.toString()+" provided.");
+    }
+    if(userDefinedValue instanceof OmniDate){
+      return matchFilter((Filter) filter, (OmniDate) userDefinedValue);
+    }else if(userDefinedValue instanceof OmniDayOfWeek){
+      return matchFilter((Filter) filter, (OmniDayOfWeek) userDefinedValue);
+    }
+    throw new IllegalArgumentException("Matching filter not found for the datatype " + 
+        userDefinedValue.getClass().toString()+ ". ");
   }
 
 }

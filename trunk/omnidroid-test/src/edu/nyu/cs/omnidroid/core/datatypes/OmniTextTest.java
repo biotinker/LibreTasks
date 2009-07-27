@@ -18,6 +18,7 @@
  */
 package edu.nyu.cs.omnidroid.core.datatypes;
 
+import edu.nyu.cs.omnidroid.core.datatypes.OmniText.Filter;
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 import junit.framework.TestCase;
 
@@ -43,16 +44,16 @@ public class OmniTextTest extends TestCase {
 
   /**
    * Test method for
-   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#matchFilter(java.lang.String, java.lang.String)}
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#matchFilter(DataType.Filter, DataType)}
    * .
    */
   public void testMatchFilter() {
-    assertTrue(omniText.matchFilter("equals", "TEST"));
-    assertTrue(omniText.matchFilter("contains", "ES"));
-    assertTrue(omniText.matchFilter("contains", ""));
-    assertFalse(omniText.matchFilter("contains", "KT"));
+    assertTrue(omniText.matchFilter(Filter.EQUALS, new OmniText("TEST")));
+    assertTrue(omniText.matchFilter(Filter.CONTAINS, new OmniText("ES")));
+    assertTrue(omniText.matchFilter(Filter.CONTAINS, new OmniText("")));
+    assertFalse(omniText.matchFilter(Filter.CONTAINS, new OmniText("KT")));
     omniText = new OmniText("");
-    assertTrue(omniText.matchFilter("equals", ""));
+    assertTrue(omniText.matchFilter(Filter.CONTAINS, omniText));
   }
 
   /**
@@ -62,7 +63,7 @@ public class OmniTextTest extends TestCase {
    */
   public void testValidateUserDefinedValue() {
     try {
-      omniText.validateUserDefinedValue("contains", null);
+      OmniText.validateUserDefinedValue(Filter.CONTAINS, null);
     } catch (IllegalArgumentException e) {
       return;
     } catch (DataTypeValidationException e) {
@@ -72,6 +73,12 @@ public class OmniTextTest extends TestCase {
     fail("Should of have thrown an exception.");
   }
 
+  public void testGetFilterFromString(){
+    assertEquals(OmniText.getFilterFromString("equals"), Filter.EQUALS);
+    assertEquals(OmniText.getFilterFromString("Equals"), Filter.EQUALS);
+    assertEquals(OmniText.getFilterFromString("contains"), Filter.CONTAINS);
+    assertEquals(OmniText.getFilterFromString("Contains"), Filter.CONTAINS);
+  }
   /**
    * Test method for
    * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniText#isValidFilter(java.lang.String)}.

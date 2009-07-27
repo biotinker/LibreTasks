@@ -18,6 +18,8 @@
  */
 package edu.nyu.cs.omnidroid.core.datatypes;
 
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber.Filter;
+import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 import junit.framework.TestCase;
 
 public class OmniPhoneNumberTest extends TestCase {
@@ -34,40 +36,47 @@ public class OmniPhoneNumberTest extends TestCase {
 
   /**
    * Test method for
-   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#matchFilter(java.lang.String, java.lang.String)}
-   * .
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#matchFilter(DataType.Filter, 
+   *  OmniPhoneNumber)}.
+   * 
+   * @throws DataTypeValidationException
    */
-  public void testMatchFilter_equals() {
-    assertTrue(omniPhoneNumber.matchFilter("equals", "555-555-5555"));
-    assertTrue(omniPhoneNumber.matchFilter("equals", "1-5555555555"));
-    assertFalse(omniPhoneNumber.matchFilter("equals", "123-345-2342"));
+  public void testMatchFilter_equals() throws DataTypeValidationException {
+    assertTrue(omniPhoneNumber.matchFilter(Filter.EQUALS, new OmniPhoneNumber("555-555-5555")));
+    assertTrue(omniPhoneNumber.matchFilter(Filter.EQUALS, new OmniPhoneNumber("1-5555555555")));
+    assertFalse(omniPhoneNumber.matchFilter(Filter.EQUALS, new OmniPhoneNumber("123-345-2342")));
   }
 
   /**
    * Test method for
-   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#matchFilter(java.lang.String, java.lang.String)}
-   * .
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#matchFilter(DataType.Filter, 
+   *  DataType)}.
+   * 
+   * @throws DataTypeValidationException
    */
-  public void testMatchFilter_invalidArgument() {
+  public void testMatchFilter_invalidArgument() throws DataTypeValidationException {
     try {
-      omniPhoneNumber.matchFilter("wrong filter", "1");
+      omniPhoneNumber.matchFilter(Filter.EQUALS, new OmniDate("2008-05-11 11:00:00"));
     } catch (IllegalArgumentException e) {
       return;
     }
     fail("Should have thrown IllegalArgumentException.");
   }
 
-  /**
-   * Test method for
-   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#validateUserDefinedValue(java.lang.String, java.lang.String)}
-   * .
-   * 
-   * @throws Exception
-   */
-  public void testValidateUserDefinedValue() throws Exception {
-    omniPhoneNumber.validateUserDefinedValue("equals", "123456");
+  public void testGetFilterFromString() {
+    assertEquals(OmniPhoneNumber.getFilterFromString("equals"), Filter.EQUALS);
+    assertEquals(OmniPhoneNumber.getFilterFromString("Equals"), Filter.EQUALS);
   }
 
+  public void testGetFilterFromString_invalidArgument(){
+    try {
+      OmniPhoneNumber.getFilterFromString("Wrong Filter name");
+    } catch (IllegalArgumentException e) {
+      return;
+    }
+    fail("Should have thrown IllegalArgumentException as the wrong filter was given.");
+  }
+  
   /**
    * Test method for
    * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#isValidFilter(java.lang.String)}.
@@ -88,7 +97,7 @@ public class OmniPhoneNumberTest extends TestCase {
    * Test method for {@link edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber#toString()}.
    */
   public void testToString() {
-    assertNotNull(omniPhoneNumber.toString());
+    assertEquals(omniPhoneNumber.toString(), "(555)-555-5555");
   }
 
 }
