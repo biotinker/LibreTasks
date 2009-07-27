@@ -1,7 +1,9 @@
 package edu.nyu.cs.omnidroid.model;
 
 import java.util.List;
-
+import java.util.Locale;
+import android.location.Geocoder;
+import android.location.Address;
 import android.app.Activity;
 import android.location.Location;
 import android.location.LocationManager;
@@ -60,7 +62,7 @@ public class DataAccessLayerTestActivity extends Activity {
 		tv.setText(temp);
 		setContentView(tv);
 		*/
-        setContentView(R.layout.main);		 
+        setContentView(R.layout.main);
 		
         Button button = null;
 
@@ -98,18 +100,37 @@ public class DataAccessLayerTestActivity extends Activity {
             public void onClick(View v) {
             	// On Click Action
             	
-        		String temp = null;
+        		String address = null;
+        		String location = null;
         		
-        		EditText address = null;
-        		EditText location = null;
-        		address = (EditText) findViewById(R.id.address);
-        		temp = address.getText().toString();            		
+        		EditText addressTextBox = null;
+        		EditText locationTextBox = null;
+        		addressTextBox = (EditText) findViewById(R.id.address);
+        		address = addressTextBox.getText().toString();            		
+
         		
-        		location = (EditText) findViewById(R.id.addressCoordinates);
-        		location.setText(temp);
+                // Reverse geocode the postal address to get a location.
+                if (address != null) {
+                  try {
+                	Geocoder geocoder = new Geocoder(v.getContext(), Locale.getDefault());
+                    List<Address> addressResult = geocoder.getFromLocationName(address, 5);
+                    if (!addressResult.isEmpty()) {
+                      Address resultAddress = addressResult.get(0);
+                      location = resultAddress.getLatitude() + ", " + resultAddress.getLongitude();
+                    }
+                    else {
+                    	location = "No Location Found";
+                    }
+                  } catch (Exception e) {
+                    location = e.getMessage();
+                  }
+                }
+              
+              locationTextBox = (EditText) findViewById(R.id.addressCoordinates);
+              locationTextBox.setText(location);
             }
         });
-        
+
 	}
 
 	/* (non-Javadoc)
