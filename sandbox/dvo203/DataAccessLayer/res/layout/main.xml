@@ -30,4 +30,43 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/exit"
         android:text="Update" android:layout_toLeftOf="@id/exit"/>
+        
+	<TextView 
+		android:id="@+id/addressLabel" 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent" 
+		android:layout_below="@+id/update" 
+		android:text="Please enter address:"/>
+
+    <EditText
+    	android:id="@+id/address"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@id/addressLabel"
+        android:text="50 Maple Ave, Springfield, NJ"/>
+
+	<TextView 
+		android:id="@+id/addressCoordinatesLabel" 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent" 
+		android:layout_below="@+id/address" 
+		android:text="Coordinates are:"/>
+
+    <EditText
+    	android:id="@+id/addressCoordinates"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:layout_below="@+id/addressCoordinatesLabel"/>
+
+    <Button
+        android:id="@+id/getCoordinates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dip"
+        android:text="Get Coordinates" 
+        android:layout_below="@+id/addressCoordinates"/>
+
 </RelativeLayout>

@@ -92,6 +92,24 @@ public class DataAccessLayerTestActivity extends Activity {
             }
         });
 
+        // Get Coordinates click
+        button = (Button) findViewById(R.id.getCoordinates);
+        button.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+            	// On Click Action
+            	
+        		String temp = null;
+        		
+        		EditText address = null;
+        		EditText location = null;
+        		address = (EditText) findViewById(R.id.address);
+        		temp = address.getText().toString();            		
+        		
+        		location = (EditText) findViewById(R.id.addressCoordinates);
+        		location.setText(temp);
+            }
+        });
+        
 	}
 
 	/* (non-Javadoc)
