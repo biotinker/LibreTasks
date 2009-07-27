@@ -49,21 +49,22 @@ import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 
 /**
- * This class serves as a access layer of the database for Omnidroid's UI data model representation.
+ * This class serves as an access layer of the database for Omnidroid's UI data model representation.
  */
 public class UIDbHelper {
 
+  private DbHelper omnidroidDbHelper;
+  private SQLiteDatabase database;
+  
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private RegisteredAppDbAdapter registeredAppDbAdapter;
   private RegisteredEventDbAdapter registeredEventDbAdapter;
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter;
-  private RuleFilterDbAdapter ruleFilterDbAdpater;
-  private RuleActionDbAdapter ruleActionDbAdpater;
+  private RuleFilterDbAdapter ruleFilterDbAdapter;
+  private RuleActionDbAdapter ruleActionDbAdapter;
   private RuleDbAdapter ruleDbAdapter;
-  private DbHelper omnidroidDbHelper;
-  private SQLiteDatabase database;
 
   // Hash maps for storing cached data for quick lookup
   private HashMap<Integer, String> dataTypeNames;
@@ -73,6 +74,9 @@ public class UIDbHelper {
   private HashMap<Integer, ModelEvent> events;
   private HashMap<Integer, ModelAction> actions;
   private HashMap<Integer, ModelAttribute> attributes;
+  
+  // This flag marks whether this helper is closed
+  private boolean isClosed = false;
 
   public UIDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
@@ -85,6 +89,8 @@ public class UIDbHelper {
     registeredEventDbAdapter = new RegisteredEventDbAdapter(database);
     registeredActionDbAdapter = new RegisteredActionDbAdapter(database);
     registeredEventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(database);
+    ruleFilterDbAdapter = new RuleFilterDbAdapter(database);
+    ruleActionDbAdapter = new RuleActionDbAdapter(database);
     ruleDbAdapter = new RuleDbAdapter(database);
 
     // Initialize db cache
@@ -101,9 +107,11 @@ public class UIDbHelper {
   }
 
   /**
-   * Close the UIHelper
+   * Close the UIDbHelper. UI needs to call this method when it is done with the database 
+   * connection. UIDbHelper is not usable after calling this method. 
    */
   public void close() {
+    isClosed = true;
     omnidroidDbHelper.close();
     database.close();
   }
@@ -198,15 +206,15 @@ public class UIDbHelper {
   }
 
   /**
-   * Get an dataType object
+   * Create a dataType object with a type matches dataTypeID, containing specific data.
    * 
-   * @param attribute
-   *          is the attribute object
+   * @param dataTypeID
+   *          is id of the dataType to be created
    *          
    * @param data
    *          is the content of the data within the dataType object
    *          
-   * @return an dataType object
+   * @return a dataType object
    */
   private DataType getDataType(int dataTypeID, String data) {
     String dataTypeClassName = dataTypeClassNames.get(dataTypeID);
@@ -215,8 +223,12 @@ public class UIDbHelper {
 
   /**
    * @return all applications as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<ModelApplication> getAllApplications() {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
     ArrayList<ModelApplication> applicationList = new ArrayList<ModelApplication>(
         applications.size());
     applicationList.addAll(applications.values());
@@ -225,8 +237,12 @@ public class UIDbHelper {
 
   /**
    * @return all events as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<ModelEvent> getAllEvents() {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
     ArrayList<ModelEvent> eventList = new ArrayList<ModelEvent>(events.size());
     eventList.addAll(events.values());
     return eventList;
@@ -237,8 +253,12 @@ public class UIDbHelper {
    *          is a ModelApplication object
    *          
    * @return all actions associated with one application as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<ModelAction> getActionsForApplication(ModelApplication application) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>(actions.size());
     for (ModelAction action : actions.values()) {
       if (action.getApplication().getDatabaseId() == application.getDatabaseId()) {
@@ -253,8 +273,12 @@ public class UIDbHelper {
    *          is a ModelEvent object
    *          
    * @return all attributes associated with one event as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
     ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>(attributes.size());
     for (ModelAttribute attribute : attributes.values()) {
       if(attribute.getForeignKeyEventId() == event.getDatabaseId()) {
@@ -269,8 +293,13 @@ public class UIDbHelper {
    *          is a ModelAttribute object
    *          
    * @return all filters associated with one attribute as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
+    
     // Fetch all filter that filters on this attribute's dataType, set filterName to null, 
     // set compareWithDatatypeID to null
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, Long.valueOf(attribute.getDatatype()), null);
@@ -297,8 +326,13 @@ public class UIDbHelper {
 
   /**
    * @return all Rule objects (sparse version just contains id, name) as an ArrayList
+   * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<Rule> getRules() {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
+    
     Cursor cursor = ruleDbAdapter.fetchAll();
     
     int count = cursor.getCount();
@@ -323,8 +357,13 @@ public class UIDbHelper {
    *          is the rule id
    *          
    * @return a fully loaded Rule object with databaseId
+   * @throws IllegalStateException if this helper is closed
    */
   public Rule loadRule(int databaseId) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
+    
     Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
 
     Rule rule = new Rule(databaseId);
@@ -366,7 +405,7 @@ public class UIDbHelper {
     HashMap<Integer, ModelRuleFilter> filtersUnlinked = new HashMap<Integer, ModelRuleFilter>();
 
     // Fetch all ruleFilter associated with this rule, set other parameters to be null
-    Cursor cursorRuleFilters = ruleFilterDbAdpater.fetchAll(Long.valueOf(ruleId), null, null, null,
+    Cursor cursorRuleFilters = ruleFilterDbAdapter.fetchAll(Long.valueOf(ruleId), null, null, null,
         null, null);
     
     int count = cursorRuleFilters.getCount();
@@ -441,7 +480,7 @@ public class UIDbHelper {
    * Get all actions associated with a rule
    */
   private ArrayList<ModelAction> getActionsForRule(int ruleId) {
-    Cursor cursorRuleActions = ruleActionDbAdpater.fetchAll(Long.valueOf(ruleId), null);
+    Cursor cursorRuleActions = ruleActionDbAdapter.fetchAll(Long.valueOf(ruleId), null);
     
     int count = cursorRuleActions.getCount();
     
@@ -461,8 +500,13 @@ public class UIDbHelper {
 
   /**
    * Given a rule, save it to the database.
+   * @throws IllegalStateException if this helper is closed
    */
   public void saveRule(Rule rule) throws Exception {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
+    
     ModelEvent event = (ModelEvent) rule.getRootNode().getItem();
     ArrayList<RuleNode> filterList = rule.getFilterBranches();
     ArrayList<ModelRuleAction> actionList = rule.getActions();
@@ -475,7 +519,7 @@ public class UIDbHelper {
     // Save all rule actions
     for (ModelRuleAction action : actionList) {
       // TODO: (ehotou) Save action data(s) here too.
-      ruleActionDbAdpater.insert(ruleID, Long.valueOf(action.getModelAction().getDatabaseId()));
+      ruleActionDbAdapter.insert(ruleID, Long.valueOf(action.getModelAction().getDatabaseId()));  
     }
 
     // Save all rule filters
@@ -491,7 +535,7 @@ public class UIDbHelper {
 
     ModelRuleFilter filter = (ModelRuleFilter) node.getItem();
 
-    long thisRuleNodeID = ruleFilterDbAdpater.insert(ruleID, 
+    long thisRuleNodeID = ruleFilterDbAdapter.insert(ruleID, 
         Long.valueOf(filter.getModelFilter().getAttribute().getDatabaseId()), 
         Long.valueOf(-1), // TODO(ehotou) after implementing external, insert it here
         // TODO: (ehotou) verify ModelFilter id is what we want here (not ModelRuleFilter):
