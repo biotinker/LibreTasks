@@ -82,8 +82,9 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewRules = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: Implement showing saved rules activity.
-      UtilUI.showAlert(v.getContext(), "Sorry!", "Viewing saved rules is not yet implemented!");
+      Intent intent = new Intent();
+      intent.setClass(getApplicationContext(), ActivitySavedRules.class);
+      startActivity(intent);
     }
   };
 

@@ -96,7 +96,8 @@ public class ActivityChooseRootEvent extends Activity {
       if (selectedEventPosition > -1 && selectedEventPosition < adapterEvents.getCount()) {
         // The user has chosen a valid root event, store it
         // in the global RuleBuilder.
-        RuleBuilder.instance().reset(adapterEvents.getItem(selectedEventPosition));
+        RuleBuilder.instance().resetForNewRuleEditing(
+          adapterEvents.getItem(selectedEventPosition));
 
         // Wipe UI state for the activity.
         SharedPreferences state = v.getContext().getSharedPreferences(

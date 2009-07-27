@@ -125,6 +125,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     listview.setAdapter(adapterRule);
 
     // Set the adapter to render the rule stored in RuleBuilder.
+    // It may be a brand new rule or a saved rule being edited.
     adapterRule.setRule(RuleBuilder.instance().getRule());
   }
   
