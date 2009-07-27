@@ -34,6 +34,9 @@ public class Rule {
   /** Name given to rule by user. */
   private String name;
   
+  /** Is the rule enabled or disabled? */
+  private boolean isEnabled;
+  
   /**
    * The rule tree can look like: 
    * RootEvent 
@@ -60,6 +63,14 @@ public class Rule {
 
   public int getDatabaseId() {
     return databaseId;
+  }
+  
+  public boolean getIsEnabled() {
+    return isEnabled;
+  }
+  
+  public void setIsEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
   }
 
   /**

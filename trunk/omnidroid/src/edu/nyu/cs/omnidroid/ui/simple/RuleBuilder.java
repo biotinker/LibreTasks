@@ -28,9 +28,20 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 
 /**
- * This is a singleton class used to store elements of a new rule between
- * <code>ActivityChooseRootEvent</code> and <code>ActivityChooseFilters</code>. Using singletons is
- * how the Android team recommends passing this type of data between activities.
+ * This is a singleton class used to store elements of a rule between different activities
+ * as the user either creates a new rule, or edits an existing rule. The Android team recommends
+ * using singletons for passing this sort of data between activities.
+ * 
+ * The user can create a new rule starting in {@link ActivityChooseRootEvent}. In this case,
+ * {@link resetWithRootEventForNewRuleEditing} should be called to wipe the internal rule 
+ * representation and start with a brand new empty rule.
+ * 
+ * The user can edit an existing rule starting in {@link ActivitySavedRules}. In this case,
+ * {@link resetWithSavedRuleForEditing} should be called to set the internal rule to a saved rule
+ * instance as loaded from the database.
+ * 
+ * In both cases, the user can then go about viewing and modifying the rule inside the activity
+ * {@link ActivityChooseRootEvent}.
  * 
  * TODO: (markww) Split this class into three separate classes, one for storage of the rule being 
  * created, the second for storage of a filter being created, and the third for storage of an 
@@ -62,9 +73,23 @@ public class RuleBuilder {
     return instance;
   }
 
-  public void reset(ModelEvent event) {
+  /** 
+   * Initialize with a root event. This should be used when the user wants to create a brand
+   * new rule.
+   */
+  public void resetForNewRuleEditing(ModelEvent rootEvent) {
     rule = new Rule(-1);
-    rule.setRootEvent(event);
+    rule.setRootEvent(rootEvent);
+    resetFilterPath();
+    resetActionPath();
+  }
+  
+  /**
+   * Initialize with an existing rule. This should be used when the user wants to edit an
+   * existing rule.
+   */
+  public void resetForEditing(Rule savedRule) {
+    rule = savedRule;
     resetFilterPath();
     resetActionPath();
   }
