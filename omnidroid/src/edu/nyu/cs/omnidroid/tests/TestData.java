@@ -16,17 +16,21 @@
 package edu.nyu.cs.omnidroid.tests;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Intent;
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.Filter;
 import edu.nyu.cs.omnidroid.core.Rule;
 import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.core.SendSmsAction;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
-// TODO(londinop): Replace with database retrieval code
+//TODO(londinop): Replace with database retrieval code
 
 public class TestData {
   /**
+   * 
    * Sample phone number and message text for an SMS event
    */
   public static final String TEST_PHONE_NO = "5556";
@@ -35,28 +39,46 @@ public class TestData {
   public static Rule getRule() {
     String name = "Auto-Reply DND";
     String eventName = "SMS";
+    HashMap<String, String> parameters = new HashMap<String, String>();
+    parameters.put(SendSmsAction.PARAM_PHONE_NO, TEST_PHONE_NO);
+    parameters.put(SendSmsAction.PARAM_SMS, TEST_MESSAGE_TEXT);
     ArrayList<Filter> filters = new ArrayList<Filter>();
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, TEST_PHONE_NO);
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    // TODO(Rohit) - add send SMS action here
-    
+    SendSmsAction action = null;
+    try {
+      action = new SendSmsAction(parameters);
+    } catch (OmnidroidException e) {
+      // TODO Add log message.
+      e.printStackTrace();
+    }
+    actions.add(action);
     return new Rule(name, eventName, filters, actions);
   }
 
   public static Rule getAnotherRule() {
     String name = "Auto-Reply DND";
     String eventName = "SMS";
+    HashMap<String, String> parameters = new HashMap<String, String>();
+    parameters.put(SendSmsAction.PARAM_PHONE_NO, TEST_PHONE_NO);
+    parameters.put(SendSmsAction.PARAM_SMS, TEST_MESSAGE_TEXT);
     ArrayList<Filter> filters = new ArrayList<Filter>();
     Filter filter = new Filter(SMSReceivedEvent.ATTRIB_PHONE_NO, "555-555-5555");
     filters.add(filter);
     ArrayList<Action> actions = new ArrayList<Action>();
-    // TODO(Rohit) - add send SMS action here
-    
+    SendSmsAction action = null;
+    try {
+      action = new SendSmsAction(parameters);
+    } catch (OmnidroidException e) {
+      // TODO Add log message.
+      e.printStackTrace();
+    }
+    actions.add(action);
     return new Rule(name, eventName, filters, actions);
   }
 
-  public static ArrayList<Rule> getRulesForEvent(String eventName) {
+  public static ArrayList<Rule> getRulesForEvent(String eventName) throws OmnidroidException {
     ArrayList<Rule> rules = new ArrayList<Rule>();
     rules.add(getRule());
     return rules;
