@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core.datatypes;
 
-import java.util.regex.Pattern;
-
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
