@@ -17,9 +17,6 @@ package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
 
-import edu.nyu.cs.omnidroid.tests.TestData;
-import edu.nyu.cs.omnidroid.util.OmnidroidException;
-
 /**
  * Gets the {@link Rule}(s) triggered by this {@link Event} and compares the event attributes with
  * the {@link Filter}(s) defined for each rule. Returns the {@link Action}(s) to execute if this
@@ -43,21 +40,8 @@ public class RuleProcessor {
    * @return the list of actions to be performed based on the rules triggered by this event
    */
   public static ArrayList<Action> getActions(Event event) {
-    // TODO(londinop): replace with database access code from Dmitriy
-    ArrayList<Rule> rules = null;
-    try {
-      rules = TestData.getRulesForEvent(event.getName());
-    } catch (OmnidroidException e) {
-      // TODO Add log message.
-      e.printStackTrace();
-    }
+    // TODO(londinop): Return data from the database for which actions this event triggers
     ArrayList<Action> actions = new ArrayList<Action>();
-
-    for (Rule currentRule : rules) {
-      if (currentRule.matchesEvent(event)) {
-        actions.addAll(currentRule.getActions(event));
-      }
-    }
     return actions;
   }
 }

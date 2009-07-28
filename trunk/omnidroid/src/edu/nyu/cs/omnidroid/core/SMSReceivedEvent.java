@@ -17,8 +17,8 @@ public class SMSReceivedEvent extends Event {
   public static final String ATTRIB_MESSAGE_TEXT = "Message Text";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
-  private String phoneNumber = null;
-  private String messageText = null;
+  protected String phoneNumber;
+  protected String messageText;
 
   /**
    * Constructs a new SMS object that holds an SMS event fired intent. This intent holds the data
@@ -65,7 +65,7 @@ public class SMSReceivedEvent extends Event {
    * TODO(londinop): Further test this method with texts longer than 160 characters, there may be a
    * bug in the emulator
    */
-  private void getMessageData() {
+  protected void getMessageData() {
 
     // TODO(londinop): Add text message data retrieval code and write a test for it
     Bundle bundle = intent.getExtras();
