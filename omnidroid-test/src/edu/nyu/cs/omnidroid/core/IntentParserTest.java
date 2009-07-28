@@ -15,7 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
-import edu.nyu.cs.omnidroid.tests.TestData;
 import junit.framework.TestCase;
 import android.content.Intent;
 
@@ -29,7 +28,7 @@ public class IntentParserTest extends TestCase {
   public void setUp() {
     intent = TestData.getIntent(TestData.TEST_PHONE_NO, TestData.TEST_MESSAGE_TEXT);
     intent.setAction(IntentParser.SMS_INTENT_ACTION);
-    event = new SMSReceivedEvent(intent);
+    event = new MockSMSReceivedEvent(intent);
   }
 
   /** Tests that the name of a created SMS event is correct */

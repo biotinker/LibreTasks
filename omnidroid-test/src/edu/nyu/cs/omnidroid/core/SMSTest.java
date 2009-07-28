@@ -17,7 +17,6 @@ package edu.nyu.cs.omnidroid.core;
 
 import junit.framework.TestCase;
 import android.content.Intent;
-import edu.nyu.cs.omnidroid.tests.TestData;
 
 /**
  * Unit tests for {@link SMS} class.

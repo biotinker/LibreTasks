@@ -1,0 +1,37 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ *     
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ *******************************************************************************/
+package edu.nyu.cs.omnidroid.core;
+
+import android.content.Intent;
+
+/**
+ * Mock version of {@link SMSReceivedEvent}, which will reliably return the phone number
+ * and message text used to create the intent passed to the constructor.
+ */
+public class MockSMSReceivedEvent extends SMSReceivedEvent {
+
+  public MockSMSReceivedEvent(Intent intent) {
+    super(intent);
+    phoneNumber = intent.getExtras().getString(SMSReceivedEvent.ATTRIB_PHONE_NO);
+    messageText = intent.getExtras().getString(SMSReceivedEvent.ATTRIB_MESSAGE_TEXT);
+  }
+  
+  @Override
+  protected void getMessageData() {
+    // In case getMessageData() gets called, override the parent's method. We don't have a valid
+    // PDU object to represent the text message.
+  }
+}

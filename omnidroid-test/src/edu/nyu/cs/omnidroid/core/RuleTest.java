@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import junit.framework.TestCase;
-import edu.nyu.cs.omnidroid.tests.TestData;
 
 /**
  * Unit tests for {@link Rule} class.
