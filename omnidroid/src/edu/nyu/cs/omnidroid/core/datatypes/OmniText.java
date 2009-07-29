@@ -84,7 +84,7 @@ public class OmniText extends DataType {
    */
   public static void validateUserDefinedValue(DataType.Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
-    if (filter instanceof Filter) {
+    if (!(filter instanceof Filter)) {
       throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
           + "' provided.");
     }

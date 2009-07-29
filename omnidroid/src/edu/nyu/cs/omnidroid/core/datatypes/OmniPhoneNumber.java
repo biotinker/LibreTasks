@@ -80,11 +80,15 @@ public class OmniPhoneNumber extends DataType {
   /*
    * (non-Javadoc)
    * 
-   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(java.lang.String,
+   * @see edu.nyu.cs.omnidroid.core.datatypes.DataType#validateUserDefinedValue(DataType.Filter,
    * java.lang.String)
    */
-  public static void validateUserDefinedValue(Filter filter, String userInput)
+  public static void validateUserDefinedValue(DataType.Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
+    if (!(filter instanceof Filter)) {
+      throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
+          + "' provided.");
+    }
     if (userInput == null) {
       throw new DataTypeValidationException("The user input cannot be null.");
     }
