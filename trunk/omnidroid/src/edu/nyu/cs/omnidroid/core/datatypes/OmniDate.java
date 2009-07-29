@@ -135,15 +135,25 @@ public class OmniDate extends DataType {
    */
   public static void validateUserDefinedValue(DataType.Filter filter, String userInput)
       throws DataTypeValidationException, IllegalArgumentException {
-    if (filter instanceof Filter) {
+    if (!(filter instanceof Filter)) {
       throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
           + "' provided.");
     }
     if (userInput == null) {
       throw new DataTypeValidationException("The user input cannot be null.");
     }
-
-    getDate(userInput);
+    switch ((Filter) filter) {
+    case BEFORE:
+    case AFTER:
+      getDate(userInput);
+      break;
+    case ISDAYOFWEEK:
+      new OmniDayOfWeek(userInput);
+      break;
+    default:
+      throw new DataTypeValidationException("Filter for " + filter.toString()
+          + " not yet supported.");
+    }
   }
 
   /**
