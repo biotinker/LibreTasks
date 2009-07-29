@@ -124,14 +124,23 @@ public class DbHelper extends SQLiteOpenHelper {
     long dataTypeIdText = dataTypeDbAdapter.insert("Text", "OmniText");
     long dataTypeIdDate = dataTypeDbAdapter.insert("Date", "OmniDate");
     long dataTypeIdPhone = dataTypeDbAdapter.insert("PhoneNumber", "OmniPhoneNumber");
+    long dataTypeIdArea = dataTypeDbAdapter.insert("Area", "OmniArea");
+    long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert("DayOfWeek", "OmniDayOfWeek");
     
     // Populate data filters
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     dataFilterDbAdapter.insert("equals", dataTypeIdText, dataTypeIdText);
     dataFilterDbAdapter.insert("contains", dataTypeIdText, dataTypeIdText);
+    
     dataFilterDbAdapter.insert("equals", dataTypeIdPhone, dataTypeIdPhone);
+    
     dataFilterDbAdapter.insert("before", dataTypeIdDate, dataTypeIdDate);
     dataFilterDbAdapter.insert("after", dataTypeIdDate, dataTypeIdDate);
+    
+    dataFilterDbAdapter.insert("near", dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert("away", dataTypeIdArea, dataTypeIdArea);
+    
+    dataFilterDbAdapter.insert("isDayOfWeek", dataTypeIdDate, dataTypeIdDayOfWeek);
     
     // Populate registered apps
     RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
@@ -146,6 +155,7 @@ public class DbHelper extends SQLiteOpenHelper {
     // Populate registered actions
     RegisteredActionDbAdapter registeredActionDbAdapter = new RegisteredActionDbAdapter(db);
     long actionIdSmsSend = registeredActionDbAdapter.insert("SMS Send", appIdSms);
+    long actionIdPhoneCall = registeredActionDbAdapter.insert("Phone Call", appIdDial);
     
     // Populate registered event attributes
     RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter = 
@@ -159,6 +169,7 @@ public class DbHelper extends SQLiteOpenHelper {
         new RegisteredActionParameterDbAdapter(db);
     registeredActionParameterDbAdapter.insert("Phone Number", actionIdSmsSend, dataTypeIdPhone);
     registeredActionParameterDbAdapter.insert("Text Message", actionIdSmsSend, dataTypeIdText);
+    registeredActionParameterDbAdapter.insert("Phone Number", actionIdPhoneCall, dataTypeIdPhone);
   }
 
   /**
