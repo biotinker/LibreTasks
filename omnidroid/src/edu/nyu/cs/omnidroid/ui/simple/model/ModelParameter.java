@@ -15,31 +15,27 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
-import java.util.ArrayList;
 
 /**
- * UI representation of an action. Actions always have an associated parent application.
+ * UI representation of an action parameter.
  */
-public class ModelAction extends ModelItem {
+public class ModelParameter extends ModelItem {
 
-  /** An action always has a parent application. */
-  private final ModelApplication application;
-  
-  /** A list of parameter names for this action. */
-  private ArrayList<ModelParameter> parameters;
+  private final int foreignKeyActionId;
+  private final int datatype;
 
-  public ModelAction(String typeName, String description, int iconResId, int databaseId,
-      ModelApplication application, ArrayList<ModelParameter> parameters) {
-    super(typeName, description, iconResId, databaseId);
-    this.application = application;
-    this.parameters = parameters;
+  public ModelParameter(int databaseId, int foreignKeyActionId, int datatype, String typeName,
+      String description) {
+    super(typeName, description, -1, databaseId);
+    this.foreignKeyActionId = foreignKeyActionId;
+    this.datatype = datatype;
   }
 
-  public ModelApplication getApplication() {
-    return application;
+  public int getForeignKeyActionId() {
+    return foreignKeyActionId;
   }
   
-  public ArrayList<ModelParameter> getParameters() {
-    return parameters;
+  public int getDatatype() {
+    return datatype;
   }
 }

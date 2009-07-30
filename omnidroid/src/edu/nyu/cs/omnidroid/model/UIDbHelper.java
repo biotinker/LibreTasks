@@ -32,10 +32,12 @@ import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredAppDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventAttributeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RuleActionDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RuleActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RuleFilterDbAdapter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
@@ -43,6 +45,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelParameter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
@@ -62,8 +65,10 @@ public class UIDbHelper {
   private RegisteredEventDbAdapter registeredEventDbAdapter;
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter;
+  private RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter;
   private RuleFilterDbAdapter ruleFilterDbAdapter;
   private RuleActionDbAdapter ruleActionDbAdapter;
+  private RuleActionParameterDbAdapter ruleActionParameterDbAdapter;
   private RuleDbAdapter ruleDbAdapter;
 
   // Hash maps for storing cached data for quick lookup
@@ -89,8 +94,10 @@ public class UIDbHelper {
     registeredEventDbAdapter = new RegisteredEventDbAdapter(database);
     registeredActionDbAdapter = new RegisteredActionDbAdapter(database);
     registeredEventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(database);
+    registeredActionParameterDbAdapter = new RegisteredActionParameterDbAdapter(database);
     ruleFilterDbAdapter = new RuleFilterDbAdapter(database);
     ruleActionDbAdapter = new RuleActionDbAdapter(database);
+    ruleActionParameterDbAdapter = new RuleActionParameterDbAdapter(database);
     ruleDbAdapter = new RuleDbAdapter(database);
 
     // Initialize db cache
@@ -176,13 +183,38 @@ public class UIDbHelper {
 
       ModelApplication application = applications.get(
           getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID));
+      
+      int actionID = getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID);
+      
+      // Load parameters for each action
+      Cursor cursorParameters = registeredActionParameterDbAdapter.fetchAll(null, 
+        Long.valueOf(actionID), null);
+      ArrayList<ModelParameter> parameterList = new ArrayList<ModelParameter>(
+        cursorParameters.getCount());
+      for (int j = 0; j < cursorParameters.getCount(); j++) {
+        cursorParameters.moveToNext();
+        parameterList.add(new ModelParameter(
+          getIntFromCursor(cursorParameters, 
+            RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID), 
+          getIntFromCursor(cursorParameters, 
+            RegisteredActionParameterDbAdapter.KEY_ACTIONID),
+          getIntFromCursor(cursorParameters, 
+            RegisteredActionParameterDbAdapter.KEY_DATATYPEID),
+          getStringFromCursor(cursorParameters, 
+            RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME), 
+          "" //TODO(ehotou) After implementing desc for action parameter, load it here
+        ));
+      }
 
       ModelAction action = new ModelAction(
           getStringFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONNAME), 
           "", //TODO(ehotou) After implementing desc for action, load it here
           R.drawable.icon_action_unknown,
-          getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID), application);
-
+          getIntFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID), application,
+          parameterList);
+      
+      cursorParameters.close();
+      
       actions.put(action.getDatabaseId(), action);
     }
     cursor.close();
@@ -376,11 +408,13 @@ public class UIDbHelper {
     addFiltersToRuleNode(databaseId, rule.getRootNode());
 
     // Add all actions for this rule
-    ArrayList<ModelAction> actionList = getActionsForRule(databaseId);
-    for (ModelAction action : actionList) {
+    ArrayList<ModelRuleAction> actionList = getActionsForRule(databaseId);
+    for (ModelRuleAction action : actionList) {
       rule.getRootNode().addChild(action);
     }
 
+    cursorRule.close();
+    
     return rule;
   }
 
@@ -438,8 +472,9 @@ public class UIDbHelper {
           modelFilter, filterData);
 
       // Insert filterId, filterParentId
-      parentIds.put(filter.getDatabaseId(), 
-          getIntFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERID));
+      int filterParentId = getIntFromCursor(cursorRuleFilters, 
+          RuleFilterDbAdapter.KEY_PARENTRULEFILTERID);
+      parentIds.put(filter.getDatabaseId(), filterParentId);
       
       // Store the filter instance itself.
       filtersUnlinked.put(filter.getDatabaseId(), filter);
@@ -461,7 +496,7 @@ public class UIDbHelper {
         // This is a top-level filter, its parent is the root node.
         RuleNode node = rootEvent.addChild(filter);
         filtersLinked.put(filterId, node);
-        filtersUnlinked.remove(filterId);
+        it.remove();
       } else {
         // Add this filter to its parent node. The node may not have
         // been constructed yet, so we have to skip it and handle it
@@ -470,29 +505,57 @@ public class UIDbHelper {
         if (nodeParent != null) {
           RuleNode nodeChild = nodeParent.addChild(filter);
           filtersLinked.put(filterId, nodeChild);
-          filtersUnlinked.remove(filterId);
+          it.remove();
         }
       }
     }
   }
 
   /**
-   * Get all actions associated with a rule
+   * Get all actions associated with a saved rule.
    */
-  private ArrayList<ModelAction> getActionsForRule(int ruleId) {
+  private ArrayList<ModelRuleAction> getActionsForRule(int ruleId) {
     Cursor cursorRuleActions = ruleActionDbAdapter.fetchAll(Long.valueOf(ruleId), null);
     
     int count = cursorRuleActions.getCount();
     
-    ArrayList<ModelAction> actionList = new ArrayList<ModelAction>(count);
+    ArrayList<ModelRuleAction> actionList = new ArrayList<ModelRuleAction>(count);
     
+    // For all saved actions, we need to fetch the ModelAction they were constructed from, as well
+    // as the (possibly multiple part) user-supplied data.
     for (int i = 0; i < count; i++) {
       cursorRuleActions.moveToNext();
       
+      // This is the action 'template' the user chose.
       ModelAction action = actions.get(
-          getIntFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_ACTIONID));
+        getIntFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_ACTIONID));
+      
+      // These are all the action parameter 'templates'.
+      ArrayList<ModelParameter> actionParameters = action.getParameters();
+      
+      Cursor cursorRuleActionParameters = ruleActionParameterDbAdapter.fetchAll(Long
+          .valueOf(getIntFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_RULEACTIONID)),
+          null, null);
+      
+      // For every parameter, fetch its corresponding user-supplied data.
+      ArrayList<DataType> userData = new ArrayList<DataType>();
+      for (int j = 0; j < cursorRuleActionParameters.getCount(); j++) {
+        cursorRuleActionParameters.moveToNext();
 
-      actionList.add(action);
+        // Let the factory recreate the correct omni datatype type based on the action parameter's
+        // associated datatype ID, and the serialized string form of the user-supplied data.
+        DataType data = getDataType(actionParameters.get(j).getDatatype(), getStringFromCursor(
+            cursorRuleActionParameters, RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA));
+        userData.add(data);
+      }
+      
+      // Finally we can recreate the user generated action.
+      ModelRuleAction ruleAction = new ModelRuleAction(
+          getIntFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_RULEACTIONID),
+          action, userData);
+      actionList.add(ruleAction);
+      
+      cursorRuleActionParameters.close();
     }
     cursorRuleActions.close();
     return actionList;
@@ -518,8 +581,17 @@ public class UIDbHelper {
 
     // Save all rule actions
     for (ModelRuleAction action : actionList) {
-      // TODO: (ehotou) Save action data(s) here too.
-      ruleActionDbAdapter.insert(ruleID, Long.valueOf(action.getModelAction().getDatabaseId()));  
+      
+      long ruleActionID = ruleActionDbAdapter.insert(
+          ruleID, Long.valueOf(action.getModelAction().getDatabaseId()));
+      
+      // Save all action parameters
+      ArrayList<ModelParameter> parameterList = action.getModelAction().getParameters();
+      ArrayList<DataType> dataList = action.getDatas();
+      for (int i = 0; i < parameterList.size(); i++) {
+        ruleActionParameterDbAdapter.insert(ruleActionID, 
+            Long.valueOf(parameterList.get(i).getDatabaseId()), dataList.get(i).toString());
+      }
     }
 
     // Save all rule filters
