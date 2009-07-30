@@ -219,7 +219,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
         return;
       }
       
-      UtilUI.showAlert(v.getContext(), "Sorry!",
+      UtilUI.showAlert(v.getContext(), "Save Rule",
           "Rule saved ok!");
     }
   };
