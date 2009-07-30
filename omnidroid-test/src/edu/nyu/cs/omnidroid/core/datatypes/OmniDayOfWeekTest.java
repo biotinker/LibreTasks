@@ -94,7 +94,7 @@ public class OmniDayOfWeekTest extends TestCase {
    *  edu.nyu.cs.omnidroid.core.datatypes.DataType.Filter, java.lang.String)}
    * .
    */
-  public void testValidateUserDefinedValueFilterString() {
+  public void testValidateUserDefinedValueFilterString_illegalValue() {
     try {
       OmniDayOfWeek.validateUserDefinedValue(Filter.AFTER, "Value");
     } catch (IllegalArgumentException e) {
@@ -102,7 +102,8 @@ public class OmniDayOfWeekTest extends TestCase {
     } catch (DataTypeValidationException e) {
       return;
     }
-    fail("Expected IllegalArgumentException or DataTypeValidationException but did not receive it.");
+    fail("Expected IllegalArgumentException or DataTypeValidationException "
+        + " but did not receive it.");
   }
 
 }

@@ -33,6 +33,9 @@ public class OmniPhoneNumber extends DataType {
   }
 
   public OmniPhoneNumber(String phoneNumber) throws DataTypeValidationException {
+    if(!isWellFormedSmsAddress(phoneNumber)){
+      throw new DataTypeValidationException("Invalid phone number "+phoneNumber+" provided.");
+    }
     value = formatNumber(phoneNumber);
   }
 

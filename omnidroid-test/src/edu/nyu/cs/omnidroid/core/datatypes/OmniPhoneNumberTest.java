@@ -99,5 +99,32 @@ public class OmniPhoneNumberTest extends TestCase {
   public void testToString() {
     assertEquals(omniPhoneNumber.toString(), "(555)-555-5555");
   }
+  
+  public void testValidateUserDefinedValue() throws IllegalArgumentException,
+      DataTypeValidationException {
+    OmniPhoneNumber.validateUserDefinedValue(Filter.EQUALS, "123-456-2345 x 1347");
+  }
+
+  public void testValidateUserDefinedValue_invalidInput() {
+    try {
+      OmniPhoneNumber.validateUserDefinedValue(Filter.EQUALS, "");
+    } catch (IllegalArgumentException e) {
+      return;
+    } catch (DataTypeValidationException e) {
+      return;
+    }
+    fail("Should have thrown an exception.");
+  }
+  
+  public void testValidateUserDefinedValue_invalidFilter() {
+    try {
+      OmniPhoneNumber.validateUserDefinedValue(OmniDate.Filter.BEFORE, "");
+    } catch (IllegalArgumentException e) {
+      return;
+    } catch (DataTypeValidationException e) {
+      return;
+    }
+    fail("Should have thrown an exception.");
+  }
 
 }
