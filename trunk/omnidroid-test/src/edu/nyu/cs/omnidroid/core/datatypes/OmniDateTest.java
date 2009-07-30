@@ -118,8 +118,23 @@ public class OmniDateTest extends TestCase {
 
   /**
    * Test method for
-   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniDate#validateUserDefinedValue(DataType.Filter, java.lang.String)}
-   * .
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniDate#validateUserDefinedValue(DataType.Filter,
+   * java.lang.String)}.
+   * 
+   * @throws DataTypeValidationException
+   * @throws IllegalArgumentException
+   */
+  public void testValidateUserDefinedValue() throws IllegalArgumentException,
+      DataTypeValidationException {
+    OmniDate.validateUserDefinedValue(Filter.AFTER, TOMORROW);
+    OmniDate.validateUserDefinedValue(Filter.BEFORE, YESTERDAY);
+    OmniDate.validateUserDefinedValue(Filter.ISDAYOFWEEK, "sunday");
+  }
+
+  /**
+   * Test method for
+   * {@link edu.nyu.cs.omnidroid.core.datatypes.OmniDate#validateUserDefinedValue(DataType.Filter, 
+   *  java.lang.String)}.
    */
   public void testValidateUserDefinedValue_invalidInput() {
     try {
