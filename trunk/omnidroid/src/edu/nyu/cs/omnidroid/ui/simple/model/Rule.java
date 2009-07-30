@@ -84,6 +84,7 @@ public class Rule {
     if (node == null) {
       node = new RuleNode(null, event);
     } else {
+      node.removeAllChildren();
       node.setItem(event);
     }
   }
@@ -109,13 +110,12 @@ public class Rule {
    */
   public ArrayList<RuleNode> getFilterBranches() {
     ArrayList<RuleNode> filters = new ArrayList<RuleNode>();
-
-    int indexAction = getFirstActionPosition();
-    int numChildren = node.getChildren().size();
-    for (int i = 0; i < numChildren; i++) {
-      if (i >= indexAction) {
-        break;
-      }
+    int stopIndex = node.getChildren().size();
+    int firstActionIndex = getFirstActionPosition();
+    if (firstActionIndex > -1) {
+      stopIndex = firstActionIndex;
+    }
+    for (int i = 0; i < stopIndex; i++) {
       filters.add(node.getChildren().get(i));
     }
 
@@ -129,10 +129,14 @@ public class Rule {
    */
   public ArrayList<ModelRuleAction> getActions() {
     ArrayList<ModelRuleAction> actions = new ArrayList<ModelRuleAction>();
-    int numChildren = node.getChildren().size();
-    for (int i = getFirstActionPosition(); i < numChildren; i++) {
-      actions.add((ModelRuleAction) node.getChildren().get(i).getItem());
+    int firstActionIndex = getFirstActionPosition();
+    if (firstActionIndex > -1) {
+      int numTopLevelChildren = node.getChildren().size();
+      for (int i = firstActionIndex; i < numTopLevelChildren; i++) {
+        actions.add((ModelRuleAction) node.getChildren().get(i).getItem());
+      }
     }
+    
     return actions;
   }
 
@@ -142,9 +146,10 @@ public class Rule {
    * @return The first index of an action, or -1 if no actions present.
    */
   public int getFirstActionPosition() {
-    // Actions are stored as siblings under the root event.
+    // Actions are stored as siblings directly under the root event.
     // This is enforced by the user interface.
-    for (int i = node.getChildren().size() - 1; i > -1; i--) {
+    int numTopLevelChildren = node.getChildren().size();
+    for (int i = 0; i < numTopLevelChildren; i++) {
       if (node.getChildren().get(i).getItem() instanceof ModelRuleAction) {
         return i;
       }
