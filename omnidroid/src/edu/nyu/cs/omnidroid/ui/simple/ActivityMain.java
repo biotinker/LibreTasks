@@ -82,6 +82,12 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewRules = new OnClickListener() {
     public void onClick(View v) {
+    	// Wipe UI state for the the activity so it appears as a brand new run.
+      SharedPreferences state = v.getContext().getSharedPreferences(
+          ActivitySavedRules.KEY_STATE,
+          Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
+      state.edit().clear().commit();
+        
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivitySavedRules.class);
       startActivity(intent);

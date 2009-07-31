@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 /**
  * Spare parts for UI work.
@@ -46,9 +47,26 @@ public class UtilUI {
    * contents might not occupy full screen size.
    */
   public static void inflateDialog(LinearLayout layout) {
-    WindowManager wm = (WindowManager) layout.getContext().getSystemService(Context.WINDOW_SERVICE);
+    WindowManager wm = (WindowManager) layout.getContext().getSystemService(
+      Context.WINDOW_SERVICE);
     Display display = wm.getDefaultDisplay();
     layout.setMinimumWidth(display.getWidth() - 30);
     layout.setMinimumHeight(display.getHeight() - 40);
+  }
+  
+  /**
+   * Uncheck any item that is currently selected in a ListView.
+   */
+  public static void uncheckListViewSingleChoice(ListView listView) {
+    if (listView.getChoiceMode() == ListView.CHOICE_MODE_SINGLE) {
+      int checkedPosition = listView.getCheckedItemPosition();
+      if (checkedPosition > -1) {
+        listView.setItemChecked(checkedPosition, false);
+      }
+    }
+    else {
+      throw new IllegalArgumentException(
+        "UtilUI.uncheckListView() only works on lists using choice mode: CHOICE_MODE_SINGLE.");
+    }
   }
 }

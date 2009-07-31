@@ -18,7 +18,9 @@ package edu.nyu.cs.omnidroid.ui.simple;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -41,7 +43,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
  */
 public class ActivitySavedRules extends Activity {
 
-  private static final String KEY_STATE = "StateActivitySavedRules";
+  public static final String KEY_STATE = "StateActivitySavedRules";
 
   private ListView listView;
   private AdapterRules adapterRules;
@@ -139,14 +141,26 @@ public class ActivitySavedRules extends Activity {
     adapterRules.toggleRuleOnOff(selectedItemPosition);
   }
 
-  private void deleteRule(int selectedItemPosition) {
+  private void deleteRule(final int selectedItemPosition) {
     if (selectedItemPosition < 0) {
       UtilUI.showAlert(this, "Sorry!", "Please select a rule from the list to delete!");
       return;
     }
 
-    // TODO: (markww) Ask user if they're sure they want to delete the rule.
-    adapterRules.deleteRule(selectedItemPosition);
+    // Ask the user if they're sure they want to delete the rule.
+    new AlertDialog.Builder(this)
+      .setIcon(android.R.drawable.ic_dialog_alert)
+      .setTitle("Are you sure you want to delete this rule?")
+      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+          adapterRules.deleteRule(selectedItemPosition);
+        }
+      })
+      .setNegativeButton("No", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+        }
+      })
+      .show();
   }
 
   /**
@@ -170,9 +184,15 @@ public class ActivitySavedRules extends Activity {
     }
 
     public void deleteRule(int position) {
-      // TODO: (markww) Call delete-rule in database once method exists.
+      // Delete from the database.
+      UIDbHelperStore.instance().db().deleteRule(rules.get(position).getDatabaseId());
+
+      // Delete from our memory representation.
       rules.remove(position);
       notifyDataSetChanged();
+
+      // Uncheck whatever item was selected in the list.
+      UtilUI.uncheckListViewSingleChoice(listView);
     }
 
     public int getCount() {
