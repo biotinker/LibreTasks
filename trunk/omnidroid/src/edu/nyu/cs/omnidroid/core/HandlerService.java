@@ -21,14 +21,18 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
+import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.util.OmLogger;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
 /**
  * This class is the heart of OmniDroid. When this class receives a system intent from
  * {@link BCReceiver} it calls {@link IntentParser} to create an {@link Event} if it is supported by
  * OmniDroid. The event is passed to the {@link RuleProcessor} to see if the event's attributes are
- * matched by the parameters of the user's defined {@link Rule}. The {@link Action}(s) of any rules that match
- * are passed to ActionExecuter where they are packaged into system intents and run.
+ * matched by the parameters of the user's defined {@link Rule}. The {@link Action}(s) of any rules
+ * that match are passed to ActionExecuter where they are packaged into system intents and run.
  */
 public class HandlerService extends Service {
 
@@ -49,8 +53,16 @@ public class HandlerService extends Service {
   @Override
   public void onStart(Intent intent, int id) {
     Event event = IntentParser.getEvent(intent);
-    ArrayList<Action> actions = RuleProcessor.getActions(event);
-    // TODO(londinop): Integrate with action launcher code from Rutvij
+    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
+    ArrayList<Action> actions = RuleProcessor.getActions(coreActionsDbHelper, event);
+    // Execute the list of actions.
+    try {
+      ActionExecuter.executeActions(this, actions);
+    } catch (OmnidroidException e) {
+      Log.w("Handler Service:", e.toString(), e);
+      Log.w("Handler Service: ", e.getLocalizedMessage());
+      OmLogger.write(this, "Illegal Execution Method");
+    }
     // TODO(londinop): Log events/actions to a database or content provider
   }
 

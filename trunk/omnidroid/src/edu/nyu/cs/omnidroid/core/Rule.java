@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
+import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
 
 /**
  * This class represents a user defined rule. It consists of the name of the {@link Event} that will
@@ -28,7 +29,7 @@ public class Rule {
   public final String ruleName;
   public final String eventAppName;
   public final ArrayList<Filter> filters;
-  public final ArrayList<Action> actions;
+  private long ruleId;
 
   /**
    * Constructs a rule from all rule parameters
@@ -57,7 +58,6 @@ public class Rule {
     this.ruleName = ruleName;
     this.eventAppName = eventAppName;
     this.filters = filters;
-    this.actions = actions;
   }
 
   /**
@@ -81,18 +81,16 @@ public class Rule {
    * Returns the actions associated with this rule. Populates the action parameter fields, which may
    * require retrieving them from the event
    * 
+   * @param coreActionsDbHelper
+   *          The helper class to get actions data from database
    * @param event
    *          the event which triggered this rule and may contain data for the action parameters
    * @return the action(s) fired by this rule
    */
-  public ArrayList<Action> getActions(Event event) {
-    /*
-     * TODO(londinop): This is where we should fill in blank action parameter data that is dependent
-     * on event attributes
-     * 
-     * for (Action currentAction : actions) { }
-     */
-
-    return actions;
+  public ArrayList<Action> getActions(CoreActionsDbHelper coreActionsDbHelper, Event event) {
+    // Get actions arraylist for this rule
+    ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleId, event);
+    coreActionsDbHelper.close();
+    return actionsList;
   }
 }

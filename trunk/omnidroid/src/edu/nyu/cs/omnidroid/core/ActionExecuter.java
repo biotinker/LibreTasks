@@ -37,6 +37,7 @@ public class ActionExecuter {
    * @param actions
    *          List of actions to be executed
    * @throws OmnidroidException
+   *           if an illegal execution method is specified
    */
   public static void executeActions(Context context, List<Action> actions)
       throws OmnidroidException {
@@ -51,17 +52,18 @@ public class ActionExecuter {
         } else {
           // Illegal Action execution method.
           throw new OmnidroidException(120001, ExceptionMessageMap.getMessage(new Integer(120001)
-              .toString()));
+              .toString())
+              + action.getActionName());
         }
       } catch (SecurityException e) {
         // Omnidroid does not have permission to perform this action
-        Log.i("Action Executer:", e.toString(), e);
-        Log.i("Action Executer: ", e.getLocalizedMessage());
+        Log.w("Action Executer:", e.toString(), e);
+        Log.w("Action Executer: ", e.getLocalizedMessage());
         OmLogger.write(context, "No permissions to perform this action: " + action.getActionName());
       } catch (ActivityNotFoundException e) {
         // No activity found to perform this action
-        Log.i("Action Executer:", e.toString(), e);
-        Log.i("Action Executer: ", e.getLocalizedMessage());
+        Log.w("Action Executer:", e.toString(), e);
+        Log.w("Action Executer: ", e.getLocalizedMessage());
         OmLogger.write(context, "No activity found to perform this action: "
             + action.getActionName());
       }
