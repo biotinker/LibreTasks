@@ -178,14 +178,22 @@ public class ActivitySavedRules extends Activity {
     }
 
     public void toggleRuleOnOff(int position) {
-      // TODO: (markww) Call set rule on/off in database once method exists.
-      rules.get(position).setIsEnabled(!rules.get(position).getIsEnabled());
+      Rule rule = rules.get(position);
+      
+      // Update from memory representation
+      rule.setIsEnabled(!rule.getIsEnabled());
+      
+      // Update the enabled flag in the database
+      UIDbHelperStore.instance().db().setRuleEnabled(rule.getDatabaseId(), rule.getIsEnabled());
+      
       notifyDataSetChanged();
     }
 
     public void deleteRule(int position) {
+      Rule rule = rules.get(position);
+      
       // Delete from the database.
-      UIDbHelperStore.instance().db().deleteRule(rules.get(position).getDatabaseId());
+      UIDbHelperStore.instance().db().deleteRule(rule.getDatabaseId());
 
       // Delete from our memory representation.
       rules.remove(position);

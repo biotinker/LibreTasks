@@ -67,4 +67,19 @@ public class CursorHelper{
     return cursor.getLong(cursor.getColumnIndex(columnName));
   }
   
+  /**
+   * Helper method to get boolean value from a column
+   * 
+   * @param cursor
+   *          is the cursor to get value from
+   *          
+   * @param columnName
+   *          is name of the column to get
+   *          
+   * @return boolean value of the specific column within the cursor
+   */
+  public static boolean getBooleanFromCursor(Cursor cursor, String columnName) {
+     return cursor.getInt(cursor.getColumnIndex(columnName)) == 1;
+  }
+  
 }
