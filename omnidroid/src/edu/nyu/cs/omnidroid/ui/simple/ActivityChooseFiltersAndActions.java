@@ -209,8 +209,9 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private OnClickListener listenerBtnClickSaveRule = new OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Prompt user for rule name and description here too.
+      long newRuleId;
       try {
-        UIDbHelperStore.instance().db().saveRule(
+        newRuleId = UIDbHelperStore.instance().db().saveRule(
           RuleBuilder.instance().getRule());
       }
       catch (Exception ex) {
@@ -221,6 +222,13 @@ public class ActivityChooseFiltersAndActions extends Activity {
       
       UtilUI.showAlert(v.getContext(), "Save Rule",
           "Rule saved ok!");
+      
+      // We have to reload the rule from the database now so that the UI representation
+      // of it is in-sync with the new element IDs assigned during the save operation.
+      // TODO: (markww) replace all occurrences of int with long to get rid of these casts.
+      RuleBuilder.instance().resetForEditing(
+        UIDbHelperStore.instance().db().loadRule((int)newRuleId));
+      adapterRule.setRule(RuleBuilder.instance().getRule());
     }
   };
 
