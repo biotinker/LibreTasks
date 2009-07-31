@@ -18,6 +18,7 @@ package edu.nyu.cs.omnidroid.model;
 import static edu.nyu.cs.omnidroid.model.CursorHelper.getIntFromCursor;
 import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 import static edu.nyu.cs.omnidroid.model.CursorHelper.getLongFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getBooleanFromCursor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +56,8 @@ import edu.nyu.cs.omnidroid.ui.simple.model.RuleNode;
 /**
  * This class serves as an access layer of the database for Omnidroid's UI data model 
  * representation.
+ * 
+ * TODO(ehotou) Consider throwing exceptions when db operations failed.
  */
 public class UIDbHelper {
 
@@ -346,7 +349,7 @@ public class UIDbHelper {
   }
 
   /**
-   * @return all Rule objects (sparse version just contains id, name) as an ArrayList
+   * @return all Rule objects (sparse version just contains id, name and enabled) as an ArrayList
    * @throws IllegalStateException if this helper is closed
    */
   public ArrayList<Rule> getRules() {
@@ -358,47 +361,53 @@ public class UIDbHelper {
     ArrayList<Rule> ruleList = new ArrayList<Rule>(cursor.getCount());
     
     while (cursor.moveToNext()) {
-      Rule rule = new Rule(getIntFromCursor(cursor, RuleDbAdapter.KEY_RULEID));
-      rule.setName(getStringFromCursor(cursor, RuleDbAdapter.KEY_RULENAME));
-      // TODO(ehotou) need to set rule active flag when it is added into rule object
-      
-      ruleList.add(rule);
+      ruleList.add(loadRuleSparse(cursor));
     }
     cursor.close();
     return ruleList;
   }
 
   /**
-   * @param databaseId
+   * @param ruleId
    *          is the rule id
    *          
    * @return a fully loaded Rule object with databaseId
    * @throws IllegalStateException if this helper is closed
    */
-  public Rule loadRule(int databaseId) {
+  public Rule loadRule(int ruleId) {
     if (isClosed) {
       throw new IllegalStateException("UIDbHelper is closed.");
     }
     
-    Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(databaseId));
+    Cursor cursorRule = ruleDbAdapter.fetch(Long.valueOf(ruleId));
 
-    Rule rule = new Rule(databaseId);
+    Rule rule = loadRuleSparse(cursorRule);
 
     // Fetch and set the root event.
     ModelEvent event = events.get(getIntFromCursor(cursorRule, RuleDbAdapter.KEY_EVENTID));
-    rule.setRootEvent(event);
+    rule.setRootEvent(event);    
 
     // Add all filters for this rule to the root node in a tree format.
-    addFiltersToRuleNode(databaseId, rule.getRootNode());
+    addFiltersToRuleNode(ruleId, rule.getRootNode());
 
     // Add all actions for this rule
-    ArrayList<ModelRuleAction> actionList = getActionsForRule(databaseId);
+    ArrayList<ModelRuleAction> actionList = getActionsForRule(ruleId);
     for (ModelRuleAction action : actionList) {
       rule.getRootNode().addChild(action);
     }
     
     cursorRule.close();
 
+    return rule;
+  }
+  
+  /**
+   * @return a sparse version of rule object 
+   */
+  private Rule loadRuleSparse(Cursor cursorRule) {
+    Rule rule = new Rule(getIntFromCursor(cursorRule, RuleDbAdapter.KEY_RULEID));
+    rule.setName(getStringFromCursor(cursorRule, RuleDbAdapter.KEY_RULENAME));
+    rule.setIsEnabled(getBooleanFromCursor(cursorRule, RuleDbAdapter.KEY_ENABLED));
     return rule;
   }
 
@@ -567,7 +576,8 @@ public class UIDbHelper {
     }
     
     // TODO(ehotou) need to specify rule name and desc after UI implement them
-    ruleID = ruleDbAdapter.insert(Long.valueOf(event.getDatabaseId()), "New Rule", "", true);
+    ruleID = ruleDbAdapter.insert(Long.valueOf(event.getDatabaseId()), "New Rule", "", 
+        rule.getIsEnabled());
 
     // Create all ruleAction records
     for (ModelRuleAction ruleAction : ruleActionList) {
@@ -662,5 +672,18 @@ public class UIDbHelper {
     for (RuleNode childRuleFilterNode : node.getChildren()) {
       deleleFilterRuleNode(childRuleFilterNode);
     }
+  }
+  
+  /**
+   * Update enabled flag of one rule record
+   * 
+   * @param ruleID
+   *          is id of the rule record to be updated
+   *          
+   * @param enabled
+   *          is the enabled flag
+   */
+  public void setRuleEnabled(int ruleID, boolean enabled) {
+    ruleDbAdapter.update(Long.valueOf(ruleID), null, null, null, enabled);
   }
 }
