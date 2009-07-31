@@ -18,14 +18,16 @@ package edu.nyu.cs.omnidroid.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.test.suitebuilder.annotation.Suppress;
+import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
-import junit.framework.TestCase;
+import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.Suppress;
 
 /**
  * Unit tests for {@link RuleProcessor} class.
  */
-public class RuleProcessorTest extends TestCase {
+public class RuleProcessorTest extends AndroidTestCase {
   Rule rule;
   Event event;
 
@@ -37,18 +39,22 @@ public class RuleProcessorTest extends TestCase {
   /**
    * Tests that the rule processor correctly retrieves an action if the event passes all rule
    * filters
+   * 
+   * @throws OmnidroidException
    */
-  // TODO(kaijohnson): Add mock database so RuleProcessor has something to use as a datastore, then
-  // unsuppress this test.
-  @Suppress // Because RuleProcessor needs database access
-  public void testRuleProcessor_pass() {
+  // TODO: (rutvij) Unsuppress this test when getActions method in RuleProcessor gets rules from
+  // database
+  @Suppress
+  // This test fails because RuleProcesser still does not get rules from database.
+  public void testRuleProcessor_pass() throws OmnidroidException {
     // Parameters provided to the CallPhoneAction
     HashMap<String, String> phoneCallParameters = new HashMap<String, String>();
     phoneCallParameters.put(CallPhoneAction.PARAM_PHONE_NO, "5556");
     ArrayList<Action> actions = new ArrayList<Action>();
     Action action = new CallPhoneAction(phoneCallParameters);
     actions.add(action);
-    assertEquals(actions.size(), RuleProcessor.getActions(event).size());
+    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(getContext());
+    assertEquals(actions.size(), RuleProcessor.getActions(coreActionsDbHelper, event).size());
   }
 
   /**
@@ -57,6 +63,7 @@ public class RuleProcessorTest extends TestCase {
    */
   public void testRuleProcessor_noPass() {
     event = TestData.getSMSEvent();
-    assertEquals(0, RuleProcessor.getActions(event).size());
+    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(getContext());
+    assertEquals(0, RuleProcessor.getActions(coreActionsDbHelper, event).size());
   }
 }

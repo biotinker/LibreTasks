@@ -17,6 +17,9 @@ package edu.nyu.cs.omnidroid.core;
 
 import java.util.HashMap;
 
+import edu.nyu.cs.omnidroid.util.ExceptionMessageMap;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
+
 import android.content.Intent;
 import android.net.Uri;
 
@@ -45,10 +48,16 @@ public class CallPhoneAction extends Action {
    *          <li>Value - A valid phone number String.
    *          </ul>
    *          </ol>
+   * @throws OmnidroidException
+   *           if Action Parameter "Phone Number" is not found
    */
-  public CallPhoneAction(HashMap<String, String> parameters) {
+  public CallPhoneAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(Intent.ACTION_CALL, Action.BY_ACTIVITY);
     phoneNumber = parameters.get(PARAM_PHONE_NO);
+    if (phoneNumber == null) {
+      throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
+          .toString()));
+    }
   }
 
   /**
