@@ -37,4 +37,8 @@
                      android:targetPackage="edu.nyu.cs.omnidroid"
                      android:label="Tests for Omnidroid."/>
 
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
