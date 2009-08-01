@@ -51,4 +51,10 @@ public interface Constants {
 
   /** Return code for action editing activities. */
   public static final int ACTIVITY_RESULT_EDIT_ACTION = 3;
+  
+  /** Return code for rule name editing activity. */
+  public static final int ACTIVITY_RESULT_RULE_NAME = 4;
+  
+  /** Return code for rule building activity. */
+  public static final int ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS = 5;
 }

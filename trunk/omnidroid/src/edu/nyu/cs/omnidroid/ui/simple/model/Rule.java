@@ -34,6 +34,9 @@ public class Rule {
   /** Name given to rule by user. */
   private String name;
   
+  /** Description given to rule by user. */
+  private String description;
+  
   /** Is the rule enabled or disabled? */
   private boolean isEnabled;
   
@@ -59,6 +62,14 @@ public class Rule {
 
   public String getName() {
     return name;
+  }
+  
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public int getDatabaseId() {

@@ -15,10 +15,10 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getIntFromCursor;
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getLongFromCursor;
 import static edu.nyu.cs.omnidroid.model.CursorHelper.getBooleanFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getIntFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getLongFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -407,6 +407,7 @@ public class UIDbHelper {
   private Rule loadRuleSparse(Cursor cursorRule) {
     Rule rule = new Rule(getIntFromCursor(cursorRule, RuleDbAdapter.KEY_RULEID));
     rule.setName(getStringFromCursor(cursorRule, RuleDbAdapter.KEY_RULENAME));
+    rule.setDescription(getStringFromCursor(cursorRule, RuleDbAdapter.KEY_RULEDESC));
     rule.setIsEnabled(getBooleanFromCursor(cursorRule, RuleDbAdapter.KEY_ENABLED));
     return rule;
   }
@@ -575,9 +576,13 @@ public class UIDbHelper {
       deleteRule(ruleID.intValue());
     }
     
-    // TODO(ehotou) need to specify rule name and desc after UI implement them
-    ruleID = ruleDbAdapter.insert(Long.valueOf(event.getDatabaseId()), "New Rule", "", 
-        rule.getIsEnabled());
+    String ruleName = rule.getName();
+    String ruleDesc = rule.getDescription();
+    ruleID = ruleDbAdapter.insert(
+      Long.valueOf(event.getDatabaseId()), 
+      ruleName == null || ruleName.length() == 0 ? "New Rule" : ruleName, 
+      ruleDesc == null || ruleDesc.length() == 0 ? "" : ruleDesc, 
+      rule.getIsEnabled());
 
     // Create all ruleAction records
     for (ModelRuleAction ruleAction : ruleActionList) {
