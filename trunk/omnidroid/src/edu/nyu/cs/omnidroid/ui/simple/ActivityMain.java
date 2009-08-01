@@ -16,9 +16,7 @@
 package edu.nyu.cs.omnidroid.ui.simple;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,14 +58,7 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
     public void onClick(View v) {
-      // Wipe UI state for the the choose root event activity. The choose
-      // root event activity cannot tell if its onDestroy() method is being
-      // called in response to the user going back here, or just due to a
-      // rotation. So we let this parent activity wipe state.
-      SharedPreferences state = v.getContext().getSharedPreferences(
-          ActivityChooseRootEvent.KEY_STATE,
-          Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
-      state.edit().clear().commit();
+      ActivityChooseRootEvent.resetUI(v.getContext());
 
       // User wants to create a new rule, move them to the ActivityChooseRootEvent
       // activity so they can choose the root event.
@@ -82,11 +73,7 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewRules = new OnClickListener() {
     public void onClick(View v) {
-    	// Wipe UI state for the the activity so it appears as a brand new run.
-      SharedPreferences state = v.getContext().getSharedPreferences(
-          ActivitySavedRules.KEY_STATE,
-          Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
-      state.edit().clear().commit();
+      ActivitySavedRules.resetUI(v.getContext());
         
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivitySavedRules.class);

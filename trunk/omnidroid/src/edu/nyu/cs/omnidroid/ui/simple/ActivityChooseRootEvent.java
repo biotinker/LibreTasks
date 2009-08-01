@@ -44,12 +44,13 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelEvent;
  */
 public class ActivityChooseRootEvent extends Activity {
 
+  private static final String KEY_STATE = "StateActivityChooseRootEvent";
+  private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
+  
   private ListView listView;
   private AdapterEvents adapterEvents;
   private SharedPreferences state;
 
-  public static final String KEY_STATE = "StateActivityChooseRootEvent";
-  private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
 
   /**
    * Called when the activity is first created.
@@ -89,6 +90,15 @@ public class ActivityChooseRootEvent extends Activity {
     prefsEditor.putInt(KEY_STATE_SELECTED_EVENT, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
+  
+  /**
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
+   */
+  public static void resetUI(Context context) {
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  }
 
   private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
     public void onClick(View v) {
@@ -99,10 +109,8 @@ public class ActivityChooseRootEvent extends Activity {
         RuleBuilder.instance().resetForNewRuleEditing(
           adapterEvents.getItem(selectedEventPosition));
 
-        // Wipe UI state for the activity.
-        SharedPreferences state = v.getContext().getSharedPreferences(
-            ActivityChooseFiltersAndActions.KEY_STATE, Context.MODE_PRIVATE);
-        state.edit().clear().commit();
+        // Wipe UI state for the new activity.
+        ActivityChooseFiltersAndActions.resetUI(v.getContext());
 
         // Move them along to the ActivityChooseFilters activity where
         // they can start adding some filters.

@@ -81,8 +81,6 @@ public class ActivityDlgAttributes extends Activity {
     // If the user constructed a valid filter, also kill ourselves.
     ModelRuleFilter filter = RuleBuilder.instance().getChosenRuleFilter();
     if (filter != null) {
-      // Be sure to wipe our UI state, otherwise the onPause will save it!
-      resetUI();
       finish();
     }
   }
@@ -111,6 +109,15 @@ public class ActivityDlgAttributes extends Activity {
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_attributes_ll_main));
   }
+  
+  /**
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
+   */
+  public static void resetUI(Context context) {
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  }
 
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
@@ -130,8 +137,6 @@ public class ActivityDlgAttributes extends Activity {
 
   private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
     public void onClick(View v) {
-      // Be sure to wipe our UI state, otherwise the onStop will save it!
-      resetUI();
       finish();
     }
   };
@@ -148,22 +153,12 @@ public class ActivityDlgAttributes extends Activity {
     // Store the selected attribute in the RuleBuilder so the next activity can pick it up.
     ModelAttribute attribute = (ModelAttribute) adapterAttributes.getItem(selectedItemPosition);
     RuleBuilder.instance().setChosenAttribute(attribute);
+    
+    ActivityDlgFilters.resetUI(this);
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilters.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTER);
-  }
-
-  /**
-   * Deselects any item selected by the user in the attributes listview. We call this before the 
-   * user closes the dialog so the UI state-saving mechanism does not record any item as being 
-   * selected. Otherwise the next time the user opens this dialog, they would see their last picked
-   * item as selected, which may be confusing.
-   */
-  private void resetUI() {
-    if (listView.getCheckedItemPosition() > -1) {
-      listView.setItemChecked(listView.getCheckedItemPosition(), false);
-    }
   }
 
   /**

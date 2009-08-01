@@ -44,7 +44,7 @@ import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
  */
 public class ActivitySavedRules extends Activity {
 
-  public static final String KEY_STATE = "StateActivitySavedRules";
+  private static final String KEY_STATE = "StateActivitySavedRules";
 
   private ListView listView;
   private AdapterRules adapterRules;
@@ -105,6 +105,15 @@ public class ActivitySavedRules extends Activity {
     }
   }
 
+  /**
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
+   */
+  public static void resetUI(Context context) {
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  }
+  
   private View.OnClickListener listenerBtnClickViewRule = new View.OnClickListener() {
     public void onClick(View v) {
       showActivityViewRule(listView.getCheckedItemPosition());
@@ -142,6 +151,9 @@ public class ActivitySavedRules extends Activity {
       return;
     }
 
+    // Wipe UI state for the new activity.
+    ActivityChooseFiltersAndActions.resetUI(this);
+    
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS);

@@ -125,8 +125,6 @@ public class ActivityDlgRuleName extends Activity {
    * @param context  Context of caller.
    */
   public static void resetUI(Context context) {
-    SharedPreferences state = context.getSharedPreferences(
-      KEY_STATE, Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
-    state.edit().clear().commit();
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
   }
 }

@@ -37,12 +37,11 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
  */
 public class ActivityChooseFiltersAndActions extends Activity {
 
+  private static final String KEY_STATE = "StateActivityChooseFilters";
+  
   private ListView listview;
   private AdapterRule adapterRule;
   private SharedPreferences state;
-
-  public static final String KEY_STATE = "StateActivityChooseFilters";
-
 
   /** Called when the activity is first created. */
   @Override
@@ -164,6 +163,15 @@ public class ActivityChooseFiltersAndActions extends Activity {
     llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
   }
   
+  /**
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
+   */
+  public static void resetUI(Context context) {
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  }
+  
   private OnClickListener listenerBtnClickAddFilter = new OnClickListener() {
     public void onClick(View v) {
       ModelItem selectedItem = adapterRule.getItem(listview.getCheckedItemPosition());
@@ -234,6 +242,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // Reset the chosen filter data if left over from a previous run.
     RuleBuilder.instance().resetFilterPath();
 
+    ActivityDlgAttributes.resetUI(this);
+    
     // Launch the activity chain for adding a filter. We check if the user completed a
     // filter in onActivityResult.
     Intent intent = new Intent();
@@ -248,6 +258,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // Reset the chosen action data if left over from a previous run.
     RuleBuilder.instance().resetActionPath();
 
+    ActivityDlgApplications.resetUI(this);
+    
     // Launch the activity chain for adding an action. We check if the user completed an
     // action in onActivityResult.
     Intent intent = new Intent();
