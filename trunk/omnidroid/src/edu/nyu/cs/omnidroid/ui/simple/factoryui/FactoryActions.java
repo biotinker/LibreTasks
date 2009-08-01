@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.ui.simple.factoryui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,6 +44,7 @@ public class FactoryActions {
   private static BuilderOmniPhoneNumber vbOmniPhoneNumber;
   private static BuilderOmniText vbOmniText;
   private static BuilderOmniArea vbOmniArea;
+  private static HashMap<Long, ViewBuilder> viewBuilders;
 
   static {
     // Initialize each of our omni data type builders.
@@ -52,6 +54,11 @@ public class FactoryActions {
     vbOmniText = new BuilderOmniText(lookup.getDataTypeID(BuilderOmniText.NAME));
     vbOmniArea = new BuilderOmniArea(lookup.getDataTypeID(BuilderOmniArea.NAME));
     // TODO: (markww) Add builders for rest of omni data types.
+
+    viewBuilders = new HashMap<Long, ViewBuilder>();
+    viewBuilders.put(vbOmniPhoneNumber.getDatatypeId(), vbOmniPhoneNumber);
+    viewBuilders.put(vbOmniText.getDatatypeId(), vbOmniText);
+    viewBuilders.put(vbOmniArea.getDatatypeId(), vbOmniArea);
   }
 
   private FactoryActions() {
@@ -83,14 +90,8 @@ public class FactoryActions {
       addParameterName(parameter, ll);
 
       // Point to the correct builder for the current parameter.
-      ViewBuilder viewBuilder;
-      if (parameter.getDatatype() == vbOmniPhoneNumber.getDatatypeId()) {
-        viewBuilder = vbOmniPhoneNumber;
-      } else if (parameter.getDatatype() == vbOmniText.getDatatypeId()) {
-        viewBuilder = vbOmniText;
-      } else if (parameter.getDatatype() == vbOmniArea.getDatatypeId()) {
-        viewBuilder = vbOmniArea;
-      } else {
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
         throw new IllegalArgumentException("Unsupported datatype encountered!");
       }
 
@@ -119,18 +120,14 @@ public class FactoryActions {
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
+      ModelParameter parameter = modelAction.getParameters().get(i);
+      
       // Skip over the parameter-name textview.
       childViewPosition++;
 
-      ViewBuilder viewBuilder;
-      ModelParameter parameter = modelAction.getParameters().get(i);
-      if (parameter.getDatatype() == vbOmniPhoneNumber.getDatatypeId()) {
-        viewBuilder = vbOmniPhoneNumber;
-      } else if (parameter.getDatatype() == vbOmniText.getDatatypeId()) {
-        viewBuilder = vbOmniText;
-      } else if (parameter.getDatatype() == vbOmniArea.getDatatypeId()) {
-        viewBuilder = vbOmniArea;
-      } else {
+      // Point to the correct builder for the current parameter.
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
         throw new IllegalArgumentException("Unsupported datatype encountered!");
       }
 
@@ -154,18 +151,14 @@ public class FactoryActions {
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
+      ModelParameter parameter = modelAction.getParameters().get(i);
+      
       // Skip over the parameter-name textview.
       childViewPosition++;
 
-      ViewBuilder viewBuilder;
-      ModelParameter parameter = modelAction.getParameters().get(i);
-      if (parameter.getDatatype() == vbOmniPhoneNumber.getDatatypeId()) {
-        viewBuilder = vbOmniPhoneNumber;
-      } else if (parameter.getDatatype() == vbOmniText.getDatatypeId()) {
-        viewBuilder = vbOmniText;
-      } else if (parameter.getDatatype() == vbOmniArea.getDatatypeId()) {
-        viewBuilder = vbOmniArea;
-      } else {
+      // Point to the correct builder for the current parameter.
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
         throw new IllegalArgumentException("Unsupported datatype encountered!");
       }
 
@@ -181,23 +174,20 @@ public class FactoryActions {
    * Given a layout created by buildUIFromAction() and data stored by uiStateSave(), load all UI
    * data back into UI elements.
    */
-  public static void uiStateLoad(ModelAction modelAction, ViewGroup layout, SharedPreferences state) {
+  public static void uiStateLoad(ModelAction modelAction, ViewGroup layout, 
+    SharedPreferences state) {
 
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
+      ModelParameter parameter = modelAction.getParameters().get(i);
+      
       // Skip over the parameter-name textview.
       childViewPosition++;
 
-      ViewBuilder viewBuilder;
-      ModelParameter parameter = modelAction.getParameters().get(i);
-      if (parameter.getDatatype() == vbOmniPhoneNumber.getDatatypeId()) {
-        viewBuilder = vbOmniPhoneNumber;
-      } else if (parameter.getDatatype() == vbOmniText.getDatatypeId()) {
-        viewBuilder = vbOmniText;
-      } else if (parameter.getDatatype() == vbOmniArea.getDatatypeId()) {
-        viewBuilder = vbOmniArea;
-      } else {
+      // Point to the correct builder for the current parameter.
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
         throw new IllegalArgumentException("Unsupported datatype encountered!");
       }
 
