@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.ViewGroup.LayoutParams;
@@ -27,10 +25,8 @@ import android.widget.TextView;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelItem;
-import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
@@ -98,15 +94,6 @@ public class FactoryDynamicUI {
   }
 
   /**
-   * Interface to make an action builder. This is used to pull UI creation code out of the main
-   * buildUIForAction function.
-   */
-  private interface BuildActionUI {
-    public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelAction modelAction,
-        ArrayList<DataType> datasOld);
-  }
-
-  /**
    * For now we hard-code all the filters into this factory class. Eventually this should be changed
    * to use some information from the database about filter attribute types to generate the required
    * UI elements, instead of a large hard-coded if statement.
@@ -151,41 +138,6 @@ public class FactoryDynamicUI {
     dlg.addDynamicLayout(ll);
   }
 
-  /**
-   * For now we hard-code all the actions into this factory class. Eventually this should be changed
-   * to use some information from the database about action attribute types to generate the required
-   * UI elements, instead of a large hard-coded if statement.
-   * 
-   * The passed action may already be a fully constructed instance, for example, if the user is
-   * editing a constructed action instance in the UI. In that case, its data can be queried and used
-   * to pre-populate controls for end-user convenience.
-   * 
-   * @param dlg
-   *          Dialog interface
-   * @param modelAction
-   *          The model action we want to try to fill.
-   * @param datasOld
-   *          If we're modifying an existing action, then this is the data the user had last set for
-   *          it.
-   */
-  public static void buildUIForAction(DlgDynamicInput dlg, final ModelAction modelAction,
-      final ArrayList<DataType> datasOld) {
-    dlg.setTitle(modelAction.getDescriptionShort());
-
-    LinearLayout ll = new LinearLayout(dlg.getContext());
-    ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
-        LayoutParams.FILL_PARENT));
-    ll.setOrientation(LinearLayout.VERTICAL);
-
-    // TODO: (markww) Replace with real ID lookup for actions once added to DbHelperUI.
-    if (modelAction.getDatabaseId() != 999999) {
-      BuildSendSMS.build(dlg, ll, modelAction, datasOld);
-    } else {
-      throw new IllegalArgumentException("Unknown action ID[" + modelAction.getDatabaseId()
-          + "] passed to FactoryDynamicUI::buildUIForAction()!");
-    }
-    dlg.addDynamicLayout(ll);
-  }
   
   private static BuildFilterUI BuildPhonenumberEquals = new BuildFilterUI() {
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
@@ -296,63 +248,6 @@ public class FactoryDynamicUI {
         public void loadState(SharedPreferences state) {
           if (state.contains("smsphrase")) {
             edit.setText(state.getString("smsphrase", ""));
-          }
-        }
-      });
-    }
-  };
-
-  private static BuildActionUI BuildSendSMS = new BuildActionUI() {
-    public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelAction modelAction,
-        ArrayList<DataType> datasOld) {
-      TextView tv0 = new TextView(dlg.getContext());
-      tv0.setText("Enter a phone number to send the SMS to:");
-      ll.addView(tv0);
-
-      final EditText edit0 = new EditText(dlg.getContext());
-      if (datasOld != null && datasOld.size() > 0) {
-        edit0.setText(((OmniPhoneNumber) datasOld.get(0)).getValue());
-      }
-      ll.addView(edit0);
-
-      TextView tv1 = new TextView(dlg.getContext());
-      tv1.setText("Enter a message for the SMS body text:");
-      ll.addView(tv1);
-
-      final EditText edit1 = new EditText(dlg.getContext());
-      if (datasOld != null && datasOld.size() > 1) {
-        edit1.setText(((OmniText) datasOld.get(1)).getValue());
-      }
-      ll.addView(edit1);
-
-      // Add the handler for when the user is done with their input.
-      dlg.setHandlerOnFilterInputDone(new InputDone() {
-        public ModelItem onInputDone() throws Exception {
-          // Actions can have multiple data parameters.
-          ArrayList<DataType> datas = new ArrayList<DataType>();
-          datas.add(new OmniPhoneNumber(edit0.getText().toString()));
-          datas.add(new OmniText(edit1.getText().toString()));
-
-          // The entered text was valid, return a completely constructed
-          // action, with its associated data.
-          return new ModelRuleAction(-1, modelAction, datas);
-        }
-      });
-      // Also implement the UI state preservation handlers.
-      dlg.setHandlerPreserveState(new DlgPreserveState() {
-        public void saveState(SharedPreferences.Editor prefsEditor) {
-          String txt0 = edit0.getText().toString();
-          prefsEditor.putString("txt0", txt0);
-          String txt1 = edit1.getText().toString();
-          prefsEditor.putString("txt1", txt1);
-        }
-
-        public void loadState(SharedPreferences state) {
-          if (state.contains("txt0")) {
-            edit0.setText(state.getString("txt0", ""));
-          }
-          if (state.contains("txt1")) {
-            edit1.setText(state.getString("txt1", ""));
           }
         }
       });

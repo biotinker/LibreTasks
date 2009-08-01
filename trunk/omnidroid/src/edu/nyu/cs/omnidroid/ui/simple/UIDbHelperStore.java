@@ -2,6 +2,7 @@ package edu.nyu.cs.omnidroid.ui.simple;
 
 import android.content.Context;
 import edu.nyu.cs.omnidroid.model.DataFilterIDLookup;
+import edu.nyu.cs.omnidroid.model.DataTypeIDLookup;
 import edu.nyu.cs.omnidroid.model.UIDbHelper;
 
 /**
@@ -19,12 +20,16 @@ public class UIDbHelperStore {
   /** Points to our internal db helper instance. */
   private UIDbHelper dbInstance;
 
-  /** Looks up filters by IDs. */
+  /** Looks up filters IDs by name. */
   private DataFilterIDLookup filterLookup;
+
+  /** Looks up data type IDs by name. */
+  private DataTypeIDLookup datatypeLookup;
 
   private UIDbHelperStore(Context context) {
     dbInstance = new UIDbHelper(context);
     filterLookup = new DataFilterIDLookup(context);
+    datatypeLookup = new DataTypeIDLookup(context);
   }
 
   public static void init(Context context) {
@@ -49,5 +54,9 @@ public class UIDbHelperStore {
 
   public DataFilterIDLookup getFilterLookup() {
     return filterLookup;
+  }
+
+  public DataTypeIDLookup getDatatypeLookup() {
+    return datatypeLookup;
   }
 }
