@@ -20,7 +20,7 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class ModelApplication extends ModelItem {
 
-  public ModelApplication(String typeName, String description, int iconResId, int databaseId) {
+  public ModelApplication(String typeName, String description, int iconResId, long databaseId) {
     super(typeName, description, iconResId, databaseId);
   }
 }

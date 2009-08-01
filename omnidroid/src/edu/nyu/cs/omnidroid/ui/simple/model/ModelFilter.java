@@ -23,7 +23,7 @@ public class ModelFilter extends ModelItem {
   /** The attribute this filter is associated with. */
   private final ModelAttribute attribute;
 
-  public ModelFilter(String typeName, String description, int iconResId, int databaseId,
+  public ModelFilter(String typeName, String description, int iconResId, long databaseId,
       ModelAttribute attribute) {
     super(typeName, description, iconResId, databaseId);
     this.attribute = attribute;

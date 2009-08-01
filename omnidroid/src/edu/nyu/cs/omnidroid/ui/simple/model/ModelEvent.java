@@ -20,7 +20,7 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class ModelEvent extends ModelItem {
 
-  public ModelEvent(int databaseId, String typeName, String description, int iconResId) {
+  public ModelEvent(long databaseId, String typeName, String description, int iconResId) {
     super(typeName, description, iconResId, databaseId);
   }
 }

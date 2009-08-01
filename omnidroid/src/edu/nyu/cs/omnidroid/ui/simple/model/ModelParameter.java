@@ -21,21 +21,21 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class ModelParameter extends ModelItem {
 
-  private final int foreignKeyActionId;
-  private final int datatype;
+  private final long foreignKeyActionId;
+  private final long datatype;
 
-  public ModelParameter(int databaseId, int foreignKeyActionId, int datatype, String typeName,
+  public ModelParameter(long databaseId, long foreignKeyActionId, long datatype, String typeName,
       String description) {
     super(typeName, description, -1, databaseId);
     this.foreignKeyActionId = foreignKeyActionId;
     this.datatype = datatype;
   }
 
-  public int getForeignKeyActionId() {
+  public long getForeignKeyActionId() {
     return foreignKeyActionId;
   }
   
-  public int getDatatype() {
+  public long getDatatype() {
     return datatype;
   }
 }

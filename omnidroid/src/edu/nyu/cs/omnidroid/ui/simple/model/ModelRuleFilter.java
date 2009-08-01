@@ -33,7 +33,7 @@ public class ModelRuleFilter extends ModelItem {
   /** Filter data entered by the end user. */
   private final DataType filterData;
 
-  public ModelRuleFilter(int databaseId, ModelFilter modelFilter, DataType filterData) {
+  public ModelRuleFilter(long databaseId, ModelFilter modelFilter, DataType filterData) {
     super(modelFilter.getTypeName(), modelFilter.getDescription(), modelFilter.getIconResId(),
         databaseId);
     this.modelFilter = modelFilter;
