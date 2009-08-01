@@ -35,7 +35,7 @@ public class ModelRuleAction extends ModelItem {
   /** Action data entered by the end user. */
   private final ArrayList<DataType> actionDatas;
 
-  public ModelRuleAction(int databaseId, ModelAction modelAction, ArrayList<DataType> actionDatas) {
+  public ModelRuleAction(long databaseId, ModelAction modelAction, ArrayList<DataType> actionDatas) {
     super(modelAction.getTypeName(), modelAction.getDescription(), modelAction.getIconResId(),
         databaseId);
     this.modelAction = modelAction;

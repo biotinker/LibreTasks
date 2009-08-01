@@ -21,7 +21,7 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
 public abstract class ModelItem {
 
   /** Database ID. */
-  private final int databaseId;
+  private final long databaseId;
 
   /** Simple name of class for presentation to the user in the UI. */
   protected final String typeName;
@@ -32,7 +32,7 @@ public abstract class ModelItem {
   /** Icon resource ID to use in the UI for this instance (may switch to path). */
   protected final int iconResId;
 
-  public ModelItem(String typeName, String description, int iconResId, int databaseId) {
+  public ModelItem(String typeName, String description, int iconResId, long databaseId) {
     this.typeName = typeName;
     this.description = description;
     this.iconResId = iconResId;
@@ -51,7 +51,7 @@ public abstract class ModelItem {
     return iconResId;
   }
 
-  public int getDatabaseId() {
+  public long getDatabaseId() {
     return databaseId;
   }
 

@@ -28,7 +28,7 @@ public class ModelAction extends ModelItem {
   /** A list of parameter names for this action. */
   private ArrayList<ModelParameter> parameters;
 
-  public ModelAction(String typeName, String description, int iconResId, int databaseId,
+  public ModelAction(String typeName, String description, int iconResId, long databaseId,
       ModelApplication application, ArrayList<ModelParameter> parameters) {
     super(typeName, description, iconResId, databaseId);
     this.application = application;

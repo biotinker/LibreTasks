@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class Rule {
 
   /** Database ID for this rule. */
-  private final int databaseId;
+  private final long databaseId;
 
   /** Name given to rule by user. */
   private String name;
@@ -52,7 +52,7 @@ public class Rule {
    */
   private RuleNode node;
 
-  public Rule(int databaseId) {
+  public Rule(long databaseId) {
     this.databaseId = databaseId;
   }
 
@@ -72,7 +72,7 @@ public class Rule {
     return description;
   }
 
-  public int getDatabaseId() {
+  public long getDatabaseId() {
     return databaseId;
   }
   

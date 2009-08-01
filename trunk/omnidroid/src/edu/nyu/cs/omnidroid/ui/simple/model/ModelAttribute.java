@@ -20,21 +20,21 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class ModelAttribute extends ModelItem {
 
-  private final int foreignKeyEventId;
-  private final int datatype;
+  private final long foreignKeyEventId;
+  private final long datatype;
 
-  public ModelAttribute(int databaseId, int foreignKeyEventId, int datatype, String typeName,
+  public ModelAttribute(long databaseId, long foreignKeyEventId, long datatype, String typeName,
       String description, int iconResId) {
     super(typeName, description, iconResId, databaseId);
     this.foreignKeyEventId = foreignKeyEventId;
     this.datatype = datatype;
   }
 
-  public int getForeignKeyEventId() {
+  public long getForeignKeyEventId() {
     return foreignKeyEventId;
   }
 
-  public int getDatatype() {
+  public long getDatatype() {
     return datatype;
   }
 }
