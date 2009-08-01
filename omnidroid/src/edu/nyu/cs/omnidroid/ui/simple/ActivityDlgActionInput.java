@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+import edu.nyu.cs.omnidroid.ui.simple.factoryui.FactoryActions;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
@@ -33,24 +34,16 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
  * This dialog is a shell to contain UI elements specific to different actions. Given an action ID,
  * we can construct the inner UI elements using {@link FactoryDynamicUI}.
  */
-public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI.DlgDynamicInput {
+public class ActivityDlgActionInput extends Activity {
 
   private static final String KEY_STATE = "StateDlgActionInput";
   
-  /**
-   * When the user hits the OK button, we interpret it to mean that they entered valid action info,
-   * and we can try to construct an action from it. In the OK handler, we execute the one function
-   * of this handler to see if their input is OK for the specific action type chosen.
-   */
-  private FactoryDynamicUI.InputDone handlerInputDone;
-
-  /**
-   * We don't know what inner UI elements we have, but we need to support UI state between
-   * orientation changes etc. We can execute the two methods of this handler to let the UI elements
-   * handle state save/load themselves.
-   */
-  private FactoryDynamicUI.DlgPreserveState handlerStatePreserver;
-
+  /** Layout dynamically generated on our action type by FactoryActions. */
+  private LinearLayout llContent;
+  
+  /** Main layout to which we append the dynamically generated layout. */
+  private LinearLayout llDynamic;
+  
   /** Our state keeper. */
   private SharedPreferences state;
 
@@ -73,7 +66,9 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
     // Restore our UI state.
     state = getSharedPreferences(ActivityDlgActionInput.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    handlerStatePreserver.loadState(state);
+    if (llDynamic != null) {
+      FactoryActions.uiStateLoad(RuleBuilder.instance().getChosenModelAction(), llDynamic, state);
+    }
 
     // By default, we want to save UI state on close.
     preserveStateOnClose = true;
@@ -88,7 +83,8 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
     prefsEditor.clear();
     prefsEditor.commit();
     if (preserveStateOnClose) {
-      handlerStatePreserver.saveState(prefsEditor);
+      FactoryActions.uiStateSave(
+        RuleBuilder.instance().getChosenModelAction(), llDynamic, prefsEditor);
       prefsEditor.commit();
     }
   }
@@ -104,12 +100,17 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
 
     Button btnCancel = (Button) findViewById(R.id.activity_dlg_action_input_btnCancel);
     btnCancel.setOnClickListener(listenerBtnClickCancel);
+    
+    llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
 
     // Add dynamic content now based on our action type.
     ModelAction modelAction = RuleBuilder.instance().getChosenModelAction();
     ArrayList<DataType> ruleActionDataOld = RuleBuilder.instance().getChosenRuleActionDataOld();
-    FactoryDynamicUI.buildUIForAction(this, modelAction, ruleActionDataOld);
-
+    //FactoryDynamicUI.buildUIForAction(this, modelAction, ruleActionDataOld);
+    
+    llDynamic = FactoryActions.buildUIFromAction(modelAction, ruleActionDataOld, this);
+    llContent.addView(llDynamic);
+    
     setTitle(modelAction.getTypeName());
   }
 
@@ -119,7 +120,9 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
       // based on our dynamic UI content.
       ModelRuleAction action;
       try {
-        action = (ModelRuleAction) handlerInputDone.onInputDone();
+      //  action = (ModelRuleAction) handlerInputDone.onInputDone();
+        action = FactoryActions.buildActionFromUI(
+          RuleBuilder.instance().getChosenModelAction(), llDynamic);
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then 
         // remove the static string below and only use the contents of the exception.
@@ -145,7 +148,7 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
     public void onClick(View v) {
       // TODO: (markww) Add help info about action.
       UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about this action soon!");
+        "We'll implement an info dialog about this action soon!");
     }
   };
 
@@ -155,25 +158,4 @@ public class ActivityDlgActionInput extends Activity implements FactoryDynamicUI
       finish();
     }
   };
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public Context getContext() {
-    return this;
-  }
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public void addDynamicLayout(LinearLayout ll) {
-    LinearLayout llContent = (LinearLayout) findViewById(
-      R.id.activity_dlg_action_input_llDynamicContent);
-    llContent.addView(ll);
-  }
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public void setHandlerOnFilterInputDone(FactoryDynamicUI.InputDone handler) {
-    handlerInputDone = handler;
-  }
-
-  public void setHandlerPreserveState(FactoryDynamicUI.DlgPreserveState handler) {
-    handlerStatePreserver = handler;
-  }
 }
