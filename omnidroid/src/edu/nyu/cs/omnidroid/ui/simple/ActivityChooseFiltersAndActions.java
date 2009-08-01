@@ -113,6 +113,14 @@ public class ActivityChooseFiltersAndActions extends Activity {
       }
       RuleBuilder.instance().resetActionPath();
       break;
+      
+    case Constants.ACTIVITY_RESULT_RULE_NAME:
+      if (resultCode != Activity.RESULT_CANCELED) {
+        // Try to save the rule for the user now. We only get this request code if the user picked
+        // a valid rule name.
+        saveRule();
+      }
+      break;
     }
   }
 
@@ -208,27 +216,14 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
   private OnClickListener listenerBtnClickSaveRule = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) Prompt user for rule name and description here too.
-      long newRuleId;
-      try {
-        newRuleId = UIDbHelperStore.instance().db().saveRule(
-          RuleBuilder.instance().getRule());
-      }
-      catch (Exception ex) {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-          "There was an error saving your rule!:\n" + ex.toString());
-        return;
-      }
-      
-      UtilUI.showAlert(v.getContext(), "Save Rule",
-          "Rule saved ok!");
-      
-      // We have to reload the rule from the database now so that the UI representation
-      // of it is in-sync with the new element IDs assigned during the save operation.
-      // TODO: (markww) replace all occurrences of int with long to get rid of these casts.
-      RuleBuilder.instance().resetForEditing(
-        UIDbHelperStore.instance().db().loadRule((int)newRuleId));
-      adapterRule.setRule(RuleBuilder.instance().getRule());
+      // Before launching the new activity, wipe its UI state.
+      ActivityDlgRuleName.resetUI(v.getContext());
+
+      // Ask the user for a new rule name. The result will be stored inside RuleBuilder.
+      // When the activity returns, we can continue trying to save the rule.
+      Intent intent = new Intent();
+      intent.setClass(getApplicationContext(), ActivityDlgRuleName.class);
+      startActivityForResult(intent, Constants.ACTIVITY_RESULT_RULE_NAME);
     }
   };
 
@@ -286,5 +281,30 @@ public class ActivityChooseFiltersAndActions extends Activity {
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_EDIT_ACTION);
+  }
+  
+  /**
+   * Saves the built-up rule inside {@link RuleBuilder} to the database.
+   */
+  private void saveRule() {
+    long newRuleId;
+    try {
+      newRuleId = UIDbHelperStore.instance().db().saveRule(
+        RuleBuilder.instance().getRule());
+    }
+    catch (Exception ex) {
+      UtilUI.showAlert(this, "Sorry!",
+        "There was an error saving your rule!:\n" + ex.toString());
+      return;
+    }
+    
+    UtilUI.showAlert(this, "Save Rule", "Rule saved ok!");
+    
+    // We have to reload the rule from the database now so that the UI representation
+    // of it is in-sync with the new element IDs assigned during the save operation.
+    // TODO: (markww) replace all occurrences of int with long to get rid of these casts.
+    RuleBuilder.instance().resetForEditing(
+      UIDbHelperStore.instance().db().loadRule((int)newRuleId));
+    adapterRule.setRule(RuleBuilder.instance().getRule());
   }
 }

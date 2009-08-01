@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.ui.Constants;
 import edu.nyu.cs.omnidroid.ui.simple.model.Rule;
 
 /**
@@ -48,6 +49,7 @@ public class ActivitySavedRules extends Activity {
   private ListView listView;
   private AdapterRules adapterRules;
   private SharedPreferences state;
+  
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,19 @@ public class ActivitySavedRules extends Activity {
     Button btnCancel = (Button) findViewById(R.id.activity_saved_rules_btnDeleteRule);
     btnCancel.setOnClickListener(listenerBtnClickDeleteRule);
   }
+  
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case Constants.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS:
+      // The user returned from the rule building activity. Refresh the list in case they created
+      // a new rule, and select the rule currently loaded into RuleBuilder.
+      adapterRules.reloadData();
+      adapterRules.notifyDataSetChanged();
+      adapterRules.setCheckedItemByRuleId(RuleBuilder.instance().getRule().getDatabaseId());
+      break;
+    }
+  }
 
   private View.OnClickListener listenerBtnClickViewRule = new View.OnClickListener() {
     public void onClick(View v) {
@@ -129,7 +144,7 @@ public class ActivitySavedRules extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
-    startActivity(intent);
+    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS);
   }
 
   private void toggleRuleOnOff(int selectedItemPosition) {
@@ -174,6 +189,10 @@ public class ActivitySavedRules extends Activity {
       this.context = context;
 
       // Fetch all available rules.
+      reloadData();
+    }
+    
+    public void reloadData() {
       rules = UIDbHelperStore.instance().db().getRules();
     }
 
@@ -202,7 +221,7 @@ public class ActivitySavedRules extends Activity {
       // Uncheck whatever item was selected in the list.
       UtilUI.uncheckListViewSingleChoice(listView);
     }
-
+    
     public int getCount() {
       return rules.size();
     }
@@ -213,6 +232,25 @@ public class ActivitySavedRules extends Activity {
 
     public long getItemId(int position) {
       return position;
+    }
+    
+    public long getCheckedRuleId() {
+      if (listView.getCheckedItemPosition() > -1) {
+        return rules.get(listView.getCheckedItemPosition()).getDatabaseId();
+      }
+      return -1;
+    }
+    
+    public void setCheckedItemByRuleId(long ruleId) {
+      UtilUI.uncheckListViewSingleChoice(listView);
+      if (ruleId != -1) {
+        for (int i = 0; i < rules.size(); i++) {
+          if (rules.get(i).getDatabaseId() == ruleId) {
+            listView.setItemChecked(i, true);
+            return;
+          }
+        }
+      }
     }
 
     /**
