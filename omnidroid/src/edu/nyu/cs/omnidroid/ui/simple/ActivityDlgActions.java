@@ -82,8 +82,6 @@ public class ActivityDlgActions extends Activity {
     // If the user constructed a valid action, also kill ourselves.
     ModelRuleAction action = RuleBuilder.instance().getChosenRuleAction();
     if (action != null) {
-      // Be sure to wipe our UI state, otherwise onPause will save it!
-      resetUI();
       finish();
     }
   }
@@ -114,7 +112,16 @@ public class ActivityDlgActions extends Activity {
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_actions_ll_main));
   }
-
+  
+  /**
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
+   */
+  public static void resetUI(Context context) {
+    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  }
+  
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       // The user has chosen an application, now get a list of actions associated
@@ -133,7 +140,6 @@ public class ActivityDlgActions extends Activity {
 
   private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
     public void onClick(View v) {
-      resetUI();
       finish();
     }
   };
@@ -154,18 +160,6 @@ public class ActivityDlgActions extends Activity {
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
-  }
-
-  /**
-   * Deselects any item selected by the user in the actions listview. We call this before the user
-   * closes the dialog so the UI state-saving mechanism does not record any item as being selected.
-   * Otherwise the next time the user opens this dialog, they would see their last picked item as
-   * selected, which may be confusing.
-   */
-  private void resetUI() {
-    if (listView.getCheckedItemPosition() > -1) {
-      listView.setItemChecked(listView.getCheckedItemPosition(), false);
-    }
   }
 
   /**

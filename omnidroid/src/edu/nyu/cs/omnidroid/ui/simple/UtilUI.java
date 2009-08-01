@@ -18,6 +18,7 @@ package edu.nyu.cs.omnidroid.ui.simple;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -68,5 +69,16 @@ public class UtilUI {
       throw new IllegalArgumentException(
         "UtilUI.uncheckListView() only works on lists using choice mode: CHOICE_MODE_SINGLE.");
     }
+  }
+  
+  /**
+   * Erases all shared preferences saved for an activity.
+   * @param context  Context of caller.
+   * @param stateName  State name used for both saving and loading preferences.
+   */
+  public static void resetSharedPreferences(Context context, String stateName) {
+    SharedPreferences state = context.getSharedPreferences(
+        stateName, Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
+      state.edit().clear().commit();
   }
 }
