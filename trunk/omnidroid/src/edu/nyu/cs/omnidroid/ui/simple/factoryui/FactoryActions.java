@@ -33,6 +33,7 @@ import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.DataTypeIDLookup;
 import edu.nyu.cs.omnidroid.ui.simple.UIDbHelperStore;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelParameter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
@@ -198,6 +199,65 @@ public class FactoryActions {
       childViewPosition += viewBuilder.getNumControls();
     }
   }
+  
+  /**
+   * Given a control position, return the omni data type it's associated with.
+   * @return Omni data type control at specified position belongs to.
+   */
+  public static long getDatatypeIdForControlAtPosition(
+      ModelAction modelAction, ViewGroup layout, int position) {
+
+    int childViewPosition = 0;
+    int numParameters = modelAction.getParameters().size();
+    for (int i = 0; i < numParameters; i++) {
+      
+      ModelParameter parameter = modelAction.getParameters().get(i);
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
+        throw new IllegalArgumentException("Unsupported datatype encountered!");
+      }
+
+      // Skip text label.
+      childViewPosition++;
+      
+      int maxChildPosition = childViewPosition + viewBuilder.getNumControls();
+      if (position < maxChildPosition) {
+        return viewBuilder.getDatatypeId();
+      }
+
+      // Advance past the number of views required for this datatype.
+      childViewPosition += viewBuilder.getNumControls();
+    }
+      
+    return -1;
+  }
+  
+  public static void insertAttributeForControlAtPosition(
+    ModelAction modelAction, ModelAttribute modelAttribute, ViewGroup layout, int position) {
+
+    int childViewPosition = 0;
+    int numParameters = modelAction.getParameters().size();
+    for (int i = 0; i < numParameters; i++) {
+      
+      ModelParameter parameter = modelAction.getParameters().get(i);
+      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+      if (viewBuilder == null) {
+        throw new IllegalArgumentException("Unsupported datatype encountered!");
+      }
+
+      // Skip text label.
+      childViewPosition++;
+      
+      int maxChildPosition = childViewPosition + viewBuilder.getNumControls();
+      if (position < maxChildPosition) {
+        viewBuilder.insertAttributeAtControl(childViewPosition, layout, modelAttribute);
+        return;
+      }
+
+      // Advance past the number of views required for this datatype.
+      childViewPosition += viewBuilder.getNumControls();
+    }
+  }
 
   /**
    * Appends a TextView with the name of the supplied parameter to the layout.
@@ -209,6 +269,10 @@ public class FactoryActions {
     TextView tv = new TextView(layout.getContext());
     tv.setText(parameter.getTypeName() + ":");
     layout.addView(tv);
+  }
+  
+  private static String getAttributeInsertName(ModelAttribute modelAttribute) {
+    return "<" + modelAttribute.getTypeName() + ">";
   }
 
   /**
@@ -229,6 +293,12 @@ public class FactoryActions {
         ViewGroup view);
 
     public void loadState(SharedPreferences state, int childViewPosition, ViewGroup view);
+    
+    /** Builders should be able to insert an attribute parameter tag directly into
+     *  their child view specified by childViewPosition.
+     */
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
+      ModelAttribute attribute);
   }
 
   /**
@@ -275,6 +345,12 @@ public class FactoryActions {
         et.setText(state.getString(childViewPosition + "", ""));
       }
     }
+    
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
+        ModelAttribute attribute) {
+      EditText et = (EditText) view.getChildAt(childViewPosition);
+      et.setText(et.getText().toString() + getAttributeInsertName(attribute));
+    }
   }
 
   /**
@@ -320,6 +396,12 @@ public class FactoryActions {
         EditText et = (EditText) view.getChildAt(childViewPosition);
         et.setText(state.getString(childViewPosition + "", ""));
       }
+    }
+    
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
+        ModelAttribute attribute) {
+      EditText et = (EditText) view.getChildAt(childViewPosition);
+      et.setText(et.getText().toString() + getAttributeInsertName(attribute));
     }
   }
 
@@ -395,6 +477,11 @@ public class FactoryActions {
         EditText et = (EditText) view.getChildAt(childViewPosition);
         et.setText(state.getString("Distance", ""));
       }
+    }
+    
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
+        ModelAttribute attribute) {
+      // TODO: (markww) figure out if BuilderOmniArea should allow copy parameter arguments.
     }
   }
 }
