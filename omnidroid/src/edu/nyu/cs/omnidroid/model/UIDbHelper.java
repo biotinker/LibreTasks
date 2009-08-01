@@ -482,7 +482,7 @@ public class UIDbHelper {
       ModelRuleFilter filter = filtersUnlinked.get(filterId);
       Long parentFilterId = parentIds.get(filterId);
 
-      if (parentFilterId.intValue() < 1) {
+      if (parentFilterId < 1) {
         // This is a top-level filter, its parent is the root node.
         RuleNode node = rootEvent.addChild(filter);
         filtersLinked.put(filterId, node);
