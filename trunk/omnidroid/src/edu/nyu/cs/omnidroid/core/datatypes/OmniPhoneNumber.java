@@ -33,10 +33,23 @@ public class OmniPhoneNumber extends DataType {
   }
 
   public OmniPhoneNumber(String phoneNumber) throws DataTypeValidationException {
-    if(!isWellFormedSmsAddress(phoneNumber)){
-      throw new DataTypeValidationException("Invalid phone number "+phoneNumber+" provided.");
+    if (!isAReferenceTag(phoneNumber)) {
+      if (!isWellFormedSmsAddress(phoneNumber)) {
+        throw new DataTypeValidationException("Invalid phone number " + phoneNumber + " provided.");
+      }
+      value = formatNumber(phoneNumber);
     }
-    value = formatNumber(phoneNumber);
+    value = phoneNumber;
+  }
+
+  /**
+   * Check if the phone number is actually a reference to a data from the intent or external
+   * parameter.
+   */
+  private boolean isAReferenceTag(String str) {
+    if (str == null)
+      return false;
+    return str.indexOf("<") == 1 && str.lastIndexOf(">") == (str.length() - 1);
   }
 
   /**
@@ -63,11 +76,11 @@ public class OmniPhoneNumber extends DataType {
       throw new IllegalArgumentException("Invalid filter type '" + filter.toString()
           + "' provided.");
     }
-    if(userDefinedValue instanceof OmniPhoneNumber){
+    if (userDefinedValue instanceof OmniPhoneNumber) {
       return matchFilter((Filter) filter, (OmniPhoneNumber) userDefinedValue);
     } else {
-      throw new IllegalArgumentException("Matching filter not found for the datatype " + 
-          userDefinedValue.getClass().toString()+ ". ");
+      throw new IllegalArgumentException("Matching filter not found for the datatype "
+          + userDefinedValue.getClass().toString() + ". ");
     }
   }
 
