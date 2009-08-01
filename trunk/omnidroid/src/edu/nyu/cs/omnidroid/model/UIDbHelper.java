@@ -642,41 +642,36 @@ public class UIDbHelper {
       throw new IllegalStateException("UIDbHelper is closed.");
     }
     
-    Rule rule = loadRule(ruleID);
     ruleDbAdapter.delete(Long.valueOf(ruleID));
     
-    ArrayList<ModelRuleAction> ruleActionList = rule.getActions();
-    for (ModelRuleAction ruleAction : ruleActionList) {
-      ruleActionDbAdapter.delete(Long.valueOf(ruleAction.getDatabaseId()));
+    // Delete all rule actions from database
+    Cursor cursorRuleAction = ruleActionDbAdapter.fetchAll(Long.valueOf(ruleID), null);
+    while (cursorRuleAction.moveToNext()) {
       
-      // Delete all rule parameters
-      Cursor cursorRuleParameters = ruleActionParameterDbAdapter.fetchAll(
-          Long.valueOf(ruleAction.getDatabaseId()), null, null);
-      while(cursorRuleParameters.moveToNext()) {
-        ruleActionParameterDbAdapter.delete(getLongFromCursor(cursorRuleParameters, 
-            RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERID));
+      long ruleActionID = getLongFromCursor(cursorRuleAction, RuleActionDbAdapter.KEY_RULEACTIONID);
+      ruleActionDbAdapter.delete(ruleActionID);
+      
+      // Delete all rule parameters of this rule action
+      Cursor cursorRuleActionParameter = ruleActionParameterDbAdapter.fetchAll(
+          ruleActionID, null, null);
+      while (cursorRuleActionParameter.moveToNext()) {
+        long ruleActionParameterID = getLongFromCursor(cursorRuleActionParameter, 
+            RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERID);
+        ruleActionParameterDbAdapter.delete(ruleActionParameterID);
       }
-      cursorRuleParameters.close();
+      cursorRuleActionParameter.close();
+      
     }
+    cursorRuleAction.close();
     
-    ArrayList<RuleNode> ruleFilterList = rule.getFilterBranches();
-    for (RuleNode filterNode : ruleFilterList) {
-      deleleFilterRuleNode(filterNode);
+    // Delete all rule filters from database
+    Cursor cursorFilter = ruleFilterDbAdapter.fetchAll(Long.valueOf(ruleID), null, null, null, 
+        null, null);
+    while (cursorFilter.moveToNext()) {
+      long ruleFilterID = getLongFromCursor(cursorFilter, RuleFilterDbAdapter.KEY_RULEFILTERID);
+      ruleFilterDbAdapter.delete(ruleFilterID);
     }
-  }
-  
-  /**
-   * Recursively delete each node of the filter branches from the database.
-   * 
-   * @param node
-   *          is root of the ruleFilterNode tree to be deleted
-   */
-  private void deleleFilterRuleNode(RuleNode node) {
-    ModelRuleFilter ruleFilter = (ModelRuleFilter) node.getItem();
-    ruleFilterDbAdapter.delete(Long.valueOf(ruleFilter.getDatabaseId()));
-    for (RuleNode childRuleFilterNode : node.getChildren()) {
-      deleleFilterRuleNode(childRuleFilterNode);
-    }
+    cursorFilter.close();
   }
   
   /**
