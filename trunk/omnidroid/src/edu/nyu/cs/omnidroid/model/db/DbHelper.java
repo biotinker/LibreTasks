@@ -150,7 +150,6 @@ public class DbHelper extends SQLiteOpenHelper {
     // Populate registered events
     RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
     long eventIdSmsRec = registeredEventDbAdapter.insert("SMS Received", appIdSms);
-    long eventIdPhoneRec = registeredEventDbAdapter.insert("Phone Call Received", appIdDial);
     
     // Populate registered actions
     RegisteredActionDbAdapter registeredActionDbAdapter = new RegisteredActionDbAdapter(db);
@@ -162,7 +161,6 @@ public class DbHelper extends SQLiteOpenHelper {
         new RegisteredEventAttributeDbAdapter(db);
     registeredEventAttributeDbAdapter.insert("SMS Phonenumber", eventIdSmsRec, dataTypeIdPhone);
     registeredEventAttributeDbAdapter.insert("SMS Text", eventIdSmsRec, dataTypeIdText);
-    registeredEventAttributeDbAdapter.insert("Phonenumber", eventIdPhoneRec, dataTypeIdPhone);
     
     // Populate registered action parameters
     RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter = 
