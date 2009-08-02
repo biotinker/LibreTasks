@@ -32,6 +32,7 @@ import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.DataTypeIDLookup;
 import edu.nyu.cs.omnidroid.ui.simple.UIDbHelperStore;
+import edu.nyu.cs.omnidroid.ui.simple.UtilUI;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelParameter;
@@ -349,7 +350,7 @@ public class FactoryActions {
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
         ModelAttribute attribute) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
-      et.setText(et.getText().toString() + getAttributeInsertName(attribute));
+      UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
     }
   }
 
@@ -401,7 +402,7 @@ public class FactoryActions {
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
         ModelAttribute attribute) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
-      et.setText(et.getText().toString() + getAttributeInsertName(attribute));
+      UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
     }
   }
 
