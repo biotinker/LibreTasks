@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -80,5 +81,28 @@ public class UtilUI {
     SharedPreferences state = context.getSharedPreferences(
         stateName, Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
       state.edit().clear().commit();
+  }
+  
+  /**
+   * Replace text in the passed EditText with a new string. This method takes into account the
+   * cursor positions to do partial replacement depending on how much text is currently selected
+   * in the field.
+   * 
+   * I think the cursor position methods of EditText don't work correctly, possibly due to this
+   * reported bug: http://code.google.com/p/android/issues/detail?id=2188
+   * 
+   * @param view The EditText field to do the replacement in.
+   * @param newText The new text string to insert in the field.
+   */
+  public static void replaceEditText(EditText view, String newText) {
+    int minpos = Math.min(view.getSelectionStart(), view.getSelectionEnd());
+
+    // TODO: (markww) Add support for selected text replacement instead of straight insert.
+    String strContents = view.getText().toString();
+    StringBuilder sb = new StringBuilder(strContents.length() + newText.length());
+    sb.append(strContents.substring(0, minpos));
+    sb.append(newText);
+    sb.append(strContents.substring(minpos, strContents.length()));
+    view.setText(sb.toString());
   }
 }
