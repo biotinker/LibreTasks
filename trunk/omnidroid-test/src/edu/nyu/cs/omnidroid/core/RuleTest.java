@@ -16,46 +16,94 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.util.OmnidroidException;
-
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.Suppress;
+import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
 /**
  * Unit tests for {@link Rule} class.
  */
+
 public class RuleTest extends AndroidTestCase {
-  Rule rule;
+  private Rule rule;
   Event event;
-
-  public void setUp() {
-    rule = TestData.getRule();
-    event = TestData.getSMSEvent();
+  
+  private SQLiteDatabase database;
+  private DbHelper omnidroidDbHelper;
+  
+  @Override
+  public void setUp() throws Exception {
+    super.setUp();
+    
+    Intent intent = TestData.getIntent("123-456-7890", "Some Other Text");
+    event = new MockSMSReceivedEvent(intent);
+   
+    omnidroidDbHelper = new DbHelper(this.getContext());
+    database = omnidroidDbHelper.getWritableDatabase();
+    
+    omnidroidDbHelper.backup();
+    
+    RuleTestData.prePopulateDatabase(database);
+    rule = RuleTestData.getRule(RuleTestData.RULE_SAY_HELLO3);
   }
 
-  public void testCheckFilters_True() {
-    assertTrue(rule.matchesEvent(event));
+  @Override
+  protected void tearDown() throws Exception {
+    // Try to restore the database
+    //database.close();
+    
+    if (omnidroidDbHelper.isBackedUp()) {
+      omnidroidDbHelper.restore();
+    }
+    super.tearDown();
+    omnidroidDbHelper.close();
+  }
+  
+  /** Tests that two rules containing the same data are equal */
+  public void testEqual() {
+    assertEquals(rule, RuleTestData.getRule(RuleTestData.RULE_SAY_HELLO3));
+    assertEquals(rule.hashCode(), RuleTestData.getRule(RuleTestData.RULE_SAY_HELLO3).hashCode());
   }
 
-  public void testCheckFilters_False() {
-    rule = TestData.getAnotherRule();
-    assertFalse(rule.matchesEvent(event));
+  /** Tests that two rules containing different data are not equal */
+  public void testNotEqual() {
+    assertFalse(rule.equals(RuleTestData.getRule(RuleTestData.RULE_SAY_HELLO2)));
   }
 
-  //TODO:(rutvij) Replace or fix this test
-  @Suppress
-  //This test throws an exception because it does not have a rule in database before testing it. 
+  /** Tests an event that passes a Rule's filters */
+  public void testRulesPass() {
+    assertTrue(rule.passesFilters(event));
+  }
+  
+  /** Tests an event does not pass a Rule's filters */
+  public void testRulesFail() {
+    Intent intent = TestData.getIntent("123-456-7890", "Non-matching text");
+    Event anotherEvent = new MockSMSReceivedEvent(intent);
+    assertFalse(rule.passesFilters(anotherEvent));
+  }
+  
   public void testGetActions() throws OmnidroidException {
-    // Parameters provided to the CallPhoneAction
-    HashMap<String, String> phoneCallParameters = new HashMap<String, String>();
-    phoneCallParameters.put(CallPhoneAction.PARAM_PHONE_NO, "5556");
-    ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new CallPhoneAction(phoneCallParameters);
-    actions.add(action);
-    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(getContext());
-    assertEquals(actions.size(), rule.getActions(coreActionsDbHelper, event).size());
+    // Create expected actions
+    ArrayList<Action> expectedActions = new ArrayList<Action>();
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_SAYHELLO, event));
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_DND2, event));
+    
+    // Get rule's actions from database
+    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this.getContext());
+    ArrayList<Action> actualActions = rule.getActions(coreActionsDbHelper, event);
+    
+    // Compare actions with available fields
+    assertEquals(expectedActions.size(), actualActions.size());
+    for (int i = 0; i < expectedActions.size(); i++) {
+      Action expectedAction = expectedActions.get(i);
+      Action actualAction = actualActions.get(i);
+      assertEquals(expectedAction.getActionName(), actualAction.getActionName());
+      assertEquals(expectedAction.getClass(), actualAction.getClass());
+      assertEquals(expectedAction.getExecutionMethod(), actualAction.getExecutionMethod());
+    }
   }
 }

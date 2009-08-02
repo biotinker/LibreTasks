@@ -33,6 +33,6 @@ public class IntentParserTest extends TestCase {
 
   /** Tests that the name of a created SMS event is correct */
   public void testGetEvent() {
-    assertEquals(IntentParser.getEvent(intent).getName(), event.getName());
+    assertEquals(IntentParser.getEvent(intent).getEventName(), event.getEventName());
   }
 }

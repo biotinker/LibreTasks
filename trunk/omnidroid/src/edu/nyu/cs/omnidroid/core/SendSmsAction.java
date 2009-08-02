@@ -30,6 +30,8 @@ public class SendSmsAction extends Action {
   /**
    * attributes field names
    */
+  public static final String ACTION_NAME = "SMS Send";
+  public static final String APP_NAME = "SMS";
   public static final String PARAM_PHONE_NO = "Phone Number";
   public static final String PARAM_SMS = "Text Message";
   public static final String SMS_INTENT = "omnidroid.intent.action.SMS_SEND";

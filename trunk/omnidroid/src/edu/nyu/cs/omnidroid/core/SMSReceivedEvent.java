@@ -10,11 +10,12 @@ import android.telephony.gsm.SmsMessage;
  */
 public class SMSReceivedEvent extends Event {
   /** Event name (to match record in database) */
-  public static final String EVENT_NAME = "SMS";
+  public static final String APPLICATION_NAME = "SMS";
+  public static final String EVENT_NAME = "SMS Received";
 
   /** Attribute field names */
-  public static final String ATTRIB_PHONE_NO = "Phone Number";
-  public static final String ATTRIB_MESSAGE_TEXT = "Message Text";
+  public static final String ATTRIB_PHONE_NO = "SMS Phonenumber";
+  public static final String ATTRIB_MESSAGE_TEXT = "SMS Text";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
@@ -28,7 +29,7 @@ public class SMSReceivedEvent extends Event {
    *          the intent received when the SMS received event was fired by and external app
    */
   public SMSReceivedEvent(Intent intent) {
-    super(EVENT_NAME, intent);
+    super(APPLICATION_NAME, EVENT_NAME, intent);
   }
 
   /**
@@ -65,7 +66,7 @@ public class SMSReceivedEvent extends Event {
    * TODO(londinop): Further test this method with texts longer than 160 characters, there may be a
    * bug in the emulator
    */
-  protected void getMessageData() {
+  private void getMessageData() {
 
     // TODO(londinop): Add text message data retrieval code and write a test for it
     Bundle bundle = intent.getExtras();

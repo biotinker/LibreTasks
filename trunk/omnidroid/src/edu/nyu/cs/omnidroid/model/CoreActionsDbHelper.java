@@ -15,8 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
-import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 import static edu.nyu.cs.omnidroid.model.CursorHelper.getLongFromCursor;
+import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.Event;
@@ -35,9 +34,9 @@ import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredAppDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RuleActionDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RuleActionParameterDbAdapter;
-import edu.nyu.cs.omnidroid.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.util.ExceptionMessageMap;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.OmnidroidException;
@@ -50,15 +49,19 @@ public class CoreActionsDbHelper {
 
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
-  private RuleDbAdapter ruleDbAdapter;
   private RuleActionDbAdapter ruleActionDbAdpater;
   private RuleActionParameterDbAdapter ruleActionParameterDbAdapter;
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter;
+  private RegisteredAppDbAdapter registeredAppDbAdapter;
   private Context context;
 
   // This flag marks whether this helper is closed
   private boolean isClosed = false;
+
+  // Action info constants
+  private final int APP_NAME = 0;
+  private final int ACTION_NAME = 1;
 
   public CoreActionsDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
@@ -66,11 +69,11 @@ public class CoreActionsDbHelper {
     this.context = context;
 
     // Initialize db adapters
-    ruleDbAdapter = new RuleDbAdapter(database);
     ruleActionDbAdpater = new RuleActionDbAdapter(database);
     ruleActionParameterDbAdapter = new RuleActionParameterDbAdapter(database);
     registeredActionDbAdapter = new RegisteredActionDbAdapter(database);
     registeredActionParameterDbAdapter = new RegisteredActionParameterDbAdapter(database);
+    registeredAppDbAdapter = new RegisteredAppDbAdapter(database);
   }
 
   /**
@@ -86,6 +89,8 @@ public class CoreActionsDbHelper {
   /**
    * This method initializes an Action object from a given action name and parameters
    * 
+   * @param appName
+   *          Name of the application
    * @param actionName
    *          Name of the action
    * @param actionParams
@@ -94,12 +99,14 @@ public class CoreActionsDbHelper {
    * @throws OmnidroidException
    *           if the given action cannot be initialized by this method
    */
-  private Action getAction(String actionName, HashMap<String, String> actionParams)
+  private Action getAction(String appName, String actionName, HashMap<String, String> actionParams)
       throws OmnidroidException {
     // TODO:(Rutvij) Fetch this hard coded data from database.
-    if (actionName == "SMS Send") {
+
+    if (appName.equals(SendSmsAction.APP_NAME) && actionName.equals(SendSmsAction.ACTION_NAME)) {
       return new SendSmsAction(actionParams);
-    } else if (actionName == "Phone Call") {
+    } else if (appName.equals(CallPhoneAction.APP_NAME)
+        && actionName.equals(CallPhoneAction.ACTION_NAME)) {
       return new CallPhoneAction(actionParams);
     } else
       throw new OmnidroidException(120003, ExceptionMessageMap.getMessage(new Integer(120003)
@@ -163,21 +170,25 @@ public class CoreActionsDbHelper {
   }
 
   /**
-   * This method gives the registered action name for a rule action
+   * This method gives the registered action name and its application name for a rule action
    * 
    * @param ruleActionId
    *          The Rule Action's Id
-   * @return Registered Action name for the rule action. Null if cannot find actionName or actionId
+   * @return String array {application name, action name}. Null if cannot find action name,
+   *         application name or action id
    * @throws IllegalStateException
    *           if the helper is closed
    */
-  private String getRegisteredActionName(Long ruleActionId) {
+  private String[] getRegisteredActionInfo(Long ruleActionId) {
     if (isClosed) {
       throw new IllegalStateException("CoreActionsDBHelper is closed.");
     }
 
     Long actionId;
+    Long appId;
     String actionName;
+    String appName;
+
     Cursor cursor = ruleActionDbAdpater.fetch(ruleActionId);
     if (cursor.moveToFirst()) {
       actionId = getLongFromCursor(cursor, RuleActionDbAdapter.KEY_ACTIONID);
@@ -189,12 +200,21 @@ public class CoreActionsDbHelper {
     cursor = registeredActionDbAdapter.fetch(actionId);
     if (cursor.moveToFirst()) {
       actionName = getStringFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONNAME);
+      appId = getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID);
       cursor.close();
     } else {
       return null;
     }
 
-    return actionName;
+    cursor = registeredAppDbAdapter.fetch(appId);
+    if (cursor.moveToFirst()) {
+      appName = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME);
+      cursor.close();
+    } else {
+      return null;
+    }
+
+    return new String[] { appName, actionName };
   }
 
   /**
@@ -299,16 +319,21 @@ public class CoreActionsDbHelper {
 
     // Create an action object for each rule action
     Action action;
+    String[] actionInfo;
     String actionName;
+    String appName;
     HashMap<Long, String> paramsData; // <ruleActionParamId, ruleActionParamData>
     HashMap<Long, Long> paramsRegisteredParamId; // <ruleActionParamId, registeredActionParamId>
     for (Long ruleActionId : ruleActionIds) {
-      // get action name
-      actionName = getRegisteredActionName(ruleActionId);
-      if (actionName == null) {
-        throw new IllegalArgumentException("Cannot find ActionId or ActionName for: "
-            + ruleActionId);
+      // get action info
+      actionInfo = getRegisteredActionInfo(ruleActionId);
+      if (actionInfo == null) {
+        throw new IllegalArgumentException(
+            "Cannot find ActionId, ApplicationName or ActionName for: " + ruleActionId);
       }
+      appName = actionInfo[APP_NAME];
+      actionName = actionInfo[ACTION_NAME];
+
       // get parameter ids and data for the current action
       paramsData = new HashMap<Long, String>();
       paramsRegisteredParamId = new HashMap<Long, Long>();
@@ -326,9 +351,9 @@ public class CoreActionsDbHelper {
             paramsData.get(parameterId));
       }
 
-      // create action using action parameters and action name
+      // create action using action parameters, action name and application name
       try {
-        action = getAction(actionName, actionParams);
+        action = getAction(appName, actionName, actionParams);
         actions.add(action); // add action to actions ArrayList
       } catch (OmnidroidException e) {
         Log.w(this.getClass().getName() + ": ", e.toString(), e);
