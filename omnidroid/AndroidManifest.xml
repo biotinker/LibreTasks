@@ -120,11 +120,6 @@
 
 		<!--  TODO: (markww) Check if following activity defs are used any more. -->        
 
-
-		<!--  Activity used to list all the phone application packages -->
-		<activity android:name=".tests.PackageLister" android:label="@string/package_lister">
-		</activity>
-
 		<!--  The service that throws actions to our applications -->
 		<service android:name=".core.HandlerService"></service>
 
@@ -133,14 +128,6 @@
 			and the CatcherApp
 		-->
 		<provider android:name=".core.CP" android:authorities="edu.nyu.cs.omnidroid.core.maincp" />
-
-		<!-- Test our service -->
-		<activity android:name=".tests.TestService">
-		</activity>
-
-		<!-- Test the CP -->
-		<activity android:name=".tests.TestCP" android:label="@string/maincp_name">
-		</activity>
 
 		<!--  Service/receiver that runs to catch events -->
 		<service android:name=".bkgservice.BRService" />
@@ -152,18 +139,6 @@
 				<action android:name="android.intent.action.PHONE_STATE" />
 			</intent-filter>
 		</receiver>
-
-		<!--  Runs all our Test Cases -->
-		<activity android:name=".tests.TestApp" android:label="@string/test_app">
-		</activity>
-
-		<!--  Runs all our App Config Test` Cases -->
-		<activity android:name=".tests.TestAppConfig" android:label="@string/test_app_cfg">
-		</activity>
-
-		<!--  Runs all our User Config Test Cases -->
-		<activity android:name=".tests.TestUserConfig" android:label="@string/test_user_cfg">
-		</activity>
 
 		<!--  Thrower Test Provider -->
 		<provider android:name=".external.eventapp.ExternalCP"
