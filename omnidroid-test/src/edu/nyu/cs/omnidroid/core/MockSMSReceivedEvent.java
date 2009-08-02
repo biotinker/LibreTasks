@@ -29,9 +29,24 @@ public class MockSMSReceivedEvent extends SMSReceivedEvent {
     messageText = intent.getExtras().getString(SMSReceivedEvent.ATTRIB_MESSAGE_TEXT);
   }
   
+  /**
+   * Looks up attributes associated with this event.
+   * 
+   * @param attributeName
+   *          the name of the attribute associated with this event
+   * @return the data associated with the attribute
+   * @throws IllegalArgumentException
+   *           if the attribute is not of a type supported by this event
+   */
   @Override
-  protected void getMessageData() {
-    // In case getMessageData() gets called, override the parent's method. We don't have a valid
-    // PDU object to represent the text message.
+  public String getAttribute(String attributeName) {
+    if (attributeName.equals(ATTRIB_PHONE_NO)) {
+      return phoneNumber;
+    } else if (attributeName.equals(ATTRIB_MESSAGE_TEXT)) {
+      return messageText;
+    } else {
+      throw (new IllegalArgumentException());
+    }
+    // TODO(londinop): Add exception for invalid data field name
   }
 }

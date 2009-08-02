@@ -18,12 +18,11 @@ package edu.nyu.cs.omnidroid.core;
 import java.util.ArrayList;
 
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.util.AGParser;
+import edu.nyu.cs.omnidroid.model.CoreRuleDbHelper;
 import edu.nyu.cs.omnidroid.util.OmLogger;
 import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
@@ -53,8 +52,10 @@ public class HandlerService extends Service {
   @Override
   public void onStart(Intent intent, int id) {
     Event event = IntentParser.getEvent(intent);
+ 
+    CoreRuleDbHelper coreRuleDbHelper = new CoreRuleDbHelper(this);
     CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
-    ArrayList<Action> actions = RuleProcessor.getActions(coreActionsDbHelper, event);
+    ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper, coreActionsDbHelper);
     // Execute the list of actions.
     try {
       ActionExecuter.executeActions(this, actions);
@@ -64,45 +65,6 @@ public class HandlerService extends Service {
       OmLogger.write(this, "Illegal Execution Method");
     }
     // TODO(londinop): Log events/actions to a database or content provider
-  }
-
-  /**
-   * Sends out a broadcast intent to trigger the action application associated with the event.<br>
-   * TODO(londinop): replace individual parameter variables with an array of action parameters from
-   * database
-   * 
-   * @param actionApp
-   *          application triggered by the event received which is used to get the class name to
-   *          launch via the intent
-   * @param actionName
-   *          name of the action as defined in the user configuration file
-   * @param actionParam1
-   *          URI to the OmniDroid content provider for the first action parameter
-   * @param actionParam2
-   *          URI to the OmniDroid content provider for the second action parameter
-   */
-  public void sendIntent(String actionApp, String actionName, String actionParam1,
-      String actionParam2) {
-    Intent actionIntent = new Intent();
-    actionIntent.setAction(actionName);
-    // TODO(londinop): Change URI strings to constants and update receiver classes
-    actionIntent.putExtra("uri", actionParam1);
-    actionIntent.putExtra("uri2", actionParam2);
-
-    AGParser appConfig = new AGParser(getApplicationContext());
-    String packageName = appConfig.readPkgName(actionApp);
-    String listener = appConfig.readListenerClass(actionApp);
-
-    if (!packageName.equalsIgnoreCase("")) {
-      ComponentName comp = new ComponentName(packageName, listener);
-      actionIntent.setComponent(comp);
-    }
-    // TODO(londinop): Handle this exception
-    try {
-      sendBroadcast(actionIntent);
-    } catch (Exception e) {
-      e.toString();
-    }
   }
 
   /**

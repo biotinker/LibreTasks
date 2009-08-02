@@ -16,65 +16,62 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
+
 import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.util.Tree;
 
 /**
- * This class represents a user defined rule. It consists of the name of the {@link Event} that will
- * trigger the rule, the filters that apply to the event, and the actions that will be performed if
- * the event matches the rule.
+ * This class represents a user defined rule. It consists of the name of the rule (for logging
+ * purposes), the filters that apply to the event, and the actions that will be performed if an
+ * event matches the rule.
  */
 public class Rule {
 
   /** Rule parameters */
   public final String ruleName;
-  public final String eventAppName;
-  public final ArrayList<Filter> filters;
-  private long ruleId;
+  Tree<Filter> filterTree;
+
+  /** Package private for pre-populating database tests */
+  long ruleID;
+
+  /** An event to check against this rule */
+  private Event event;
 
   /**
    * Constructs a rule from all rule parameters
    * 
    * @param ruleName
    *          user-defined name of the rule
-   * @param eventAppName
-   *          event that triggers this rule
    * @param filters
-   *          any filters on the event attributes, can be null if there are no filters
-   * @param actions
-   *          the actions that are triggered by this event
+   *          a tree of filters on the event attributes which captures the and/or relationships
+   *          between the filters, can be null if there are no filters defined for this rule
    * @throws IllegalArgumentException
-   *           if required parameters are null or if there are no actions associated with this rule
+   *           if required parameters are null
    */
-  public Rule(String ruleName, String eventAppName, ArrayList<Filter> filters,
-      ArrayList<Action> actions) throws IllegalArgumentException {
-
+  public Rule(String ruleName, long ruleID, Tree<Filter> filterTree) {
     if (ruleName == null) {
       throw new IllegalArgumentException("ruleName cannot be null");
-    } else if (eventAppName == null) {
-      throw new IllegalArgumentException("eventAppName cannot be null");
-    } else if (actions.size() < 1) {
-      throw new IllegalArgumentException("must provide at least one action");
     }
     this.ruleName = ruleName;
-    this.eventAppName = eventAppName;
-    this.filters = filters;
+    this.ruleID = ruleID;
+    this.filterTree = filterTree;
   }
 
   /**
-   * Matches the event to all filters associated with this rule
+   * Matches the {@link Event} to all {@link Filter}s associated with this rule
    * 
    * @param event
    *          the event that triggered this rule
-   * @return true if this event passes all rule filters, false otherwise
+   * @return true if this event passes all rule filters (or if there are no filters), false
+   *         otherwise
    */
-  public boolean matchesEvent(Event event) {
-    // TODO(londinop): Support "and/or" structure of filters
-    for (Filter currentFilter : filters) {
-      if (!event.getAttribute(currentFilter.type).equals(currentFilter.data)) {
-        return false;
-      }
+  public boolean passesFilters(Event event) {
+    if (filterTree == null) {
+      return true;
     }
-    return true;
+
+    this.event = event;
+    return isFilterBranchTrue(filterTree);
   }
 
   /**
@@ -89,8 +86,50 @@ public class Rule {
    */
   public ArrayList<Action> getActions(CoreActionsDbHelper coreActionsDbHelper, Event event) {
     // Get actions arraylist for this rule
-    ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleId, event);
-    coreActionsDbHelper.close();
+    ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleID, event);
     return actionsList;
+  }
+
+  /**
+   * Recursively descends down the tree looking for a branch which returns true at the leaf level,
+   * which represents an "and" relationship between the filters
+   * 
+   * @param node
+   *          the root of the tree on which to check the filters
+   * @return true if this is a leaf, or if at least one branch is true to the leaf level, false
+   *         otherwise
+   */
+  private boolean isFilterBranchTrue(Tree<Filter> node) {
+    if (node.isLeafNode()) {
+      return node.getItem().match(event);
+    }
+
+    for (Tree<Filter> currentNode : node.getChildren()) {
+      if (currentNode.getItem().match(event)) {
+        return isFilterBranchTrue(currentNode);
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Rule)) {
+      return false;
+    }
+    Rule that = (Rule) o;
+    return that.ruleName.equals(ruleName)
+        && (filterTree == null ? that.filterTree == null : filterTree.equals(that.filterTree));
+  }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result = 37 * result + ruleName.hashCode();
+    result = 37 * result + (filterTree == null ? 0 : filterTree.hashCode());
+    return result;
   }
 }

@@ -16,7 +16,9 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
+
 import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.model.CoreRuleDbHelper;
 
 /**
  * Gets the {@link Rule}(s) triggered by this {@link Event} and compares the event attributes with
@@ -42,13 +44,14 @@ public class RuleProcessor {
    *          the event that will be compared to all defined user rules
    * @return the list of actions to be performed based on the rules triggered by this event
    */
-  public static ArrayList<Action> getActions(CoreActionsDbHelper coreActionsDbHelper, Event event) {
+  public static ArrayList<Action> getActions(Event event, CoreRuleDbHelper coreRuleDbHelper,
+      CoreActionsDbHelper coreActionsDbHelper) {
+
+    ArrayList<Rule> rules = coreRuleDbHelper.getRulesMatchingEvent(event.getAppName(), event.getEventName());
     ArrayList<Action> actions = new ArrayList<Action>();
-    ArrayList<Rule> rules = new ArrayList<Rule>();
-    // TODO(londinop): get list of rules triggered by this event from database
 
     for (Rule currentRule : rules) {
-      if (currentRule.matchesEvent(event)) {
+      if (currentRule.passesFilters(event)) {
         actions.addAll(currentRule.getActions(coreActionsDbHelper, event));
       }
     }

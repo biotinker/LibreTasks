@@ -96,6 +96,9 @@ public class ExceptionMessageMap {
     
     MESSAGE_MAP.put("130000", "130000: Error starting Application API.");
 
+    MESSAGE_MAP.put("140000", "140000: Application/Event name cannot be null.");
+    MESSAGE_MAP.put("140001", "140001: Error retrieving event from database.");
+    
     MESSAGE_MAP.put("200000", "200000: When reading bytes from an InputStream, the EndOfFile "
         + "was reached before expected.");
     MESSAGE_MAP.put("200001", "200001: When reading chars from a Reader, the EndOfFile was "

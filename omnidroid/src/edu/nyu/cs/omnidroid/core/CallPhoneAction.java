@@ -29,6 +29,9 @@ import android.net.Uri;
 public class CallPhoneAction extends Action {
 
   /** Parameter names */
+  //TODO(londinop): Decide on the best location for all app name and action name constants for consistency
+  public static final String ACTION_NAME = "Phone Call";
+  public static final String APP_NAME = "DIAL";
   public static final String PARAM_PHONE_NO = "Phone Number";
 
   /** The phone number to call */

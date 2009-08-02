@@ -25,6 +25,7 @@ import android.content.Intent;
  */
 public abstract class Event {
   /** The name of the event for data lookup */
+  private final String appName;
   private final String eventName;
 
   /** Stores the intent that triggered this event, which contains data associated with it */
@@ -38,17 +39,27 @@ public abstract class Event {
    * @param intent
    *          the intent that triggered this event
    */
-  public Event(String eventName, Intent intent) {
+  public Event(String appName, String eventName, Intent intent) {
     this.intent = intent;
+    this.appName = appName;
     this.eventName = eventName;
   }
 
+  /**
+   * Returns the name of the application for this event
+   * 
+   * @return name of the application for this event
+   */
+  public String getAppName() {
+    return appName;
+  }
+  
   /**
    * Returns the name of the event
    * 
    * @return name of the event
    */
-  public String getName() {
+  public String getEventName() {
     return eventName;
   }
 

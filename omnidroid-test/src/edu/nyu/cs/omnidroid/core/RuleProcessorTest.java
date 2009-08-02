@@ -16,13 +16,19 @@
 package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 
-import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.util.OmnidroidException;
-
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.Suppress;
+import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.model.CoreRuleDbHelper;
+import edu.nyu.cs.omnidroid.model.CursorHelper;
+import edu.nyu.cs.omnidroid.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.model.db.RuleDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RuleFilterDbAdapter;
+import edu.nyu.cs.omnidroid.util.OmnidroidException;
 
 /**
  * Unit tests for {@link RuleProcessor} class.
@@ -30,10 +36,34 @@ import android.test.suitebuilder.annotation.Suppress;
 public class RuleProcessorTest extends AndroidTestCase {
   Rule rule;
   Event event;
+  private SQLiteDatabase database;
+  private DbHelper omnidroidDbHelper;
+  CoreRuleDbHelper coreRuleDbHelper;
+  CoreActionsDbHelper coreActionsDbHelper;
 
   public void setUp() {
-    event = TestData.getSMSEvent();
+    Intent intent = TestData.getIntent("123-456-7890", "Some Other Text");
+    event = new MockSMSReceivedEvent(intent);
 
+    omnidroidDbHelper = new DbHelper(this.getContext());
+    database = omnidroidDbHelper.getWritableDatabase();
+    coreRuleDbHelper = new CoreRuleDbHelper(getContext());
+    coreActionsDbHelper = new CoreActionsDbHelper(getContext());
+
+    omnidroidDbHelper.backup();
+    RuleTestData.prePopulateDatabase(database);
+  }
+
+  @Override
+  protected void tearDown() throws Exception {
+    // Try to restore the database
+    // database.close();
+
+    if (omnidroidDbHelper.isBackedUp()) {
+      omnidroidDbHelper.restore();
+    }
+    super.tearDown();
+    omnidroidDbHelper.close();
   }
 
   /**
@@ -42,28 +72,53 @@ public class RuleProcessorTest extends AndroidTestCase {
    * 
    * @throws OmnidroidException
    */
-  // TODO: (rutvij) Unsuppress this test when getActions method in RuleProcessor gets rules from
-  // database
-  @Suppress
-  // This test fails because RuleProcesser still does not get rules from database.
   public void testRuleProcessor_pass() throws OmnidroidException {
-    // Parameters provided to the CallPhoneAction
-    HashMap<String, String> phoneCallParameters = new HashMap<String, String>();
-    phoneCallParameters.put(CallPhoneAction.PARAM_PHONE_NO, "5556");
-    ArrayList<Action> actions = new ArrayList<Action>();
-    Action action = new CallPhoneAction(phoneCallParameters);
-    actions.add(action);
-    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(getContext());
-    assertEquals(actions.size(), RuleProcessor.getActions(coreActionsDbHelper, event).size());
+    // Create expected actions
+    ArrayList<Action> expectedActions = new ArrayList<Action>();
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_DND, event));
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_SAYHELLO, event));
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_SAYHELLO, event));
+    expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_DND2, event));
+
+    ArrayList<Action> actualActions = RuleProcessor.getActions(event, coreRuleDbHelper,
+        coreActionsDbHelper);
+    assertEquals(expectedActions.size(), actualActions.size());
   }
 
   /**
-   * Tests that the rule processor does not retrieve an action if the event does not pass all rule
-   * filters
+   * Tests that the rule processor does not retrieve any actions if the event does not match a rule
    */
   public void testRuleProcessor_noPass() {
-    event = TestData.getSMSEvent();
-    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(getContext());
-    assertEquals(0, RuleProcessor.getActions(coreActionsDbHelper, event).size());
+    // Make a new event that doesn't match any rules
+    Intent intent = TestData.getIntent("000-000-0000", "Some message text");
+    Event anotherEvent = new MockSMSReceivedEvent(intent);
+
+    // Delete any rules that have no filters, since they will always pass
+    RuleDbAdapter ruleDbAdapter = new RuleDbAdapter(database);
+    RuleFilterDbAdapter ruleFilterDbAdapter = new RuleFilterDbAdapter(database);
+
+    Cursor cursor = ruleDbAdapter.fetchAll();
+
+    // Get a set of all rule IDs
+    HashSet<Long> ruleIDs = new HashSet<Long>();
+    while (cursor.moveToNext()) {
+      ruleIDs.add(CursorHelper.getLongFromCursor(cursor, RuleDbAdapter.KEY_RULEID));
+    }
+
+    // Get a set of all rules with filters
+    HashSet<Long> rulesWithFilters = new HashSet<Long>();
+    // Look through the RuleFilters table, and delete any rules that don't have any filters
+    cursor = ruleFilterDbAdapter.fetchAll();
+    while (cursor.moveToNext()) {
+      rulesWithFilters.add(CursorHelper.getLongFromCursor(cursor, RuleFilterDbAdapter.KEY_RULEID));
+    }
+
+    // Get the set of rule IDs with no filters and delete them from the rules table
+    ruleIDs.removeAll(rulesWithFilters);
+    for (Long ruleID : ruleIDs) {
+      ruleDbAdapter.delete(ruleID);
+    }
+    assertEquals(0, RuleProcessor.getActions(anotherEvent, coreRuleDbHelper, coreActionsDbHelper)
+        .size());
   }
 }
