@@ -5,257 +5,289 @@ import java.util.Locale;
 import android.location.Geocoder;
 import android.location.Address;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import edu.nyu.cs.omnidroid.ExternalParameters.ExternalParameterAccessException;
+import edu.nyu.cs.omnidroid.ExternalParameters.LocationService;
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredAction;
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredApplication;
 import edu.nyu.cs.omnidroid.model.ApplicationConfiguration.RegisteredEvent;
+import edu.nyu.cs.omnidroid.model.DataTypes.DataTypeValidationException;
+import edu.nyu.cs.omnidroid.model.DataTypes.OmniArea;
 
 public class DataAccessLayerTestActivity extends Activity {
-	
-	private static int execID = 0;
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		String temp = new String();
+  private static int execID = 0;
 
-		/*
-		 * // test my own wrappers temp = runTest();
-		 */
+  private LocationService locationService;
 
-		/*
-		 * // Create instance by name. String className =
-		 * "edu.nyu.cs.omnidroid.model.DataTypes.DataFilter"; try { Class
-		 * theClass = Class.forName(className);
-		 * 
-		 * Method[] methods = theClass.getMethods();
-		 * 
-		 * for(int i=0; i<methods.length; i++) { if (temp.length() > 0)
-		 * temp+=("\n"); temp+=(methods[i].getName()); }
-		 * 
-		 * 
-		 * } catch ( ClassNotFoundException ex ){ temp = ( ex +
-		 * " Interpreter class must be in class path."); }
-		 * 
-		 * temp+=this.getClass().getName();
-		 */
+  /** Called when the activity is first created. */
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-		/*
-		 * // Test FactoryDataType class DataType someDT =
-		 * FactoryDataType.createObject("OmniTextn", "blah blah blah");
-		 * 
-		 * if(someDT == null) { temp = "No such Type"; } else { temp =
-		 * someDT.getValue(); }
-		 */
+    String temp = new String();
 
-		/*
-		// Manually create visuals
-		TextView tv = new TextView(this);
-		tv.setText(temp);
-		setContentView(tv);
-		*/
-        setContentView(R.layout.main);
-		
-        Button button = null;
+    /*
+     * // test my own wrappers temp = runTest();
+     */
 
-        // Exit click
-        button = (Button) findViewById(R.id.exit);
+    /*
+     * // Create instance by name. String className =
+     * "edu.nyu.cs.omnidroid.model.DataTypes.DataFilter"; try { Class theClass =
+     * Class.forName(className);
+     * 
+     * Method[] methods = theClass.getMethods();
+     * 
+     * for(int i=0; i<methods.length; i++) { if (temp.length() > 0) temp+=("\n");
+     * temp+=(methods[i].getName()); }
+     * 
+     * 
+     * } catch ( ClassNotFoundException ex ){ temp = ( ex +
+     * " Interpreter class must be in class path."); }
+     * 
+     * temp+=this.getClass().getName();
+     */
 
-        button.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            	// On Click Action
-            	finish();	
-            }
-        });
+    /*
+     * // Test FactoryDataType class DataType someDT = FactoryDataType.createObject("OmniTextn",
+     * "blah blah blah");
+     * 
+     * if(someDT == null) { temp = "No such Type"; } else { temp = someDT.getValue(); }
+     */
 
-        // Update click
-        button = (Button) findViewById(R.id.update);
-        button.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            	// On Click Action
-            	
-        		String temp = new String();
+    /*
+     * // Manually create visuals TextView tv = new TextView(this); tv.setText(temp);
+     * setContentView(tv);
+     */
+    setContentView(R.layout.main);
 
-        		temp = gpsTest();
-        		temp += "\n" + execID;
-        		execID++;
-        		
-        		EditText location = null;
-        		location = (EditText) findViewById(R.id.coordinates);
-        		location.setText(temp);
-            }
-        });
+    Button button = null;
 
-        // Get Coordinates click
-        button = (Button) findViewById(R.id.getCoordinates);
-        button.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-            	// On Click Action
-            	
-        		String address = null;
-        		String location = null;
-        		
-        		EditText addressTextBox = null;
-        		EditText locationTextBox = null;
-        		addressTextBox = (EditText) findViewById(R.id.address);
-        		address = addressTextBox.getText().toString();            		
+    // Exit click
+    button = (Button) findViewById(R.id.exit);
 
-        		
-                // Reverse geocode the postal address to get a location.
-                if (address != null) {
-                  try {
-                	Geocoder geocoder = new Geocoder(v.getContext(), Locale.getDefault());
-                    List<Address> addressResult = geocoder.getFromLocationName(address, 5);
-                    if (!addressResult.isEmpty()) {
-                      Address resultAddress = addressResult.get(0);
-                      location = resultAddress.getLatitude() + ", " + resultAddress.getLongitude();
-                    }
-                    else {
-                    	location = "No Location Found";
-                    }
-                  } catch (Exception e) {
-                    location = e.getMessage();
-                  }
-                }
-              
-              locationTextBox = (EditText) findViewById(R.id.addressCoordinates);
-              locationTextBox.setText(location);
-            }
-        });
+    button.setOnClickListener(new Button.OnClickListener() {
+      public void onClick(View v) {
+        // On Click Action
+        finish();
+      }
+    });
 
-	}
+    // Update click
+    button = (Button) findViewById(R.id.update);
+    button.setOnClickListener(new Button.OnClickListener() {
+      public void onClick(View v) {
+        // On Click Action
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
+        String temp = new String();
 
-/*
-		String temp = gpsTest();
-		temp += "\n" + execID;
+        // temp = gpsTest();
+        // temp += testDistance();
 
-		TextView tv = new TextView(this);
-		tv.setText(temp);
-		setContentView(tv);
-		*/
-	}
+        OmniArea myLocation;
+        try {
+          myLocation = (OmniArea) LocationService.getAttributeValue();
+        } catch (ExternalParameterAccessException e) {
+          myLocation = null;;
+        }
+        if (myLocation != null)
+          temp = myLocation.getLatitude() + " " + myLocation.getLongitude();
+        else
+          temp = "No Location";
 
+        temp += "\n" + execID;
+        execID++;
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPostResume()
-	 */
-	@Override
-	protected void onPostResume() {
-		// TODO Auto-generated method stub
-		super.onPostResume();
-/*
-		String temp = gpsTest();
-		temp += "\n" + execID;
+        EditText location = null;
+        location = (EditText) findViewById(R.id.coordinates);
+        location.setText(temp);
+      }
+    });
 
-		TextView tv = new TextView(this);
-		tv.setText(temp);
-		setContentView(tv);
-*/
-}
+    // Get Coordinates click
+    button = (Button) findViewById(R.id.getCoordinates);
+    button.setOnClickListener(new Button.OnClickListener() {
+      public void onClick(View v) {
+        // On Click Action
 
+        String address = null;
+        String location = null;
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onRestart()
-	 */
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-/*
-		String temp = gpsTest();
-		temp += "\n" + execID;
+        EditText addressTextBox = null;
+        EditText locationTextBox = null;
+        addressTextBox = (EditText) findViewById(R.id.address);
+        address = addressTextBox.getText().toString();
 
-		TextView tv = new TextView(this);
-		tv.setText(temp);
-		setContentView(tv);
-		*/
-}
+        try {
+          OmniArea loc = new OmniArea(OmniArea.getOmniArea(v.getContext(), address, 0));
+          location = loc.getLatitude() + ", " + loc.getLongitude();
+        } catch (Exception e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
 
+        /*
+         * // Reverse geocode the postal address to get a location. if (address != null) { try {
+         * Geocoder geocoder = new Geocoder(v.getContext(), Locale.getDefault()); List<Address>
+         * addressResult = geocoder.getFromLocationName(address, 1); if (!addressResult.isEmpty()) {
+         * Address resultAddress = addressResult.get(0); location = resultAddress.getLatitude() +
+         * ", " + resultAddress.getLongitude(); } else { location = "No Location Found"; } } catch
+         * (Exception e) { location = e.getMessage(); } }
+         */
+        locationTextBox = (EditText) findViewById(R.id.addressCoordinates);
+        locationTextBox.setText(location);
+      }
+    });
 
-	public String gpsTest() {
-		String temp = "";
-		LocationManager lm = null;
-		List<String> locationProviders = null;
+    // Watch for button clicks.
+    button = (Button) findViewById(R.id.startService);
+    button.setOnClickListener(mStartListener);
+    button = (Button) findViewById(R.id.stopService);
+    button.setOnClickListener(mStopListener);
+  }
 
-		try {
-			lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-			locationProviders = lm.getAllProviders();
+  private OnClickListener mStartListener = new OnClickListener() {
+    public void onClick(View v) {
+      // Make sure the service is started. It will continue running
+      // until someone calls stopService(). The Intent we use to find
+      // the service explicitly specifies our service component, because
+      // we want it running in our own process and don't want other
+      // applications to replace it.
+      startService(new Intent(DataAccessLayerTestActivity.this, LocationService.class));
+    }
+  };
 
-			for (int i = 0; i < locationProviders.size(); i++) {
-				if (temp.length() > 0)
-					temp += ("\n");
-				temp += (locationProviders.get(i));
-			}
-			
-			LocationProvider lp = lm.getProvider(lm.GPS_PROVIDER);
-			
-			Location lastLocation = lm.getLastKnownLocation(lm.GPS_PROVIDER);
-			temp += "\n";
-			if(lastLocation == null) temp += "No Location";
-			else temp += lastLocation.getLatitude() + " " + lastLocation.getLongitude();
-			
-			
-		} catch (Exception ex) {
-			temp = (ex + " - Location Error.");
-		}
-		
-		return temp;
-	}
-	
-	public static String runTest() {
-		// TODO Auto-generated method stub
-		RegisteredApplication.LoadRegisteredApplication();
-		List<String> appNames = RegisteredApplication.getAllNames();
-		String temp = new String();
+  private OnClickListener mStopListener = new OnClickListener() {
+    public void onClick(View v) {
+      // Cancel a previous call to startService(). Note that the
+      // service will not actually stop at this point if there are
+      // still bound clients.
+      stopService(new Intent(DataAccessLayerTestActivity.this, LocationService.class));
+    }
+  };
 
-		for (int i = 0; i < appNames.size(); i++) {
-			if (temp.length() > 0)
-				temp += ("\n");
-			temp += (appNames.get(i));
+  public String gpsTest() {
+    String temp = "";
+    LocationManager lm = null;
+    List<String> locationProviders = null;
 
-			RegisteredApplication nextApp = RegisteredApplication
-					.getByName(appNames.get(i));
-			temp += "\n" + nextApp.getAppID() + " " + nextApp.getAppName()
-					+ " " + nextApp.getPackageName() + " "
-					+ nextApp.isEnabled();
+    try {
+      lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+      locationProviders = lm.getAllProviders();
 
-			temp += "\n    Actions";
-			List<RegisteredAction> actions = nextApp.getActions();
+      for (int i = 0; i < locationProviders.size(); i++) {
+        if (temp.length() > 0)
+          temp += ("\n");
+        temp += (locationProviders.get(i));
+      }
 
-			for (int j = 0; j < actions.size(); j++) {
-				temp += "\n    " + actions.get(j).getAppID() + " "
-						+ actions.get(j).getID() + " "
-						+ actions.get(j).getName();
-			}
+      LocationProvider lp = lm.getProvider(lm.GPS_PROVIDER);
 
-			temp += "\n    Events";
-			List<RegisteredEvent> events = nextApp.getEvents();
+      Location lastLocation = lm.getLastKnownLocation(lm.GPS_PROVIDER);
+      temp += "\n";
+      if (lastLocation == null)
+        temp += "No Location";
+      else
+        temp += lastLocation.getLatitude() + " " + lastLocation.getLongitude() + " "
+            + lastLocation.getAccuracy();
 
-			for (int j = 0; j < events.size(); j++) {
-				temp += "\n    " + events.get(j).getAppID() + " "
-						+ events.get(j).getID() + " " + events.get(j).getName();
-			}
-		}
+      lm.requestLocationUpdates(lm.GPS_PROVIDER, 60000, // 1min
+          100, // 1km
+          locationListener);
 
-		temp += "OK";
+    } catch (Exception ex) {
+      temp = (ex + " - Location Error.");
+    }
 
-		return temp;
-	}
+    return temp;
+  }
+
+  private void updateWithNewLocation(Location newLocation) {
+    /*
+     * String temp = new String(); OmniArea location = GPSService.getLastLocation();
+     * 
+     * //temp = newLocation.getLatitude() + " " + newLocation.getLongitude(); if(location != null)
+     * temp = location.getLatitude() + " " + location.getLongitude(); else temp = "No Location";
+     * temp += "\n" + execID; execID++;
+     * 
+     * EditText locationTextBox = null; locationTextBox = (EditText) findViewById(R.id.coordinates);
+     * locationTextBox.setText(temp);
+     */
+  }
+
+  private final LocationListener locationListener = new LocationListener() {
+    public void onLocationChanged(Location location) {
+      updateWithNewLocation(location);
+    }
+
+    public void onProviderDisabled(String provider) {
+    }
+
+    public void onProviderEnabled(String provider) {
+    }
+
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+  };
+
+  private double testDistance() {
+    final int DISTANCE = 0;
+    final int RETURN_VALUES = 1;
+
+    float[] results = new float[RETURN_VALUES];
+
+    Location.distanceBetween(40.7279793, -73.9957865, 40.756073, -73.9906634, results);
+
+    // convert distance from meters to miles
+    return results[DISTANCE];
+  }
+
+  public static String runTest() {
+    // TODO Auto-generated method stub
+    RegisteredApplication.LoadRegisteredApplication();
+    List<String> appNames = RegisteredApplication.getAllNames();
+    String temp = new String();
+
+    for (int i = 0; i < appNames.size(); i++) {
+      if (temp.length() > 0)
+        temp += ("\n");
+      temp += (appNames.get(i));
+
+      RegisteredApplication nextApp = RegisteredApplication.getByName(appNames.get(i));
+      temp += "\n" + nextApp.getAppID() + " " + nextApp.getAppName() + " "
+          + nextApp.getPackageName() + " " + nextApp.isEnabled();
+
+      temp += "\n    Actions";
+      List<RegisteredAction> actions = nextApp.getActions();
+
+      for (int j = 0; j < actions.size(); j++) {
+        temp += "\n    " + actions.get(j).getAppID() + " " + actions.get(j).getID() + " "
+            + actions.get(j).getName();
+      }
+
+      temp += "\n    Events";
+      List<RegisteredEvent> events = nextApp.getEvents();
+
+      for (int j = 0; j < events.size(); j++) {
+        temp += "\n    " + events.get(j).getAppID() + " " + events.get(j).getID() + " "
+            + events.get(j).getName();
+      }
+    }
+
+    temp += "OK";
+
+    return temp;
+  }
 
 }

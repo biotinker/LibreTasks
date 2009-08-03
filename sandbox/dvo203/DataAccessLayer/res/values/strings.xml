@@ -2,4 +2,7 @@
 <resources>
     <string name="hello">Hello World, DataAccessLayerActivity!</string>
     <string name="app_name">DataAccessLayer</string>
+    <string name="gps_service_started">GPSService Started</string>
+    <string name="gps_service_stopped">GPSService Stopped</string>
+    <string name="gps_service_label">GPSService</string>
 </resources>

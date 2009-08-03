@@ -22,14 +22,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dip"
-        android:text="Exit" android:layout_below="@id/coordinates"/>
+        android:text="Exit" 
+        android:layout_below="@id/coordinates"/>
 
     <Button
     	android:id="@+id/update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/exit"
-        android:text="Update" android:layout_toLeftOf="@id/exit"/>
+        android:text="Update" 
+        android:layout_toLeftOf="@id/exit"/>
         
 	<TextView 
 		android:id="@+id/addressLabel" 
@@ -68,5 +70,21 @@
         android:layout_marginLeft="10dip"
         android:text="Get Coordinates" 
         android:layout_below="@+id/addressCoordinates"/>
+        
+    <Button
+        android:id="@+id/startService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:text="Start Service" 
+        android:layout_below="@+id/getCoordinates"/>
 
+    <Button
+        android:id="@+id/stopService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dip"
+        android:text="Stop Service" 
+        android:layout_below="@+id/getCoordinates"/>
 </RelativeLayout>
