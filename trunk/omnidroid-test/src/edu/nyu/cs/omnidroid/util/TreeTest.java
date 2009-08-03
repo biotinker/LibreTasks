@@ -25,15 +25,16 @@ public class TreeTest extends TestCase {
 
   @Override
   public void setUp() {
-    tree = generateTree(5);
+    tree = generateTree(4);
   }
 
   /**
-   * Tests that two trees with the same structure and node data are equal
+   * Tests that two trees with the same structure and node data are equal and have the same hashcode
    */
   public void testEqual() {
-    Tree<Integer> sameTree = generateTree(5);
+    Tree<Integer> sameTree = generateTree(4);
     assertEquals(tree, sameTree);
+    assertEquals(tree.hashCode(), sameTree.hashCode());
   }
 
   /**
@@ -44,20 +45,9 @@ public class TreeTest extends TestCase {
     assertFalse(tree.equals(differentTree));
   }
 
-  /**
-   * Tests that two equal trees have the same hash code
-   */
-  public void testEqualHashCode() {
-    Tree<Integer> sameTree = generateTree(5);
-    assertEquals(tree.hashCode(), sameTree.hashCode());
-  }
-
-  /**
-   * Tests that two different trees (probably) do not have the same hash code
-   */
-  public void testNotEqualHashCode() {
-    Tree<Integer> differentTree = generateTree(17);
-    assertFalse(tree.hashCode() == differentTree.hashCode());
+  public void testToString() {
+    String string = "1, 2, 4, 5, 6, 3, 7, 8, 9";
+    assertEquals(tree.toString(), string);
   }
 
   /**
