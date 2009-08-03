@@ -161,8 +161,32 @@ public class Tree<E> {
     return (children.size() > 0 && children.get(children.size() - 1) == node);
   }
 
-  @SuppressWarnings("unchecked")
   @Override
+  /** Pre-order traversal string representation */
+  public String toString() {
+    StringBuffer treeString = new StringBuffer();
+    getNodeString(this, treeString);
+    return treeString.toString();
+  }
+
+  /**
+   * Appends the string value of a node's item (or "null" if it is null) to the given StringBuffer
+   * 
+   * @param node
+   *          the top node, recursively appends the values from this node
+   * @param treeString
+   *          a StringBuffer that will be appended with the node's string value
+   */
+  private void getNodeString(Tree<E> node, StringBuffer treeString) {
+    treeString.append((node.getItem() == null) ? "null" : node.item);
+    for (Tree<E> childNode : node.children) {
+      treeString.append(", ");
+      getNodeString(childNode, treeString);
+    }
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -170,6 +194,7 @@ public class Tree<E> {
     if (!(o instanceof Tree)) {
       return false;
     }
+    
     Tree<E> that = (Tree<E>) o;
     return nodeEquals(this, that);
   }

@@ -72,7 +72,7 @@ public class DualKey<T1, T2> {
       return true;
     }
 
-    if (!(other instanceof DualKey)) {
+    if (!(other instanceof DualKey<?,?>)) {
       return false;
     }
     
