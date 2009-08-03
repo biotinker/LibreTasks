@@ -19,6 +19,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.model.DbData;
 import edu.nyu.cs.omnidroid.util.IOUtil;
 
 /**
@@ -30,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
   
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 3;
+  private static final int DATABASE_VERSION = 4;
   
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
@@ -53,7 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
     createTables(db);
     
     // Pre-populate data after installation.
-    populateDefaultData(db);
+    DbData.prepopulate(db);
   }
 
   @Override
@@ -110,65 +111,6 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
   }
-  
-  /**
-   * Pre-populate data into the database
-   * 
-   * @param db
-   *          SQLiteDatabase object to work with
-   */
-  private void populateDefaultData(SQLiteDatabase db) {
-    
-    // Populate data types
-    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
-    long dataTypeIdText = dataTypeDbAdapter.insert("Text", "OmniText");
-    long dataTypeIdDate = dataTypeDbAdapter.insert("Date", "OmniDate");
-    long dataTypeIdPhone = dataTypeDbAdapter.insert("PhoneNumber", "OmniPhoneNumber");
-    long dataTypeIdArea = dataTypeDbAdapter.insert("Area", "OmniArea");
-    long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert("DayOfWeek", "OmniDayOfWeek");
-    
-    // Populate data filters
-    DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
-    dataFilterDbAdapter.insert("equals", dataTypeIdText, dataTypeIdText);
-    dataFilterDbAdapter.insert("contains", dataTypeIdText, dataTypeIdText);
-    
-    dataFilterDbAdapter.insert("equals", dataTypeIdPhone, dataTypeIdPhone);
-    
-    dataFilterDbAdapter.insert("before", dataTypeIdDate, dataTypeIdDate);
-    dataFilterDbAdapter.insert("after", dataTypeIdDate, dataTypeIdDate);
-    
-    dataFilterDbAdapter.insert("near", dataTypeIdArea, dataTypeIdArea);
-    dataFilterDbAdapter.insert("away", dataTypeIdArea, dataTypeIdArea);
-    
-    dataFilterDbAdapter.insert("isDayOfWeek", dataTypeIdDate, dataTypeIdDayOfWeek);
-    
-    // Populate registered apps
-    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
-    long appIdSms = registeredAppDbAdapter.insert("SMS", "", true);
-    long appIdDial = registeredAppDbAdapter.insert("DIAL", "", true);
-    
-    // Populate registered events
-    RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
-    long eventIdSmsRec = registeredEventDbAdapter.insert("SMS Received", appIdSms);
-    
-    // Populate registered actions
-    RegisteredActionDbAdapter registeredActionDbAdapter = new RegisteredActionDbAdapter(db);
-    long actionIdSmsSend = registeredActionDbAdapter.insert("SMS Send", appIdSms);
-    long actionIdPhoneCall = registeredActionDbAdapter.insert("Phone Call", appIdDial);
-    
-    // Populate registered event attributes
-    RegisteredEventAttributeDbAdapter registeredEventAttributeDbAdapter = 
-        new RegisteredEventAttributeDbAdapter(db);
-    registeredEventAttributeDbAdapter.insert("SMS Phonenumber", eventIdSmsRec, dataTypeIdPhone);
-    registeredEventAttributeDbAdapter.insert("SMS Text", eventIdSmsRec, dataTypeIdText);
-    
-    // Populate registered action parameters
-    RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter = 
-        new RegisteredActionParameterDbAdapter(db);
-    registeredActionParameterDbAdapter.insert("Phone Number", actionIdSmsSend, dataTypeIdPhone);
-    registeredActionParameterDbAdapter.insert("Text Message", actionIdSmsSend, dataTypeIdText);
-    registeredActionParameterDbAdapter.insert("Phone Number", actionIdPhoneCall, dataTypeIdPhone);
-  }
 
   /**
    * Back up the database by backing up the sqlite file.
@@ -177,13 +119,21 @@ public class DbHelper extends SQLiteOpenHelper {
     Log.w(TAG, "Backing up" + DATABASE_NAME);
     IOUtil.copy(databaseDir() + DATABASE_NAME, databaseDir() + DATABASE_NAME_BACKUP);
   }
+  
+  /**
+   * Removing the current database file
+   */
+  public void remove() {
+    Log.w(TAG, "Removing" + DATABASE_NAME);
+    IOUtil.remove(databaseDir() + DATABASE_NAME);
+  }
 
   /**
    * Restore the database by using the sqlite file backed up.
    */
   public void restore() {
     Log.w(TAG, "Restoring " + DATABASE_NAME);
-    IOUtil.remove(databaseDir() + DATABASE_NAME);
+    remove();
     IOUtil.move(databaseDir() + DATABASE_NAME_BACKUP, databaseDir() + DATABASE_NAME);
   }
 

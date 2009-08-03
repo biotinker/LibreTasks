@@ -1,0 +1,119 @@
+/*******************************************************************************
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
+package edu.nyu.cs.omnidroid.model;
+
+import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredAppDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredEventAttributeDbAdapter;
+import edu.nyu.cs.omnidroid.model.db.RegisteredEventDbAdapter;
+import android.database.sqlite.SQLiteDatabase;
+
+/**
+ * This class store data that needs to be populated into the DB by default
+ */
+public class DbData {
+  
+  /* DataType names */
+  public static final String DATATYPE_TEXT = "Text";
+  public static final String DATATYPE_DATE = "Date";
+  public static final String DATATYPE_PHONENUMBER = "PhoneNumber";
+  public static final String DATATYPE_AREA = "Area";
+  public static final String DATATYPE_DAYOFWEEK = "DayOfWeek";
+  
+  /* Registered App Names */
+  public static final String APP_SMS = "SMS";
+  public static final String APP_DIAL = "Phone";
+  
+  /* Registered Events and their Attributes names */
+  public static final String EVENT_SMS_REC = "SMS Received";
+  public static final String ATTR_SMS_REC_PHONENUMBER = "SMS Phonenumber";
+  public static final String ATTR_SMS_RES_MESSAGE = "SMS Text";
+  
+  /* Registered Actions and their parameters name */
+  public static final String ACTION_SMS_SEND = "SMS Send";
+  public static final String PARAM_SMS_SEND_PHONENUMBER = "Phone Number";
+  public static final String PARAM_SMS_SEND_MESSAGE = "Text Message";
+  
+  public static final String ACTION_DIAL_PHONECALL = "Dial Number";
+  public static final String PARAM_DIAL_PHONECALL_PHONENUMBER = "Phone Number";
+  
+  /**
+   * This class does not need to be instantiated.
+   */
+  private DbData() {
+  }
+  
+  /**
+   * Pre-populate data into the database
+   * 
+   * @param db
+   *          SQLiteDatabase object to work with
+   */
+  public static void prepopulate(SQLiteDatabase db) {
+
+    /* Populate data types and their data filters */
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
+    
+    long dataTypeIdText = dataTypeDbAdapter.insert(DATATYPE_TEXT, "OmniText");
+    dataFilterDbAdapter.insert("equals", dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert("contains", dataTypeIdText, dataTypeIdText);
+    
+    long dataTypeIdDate = dataTypeDbAdapter.insert(DATATYPE_DATE, "OmniDate");
+    dataFilterDbAdapter.insert("before", dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert("after", dataTypeIdDate, dataTypeIdDate);
+    
+    long dataTypeIdPhone = dataTypeDbAdapter.insert(DATATYPE_PHONENUMBER, "OmniPhoneNumber");
+    dataFilterDbAdapter.insert("equals", dataTypeIdPhone, dataTypeIdPhone);
+    
+    long dataTypeIdArea = dataTypeDbAdapter.insert(DATATYPE_AREA, "OmniArea");
+    dataFilterDbAdapter.insert("near", dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert("away", dataTypeIdArea, dataTypeIdArea);
+    
+    long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(DATATYPE_DAYOFWEEK, "OmniDayOfWeek");
+    dataFilterDbAdapter.insert("isDayOfWeek", dataTypeIdDate, dataTypeIdDayOfWeek);
+    
+    /* Populate registered applications */
+    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+    long appIdSms = appDbAdapter.insert(APP_SMS, "", true);
+    long appIdDial = appDbAdapter.insert(APP_DIAL, "", true);
+    
+    /* Populate registered events and event attributes */ 
+    RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
+    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = 
+        new RegisteredEventAttributeDbAdapter(db);
+    
+    long eventIdSmsRec = eventDbAdapter.insert(EVENT_SMS_REC, appIdSms);  
+    eventAttributeDbAdapter.insert(ATTR_SMS_REC_PHONENUMBER, eventIdSmsRec, dataTypeIdPhone);
+    eventAttributeDbAdapter.insert(ATTR_SMS_RES_MESSAGE, eventIdSmsRec, dataTypeIdText);
+    
+    /* Populate registered actions and action parameters */
+    RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+    RegisteredActionParameterDbAdapter actionParameterDbAdapter = 
+      new RegisteredActionParameterDbAdapter(db);
+    
+    long actionIdSmsSend = actionDbAdapter.insert(ACTION_SMS_SEND, appIdSms);
+    actionParameterDbAdapter.insert(PARAM_SMS_SEND_PHONENUMBER, actionIdSmsSend, dataTypeIdPhone);
+    actionParameterDbAdapter.insert(PARAM_SMS_SEND_MESSAGE, actionIdSmsSend, dataTypeIdText);
+    
+    long actionIdPhoneCall = actionDbAdapter.insert(ACTION_DIAL_PHONECALL, appIdDial);
+    actionParameterDbAdapter.insert(PARAM_DIAL_PHONECALL_PHONENUMBER, actionIdPhoneCall,
+        dataTypeIdPhone);
+  }
+}
