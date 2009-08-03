@@ -72,6 +72,7 @@ public class CallPhoneAction extends Action {
   public Intent getIntent() {
     // TODO(Rutvij): Fetch "tel:" from constants of another class (if any).
     Intent intent = new Intent(getActionName(), Uri.parse("tel:" + phoneNumber));
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     return intent;
   }
 
