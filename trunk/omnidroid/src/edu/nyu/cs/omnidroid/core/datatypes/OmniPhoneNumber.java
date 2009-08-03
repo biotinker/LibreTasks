@@ -47,9 +47,10 @@ public class OmniPhoneNumber extends DataType {
    * parameter.
    */
   private boolean isAReferenceTag(String str) {
-    if (str == null)
+    if (str == null) {
       return false;
-    return str.indexOf("<") == 1 && str.lastIndexOf(">") == (str.length() - 1);
+    }
+    return str.indexOf("<") == 0 && str.lastIndexOf(">") == (str.length() - 1);
   }
 
   /**
