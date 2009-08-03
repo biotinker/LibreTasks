@@ -115,7 +115,7 @@ public class RuleTestData {
   private static RegisteredEventDbAdapter eventDbAdapter;
   private static RegisteredEventAttributeDbAdapter eventAttributeDbAdapter;
   private static RuleDbAdapter ruleDbAdapter;
-  private static RuleFilterDbAdapter filterDbAdapter;
+  private static RuleFilterDbAdapter ruleFilterDbAdapter;
   private static DataFilterDbAdapter filterComparisonDbAdapter;
   private static DataTypeDbAdapter filterDataTypeDbAdapter;
   private static RegisteredActionDbAdapter actionDbAdapter;
@@ -212,19 +212,22 @@ public class RuleTestData {
    */
   public static void prePopulateDatabase(SQLiteDatabase database) {
     applicationDbAdapter = new RegisteredAppDbAdapter(database);
-    ruleDbAdapter = new RuleDbAdapter(database);
     eventDbAdapter = new RegisteredEventDbAdapter(database);
     eventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(database);
-    filterDbAdapter = new RuleFilterDbAdapter(database);
     filterComparisonDbAdapter = new DataFilterDbAdapter(database);
     filterDataTypeDbAdapter = new DataTypeDbAdapter(database);
     actionDbAdapter = new RegisteredActionDbAdapter(database);
     actionParameterDbAdapter = new RegisteredActionParameterDbAdapter(database);
+    
+    ruleDbAdapter = new RuleDbAdapter(database);
+    ruleFilterDbAdapter = new RuleFilterDbAdapter(database);
     ruleActionDbAdapter = new RuleActionDbAdapter(database);
     ruleActionParameterDbAdapter = new RuleActionParameterDbAdapter(database);
 
     buildRules();
-
+    
+    clearRuleDbData();
+    
     // Populate the database with data from the Rule array
     for (int i = 0; i < rules.size(); i++) {
 
@@ -247,6 +250,16 @@ public class RuleTestData {
         addActionsToDatabase(actionListString);
       }
     }
+  }
+  
+  /**
+   * delete all rule data from the db
+   */
+  private static void clearRuleDbData() {
+    ruleDbAdapter.deleteAll();
+    ruleFilterDbAdapter.deleteAll();
+    ruleActionDbAdapter.deleteAll();
+    ruleActionParameterDbAdapter.deleteAll();
   }
 
   /**
@@ -490,7 +503,7 @@ public class RuleTestData {
         RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID);
 
     // Insert the filter into the database and use its ID as the parent of the next filter
-    parentID = filterDbAdapter.insert(ruleID, eventAttributeID, -1L, dataFilterID, parentID,
+    parentID = ruleFilterDbAdapter.insert(ruleID, eventAttributeID, -1L, dataFilterID, parentID,
         filter.compareWithData);
 
     for (Tree<Filter> childNode : filterNode.getChildren()) {
