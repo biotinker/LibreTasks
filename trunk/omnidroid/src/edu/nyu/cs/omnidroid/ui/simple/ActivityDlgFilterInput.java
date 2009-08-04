@@ -117,7 +117,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
       // based on our dynamic UI content.
       ModelRuleFilter filter;
       try {
-        filter = (ModelRuleFilter) handlerInputDone.onInputDone();
+        filter = (ModelRuleFilter) handlerInputDone.onInputDone(v.getContext());
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then 
         // remove the static string below and only use the contents of the exception.

@@ -51,10 +51,10 @@ public class FactoryActions {
   static {
     // Initialize each of our omni data type builders.
     DataTypeIDLookup lookup = UIDbHelperStore.instance().getDatatypeLookup();
-    vbOmniPhoneNumber = new BuilderOmniPhoneNumber(lookup
-        .getDataTypeID(BuilderOmniPhoneNumber.NAME));
-    vbOmniText = new BuilderOmniText(lookup.getDataTypeID(BuilderOmniText.NAME));
-    vbOmniArea = new BuilderOmniArea(lookup.getDataTypeID(BuilderOmniArea.NAME));
+    vbOmniPhoneNumber = new BuilderOmniPhoneNumber(
+      lookup.getDataTypeID(OmniPhoneNumber.DB_NAME));
+    vbOmniText = new BuilderOmniText(lookup.getDataTypeID(OmniText.DB_NAME));
+    vbOmniArea = new BuilderOmniArea(lookup.getDataTypeID(OmniArea.DB_NAME));
     // TODO: (markww) Add builders for rest of omni data types.
 
     viewBuilders = new HashMap<Long, ViewBuilder>();
@@ -306,7 +306,6 @@ public class FactoryActions {
    * Builder for OmniPhoneNumber.
    */
   private static class BuilderOmniPhoneNumber implements ViewBuilder {
-    public static final String NAME = "PhoneNumber";
     private long datatypeId;
 
     public BuilderOmniPhoneNumber(long datatypeId) {
@@ -358,7 +357,6 @@ public class FactoryActions {
    * Builder for OmniText.
    */
   private static class BuilderOmniText implements ViewBuilder {
-    public static final String NAME = "Text";
     private long datatypeId;
 
     public BuilderOmniText(long datatypeId) {
@@ -410,7 +408,6 @@ public class FactoryActions {
    * Builder for OmniArea.
    */
   private static class BuilderOmniArea implements ViewBuilder {
-    public static final String NAME = "Area";
     private long datatypeId;
 
     public BuilderOmniArea(long datatypeId) {

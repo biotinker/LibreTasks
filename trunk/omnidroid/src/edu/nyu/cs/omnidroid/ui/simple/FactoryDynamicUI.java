@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
@@ -31,6 +32,8 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 
 /**
  * Static factory class for setting up a dynamic UI for every filter/action type.
+ * 
+ * TODO: (markww) Refactor internal builder classes to use parent class for common tasks.
  */
 public class FactoryDynamicUI {
 
@@ -46,7 +49,7 @@ public class FactoryDynamicUI {
    * message.
    */
   public interface InputDone {
-    public ModelItem onInputDone() throws Exception;
+    public ModelItem onInputDone(Context context) throws Exception;
   }
 
   /**
@@ -122,15 +125,21 @@ public class FactoryDynamicUI {
     ll.setOrientation(LinearLayout.VERTICAL);
 
     UIDbHelperStore dbi = UIDbHelperStore.instance();
-    if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("PhoneNumber",
-        "equals")) {
+    if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
+        OmniPhoneNumber.DB_NAME, OmniPhoneNumber.Filter.EQUALS.toString())) {
       BuildPhonenumberEquals.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text",
-        "equals")) {
+    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
+        OmniText.DB_NAME, OmniText.Filter.EQUALS.toString())) {
       BuildTextEquals.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID("Text",
-        "contains")) {
+    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
+        OmniText.DB_NAME, OmniText.Filter.CONTAINS.toString())) {
       BuildTextContains.build(dlg, ll, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
+        OmniArea.DB_NAME, OmniArea.Filter.AWAY.toString())) {
+      BuildAreaAwayOrNear.build(dlg, ll, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
+        OmniArea.DB_NAME, OmniArea.Filter.NEAR.toString())) {
+      BuildAreaAwayOrNear.build(dlg, ll, modelFilter, dataOld);
     } else {
       throw new IllegalArgumentException("Unknown filter ID[" + modelFilter.getDatabaseId()
           + "] passed to FactoryDynamicUI::buildUIForFilter()!");
@@ -138,8 +147,9 @@ public class FactoryDynamicUI {
     dlg.addDynamicLayout(ll);
   }
 
-  
   private static BuildFilterUI BuildPhonenumberEquals = new BuildFilterUI() {
+    private static final String UISTATE_PHONENUMBER = "phonenumber";
+    
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       // This is a Phonenumber Equals filter, so generate a specific UI for it.
@@ -156,7 +166,7 @@ public class FactoryDynamicUI {
 
       // Add the handler for when the user signals they are done with their input.
       dlg.setHandlerOnFilterInputDone(new InputDone() {
-        public ModelItem onInputDone() throws Exception {
+        public ModelItem onInputDone(Context context) throws Exception {
           // Try to construct an OmniPhoneNumber from what the user
           // entered in the edit field. If no good, let its exception
           // be thrown up.
@@ -174,12 +184,12 @@ public class FactoryDynamicUI {
       dlg.setHandlerPreserveState(new DlgPreserveState() {
         public void saveState(SharedPreferences.Editor prefsEditor) {
           String phoneNumber = edit.getText().toString();
-          prefsEditor.putString("phoneNumber", phoneNumber);
+          prefsEditor.putString(UISTATE_PHONENUMBER, phoneNumber);
         }
 
         public void loadState(SharedPreferences state) {
-          if (state.contains("phoneNumber")) {
-            edit.setText(state.getString("phoneNumber", ""));
+          if (state.contains(UISTATE_PHONENUMBER)) {
+            edit.setText(state.getString(UISTATE_PHONENUMBER, ""));
           }
         }
       });
@@ -187,6 +197,8 @@ public class FactoryDynamicUI {
   };
 
   private static BuildFilterUI BuildTextEquals = new BuildFilterUI() {
+    private static final String UISTATE_TEXT = "text";
+    
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvInstructions = new TextView(dlg.getContext());
@@ -201,7 +213,7 @@ public class FactoryDynamicUI {
 
       // Add the handler for when the user is done with their input.
       dlg.setHandlerOnFilterInputDone(new InputDone() {
-        public ModelItem onInputDone() throws Exception {
+        public ModelItem onInputDone(Context context) throws Exception {
           OmniText data = new OmniText(edit.getText().toString());
           return new ModelRuleFilter(-1, modelFilter, data);
         }
@@ -209,12 +221,12 @@ public class FactoryDynamicUI {
       // Also implement the UI state preservation handlers.
       dlg.setHandlerPreserveState(new DlgPreserveState() {
         public void saveState(SharedPreferences.Editor prefsEditor) {
-          prefsEditor.putString("smstext", edit.getText().toString());
+          prefsEditor.putString(UISTATE_TEXT, edit.getText().toString());
         }
 
         public void loadState(SharedPreferences state) {
-          if (state.contains("smstext")) {
-            edit.setText(state.getString("smstext", ""));
+          if (state.contains(UISTATE_TEXT)) {
+            edit.setText(state.getString(UISTATE_TEXT, ""));
           }
         }
       });
@@ -222,6 +234,8 @@ public class FactoryDynamicUI {
   };
 
   private static BuildFilterUI BuildTextContains = new BuildFilterUI() {
+    private static final String UISTATE_TEXT = "text";
+    
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvInstructions = new TextView(dlg.getContext());
@@ -235,19 +249,80 @@ public class FactoryDynamicUI {
       ll.addView(edit);
 
       dlg.setHandlerOnFilterInputDone(new InputDone() {
-        public ModelItem onInputDone() throws Exception {
+        public ModelItem onInputDone(Context context) throws Exception {
           OmniText data = new OmniText(edit.getText().toString());
           return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
       dlg.setHandlerPreserveState(new DlgPreserveState() {
         public void saveState(SharedPreferences.Editor prefsEditor) {
-          prefsEditor.putString("smsphrase", edit.getText().toString());
+          prefsEditor.putString(UISTATE_TEXT, edit.getText().toString());
         }
 
         public void loadState(SharedPreferences state) {
-          if (state.contains("smsphrase")) {
-            edit.setText(state.getString("smsphrase", ""));
+          if (state.contains(UISTATE_TEXT)) {
+            edit.setText(state.getString(UISTATE_TEXT, ""));
+          }
+        }
+      });
+    }
+  };
+  
+  private static BuildFilterUI BuildAreaAwayOrNear = new BuildFilterUI() {
+    private final static String UISTATE_ADDRESS = "address";
+    
+    private final static String UISTATE_DISTANCE = "distance";
+    
+    public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
+        DataType dataOld) {
+      TextView tvAddress = new TextView(dlg.getContext());
+      tvAddress.setText("Address:");
+      ll.addView(tvAddress);
+
+      final EditText etAddress = new EditText(dlg.getContext());
+      ll.addView(etAddress);
+      
+      TextView tvDistance = new TextView(dlg.getContext());
+      tvDistance.setText("Distance (in miles):");
+      ll.addView(tvDistance);
+
+      final EditText etDistance = new EditText(dlg.getContext());
+      ll.addView(etDistance);
+      
+      if (dataOld != null) {
+        OmniArea area = (OmniArea)dataOld;
+        etAddress.setText(area.getUserInput());
+        etDistance.setText(Double.toString(area.getProximityDistance()));
+      }
+      
+      dlg.setHandlerOnFilterInputDone(new InputDone() {
+        public ModelItem onInputDone(Context context) throws Exception {
+          String address = etAddress.getText().toString();
+          double distance = 0;
+          try {
+            Double.parseDouble(etDistance.getText().toString());
+          } catch (NumberFormatException ex) {
+            throw new Exception("Please enter a distance in miles.");
+          }
+          
+          OmniArea data = new OmniArea(OmniArea.getOmniArea(
+            context, address, distance));
+          
+          return new ModelRuleFilter(-1, modelFilter, data);
+        }
+      });
+      dlg.setHandlerPreserveState(new DlgPreserveState() {
+        public void saveState(SharedPreferences.Editor prefsEditor) {
+          prefsEditor.putString(UISTATE_ADDRESS, etAddress.getText().toString());
+          prefsEditor.putString(UISTATE_DISTANCE, etDistance.getText().toString());
+        }
+
+        public void loadState(SharedPreferences state) {
+          if (state.contains(UISTATE_ADDRESS)) {
+            etAddress.setText(state.getString(UISTATE_ADDRESS, ""));
+          }
+          if (state.contains(UISTATE_DISTANCE)) {
+            etDistance.setText(state.getString(UISTATE_DISTANCE, ""));
           }
         }
       });
