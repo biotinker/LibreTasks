@@ -58,9 +58,12 @@ public class DbData {
   public static final String EVENT_SMS_REC = "SMS Received";
   public static final String ATTR_SMS_REC_PHONENUMBER = "SMS Phonenumber";
   public static final String ATTR_SMS_RES_MESSAGE = "SMS Text";
+  
   public static final String EVENT_GPS_LOCATION_CHANGED = "GPS Location Changed";
   public static final String ATTR_GPS_CURRENT_LOCATION = "Current Location";
+  
   public static final String EVENT_SENSOR_PHONE_IS_FALLING = "Phone Is Falling";
+  
   public static final String EVENT_PHONE_RING = "Phone is Ringing";
   public static final String ATTR_PHONE_PHONE_NUMBER = "Phone Number";
   
@@ -128,9 +131,10 @@ public class DbData {
     eventAttributeDbAdapter.insert(ATTR_PHONE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
     
     long eventIdGPSLocationChanged = eventDbAdapter.insert(EVENT_GPS_LOCATION_CHANGED, appIdGPS);  
-    eventAttributeDbAdapter.insert(ATTR_GPS_CURRENT_LOCATION, eventIdGPSLocationChanged, dataTypeIdArea);
+    eventAttributeDbAdapter.insert(ATTR_GPS_CURRENT_LOCATION, eventIdGPSLocationChanged, 
+        dataTypeIdArea);
     
-    long eventIdSensorPhoneIsFalling = eventDbAdapter.insert(EVENT_SENSOR_PHONE_IS_FALLING, appIdSensor);  
+    eventDbAdapter.insert(EVENT_SENSOR_PHONE_IS_FALLING, appIdSensor);  
 
     /* Populate registered actions and action parameters */
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
