@@ -31,6 +31,9 @@ import android.widget.Toast;
  */
 public class EventMonitoringService extends Service {
 
+  // TODO (dvo203): This value should be checked at runtime, to determine the environment.
+  public static final boolean EXECUTING_ON_EMULATOR = true;
+
   private static final String monitorPackage = "edu.nyu.cs.omnidroid.external.attributes";
 
   private final IBinder mBinder = new LocalBinder();
