@@ -22,6 +22,7 @@ import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea.Filter;
+import edu.nyu.cs.omnidroid.external.attributes.EventMonitoringService;
 import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
@@ -148,8 +149,15 @@ public class OmniAreaTest extends AndroidTestCase {
    * @throws IOException
    * @throws IllegalArgumentException
    */
-  @Suppress
   public void testGetOmniArea() throws IllegalArgumentException, IOException {
+    /*
+     * getOmniArea requires Geocoder, which does not work correctly on emulator. Therefore the test
+     * will pass automatically if EXECUTING_ON_EMULATOR flag is true.
+     */
+    if(EventMonitoringService.EXECUTING_ON_EMULATOR) {
+      return;
+    }
+    
     // Valid
     OmniArea omniArea = OmniArea.getOmniArea(getContext(), NYU_ADDRESS, NYU_RADIUS);
     assertEquals(oaNYU, omniArea);
