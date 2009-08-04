@@ -29,12 +29,24 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DbData {
   
-  /* DataType names */
+  /* DataType names and their DataFilter names */
   public static final String DATATYPE_TEXT = "Text";
-  public static final String DATATYPE_DATE = "Date";
+  public static final String DATAFILTER_TEXT_EQUALS = "equals";
+  public static final String DATAFILTER_TEXT_CONTAINS = "contains";
+  
   public static final String DATATYPE_PHONENUMBER = "PhoneNumber";
-  public static final String DATATYPE_AREA = "Area";
+  public static final String DATAFILTER_PHONENUMBER_EQUALS = "equals";
+
   public static final String DATATYPE_DAYOFWEEK = "DayOfWeek";
+  
+  public static final String DATATYPE_DATE = "Date";
+  public static final String DATAFILTER_DATE_BEFORE = "before";
+  public static final String DATAFILTER_DATE_AFTER = "after";
+  public static final String DATAFILTER_DATE_ISDAYOFWEEK = "isDayOfWeek";
+  
+  public static final String DATATYPE_AREA = "Area";
+  public static final String DATAFILTER_AREA_NEAR = "near";
+  public static final String DATAFILTER_AREA_AWAY = "away";
   
   /* Registered App Names */
   public static final String APP_SMS = "SMS";
@@ -72,22 +84,22 @@ public class DbData {
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     
     long dataTypeIdText = dataTypeDbAdapter.insert(DATATYPE_TEXT, "OmniText");
-    dataFilterDbAdapter.insert("equals", dataTypeIdText, dataTypeIdText);
-    dataFilterDbAdapter.insert("contains", dataTypeIdText, dataTypeIdText);
-    
-    long dataTypeIdDate = dataTypeDbAdapter.insert(DATATYPE_DATE, "OmniDate");
-    dataFilterDbAdapter.insert("before", dataTypeIdDate, dataTypeIdDate);
-    dataFilterDbAdapter.insert("after", dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(DATAFILTER_TEXT_EQUALS, dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert(DATAFILTER_TEXT_CONTAINS, dataTypeIdText, dataTypeIdText);
     
     long dataTypeIdPhone = dataTypeDbAdapter.insert(DATATYPE_PHONENUMBER, "OmniPhoneNumber");
-    dataFilterDbAdapter.insert("equals", dataTypeIdPhone, dataTypeIdPhone);
-    
-    long dataTypeIdArea = dataTypeDbAdapter.insert(DATATYPE_AREA, "OmniArea");
-    dataFilterDbAdapter.insert("near", dataTypeIdArea, dataTypeIdArea);
-    dataFilterDbAdapter.insert("away", dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert(DATAFILTER_PHONENUMBER_EQUALS, dataTypeIdPhone, dataTypeIdPhone);
     
     long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(DATATYPE_DAYOFWEEK, "OmniDayOfWeek");
-    dataFilterDbAdapter.insert("isDayOfWeek", dataTypeIdDate, dataTypeIdDayOfWeek);
+    
+    long dataTypeIdDate = dataTypeDbAdapter.insert(DATATYPE_DATE, "OmniDate");
+    dataFilterDbAdapter.insert(DATAFILTER_DATE_BEFORE, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(DATAFILTER_DATE_AFTER, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(DATAFILTER_DATE_ISDAYOFWEEK, dataTypeIdDate, dataTypeIdDayOfWeek);
+    
+    long dataTypeIdArea = dataTypeDbAdapter.insert(DATATYPE_AREA, "OmniArea");
+    dataFilterDbAdapter.insert(DATAFILTER_AREA_NEAR, dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert(DATAFILTER_AREA_AWAY, dataTypeIdArea, dataTypeIdArea);
     
     /* Populate registered applications */
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
