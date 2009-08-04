@@ -56,6 +56,14 @@ public class PhoneIsFallingMonitor implements SystemServiceEventMonitor {
   }
 
   public void init() {
+    /*
+     * getSystemService(SENSOR_SERVICE) does not work correctly on emulator. Therefore the monitor
+     * will not initialize if EXECUTING_ON_EMULATOR flag is true.
+     */
+    if (EventMonitoringService.EXECUTING_ON_EMULATOR) {
+      return;
+    }
+    
     SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     if (sm == null) {
       Log.i(MONITOR_NAME, "Could not obtain SENSOR_SERVICE from the system.");
@@ -74,6 +82,12 @@ public class PhoneIsFallingMonitor implements SystemServiceEventMonitor {
   }
 
   public void stop() {
+    /*
+     * getSystemService(SENSOR_SERVICE) does not work correctly on emulator. Therefore the monitor
+     * will not initialize if EXECUTING_ON_EMULATOR flag is true.
+     */
+    if(EventMonitoringService.EXECUTING_ON_EMULATOR) return;
+
     SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     sm.unregisterListener(sensorEventListener);
   }
