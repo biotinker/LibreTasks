@@ -65,6 +65,7 @@ public class HandlerService extends Service {
       OmLogger.write(this, "Illegal Execution Method");
     }
     // TODO(londinop): Log events/actions to a database or content provider
+    stopSelf();
   }
 
   /**
