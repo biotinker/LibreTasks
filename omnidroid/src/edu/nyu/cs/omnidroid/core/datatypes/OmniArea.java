@@ -54,6 +54,9 @@ public class OmniArea extends DataType {
   private static final String proximityDistanceOpenTag = "<proximityDistance>";
   private static final String proximityDistanceCloseTag = "</proximityDistance>";
 
+  /* data type name to be stored in db */
+  public static final String DB_NAME = "Area";
+  
   public enum Filter implements DataType.Filter {
     NEAR, AWAY;
   }

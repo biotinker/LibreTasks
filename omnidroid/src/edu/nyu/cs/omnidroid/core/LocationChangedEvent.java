@@ -1,6 +1,5 @@
 package edu.nyu.cs.omnidroid.core;
 
-import edu.nyu.cs.omnidroid.model.DbData;
 import android.content.Intent;
 
 /**
@@ -9,10 +8,10 @@ import android.content.Intent;
  */
 public class LocationChangedEvent extends Event {
   /** Event name (to match record in database) */
-  public static final String APPLICATION_NAME = DbData.APP_GPS;
-  public static final String EVENT_NAME = DbData.EVENT_GPS_LOCATION_CHANGED;
+  public static final String APPLICATION_NAME = "GPS";
+  public static final String EVENT_NAME = "GPS Location Changed";
   public static final String ACTION_NAME = "LOCATION_CHANGED";
-  public static final String ATTRIBUTE_CURRENT_LOCATION = DbData.ATTR_GPS_CURRENT_LOCATION;
+  public static final String ATTRIBUTE_CURRENT_LOCATION = "Current Location";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String location;

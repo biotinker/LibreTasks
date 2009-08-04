@@ -22,7 +22,10 @@ import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
  */
 public class OmniText extends DataType {
   private String value;
-
+  
+  /* data type name to be stored in db */
+  public static final String DB_NAME = "Text";
+  
   public enum Filter implements DataType.Filter {
     CONTAINS, EQUALS;
   }

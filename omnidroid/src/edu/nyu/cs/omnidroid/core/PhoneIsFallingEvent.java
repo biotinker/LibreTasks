@@ -1,6 +1,5 @@
 package edu.nyu.cs.omnidroid.core;
 
-import edu.nyu.cs.omnidroid.model.DbData;
 import android.content.Intent;
 
 /**
@@ -9,8 +8,8 @@ import android.content.Intent;
  */
 public class PhoneIsFallingEvent extends Event {
   /** Event name (to match record in database) */
-  public static final String APPLICATION_NAME = DbData.APP_SENSOR;
-  public static final String EVENT_NAME = DbData.EVENT_SENSOR_PHONE_IS_FALLING;
+  public static final String APPLICATION_NAME = "Sensor";
+  public static final String EVENT_NAME = "Phone Is Falling";
   public static final String ATTRIBUTE_ACCELERATIONS = "Accelerations";
   public static final String ACTION_NAME = "PHONE_IS_FALLING";
 
