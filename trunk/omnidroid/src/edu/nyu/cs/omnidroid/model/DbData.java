@@ -50,12 +50,19 @@ public class DbData {
   
   /* Registered App Names */
   public static final String APP_SMS = "SMS";
-  public static final String APP_DIAL = "Phone";
+  public static final String APP_PHONE = "Phone";
+  public static final String APP_GPS = "GPS";
+  public static final String APP_SENSOR = "Sensor";
   
   /* Registered Events and their Attributes names */
   public static final String EVENT_SMS_REC = "SMS Received";
   public static final String ATTR_SMS_REC_PHONENUMBER = "SMS Phonenumber";
   public static final String ATTR_SMS_RES_MESSAGE = "SMS Text";
+  public static final String EVENT_GPS_LOCATION_CHANGED = "GPS Location Changed";
+  public static final String ATTR_GPS_CURRENT_LOCATION = "Current Location";
+  public static final String EVENT_SENSOR_PHONE_IS_FALLING = "Phone Is Falling";
+  public static final String EVENT_PHONE_RING = "Phone is Ringing";
+  public static final String ATTR_PHONE_PHONE_NUMBER = "Phone Number";
   
   /* Registered Actions and their parameters name */
   public static final String ACTION_SMS_SEND = "SMS Send";
@@ -104,7 +111,9 @@ public class DbData {
     /* Populate registered applications */
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
     long appIdSms = appDbAdapter.insert(APP_SMS, "", true);
-    long appIdDial = appDbAdapter.insert(APP_DIAL, "", true);
+    long appIdPhone = appDbAdapter.insert(APP_PHONE, "", true);
+    long appIdGPS = appDbAdapter.insert(APP_GPS, "", true);
+    long appIdSensor = appDbAdapter.insert(APP_SENSOR, "", true);
     
     /* Populate registered events and event attributes */ 
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
@@ -114,7 +123,15 @@ public class DbData {
     long eventIdSmsRec = eventDbAdapter.insert(EVENT_SMS_REC, appIdSms);  
     eventAttributeDbAdapter.insert(ATTR_SMS_REC_PHONENUMBER, eventIdSmsRec, dataTypeIdPhone);
     eventAttributeDbAdapter.insert(ATTR_SMS_RES_MESSAGE, eventIdSmsRec, dataTypeIdText);
+
+    long eventIdPhoneRings = eventDbAdapter.insert(EVENT_PHONE_RING, appIdPhone);  
+    eventAttributeDbAdapter.insert(ATTR_PHONE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
     
+    long eventIdGPSLocationChanged = eventDbAdapter.insert(EVENT_GPS_LOCATION_CHANGED, appIdGPS);  
+    eventAttributeDbAdapter.insert(ATTR_GPS_CURRENT_LOCATION, eventIdGPSLocationChanged, dataTypeIdArea);
+    
+    long eventIdSensorPhoneIsFalling = eventDbAdapter.insert(EVENT_SENSOR_PHONE_IS_FALLING, appIdSensor);  
+
     /* Populate registered actions and action parameters */
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
     RegisteredActionParameterDbAdapter actionParameterDbAdapter = 
@@ -124,7 +141,7 @@ public class DbData {
     actionParameterDbAdapter.insert(PARAM_SMS_SEND_PHONENUMBER, actionIdSmsSend, dataTypeIdPhone);
     actionParameterDbAdapter.insert(PARAM_SMS_SEND_MESSAGE, actionIdSmsSend, dataTypeIdText);
     
-    long actionIdPhoneCall = actionDbAdapter.insert(ACTION_DIAL_PHONECALL, appIdDial);
+    long actionIdPhoneCall = actionDbAdapter.insert(ACTION_DIAL_PHONECALL, appIdPhone);
     actionParameterDbAdapter.insert(PARAM_DIAL_PHONECALL_PHONENUMBER, actionIdPhoneCall,
         dataTypeIdPhone);
   }
