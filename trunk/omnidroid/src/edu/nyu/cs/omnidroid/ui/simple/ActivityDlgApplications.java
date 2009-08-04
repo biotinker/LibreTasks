@@ -36,22 +36,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.ui.Constants;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
 /**
  * This dialog shows a list of all applications available for use with actions. After the user
- * selects an application, we move them to the {@link ActivityDlgActions} dialog which shows
- * all actions available for that application.
+ * selects an application, we move them to the {@link ActivityDlgActions} dialog which shows all
+ * actions available for that application.
  */
 public class ActivityDlgApplications extends Activity {
 
   private static final String KEY_STATE = "StateDlgApplications";
-  
+
   private ListView listView;
   private AdapterApplications adapterApplications;
   private SharedPreferences state;
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class ActivityDlgApplications extends Activity {
 
     // Link up controls from the xml layout resource file.
     initializeUI();
-    
+
     // Restore UI state.
     state = getSharedPreferences(ActivityDlgApplications.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
@@ -107,16 +107,18 @@ public class ActivityDlgApplications extends Activity {
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_applications_ll_main));
   }
-  
+
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
+   * this before launching so we appear as a brand new instance.
+   * 
+   * @param context
+   *          Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
   }
-  
+
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       // The user has chosen an attribute, now get a list of filters associated
@@ -129,7 +131,7 @@ public class ActivityDlgApplications extends Activity {
     public void onClick(View v) {
       // TODO: (markww) Add help info about the application.
       UtilUI.showAlert(v.getContext(), "Sorry!",
-        "We'll implement an info dialog about the selected application soon!");
+          "We'll implement an info dialog about the selected application soon!");
     }
   };
 
@@ -149,8 +151,8 @@ public class ActivityDlgApplications extends Activity {
     }
 
     // Store the selected attribute in the RuleBuilder so the next activity can pick it up.
-    ModelApplication application = (ModelApplication) adapterApplications.getItem(
-      selectedItemPosition);
+    ModelApplication application = (ModelApplication) adapterApplications
+        .getItem(selectedItemPosition);
     RuleBuilder.instance().setChosenApplication(application);
 
     Intent intent = new Intent();
@@ -168,8 +170,25 @@ public class ActivityDlgApplications extends Activity {
     public AdapterApplications(Context context) {
       this.context = context;
 
+      /*
+       * TODO (dvo203): We shouldn't have to filter the applications here, it should be done in DB
+       * layer. UIDbHelper in particular.
+       */
+
       // Fetch all available applications.
-      applications = UIDbHelperStore.instance().db().getAllApplications();
+      ArrayList<ModelApplication> allApplications = UIDbHelperStore.instance().db()
+          .getAllApplications();
+
+      applications = new ArrayList<ModelApplication>();
+
+      // Look for applications that have actions and put them on the
+      for (ModelApplication application : allApplications) {
+        ArrayList<ModelAction> actions = UIDbHelperStore.instance().db().getActionsForApplication(
+            application);
+        if (!actions.isEmpty()) {
+          applications.add(application);
+        }
+      }
     }
 
     public int getCount() {

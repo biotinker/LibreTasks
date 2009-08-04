@@ -21,11 +21,11 @@ public interface SystemServiceEventMonitor {
   public String getSystemServiceName();
   
   /** Actions performed to initialize EventMonitor service. */
-  public void onCreate();
+  public void init();
 
   /** Actions performed to finalize EventMonitor service. */
-  public void onDestroy();
+  public void stop();
 
-  /** Actions performed to finalize EventMonitor service */
+  /** EventMonitor service name */
   public String getMonitorName();
 }
