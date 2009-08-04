@@ -106,7 +106,8 @@ public class CoreRuleDbHelper {
     long eventID = CursorHelper
         .getLongFromCursor(eventCursor, RegisteredEventDbAdapter.KEY_EVENTID);
 
-    Cursor ruleTable = ruleDbAdapter.fetchAll(eventID, null, null, null, null);
+    // Fetch all rules that match this event and are enabled
+    Cursor ruleTable = ruleDbAdapter.fetchAll(eventID, null, null, true, null);
 
     if (ruleTable.getCount() == 0) {
       // No rules matched this event, return empty list
