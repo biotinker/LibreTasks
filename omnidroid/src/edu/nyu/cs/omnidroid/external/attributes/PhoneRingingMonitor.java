@@ -35,7 +35,7 @@ public class PhoneRingingMonitor implements SystemServiceEventMonitor {
     this.context = context;
   }
   
-  public void onCreate() {
+  public void init() {
     TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     if (tm == null) {
       Log.i("PhoneRingingService", "Could not obtain TELEPHONY_SERVICE from the system.");
@@ -44,7 +44,7 @@ public class PhoneRingingMonitor implements SystemServiceEventMonitor {
     tm.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
   }
 
-  public void onDestroy() {
+  public void stop() {
     TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     tm.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
   }

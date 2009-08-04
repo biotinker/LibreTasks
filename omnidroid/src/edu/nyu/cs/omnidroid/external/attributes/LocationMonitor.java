@@ -48,7 +48,7 @@ public class LocationMonitor implements SystemServiceEventMonitor {
     this.context = context;
   }
   
-  public void onCreate() {
+  public void init() {
     lastLocation = null;
     LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     if (lm == null) {
@@ -59,7 +59,7 @@ public class LocationMonitor implements SystemServiceEventMonitor {
         locationListener);
   }
 
-  public void onDestroy() {
+  public void stop() {
     LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     lm.removeUpdates(locationListener);
   }

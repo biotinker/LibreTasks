@@ -55,7 +55,7 @@ public class PhoneIsFallingMonitor implements SystemServiceEventMonitor {
     this.context = context;
   }
 
-  public void onCreate() {
+  public void init() {
     SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     if (sm == null) {
       Log.i(MONITOR_NAME, "Could not obtain SENSOR_SERVICE from the system.");
@@ -73,7 +73,7 @@ public class PhoneIsFallingMonitor implements SystemServiceEventMonitor {
     }
   }
 
-  public void onDestroy() {
+  public void stop() {
     SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
     sm.unregisterListener(sensorEventListener);
   }

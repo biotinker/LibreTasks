@@ -16,7 +16,6 @@
 package edu.nyu.cs.omnidroid.external.attributes;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -28,8 +27,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * The class is responsible for communication with the Location Service. It provides access to
- * Location Services External Attribute, as well as Initiates Location Change Intents.
+ * The service creates monitors for System Events, and could later support third party applications.
  */
 public class EventMonitoringService extends Service {
 
@@ -42,7 +40,6 @@ public class EventMonitoringService extends Service {
    * also allows us to support third party events, like Facebook update.
    */
   /** List of monitors to run */
-
   private static String MONITORS[] = { monitorPackage + "." + "PhoneIsFallingMonitor",
       monitorPackage + "." + "PhoneRingingMonitor", monitorPackage + "." + "LocationMonitor" };
 
@@ -55,7 +52,7 @@ public class EventMonitoringService extends Service {
   public static void startService(Context context) {
     ComponentName service = context.startService(new Intent(context, EventMonitoringService.class));
     if (null == service) {
-      Toast.makeText(context, "Failed to start Location Service", Toast.LENGTH_LONG).show();
+      Toast.makeText(context, "Failed to start Event Monitoring Service", Toast.LENGTH_LONG).show();
       Log.i("EventMonitoringService", "EventMonitoringService did not start.");
     }
     // TODO (dvo203): Log the service start
@@ -65,48 +62,57 @@ public class EventMonitoringService extends Service {
     context.stopService(new Intent(context, EventMonitoringService.class));
   }
 
+  /**
+   * Actions performed on service initialization. EventMonitoringService performs initialization of
+   * each SystemServiceMonitor.
+   */
   @Override
   public void onCreate() {
     Class<?> theClass = null;
     Class<?>[] constructorParameters = new Class[1];
     Constructor<?> classConstructor;
 
+    // For each monitor, create an instance and start (onCreate) the monitoring.
     for (int i = 0; i < MONITORS.length; i++) {
       try {
         theClass = Class.forName(MONITORS[i]);
         constructorParameters[0] = Class.forName("android.content.Context");
         classConstructor = theClass.getConstructor(constructorParameters);
-        SystemServiceEventMonitor monitor = 
-          (SystemServiceEventMonitor) classConstructor.newInstance(this);
-        monitor.onCreate();
+        SystemServiceEventMonitor monitor = (SystemServiceEventMonitor) classConstructor
+            .newInstance(this);
+        monitor.init();
       } catch (Exception e) {
-        Log.i("EventMonitoringService", MONITORS[i] + " did not start.");
+        Log.w("EventMonitoringService", MONITORS[i]
+            + " did not start.\nThe following error occurred: " + e + e.getMessage()
+            + e.getStackTrace());
       }
       // TODO (dvo203): Log the event
     }
   }
 
+  /**
+   * Actions performed on service shut down. EventMonitoringService performs the shut down of each
+   * SystemServiceMonitor.
+   */
   @Override
   public void onDestroy() {
     Class<?> theClass = null;
     Class<?>[] constructorParameters = new Class[1];
     Constructor<?> classConstructor;
 
+    // For each monitor, stop (onDestroy) the monitoring.
     for (int i = 0; i < MONITORS.length - 1; i++) {
       try {
         theClass = Class.forName(MONITORS[i]);
         constructorParameters[0] = Class.forName("android.content.Context");
         classConstructor = theClass.getConstructor(constructorParameters);
-        SystemServiceEventMonitor monitor = 
-          (SystemServiceEventMonitor) classConstructor.newInstance(this);
-        monitor.onDestroy();
-      } catch (SecurityException e) {
-      } catch (NoSuchMethodException e) {
-      } catch (ClassNotFoundException e) {
-      } catch (IllegalArgumentException e) {
-      } catch (InstantiationException e) {
-      } catch (IllegalAccessException e) {
-      } catch (InvocationTargetException e) {
+        SystemServiceEventMonitor monitor = (SystemServiceEventMonitor) classConstructor
+            .newInstance(this);
+        monitor.stop();
+      } catch (Exception e) {
+        Log.w("EventMonitoringService", MONITORS[i]
+            + " did not stop.\nThe following error occurred: " + e + e.getMessage()
+            + e.getStackTrace());
       }
     }
   }
