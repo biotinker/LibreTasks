@@ -28,7 +28,10 @@ import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 public class OmniDate extends DataType {
   private Date value;
   public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+  
+  /* data type name to be stored in db */
+  public static final String DB_NAME = "Date";
+  
   public enum Filter implements DataType.Filter {
     BEFORE, AFTER, ISDAYOFWEEK;
   }

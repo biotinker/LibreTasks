@@ -23,7 +23,10 @@ import java.util.GregorianCalendar;
  */
 public class OmniDayOfWeek extends DataType {
   private DayOfWeek value;
-
+  
+  /* data type name to be stored in db */
+  public static final String DB_NAME = "DayOfWeek";
+    
   private enum DayOfWeek {
     SUNDAY(GregorianCalendar.SUNDAY, "Sunday"), MONDAY(GregorianCalendar.MONDAY, "Monday"), TUESDAY(
         GregorianCalendar.TUESDAY, "Tuesday"), WEDNESDAY(GregorianCalendar.WEDNESDAY, "Wednesday"), 

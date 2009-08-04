@@ -15,6 +15,17 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
+import edu.nyu.cs.omnidroid.core.CallPhoneAction;
+import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
+import edu.nyu.cs.omnidroid.core.PhoneIsFallingEvent;
+import edu.nyu.cs.omnidroid.core.PhoneRingingEvent;
+import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.core.SendSmsAction;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniDayOfWeek;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
@@ -28,52 +39,6 @@ import android.database.sqlite.SQLiteDatabase;
  * This class store data that needs to be populated into the DB by default
  */
 public class DbData {
-  
-  /* DataType names and their DataFilter names */
-  public static final String DATATYPE_TEXT = "Text";
-  public static final String DATAFILTER_TEXT_EQUALS = "equals";
-  public static final String DATAFILTER_TEXT_CONTAINS = "contains";
-  
-  public static final String DATATYPE_PHONENUMBER = "PhoneNumber";
-  public static final String DATAFILTER_PHONENUMBER_EQUALS = "equals";
-
-  public static final String DATATYPE_DAYOFWEEK = "DayOfWeek";
-  
-  public static final String DATATYPE_DATE = "Date";
-  public static final String DATAFILTER_DATE_BEFORE = "before";
-  public static final String DATAFILTER_DATE_AFTER = "after";
-  public static final String DATAFILTER_DATE_ISDAYOFWEEK = "isDayOfWeek";
-  
-  public static final String DATATYPE_AREA = "Area";
-  public static final String DATAFILTER_AREA_NEAR = "near";
-  public static final String DATAFILTER_AREA_AWAY = "away";
-  
-  /* Registered App Names */
-  public static final String APP_SMS = "SMS";
-  public static final String APP_PHONE = "Phone";
-  public static final String APP_GPS = "GPS";
-  public static final String APP_SENSOR = "Sensor";
-  
-  /* Registered Events and their Attributes names */
-  public static final String EVENT_SMS_REC = "SMS Received";
-  public static final String ATTR_SMS_REC_PHONENUMBER = "SMS Phonenumber";
-  public static final String ATTR_SMS_RES_MESSAGE = "SMS Text";
-  
-  public static final String EVENT_GPS_LOCATION_CHANGED = "GPS Location Changed";
-  public static final String ATTR_GPS_CURRENT_LOCATION = "Current Location";
-  
-  public static final String EVENT_SENSOR_PHONE_IS_FALLING = "Phone Is Falling";
-  
-  public static final String EVENT_PHONE_RING = "Phone is Ringing";
-  public static final String ATTR_PHONE_PHONE_NUMBER = "Phone Number";
-  
-  /* Registered Actions and their parameters name */
-  public static final String ACTION_SMS_SEND = "SMS Send";
-  public static final String PARAM_SMS_SEND_PHONENUMBER = "Phone Number";
-  public static final String PARAM_SMS_SEND_MESSAGE = "Text Message";
-  
-  public static final String ACTION_DIAL_PHONECALL = "Dial Number";
-  public static final String PARAM_DIAL_PHONECALL_PHONENUMBER = "Phone Number";
   
   /**
    * This class does not need to be instantiated.
@@ -93,60 +58,72 @@ public class DbData {
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     
-    long dataTypeIdText = dataTypeDbAdapter.insert(DATATYPE_TEXT, "OmniText");
-    dataFilterDbAdapter.insert(DATAFILTER_TEXT_EQUALS, dataTypeIdText, dataTypeIdText);
-    dataFilterDbAdapter.insert(DATAFILTER_TEXT_CONTAINS, dataTypeIdText, dataTypeIdText);
+    long dataTypeIdText = dataTypeDbAdapter.insert(
+        OmniText.DB_NAME, OmniText.class.toString());
+    dataFilterDbAdapter.insert(OmniText.Filter.EQUALS.toString(), dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert(OmniText.Filter.CONTAINS.toString(), dataTypeIdText, dataTypeIdText);
     
-    long dataTypeIdPhone = dataTypeDbAdapter.insert(DATATYPE_PHONENUMBER, "OmniPhoneNumber");
-    dataFilterDbAdapter.insert(DATAFILTER_PHONENUMBER_EQUALS, dataTypeIdPhone, dataTypeIdPhone);
+    long dataTypeIdPhone = dataTypeDbAdapter.insert(
+        OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.toString());
+    dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.EQUALS.toString(), dataTypeIdPhone, 
+        dataTypeIdPhone);
     
-    long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(DATATYPE_DAYOFWEEK, "OmniDayOfWeek");
+    long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(
+        OmniDayOfWeek.DB_NAME, OmniDayOfWeek.class.toString());
     
-    long dataTypeIdDate = dataTypeDbAdapter.insert(DATATYPE_DATE, "OmniDate");
-    dataFilterDbAdapter.insert(DATAFILTER_DATE_BEFORE, dataTypeIdDate, dataTypeIdDate);
-    dataFilterDbAdapter.insert(DATAFILTER_DATE_AFTER, dataTypeIdDate, dataTypeIdDate);
-    dataFilterDbAdapter.insert(DATAFILTER_DATE_ISDAYOFWEEK, dataTypeIdDate, dataTypeIdDayOfWeek);
+    long dataTypeIdDate = dataTypeDbAdapter.insert(
+        OmniDate.DB_NAME, OmniDate.class.toString());
+    dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE.toString(), dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.AFTER.toString(), dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.ISDAYOFWEEK.toString(), dataTypeIdDate, 
+        dataTypeIdDayOfWeek);
     
-    long dataTypeIdArea = dataTypeDbAdapter.insert(DATATYPE_AREA, "OmniArea");
-    dataFilterDbAdapter.insert(DATAFILTER_AREA_NEAR, dataTypeIdArea, dataTypeIdArea);
-    dataFilterDbAdapter.insert(DATAFILTER_AREA_AWAY, dataTypeIdArea, dataTypeIdArea);
+    long dataTypeIdArea = dataTypeDbAdapter.insert(
+        OmniArea.DB_NAME, OmniArea.class.toString());
+    dataFilterDbAdapter.insert(OmniArea.Filter.NEAR.toString(), dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert(OmniArea.Filter.AWAY.toString(), dataTypeIdArea, dataTypeIdArea);
     
     /* Populate registered applications */
+    // TODO(ehotou) Consider move these static strings to a storage class.
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-    long appIdSms = appDbAdapter.insert(APP_SMS, "", true);
-    long appIdPhone = appDbAdapter.insert(APP_PHONE, "", true);
-    long appIdGPS = appDbAdapter.insert(APP_GPS, "", true);
-    long appIdSensor = appDbAdapter.insert(APP_SENSOR, "", true);
+    long appIdSms = appDbAdapter.insert("SMS", "", true);
+    long appIdPhone = appDbAdapter.insert("Phone", "", true);
+    long appIdGPS = appDbAdapter.insert("GPS", "", true);
+    long appIdSensor = appDbAdapter.insert("Sensor", "", true);
     
     /* Populate registered events and event attributes */ 
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
     RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = 
         new RegisteredEventAttributeDbAdapter(db);
     
-    long eventIdSmsRec = eventDbAdapter.insert(EVENT_SMS_REC, appIdSms);  
-    eventAttributeDbAdapter.insert(ATTR_SMS_REC_PHONENUMBER, eventIdSmsRec, dataTypeIdPhone);
-    eventAttributeDbAdapter.insert(ATTR_SMS_RES_MESSAGE, eventIdSmsRec, dataTypeIdText);
+    long eventIdSmsRec = eventDbAdapter.insert(SMSReceivedEvent.EVENT_NAME, appIdSms);  
+    eventAttributeDbAdapter.insert(
+        SMSReceivedEvent.ATTRIB_PHONE_NO, eventIdSmsRec, dataTypeIdPhone);
+    eventAttributeDbAdapter.insert(
+        SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, eventIdSmsRec, dataTypeIdText);
 
-    long eventIdPhoneRings = eventDbAdapter.insert(EVENT_PHONE_RING, appIdPhone);  
-    eventAttributeDbAdapter.insert(ATTR_PHONE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
+    long eventIdPhoneRings = eventDbAdapter.insert(PhoneRingingEvent.EVENT_NAME, appIdPhone);  
+    eventAttributeDbAdapter.insert(
+        PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
     
-    long eventIdGPSLocationChanged = eventDbAdapter.insert(EVENT_GPS_LOCATION_CHANGED, appIdGPS);  
-    eventAttributeDbAdapter.insert(ATTR_GPS_CURRENT_LOCATION, eventIdGPSLocationChanged, 
-        dataTypeIdArea);
+    long eventIdGPSLocationChanged = eventDbAdapter.insert(
+        LocationChangedEvent.EVENT_NAME, appIdGPS);  
+    eventAttributeDbAdapter.insert(
+        LocationChangedEvent.ATTRIBUTE_CURRENT_LOCATION, eventIdGPSLocationChanged, dataTypeIdArea);
     
-    eventDbAdapter.insert(EVENT_SENSOR_PHONE_IS_FALLING, appIdSensor);  
+    eventDbAdapter.insert(PhoneIsFallingEvent.EVENT_NAME, appIdSensor);  
 
     /* Populate registered actions and action parameters */
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
     RegisteredActionParameterDbAdapter actionParameterDbAdapter = 
       new RegisteredActionParameterDbAdapter(db);
     
-    long actionIdSmsSend = actionDbAdapter.insert(ACTION_SMS_SEND, appIdSms);
-    actionParameterDbAdapter.insert(PARAM_SMS_SEND_PHONENUMBER, actionIdSmsSend, dataTypeIdPhone);
-    actionParameterDbAdapter.insert(PARAM_SMS_SEND_MESSAGE, actionIdSmsSend, dataTypeIdText);
+    long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
+    actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend, dataTypeIdPhone);
+    actionParameterDbAdapter.insert(SendSmsAction.PARAM_SMS, actionIdSmsSend, dataTypeIdText);
     
-    long actionIdPhoneCall = actionDbAdapter.insert(ACTION_DIAL_PHONECALL, appIdPhone);
-    actionParameterDbAdapter.insert(PARAM_DIAL_PHONECALL_PHONENUMBER, actionIdPhoneCall,
-        dataTypeIdPhone);
+    long actionIdPhoneCall = actionDbAdapter.insert(CallPhoneAction.ACTION_NAME, appIdPhone);
+    actionParameterDbAdapter.insert(
+        CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall, dataTypeIdPhone);
   }
 }
