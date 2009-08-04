@@ -46,6 +46,15 @@ public class IntentParser {
       // Handle SMS event
       event = new SMSReceivedEvent(intent);
     }
+    else if (intent.getAction().equals(LocationChangedEvent.ACTION_NAME)) {
+      event = new LocationChangedEvent(intent);
+    }
+    else if (intent.getAction().equals(PhoneRingingEvent.ACTION_NAME)) {
+      event = new PhoneRingingEvent(intent);
+    }
+    else if (intent.getAction().equals(PhoneIsFallingEvent.ACTION_NAME)) {
+      event = new PhoneIsFallingEvent(intent);
+    }
     return event;
   }
 }

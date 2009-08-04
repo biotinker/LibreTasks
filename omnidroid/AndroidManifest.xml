@@ -119,6 +119,12 @@
 		<!--  The service that throws actions to our applications -->
 		<service android:name=".core.HandlerService"></service>
 
+		<!--
+			The service that monitors for System Events and throws associated
+			intents
+		-->
+		<service android:name=".external.attributes.EventMonitoringService" />
+
 		<!--  Receiver that runs to catch events -->
 		<receiver android:name=".bkgservice.BCReceiver">
 			<intent-filter>
@@ -126,6 +132,15 @@
 			</intent-filter>
 			<intent-filter>
 				<action android:name="android.intent.action.PHONE_STATE" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="LOCATION_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="PHONE_RINGING" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="PHONE_IS_FALLING" />
 			</intent-filter>
 		</receiver>
 
@@ -139,7 +154,7 @@
 		
 	</application>
 
-	<!-- Permissions that OmniDroid registers so it can access more complex functionality -->
+	<!-- Permissions that OmniDroid registers so it can access more complex functionality-->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.SEND_SMS" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />

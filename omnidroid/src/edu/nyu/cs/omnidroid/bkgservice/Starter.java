@@ -18,6 +18,7 @@ package edu.nyu.cs.omnidroid.bkgservice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import edu.nyu.cs.omnidroid.external.attributes.EventMonitoringService;
 
 /**
  * This broadcast receiver detect intents including System Boot, OmniStart and OmniRestart to
@@ -28,8 +29,8 @@ public class Starter extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
     
     if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-      // Do something when system start
-      
+      // Start the background monitoring service.
+      EventMonitoringService.startService(context);
     } else if ("OmniStart".equals(intent.getAction())) {
       // Do something when receiving 'OmniStart'
 
