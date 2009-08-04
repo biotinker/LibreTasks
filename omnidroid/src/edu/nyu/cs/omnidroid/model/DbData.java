@@ -59,27 +59,27 @@ public class DbData {
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     
     long dataTypeIdText = dataTypeDbAdapter.insert(
-        OmniText.DB_NAME, OmniText.class.toString());
+        OmniText.DB_NAME, OmniText.class.getName());
     dataFilterDbAdapter.insert(OmniText.Filter.EQUALS.toString(), dataTypeIdText, dataTypeIdText);
     dataFilterDbAdapter.insert(OmniText.Filter.CONTAINS.toString(), dataTypeIdText, dataTypeIdText);
     
     long dataTypeIdPhone = dataTypeDbAdapter.insert(
-        OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.toString());
+        OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.getName());
     dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.EQUALS.toString(), dataTypeIdPhone, 
         dataTypeIdPhone);
     
     long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(
-        OmniDayOfWeek.DB_NAME, OmniDayOfWeek.class.toString());
+        OmniDayOfWeek.DB_NAME, OmniDayOfWeek.class.getName());
     
     long dataTypeIdDate = dataTypeDbAdapter.insert(
-        OmniDate.DB_NAME, OmniDate.class.toString());
+        OmniDate.DB_NAME, OmniDate.class.getName());
     dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE.toString(), dataTypeIdDate, dataTypeIdDate);
     dataFilterDbAdapter.insert(OmniDate.Filter.AFTER.toString(), dataTypeIdDate, dataTypeIdDate);
     dataFilterDbAdapter.insert(OmniDate.Filter.ISDAYOFWEEK.toString(), dataTypeIdDate, 
         dataTypeIdDayOfWeek);
     
     long dataTypeIdArea = dataTypeDbAdapter.insert(
-        OmniArea.DB_NAME, OmniArea.class.toString());
+        OmniArea.DB_NAME, OmniArea.class.getName());
     dataFilterDbAdapter.insert(OmniArea.Filter.NEAR.toString(), dataTypeIdArea, dataTypeIdArea);
     dataFilterDbAdapter.insert(OmniArea.Filter.AWAY.toString(), dataTypeIdArea, dataTypeIdArea);
     

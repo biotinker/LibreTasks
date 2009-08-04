@@ -25,13 +25,6 @@ import java.lang.reflect.Method;
  */
 public class FactoryDataType {
 
-  /*
-   * TODO: (dvo203) The package name is temporary measure, as requested by other developers, once
-   * all the packages are settled and defined, it should be removed. The complete package name and
-   * class should be stored in the database.
-   */
-  private static final String packageName = "edu.nyu.cs.omnidroid.core.datatypes";
-
   /**
    * Private constructor to make sure that the class cannot be instantiated.
    */
@@ -51,7 +44,7 @@ public class FactoryDataType {
    */
   public static DataType createObject(String className, String value) {
     try {
-      Class<?> theClass = Class.forName(packageName + "." + className);
+      Class<?> theClass = Class.forName(className);
 
       Class<?>[] constructorParameters = new Class[1];
       constructorParameters[0] = Class.forName("java.lang.String");
@@ -76,7 +69,7 @@ public class FactoryDataType {
   public static DataType.Filter getFilterFromString(String className, String filter) {
     Class<?> theClass;
     try {
-      theClass = Class.forName(packageName + "." + className);
+      theClass = Class.forName(className);
       Method method = theClass.getMethod("getFilterFromString", String.class);
       return (DataType.Filter) method.invoke(null, filter);
     } catch (ClassNotFoundException e) {
