@@ -88,21 +88,19 @@ public class UtilUI {
    * cursor positions to do partial replacement depending on how much text is currently selected
    * in the field.
    * 
-   * I think the cursor position methods of EditText don't work correctly, possibly due to this
-   * reported bug: http://code.google.com/p/android/issues/detail?id=2188
-   * 
    * @param view The EditText field to do the replacement in.
    * @param newText The new text string to insert in the field.
    */
   public static void replaceEditText(EditText view, String newText) {
-    int minpos = Math.min(view.getSelectionStart(), view.getSelectionEnd());
-
-    // TODO: (markww) Add support for selected text replacement instead of straight insert.
+    int start = Math.min(view.getSelectionStart(), view.getSelectionEnd());
+    int end   = Math.max(view.getSelectionStart(), view.getSelectionEnd());
+    int diff  = end - start;
+    
     String strContents = view.getText().toString();
-    StringBuilder sb = new StringBuilder(strContents.length() + newText.length());
-    sb.append(strContents.substring(0, minpos));
+    StringBuilder sb = new StringBuilder(strContents.length() + newText.length() - diff);
+    sb.append(strContents.substring(0, start));
     sb.append(newText);
-    sb.append(strContents.substring(minpos, strContents.length()));
+    sb.append(strContents.substring(end, strContents.length()));
     view.setText(sb.toString());
   }
 }
