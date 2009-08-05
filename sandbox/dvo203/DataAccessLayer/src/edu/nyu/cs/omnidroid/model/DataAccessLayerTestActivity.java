@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.telephony.gsm.SmsManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -84,6 +85,18 @@ public class DataAccessLayerTestActivity extends Activity {
       }
     });
 
+    // Send SMS click
+    button = (Button) findViewById(R.id.sendSMS);
+
+    button.setOnClickListener(new Button.OnClickListener() {
+      public void onClick(View v) {
+        // On Click Action
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage("7325039445", null, "SMS Send Test " + execID, null, null);
+        execID++;
+      }
+    });
+
     // Update click
     button = (Button) findViewById(R.id.update);
     button.setOnClickListener(new Button.OnClickListener() {
@@ -95,12 +108,14 @@ public class DataAccessLayerTestActivity extends Activity {
         // temp = gpsTest();
         // temp += testDistance();
 
-        OmniArea myLocation;
+        OmniArea myLocation = null;
+/*
         try {
           myLocation = (OmniArea) LocationService.getAttributeValue();
         } catch (ExternalParameterAccessException e) {
-          myLocation = null;;
+          myLocation = null;
         }
+*/
         if (myLocation != null)
           temp = myLocation.getLatitude() + " " + myLocation.getLongitude();
         else

@@ -15,28 +15,25 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ExternalParameters;
 
-import android.app.Service;
 import edu.nyu.cs.omnidroid.model.DataTypes.DataType;
 
 /**
- * This class encapsulates a generic external attribute.
+ * This class encapsulates a generic external attribute. External Attributes allow us to access
+ * properties like, phone ring tone setting, location, sensor access, etc. None of this are event
+ * driven, but simply represent the current state.
  */
-public abstract class ExternalAttribute extends Service {
+public interface ExternalAttribute {
   /**
    * Looks up attribute value of external attribute.
    * 
    * @return attribute value
    */
-  public static DataType getAttributeValue() throws ExternalParameterAccessException {
-    return null;
-  }
+  public DataType getAttributeValue() throws ExternalAttributeAccessException;
 
   /**
    * Returns the name of the external attribute
    * 
    * @return name of the event
    */
-  public static String getName() {
-    return null;
-  }
+  public String getName();
 }

@@ -23,84 +23,107 @@ import android.location.LocationManager;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.widget.Toast;
-import edu.nyu.cs.omnidroid.model.DataTypes.DataType;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.model.DataTypes.DataTypeValidationException;
 import edu.nyu.cs.omnidroid.model.DataTypes.OmniArea;
 
-public class LocationService extends ExternalAttribute {
+/**
+ * The class is responsible for communication with the Location Service. It provides access to
+ * Location Services External Attribute, as well as Initiates Location Change Intents.
+ */
+public class LocationService extends Service implements ExternalAttribute {
   private static OmniArea lastLocation;
   // TODO (dvo203): Change interval to 5 minutes (300000)
-  private static final long MIN_PROVIDER_UPDATE_INTERVAL = 30000; // 5 minutes (in milliseconds).
-  private static final float MIN_PROVIDER_UPDATE_DISTANCE = 50; // 50 meters (in meters)
-  private static final String serviceName = "LocationService";
-  private static final String PROVIDER = LocationManager.NETWORK_PROVIDER;
-  /**
-   * Class for clients to access.  Because we know this service always
-   * runs in the same process as its clients, we don't need to deal with
-   * IPC.
-   */
+  /** Minimum frequency in updates(in milliseconds). Default value is 300000 (5 minutes). */
+  private static final long MIN_PROVIDER_UPDATE_INTERVAL = 30000;
+  // TODO (dvo203): Change distance to 50 meters (50)
+  /** Minimum change in location(in meters). Default value is 50 meters. */
+  private static final float MIN_PROVIDER_UPDATE_DISTANCE = 5;
+  private static final String PROVIDER = LocationManager.GPS_PROVIDER;
+  private static final String serviceName = "OmniDroidLocationService";
+
   public class LocalBinder extends Binder {
     LocationService getService() {
-          return LocationService.this;
-      }
+      return LocationService.this;
+    }
   }
 
   @Override
   public void onCreate() {
-    // TODO (dvo203): Remove Toast Message
-    Toast.makeText(this, serviceName + "(" + PROVIDER + ") service started.", Toast.LENGTH_SHORT).show();
-    
     lastLocation = null;
-      LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-      lm.requestLocationUpdates(PROVIDER, MIN_PROVIDER_UPDATE_INTERVAL,
-          MIN_PROVIDER_UPDATE_DISTANCE, locationListener);
+    LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+    if (lm == null) {
+      Log.i("LocationService", "Could not obtain LOCATION_SERVICE from the system.");
+      return;
+    }
+    lm.requestLocationUpdates(PROVIDER, MIN_PROVIDER_UPDATE_INTERVAL, MIN_PROVIDER_UPDATE_DISTANCE,
+        locationListener);
   }
 
   @Override
   public void onDestroy() {
-      LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-      lm.removeUpdates(locationListener);
-
-      // TODO (dvo203): Remove Toast Message
-      Toast.makeText(this, serviceName + "(" + PROVIDER + ") service started.", Toast.LENGTH_SHORT).show();
+    LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+    lm.removeUpdates(locationListener);
   }
 
-  // This is the object that receives interactions from clients.  See
-  // RemoteService for a more complete example.
   private final IBinder mBinder = new LocalBinder();
 
   @Override
   public IBinder onBind(Intent intent) {
-    // TODO Auto-generated method stub
     return mBinder;
   }
 
   private final LocationListener locationListener = new LocationListener() {
     public void onLocationChanged(Location location) {
+      OmniArea newLocation;
       try {
-        lastLocation = new OmniArea(null, location.getLatitude(), location.getLongitude(), location
+        newLocation = new OmniArea(null, location.getLatitude(), location.getLongitude(), location
             .getAccuracy());
       } catch (DataTypeValidationException e) {
-        lastLocation = null;
+        newLocation = null;
+
+      }
+
+      if (newLocation != null && lastLocation != newLocation) {
+        // Create intent
+/*
+        Intent intent = new Intent(LocationChangedEvent.ACTION_NAME);
+        String temp = newLocation.toString();
+        intent.putExtra(LocationChangedEvent.ATTRIBUTE_CURRENT_LOCATION, temp);
+        sendBroadcast(intent);
+*/
       }
     }
 
+    /** Required to implement. Do nothing. */
     public void onProviderDisabled(String provider) {
     }
 
+    /** Required to implement. Do nothing. */
     public void onProviderEnabled(String provider) {
     }
 
+    /** Required to implement. Do nothing. */
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
   };
 
-  public static DataType getAttributeValue() throws ExternalParameterAccessException {
+  /**
+   * Returns current location.
+   * 
+   * @return OmniArea object that has longitude, latitude, and accuracy (proximityDistance)
+   * @throws ExternalAttributeAccessException
+   *           throws an exception if attribute is unavailable.
+   */
+  public OmniArea getAttributeValue() throws ExternalAttributeAccessException {
+    if (lastLocation == null) {
+      Log.i("LocationService", "Could not obtain Current Location from the system.");
+      throw new ExternalAttributeAccessException("Location Service is not available.");
+    }
     return lastLocation;
   }
 
-  public static String getName() {
+  public String getName() {
     return serviceName;
   }
 }

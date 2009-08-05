@@ -87,4 +87,6 @@
         android:layout_marginLeft="10dip"
         android:text="Stop Service" 
         android:layout_below="@+id/getCoordinates"/>
+        
+	<Button android:text="Send SMS" android:id="@+id/sendSMS" android:layout_below="@id/stopService" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 </RelativeLayout>
