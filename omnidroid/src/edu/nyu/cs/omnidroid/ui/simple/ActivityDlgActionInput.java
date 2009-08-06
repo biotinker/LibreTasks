@@ -289,13 +289,15 @@ public class ActivityDlgActionInput extends Activity {
           return;
         }
 
-        // Store the saved 
+        // The parent activity will pick up our selected attribute from the list.
         dismiss();
       }
     };
 
     private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
       public void onClick(View v) {
+        // Since the user is canceling the dialog, deselect any items.
+        UtilUI.uncheckListViewSingleChoice(listView);
         dismiss();
       }
     };
