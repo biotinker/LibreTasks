@@ -300,7 +300,7 @@ public class FactoryDynamicUI {
           String address = etAddress.getText().toString();
           double distance = 0;
           try {
-            Double.parseDouble(etDistance.getText().toString());
+            distance = Double.parseDouble(etDistance.getText().toString());
           } catch (NumberFormatException ex) {
             throw new Exception("Please enter a distance in miles.");
           }
