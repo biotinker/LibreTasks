@@ -90,7 +90,11 @@ public class ActivitySavedRules extends Activity {
     btnInfo.setOnClickListener(listenerBtnClickToggleOnOff);
     Button btnCancel = (Button) findViewById(R.id.activity_saved_rules_btnDeleteRule);
     btnCancel.setOnClickListener(listenerBtnClickDeleteRule);
-  }
+    
+    LinearLayout llBottomButtons = (LinearLayout) findViewById(
+      R.id.activity_saved_rules_llBottomButtons);
+    llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
+  } 
   
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {

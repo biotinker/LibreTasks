@@ -26,26 +26,31 @@
 	android:layout_height="wrap_content" 
 	android:gravity="center">
 
-	<LinearLayout android:orientation="horizontal"
+	<LinearLayout 
+      android:id="@+id/activity_saved_rules_llButtons"
+      android:orientation="horizontal"
 	  android:layout_width="wrap_content" 
 	  android:layout_height="wrap_content">
-
+	  
       <Button android:text="V" android:id="@+id/activity_saved_rules_btnViewRule"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:minWidth="40px">
       </Button>
 
       <Button android:text="T" android:id="@+id/activity_saved_rules_btnToggleOnOff"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:minWidth="40px">
       </Button>
       
       <Button android:text="D" android:id="@+id/activity_saved_rules_btnDeleteRule"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:minWidth="40px">
       </Button>
 
     </LinearLayout>
