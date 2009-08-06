@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.CursorHelper;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
@@ -89,14 +91,22 @@ public class RuleTestData {
    * Data.
    */
   private static final String[][] filterData = {
-      // Data Type Name, Event Attribute Name, Comparison, Filter Data
-      { SMSReceivedEvent.ATTRIB_PHONE_NO, "OmniPhoneNumber", "equals", "OmniPhoneNumber",
-          "555-555-5555" },
-      { SMSReceivedEvent.ATTRIB_PHONE_NO, "OmniPhoneNumber", "equals", "OmniPhoneNumber",
-          "123-456-7890" },
-      { SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, "OmniText", "contains", "OmniText", "Some Text" },
-      { SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, "OmniText", "contains", "OmniText", 
-          "Some Other Text" } };
+      // EventAttributeName, FilterOnDataType, Comparison, CompareWithDataTypeName, Filter Data
+      { SMSReceivedEvent.ATTRIB_PHONE_NO, 
+        OmniPhoneNumber.class.getName(), OmniPhoneNumber.Filter.EQUALS.toString(), 
+        OmniPhoneNumber.class.getName(), "555-555-5555" },
+        
+      { SMSReceivedEvent.ATTRIB_PHONE_NO, 
+        OmniPhoneNumber.class.getName(), OmniPhoneNumber.Filter.EQUALS.toString(), 
+        OmniPhoneNumber.class.getName(), "123-456-7890" },
+        
+      { SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, 
+        OmniText.class.getName(), OmniText.Filter.CONTAINS.toString(), 
+        OmniText.class.getName(), "Some Text" },
+      
+      { SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, 
+        OmniText.class.getName(), OmniText.Filter.CONTAINS.toString(), 
+        OmniText.class.getName(), "Some Other Text" } };
 
   private static final String[][] actionData = {
       // Action Application, Action Parameter Name, Action Parameter Data
