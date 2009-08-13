@@ -1,0 +1,22 @@
+#labels Featured
+How to build and install OmniDroid
+
+= Install From the Android Market =
+
+Coming soon.
+
+= Install From Source Code = 
+== Requirements ==
+  * Ant
+  * Android SDK 1.5
+
+== Building/Installing with Ant ==
+  # Start an [http://developer.android.com/guide/developing/tools/emulator.html emulator] to install onto.
+    * {{{/path/to/android-sdk/tools/emulator}}}
+  # Checkout the omnidroid project from the trunk of the [http://code.google.com/p/omnidroid/source/checkout repository].
+    * {{{svn checkout http://omnidroid.googlecode.com/svn/trunk/omnidroid}}}
+  # Edit the build.properties file to point to your Android SDK.
+  # Build, Install, or Update
+    * To build an android package run: {{{ant release}}}
+    * To install on the running emulator: {{{ant install}}}
+    * To update an install on the emulator: {{{ant reinstall}}}
