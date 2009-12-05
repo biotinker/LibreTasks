@@ -22,8 +22,20 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the DataFilters table. Defines basic CRUD methods. 
- * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all data filters registered in Omnidroid. DataFilter compare whether one 
+ * dataType object matches another, so every dataFilter has a name and two dataTypeIDs:
+ * </p>
+ * <p>
+ * FK_FilterOnDataTypeID points to the data type which this filter method is called on. 
+ * usually, the codes that implements this filter is within the 'filterOn' dataType class.
+ * </p>
+ * <p>
+ * FK_CompareWithDataTypeID points to the data type which the filter try to compares with.
+ * </p>
+ * <p>
+ * Note: Filters belong to the same dataType should each has a unique name.
+ * </p>
  */
 public class DataFilterDbAdapter extends DbAdapter {
 

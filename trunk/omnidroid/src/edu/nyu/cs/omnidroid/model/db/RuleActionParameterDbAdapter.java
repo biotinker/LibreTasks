@@ -23,7 +23,14 @@ import android.database.sqlite.SQLiteQueryBuilder;
 /**
  * Database helper class for the RuleActionParameters table. Defines basic CRUD methods.
  * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains parameter association with each ruleAction as well as data that required to
+ * feed in to these parameters.
+ *  
+ * FK_RuleActionID points to the ruleAction it belongs to.
+ * FK_ActionParameterID points to the actionParameter record associated.
+ * FK_RuleActionParameterData is the user defined data for this parameter
+ * </p>
  */
 public class RuleActionParameterDbAdapter extends DbAdapter {
 

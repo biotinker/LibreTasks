@@ -24,8 +24,17 @@ import java.text.SimpleDateFormat;
 
 /**
  * Database helper class for the Rules table. Defines basic CRUD methods. 
+ * <p>
+ * This table contains all rule records defined by the user. Every rule is a combination of records
+ * in these four tables: Rules, RuleActions, RuleActionParameters, RuleFilters. 
+ * </p>
  * 
- * TODO(ehotou) document about this table.
+ * RuleName is the user defined name of the rule; 
+ * RuleDesc is the user defined description of the rule;
+ * Enabled is whether this rule is activated. 
+ * Created is the time stamp of when this rule is created
+ * Updated is the time stamp of when this rule is last updated
+ * 
  */
 public class RuleDbAdapter extends DbAdapter {
 

@@ -22,8 +22,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the RegisteredActions table. Defines basic CRUD methods. 
- * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table records all actions registered in Omnidroid. ActionName is the name of the action, 
+ * FK_AppID points to the application it belongs to. Every application could have multiple actions.
+ * </p>
+ * <p>Note: Actions belong to the same app should each has a unique name.<p>
  */
 public class RegisteredActionDbAdapter extends DbAdapter {
 

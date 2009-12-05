@@ -22,8 +22,24 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the RuleFilters table. Defines basic CRUD methods. 
+ * <p> 
+ * This table contains ruleFilers associated with each rule. 
+ * FK_RuleID points to the rule it belongs to.
+ * FK_EventAttributeID points to the event attribute which it filters on
+ * FK_ExternalAttributeID points the external attribute which it filters on
+ * </p>
+ * <p>
+ * Note: Only one of FK_EventAttributeID and FK_ExternalAttributeID is valid foreign key 
+ * indicating whether the filter is on an eventAttribute or an external attribute. 
+ * The non-valid one should be -1
+ * </p>
  * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * Every rule has a user defined filter tree, one record in this table is one node of that tree.
+ * FK_ParentRuleFilterID points to the ruleFilter in the same table which is parent of this node.
+ * (FK_ParentRuleFilterID = -1 if it has no parent.)
+ * RuleFilterData is the user defined data associated with this ruleFilterNode
+ * </p>
  */
 public class RuleFilterDbAdapter extends DbAdapter {
 

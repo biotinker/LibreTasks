@@ -23,7 +23,13 @@ import android.database.sqlite.SQLiteQueryBuilder;
 /**
  * Database adapter class for the ExternalAttributes table. Defines basic CRUD methods. 
  * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all external attributes that Omnidroid support. ExternalAttributeName is 
+ * the name of the attribute; FK_AppID points to the app it belongs to; FK_DataTypeID points to
+ * its data type. 
+ * </p>
+ * 
+ * <p>Note: Every External attributes should have a unique name.<p>
  */
 public class ExternalAttributeDbAdapter extends DbAdapter {
 

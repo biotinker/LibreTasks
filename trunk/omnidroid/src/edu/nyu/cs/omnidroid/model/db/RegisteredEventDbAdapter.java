@@ -23,7 +23,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 /**
  * Database helper class for the RegisteredEvents table. Defines basic CRUD methods. 
  * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all events registered in Omnidroid. EventName is the name of that event; 
+ * FK_AppID points to the application it belongs to.
+ * </p>
+ * <p> Note: Events belong to the same app should each has a unique name. <p>
  */
 public class RegisteredEventDbAdapter extends DbAdapter {
 
