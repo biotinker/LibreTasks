@@ -23,7 +23,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
 /**
  * Database helper class for the RegisteredEventAttributes table. Defines basic CRUD methods.
  * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all event attributes registered in Omnidroid. EventAttributeName is the name
+ * of that attribute; FK_EventID points to the event it belongs to; FK_DataTypeID points the 
+ * dataType of this attribute.
+ * </p>
+ * <p>Note: Attributes belong to the same event should each has a unique name.<p>
  */
 public class RegisteredEventAttributeDbAdapter extends DbAdapter {
 

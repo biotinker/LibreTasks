@@ -22,8 +22,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the RegisteredActionParameters table. Defines basic CRUD methods.
- * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all action parameter registered in Omnidroid. ActionParameterName is the
+ * name of this parameter; FK_ActionID points to the action it belongs to; FK_DataTypeID points
+ * to the dataType of this parameter.
+ * </p>
+ * <p>Note: Parameters belong to the same action should each has a unique name.<p>
  */
 public class RegisteredActionParameterDbAdapter extends DbAdapter {
 

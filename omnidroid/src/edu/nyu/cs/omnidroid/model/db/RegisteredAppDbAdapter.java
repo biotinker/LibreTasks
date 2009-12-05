@@ -21,9 +21,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
- * Database helper class for the RegisteredApps table. Defines basic CRUD methods. 
- * 
- * TODO(ehotou) document about this table.
+ * Database helper class for the RegisteredApps table. Defines basic CRUD methods.  
+ * <p>
+ * This table contains all applications registered in Omnidroid. For each application record: 
+ * AppName is name of the application; PkgName is the package name of the application; 
+ * Enabled is whether this application is enabled in Omnidroid
+ * </p>
+ * <p>
+ * Note: Every app should have a unique name
+ * </p>
  */
 public class RegisteredAppDbAdapter extends DbAdapter {
 

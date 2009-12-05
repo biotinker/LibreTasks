@@ -22,8 +22,13 @@ import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
  * Database helper class for the DataTypes table. Defines basic CRUD methods. 
- * 
- * TODO(ehotou) document about this table.
+ * <p>
+ * This table contains all data types that registered in Omnidroid. Every datatype have a name 
+ * and class name. The class name is the class that actually implement this datatype.
+ * </p>
+ * <p>
+ * Every data type should have a unique name
+ * </p>
  */
 public class DataTypeDbAdapter extends DbAdapter {
 
