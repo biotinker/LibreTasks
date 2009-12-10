@@ -52,19 +52,23 @@ public class HandlerService extends Service {
   @Override
   public void onStart(Intent intent, int id) {
     Event event = IntentParser.getEvent(intent);
- 
-    CoreRuleDbHelper coreRuleDbHelper = new CoreRuleDbHelper(this);
-    CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
-    ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper, coreActionsDbHelper);
-    // Execute the list of actions.
-    try {
-      ActionExecuter.executeActions(this, actions);
-    } catch (OmnidroidException e) {
-      Log.w("Handler Service:", e.toString(), e);
-      Log.w("Handler Service: ", e.getLocalizedMessage());
-      OmLogger.write(this, "Illegal Execution Method");
+
+    if (event != null) {
+      CoreRuleDbHelper coreRuleDbHelper = new CoreRuleDbHelper(this);
+      CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
+      ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
+          coreActionsDbHelper);
+      // Execute the list of actions.
+      try {
+        ActionExecuter.executeActions(this, actions);
+      } catch (OmnidroidException e) {
+        Log.w("Handler Service:", e.toString(), e);
+        Log.w("Handler Service: ", e.getLocalizedMessage());
+        OmLogger.write(this, "Illegal Execution Method");
+      }
+      // TODO(londinop): Log events/actions to a database or content provider
     }
-    // TODO(londinop): Log events/actions to a database or content provider
+    
     stopSelf();
   }
 
