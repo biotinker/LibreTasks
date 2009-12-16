@@ -20,10 +20,12 @@ import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.core.PhoneIsFallingEvent;
 import edu.nyu.cs.omnidroid.core.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDayOfWeek;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
@@ -83,6 +85,9 @@ public class DbData {
     dataFilterDbAdapter.insert(OmniArea.Filter.NEAR.toString(), dataTypeIdArea, dataTypeIdArea);
     dataFilterDbAdapter.insert(OmniArea.Filter.AWAY.toString(), dataTypeIdArea, dataTypeIdArea);
     
+    long dataTypeIdPasswordInput = dataTypeDbAdapter.insert(
+        OmniPasswordInput.DB_NAME, OmniPasswordInput.class.getName());
+    
     /* Populate registered applications */
     // TODO(ehotou) Consider move these static strings to a storage class.
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
@@ -90,6 +95,7 @@ public class DbData {
     long appIdPhone = appDbAdapter.insert("Phone", "", true);
     long appIdGPS = appDbAdapter.insert("GPS", "", true);
     long appIdSensor = appDbAdapter.insert("Sensor", "", true);
+    long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
     
     /* Populate registered events and event attributes */ 
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
@@ -125,5 +131,17 @@ public class DbData {
     long actionIdPhoneCall = actionDbAdapter.insert(CallPhoneAction.ACTION_NAME, appIdPhone);
     actionParameterDbAdapter.insert(
         CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall, dataTypeIdPhone);
+
+    long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdGmail);
+    actionParameterDbAdapter.insert(
+        SendGmailAction.PARAM_USERNAME, actionIdGmailSend, dataTypeIdText);
+    actionParameterDbAdapter.insert(
+        SendGmailAction.PARAM_PASSWORD, actionIdGmailSend, dataTypeIdPasswordInput);
+    actionParameterDbAdapter.insert(
+        SendGmailAction.PARAM_TO, actionIdGmailSend, dataTypeIdText);
+    actionParameterDbAdapter.insert(
+        SendGmailAction.PARAM_SUBJECT, actionIdGmailSend, dataTypeIdText);
+    actionParameterDbAdapter.insert(
+        SendGmailAction.PARAM_BODY, actionIdGmailSend, dataTypeIdText);
   }
 }

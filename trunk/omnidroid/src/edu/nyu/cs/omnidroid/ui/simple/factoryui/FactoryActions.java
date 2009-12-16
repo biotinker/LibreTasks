@@ -20,6 +20,9 @@ import java.util.HashMap;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
@@ -28,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.DataTypeIDLookup;
@@ -46,6 +50,7 @@ public class FactoryActions {
   private static BuilderOmniPhoneNumber vbOmniPhoneNumber;
   private static BuilderOmniText vbOmniText;
   private static BuilderOmniArea vbOmniArea;
+  private static BuilderOmniPasswordInput vbOmniPasswordInput;
   private static HashMap<Long, ViewBuilder> viewBuilders;
 
   static {
@@ -55,12 +60,15 @@ public class FactoryActions {
       lookup.getDataTypeID(OmniPhoneNumber.DB_NAME));
     vbOmniText = new BuilderOmniText(lookup.getDataTypeID(OmniText.DB_NAME));
     vbOmniArea = new BuilderOmniArea(lookup.getDataTypeID(OmniArea.DB_NAME));
+    vbOmniPasswordInput = new BuilderOmniPasswordInput(lookup
+        .getDataTypeID(OmniPasswordInput.DB_NAME));
     // TODO: (markww) Add builders for rest of omni data types.
 
     viewBuilders = new HashMap<Long, ViewBuilder>();
     viewBuilders.put(vbOmniPhoneNumber.getDatatypeId(), vbOmniPhoneNumber);
     viewBuilders.put(vbOmniText.getDatatypeId(), vbOmniText);
     viewBuilders.put(vbOmniArea.getDatatypeId(), vbOmniArea);
+    viewBuilders.put(vbOmniPasswordInput.getDatatypeId(), vbOmniPasswordInput);
   }
 
   private FactoryActions() {
@@ -481,5 +489,58 @@ public class FactoryActions {
         ModelAttribute attribute) {
       // TODO: (markww) figure out if BuilderOmniArea should allow copy parameter arguments.
     }
+  }
+  
+  /**
+   * Builder for OmniPasswordInput
+   */
+  private static class BuilderOmniPasswordInput implements ViewBuilder {
+    private long datatypeId;
+    
+    public BuilderOmniPasswordInput(long datatypeId){
+      this.datatypeId = datatypeId;
+    }
+    
+    public int getNumControls() {
+      return 1;
+    }
+    
+    public long getDatatypeId() {
+      return datatypeId;
+    }
+    
+    public void buildUI(ViewGroup view, DataType dataOld) {
+      EditText et = new EditText(view.getContext());
+      et.setTransformationMethod(PasswordTransformationMethod.getInstance());
+      et.setRawInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+      if (dataOld != null) {
+        et.setText(dataOld.getValue());
+      }
+      view.addView(et);
+    }
+
+    public DataType getDataFromView(int childViewPosition, ViewGroup view) throws Exception {
+      EditText et = (EditText) view.getChildAt(childViewPosition);
+      return new OmniText(et.getText().toString());
+    }    
+
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view,
+        ModelAttribute attribute) {
+      EditText et = (EditText) view.getChildAt(childViewPosition);
+      UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
+    }
+
+    public void loadState(SharedPreferences state, int childViewPosition, ViewGroup view) {
+      if (state.contains(childViewPosition + "")) {
+        EditText et = (EditText) view.getChildAt(childViewPosition);
+        et.setText(state.getString(childViewPosition + "", ""));
+      }
+    }
+
+    public void saveState(Editor prefsEditor, int childViewPosition, ViewGroup view) {
+      EditText et = (EditText) view.getChildAt(childViewPosition);
+      prefsEditor.putString(childViewPosition + "", et.getText().toString());
+    }
+    
   }
 }
