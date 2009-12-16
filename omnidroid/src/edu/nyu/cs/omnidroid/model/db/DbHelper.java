@@ -31,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
   
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 4;
+  private static final int DATABASE_VERSION = 5;
   
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";

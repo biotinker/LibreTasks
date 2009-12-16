@@ -30,6 +30,7 @@ import android.util.Log;
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.Event;
+import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
@@ -103,14 +104,19 @@ public class CoreActionsDbHelper {
       throws OmnidroidException {
     // TODO:(Rutvij) Fetch this hard coded data from database.
 
-    if (appName.equals(SendSmsAction.APP_NAME) && actionName.equals(SendSmsAction.ACTION_NAME)) {
+    if (appName.equals(SendSmsAction.APP_NAME) 
+        && actionName.equals(SendSmsAction.ACTION_NAME)) {
       return new SendSmsAction(actionParams);
     } else if (appName.equals(CallPhoneAction.APP_NAME)
         && actionName.equals(CallPhoneAction.ACTION_NAME)) {
       return new CallPhoneAction(actionParams);
-    } else
+    } else if (appName.equals(SendGmailAction.APP_NAME)
+        && actionName.equals(SendGmailAction.ACTION_NAME)) {
+      return new SendGmailAction(actionParams);
+    } else {
       throw new OmnidroidException(120003, ExceptionMessageMap.getMessage(new Integer(120003)
           .toString()));
+    }
   }
 
   /**

@@ -150,6 +150,11 @@
 				<action android:name="omnidroid.intent.action.SMS_SEND" />
 			</intent-filter>
 		</service>
+		<service android:name=".external.actions.GMailService">
+			<intent-filter>
+				<action android:name="omnidroid.intent.action.GMAIL_SEND" />
+			</intent-filter>
+		</service>
 		<!-- End Services that runs to fire actions -->
 		
 	</application>
