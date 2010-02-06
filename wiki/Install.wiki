@@ -20,3 +20,5 @@ Coming soon.
     * To build an android package run: {{{ant release}}}
     * To install on the running emulator: {{{ant install}}}
     * To update an install on the emulator: {{{ant reinstall}}}
+    Specify SDK location by using "-Dsdk-location=" argument, for example:
+    ant install -Dsdk-location=/Library/android-sdk-mac_x86-1.5_r4/
