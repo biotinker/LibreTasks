@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+   
+	<TextView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="Welcome to Omnidroid!"
+	    android:layout_gravity="center"
+	    android:layout_marginBottom="60px"
+	    />
+	    
+	<Button 
+	    android:text="Create Rule" 
+	    android:id="@+id/activity_main_btnCreateRule" 
+	    android:layout_width="150px" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+	    android:text="View Rules" 
+	    android:id="@+id/activity_main_btnViewRules" 
+	    android:layout_width="150px" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+	    android:text="Event Log" 
+	    android:id="@+id/activity_main_btnEventLog" 
+	    android:layout_width="150px" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+	    android:text="Help" 
+	    android:id="@+id/activity_main_btnHelp" 
+	    android:layout_width="150px" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+	    android:text="ResetDB" 
+	    android:id="@+id/activity_main_btnResetDB" 
+	    android:layout_width="150px" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+
+</LinearLayout>
