@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="edu.nyu.cs.omnidroid" android:versionCode="1"
+	android:versionName="1.0">
+
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:debuggable="true">
+				
+		<!--  Start UI activity definitions. -->
+		<activity android:name=".ui.simple.ActivityMain"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.simple.ActivityChooseRootEvent"
+                  android:label="Choose a root event">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.simple.ActivityChooseFiltersAndActions"
+                  android:label="Add filters and actions to your rule!">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+
+        <activity android:name=".ui.simple.ActivityDlgAttributes"
+                  android:label="Attributes"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+
+        <activity android:name=".ui.simple.ActivityDlgFilters"
+                  android:label="Filters"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.simple.ActivityDlgFilterInput"
+                  android:label="Filter Input"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.simple.ActivityDlgApplications"
+                  android:label="Applications"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.simple.ActivityDlgActions"
+                  android:label="Actions"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.simple.ActivityDlgActionInput"
+                  android:label="Action Input"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.simple.ActivitySavedRules"
+                  android:label="Saved Rules">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".ui.simple.ActivityDlgRuleName"
+                  android:label="Rule Name"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+		<!--  End UI activity definitions. -->
+
+		<!-- Receiver that runs when Android or Omnidroid starts/restarts -->	
+		<receiver android:name=".bkgservice.Starter">
+			<intent-filter>	
+				<action android:name="android.intent.action.BOOT_COMPLETED" />	
+			</intent-filter>
+			<intent-filter>	
+				<action android:name="OmniStart" />	
+			</intent-filter>
+			<intent-filter>	
+				<action android:name="OmniRestart" />	
+			</intent-filter>	
+		</receiver>    
+
+		<!--  The service that throws actions to our applications -->
+		<service android:name=".core.HandlerService"></service>
+
+		<!--
+			The service that monitors for System Events and throws associated
+			intents
+		-->
+		<service android:name=".external.attributes.EventMonitoringService" />
+
+		<!--  Receiver that runs to catch events -->
+		<receiver android:name=".bkgservice.BCReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.PHONE_STATE" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.BATTERY_LOW" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.BATTERY_OKAY" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.CAMERA_BUTTON" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DOCK_EVENT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.GTALK_CONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.GTALK_DISCONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.HEADSET_PLUG" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SCREEN_OFF" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SCREEN_ON" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.TIMEZONE_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.WALLPAPER_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="LOCATION_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="PHONE_RINGING" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="PHONE_IS_FALLING" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name=".HelloAndroid" />
+			</intent-filter>
+		</receiver>
+
+		<!-- Services that runs to fire actions -->
+		<service android:name=".external.actions.SMSService">
+			<intent-filter>
+				<action android:name="omnidroid.intent.action.SMS_SEND" />
+			</intent-filter>
+		</service>
+		<service android:name=".external.actions.GMailService">
+			<intent-filter>
+				<action android:name="omnidroid.intent.action.GMAIL_SEND" />
+			</intent-filter>
+		</service>
+		<!-- End Services that runs to fire actions -->
+		
+	</application>
+
+	<!-- Permissions that OmniDroid registers so it can access more complex functionality-->
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.SEND_SMS" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.READ_SMS" />
+	<uses-permission android:name="android.permission.WRITE_SMS" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.CALL_PHONE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.INTERNET" />
+</manifest>
