@@ -42,7 +42,7 @@
      >
     
 		<Button 
-		    android:text="+F" 
+		    android:text="+Filter " 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddFilter" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 		</Button>
 		
 		<Button 
-		    android:text="+A" 
+		    android:text="+Action " 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 		</Button>
 		
 		<Button 
-            android:text="D" 
+            android:text="Delete " 
             android:id="@+id/activity_choosefiltersandactions_btnDeleteItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         </Button>
         
         <Button 
-            android:text="E" 
+            android:text="Edit " 
             android:id="@+id/activity_choosefiltersandactions_btnEditItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         </Button>
         
         <Button 
-            android:text="S" 
+            android:text="Save " 
             android:id="@+id/activity_choosefiltersandactions_btnSaveRule" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
