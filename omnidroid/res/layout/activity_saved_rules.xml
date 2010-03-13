@@ -6,7 +6,7 @@
   <TextView android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
 	android:text="Your saved rules:"
-	android:layout_marginBottom="10px" />
+	android:layout_marginBottom="10dip" />
 
   <FrameLayout android:id="@+id/activity_saved_rules_frame_list"
 	android:layout_width="fill_parent" 
@@ -32,25 +32,25 @@
 	  android:layout_width="wrap_content" 
 	  android:layout_height="wrap_content">
 	  
-      <Button android:text="V" android:id="@+id/activity_saved_rules_btnViewRule"
+      <Button android:text="View" android:id="@+id/activity_saved_rules_btnViewRule"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:minWidth="40px">
+        android:minWidth="60dip">
       </Button>
 
-      <Button android:text="T" android:id="@+id/activity_saved_rules_btnToggleOnOff"
+      <Button android:text="On/Off" android:id="@+id/activity_saved_rules_btnToggleOnOff"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:minWidth="40px">
+        android:minWidth="70dip">
       </Button>
       
-      <Button android:text="D" android:id="@+id/activity_saved_rules_btnDeleteRule"
+      <Button android:text="Delete" android:id="@+id/activity_saved_rules_btnDeleteRule"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:minWidth="40px">
+        android:minWidth="75dip">
       </Button>
 
     </LinearLayout>
