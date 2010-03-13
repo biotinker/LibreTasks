@@ -9,7 +9,7 @@
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="Select an item from the list below, then add filters:"
-	android:layout_marginBottom="10px"
+	android:layout_marginBottom="10dip"
     />
    
    <FrameLayout
@@ -42,48 +42,48 @@
      >
     
 		<Button 
-		    android:text="+Filter " 
+		    android:text="+Filter" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddFilter" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center"
-		    android:minWidth="40px">
+		    android:minWidth="65dip">
 		</Button>
 		
 		<Button 
-		    android:text="+Action " 
+		    android:text="+Action" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center"
-		    android:minWidth="40px">
+		    android:minWidth="75dip">
 		</Button>
 		
 		<Button 
-            android:text="Delete " 
+            android:text="Delete" 
             android:id="@+id/activity_choosefiltersandactions_btnDeleteItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:minWidth="40px">
+            android:minWidth="65dip">
         </Button>
         
         <Button 
-            android:text="Edit " 
+            android:text="Edit" 
             android:id="@+id/activity_choosefiltersandactions_btnEditItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:minWidth="40px">
+            android:minWidth="40dip">
         </Button>
         
         <Button 
-            android:text="Save " 
+            android:text="Save" 
             android:id="@+id/activity_choosefiltersandactions_btnSaveRule" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:minWidth="40px">
+            android:minWidth="40dip">
         </Button>
 
       </LinearLayout>
