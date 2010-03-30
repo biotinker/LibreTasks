@@ -11,13 +11,13 @@
 	    android:layout_height="wrap_content" 
 	    android:text="Welcome to Omnidroid!"
 	    android:layout_gravity="center"
-	    android:layout_marginBottom="60px"
+	    android:layout_marginBottom="60dip"
 	    />
 	    
 	<Button 
 	    android:text="Create Rule" 
 	    android:id="@+id/activity_main_btnCreateRule" 
-	    android:layout_width="150px" 
+	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center">
 	</Button>
@@ -25,7 +25,7 @@
 	<Button 
 	    android:text="View Rules" 
 	    android:id="@+id/activity_main_btnViewRules" 
-	    android:layout_width="150px" 
+	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center">
 	</Button>
@@ -33,7 +33,7 @@
 	<Button 
 	    android:text="Event Log" 
 	    android:id="@+id/activity_main_btnEventLog" 
-	    android:layout_width="150px" 
+	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center">
 	</Button>
@@ -41,7 +41,15 @@
 	<Button 
 	    android:text="Help" 
 	    android:id="@+id/activity_main_btnHelp" 
-	    android:layout_width="150px" 
+	    android:layout_width="150dip" 
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+	    android:text="ResetDB" 
+	    android:id="@+id/activity_main_btnResetDB" 
+	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center">
 	</Button>

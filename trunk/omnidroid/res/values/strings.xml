@@ -55,6 +55,7 @@
 	<string name="missing_action">At least one action must be added.</string>	
 	<string name="missing_data">Data field can not be empty.</string>	
 	<string name="missing_name">OmniHandler name can not be empty.</string>
+	<string name="oh_no">Oh no! </string>
 
 	<!--  Help Dialog Texts -->
     <string name="help_event_intro">OmniHandlers catch events that occur on the platform.</string>
@@ -79,6 +80,18 @@
 	<string name="sms_catcher">SMS Catcher</string>
 	<string name="event_catcher">Catcher</string>
 	<string name="tests">Run Tests</string>
+
+	<!--  Actions -->
+    <string name="action_app_name">OmniDroid</string>
+    <string name="action_default_message">message</string>
+    
+	<!--  System Events -->
+    <string name="APPLICATION_NAME_ANDROID">Android</string>
+    
+	<!--  UI Strings -->
+    <string name="UI_OMNITIMEPERIOD_PICK_STARTTIMR">Pick a start time:</string>
+    <string name="UI_OMNITIMEPERIOD_PICK_ENDTIMR">Pick an end time:</string>
+    <string name="UI_OMNIDATE_PICK_TIMR">Pick a time:</string>
 
 </resources>
 	

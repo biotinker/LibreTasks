@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.core.datatypes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -26,6 +27,10 @@ import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
  * Provides date & time filter functionality.
  */
 public class OmniDate extends DataType {
+  
+  public static final int MINUTES_IN_HOUR = 60;
+  public static final int SECONDS_IN_MINUTE = 60;
+  public static final int SECONDS_IN_HOUR = 3600;
   private Date value;
   public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
   
@@ -33,7 +38,11 @@ public class OmniDate extends DataType {
   public static final String DB_NAME = "Date";
   
   public enum Filter implements DataType.Filter {
-    BEFORE, AFTER, ISDAYOFWEEK;
+    BEFORE, AFTER, BEFORE_EVERYDAY, AFTER_EVERYDAY, 
+    //for OmniTimePeriod
+    DURING, DURING_EVERYDAY, EXCEPT, EXCEPT_EVERYDAY, 
+    //for OmniDayOfWeek
+    ISDAYOFWEEK;
   }
 
   public OmniDate(Date date) {
@@ -87,6 +96,25 @@ public class OmniDate extends DataType {
       return after(compareValue);
     case BEFORE:
       return before(compareValue);
+    case AFTER_EVERYDAY:
+      return afterEveryday(compareValue);
+    case BEFORE_EVERYDAY:
+      return beforeEveryday(compareValue);
+    default:
+      return false;
+    }
+  }
+  
+  public boolean matchFilter(Filter filter, OmniTimePeriod compareValue) {
+    switch (filter) {
+    case DURING :
+      return compareValue.during(this);
+    case DURING_EVERYDAY :
+      return compareValue.duringEveryday(this);
+    case EXCEPT :
+      return compareValue.except(this);
+    case EXCEPT_EVERYDAY :
+      return compareValue.exceptEveryday(this);
     default:
       return false;
     }
@@ -116,12 +144,58 @@ public class OmniDate extends DataType {
     }
   }
 
+  /**
+   * return true if this time is before the <code>compareDate</code>
+   * 
+   * @param compareDate
+   * @return
+   */
   public boolean before(OmniDate compareDate) {
     return value.before(compareDate.getDate());
   }
-
+  
+  /**
+   * return true if this time is after the <code>compareDate</code>
+   * 
+   * @param compareDate
+   * @return
+   */
   public boolean after(OmniDate compareDate) {
     return value.after(compareDate.getDate());
+  }
+  
+  /**
+   * only compare the hour minute and second inclusive.
+   * 
+   * @param compareDate
+   * @return
+   */
+  public boolean beforeEveryday(OmniDate compareDate) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(compareDate.getDate());
+    int compareHour = calendar.get(Calendar.HOUR_OF_DAY);
+    int compareMinute = calendar.get(Calendar.MINUTE);
+    int compareSecond = calendar.get(Calendar.SECOND);
+    int compareSecondInDay = compareHour * SECONDS_IN_HOUR + compareMinute * SECONDS_IN_MINUTE + compareSecond;
+    calendar.setTime(value);
+    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+    int minute = calendar.get(Calendar.MINUTE);
+    int second = calendar.get(Calendar.SECOND);
+    int secondInDay = hour * SECONDS_IN_HOUR + minute * SECONDS_IN_MINUTE + second;
+    
+    if (secondInDay <= compareSecondInDay) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * only compare the hour minute and second
+   * @param compareDate
+   * @return
+   */
+  public boolean afterEveryday(OmniDate compareDate) {
+    return !beforeEveryday(compareDate);
   }
 
   public boolean isDayOfWeek(OmniDayOfWeek compareValue) {
@@ -148,11 +222,18 @@ public class OmniDate extends DataType {
     switch ((Filter) filter) {
     case BEFORE:
     case AFTER:
+    case BEFORE_EVERYDAY:
+    case AFTER_EVERYDAY:
       getDate(userInput);
       break;
     case ISDAYOFWEEK:
       new OmniDayOfWeek(userInput);
       break;
+    case DURING:
+    case DURING_EVERYDAY:
+    case EXCEPT:
+    case EXCEPT_EVERYDAY:
+      new OmniTimePeriod(userInput);
     default:
       throw new DataTypeValidationException("Filter for " + filter.toString()
           + " not yet supported.");
@@ -198,10 +279,15 @@ public class OmniDate extends DataType {
     if(!(filter instanceof Filter)){
       throw new IllegalArgumentException("Invalid filter "+filter.toString()+" provided.");
     }
-    if(userDefinedValue instanceof OmniDate){
+    if (userDefinedValue == null) {
+      throw new IllegalArgumentException("userDefinedValue is null.");
+    }
+    if (userDefinedValue instanceof OmniDate) {
       return matchFilter((Filter) filter, (OmniDate) userDefinedValue);
-    }else if(userDefinedValue instanceof OmniDayOfWeek){
+    } else if(userDefinedValue instanceof OmniDayOfWeek) {
       return matchFilter((Filter) filter, (OmniDayOfWeek) userDefinedValue);
+    } else if (userDefinedValue instanceof OmniTimePeriod) {
+      return matchFilter((Filter)filter, (OmniTimePeriod)userDefinedValue);
     }
     throw new IllegalArgumentException("Matching filter not found for the datatype " + 
         userDefinedValue.getClass().toString()+ ". ");

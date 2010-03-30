@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
  * This dialog is a shell to contain UI elements specific to different filters. Given a filter ID,
@@ -34,7 +36,8 @@ import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
 public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI.DlgDynamicInput {
 
   private static final String KEY_STATE = "StateDlgFilterInput";
-  
+  public static final int TIME_DIALOG_ID = 0;
+
   /**
    * When the user hits the OK button, we interpret it to mean that they entered valid filter info,
    * and we can try to construct a filter from it. In the OK handler, we execute the one function 
@@ -64,14 +67,18 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     // Link up controls from the xml layout resource file.
     initializeUI();
-    
+
     // Restore our UI state.
     state = getSharedPreferences(ActivityDlgFilterInput.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    handlerStatePreserver.loadState(state);
+    try {
+      handlerStatePreserver.loadState(state);
+    } catch (DataTypeValidationException e) {
+      Log.e("ActivityDlgFilterInput", "Can't load state, " + e);
+    }
 
     // By default, we want to save UI state on close.
     preserveStateOnClose = true;
@@ -90,7 +97,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
       prefsEditor.commit();
     }
   }
-  
+
   private void initializeUI() {
     setContentView(R.layout.activity_dlg_filter_input);
 
@@ -123,7 +130,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
         // remove the static string below and only use the contents of the exception.
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "There was an error creating your filter, your input was probably bad!:\n"
-                + ex.toString());
+            + ex.toString());
         return;
       }
 
@@ -143,7 +150,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
     public void onClick(View v) {
       // TODO: (markww) Add help info about filter.
       UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about this filter soon!");
+      "We'll implement an info dialog about this filter soon!");
     }
   };
 
@@ -162,7 +169,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
   /** Implements FactoryDynamicUI.DlgDynamicInput. */
   public void addDynamicLayout(LinearLayout ll) {
     LinearLayout llContent = (LinearLayout) findViewById(
-      R.id.activity_dlg_filter_input_llDynamicContent);
+        R.id.activity_dlg_filter_input_llDynamicContent);
     llContent.addView(ll);
   }
 
@@ -173,5 +180,9 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
 
   public void setHandlerPreserveState(FactoryDynamicUI.DlgPreserveState handler) {
     handlerStatePreserver = handler;
+  }
+
+  public void showActivityDialog(int id) {
+    showDialog(id);
   }
 }

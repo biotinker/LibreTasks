@@ -23,7 +23,7 @@ import edu.nyu.cs.omnidroid.external.attributes.EventMonitoringService;
 /**
  * This broadcast receiver detect intents including System Boot, OmniStart and OmniRestart to
  * complete necessary operations
- * */
+ */
 public class Starter extends BroadcastReceiver {
 
   public void onReceive(Context context, Intent intent) {

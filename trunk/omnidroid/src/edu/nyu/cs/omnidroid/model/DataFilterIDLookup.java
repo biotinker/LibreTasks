@@ -47,18 +47,33 @@ public class DataFilterIDLookup {
   }
 
   /**
+   * This is for filter with same filterOn and compareWith dataType, forward to 
+   * {@link #getDataFilterID(String, String, String)}. with compareDataTypeName set to dataTypeName.
+   * 
+   * @param dataTypeName
+   * @param dataFilterName
+   * @return
+   */
+  public long getDataFilterID(String dataTypeName, String dataFilterName) {
+    return getDataFilterID(dataTypeName, dataTypeName, dataFilterName);
+  }
+  
+  /**
    * Query the dataFilterID with dataTypeName and dataFilterNames. This method is caching the result
    * into filterIDMap.
    * 
    * @param dataTypeName
    *          is name of the dataType it filters on
+   *          
+   * @param compareDataTypeName
+   *          is name of the dataType it filters with
    * 
    * @param dataFilterName
    *          is name of the dataFilter
    * 
    * @return filterID that matches dataTypeName and dataFilterName or -1 if no match
    */
-  public long getDataFilterID(String dataTypeName, String dataFilterName) {
+  public long getDataFilterID(String dataTypeName, String compareDataTypeName, String dataFilterName) {
     if (dataTypeName == null || dataFilterName == null) {
       throw new IllegalArgumentException("Arguments null.");
     }
@@ -79,13 +94,19 @@ public class DataFilterIDLookup {
       dataTypeID = cursor.getLong(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID));
     }
     cursor.close();
+    
+    // Try to find compareDataTypeID
+    long compareDataTypeID = -1;
+    cursor = dataTypeDbAdapter.fetchAll(compareDataTypeName, null);
+    if (cursor.getCount() > 0) {
+      cursor.moveToFirst();
+      compareDataTypeID = cursor.getLong(cursor.getColumnIndex(DataTypeDbAdapter.KEY_DATATYPEID));
+    }
+    cursor.close();
 
     // Try to find dataFilterID
     long dataFilterID = -1;
-    /* TODO(ehotou) now only support filters that have the same filterOn and compareWith 
-    *  datatypes, need to change the second one when we support actually compareWithDataType.
-    */
-    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID, dataTypeID);
+    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID, compareDataTypeID);
     if (cursor.getCount() > 0) {
       cursor.moveToFirst();
       dataFilterID = cursor.getLong(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));

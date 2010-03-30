@@ -15,20 +15,28 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelItem;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
  * Static factory class for setting up a dynamic UI for every filter/action type.
@@ -62,8 +70,9 @@ public class FactoryDynamicUI {
     /** Called when the dynamic dialog should save its state. */
     public void saveState(SharedPreferences.Editor prefsEditor);
 
-    /** Called to restore the dynamic dialog to its saved state. */
-    public void loadState(SharedPreferences state);
+    /** Called to restore the dynamic dialog to its saved state. 
+     * @throws DataTypeValidationException */
+    public void loadState(SharedPreferences state) throws DataTypeValidationException;
   }
 
   /**
@@ -86,7 +95,7 @@ public class FactoryDynamicUI {
     /** Set the handler to be called for state preservation. */
     public void setHandlerPreserveState(DlgPreserveState handler);
   }
-  
+
   /**
    * Interface to make a filter builder. This is used to pull UI creation code out of the main
    * buildUIForFilter function.
@@ -116,53 +125,209 @@ public class FactoryDynamicUI {
   public static void buildUIForFilter(DlgDynamicInput dlg, final ModelFilter modelFilter,
       final DataType dataOld) {
     dlg
-        .setTitle(modelFilter.getAttribute().getDescriptionShort() + " "
-            + modelFilter.getTypeName());
+    .setTitle(modelFilter.getAttribute().getDescriptionShort() + " "
+        + modelFilter.getTypeName());
 
-    LinearLayout ll = new LinearLayout(dlg.getContext());
-    ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
+    LinearLayout linearLayout = new LinearLayout(dlg.getContext());
+    linearLayout.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
         LayoutParams.FILL_PARENT));
-    ll.setOrientation(LinearLayout.VERTICAL);
+    linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-    UIDbHelperStore dbi = UIDbHelperStore.instance();
-    if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
-        OmniPhoneNumber.DB_NAME, OmniPhoneNumber.Filter.EQUALS.toString())) {
-      BuildPhonenumberEquals.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
-        OmniText.DB_NAME, OmniText.Filter.EQUALS.toString())) {
-      BuildTextEquals.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
-        OmniText.DB_NAME, OmniText.Filter.CONTAINS.toString())) {
-      BuildTextContains.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
-        OmniArea.DB_NAME, OmniArea.Filter.AWAY.toString())) {
-      BuildAreaAwayOrNear.build(dlg, ll, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == dbi.getFilterLookup().getDataFilterID(
-        OmniArea.DB_NAME, OmniArea.Filter.NEAR.toString())) {
-      BuildAreaAwayOrNear.build(dlg, ll, modelFilter, dataOld);
+    //pick UI builder according to the filter
+    AllFilterID filterId = new AllFilterID();
+    if (modelFilter.getDatabaseId() == filterId.PHONENUMBER_EQUALS) {
+      BuildPhonenumberEquals.build(dlg, linearLayout, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == filterId.TEXT_EQUALS) {
+      BuildTextEquals.build(dlg, linearLayout, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == filterId.TEXT_CONTAINS) {
+      BuildTextContains.build(dlg, linearLayout, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == filterId.AREA_AWAY || 
+        modelFilter.getDatabaseId() == filterId.AREA_NEAR) {
+      BuildAreaAwayOrNear.build(dlg, linearLayout, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == filterId.DATE_BEFORE_EVERYDAY || 
+        modelFilter.getDatabaseId() == filterId.DATE_AFTER_EVERYDAY) {
+      BuildDateBeforeOrAfter.build(dlg, linearLayout, modelFilter, dataOld);
+    } else if (modelFilter.getDatabaseId() == filterId.DATE_DURING_EVERYDAY ||
+        modelFilter.getDatabaseId() == filterId.DATE_EXCEPT_EVERYDAY ||
+        modelFilter.getDatabaseId() == filterId.TIMEPERIOD_DURING_EVERYDAY || 
+        modelFilter.getDatabaseId() == filterId.TIMEPERIOD_EXCEPT_EVERYDAY) {
+      BuildGetTimePeriod.build(dlg, linearLayout, modelFilter, dataOld);
     } else {
       throw new IllegalArgumentException("Unknown filter ID[" + modelFilter.getDatabaseId()
           + "] passed to FactoryDynamicUI::buildUIForFilter()!");
     }
-    dlg.addDynamicLayout(ll);
+    dlg.addDynamicLayout(linearLayout);
   }
 
+  /**
+   * Build UI for a Omnidate to OmniTimePeriod filter
+   */
+  private static BuildFilterUI BuildGetTimePeriod = new BuildFilterUI() {
+    private static final String UISTATE_TIME_PERIOD_START = "time period start";
+    private static final String UISTATE_TIME_PERIOD_END = "time period end";
+
+    public void build(final DlgDynamicInput dlg, LinearLayout linearLayout, 
+        final ModelFilter modelFilter, DataType dataOld) {
+      Log.d("BuildDateDuringOrExcept", "start to build the ui...");
+      // This is a Time period Before or After filter, so generate a specific UI for it.
+      TextView tvInstructionsStart = new TextView(dlg.getContext());
+      tvInstructionsStart.setText(dlg.getContext().getString(
+          R.string.UI_OMNITIMEPERIOD_PICK_STARTTIMR));
+      linearLayout.addView(tvInstructionsStart);
+
+      final TimePicker startTimePicker = new TimePicker(dlg.getContext());
+      startTimePicker.setIs24HourView(true);
+      // If we had data previously entered by the user, reset it for them.
+      if (dataOld != null) {
+        startTimePicker.setCurrentHour(((OmniTimePeriod) dataOld).getStartHour());
+        startTimePicker.setCurrentMinute(((OmniTimePeriod) dataOld).getStartMinute());
+      }
+      linearLayout.addView(startTimePicker);
+
+      TextView tvInstructionsEnd = new TextView(dlg.getContext());
+      tvInstructionsEnd.setText(dlg.getContext().getString(
+          R.string.UI_OMNITIMEPERIOD_PICK_ENDTIMR));
+      linearLayout.addView(tvInstructionsEnd);
+
+      final TimePicker endTimePicker = new TimePicker(dlg.getContext());
+      endTimePicker.setIs24HourView(true);
+      // If we had data previously entered by the user, reset it for them.
+      if (dataOld != null) {
+        endTimePicker.setCurrentHour(((OmniTimePeriod) dataOld).getEndHour());
+        endTimePicker.setCurrentMinute(((OmniTimePeriod) dataOld).getEndMinute());
+      }
+      linearLayout.addView(endTimePicker);
+
+      // Add the handler for when the user signals they are done with their input.
+      dlg.setHandlerOnFilterInputDone(new InputDone() {
+        public ModelItem onInputDone(Context context) throws Exception {
+          // Try to construct an OmniTimePeriod from what the user
+          // entered. If no good, let its exception be thrown up. As we don't use
+          // year, month, day, so set them to be anything.
+          OmniTimePeriod data = new OmniTimePeriod(
+              OmniTimePeriod.buildTimeString(1, 1, 1, startTimePicker.getCurrentHour(), 
+                  startTimePicker.getCurrentMinute(), 0),
+                  OmniTimePeriod.buildTimeString(1, 1, 1, endTimePicker.getCurrentHour(), 
+                      endTimePicker.getCurrentMinute(), 0));
+
+          // The entered text was valid, return a completely constructed
+          // rule filter with an invalid database ID, along with the new
+          // associated omni data.
+          return new ModelRuleFilter(-1, modelFilter, data);
+        }
+      });
+
+      // Also implement the UI state preservation handlers, again specific to the
+      // UI created for this filter.
+      dlg.setHandlerPreserveState(new DlgPreserveState() {
+        public void saveState(SharedPreferences.Editor prefsEditor) {
+          prefsEditor.putString(UISTATE_TIME_PERIOD_START, 
+              OmniTimePeriod.buildTimeString(0, 0, 0, startTimePicker.getCurrentHour(), 
+                  startTimePicker.getCurrentMinute(), 0));
+          prefsEditor.putString(UISTATE_TIME_PERIOD_END, 
+              OmniTimePeriod.buildTimeString(0, 0, 0, endTimePicker.getCurrentHour(), 
+                  endTimePicker.getCurrentMinute(), 0));
+        }
+
+        public void loadState(SharedPreferences state) throws DataTypeValidationException {
+          if (state.contains(OmniTimePeriod.buildTimeString(1, 1, 1,
+              startTimePicker.getCurrentHour(), 
+              startTimePicker.getCurrentMinute(), 0))) {
+            Date date = OmniTimePeriod.getDate(state.getString(UISTATE_TIME_PERIOD_START, ""));
+            startTimePicker.setCurrentHour(date.getHours());
+            startTimePicker.setCurrentMinute(date.getMinutes());
+
+          }
+          if (state.contains(OmniTimePeriod.buildTimeString(1, 1, 1, endTimePicker.getCurrentHour(), 
+              endTimePicker.getCurrentMinute(), 0))) {
+            Date date = OmniTimePeriod.getDate(state.getString(UISTATE_TIME_PERIOD_END, ""));
+            endTimePicker.setCurrentHour(date.getHours());
+            endTimePicker.setCurrentMinute(date.getMinutes());
+          }
+        }
+      });
+    }
+  };
+
+  /**
+   * UI for before or after filter for OmniDate
+   */
+  private static BuildFilterUI BuildDateBeforeOrAfter = new BuildFilterUI() {
+    private static final String UISTATE_DATE = "time";
+
+    public void build(DlgDynamicInput dlg, LinearLayout linearLayout, final ModelFilter modelFilter,
+        DataType dataOld) {
+      // This is a Before or After filter, so generate a specific UI for it.
+      TextView tvInstructions = new TextView(dlg.getContext());
+      tvInstructions.setText(dlg.getContext().getString(
+          R.string.UI_OMNIDATE_PICK_TIMR));
+      linearLayout.addView(tvInstructions);
+
+      final TimePicker timePicker = new TimePicker(dlg.getContext());
+      timePicker.setIs24HourView(true);
+      // If we had data previously entered by the user, reset it for them.
+      if (dataOld != null) {
+        timePicker.setCurrentHour(((OmniDate) dataOld).getDate().getHours());
+        timePicker.setCurrentMinute(((OmniDate) dataOld).getDate().getMinutes());
+      }
+      linearLayout.addView(timePicker);
+
+      // Add the handler for when the user signals they are done with their input.
+      dlg.setHandlerOnFilterInputDone(new InputDone() {
+        public ModelItem onInputDone(Context context) throws Exception {
+          // Try to construct an OmniDate from what the user
+          // entered in the edit field. If no good, let its exception
+          // be thrown up.
+          OmniDate data = new OmniDate(
+              OmniTimePeriod.buildTimeString(1, 1, 1, timePicker.getCurrentHour(), 
+              timePicker.getCurrentMinute(), 0));
+
+          // The entered text was valid, return a completely constructed
+          // rule filter with an invalid database ID, along with the new
+          // associated omni data.
+          return new ModelRuleFilter(-1, modelFilter, data);
+        }
+      });
+
+      // Also implement the UI state preservation handlers, again specific to the
+      // UI created for this filter.
+      dlg.setHandlerPreserveState(new DlgPreserveState() {
+        public void saveState(SharedPreferences.Editor prefsEditor) {
+          String date = OmniTimePeriod.buildTimeString(1, 1, 1, timePicker.getCurrentHour(), 
+              timePicker.getCurrentMinute(), 0);
+          prefsEditor.putString(UISTATE_DATE, date);
+        }
+
+        public void loadState(SharedPreferences state) throws DataTypeValidationException {
+          if (state.contains(UISTATE_DATE)) {
+            Date date = OmniTimePeriod.getDate(state.getString(UISTATE_DATE, ""));
+            timePicker.setCurrentHour(date.getHours());
+            timePicker.setCurrentMinute(date.getMinutes());
+          }
+        }
+      });
+    }
+  };
+
+  /**
+   * UI for equal filter for PhoneNumber
+   */
   private static BuildFilterUI BuildPhonenumberEquals = new BuildFilterUI() {
     private static final String UISTATE_PHONENUMBER = "phonenumber";
-    
-    public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
+
+    public void build(DlgDynamicInput dlg, LinearLayout linearLayout, final ModelFilter modelFilter,
         DataType dataOld) {
       // This is a Phonenumber Equals filter, so generate a specific UI for it.
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter a phone number to match below:");
-      ll.addView(tvInstructions);
+      linearLayout.addView(tvInstructions);
 
       // If we had data previously entered by the user, reset it for them.
       final EditText edit = new EditText(dlg.getContext());
       if (dataOld != null) {
         edit.setText(((OmniPhoneNumber) dataOld).getValue());
       }
-      ll.addView(edit);
+      linearLayout.addView(edit);
 
       // Add the handler for when the user signals they are done with their input.
       dlg.setHandlerOnFilterInputDone(new InputDone() {
@@ -178,7 +343,7 @@ public class FactoryDynamicUI {
           return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
-      
+
       // Also implement the UI state preservation handlers, again specific to the
       // UI created for this filter.
       dlg.setHandlerPreserveState(new DlgPreserveState() {
@@ -196,20 +361,23 @@ public class FactoryDynamicUI {
     }
   };
 
+  /**
+   * UI for equal filter between OmniText
+   */
   private static BuildFilterUI BuildTextEquals = new BuildFilterUI() {
     private static final String UISTATE_TEXT = "text";
-    
-    public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
+
+    public void build(DlgDynamicInput dlg, LinearLayout linearLayout, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText("Enter an exact text string to match below:");
-      ll.addView(tvInstructions);
+      linearLayout.addView(tvInstructions);
 
       final EditText edit = new EditText(dlg.getContext());
       if (dataOld != null) {
         edit.setText(((OmniText) dataOld).getValue());
       }
-      ll.addView(edit);
+      linearLayout.addView(edit);
 
       // Add the handler for when the user is done with their input.
       dlg.setHandlerOnFilterInputDone(new InputDone() {
@@ -235,7 +403,7 @@ public class FactoryDynamicUI {
 
   private static BuildFilterUI BuildTextContains = new BuildFilterUI() {
     private static final String UISTATE_TEXT = "text";
-    
+
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvInstructions = new TextView(dlg.getContext());
@@ -267,12 +435,12 @@ public class FactoryDynamicUI {
       });
     }
   };
-  
+
   private static BuildFilterUI BuildAreaAwayOrNear = new BuildFilterUI() {
     private final static String UISTATE_ADDRESS = "address";
-    
+
     private final static String UISTATE_DISTANCE = "distance";
-    
+
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvAddress = new TextView(dlg.getContext());
@@ -281,20 +449,20 @@ public class FactoryDynamicUI {
 
       final EditText etAddress = new EditText(dlg.getContext());
       ll.addView(etAddress);
-      
+
       TextView tvDistance = new TextView(dlg.getContext());
       tvDistance.setText("Distance (in miles):");
       ll.addView(tvDistance);
 
       final EditText etDistance = new EditText(dlg.getContext());
       ll.addView(etDistance);
-      
+
       if (dataOld != null) {
         OmniArea area = (OmniArea)dataOld;
         etAddress.setText(area.getUserInput());
         etDistance.setText(Double.toString(area.getProximityDistance()));
       }
-      
+
       dlg.setHandlerOnFilterInputDone(new InputDone() {
         public ModelItem onInputDone(Context context) throws Exception {
           String address = etAddress.getText().toString();
@@ -304,10 +472,10 @@ public class FactoryDynamicUI {
           } catch (NumberFormatException ex) {
             throw new Exception("Please enter a distance in miles.");
           }
-          
+
           OmniArea data = new OmniArea(OmniArea.getOmniArea(
-            context, address, distance));
-          
+              context, address, distance));
+
           return new ModelRuleFilter(-1, modelFilter, data);
         }
       });
@@ -328,4 +496,51 @@ public class FactoryDynamicUI {
       });
     }
   };
+
+  /**
+   * static class to load all filter id for later use.
+   */
+  @SuppressWarnings("unused")
+  private static class AllFilterID{
+    public final long PHONENUMBER_EQUALS = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniPhoneNumber.DB_NAME, OmniPhoneNumber.Filter.EQUALS.toString());
+    public final long TEXT_EQUALS = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniText.DB_NAME, OmniText.Filter.EQUALS.toString());
+    public final long TEXT_CONTAINS = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniText.DB_NAME, OmniText.Filter.CONTAINS.toString());
+    public final long AREA_AWAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniArea.DB_NAME, OmniArea.Filter.AWAY.toString());
+    public final long AREA_NEAR = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniArea.DB_NAME, OmniArea.Filter.NEAR.toString());
+    public final long DATE_BEFORE = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.BEFORE.toString());
+    public final long DATE_AFTER = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.AFTER.toString());
+    public final long DATE_AFTER_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.AFTER_EVERYDAY.toString());
+    public final long DATE_BEFORE_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.BEFORE_EVERYDAY.toString());
+    public final long DATE_DURING = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniTimePeriod.DB_NAME, OmniDate.Filter.DURING.toString());
+    public final long DATE_DURING_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniTimePeriod.DB_NAME, 
+        OmniDate.Filter.DURING_EVERYDAY.toString());
+    public final long DATE_EXCEPT = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniTimePeriod.DB_NAME, OmniDate.Filter.EXCEPT.toString());
+    public final long DATE_EXCEPT_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniTimePeriod.DB_NAME, 
+        OmniDate.Filter.EXCEPT_EVERYDAY.toString());
+    public final long TIMEPERIOD_DURING = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniTimePeriod.DB_NAME,OmniDate.DB_NAME, 
+        OmniTimePeriod.Filter.DURING.toString());
+    public final long TIMEPERIOD_DURING_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniTimePeriod.DB_NAME,OmniDate.DB_NAME, 
+        OmniTimePeriod.Filter.DURING_EVERYDAY.toString());
+    public final long TIMEPERIOD_EXCEPT = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniTimePeriod.DB_NAME,OmniDate.DB_NAME, 
+        OmniTimePeriod.Filter.EXCEPT.toString());
+    public final long TIMEPERIOD_EXCEPT_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniTimePeriod.DB_NAME,OmniDate.DB_NAME, 
+        OmniTimePeriod.Filter.EXCEPT_EVERYDAY.toString());
+  }
 }

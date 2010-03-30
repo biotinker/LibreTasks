@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -299,6 +300,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
    * Saves the built-up rule inside {@link RuleBuilder} to the database.
    */
   private void saveRule() {
+    Log.d("ActivityChooseFiltersAndActions", "entered saveRule()");
     long newRuleId;
     try {
       newRuleId = UIDbHelperStore.instance().db().saveRule(
@@ -309,14 +311,15 @@ public class ActivityChooseFiltersAndActions extends Activity {
         "There was an error saving your rule!:\n" + ex.toString());
       return;
     }
-    
+    Log.d("ActivityChooseFiltersAndActions", "new rule saved");
     UtilUI.showAlert(this, "Save Rule", "Rule saved ok!");
     
     // We have to reload the rule from the database now so that the UI representation
     // of it is in-sync with the new element IDs assigned during the save operation.
-    // TODO: (markww) replace all occurrences of int with long to get rid of these casts.
     RuleBuilder.instance().resetForEditing(
-      UIDbHelperStore.instance().db().loadRule((int)newRuleId));
+      UIDbHelperStore.instance().db().loadRule(newRuleId));
+    Log.d("ActivityChooseFiltersAndActions", "new rule reloaded from db");
     adapterRule.setRule(RuleBuilder.instance().getRule());
+    Log.d("ActivityChooseFiltersAndActions", "new rule set");
   }
 }

@@ -40,7 +40,7 @@ public abstract class Action {
    * @param actionName
    *          Action name to be used in the intent
    * @param executionMethod
-   *          The execution method used to fire an intent
+   *          The execution method used to fire an intent (activity, service or broadcast)
    */
   public Action(String actionName, String executionMethod) {
     this.actionName = actionName;

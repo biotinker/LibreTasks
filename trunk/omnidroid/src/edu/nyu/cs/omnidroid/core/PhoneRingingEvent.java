@@ -1,6 +1,10 @@
 package edu.nyu.cs.omnidroid.core;
 
+import java.util.Date;
+
+import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * This class encapsulates an PhoneRinging event. It wraps the intent that triggered this event and
@@ -11,10 +15,12 @@ public class PhoneRingingEvent extends Event {
   public static final String APPLICATION_NAME = "Phone";
   public static final String EVENT_NAME = "Phone is Ringing";
   public static final String ATTRIBUTE_PHONE_NUMBER = "Phone Number";
+  public static final String ATTRIBUTE_PHONE_RING_TIME = "Phone Ring Time";
   public static final String ACTION_NAME = "PHONE_RINGING";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
+  protected String phoneRingTime;
 
   /**
    * Constructs a new PhoneRinging object that holds an PhoneRinging event fired intent. This intent
@@ -25,6 +31,10 @@ public class PhoneRingingEvent extends Event {
    */
   public PhoneRingingEvent(Intent intent) {
     super(APPLICATION_NAME, EVENT_NAME, intent);
+    Date date = new Date(System.currentTimeMillis());
+    OmniDate omniDate = new OmniDate(date);
+    phoneRingTime = omniDate.toString();
+    Log.d("PhoneRingingEvent", "The phoneRingTime is : " + phoneRingTime);
   }
 
   /**
@@ -44,7 +54,9 @@ public class PhoneRingingEvent extends Event {
         phoneNumber = intent.getStringExtra(PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER);
       }
       return phoneNumber;
-    } else {
+    } else if (attributeName.equals(PhoneRingingEvent.ATTRIBUTE_PHONE_RING_TIME)) {
+        return phoneRingTime;
+      } else {
       throw (new IllegalArgumentException());
     }
   }
