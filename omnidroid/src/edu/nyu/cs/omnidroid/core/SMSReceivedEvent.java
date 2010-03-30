@@ -1,8 +1,12 @@
 package edu.nyu.cs.omnidroid.core;
 
+import java.util.Date;
+
+import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.gsm.SmsMessage;
+import android.util.Log;
 
 /**
  * This class encapsulates an SMS event. It wraps the intent that triggered this event and provides
@@ -16,10 +20,12 @@ public class SMSReceivedEvent extends Event {
   /** Attribute field names */
   public static final String ATTRIB_PHONE_NO = "SMS Phonenumber";
   public static final String ATTRIB_MESSAGE_TEXT = "SMS Text";
+  public static final String ATTRIB_MESSAGE_TIME = "SMS Time";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
   protected String messageText;
+  protected String messageTime;
 
   /**
    * Constructs a new SMS object that holds an SMS event fired intent. This intent holds the data
@@ -30,6 +36,10 @@ public class SMSReceivedEvent extends Event {
    */
   public SMSReceivedEvent(Intent intent) {
     super(APPLICATION_NAME, EVENT_NAME, intent);
+    Date date = new Date(System.currentTimeMillis());
+    OmniDate omniDate = new OmniDate(date);
+    messageTime = omniDate.toString();
+    Log.d("SMSReceivedEvent", "The message received at : " + messageTime);
   }
 
   /**
@@ -53,6 +63,8 @@ public class SMSReceivedEvent extends Event {
         getMessageData();
       }
       return messageText;
+    } else if (attributeName.equals(ATTRIB_MESSAGE_TIME)) {
+      return messageTime;
     } else {
       throw (new IllegalArgumentException());
     }

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.core.Filter;
 import edu.nyu.cs.omnidroid.core.Rule;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
@@ -89,7 +90,13 @@ public class CoreRuleDbHelper {
 
     // Use the appName and eventName to find a unique event in the database
     Cursor appCursor = applicationDbAdapter.fetchAll(appName, null, true);
+    Cursor c = applicationDbAdapter.fetchAll();
+    while(c.moveToNext()) {
+    	Log.d("CoreRuleDbHelper", CursorHelper.getStringFromCursor(c, "AppName"));
+    }
+    
     if (appCursor.getCount() == 0) {
+    	Log.d("CoreRuleDbHelper", "No enabled applications match this event's application " + appName);
       // No enabled applications match this event's application
       return rules;
     }
@@ -97,6 +104,7 @@ public class CoreRuleDbHelper {
     long appID = CursorHelper.getLongFromCursor(appCursor, RegisteredAppDbAdapter.KEY_APPID);
     Cursor eventCursor = eventDbAdapter.fetchAll(eventName, appID);
     if (eventCursor.getCount() == 0) {
+    	Log.d("CoreRuleDbHelper", "This application does not have an event matching this event's name");
       // This application does not have an event matching this event's name
       return rules;
     }
@@ -110,6 +118,7 @@ public class CoreRuleDbHelper {
     Cursor ruleTable = ruleDbAdapter.fetchAll(eventID, null, null, true, null);
 
     if (ruleTable.getCount() == 0) {
+    	Log.d("CoreRuleDbHelper", "No rules matched this event, return empty list");
       // No rules matched this event, return empty list
       return rules;
     }
@@ -230,7 +239,7 @@ public class CoreRuleDbHelper {
     long filterOnDataTypeID = CursorHelper.getLongFromCursor(cursor,
         DataFilterDbAdapter.KEY_FILTERONDATATYPEID);
     long compareWithDataTypeID = CursorHelper.getLongFromCursor(cursor,
-        DataFilterDbAdapter.KEY_FILTERONDATATYPEID);
+        DataFilterDbAdapter.KEY_COMPAREWITHDATATYPEID);
 
     // Gets the OmniType of the event attribute to be compared
     cursor = filterDataTypeDbAdapter.fetch(filterOnDataTypeID);

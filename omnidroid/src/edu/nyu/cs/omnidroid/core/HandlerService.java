@@ -21,6 +21,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.bkgservice.BCReceiver;
 import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.model.CoreRuleDbHelper;
 import edu.nyu.cs.omnidroid.util.OmLogger;
@@ -58,6 +59,7 @@ public class HandlerService extends Service {
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
           coreActionsDbHelper);
+      Log.d("HandlerService", "get " + actions.size() + " action(s) for event " + intent.getAction());
       // Execute the list of actions.
       try {
         ActionExecuter.executeActions(this, actions);

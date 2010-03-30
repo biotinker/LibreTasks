@@ -317,5 +317,6 @@ public class ActivitySavedRules extends Activity {
 
       return ll;
     }
-  }
+  }//AdapterRules
+  
 }

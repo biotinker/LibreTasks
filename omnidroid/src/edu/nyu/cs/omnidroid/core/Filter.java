@@ -68,6 +68,7 @@ public class Filter {
    */
   public boolean match(Event event) {
     String eventAttributeData = event.getAttribute(eventAttribute);
+    //the attribute data we get from the event
     DataType leftHandSide = FactoryDataType.createObject(filterOnDataType, eventAttributeData);
     DataType.Filter comparisonFilter = FactoryDataType.getFilterFromString(filterOnDataType,
         comparison);

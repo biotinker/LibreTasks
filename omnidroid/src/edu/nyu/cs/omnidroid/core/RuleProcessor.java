@@ -17,6 +17,8 @@ package edu.nyu.cs.omnidroid.core;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import edu.nyu.cs.omnidroid.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.model.CoreRuleDbHelper;
 
@@ -48,6 +50,9 @@ public class RuleProcessor {
       CoreActionsDbHelper coreActionsDbHelper) {
 
     ArrayList<Rule> rules = coreRuleDbHelper.getRulesMatchingEvent(event.getAppName(), event.getEventName());
+    Log.d("RuleProcessor", "get " + rules.size() + " rule(s) for event " + event.getEventName() + 
+    		" from App " + event.getAppName());
+    
     ArrayList<Action> actions = new ArrayList<Action>();
 
     for (Rule currentRule : rules) {
@@ -55,6 +60,8 @@ public class RuleProcessor {
         actions.addAll(currentRule.getActions(coreActionsDbHelper, event));
       }
     }
+    Log.d("RuleProcessor", "get " + actions.size() + " action(s) for event " + event.getEventName() + 
+        " from App " + event.getAppName());
     return actions;
   }
 }

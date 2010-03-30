@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.core;
 
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * This class parses the received {@link android.content.Intent}'s action field to see if it is an
@@ -25,6 +26,7 @@ import android.content.Intent;
 public class IntentParser {
   // TODO(londinop): put intent action fields in a database table rather than hard code
   public static final String SMS_INTENT_ACTION = "android.provider.Telephony.SMS_RECEIVED";
+  public static final String GMAIL_INTENT_ACTION = "android.intent.action.PROVIDER_CHANGED";
 
   /**
    * This is a static utility class which cannot be instantiated.
@@ -34,26 +36,31 @@ public class IntentParser {
 
   /**
    * Given an intent with a supported action type, create and return an Event of the appropriate
-   * type.
+   * type. If the action is not supported, null is returned.
    * 
    * @param intent
    *          an intent received by the system describing the event that took place
    * @return an OmniDroid Event type that contains the methods to get at the event's data attributes
    */
   public static Event getEvent(Intent intent) {
+    Log.d("IntentParser:", "get Intent with action: " + intent.getAction());
     Event event = null;
     if (intent.getAction().equals(SMS_INTENT_ACTION)) {
       // Handle SMS event
       event = new SMSReceivedEvent(intent);
-    }
-    else if (intent.getAction().equals(LocationChangedEvent.ACTION_NAME)) {
+    } else if (intent.getAction().equals(LocationChangedEvent.ACTION_NAME)) {
       event = new LocationChangedEvent(intent);
-    }
-    else if (intent.getAction().equals(PhoneRingingEvent.ACTION_NAME)) {
+    } else if (intent.getAction().equals(PhoneRingingEvent.ACTION_NAME)) {
       event = new PhoneRingingEvent(intent);
-    }
-    else if (intent.getAction().equals(PhoneIsFallingEvent.ACTION_NAME)) {
+    } else if (intent.getAction().equals(PhoneIsFallingEvent.ACTION_NAME)) {
       event = new PhoneIsFallingEvent(intent);
+    } else { // system events
+      for (SystemEvent e : SystemEvent.values()) {
+        if (intent.getAction().equals(e.ACTION_NAME)) {
+          Log.d("IntentParser:", e.ACTION_NAME);
+          event = new SystemBroadcastedEvent(intent, e);
+        }
+      }
     }
     return event;
   }

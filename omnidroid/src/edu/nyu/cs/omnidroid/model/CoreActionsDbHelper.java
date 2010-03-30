@@ -30,8 +30,11 @@ import android.util.Log;
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.Event;
+import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
+import edu.nyu.cs.omnidroid.core.ShowAlertAction;
 import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
+import edu.nyu.cs.omnidroid.core.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
@@ -113,7 +116,18 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(SendGmailAction.APP_NAME)
         && actionName.equals(SendGmailAction.ACTION_NAME)) {
       return new SendGmailAction(actionParams);
+    } else if (appName.equals(ShowAlertAction.APP_NAME)
+        && actionName.equals(ShowAlertAction.ACTION_NAME)) {
+      return new ShowAlertAction(actionParams);
+    } else if (appName.equals(ShowNotificationAction.APP_NAME)
+        && actionName.equals(ShowNotificationAction.ACTION_NAME)) {
+      return new ShowNotificationAction(actionParams);
+    } else if (appName.equals(ShowWebsiteAction.APP_NAME)
+        && actionName.equals(ShowWebsiteAction.ACTION_NAME)) {
+      return new ShowWebsiteAction(actionParams);
     } else {
+    	Log.d("CoreActionsDbHelper", "doesn't catch AppName is: " + appName + 
+    			" and actionName is: " + actionName);
       throw new OmnidroidException(120003, ExceptionMessageMap.getMessage(new Integer(120003)
           .toString()));
     }

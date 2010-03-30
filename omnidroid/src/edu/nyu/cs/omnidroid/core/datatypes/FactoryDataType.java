@@ -19,6 +19,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import android.util.Log;
+
 /**
  * The class acts as a factory for instantiation of the Omnidroid data types.
  * 
@@ -53,6 +55,7 @@ public class FactoryDataType {
 
       return (DataType) classConstructor.newInstance(value);
     } catch (Exception ex) {
+      Log.d("createObject", "Can't create class " + className + " with value: " + value);
     }
 
     return null;

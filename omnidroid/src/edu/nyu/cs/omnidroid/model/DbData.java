@@ -15,19 +15,26 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.model;
 
+import android.database.sqlite.SQLiteDatabase;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
+import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
+import edu.nyu.cs.omnidroid.core.OmniAction;
 import edu.nyu.cs.omnidroid.core.PhoneIsFallingEvent;
 import edu.nyu.cs.omnidroid.core.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.core.ShowAlertAction;
 import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
+import edu.nyu.cs.omnidroid.core.ShowWebsiteAction;
+import edu.nyu.cs.omnidroid.core.SystemEvent;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDayOfWeek;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
@@ -35,7 +42,6 @@ import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredAppDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventAttributeDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredEventDbAdapter;
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * This class store data that needs to be populated into the DB by default
@@ -56,7 +62,9 @@ public class DbData {
    */
   public static void prepopulate(SQLiteDatabase db) {
 
-    /* Populate data types and their data filters */
+    /*
+     * Populate data types and their data filters
+     */
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
     DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
     
@@ -73,10 +81,23 @@ public class DbData {
     long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(
         OmniDayOfWeek.DB_NAME, OmniDayOfWeek.class.getName());
     
-    long dataTypeIdDate = dataTypeDbAdapter.insert(
-        OmniDate.DB_NAME, OmniDate.class.getName());
-    dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE.toString(), dataTypeIdDate, dataTypeIdDate);
-    dataFilterDbAdapter.insert(OmniDate.Filter.AFTER.toString(), dataTypeIdDate, dataTypeIdDate);
+    long dataTypeIdTimePeriod = dataTypeDbAdapter.insert(
+        OmniTimePeriod.DB_NAME, OmniTimePeriod.class.getName());
+    long dataTypeIdDate = dataTypeDbAdapter.insert(OmniDate.DB_NAME, OmniDate.class.getName());
+    
+    dataFilterDbAdapter.insert(OmniTimePeriod.Filter.DURING_EVERYDAY.toString(), 
+        dataTypeIdTimePeriod, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniTimePeriod.Filter.EXCEPT_EVERYDAY.toString(), 
+        dataTypeIdTimePeriod, dataTypeIdDate);
+    
+    dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE_EVERYDAY.toString(), dataTypeIdDate, 
+        dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.AFTER_EVERYDAY.toString(), dataTypeIdDate, 
+        dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.DURING_EVERYDAY.toString(), dataTypeIdDate, 
+        dataTypeIdTimePeriod);
+    dataFilterDbAdapter.insert(OmniDate.Filter.EXCEPT_EVERYDAY.toString(), dataTypeIdDate, 
+        dataTypeIdTimePeriod);
     dataFilterDbAdapter.insert(OmniDate.Filter.ISDAYOFWEEK.toString(), dataTypeIdDate, 
         dataTypeIdDayOfWeek);
     
@@ -88,7 +109,9 @@ public class DbData {
     long dataTypeIdPasswordInput = dataTypeDbAdapter.insert(
         OmniPasswordInput.DB_NAME, OmniPasswordInput.class.getName());
     
-    /* Populate registered applications */
+    /*
+     *  Populate registered applications
+     */ 
     // TODO(ehotou) Consider move these static strings to a storage class.
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
     long appIdSms = appDbAdapter.insert("SMS", "", true);
@@ -97,20 +120,37 @@ public class DbData {
     long appIdSensor = appDbAdapter.insert("Sensor", "", true);
     long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
     
-    /* Populate registered events and event attributes */ 
+    //TODO(Roger): just testing, remove later
+    long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
+    long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME
+        , "", true);
+    
+    
+    /*
+     *  Populate registered events and event attributes
+     */ 
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
     RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = 
         new RegisteredEventAttributeDbAdapter(db);
+    
+    for (SystemEvent e : SystemEvent.values()) {
+      eventDbAdapter.insert(e.EVENT_NAME, appIdAndroid);
+    }
+    
     
     long eventIdSmsRec = eventDbAdapter.insert(SMSReceivedEvent.EVENT_NAME, appIdSms);  
     eventAttributeDbAdapter.insert(
         SMSReceivedEvent.ATTRIB_PHONE_NO, eventIdSmsRec, dataTypeIdPhone);
     eventAttributeDbAdapter.insert(
         SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, eventIdSmsRec, dataTypeIdText);
+    eventAttributeDbAdapter.insert(
+        SMSReceivedEvent.ATTRIB_MESSAGE_TIME, eventIdSmsRec, dataTypeIdText);
 
     long eventIdPhoneRings = eventDbAdapter.insert(PhoneRingingEvent.EVENT_NAME, appIdPhone);  
     eventAttributeDbAdapter.insert(
         PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
+    eventAttributeDbAdapter.insert(
+        PhoneRingingEvent.ATTRIBUTE_PHONE_RING_TIME, eventIdPhoneRings, dataTypeIdDate);
     
     long eventIdGPSLocationChanged = eventDbAdapter.insert(
         LocationChangedEvent.EVENT_NAME, appIdGPS);  
@@ -119,13 +159,29 @@ public class DbData {
     
     eventDbAdapter.insert(PhoneIsFallingEvent.EVENT_NAME, appIdSensor);  
 
-    /* Populate registered actions and action parameters */
+    /*
+     *  Populate registered actions and action parameters
+     */
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
     RegisteredActionParameterDbAdapter actionParameterDbAdapter = 
       new RegisteredActionParameterDbAdapter(db);
     
+    long actionIdDisplayMessage = actionDbAdapter.insert(ShowAlertAction.ACTION_NAME, 
+        appIdOmnidroid);
+    actionParameterDbAdapter.insert(ShowAlertAction.PARAM_ALERT_MESSAGE, 
+        actionIdDisplayMessage, dataTypeIdText);  
+    long actionIdNotifyMessage = actionDbAdapter.insert(ShowNotificationAction.ACTION_NAME, 
+        appIdOmnidroid);
+    actionParameterDbAdapter.insert(ShowNotificationAction.PARAM_ALERT_MESSAGE, 
+        actionIdNotifyMessage, dataTypeIdText);  
+    long actionIdShowWebsite = actionDbAdapter.insert(ShowWebsiteAction.ACTION_NAME, 
+        appIdOmnidroid);
+    actionParameterDbAdapter.insert(ShowWebsiteAction.PARAM_WEB_URL, 
+        actionIdShowWebsite, dataTypeIdText);  
+    
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
-    actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend, dataTypeIdPhone);
+    actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend, 
+        dataTypeIdPhone);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_SMS, actionIdSmsSend, dataTypeIdText);
     
     long actionIdPhoneCall = actionDbAdapter.insert(CallPhoneAction.ACTION_NAME, appIdPhone);

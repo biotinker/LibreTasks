@@ -101,6 +101,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".util.ShowWebsiteActivity"
+                  android:label="Show Website">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 		<!--  End UI activity definitions. -->
 
 		<!-- Receiver that runs when Android or Omnidroid starts/restarts -->	
@@ -128,10 +137,61 @@
 		<!--  Receiver that runs to catch events -->
 		<receiver android:name=".bkgservice.BCReceiver">
 			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+			</intent-filter>
+			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
 			</intent-filter>
 			<intent-filter>
+				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+			</intent-filter>
+			<intent-filter>
 				<action android:name="android.intent.action.PHONE_STATE" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.BATTERY_LOW" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.BATTERY_OKAY" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.CAMERA_BUTTON" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.DOCK_EVENT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.GTALK_CONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.GTALK_DISCONNECTED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.HEADSET_PLUG" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SCREEN_OFF" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.SCREEN_ON" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.TIMEZONE_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.WALLPAPER_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="LOCATION_CHANGED" />
@@ -153,6 +213,12 @@
 		<service android:name=".external.actions.GMailService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.GMAIL_SEND" />
+			</intent-filter>
+		</service>
+		<service android:name=".external.actions.OmniActionService">
+			<intent-filter>
+				<action android:name="omnidroid.intent.action.SHOW_MESSAGE" />
+				<action android:name="omnidroid.intent.action.SHOW_NOTIFICATION" />
 			</intent-filter>
 		</service>
 		<!-- End Services that runs to fire actions -->

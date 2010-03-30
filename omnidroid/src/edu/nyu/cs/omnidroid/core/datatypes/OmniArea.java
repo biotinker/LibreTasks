@@ -64,16 +64,17 @@ public class OmniArea extends DataType {
   public OmniArea(String omniAreaString) throws DataTypeValidationException {
     OmniArea area = parseOmniArea(omniAreaString);
 
-    userInput = area.getUserInput();
-    longitude = area.getLongitude();
-    latitude = area.getLatitude();
-    proximityDistance = area.getProximityDistance();
+    init(area);
   }
 
   public OmniArea(OmniArea area) throws DataTypeValidationException {
     if (area == null) {
       throw new DataTypeValidationException("Parameter area cannot be null.");
     }
+    init(area);
+  }
+  
+  private void init(OmniArea area) {
     userInput = area.getUserInput();
     longitude = area.getLongitude();
     latitude = area.getLatitude();

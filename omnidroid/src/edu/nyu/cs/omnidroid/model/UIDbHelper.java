@@ -26,6 +26,7 @@ import java.util.Iterator;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.FactoryDataType;
@@ -87,6 +88,14 @@ public class UIDbHelper {
   
   // This flag marks whether this helper is closed
   private boolean isClosed = false;
+  
+  /**
+   * Reset the db, drop all existing table, and recreate them and repopulate them again
+   * TODO(Roger): save the user defined rules when reset the database.
+   */
+  public void resetDB() {
+    omnidroidDbHelper.onUpgrade(database, 0, 0);
+  }
 
   public UIDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
@@ -385,16 +394,16 @@ public class UIDbHelper {
     // Fetch and set the root event.
     ModelEvent event = events.get(getLongFromCursor(cursorRule, RuleDbAdapter.KEY_EVENTID));
     rule.setRootEvent(event);    
-
+    Log.d("UIDbhelper", "rule name: " + rule.getName());
     // Add all filters for this rule to the root node in a tree format.
     addFiltersToRuleNode(ruleId, rule.getRootNode());
-
+    Log.d("UIDbhelper", "rule root event added: " + rule.getRootNode().getItem().getTypeName());
     // Add all actions for this rule
     ArrayList<ModelRuleAction> actionList = getActionsForRule(ruleId);
     for (ModelRuleAction action : actionList) {
       rule.getRootNode().addChild(action);
     }
-    
+    Log.d("UIDbhelper", "rule loaded: " + rule.getNaturalLanguageString());
     cursorRule.close();
 
     return rule;
@@ -420,7 +429,7 @@ public class UIDbHelper {
    * @param ruleId
    *          is id of the rule record to be loaded
    * 
-   * @param is
+   * @param rootEvent
    *          the event node at the root of the rule structure
    */
   private void addFiltersToRuleNode(long ruleId, RuleNode rootEvent) {
@@ -444,14 +453,22 @@ public class UIDbHelper {
       // Load the user defined data within this rule filter
       String filterInputFromUser = getStringFromCursor(
           cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERDATA);
-
-      // Construct a data type object
-      DataType filterData = getDataType(attribute.getDatatype(), filterInputFromUser);
-
+      Log.d("addFiltersToRuleNode", "trying to construct a " + attribute.getDatatype()
+          + " dataType with: " + filterInputFromUser);
+      
       // For filters, first load up the model filter, then supply it to
       // the model rule filter instance.
       long filterID = getLongFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_DATAFILTERID);
       String filterName = dataFilterNames.get(filterID);
+      
+      Cursor cursorFilter = dataFilterDbAdapter.fetch(filterID);
+      long compareWithDataTypeId = getLongFromCursor(cursorFilter,
+          DataFilterDbAdapter.KEY_COMPAREWITHDATATYPEID);
+      
+      // Construct a data type object
+      DataType filterData = getDataType(compareWithDataTypeId, filterInputFromUser);
+
+      Log.d("addFiltersToRuleNode", "The object constructed is : " + filterData);
       
       ModelFilter modelFilter = new ModelFilter(filterName, 
           "", // TODO(ehotou) After implementing desc for filter, load it here.

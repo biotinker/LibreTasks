@@ -55,6 +55,9 @@ public class ActivityMain extends Activity {
 
     Button btnHelp = (Button) findViewById(R.id.activity_main_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickHelp);
+
+    Button btnResetDB = (Button) findViewById(R.id.activity_main_btnResetDB);
+    btnResetDB.setOnClickListener(listenerBtnClickResetDb);
   }
 
   /**
@@ -102,6 +105,15 @@ public class ActivityMain extends Activity {
     public void onClick(View v) {
       // TODO: Implement showing help activity.
       UtilUI.showAlert(v.getContext(), "Sorry!", "Help is not yet available!");
+    }
+  };
+
+  /**
+   * Reset the database, all info will be reset, user set rules will be lost
+   */
+  private OnClickListener listenerBtnClickResetDb = new OnClickListener() {
+    public void onClick(View v) {
+      UIDbHelperStore.instance().db().resetDB();
     }
   };
 }
