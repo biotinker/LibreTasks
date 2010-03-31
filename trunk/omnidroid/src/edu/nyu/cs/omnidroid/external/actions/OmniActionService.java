@@ -29,7 +29,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * This service is for Omnidroid to lunch simple actions like: show a message, put some message on
+ * This service is for Omnidroid to launch simple actions like: show a message, put some message on
  * notification bar, show a web page etc.
  */
 public class OmniActionService extends Service {
