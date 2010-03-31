@@ -35,6 +35,7 @@ import edu.nyu.cs.omnidroid.core.ShowAlertAction;
 import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.core.ShowWebsiteAction;
+import edu.nyu.cs.omnidroid.core.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.model.db.RegisteredActionParameterDbAdapter;
@@ -125,6 +126,9 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(ShowWebsiteAction.APP_NAME)
         && actionName.equals(ShowWebsiteAction.ACTION_NAME)) {
       return new ShowWebsiteAction(actionParams);
+    } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
+        && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
+      return new UpdateTwitterStatusAction(actionParams);
     } else {
     	Log.d("CoreActionsDbHelper", "doesn't catch AppName is: " + appName + 
     			" and actionName is: " + actionName);

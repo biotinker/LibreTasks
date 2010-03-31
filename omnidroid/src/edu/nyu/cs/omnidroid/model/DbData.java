@@ -28,6 +28,7 @@ import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.core.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.core.SystemEvent;
+import edu.nyu.cs.omnidroid.core.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDayOfWeek;
@@ -119,8 +120,9 @@ public class DbData {
     long appIdGPS = appDbAdapter.insert("GPS", "", true);
     long appIdSensor = appDbAdapter.insert("Sensor", "", true);
     long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
-    
+    long appIdTwitter = appDbAdapter.insert("Twitter", "", true);
     //TODO(Roger): just testing, remove later
+    //TODO(For Roger) : Can we remove these two lines.. (From Anur)
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME
         , "", true);
@@ -199,5 +201,14 @@ public class DbData {
         SendGmailAction.PARAM_SUBJECT, actionIdGmailSend, dataTypeIdText);
     actionParameterDbAdapter.insert(
         SendGmailAction.PARAM_BODY, actionIdGmailSend, dataTypeIdText);
+    
+    long actionIdTwitterUpdate = actionDbAdapter.insert(UpdateTwitterStatusAction.ACTION_NAME, appIdTwitter);
+    actionParameterDbAdapter.insert(
+        UpdateTwitterStatusAction.PARAM_USERNAME, actionIdTwitterUpdate, dataTypeIdText);
+    actionParameterDbAdapter.insert(
+        UpdateTwitterStatusAction.PARAM_PASSWORD, actionIdTwitterUpdate, dataTypeIdPasswordInput);
+    actionParameterDbAdapter.insert(
+        UpdateTwitterStatusAction.PARAM_MESSAGE, actionIdTwitterUpdate, dataTypeIdText);
+    
   }
 }

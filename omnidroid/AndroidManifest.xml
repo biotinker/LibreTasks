@@ -221,6 +221,11 @@
 				<action android:name="omnidroid.intent.action.SHOW_NOTIFICATION" />
 			</intent-filter>
 		</service>
+		<service android:name=".external.actions.UpdateTwitterStatusService">
+			<intent-filter>
+				<action android:name="omnidroid.intent.action.TWITTER_UPDATE" />
+			</intent-filter>
+		</service>
 		<!-- End Services that runs to fire actions -->
 		
 	</application>
