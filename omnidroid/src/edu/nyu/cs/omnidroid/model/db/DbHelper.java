@@ -69,6 +69,30 @@ public class DbHelper extends SQLiteOpenHelper {
     dropTables(db);
     onCreate(db);
   }
+  
+  /**
+   * repopulate the db using dbData, except for user defined rules
+   */
+  public void repopulate(SQLiteDatabase db) {
+    //drop all necessary tables i.e. prepopulated using dbData
+    db.execSQL(RegisteredAppDbAdapter.DATABASE_DROP);
+    db.execSQL(RegisteredEventDbAdapter.DATABASE_DROP);
+    db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_DROP);
+    db.execSQL(RegisteredActionDbAdapter.DATABASE_DROP);
+    db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_DROP);
+    db.execSQL(DataFilterDbAdapter.DATABASE_DROP);
+    db.execSQL(DataTypeDbAdapter.DATABASE_DROP);
+    //create those tables again
+    db.execSQL(RegisteredAppDbAdapter.DATABASE_CREATE);
+    db.execSQL(RegisteredEventDbAdapter.DATABASE_CREATE);
+    db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_CREATE);
+    db.execSQL(RegisteredActionDbAdapter.DATABASE_CREATE);
+    db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_CREATE);
+    db.execSQL(DataFilterDbAdapter.DATABASE_CREATE);
+    db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
+    //prepopulate the db
+    DbData.prepopulate(db);
+  }
 
   /**
    * Create all necessary tables in the database

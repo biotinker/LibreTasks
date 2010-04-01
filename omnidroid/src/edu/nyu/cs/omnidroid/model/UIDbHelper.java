@@ -90,11 +90,10 @@ public class UIDbHelper {
   private boolean isClosed = false;
   
   /**
-   * Reset the db, drop all existing table, and recreate them and repopulate them again
-   * TODO(Roger): save the user defined rules when reset the database.
+   * Reset the db, drop all necessary table, and recreate them and repopulate them again
    */
   public void resetDB() {
-    omnidroidDbHelper.onUpgrade(database, 0, 0);
+    omnidroidDbHelper.repopulate(database);
   }
 
   public UIDbHelper(Context context) {

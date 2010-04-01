@@ -121,8 +121,6 @@ public class DbData {
     long appIdSensor = appDbAdapter.insert("Sensor", "", true);
     long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
     long appIdTwitter = appDbAdapter.insert("Twitter", "", true);
-    //TODO(Roger): just testing, remove later
-    //TODO(For Roger) : Can we remove these two lines.. (From Anur)
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME
         , "", true);
@@ -146,7 +144,7 @@ public class DbData {
     eventAttributeDbAdapter.insert(
         SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, eventIdSmsRec, dataTypeIdText);
     eventAttributeDbAdapter.insert(
-        SMSReceivedEvent.ATTRIB_MESSAGE_TIME, eventIdSmsRec, dataTypeIdText);
+        SMSReceivedEvent.ATTRIB_MESSAGE_TIME, eventIdSmsRec, dataTypeIdDate);
 
     long eventIdPhoneRings = eventDbAdapter.insert(PhoneRingingEvent.EVENT_NAME, appIdPhone);  
     eventAttributeDbAdapter.insert(
