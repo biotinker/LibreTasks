@@ -99,8 +99,5 @@ public class SMSReceivedEvent extends Event {
       sb.append(currentMessage.getDisplayMessageBody());
     }
     messageText = sb.toString();
-
-    // phoneNumber = TestData.TEST_PHONE_NO;
-    // messageText = TestData.TEST_MESSAGE_TEXT;
   }
 }

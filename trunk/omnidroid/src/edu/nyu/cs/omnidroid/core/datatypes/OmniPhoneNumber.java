@@ -32,7 +32,13 @@ public class OmniPhoneNumber extends DataType {
   public static final String DB_NAME = "PhoneNumber";
   
   public enum Filter implements DataType.Filter {
-    EQUALS;
+    EQUALS("equals");
+    
+    public final String displayName;
+    
+    Filter(String displayName) {
+     this.displayName = displayName; 
+    }
   }
 
   public OmniPhoneNumber(String phoneNumber) throws DataTypeValidationException {

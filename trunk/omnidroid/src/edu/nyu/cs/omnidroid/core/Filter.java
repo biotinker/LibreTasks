@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.core;
 
+import android.util.Log;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.FactoryDataType;
 
@@ -26,7 +27,7 @@ public class Filter {
   /** Filter parameters used to construct two OmniType objects and perform a comparison */
   public final String eventAttribute;
   public final String filterOnDataType;
-  public final String comparison;
+  public final String filter;
   public final String compareWithDataType;
   public final String compareWithData;
 
@@ -37,7 +38,7 @@ public class Filter {
    *          the event attribute data field to be filtered
    * @param filterOnDataType
    *          the OmniDroid class name of the data type of the event attribute field
-   * @param comparison
+   * @param filter
    *          the comparison to be made between the event attribute and the user filter data
    * @param compareWithDataTyp
    *          the OmniDroid class name of the data type of the user filter data
@@ -46,15 +47,15 @@ public class Filter {
    * @throws IllegalArgumentException
    *           if any parameters are null
    */
-  public Filter(String eventAttribute, String filterOnDataType, String comparison,
+  public Filter(String eventAttribute, String filterOnDataType, String filter,
       String compareWithDataType, String compareWithdata) {
-    if (eventAttribute == null || filterOnDataType == null || comparison == null
+    if (eventAttribute == null || filterOnDataType == null || filter == null
         || compareWithDataType == null || compareWithdata == null) {
       throw new IllegalArgumentException();
     }
     this.eventAttribute = eventAttribute;
     this.filterOnDataType = filterOnDataType;
-    this.comparison = comparison;
+    this.filter = filter;
     this.compareWithDataType = compareWithDataType;
     this.compareWithData = compareWithdata;
   }
@@ -71,7 +72,8 @@ public class Filter {
     //the attribute data we get from the event
     DataType leftHandSide = FactoryDataType.createObject(filterOnDataType, eventAttributeData);
     DataType.Filter comparisonFilter = FactoryDataType.getFilterFromString(filterOnDataType,
-        comparison);
+        filter);
+    Log.d("match", "filterOnDataType is : " + filterOnDataType + " comparison is : " + filter);
     DataType rightHandSide = FactoryDataType.createObject(compareWithDataType, compareWithData);
     return leftHandSide.matchFilter(comparisonFilter, rightHandSide);
   }
@@ -85,7 +87,7 @@ public class Filter {
       return false;
     }
     Filter that = (Filter) o;
-    return that.compareWithData.equals(compareWithData) && that.comparison.equals(comparison)
+    return that.compareWithData.equals(compareWithData) && that.filter.equals(filter)
         && that.filterOnDataType.equals(filterOnDataType)
         && that.eventAttribute.equals(eventAttribute);
   }
@@ -95,7 +97,7 @@ public class Filter {
     int result = 17;
     result = 37 * result + eventAttribute.hashCode();
     result = 37 * result + filterOnDataType.hashCode();
-    result = 37 * result + comparison.hashCode();
+    result = 37 * result + filter.hashCode();
     result = 37 * result + compareWithDataType.hashCode();
     result = 37 * result + compareWithData.hashCode();
     return result;

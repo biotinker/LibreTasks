@@ -43,8 +43,10 @@ public class EventMonitoringService extends Service {
    * also allows us to support third party events, like Facebook update.
    */
   /** List of monitors to run */
-  private static String MONITORS[] = { monitorPackage + "." + "PhoneIsFallingMonitor",
-      monitorPackage + "." + "PhoneRingingMonitor", monitorPackage + "." + "LocationMonitor" };
+  private static String MONITORS[] = {
+    monitorPackage + "." + "PhoneRingingMonitor", 
+    monitorPackage + "." + "LocationMonitor",
+    monitorPackage + "." + "TimeMonitor" };
 
   public class LocalBinder extends Binder {
     EventMonitoringService getService() {

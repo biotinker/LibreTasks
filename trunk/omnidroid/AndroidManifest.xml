@@ -124,6 +124,13 @@
 				<action android:name="OmniRestart" />	
 			</intent-filter>	
 		</receiver>    
+		
+		<!-- Receiver that receive TimeTick -->	
+		<receiver android:name=".external.attributes.TimeMonitor">
+			<intent-filter>	
+				<action android:name="android.intent.action.TIME_TICK" />	
+			</intent-filter>
+		</receiver>    
 
 		<!--  The service that throws actions to our applications -->
 		<service android:name=".core.HandlerService"></service>
@@ -200,7 +207,7 @@
 				<action android:name="PHONE_RINGING" />
 			</intent-filter>
 			<intent-filter>
-				<action android:name="PHONE_IS_FALLING" />
+				<action android:name="TIME_TICK" />
 			</intent-filter>
 		</receiver>
 

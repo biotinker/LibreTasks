@@ -101,7 +101,7 @@ public class ActivityDlgFilters extends Activity {
     listView.setAdapter(adapterFilters);
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_filters_tv_info1);
-    mTextViewInfo.setText("Select a filter to apply to [" + attribute.getTypeName() + "]:");
+    mTextViewInfo.setText("Select a filter to apply to [ " + attribute.getTypeName() + " ]:");
 
     Button btnOk = (Button) findViewById(R.id.activity_dlg_filters_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
@@ -198,6 +198,7 @@ public class ActivityDlgFilters extends Activity {
       ll.setOrientation(LinearLayout.HORIZONTAL);
       ll.setGravity(Gravity.CENTER_VERTICAL);
 
+      //the icon of the filter
       ImageView iv = new ImageView(context);
       iv.setImageResource(filters.get(position).getIconResId());
       iv.setAdjustViewBounds(true);
@@ -207,6 +208,7 @@ public class ActivityDlgFilters extends Activity {
         iv.setBackgroundResource(R.drawable.icon_hilight);
       }
 
+      //the description of the filter
       TextView tv = new TextView(context);
       tv.setText(filters.get(position).getDescriptionShort());
       tv.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,

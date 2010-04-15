@@ -16,11 +16,11 @@
 package edu.nyu.cs.omnidroid.model;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.core.OmniAction;
-import edu.nyu.cs.omnidroid.core.PhoneIsFallingEvent;
 import edu.nyu.cs.omnidroid.core.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.core.SMSReceivedEvent;
 import edu.nyu.cs.omnidroid.core.ShowAlertAction;
@@ -28,6 +28,7 @@ import edu.nyu.cs.omnidroid.core.SendGmailAction;
 import edu.nyu.cs.omnidroid.core.SendSmsAction;
 import edu.nyu.cs.omnidroid.core.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.core.SystemEvent;
+import edu.nyu.cs.omnidroid.core.TimeTickEvent;
 import edu.nyu.cs.omnidroid.core.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniDate;
@@ -71,12 +72,15 @@ public class DbData {
     
     long dataTypeIdText = dataTypeDbAdapter.insert(
         OmniText.DB_NAME, OmniText.class.getName());
-    dataFilterDbAdapter.insert(OmniText.Filter.EQUALS.toString(), dataTypeIdText, dataTypeIdText);
-    dataFilterDbAdapter.insert(OmniText.Filter.CONTAINS.toString(), dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert(OmniText.Filter.EQUALS.toString(), 
+        OmniText.Filter.EQUALS.displayName, dataTypeIdText, dataTypeIdText);
+    dataFilterDbAdapter.insert(OmniText.Filter.CONTAINS.toString(), 
+        OmniText.Filter.CONTAINS.displayName, dataTypeIdText, dataTypeIdText);
     
     long dataTypeIdPhone = dataTypeDbAdapter.insert(
         OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.getName());
-    dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.EQUALS.toString(), dataTypeIdPhone, 
+    dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.EQUALS.toString(), 
+        OmniPhoneNumber.Filter.EQUALS.displayName, dataTypeIdPhone, 
         dataTypeIdPhone);
     
     long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(
@@ -87,25 +91,32 @@ public class DbData {
     long dataTypeIdDate = dataTypeDbAdapter.insert(OmniDate.DB_NAME, OmniDate.class.getName());
     
     dataFilterDbAdapter.insert(OmniTimePeriod.Filter.DURING_EVERYDAY.toString(), 
-        dataTypeIdTimePeriod, dataTypeIdDate);
+        OmniTimePeriod.Filter.DURING_EVERYDAY.displayName, dataTypeIdTimePeriod, dataTypeIdDate);
     dataFilterDbAdapter.insert(OmniTimePeriod.Filter.EXCEPT_EVERYDAY.toString(), 
-        dataTypeIdTimePeriod, dataTypeIdDate);
+        OmniTimePeriod.Filter.EXCEPT_EVERYDAY.displayName, dataTypeIdTimePeriod, dataTypeIdDate);
     
-    dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE_EVERYDAY.toString(), dataTypeIdDate, 
-        dataTypeIdDate);
-    dataFilterDbAdapter.insert(OmniDate.Filter.AFTER_EVERYDAY.toString(), dataTypeIdDate, 
-        dataTypeIdDate);
-    dataFilterDbAdapter.insert(OmniDate.Filter.DURING_EVERYDAY.toString(), dataTypeIdDate, 
-        dataTypeIdTimePeriod);
-    dataFilterDbAdapter.insert(OmniDate.Filter.EXCEPT_EVERYDAY.toString(), dataTypeIdDate, 
-        dataTypeIdTimePeriod);
-    dataFilterDbAdapter.insert(OmniDate.Filter.ISDAYOFWEEK.toString(), dataTypeIdDate, 
+    dataFilterDbAdapter.insert(OmniDate.Filter.IS_EVERYDAY.toString(), 
+        OmniDate.Filter.IS_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.IS_NOT_EVERYDAY.toString(),  
+        OmniDate.Filter.IS_NOT_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.BEFORE_EVERYDAY.toString(), 
+        OmniDate.Filter.BEFORE_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.AFTER_EVERYDAY.toString(), 
+        OmniDate.Filter.AFTER_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdDate);
+    dataFilterDbAdapter.insert(OmniDate.Filter.DURING_EVERYDAY.toString(), 
+        OmniDate.Filter.DURING_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdTimePeriod);
+    dataFilterDbAdapter.insert(OmniDate.Filter.EXCEPT_EVERYDAY.toString(), 
+        OmniDate.Filter.EXCEPT_EVERYDAY.displayName, dataTypeIdDate, dataTypeIdTimePeriod);
+    dataFilterDbAdapter.insert(OmniDate.Filter.ISDAYOFWEEK.toString(), 
+        OmniDate.Filter.ISDAYOFWEEK.displayName, dataTypeIdDate, 
         dataTypeIdDayOfWeek);
     
     long dataTypeIdArea = dataTypeDbAdapter.insert(
         OmniArea.DB_NAME, OmniArea.class.getName());
-    dataFilterDbAdapter.insert(OmniArea.Filter.NEAR.toString(), dataTypeIdArea, dataTypeIdArea);
-    dataFilterDbAdapter.insert(OmniArea.Filter.AWAY.toString(), dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert(OmniArea.Filter.NEAR.toString(), OmniArea.Filter.NEAR.displayName, 
+        dataTypeIdArea, dataTypeIdArea);
+    dataFilterDbAdapter.insert(OmniArea.Filter.AWAY.toString(), OmniArea.Filter.AWAY.displayName, 
+        dataTypeIdArea, dataTypeIdArea);
     
     long dataTypeIdPasswordInput = dataTypeDbAdapter.insert(
         OmniPasswordInput.DB_NAME, OmniPasswordInput.class.getName());
@@ -118,7 +129,6 @@ public class DbData {
     long appIdSms = appDbAdapter.insert("SMS", "", true);
     long appIdPhone = appDbAdapter.insert("Phone", "", true);
     long appIdGPS = appDbAdapter.insert("GPS", "", true);
-    long appIdSensor = appDbAdapter.insert("Sensor", "", true);
     long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
     long appIdTwitter = appDbAdapter.insert("Twitter", "", true);
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
@@ -137,6 +147,8 @@ public class DbData {
       eventDbAdapter.insert(e.EVENT_NAME, appIdAndroid);
     }
     
+    //TODO(Roger): for testing, remove later..
+    Log.d("DbData", "updating..");
     
     long eventIdSmsRec = eventDbAdapter.insert(SMSReceivedEvent.EVENT_NAME, appIdSms);  
     eventAttributeDbAdapter.insert(
@@ -156,9 +168,12 @@ public class DbData {
         LocationChangedEvent.EVENT_NAME, appIdGPS);  
     eventAttributeDbAdapter.insert(
         LocationChangedEvent.ATTRIBUTE_CURRENT_LOCATION, eventIdGPSLocationChanged, dataTypeIdArea);
-    
-    eventDbAdapter.insert(PhoneIsFallingEvent.EVENT_NAME, appIdSensor);  
 
+    long eventIdTimeTick = eventDbAdapter.insert(
+        TimeTickEvent.EVENT_NAME, appIdAndroid);  
+    eventAttributeDbAdapter.insert(
+        TimeTickEvent.ATTRIBUTE_CURRENT_TIME, eventIdTimeTick, dataTypeIdDate);
+    
     /*
      *  Populate registered actions and action parameters
      */
@@ -200,7 +215,8 @@ public class DbData {
     actionParameterDbAdapter.insert(
         SendGmailAction.PARAM_BODY, actionIdGmailSend, dataTypeIdText);
     
-    long actionIdTwitterUpdate = actionDbAdapter.insert(UpdateTwitterStatusAction.ACTION_NAME, appIdTwitter);
+    long actionIdTwitterUpdate = actionDbAdapter.insert(UpdateTwitterStatusAction.ACTION_NAME, 
+        appIdTwitter);
     actionParameterDbAdapter.insert(
         UpdateTwitterStatusAction.PARAM_USERNAME, actionIdTwitterUpdate, dataTypeIdText);
     actionParameterDbAdapter.insert(

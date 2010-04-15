@@ -27,7 +27,13 @@ public class OmniText extends DataType {
   public static final String DB_NAME = "Text";
   
   public enum Filter implements DataType.Filter {
-    CONTAINS, EQUALS;
+    CONTAINS("contains"), EQUALS("equals");
+    
+    public final String displayName;
+    
+    Filter(String displayName) {
+     this.displayName = displayName; 
+    }
   }
 
   public OmniText(String str) {

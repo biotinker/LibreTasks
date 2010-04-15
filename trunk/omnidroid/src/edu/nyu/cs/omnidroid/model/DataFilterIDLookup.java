@@ -106,7 +106,7 @@ public class DataFilterIDLookup {
 
     // Try to find dataFilterID
     long dataFilterID = -1;
-    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, dataTypeID, compareDataTypeID);
+    cursor = dataFilterDbAdapter.fetchAll(dataFilterName, null, dataTypeID, compareDataTypeID);
     if (cursor.getCount() > 0) {
       cursor.moveToFirst();
       dataFilterID = cursor.getLong(cursor.getColumnIndex(DataFilterDbAdapter.KEY_DATAFILTERID));

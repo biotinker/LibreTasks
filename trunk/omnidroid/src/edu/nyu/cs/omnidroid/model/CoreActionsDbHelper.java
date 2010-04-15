@@ -139,36 +139,54 @@ public class CoreActionsDbHelper {
 
   /**
    * This method checks the parameter data to see if it already has value or it should extract value
-   * from the event.
+   * from the event. The paramData should contain valid tags like "<Phone Ring Time>" in order to 
+   * retrieve related information.
    * 
    * @param paramData
    *          The parameter data
    * @param event
    *          The event whose attributes can be used as parameter data
    * @return The parameter data with actual value that can be used in intent
-   * @throws IllegalArgumentException
-   *           if the attribute name is not valid for the event
-   * @throws IllegalStateException
-   *           if the helper is closed
    */
-  private String extractData(String paramData, Event event) throws IllegalArgumentException {
+  public String fillParamWithEventAttrib(String paramData, Event event) {
     if (isClosed) {
       throw new IllegalStateException("CoreActionsDBHelper is closed.");
     }
-
-    // Parameter data to be extracted from an event's attributes has the format "<attribute_name>"
-    Pattern pattern = Pattern.compile("^<(.*)>$");
-    Matcher matcher = pattern.matcher(paramData);
-    final int EVENT_ATTRIB = 1; // Name of the event attribute in the pattern.
-    String eventAttr;
-    if (matcher.find()) {
-      eventAttr = matcher.group(EVENT_ATTRIB);
-      return event.getAttribute(eventAttr); // return value of the event attribute
-    } else {
-      return paramData; // return the value in parameter data
+    
+    StringBuilder retVal = new StringBuilder();
+    
+    //the index of current cursor
+    int cursor = 0;
+    while (cursor < paramData.length()) {
+      int openBracketIdx = paramData.indexOf('<', cursor);
+      int closeBracketIdx = paramData.indexOf('>', cursor);
+      
+      //if no valid brancket pair found, append whatever left, and return the string.
+      if (openBracketIdx == -1 || closeBracketIdx == -1 || openBracketIdx + 1 >= closeBracketIdx) {
+        retVal.append(paramData.substring(cursor));
+        break;
+      }
+      
+      //else if the pair is found, substitute "<attr>" with the actual attribute and append that to
+      //the retVal
+      String attr = paramData.substring(openBracketIdx + 1, closeBracketIdx);
+      String param = paramData.substring(openBracketIdx, closeBracketIdx + 1);
+      String paramAttr;
+      try {
+        paramAttr = event.getAttribute(attr);
+      } catch (IllegalArgumentException e) {
+        paramAttr = param;
+      }
+      retVal.append(paramData.substring(cursor, openBracketIdx));
+      retVal.append(paramAttr);
+      
+      //update cursor
+      cursor = closeBracketIdx + 1;
     }
+    Log.d("fillParamWithEventAttrib", paramData + " -> " + retVal.toString());
+    return retVal.toString();
   }
-
+  
   /**
    * This method returns an ArrayList of action ids which are to be executed for a given rule
    * 
@@ -274,13 +292,7 @@ public class CoreActionsDbHelper {
           RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA);
       paramRegisteredParamId = getLongFromCursor(cursor,
           RuleActionParameterDbAdapter.KEY_ACTIONPARAMETERID);
-      try {
-        paramsData.put(paramId, extractData(paramData, event));
-      } catch (IllegalArgumentException e) {
-        Log.w(this.getClass().getName() + ": ", e.toString(), e);
-        Log.w(this.getClass().getName() + ": ", e.getLocalizedMessage());
-        OmLogger.write(context, "Attribute " + paramData + " is not valid for the event");
-      }
+      paramsData.put(paramId, fillParamWithEventAttrib(paramData, event));
       paramsRegisteredParamId.put(paramId, paramRegisteredParamId);
     }
     cursor.close();

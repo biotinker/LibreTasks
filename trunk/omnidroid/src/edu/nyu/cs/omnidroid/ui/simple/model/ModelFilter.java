@@ -15,6 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.ui.simple.model;
 
+import android.util.Log;
+
 /**
  * UI representation of a filter.
  */
@@ -35,6 +37,7 @@ public class ModelFilter extends ModelItem {
 
   @Override
   public String getDescriptionShort() {
+    Log.d("getDescriptionShort", "description: " + attribute.getDescriptionShort() + " typeName is : " + typeName);
     return attribute.getDescriptionShort() + " " + typeName;
   }
 }

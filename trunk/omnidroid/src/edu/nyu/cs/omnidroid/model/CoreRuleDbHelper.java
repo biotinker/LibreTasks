@@ -90,10 +90,6 @@ public class CoreRuleDbHelper {
 
     // Use the appName and eventName to find a unique event in the database
     Cursor appCursor = applicationDbAdapter.fetchAll(appName, null, true);
-    Cursor c = applicationDbAdapter.fetchAll();
-    while(c.moveToNext()) {
-    	Log.d("CoreRuleDbHelper", CursorHelper.getStringFromCursor(c, "AppName"));
-    }
     
     if (appCursor.getCount() == 0) {
     	Log.d("CoreRuleDbHelper", "No enabled applications match this event's application " + appName);
