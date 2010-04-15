@@ -500,7 +500,7 @@ public class RuleTestData {
 
     // Get the id of the comparison using the comparison name and the ids of the data types of its
     // arguments
-    cursor = filterComparisonDbAdapter.fetchAll(filter.comparison, filterOnDataTypeID,
+    cursor = filterComparisonDbAdapter.fetchAll(filter.filter, null, filterOnDataTypeID,
         compareWithDataTypeID);
     cursor.moveToFirst();
     long dataFilterID = CursorHelper

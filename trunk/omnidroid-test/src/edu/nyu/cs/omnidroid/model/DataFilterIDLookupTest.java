@@ -35,6 +35,8 @@ public class DataFilterIDLookupTest extends AndroidTestCase {
   private static String[] dataTypeNames = { "Type11", "Type12" };
   private Long[] dataTypeIDs;
   private static String[] dataFilterNames = { "Filter1", "Filter2", "Filter3" };
+  private static String[] dataFilterDisplayNames = { "Filter1 display", "Filter2 display", 
+    "Filter3 display" };
   private Long[] dataFilterIDs;
 
   @Override
@@ -79,22 +81,22 @@ public class DataFilterIDLookupTest extends AndroidTestCase {
      * DataFilterIDLookup only support filters with the same filterOn and compareWith datatypes now.
      */
     dataFilterIDs[0] = dataFilterDbAdapter.insert(
-        dataFilterNames[0], dataTypeIDs[0], dataTypeIDs[0]);
+        dataFilterNames[0], dataFilterDisplayNames[0], dataTypeIDs[0], dataTypeIDs[0]);
     
     dataFilterIDs[1] = dataFilterDbAdapter.insert(
-        dataFilterNames[1], dataTypeIDs[0], dataTypeIDs[0]);
+        dataFilterNames[1], dataFilterDisplayNames[1], dataTypeIDs[0], dataTypeIDs[0]);
     
     dataFilterIDs[2] = dataFilterDbAdapter.insert(
-        dataFilterNames[2], dataTypeIDs[0], dataTypeIDs[0]);
+        dataFilterNames[2], dataFilterDisplayNames[2], dataTypeIDs[0], dataTypeIDs[0]);
 
     dataFilterIDs[3] = dataFilterDbAdapter.insert(
-        dataFilterNames[0], dataTypeIDs[1], dataTypeIDs[1]);
+        dataFilterNames[0], dataFilterDisplayNames[0], dataTypeIDs[1], dataTypeIDs[1]);
     
     dataFilterIDs[4] = dataFilterDbAdapter.insert(
-        dataFilterNames[1], dataTypeIDs[1], dataTypeIDs[1]);
+        dataFilterNames[1], dataFilterDisplayNames[1], dataTypeIDs[1], dataTypeIDs[1]);
     
     dataFilterIDs[5] = dataFilterDbAdapter.insert(
-        dataFilterNames[2], dataTypeIDs[1], dataTypeIDs[1]);
+        dataFilterNames[2], dataFilterDisplayNames[2], dataTypeIDs[1], dataTypeIDs[1]);
   }
 
   public void testGetDataFilterID() {
