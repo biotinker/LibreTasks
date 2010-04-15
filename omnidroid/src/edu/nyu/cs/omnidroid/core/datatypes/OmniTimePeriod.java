@@ -41,7 +41,14 @@ public class OmniTimePeriod extends DataType {
   public static final String DB_NAME = "TimePeriod";
   
   public enum Filter implements DataType.Filter {
-    DURING, DURING_EVERYDAY, EXCEPT, EXCEPT_EVERYDAY;
+    DURING("during"), DURING_EVERYDAY("during (daily)"), EXCEPT("not during"), 
+    EXCEPT_EVERYDAY("not during (daily)");
+    
+    public final String displayName;
+    
+    Filter(String displayName) {
+     this.displayName = displayName; 
+    }
   }
   
   public OmniTimePeriod(Date startTime, Date endTime) {

@@ -52,8 +52,8 @@ public class IntentParser {
       event = new LocationChangedEvent(intent);
     } else if (intent.getAction().equals(PhoneRingingEvent.ACTION_NAME)) {
       event = new PhoneRingingEvent(intent);
-    } else if (intent.getAction().equals(PhoneIsFallingEvent.ACTION_NAME)) {
-      event = new PhoneIsFallingEvent(intent);
+    } else if (intent.getAction().equals(TimeTickEvent.ACTION_NAME)) {
+      event = new TimeTickEvent(intent);
     } else { // system events
       for (SystemEvent e : SystemEvent.values()) {
         if (intent.getAction().equals(e.ACTION_NAME)) {

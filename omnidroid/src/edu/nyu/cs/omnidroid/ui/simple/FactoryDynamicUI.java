@@ -144,7 +144,9 @@ public class FactoryDynamicUI {
     } else if (modelFilter.getDatabaseId() == filterId.AREA_AWAY || 
         modelFilter.getDatabaseId() == filterId.AREA_NEAR) {
       BuildAreaAwayOrNear.build(dlg, linearLayout, modelFilter, dataOld);
-    } else if (modelFilter.getDatabaseId() == filterId.DATE_BEFORE_EVERYDAY || 
+    } else if (modelFilter.getDatabaseId() == filterId.DATE_BEFORE_EVERYDAY ||
+        modelFilter.getDatabaseId() == filterId.DATE_IS_EVERYDAY ||
+        modelFilter.getDatabaseId() == filterId.DATE_IS_NOT_EVERYDAY ||
         modelFilter.getDatabaseId() == filterId.DATE_AFTER_EVERYDAY) {
       BuildDateBeforeOrAfter.build(dlg, linearLayout, modelFilter, dataOld);
     } else if (modelFilter.getDatabaseId() == filterId.DATE_DURING_EVERYDAY ||
@@ -176,7 +178,7 @@ public class FactoryDynamicUI {
       linearLayout.addView(tvInstructionsStart);
 
       final TimePicker startTimePicker = new TimePicker(dlg.getContext());
-      startTimePicker.setIs24HourView(true);
+      startTimePicker.setIs24HourView(false);
       // If we had data previously entered by the user, reset it for them.
       if (dataOld != null) {
         startTimePicker.setCurrentHour(((OmniTimePeriod) dataOld).getStartHour());
@@ -190,7 +192,7 @@ public class FactoryDynamicUI {
       linearLayout.addView(tvInstructionsEnd);
 
       final TimePicker endTimePicker = new TimePicker(dlg.getContext());
-      endTimePicker.setIs24HourView(true);
+      endTimePicker.setIs24HourView(false);
       // If we had data previously entered by the user, reset it for them.
       if (dataOld != null) {
         endTimePicker.setCurrentHour(((OmniTimePeriod) dataOld).getEndHour());
@@ -264,7 +266,7 @@ public class FactoryDynamicUI {
       linearLayout.addView(tvInstructions);
 
       final TimePicker timePicker = new TimePicker(dlg.getContext());
-      timePicker.setIs24HourView(true);
+      timePicker.setIs24HourView(false);
       // If we had data previously entered by the user, reset it for them.
       if (dataOld != null) {
         timePicker.setCurrentHour(((OmniDate) dataOld).getDate().getHours());
@@ -512,6 +514,10 @@ public class FactoryDynamicUI {
     .getDataFilterID(OmniArea.DB_NAME, OmniArea.Filter.AWAY.toString());
     public final long AREA_NEAR = UIDbHelperStore.instance().getFilterLookup()
     .getDataFilterID(OmniArea.DB_NAME, OmniArea.Filter.NEAR.toString());
+    public final long DATE_IS_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.IS_EVERYDAY.toString());
+    public final long DATE_IS_NOT_EVERYDAY = UIDbHelperStore.instance().getFilterLookup()
+    .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.IS_NOT_EVERYDAY.toString());
     public final long DATE_BEFORE = UIDbHelperStore.instance().getFilterLookup()
     .getDataFilterID(OmniDate.DB_NAME, OmniDate.Filter.BEFORE.toString());
     public final long DATE_AFTER = UIDbHelperStore.instance().getFilterLookup()

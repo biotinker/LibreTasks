@@ -55,7 +55,7 @@ public class FactoryDataType {
 
       return (DataType) classConstructor.newInstance(value);
     } catch (Exception ex) {
-      Log.d("createObject", "Can't create class " + className + " with value: " + value);
+      Log.e("createObject", "Can't create class " + className + " with value: " + value);
     }
 
     return null;
@@ -76,16 +76,22 @@ public class FactoryDataType {
       Method method = theClass.getMethod("getFilterFromString", String.class);
       return (DataType.Filter) method.invoke(null, filter);
     } catch (ClassNotFoundException e) {
+      Log.e("getFilterFromString", "ClassNotFoundException");
       return null;
     } catch (SecurityException e) {
+      Log.e("getFilterFromString", "SecurityException");
       return null;
     } catch (NoSuchMethodException e) {
+      Log.e("getFilterFromString", "NoSuchMethodException");
       return null;
     } catch (IllegalArgumentException e) {
+      Log.e("getFilterFromString", "IllegalArgumentException");
       return null;
     } catch (IllegalAccessException e) {
+      Log.e("getFilterFromString", "IllegalAccessException");
       return null;
     } catch (InvocationTargetException e) {
+      Log.e("getFilterFromString", "InvocationTargetException");
       return null;
     }
   }

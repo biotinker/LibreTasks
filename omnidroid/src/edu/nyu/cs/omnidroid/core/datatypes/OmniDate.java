@@ -37,12 +37,24 @@ public class OmniDate extends DataType {
   /* data type name to be stored in db */
   public static final String DB_NAME = "Date";
   
+  //TODO(Roger):put display name into resource(pass in context to construct).
   public enum Filter implements DataType.Filter {
-    BEFORE, AFTER, BEFORE_EVERYDAY, AFTER_EVERYDAY, 
+    //for OmniDate
+    //is and is_not only compares down to minute and ignore date.
+    IS_EVERYDAY("is (daily)"), IS_NOT_EVERYDAY("is not (daily)"), 
+    BEFORE("is before"), AFTER("is after"), 
+    BEFORE_EVERYDAY("is before (daily)"), AFTER_EVERYDAY("is after (daily)"), 
     //for OmniTimePeriod
-    DURING, DURING_EVERYDAY, EXCEPT, EXCEPT_EVERYDAY, 
+    DURING("is during"), DURING_EVERYDAY("is during (daily)"), EXCEPT("is not during"), 
+    EXCEPT_EVERYDAY("is not during (daily)"), 
     //for OmniDayOfWeek
-    ISDAYOFWEEK;
+    ISDAYOFWEEK("is day of week");
+    
+    public final String displayName;
+    
+    Filter(String displayName) {
+      this.displayName = displayName;
+    }
   }
 
   public OmniDate(Date date) {
@@ -92,6 +104,10 @@ public class OmniDate extends DataType {
 
   public boolean matchFilter(Filter filter, OmniDate compareValue) {
     switch (filter) {
+    case IS_EVERYDAY:
+      return is(compareValue);
+    case IS_NOT_EVERYDAY:
+      return isNot(compareValue);
     case AFTER:
       return after(compareValue);
     case BEFORE:
@@ -142,6 +158,29 @@ public class OmniDate extends DataType {
     } catch (DataTypeValidationException e) {
       throw new IllegalArgumentException(e.getMessage());
     }
+  }
+  
+  /**
+   * Indicates whether or not provided value has the same hour and minute as the 
+   * <code>compareDate</code>.
+   * 
+   * @param compareDate
+   * @return
+   */
+  public boolean is(OmniDate compareDate) {
+    return (value.getHours() == compareDate.value.getHours() &&
+        value.getMinutes() == compareDate.value.getMinutes());
+  }
+  
+  /**
+   * Indicates whether or not provided value has the same hour and minute as the 
+   * <code>compareDate</code>.
+   * 
+   * @param compareDate
+   * @return
+   */
+  public boolean isNot(OmniDate compareDate) {
+    return !is(compareDate);
   }
 
   /**
@@ -220,6 +259,8 @@ public class OmniDate extends DataType {
       throw new DataTypeValidationException("The user input cannot be null.");
     }
     switch ((Filter) filter) {
+    case IS_EVERYDAY:
+    case IS_NOT_EVERYDAY:
     case BEFORE:
     case AFTER:
     case BEFORE_EVERYDAY:
@@ -276,8 +317,8 @@ public class OmniDate extends DataType {
   @Override
   public boolean matchFilter(DataType.Filter filter, DataType userDefinedValue)
       throws IllegalArgumentException {
-    if(!(filter instanceof Filter)){
-      throw new IllegalArgumentException("Invalid filter "+filter.toString()+" provided.");
+    if(filter == null || !(filter instanceof Filter)){
+      throw new IllegalArgumentException("Invalid filter "+filter+" provided.");
     }
     if (userDefinedValue == null) {
       throw new IllegalArgumentException("userDefinedValue is null.");

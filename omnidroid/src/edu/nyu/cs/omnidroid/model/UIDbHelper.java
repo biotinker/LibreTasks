@@ -157,8 +157,9 @@ public class UIDbHelper {
     // Load Filters
     cursor = dataFilterDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
+      
       dataFilterNames.put(getLongFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERID),
-          getStringFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERNAME));
+          getStringFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERDISPLAYNAME));
     }
     cursor.close();
 
@@ -339,7 +340,7 @@ public class UIDbHelper {
     
     // Fetch all filter that filters on this attribute's dataType, set filterName to null, 
     // set compareWithDatatypeID to null
-    Cursor cursor = dataFilterDbAdapter.fetchAll(null, attribute.getDatatype(), null);
+    Cursor cursor = dataFilterDbAdapter.fetchAll(null, null, attribute.getDatatype(), null);
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>(cursor.getCount());
     
     while (cursor.moveToNext()) {

@@ -58,7 +58,13 @@ public class OmniArea extends DataType {
   public static final String DB_NAME = "Area";
   
   public enum Filter implements DataType.Filter {
-    NEAR, AWAY;
+    NEAR("near"), AWAY("away");
+    
+    public final String displayName;
+    
+    Filter(String displayName) {
+      this.displayName = displayName;
+    }
   }
 
   public OmniArea(String omniAreaString) throws DataTypeValidationException {
