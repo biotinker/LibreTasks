@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
+import edu.nyu.cs.omnidroid.core.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.core.OmniAction;
 import edu.nyu.cs.omnidroid.core.PhoneRingingEvent;
@@ -77,11 +78,11 @@ public class DbData {
     dataFilterDbAdapter.insert(OmniText.Filter.CONTAINS.toString(), 
         OmniText.Filter.CONTAINS.displayName, dataTypeIdText, dataTypeIdText);
     
-    long dataTypeIdPhone = dataTypeDbAdapter.insert(
+    long dataTypeIdPhoneNumber = dataTypeDbAdapter.insert(
         OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.getName());
     dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.EQUALS.toString(), 
-        OmniPhoneNumber.Filter.EQUALS.displayName, dataTypeIdPhone, 
-        dataTypeIdPhone);
+        OmniPhoneNumber.Filter.EQUALS.displayName, dataTypeIdPhoneNumber, 
+        dataTypeIdPhoneNumber);
     
     long dataTypeIdDayOfWeek = dataTypeDbAdapter.insert(
         OmniDayOfWeek.DB_NAME, OmniDayOfWeek.class.getName());
@@ -152,7 +153,7 @@ public class DbData {
     
     long eventIdSmsRec = eventDbAdapter.insert(SMSReceivedEvent.EVENT_NAME, appIdSms);  
     eventAttributeDbAdapter.insert(
-        SMSReceivedEvent.ATTRIB_PHONE_NO, eventIdSmsRec, dataTypeIdPhone);
+        SMSReceivedEvent.ATTRIB_PHONE_NO, eventIdSmsRec, dataTypeIdPhoneNumber);
     eventAttributeDbAdapter.insert(
         SMSReceivedEvent.ATTRIB_MESSAGE_TEXT, eventIdSmsRec, dataTypeIdText);
     eventAttributeDbAdapter.insert(
@@ -160,7 +161,7 @@ public class DbData {
 
     long eventIdPhoneRings = eventDbAdapter.insert(PhoneRingingEvent.EVENT_NAME, appIdPhone);  
     eventAttributeDbAdapter.insert(
-        PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhone);
+        PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhoneNumber);
     eventAttributeDbAdapter.insert(
         PhoneRingingEvent.ATTRIBUTE_PHONE_RING_TIME, eventIdPhoneRings, dataTypeIdDate);
     
@@ -193,15 +194,19 @@ public class DbData {
         appIdOmnidroid);
     actionParameterDbAdapter.insert(ShowWebsiteAction.PARAM_WEB_URL, 
         actionIdShowWebsite, dataTypeIdText);  
+    long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME, 
+        appIdOmnidroid);
+    actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS, 
+        actionIdSetBrightness, dataTypeIdText);  
     
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend, 
-        dataTypeIdPhone);
+        dataTypeIdPhoneNumber);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_SMS, actionIdSmsSend, dataTypeIdText);
     
     long actionIdPhoneCall = actionDbAdapter.insert(CallPhoneAction.ACTION_NAME, appIdPhone);
     actionParameterDbAdapter.insert(
-        CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall, dataTypeIdPhone);
+        CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall, dataTypeIdPhoneNumber);
 
     long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdGmail);
     actionParameterDbAdapter.insert(

@@ -30,6 +30,7 @@ import android.util.Log;
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.Event;
+import edu.nyu.cs.omnidroid.core.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.core.ShowAlertAction;
 import edu.nyu.cs.omnidroid.core.SendGmailAction;
@@ -126,6 +127,9 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(ShowWebsiteAction.APP_NAME)
         && actionName.equals(ShowWebsiteAction.ACTION_NAME)) {
       return new ShowWebsiteAction(actionParams);
+    } else if (appName.equals(SetScreenBrightnessAction.APP_NAME)
+        && actionName.equals(SetScreenBrightnessAction.ACTION_NAME)) {
+      return new SetScreenBrightnessAction(actionParams);
     } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);
