@@ -23,9 +23,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.R;
+import edu.nyu.cs.omnidroid.core.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.core.ShowAlertAction;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 
@@ -43,6 +45,7 @@ public class OmniActionService extends Service {
   public static final int SHOW_NOTIFICATION_ACTION = 2;
   public static final int TURN_OFF_WIFI_ACTION = 3;
   public static final int TURN_ON_WIFI_ACTION = 4;
+  public static final int SET_SCREEN_BRIGHTNESS = 5;
   
   //TODO(Roger): chose a more meaningful id
   public static final int NOTIFICATION_ID = 1;
@@ -69,6 +72,9 @@ public class OmniActionService extends Service {
       break;
     case TURN_ON_WIFI_ACTION :
       turnOnWifi();
+      break;
+    case SET_SCREEN_BRIGHTNESS :
+      setScreenBrightness(intent);
       break;
     default:
       Log.e("OmniActionSercive", "No such operation supported as: " + operationType);
@@ -126,6 +132,13 @@ public class OmniActionService extends Service {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
   
-  
+  /**
+   * Set the brightness of the screen, the value is between 0 and 255. {@link SCREEN_BRIGHTNESS}
+   * @param brightness
+   */
+  private void setScreenBrightness(Intent intent) {
+    int brightness = intent.getIntExtra(SetScreenBrightnessAction.PARAM_BRIGHTNESS, 200);
+    Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightness);
+  }
 
 }
