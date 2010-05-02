@@ -21,6 +21,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -46,6 +47,9 @@ public class OmniActionService extends Service {
   public static final int TURN_OFF_WIFI_ACTION = 3;
   public static final int TURN_ON_WIFI_ACTION = 4;
   public static final int SET_SCREEN_BRIGHTNESS = 5;
+  public static final int SET_PHONE_LOUD = 6;
+  public static final int SET_PHONE_SILENT = 7;
+  public static final int SET_PHONE_VIBRATE = 8;
   
   //TODO(Roger): chose a more meaningful id
   public static final int NOTIFICATION_ID = 1;
@@ -76,11 +80,47 @@ public class OmniActionService extends Service {
     case SET_SCREEN_BRIGHTNESS :
       setScreenBrightness(intent);
       break;
+    case SET_PHONE_LOUD :
+      setPhoneLoud();
+      break;
+    case SET_PHONE_SILENT :
+      setPhoneSilent();
+      break;
+    case SET_PHONE_VIBRATE :
+      setPhoneVibrate();
+      break;
     default:
       Log.e("OmniActionSercive", "No such operation supported as: " + operationType);
     }
   }
-
+  
+  /**
+   * set the phone to loud
+   */
+  private void setPhoneLoud() {
+    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+    int ringstream = AudioManager.STREAM_RING;
+    int ringmaxvolume = audioManager.getStreamMaxVolume(ringstream);
+    audioManager.setStreamVolume(ringstream, ringmaxvolume, AudioManager.FLAG_SHOW_UI);
+   }
+  
+  /**
+   * set the phone to silent
+   */
+  private void setPhoneSilent() {
+    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+   }
+  
+  /**
+   * set the phone to vibrate
+   */
+  private void setPhoneVibrate() {
+    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+   }
+  
   /**
    * turn off the wifi.
    */

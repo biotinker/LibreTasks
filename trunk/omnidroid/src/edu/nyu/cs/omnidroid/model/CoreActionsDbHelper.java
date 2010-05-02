@@ -30,6 +30,9 @@ import android.util.Log;
 import edu.nyu.cs.omnidroid.core.Action;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.Event;
+import edu.nyu.cs.omnidroid.core.SetPhoneLoudAction;
+import edu.nyu.cs.omnidroid.core.SetPhoneSilentAction;
+import edu.nyu.cs.omnidroid.core.SetPhoneVibrateAction;
 import edu.nyu.cs.omnidroid.core.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.core.ShowAlertAction;
@@ -130,6 +133,15 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(SetScreenBrightnessAction.APP_NAME)
         && actionName.equals(SetScreenBrightnessAction.ACTION_NAME)) {
       return new SetScreenBrightnessAction(actionParams);
+    } else if (appName.equals(SetPhoneLoudAction.APP_NAME)
+        && actionName.equals(SetPhoneLoudAction.ACTION_NAME)) {
+      return new SetPhoneLoudAction(actionParams);
+    } else if (appName.equals(SetPhoneSilentAction.APP_NAME)
+        && actionName.equals(SetPhoneSilentAction.ACTION_NAME)) {
+      return new SetPhoneSilentAction(actionParams);
+    } else if (appName.equals(SetPhoneVibrateAction.APP_NAME)
+        && actionName.equals(SetPhoneVibrateAction.ACTION_NAME)) {
+      return new SetPhoneVibrateAction(actionParams);
     } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);
