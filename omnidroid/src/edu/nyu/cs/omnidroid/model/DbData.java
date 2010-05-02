@@ -19,6 +19,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.core.CallPhoneAction;
 import edu.nyu.cs.omnidroid.core.LocationChangedEvent;
+import edu.nyu.cs.omnidroid.core.SetPhoneLoudAction;
+import edu.nyu.cs.omnidroid.core.SetPhoneSilentAction;
+import edu.nyu.cs.omnidroid.core.SetPhoneVibrateAction;
 import edu.nyu.cs.omnidroid.core.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.core.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.core.OmniAction;
@@ -198,7 +201,13 @@ public class DbData {
         appIdOmnidroid);
     actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS, 
         actionIdSetBrightness, dataTypeIdText);  
-    
+     actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, 
+        appIdOmnidroid);
+     actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, 
+         appIdOmnidroid);
+     actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, 
+         appIdOmnidroid);
+     
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend, 
         dataTypeIdPhoneNumber);
