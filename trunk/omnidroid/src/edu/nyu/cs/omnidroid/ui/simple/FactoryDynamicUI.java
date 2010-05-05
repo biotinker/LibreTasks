@@ -403,6 +403,9 @@ public class FactoryDynamicUI {
     }
   };
 
+  /**
+   * UI for contains filter between OmniText
+   */
   private static BuildFilterUI BuildTextContains = new BuildFilterUI() {
     private static final String UISTATE_TEXT = "text";
 

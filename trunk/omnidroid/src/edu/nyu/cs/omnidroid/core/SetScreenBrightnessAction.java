@@ -27,7 +27,7 @@ import edu.nyu.cs.omnidroid.util.OmnidroidException;
  *
  */
 public class SetScreenBrightnessAction extends OmniAction {
-
+  //TODO(Roger):in the future store it in R to support internationalization.
   public static final String ACTION_NAME = "Change screen brightness";
   public static final String PARAM_BRIGHTNESS = "brightness";
   

@@ -250,6 +250,7 @@ public class ActivitySavedRules extends Activity {
       return position;
     }
     
+    @SuppressWarnings("unused")
     public long getCheckedRuleId() {
       if (listView.getCheckedItemPosition() > -1) {
         return rules.get(listView.getCheckedItemPosition()).getDatabaseId();

@@ -133,8 +133,8 @@ public class DbData {
     long appIdSms = appDbAdapter.insert("SMS", "", true);
     long appIdPhone = appDbAdapter.insert("Phone", "", true);
     long appIdGPS = appDbAdapter.insert("GPS", "", true);
-    long appIdGmail = appDbAdapter.insert("GMAIL", "", true);
-    long appIdTwitter = appDbAdapter.insert("Twitter", "", true);
+    long appIdGmail = appDbAdapter.insert("GMAIL", "", true, true);
+    long appIdTwitter = appDbAdapter.insert("Twitter", "", true, true);
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME
         , "", true);

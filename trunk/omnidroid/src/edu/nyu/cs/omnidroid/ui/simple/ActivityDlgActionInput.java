@@ -40,6 +40,7 @@ import edu.nyu.cs.omnidroid.R;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.ui.simple.factoryui.FactoryActions;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
 
@@ -123,7 +124,14 @@ public class ActivityDlgActionInput extends Activity {
     ModelAction modelAction = RuleBuilder.instance().getChosenModelAction();
     ArrayList<DataType> ruleActionDataOld = RuleBuilder.instance().getChosenRuleActionDataOld();
     
-    llDynamic = FactoryActions.buildUIFromAction(modelAction, ruleActionDataOld, this);
+    //Retrieve the login info from the database to pre-populate the UI
+    ModelApplication modelApp = null;
+    if(RuleBuilder.instance().getChosenApplication() != null){
+      modelApp = UIDbHelperStore.instance().db().getApplication(
+              RuleBuilder.instance().getChosenApplication().getDatabaseId());
+    }
+
+    llDynamic = FactoryActions.buildUIFromAction(modelApp, modelAction, ruleActionDataOld, this);
     llContent.addView(llDynamic);
     
     setTitle(modelAction.getTypeName());

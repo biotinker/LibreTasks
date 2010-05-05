@@ -92,6 +92,11 @@
     <string name="UI_OMNITIMEPERIOD_PICK_STARTTIMR">Pick a start time:</string>
     <string name="UI_OMNITIMEPERIOD_PICK_ENDTIMR">Pick an end time:</string>
     <string name="UI_OMNIDATE_PICK_TIMR">Pick a time:</string>
+    
+	<!--  UI Login -->
+    <string name="UI_login_CHECK_BOX_TEXT">Stay Signed in</string>
+    <string name="UI_login_info_button">Login Info</string>
+    <string name="UI_login_info">Please enter your username and password and select the check box to remember it</string>
 
 </resources>
 	

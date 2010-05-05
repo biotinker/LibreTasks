@@ -26,21 +26,26 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.core.datatypes.DataType;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniArea;
+import edu.nyu.cs.omnidroid.core.datatypes.OmniCheckBoxInput;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.core.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.model.DataTypeIDLookup;
+import edu.nyu.cs.omnidroid.ui.simple.RuleBuilder;
 import edu.nyu.cs.omnidroid.ui.simple.UIDbHelperStore;
 import edu.nyu.cs.omnidroid.ui.simple.UtilUI;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.ui.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelParameter;
 import edu.nyu.cs.omnidroid.ui.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.util.DataTypeValidationException;
 
 /**
  * Static factory class for setting up a dynamic UI for every filter/action type.
@@ -51,17 +56,21 @@ public class FactoryActions {
   private static BuilderOmniText vbOmniText;
   private static BuilderOmniArea vbOmniArea;
   private static BuilderOmniPasswordInput vbOmniPasswordInput;
+  private static BuilderOmniCheckBox vbOmniCheckBox;
   private static HashMap<Long, ViewBuilder> viewBuilders;
 
   static {
     // Initialize each of our omni data type builders.
     DataTypeIDLookup lookup = UIDbHelperStore.instance().getDatatypeLookup();
     vbOmniPhoneNumber = new BuilderOmniPhoneNumber(
-      lookup.getDataTypeID(OmniPhoneNumber.DB_NAME));
+            lookup.getDataTypeID(OmniPhoneNumber.DB_NAME));
     vbOmniText = new BuilderOmniText(lookup.getDataTypeID(OmniText.DB_NAME));
     vbOmniArea = new BuilderOmniArea(lookup.getDataTypeID(OmniArea.DB_NAME));
     vbOmniPasswordInput = new BuilderOmniPasswordInput(lookup
-        .getDataTypeID(OmniPasswordInput.DB_NAME));
+            .getDataTypeID(OmniPasswordInput.DB_NAME));
+    vbOmniCheckBox = new BuilderOmniCheckBox(lookup
+            .getDataTypeID(OmniCheckBoxInput.DB_NAME));
+
     // TODO: (markww) Add builders for rest of omni data types.
 
     viewBuilders = new HashMap<Long, ViewBuilder>();
@@ -69,48 +78,162 @@ public class FactoryActions {
     viewBuilders.put(vbOmniText.getDatatypeId(), vbOmniText);
     viewBuilders.put(vbOmniArea.getDatatypeId(), vbOmniArea);
     viewBuilders.put(vbOmniPasswordInput.getDatatypeId(), vbOmniPasswordInput);
+    viewBuilders.put(vbOmniCheckBox.getDatatypeId(), vbOmniCheckBox);
   }
 
   private FactoryActions() {
   }
 
   /**
-   * Given an action, build a UI for it based on its parameters and their datatypes.
+   * Given an action and application, build a UI for it based on its parameters and their datatypes.
+   * If the parameter type names are "username" or "password"(Both case insensitive)
+   * and if the application uses a login window for username and password,
+   * then these fields will be pre-populated accordingly.
    * 
    * @return The fully constructed UI which should be appended to the caller parent.
    */
-  public static LinearLayout buildUIFromAction(ModelAction modelAction,
-      ArrayList<DataType> datasOld, Context context) {
+  public static LinearLayout buildUIFromAction(ModelApplication modelApp,ModelAction modelAction,
+          ArrayList<DataType> datasOld, Context context) {
 
     if (datasOld != null && datasOld.size() != modelAction.getParameters().size()) {
       throw new IllegalStateException(
-          "Old action parameter data array does not much parameter size!");
+      "Old action parameter data array does not match parameter size!");
     }
 
     LinearLayout ll = new LinearLayout(context);
     ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
         LayoutParams.FILL_PARENT));
+
     ll.setOrientation(LinearLayout.VERTICAL);
 
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
       ModelParameter parameter = modelAction.getParameters().get(i);
-
       // Always add a TextView showing the parameter name.
       addParameterName(parameter, ll);
 
-      // Point to the correct builder for the current parameter.
-      ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
-      if (viewBuilder == null) {
-        throw new IllegalArgumentException("Unsupported datatype encountered!");
-      }
+      //Checking for null since the Rule builder will return the
+      //application as null, once the rule has been created.
+      if(RuleBuilder.instance().getChosenApplication() != null &&
+              RuleBuilder.instance().getChosenApplication().getLoginEnabled()
+              ){
+        if(parameter.getTypeName().equalsIgnoreCase("username")){
+          if(modelApp.getUsername().length() != 0){
+            vbOmniText.buildUI(ll, new OmniText(modelApp.getUsername()));
+          } else { //If not stored in database, get it from model
+            vbOmniText.buildUI(ll, new OmniText(RuleBuilder.instance().
+                    getChosenApplication().getUsername()));
+          }
+          continue;
+        } else if(parameter.getTypeName().equalsIgnoreCase("password")){
+          
+          if(modelApp.getPassword().length() != 0){
+            vbOmniPasswordInput.buildUI(ll, new OmniPasswordInput(modelApp.getPassword()));
+          } else { //If not stored in database, get it from model
+            vbOmniPasswordInput.buildUI(ll, new OmniPasswordInput(RuleBuilder.instance().
+                    getChosenApplication().getPassword()));
+          }
+          continue;
+        }  
+       }
+      
+        // Point to the correct builder for the current parameter.
+        ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+        if (viewBuilder == null) {
+          throw new IllegalArgumentException("Unsupported datatype encountered!");
+        }
 
-      // Now append the UI elements required for the type.
-      viewBuilder.buildUI(ll, datasOld != null ? datasOld.get(i) : null);
+        // Now append the UI elements required for the type.
+        viewBuilder.buildUI(ll, datasOld != null ? datasOld.get(i) : null);    
+      } 
+    return ll;
     }
 
+  /**
+   * Build a standard login UI with Username , Password fields and
+   * the ability to store them in a consistent storage if the user selects
+   * to stay signed in.
+   * 
+   * The check box is set checked by default
+   * 
+   * @param modelApp Application object used to pre-populate 
+   *   the UI
+   * @param context
+   * @param checkBoxText text to be used as check box label
+   * @return The fully constructed login UI which should be appended to the caller parent.
+   */
+  public static LinearLayout buildLoginUI(ModelApplication modelApp,
+          Context context, String checkBoxText) {
+
+    LinearLayout ll = new LinearLayout(context);
+    ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
+        LayoutParams.FILL_PARENT));
+
+    ll.setOrientation(LinearLayout.VERTICAL);
+    
+    TextView usernameText = new TextView(ll.getContext());
+    //TODO(Roger): use R.string
+    usernameText.setText("Username :");
+    ll.addView(usernameText);
+    
+    vbOmniText.buildUI(ll, new OmniText(modelApp.getUsername()));
+    
+    TextView passwordText = new TextView(ll.getContext());
+    passwordText.setText("Password :");
+    ll.addView(passwordText);
+    
+    vbOmniPasswordInput.buildUI(ll, new OmniPasswordInput(modelApp.getPassword()));
+    
+    TextView checkBoxLabel = new TextView(ll.getContext());
+    checkBoxLabel.setText(checkBoxText);
+    ll.addView(checkBoxLabel);
+    
+    vbOmniCheckBox.buildUI(ll, new OmniCheckBoxInput(true));
     return ll;
   }
+  
+  /**
+   * Given a layout we previously constructed and an application,
+   *  extract all user supplied data from it
+   * and construct a ModelApplication.
+   * 
+   * @return A ModelApplication constructed from the user-supplied data.
+   * @throws DataTypeValidationException
+   *           If the username or password fields are empty
+   */
+  public static ModelApplication buildApplicationFromLoginUI(ModelApplication
+          modelApplication, ViewGroup layout)
+  throws Exception {
+    // Extract all user-supplied information from the UI.
+    int childViewPosition = 0;
+      // Skip over the parameter-name textview.
+      childViewPosition++;
+      
+      modelApplication.setUsername(vbOmniText.getDataFromView(childViewPosition,
+              layout).getValue());
+      
+      // Advance past the number of views required for this datatype.
+      childViewPosition += vbOmniText.getNumControls();
+      childViewPosition++;
+
+      // Add the user-supplied data password
+      modelApplication.setPassword(vbOmniPasswordInput.getDataFromView(childViewPosition,
+              layout).getValue());
+      
+      if(modelApplication.getUsername().length() == 0 ){
+        throw new DataTypeValidationException("Please enter a username");
+      } else if(modelApplication.getPassword().length() == 0 ){
+        throw new DataTypeValidationException("Please enter a password");
+      }
+      
+      childViewPosition += vbOmniPasswordInput.getNumControls();
+      childViewPosition++;
+
+      modelApplication.setStaySignedIn(vbOmniCheckBox.getDataFromView(childViewPosition,
+              layout).isChecked());  
+      return modelApplication;
+  }
+  
 
   /**
    * Given a layout we previously constructed and an action, extract all user supplied data from it
@@ -122,7 +245,7 @@ public class FactoryActions {
    *           buildUIFromAction().
    */
   public static ModelRuleAction buildActionFromUI(ModelAction modelAction, ViewGroup layout)
-      throws Exception {
+  throws Exception {
 
     ArrayList<DataType> datas = new ArrayList<DataType>();
 
@@ -131,16 +254,17 @@ public class FactoryActions {
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
       ModelParameter parameter = modelAction.getParameters().get(i);
-      
+
       // Skip over the parameter-name textview.
       childViewPosition++;
 
       // Point to the correct builder for the current parameter.
       ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
+
       if (viewBuilder == null) {
         throw new IllegalArgumentException("Unsupported datatype encountered!");
       }
-
+      
       // Add the user-supplied data finally.
       datas.add(viewBuilder.getDataFromView(childViewPosition, layout));
 
@@ -156,13 +280,13 @@ public class FactoryActions {
    * supplied prefsEditor.
    */
   public static void uiStateSave(ModelAction modelAction, ViewGroup layout,
-      SharedPreferences.Editor prefsEditor) {
+          SharedPreferences.Editor prefsEditor) {
 
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
       ModelParameter parameter = modelAction.getParameters().get(i);
-      
+
       // Skip over the parameter-name textview.
       childViewPosition++;
 
@@ -183,17 +307,35 @@ public class FactoryActions {
   /**
    * Given a layout created by buildUIFromAction() and data stored by uiStateSave(), load all UI
    * data back into UI elements.
+   * When creating a rule, it loads the username and password fields from the
+   * database which are saved by the user.
+   * 
    */
   public static void uiStateLoad(ModelAction modelAction, ViewGroup layout, 
-    SharedPreferences state) {
+          SharedPreferences state) {
 
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
+    
+    ModelApplication modelApp = RuleBuilder.instance().getChosenApplication();
+    
     for (int i = 0; i < numParameters; i++) {
       ModelParameter parameter = modelAction.getParameters().get(i);
-      
+
       // Skip over the parameter-name textview.
       childViewPosition++;
+      
+      // Get the username and password fields from the database
+      //instead them loading from state
+      if(modelApp != null && modelApp.getLoginEnabled()){
+        if(parameter.getTypeName().equalsIgnoreCase("username")){
+          childViewPosition += vbOmniText.getNumControls();
+          continue;
+        } else if(parameter.getTypeName().equalsIgnoreCase("password")){
+          childViewPosition += vbOmniPasswordInput.getNumControls();
+          continue;
+        }  
+       } 
 
       // Point to the correct builder for the current parameter.
       ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
@@ -208,18 +350,18 @@ public class FactoryActions {
       childViewPosition += viewBuilder.getNumControls();
     }
   }
-  
+
   /**
    * Given a control position, return the omni data type it's associated with.
    * @return Omni data type control at specified position belongs to.
    */
   public static long getDatatypeIdForControlAtPosition(
-      ModelAction modelAction, ViewGroup layout, int position) {
+          ModelAction modelAction, ViewGroup layout, int position) {
 
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
-      
+
       ModelParameter parameter = modelAction.getParameters().get(i);
       ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
       if (viewBuilder == null) {
@@ -228,7 +370,7 @@ public class FactoryActions {
 
       // Skip text label.
       childViewPosition++;
-      
+
       int maxChildPosition = childViewPosition + viewBuilder.getNumControls();
       if (position < maxChildPosition) {
         return viewBuilder.getDatatypeId();
@@ -237,17 +379,17 @@ public class FactoryActions {
       // Advance past the number of views required for this datatype.
       childViewPosition += viewBuilder.getNumControls();
     }
-      
+
     return -1;
   }
-  
+
   public static void insertAttributeForControlAtPosition(
-    ModelAction modelAction, ModelAttribute modelAttribute, ViewGroup layout, int position) {
+          ModelAction modelAction, ModelAttribute modelAttribute, ViewGroup layout, int position) {
 
     int childViewPosition = 0;
     int numParameters = modelAction.getParameters().size();
     for (int i = 0; i < numParameters; i++) {
-      
+
       ModelParameter parameter = modelAction.getParameters().get(i);
       ViewBuilder viewBuilder = viewBuilders.get(parameter.getDatatype());
       if (viewBuilder == null) {
@@ -256,7 +398,7 @@ public class FactoryActions {
 
       // Skip text label.
       childViewPosition++;
-      
+
       int maxChildPosition = childViewPosition + viewBuilder.getNumControls();
       if (position < maxChildPosition) {
         viewBuilder.insertAttributeAtControl(childViewPosition, layout, modelAttribute);
@@ -279,7 +421,7 @@ public class FactoryActions {
     tv.setText(parameter.getTypeName() + ":");
     layout.addView(tv);
   }
-  
+
   private static String getAttributeInsertName(ModelAttribute modelAttribute) {
     return "<" + modelAttribute.getTypeName() + ">";
   }
@@ -299,15 +441,15 @@ public class FactoryActions {
     public DataType getDataFromView(int childViewPosition, ViewGroup view) throws Exception;
 
     public void saveState(SharedPreferences.Editor prefsEditor, int childViewPosition,
-        ViewGroup view);
+            ViewGroup view);
 
     public void loadState(SharedPreferences state, int childViewPosition, ViewGroup view);
-    
+
     /** Builders should be able to insert an attribute parameter tag directly into
      *  their child view specified by childViewPosition.
      */
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
-      ModelAttribute attribute);
+            ModelAttribute attribute);
   }
 
   /**
@@ -342,7 +484,7 @@ public class FactoryActions {
     }
 
     public void saveState(SharedPreferences.Editor prefsEditor, int childViewPosition,
-        ViewGroup view) {
+            ViewGroup view) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       prefsEditor.putString(childViewPosition + "", et.getText().toString());
     }
@@ -353,9 +495,9 @@ public class FactoryActions {
         et.setText(state.getString(childViewPosition + "", ""));
       }
     }
-    
+
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
-        ModelAttribute attribute) {
+            ModelAttribute attribute) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
     }
@@ -393,7 +535,7 @@ public class FactoryActions {
     }
 
     public void saveState(SharedPreferences.Editor prefsEditor, int childViewPosition,
-        ViewGroup view) {
+            ViewGroup view) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       prefsEditor.putString(childViewPosition + "", et.getText().toString());
     }
@@ -404,9 +546,9 @@ public class FactoryActions {
         et.setText(state.getString(childViewPosition + "", ""));
       }
     }
-    
+
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
-        ModelAttribute attribute) {
+            ModelAttribute attribute) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
     }
@@ -458,11 +600,11 @@ public class FactoryActions {
       EditText etDistance = (EditText) view.getChildAt(childViewPosition);
       double distance = Double.parseDouble(etDistance.getText().toString());
       return new OmniArea(OmniArea.getOmniArea(view.getContext(), etAddress.getText().toString(),
-          distance));
+              distance));
     }
 
     public void saveState(SharedPreferences.Editor prefsEditor, int childViewPosition,
-        ViewGroup view) {
+            ViewGroup view) {
       childViewPosition++; // Skip TextView
       EditText etAddress = (EditText) view.getChildAt(childViewPosition++);
       prefsEditor.putString("Address", etAddress.getText().toString());
@@ -484,31 +626,31 @@ public class FactoryActions {
         et.setText(state.getString("Distance", ""));
       }
     }
-    
+
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view, 
-        ModelAttribute attribute) {
+            ModelAttribute attribute) {
       // TODO: (markww) figure out if BuilderOmniArea should allow copy parameter arguments.
     }
   }
-  
+
   /**
    * Builder for OmniPasswordInput
    */
   private static class BuilderOmniPasswordInput implements ViewBuilder {
     private long datatypeId;
-    
+
     public BuilderOmniPasswordInput(long datatypeId){
       this.datatypeId = datatypeId;
     }
-    
+
     public int getNumControls() {
       return 1;
     }
-    
+
     public long getDatatypeId() {
       return datatypeId;
     }
-    
+
     public void buildUI(ViewGroup view, DataType dataOld) {
       EditText et = new EditText(view.getContext());
       et.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -519,13 +661,14 @@ public class FactoryActions {
       view.addView(et);
     }
 
-    public DataType getDataFromView(int childViewPosition, ViewGroup view) throws Exception {
+    public DataType getDataFromView(int childViewPosition, ViewGroup view)
+    throws Exception {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       return new OmniText(et.getText().toString());
     }    
 
     public void insertAttributeAtControl(int childViewPosition, ViewGroup view,
-        ModelAttribute attribute) {
+            ModelAttribute attribute) {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       UtilUI.replaceEditText(et, getAttributeInsertName(attribute));
     }
@@ -541,6 +684,56 @@ public class FactoryActions {
       EditText et = (EditText) view.getChildAt(childViewPosition);
       prefsEditor.putString(childViewPosition + "", et.getText().toString());
     }
-    
+
+  }
+
+  /**
+   * Builder for OmniCheckBox
+   */
+  private static class BuilderOmniCheckBox implements ViewBuilder {
+    private long datatypeId;
+
+    public BuilderOmniCheckBox(long datatypeId){
+      this.datatypeId = datatypeId;
+    }
+
+    public int getNumControls() {
+      return 1;
+    }
+
+    public long getDatatypeId() {
+      return datatypeId;
+    }
+
+    public void buildUI(ViewGroup view, DataType dataOld) {
+      CheckBox et = new CheckBox(view.getContext());
+      if (dataOld != null) {
+        et.setChecked(Boolean.parseBoolean(dataOld.getValue()));
+      }
+      view.addView(et);
+    }
+
+    public OmniCheckBoxInput getDataFromView(int childViewPosition, ViewGroup view)
+      throws Exception {
+      CheckBox et = (CheckBox) view.getChildAt(childViewPosition);
+      return new OmniCheckBoxInput(et.isChecked());
+    }    
+
+    public void insertAttributeAtControl(int childViewPosition, ViewGroup view,
+            ModelAttribute attribute) {
+    }
+
+    public void loadState(SharedPreferences state, int childViewPosition, ViewGroup view) {
+      if (state.contains(childViewPosition + "")) {
+        CheckBox et = (CheckBox) view.getChildAt(childViewPosition);
+        et.setChecked(state.getBoolean(childViewPosition + "", true));
+      }
+    }
+
+    public void saveState(Editor prefsEditor, int childViewPosition, ViewGroup view) {
+      CheckBox et = (CheckBox) view.getChildAt(childViewPosition);
+      prefsEditor.putBoolean(childViewPosition + "", et.isChecked());
+    }
+
   }
 }
