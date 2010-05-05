@@ -38,9 +38,13 @@ public class RegisteredAppDbAdapter extends DbAdapter {
   public static final String KEY_APPNAME = "AppName";
   public static final String KEY_PKGNAME = "PkgName";
   public static final String KEY_ENABLED = "Enabled";
-
+  public static final String KEY_LOGIN = "Login";
+  public static final String KEY_USERNAME = "Username";
+  public static final String KEY_PASSWORD = "Password";
+  
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_APPID, KEY_APPNAME, KEY_PKGNAME, KEY_ENABLED };
+  public static final String[] KEYS = { KEY_APPID, KEY_APPNAME, KEY_PKGNAME, KEY_ENABLED, KEY_LOGIN,
+    KEY_USERNAME, KEY_PASSWORD};
 
   /* Table name */
   private static final String DATABASE_TABLE = "RegisteredApps";
@@ -50,7 +54,10 @@ public class RegisteredAppDbAdapter extends DbAdapter {
       + KEY_APPID + " integer primary key autoincrement, " 
       + KEY_APPNAME + " text not null, "
       + KEY_PKGNAME + " text not null, " 
-      + KEY_ENABLED + " integer);";
+      + KEY_ENABLED + " integer, "
+      + KEY_LOGIN + " integer, "
+      + KEY_USERNAME + " text not null, "
+      + KEY_PASSWORD + " text not null);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
   /**
@@ -72,9 +79,17 @@ public class RegisteredAppDbAdapter extends DbAdapter {
    *          is the package name of the application.
    * @param enabled
    *          is whether the application is activated.
+   * @param loginEabled
+   *          is whether the application needs username
+   *          and password information.
+   * @param username
+   *          is the username for the application.       
+   * @param password
+   *          is the password the application.
    * @return appID or -1 if creation failed.
    * @throws IllegalArgumentException
-   *           if there is null within parameters
+   *           if there is null within parameters.
+   *           username and password could be null
    */
   public long insert(String appName, String pkgName, Boolean enabled) {
     if (appName == null || pkgName == null || enabled == null) {
@@ -84,6 +99,79 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     initialValues.put(KEY_APPNAME, appName);
     initialValues.put(KEY_PKGNAME, pkgName);
     initialValues.put(KEY_ENABLED, enabled);
+    initialValues.put(KEY_LOGIN, false);
+    initialValues.put(KEY_USERNAME, "");
+    initialValues.put(KEY_PASSWORD, "");
+    // Set null because don't use 'null column hack'.
+    return database.insert(DATABASE_TABLE, null, initialValues);
+  }
+  
+  /**
+   * Insert a new RegisteredApp record.
+   * 
+   * @param appName
+   *          is the name of the application.
+   * @param pkgName
+   *          is the package name of the application.
+   * @param enabled
+   *          is whether the application is activated.
+   * @param loginEabled
+   *          is whether the application needs username
+   *          and password information.
+   * @return appID or -1 if creation failed.
+   * @throws IllegalArgumentException
+   *           if there is null within parameters.
+   *           username and password could be null
+   */
+  public long insert(String appName, String pkgName, Boolean enabled, Boolean loginEnabled) {
+    if (appName == null || pkgName == null || enabled == null || loginEnabled == null) {
+      throw new IllegalArgumentException("insert parameter null.");
+    }
+    ContentValues initialValues = new ContentValues();
+    initialValues.put(KEY_APPNAME, appName);
+    initialValues.put(KEY_PKGNAME, pkgName);
+    initialValues.put(KEY_ENABLED, enabled);
+    initialValues.put(KEY_LOGIN, loginEnabled);
+    initialValues.put(KEY_USERNAME, "");
+    initialValues.put(KEY_PASSWORD, "");
+    // Set null because don't use 'null column hack'.
+    return database.insert(DATABASE_TABLE, null, initialValues);
+  }
+  
+  /**
+   * Insert a new RegisteredApp record along with a
+   * default username and password.
+   * 
+   * @param appName
+   *          is the name of the application.
+   * @param pkgName
+   *          is the package name of the application.
+   * @param enabled
+   *          is whether the application is activated.
+   * @param loginEabled
+   *          is whether the application needs username
+   *          and password information.
+   * @param username
+   *          is the username for the application.       
+   * @param password
+   *          is the password the application.
+   * @return appID or -1 if creation failed.
+   * @throws IllegalArgumentException
+   *           if there is null within parameters.
+   *           username and password could be null
+   */
+  public long insert(String appName, String pkgName, Boolean enabled, Boolean loginEnabled,
+          String username, String password) {
+    if (appName == null || pkgName == null || enabled == null || loginEnabled == null) {
+      throw new IllegalArgumentException("insert parameter null.");
+    }
+    ContentValues initialValues = new ContentValues();
+    initialValues.put(KEY_APPNAME, appName);
+    initialValues.put(KEY_PKGNAME, pkgName);
+    initialValues.put(KEY_ENABLED, enabled);
+    initialValues.put(KEY_LOGIN, loginEnabled);
+    initialValues.put(KEY_USERNAME, username);
+    initialValues.put(KEY_PASSWORD, password);
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
@@ -174,6 +262,56 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
   }
+  
+  /**
+   * Return a Cursor that contains all RegisteredApp records which matches the parameters.
+   * 
+   * @param appName
+   *          is the application name or null to fetch any appName.
+   * @param pkgName
+   *          is the package name or null to fetch any pkgName.
+   * @param enabled
+   *          is whether the application is activated or null to fetch any enabled status.
+   * @param loginEabled
+   *          is whether the application needs username
+   *          and password information.
+   * @param username
+   *          is the username for the application.       
+   * @param password
+   *          is the password the application.
+   * @return a Cursor that contains all RegisteredApp records which matches the parameters.
+   */
+  public Cursor fetchAll(String appName, String pkgName, Boolean enabled,
+          Boolean loginEnabled, String username
+          , String password) {
+    SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+    qb.setTables(DATABASE_TABLE);
+    qb.appendWhere("1=1");
+    if (appName != null) {
+      qb.appendWhere(" AND " + KEY_APPNAME + " = ");
+      qb.appendWhereEscapeString(appName);
+    }
+    if (pkgName != null) {
+      qb.appendWhere(" AND " + KEY_PKGNAME + " = ");
+      qb.appendWhereEscapeString(pkgName);
+    }
+    if (enabled != null) {
+      qb.appendWhere(" AND " + KEY_ENABLED + " = " + (enabled ? 1 : 0));
+    }
+    if (loginEnabled != null) {
+      qb.appendWhere(" AND " + KEY_LOGIN+ " = " + (loginEnabled ? 1 : 0));
+    }
+    if (username != null) {
+      qb.appendWhere(" AND " + KEY_USERNAME + " = ");
+      qb.appendWhereEscapeString(username);
+    }
+    if (password != null) {
+      qb.appendWhere(" AND " + KEY_PASSWORD + " = ");
+      qb.appendWhereEscapeString(password);
+    }
+    // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
+    return qb.query(database, KEYS, null, null, null, null, null);
+  }
 
   /**
    * Update a RegisteredApp record with specific parameters.
@@ -186,11 +324,20 @@ public class RegisteredAppDbAdapter extends DbAdapter {
    *          is the package name or null if not updating it.
    * @param enabled
    *          is whether the application is activated or null if not updating it.
+   * @param loginEabled
+   *          is whether the application needs username
+   *          and password information.
+   * @param username
+   *          is the username for the application.       
+   * @param password
+   *          is the password the application.
    * @return true if success, or false otherwise.
    * @throws IllegalArgumentException
    *           if appID is null
    */
-  public boolean update(Long appID, String appName, String pkgName, Boolean enabled) {
+  public boolean update(Long appID, String appName, String pkgName,
+          Boolean enabled, Boolean loginEnabled
+          , String username, String password) {
     if (appID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
@@ -203,6 +350,15 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     }
     if (enabled != null) {
       args.put(KEY_ENABLED, enabled);
+    }
+    if (loginEnabled != null) {
+      args.put(KEY_LOGIN, loginEnabled);
+    }
+    if (username != null) {
+      args.put(KEY_USERNAME, username);
+    }
+    if (password != null) {
+      args.put(KEY_PASSWORD, password);
     }
 
     if (args.size() > 0) {

@@ -20,8 +20,6 @@ import static edu.nyu.cs.omnidroid.model.CursorHelper.getStringFromCursor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.database.Cursor;

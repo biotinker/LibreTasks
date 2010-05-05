@@ -156,8 +156,17 @@ public class ActivityDlgApplications extends Activity {
     RuleBuilder.instance().setChosenApplication(application);
 
     Intent intent = new Intent();
-    intent.setClass(getApplicationContext(), ActivityDlgActions.class);
-    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+
+    //If the application uses a login window, call the 
+    // next window accordingly
+    if(application.getLoginEnabled()){
+      intent.setClass(getApplicationContext(), ActivityDlgApplicationLoginInput.class);
+      startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+    } else {
+      intent.setClass(getApplicationContext(), ActivityDlgActions.class);
+      startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+    }
+
   }
 
   /**

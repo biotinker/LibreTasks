@@ -20,7 +20,73 @@ package edu.nyu.cs.omnidroid.ui.simple.model;
  */
 public class ModelApplication extends ModelItem {
 
+  private final boolean loginEnabled;
+  private boolean staySignedIn;
+  private String username;
+  private String password;
+
   public ModelApplication(String typeName, String description, int iconResId, long databaseId) {
     super(typeName, description, iconResId, databaseId);
+    this.loginEnabled = false;
+    this.username = "";
+    this.password = "";
   }
+
+  public ModelApplication(String typeName, String description, int iconResId, long databaseId,
+          boolean loginEnabled, String username, String password) {
+    super(typeName, description, iconResId, databaseId);
+    this.loginEnabled = loginEnabled;
+    this.username = username;
+    this.password = password;
+  }
+
+  /**
+   * @return the loginEnabled
+   */
+  public boolean getLoginEnabled() {
+    return loginEnabled;
+  }
+
+  /**
+   * @return the username
+   */
+  public String getUsername() {
+    return username;
+  }
+
+  /**
+   * @return the password
+   */
+  public String getPassword() {
+    return password;
+  }
+  
+  /**
+   * @param username the username to set
+   */
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  /**
+   * @param password the password to set
+   */
+  public void setPassword(String password) {
+    this.password = password;
+  }
+  
+  /**
+   * @return the staySignedIn
+   */
+  public boolean isStaySignedIn() {
+    return staySignedIn;
+  }
+
+  /**
+   * @param staySignedIn the staySignedIn to set
+   */
+  public void setStaySignedIn(boolean staySignedIn) {
+    this.staySignedIn = staySignedIn;
+  }
+
 }

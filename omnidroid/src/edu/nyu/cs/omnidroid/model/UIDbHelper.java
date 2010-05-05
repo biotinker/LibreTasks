@@ -170,7 +170,11 @@ public class UIDbHelper {
             getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME), 
             "", //TODO(ehotou) After implementing desc for app, load it here
             R.drawable.icon_application_unknown, 
-            getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID));
+            getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID),
+            getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN),
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME),
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD)
+            );
       applications.put(application.getDatabaseId(), application);
     }
     cursor.close();
@@ -271,6 +275,60 @@ public class UIDbHelper {
         applications.size());
     applicationList.addAll(applications.values());
     return applicationList;
+  }
+  
+  /**
+   * Updates the application username and password in the database.
+   * 
+   * @param modelApp
+   *          the application object to be updated
+   * @return true if success, or false otherwise.
+   * @throws IllegalStateException if this helper is closed
+   */
+  public boolean updateApplicationLoginInfo(ModelApplication modelApp) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }
+    return registeredAppDbAdapter.update(modelApp.getDatabaseId(),
+            null, null, null, null, modelApp.getUsername()
+            , modelApp.getPassword()); 
+  }
+  
+  /**
+   * Clears the application username and password in the database.
+   * Sets them as empty strings.
+   * 
+   * @param modelApp
+   *          the application object to be updated
+   * @return true if success, or false otherwise.
+   * @throws IllegalStateException if this helper is closed
+   */
+  public boolean clearApplicationLoginInfo(ModelApplication modelApp) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }  
+    return registeredAppDbAdapter.update(modelApp.getDatabaseId(), null, null, null, null, "", "");
+  }
+  
+  /**
+   * @param appDatabaseId  the application database Id
+   * @return application
+   * @throws IllegalStateException if this helper is closed
+   */
+  public ModelApplication getApplication(long appDatabaseId) {
+    if (isClosed) {
+      throw new IllegalStateException("UIDbHelper is closed.");
+    }  
+    Cursor cursor = registeredAppDbAdapter.fetch(appDatabaseId);
+    return  new ModelApplication(
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME), 
+            "",
+            R.drawable.icon_application_unknown, 
+            getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID),
+            getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN),
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME),
+            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD)
+            );
   }
 
   /**

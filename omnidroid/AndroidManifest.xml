@@ -85,6 +85,15 @@
             </intent-filter>
         </activity>
         
+         <activity android:name=".ui.simple.ActivityDlgApplicationLoginInput"
+                  android:label="Login"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <activity android:name=".ui.simple.ActivitySavedRules"
                   android:label="Saved Rules">
             <intent-filter>
@@ -237,7 +246,8 @@
 		
 	</application>
 
-	<!-- Permissions that OmniDroid registers so it can access more complex functionality-->
+	<!-- Permissions that OmniDroid registers so it can access more complex functionality
+-->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.SEND_SMS" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
