@@ -142,7 +142,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
 
   public void testUpdate() {
     long id = dbAdapter.insert(appNames[0], pkgNames[0], true);
-    assertTrue(dbAdapter.update(id, appNames[1], pkgNames[1], false));
+    assertTrue(dbAdapter.update(id, appNames[1], pkgNames[1], false, false, null, null));
     // Validate the updated record.
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, appNames[1], pkgNames[1], false);
@@ -151,12 +151,12 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
   public void testUpdate_notExisting() {
     long id = dbAdapter.insert(appNames[0], pkgNames[0], true);
     dbAdapter.delete(id);
-    assertFalse(dbAdapter.update(id, appNames[1], pkgNames[1], false));
+    assertFalse(dbAdapter.update(id, appNames[1], pkgNames[1], false, false, null, null));
   }
 
   public void testUpdate_withNullValues() {
     long id = dbAdapter.insert(appNames[0], pkgNames[0], true);
-    assertFalse(dbAdapter.update(id, null, null, null));
+    assertFalse(dbAdapter.update(id, null, null, null, false, null, null));
     // Validate the updated record.
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, appNames[0], pkgNames[0], true);
@@ -165,7 +165,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
-      dbAdapter.update(null, appNames[0], pkgNames[0], true);
+      dbAdapter.update(null, appNames[0], pkgNames[0], true, false, null, null);
     } catch (IllegalArgumentException e) {
       expected = e;
     }
