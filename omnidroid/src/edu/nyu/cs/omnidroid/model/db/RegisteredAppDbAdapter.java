@@ -367,5 +367,4 @@ public class RegisteredAppDbAdapter extends DbAdapter {
     }
     return false;
   }
-
 }
