@@ -156,7 +156,7 @@ public class RegisteredAppDbAdapterTest extends AndroidTestCase {
 
   public void testUpdate_withNullValues() {
     long id = dbAdapter.insert(appNames[0], pkgNames[0], true);
-    assertFalse(dbAdapter.update(id, null, null, null, false, null, null));
+    assertFalse(dbAdapter.update(id, null, null, null, null, null, null));
     // Validate the updated record.
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, appNames[0], pkgNames[0], true);
