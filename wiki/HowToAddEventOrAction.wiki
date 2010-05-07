@@ -2,22 +2,21 @@ This is a simple tutorial for add an Event/Action to Omnidroid
 
 ==Add Event==
 
-= Introduction =
 To add an event, you need to make changes to the following classes:
 
-'''AndroidManifest.xml''' -- add support to service, activity etc.
+M  AndroidManifest.xml -- add support to service, activity etc.
 
-'''src/edu/nyu/cs/omnidroid/core/IntentParser.java''' -- add the support to the new intent
+M src/edu/nyu/cs/omnidroid/core/IntentParser.java -- add the support to the new intent
 
-'''src/edu/nyu/cs/omnidroid/core/SomeEvent.java''' -- the wrapper for the new event.
+A src/edu/nyu/cs/omnidroid/core/SomeEvent.java -- the wrapper for the new event.
 
-'''src/edu/nyu/cs/omnidroid/external/attributes/EventMonitoringService.java''' -- add more monitor if you need.
+M src/edu/nyu/cs/omnidroid/external/attributes/EventMonitoringService.java -- add more monitor if you need.
 
-'''src/edu/nyu/cs/omnidroid/external/attributes/SomeMonitor.java''' -- the new monitor.
+A src/edu/nyu/cs/omnidroid/external/attributes/SomeMonitor.java -- the new monitor.
 
-'''src/edu/nyu/cs/omnidroid/model/DbData.java''' -- prepopulate the db.
+M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate the db.
 
-'''src/edu/nyu/cs/omnidroid/ui/simple/FactoryDynamicUI.java''' -- create UI support for the new event.
+M src/edu/nyu/cs/omnidroid/ui/simple/FactoryDynamicUI.java -- create UI support for the new event.
 
 
 here's an example code review for add a new event:
@@ -25,3 +24,11 @@ http://codereview.appspot.com/890043/show
 
 
 ==Add Action==
+To add an Action, you need to make changes to the following classes:
+M AndroidManifest.xml
+A src/edu/nyu/cs/omnidroid/core/UpdateTwitterStatusAction.java -- the action
+A src/edu/nyu/cs/omnidroid/external/actions/UpdateTwitterStatusService.java -- create a service to do the job if necessary.
+M src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java -- add support to the action
+M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate Db
+
+http://codereview.appspot.com/822041/show
