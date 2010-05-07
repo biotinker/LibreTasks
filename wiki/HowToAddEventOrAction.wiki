@@ -26,9 +26,13 @@ http://codereview.appspot.com/890043/show
 ==Add Action==
 To add an Action, you need to make changes to the following classes:
 M AndroidManifest.xml
-A src/edu/nyu/cs/omnidroid/core/UpdateTwitterStatusAction.java -- the action
-A src/edu/nyu/cs/omnidroid/external/actions/UpdateTwitterStatusService.java -- create a service to do the job if necessary.
+A src/edu/nyu/cs/omnidroid/core/SomeAction.java -- the action
+
+A src/edu/nyu/cs/omnidroid/external/actions/SomeService.java -- create a service to do the job if necessary.
+
 M src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java -- add support to the action
+
 M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate Db
 
+Here's an example code review of adding a new Action.
 http://codereview.appspot.com/822041/show
