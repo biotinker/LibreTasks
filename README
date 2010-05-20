@@ -2,20 +2,22 @@
 
       TABLE OF CONTENTS
 
-  I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
- II. DEVELOPING OMNIDROID
+  I. INSTALL
+ II. DEVELOPING
 III. MORE INFORMATION
 
 
-I. GETTING/BUILDING/INSTALLING/RUNNING OMNIDROID
+I. INSTALL (Coming soon)
 
-    OmniDroid is currently only available in source form for development.
+    Download from the Android Market.
+      or
+    Download the apk from http://code.google.com/p/omnidroid/downloads
+    and install it manually.
 
-    See Setup Dev Environment for details:
-        http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
+II. DEVELOPING
 
-
-II. DEVELOPING OMNIDROID
+    For setup development environment and install OmniDroid see:
+    http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
 
     Style Guide see: http://code.google.com/p/omnidroid/wiki/StyleGuide
 
@@ -24,6 +26,7 @@ II. DEVELOPING OMNIDROID
         Patches should be submitted to the mailing list in unified diff format.
 
     Design Overview see: http://code.google.com/p/omnidroid/wiki/DesignOverview
+
 
 III. MORE INFORMATION
 
