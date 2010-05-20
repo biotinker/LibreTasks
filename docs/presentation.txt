@@ -1,0 +1,29 @@
+Why is android so cool
+
+New devices coming out
+
+1.1 vs. 1.5 (cupcake)
+
+Application Fundamentals from developers.android.com
+
+Application Components
+- Activities
+- Services
+- Broadcast Receivers
+- Content Providers
+
+Communication
+- Intents
+  - Explicit
+  - Implicit
+
+Registration
+- Manifest file
+
+What is omnidroid presentation
+
+Debugging on a device
+
+Managing Emulators
+
+Live demo
