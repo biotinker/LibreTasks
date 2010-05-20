@@ -1,8 +1,14 @@
-This is a simple tutorial for add an Event/Action to Omnidroid
+This is a simple document to help you add an Event/Action to Omnidroid
 
 ==Add Event==
 
-To add an event, you need to make changes to the following classes:
+To add an event to Omnidroid, first one need to create an Monitor class to capture the intent. If the intent is broadcast directly to Omnidroid (or to all apps), no need to create monitor. Secondly create an Event class, as a wrapper class for the intent. The third step is to let Omnidroid aware of this event, this including make changes to AndroidManifest.xml, IntentParser.java, DbDate.java(this class should eventually replaced by a static file) and FactoryDynamicUI.java.
+
+
+here's an example code review for add a new event:
+http://codereview.appspot.com/890043/show
+
+In this code review, the following is the changed/added classes and their purpose.
 
 M  AndroidManifest.xml -- add support to service, activity etc.
 
@@ -18,9 +24,6 @@ M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate the db.
 
 M src/edu/nyu/cs/omnidroid/ui/simple/FactoryDynamicUI.java -- create UI support for the new event.
 
-
-here's an example code review for add a new event:
-http://codereview.appspot.com/890043/show
 
 
 ==Add Action==
