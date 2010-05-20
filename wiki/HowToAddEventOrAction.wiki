@@ -27,7 +27,15 @@ M src/edu/nyu/cs/omnidroid/ui/simple/FactoryDynamicUI.java -- create UI support 
 
 
 ==Add Action==
-To add an Action, you need to make changes to the following classes:
+
+To add an Action to Omnidroid is relatively easier, the basic idea is to create an intent and fire corresponding application on that intent. So the first step is to create the Action, which contains the intent waiting for fire. And the other step is to let Omnidroid know how and when to use the Action. This including modify the following classes: AndroidManifest.xml, CoreActionDbHelper.java and DbData.java. And in order to fire the Action, you need to create a service for that, (or added it to an existing service).
+
+
+Here's an example code review of adding a new Action.
+http://codereview.appspot.com/822041/show
+
+In this code review, the following is the changed/added classes and their purpose.
+
 M AndroidManifest.xml
 A src/edu/nyu/cs/omnidroid/core/SomeAction.java -- the action
 
@@ -36,6 +44,3 @@ A src/edu/nyu/cs/omnidroid/external/actions/SomeService.java -- create a service
 M src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java -- add support to the action
 
 M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate Db
-
-Here's an example code review of adding a new Action.
-http://codereview.appspot.com/822041/show
