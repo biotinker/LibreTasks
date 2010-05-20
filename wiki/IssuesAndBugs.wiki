@@ -1,0 +1,26 @@
+#summary Issues and Bugs Document.
+
+= Introduction =
+
+This page contains a list of the problems we faced during the course of the semester and some of the known bugs encountered along with a brief explanation of the problem behind the issue.
+
+= Details =
+
+==1. Calendar Event:==
+This would allow Omnidroid to interact with the calendar so that the user could set rules based on the calendar events.
+Issues faced: Calendar is not sending any intent to public
+
+==2. Email Event:==
+This would allow the users to create certain rules based on the event when an email was received.
+Issues faced: Email and Gmail app are not sending any intent to public
+
+==3. Facebook Update Action:==
+This would allow the user to send updates to facebook based on messages received similar to the twitter update action that we created.
+Issues faced:
+
+==4. ResetDB bug:==
+We added a resetDB button so that the user would not have to reinstall the application each time a change was made to the DB data. Though the button has now been incorporated there seems to be a bug in this as it does not work all the time.
+Issues faced: not sure how apps gets updated, which function will be called, what will happen to the Data Base etc.
+
+==5. Add R.String support in Action Event and all other classes that needed==
+Issues: there's no context field in those classes, so no way to call R.String
