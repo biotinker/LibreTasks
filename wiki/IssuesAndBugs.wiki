@@ -18,6 +18,17 @@ Issues faced: Email and Gmail app are not sending any intent to public
 This would allow the user to send updates to facebook based on messages received similar to the twitter update action that we created.
 Issues faced:
 
+We were working with two libraries
+
+http://www.xeomax.net/fbrocket/
+http://code.google.com/p/fbconnect-android/
+
+
+The thing with Facebook libraries is that you cant pass the username/password to some function to login to facebook. You have to enter the username, password via a login page if the session has expired.
+
+This will not work for our Omnidroid as compared to updating status on twitter ( where we pass the username password as parameters to a function to login to twitter).
+
+
 ==4. ResetDB bug:==
 We added a resetDB button so that the user would not have to reinstall the application each time a change was made to the DB data. Though the button has now been incorporated there seems to be a bug in this as it does not work all the time.
 Issues faced: not sure how apps gets updated, which function will be called, what will happen to the Data Base etc.
