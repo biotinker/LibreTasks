@@ -12,13 +12,14 @@ REPO_URL="http://omnidroid.googlecode.com/svn"
 TMPFILE="$BUILD_DIR/var/tmp/check-build"
 EMAIL_HEAD="$BUILD_DIR/share/templates/email_header"
 EMAIL_FOOT="$BUILD_DIR/share/templates/email_footer"
-LOG="$BUILD_DIR/logs/omnidroid.build.log.$DATE"
+LOG_DIR="$BUILD_DIR/logs"
+LOG="$LOG_DIR/omnidroid.build.log.$DATE"
 TO="omnidroid-build@googlegroups.com"
 REV_OLD_FILE="$BUILD_DIR/.REV_OLD"
 REV_NEW_FILE="$BUILD_DIR/.REV_NEW"
 REV_OLD=""
 REV_NEW=""
-SUBJECT="Rev#"
+SUBJECT="[build] r"
 
 update_version() {
     new_version=`svn info $REPO_URL | grep ^Rev | awk '{print $2}'`
@@ -31,7 +32,10 @@ update_version() {
 }
 
 initialize() {
-    touch $LOG
+    mkdir -p $LOG_DIR && \
+    chmod 755 $LOG_DIR && \
+    touch $LOG && \
+    chmod 644 $LOG
     # If this script is already running, then don't build
     if [ -f $TMPFILE ]; then
         echo "$TMPFILE found, build probably already in progress." >> $LOG
@@ -60,10 +64,10 @@ build() {
     $BUILD_SCRIPT >>$LOG 2>&1 
     if [ $? == "0" ]; then
         build_result=0
-        SUBJECT="$SUBJECT $REV_NEW SUCCESSFUL"
+        SUBJECT="$SUBJECT $REV_NEW Successful"
     else
         build_result=1
-        SUBJECT="$SUBJECT $REV_NEW FAILURE"
+        SUBJECT="$SUBJECT $REV_NEW Failure"
     fi
 }
 

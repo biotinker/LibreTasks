@@ -1,0 +1,3 @@
+These autobuild tools are currently run via every 15 minutes via the cronjob:
+*/15 * * * * /path/to/check-build.sh
+
