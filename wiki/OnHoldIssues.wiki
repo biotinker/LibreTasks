@@ -12,4 +12,16 @@ The build-in Email or Gmail or Calendar apps are not sending intent to public. W
 ==Next step==
 Do more research. Maybe find a 3rd party application that do send intent, or contact Gmail/Calendar dev team.
 
-=Facebook update=
+=Facebook Update Action=
+
+==Idea==
+This would allow the user to send updates to facebook based on messages received similar to the twitter update action that we created. Issues faced:
+
+==Problems==
+We were working with two libraries
+
+http://www.xeomax.net/fbrocket/ http://code.google.com/p/fbconnect-android/
+
+The thing with Facebook libraries is that you cant pass the username/password to some function to login to facebook. You have to enter the username, password via a login page if the session has expired.
+
+This will not work for our Omnidroid as compared to updating status on twitter ( where we pass the username password as parameters to a function to login to twitter).
