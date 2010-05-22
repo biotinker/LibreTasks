@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="edu.nyu.cs.omnidroid" android:versionCode="2"
+	package="edu.nyu.cs.omnidroid.app" android:versionCode="2"
 	android:versionName="0.1.1">
     <uses-sdk android:minSdkVersion="4" />
 
