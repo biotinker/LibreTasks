@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="edu.nyu.cs.omnidroid" android:versionCode="1"
-	android:versionName="1.0">
+	package="edu.nyu.cs.omnidroid" android:versionCode="2"
+	android:versionName="0.1.1">
+    <uses-sdk android:minSdkVersion="4" />
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:debuggable="true">
