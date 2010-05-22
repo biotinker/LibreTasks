@@ -61,13 +61,13 @@
     <string name="help_event_intro">OmniHandlers catch events that occur on the platform.</string>
 	<string name="help_event">Select the name of the application whose events you want to catch using this OmniHandler.</string>
 	<string name="help_event_type">Select the type of event that you want to catch.</string>
-	<string name="help_filters">Add filters to limit the events caught by this OmniHandler to a subset of events.\nWhen done adding filters, select 'Done' to proceed.</string>
+	<string name="help_filters">Add filters to limit the events caught by this OmniHandler to a subset of events.\nWhen done adding filters, select \'Done\' to proceed.</string>
 	<string name="help_filters_add_data">Enter the data you want to use for this filter.</string>
 	<string name="help_filters_add_type">Select the type of filter you wish to apply.</string>
-	<string name="help_actions">Add actions that you want OmniDroid to spawn when the event is caught.\nWhen done adding actions, select 'Save' to save this OmniHandler.</string>
+	<string name="help_actions">Add actions that you want OmniDroid to spawn when the event is caught.\nWhen done adding actions, select \'Save\' to save this OmniHandler.</string>
 	<string name="help_action_add">Select the application which will be used to respond for the given event.</string>
 	<string name="help_action_type">Select the action that you want the selected catcher application to respond with.</string>
-	<string name="help_action_data">Listed is the data that the action may need.  Select each data type to set the data to store there.  When finished, select 'Done' to proceed.</string>
+	<string name="help_action_data">Listed is the data that the action may need.  Select each data type to set the data to store there.  When finished, select \'Done\' to proceed.</string>
 	<string name="help_action_datum_add">Select from the data provided from the event application, or enter data in manually (ex. 12125550000)</string>
 
 	<!--  Test Apps -->
