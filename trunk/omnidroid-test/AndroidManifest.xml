@@ -16,10 +16,10 @@
 
 <!-- package name must be unique so suffix with "tests" so package loader doesn't ignore us -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.nyu.cs.omnidroid.tests">
+    package="edu.nyu.cs.omnidroid.app.tests">
 
     <!-- Specify what version of the SDK is needed -->
-    <uses-sdk android:minSdkVersion="3" />
+    <uses-sdk android:minSdkVersion="4" />
 
     <!-- We add an application tag here just so that we can indicate that
          this package needs to link against the android.test library,
@@ -34,7 +34,7 @@
     "adb shell am instrument -w com.example.android.apis.tests/android.test.InstrumentationTestRunner"
     -->
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="edu.nyu.cs.omnidroid"
+                     android:targetPackage="edu.nyu.cs.omnidroid.app"
                      android:label="Tests for Omnidroid."/>
 
 
