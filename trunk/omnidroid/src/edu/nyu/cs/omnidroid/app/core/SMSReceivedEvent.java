@@ -5,7 +5,7 @@ import java.util.Date;
 import edu.nyu.cs.omnidroid.app.core.datatypes.OmniDate;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.gsm.SmsMessage;
+import android.telephony.SmsMessage;
 import android.util.Log;
 
 /**

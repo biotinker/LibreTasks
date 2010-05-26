@@ -25,7 +25,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.telephony.gsm.SmsManager;
+import android.telephony.SmsManager;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.core.SendSmsAction;
 
