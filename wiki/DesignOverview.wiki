@@ -1,17 +1,17 @@
 #labels Phase-Design
-General Design Overview for OmniDroid
+General Design Overview for Omnidroid
 
 = ARCHITECTURE =
 
-OmniDroid presents a simple event handler system.  OmniDroid processes data on three levels:
+Omnidroid presents a simple event handler system.  Omnidroid processes data on three levels:
   * Application Registration
   * User Setup/Configuration
   * Event Handling.
 
 == Application Registration ==
-In order for OmniDroid to handle events, it needs to have applications register with it.  This can either be a passive registration where OmniDroid has built-in support for a specific application, or active registration where an application is OmniAware and provides the necessary information to OmniDroid.
+In order for Omnidroid to handle events, it needs to have applications register with it.  This can either be a passive registration where Omnidroid has built-in support for a specific application, or active registration where an application is OmniAware and provides the necessary information to Omnidroid.
 
-Application registration occurs at two times.  First when OmniDroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with OmniDroid it populates the Application Configuration File.
+Application registration occurs at two times.  First when Omnidroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with Omnidroid it populates the Omnidroid database with the information that application provides on Events and the infomration it can receive on Actions through intents.
 
 
 == User Setup/Configuration ==
@@ -25,11 +25,11 @@ Event handling is probably the most complex of the processing levels.  The data 
   | App Events |-->| Catcher |-->| Engine |-->| Thrower |-->|App Actions|
    ------------     ---------     --------     ---------     -----------
 }}}
-Applications cause events.  OmniDroid catches these events using a Catcher based on what events have registered with OmniDroid.  The Catcher then hands this event off the Engine.  The engine then checks to see if the event matches a given OmniHandler set in the User Configuration File.  If it does, it then gathers the data needed based on the Application Configuration File in combination with the User Configuration File and hands this data over to the Thrower part of the application.  The Thrower then sends other applications the data they need to perform the action requested by the OmniHandler.
+Applications cause events.  Omnidroid catches these events using a Catcher based on what events have registered with Omnidroid.  The Catcher then hands this event off the Engine.  The engine then checks to see if the event matches a given OmniHandler set in the User Configuration File.  If it does, it then gathers the data needed based on the Application Configuration File in combination with the User Configuration File and hands this data over to the Thrower part of the application.  The Thrower then sends other applications the data they need to perform the action requested by the OmniHandler.
 
 = CONFIG SPECIFICATIONS =
 
-Subject to change, here are the Application and User Configuration specification examples:
+These configuration files are no longer relevant as we store this data in a database, but the information stored should be relatively close still.  Please see DatabaseDesign0 for details.
 
 == Sample Plain-Text AppCfg ==
 {{{
