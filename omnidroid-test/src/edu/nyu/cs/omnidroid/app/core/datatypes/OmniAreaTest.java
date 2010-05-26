@@ -19,8 +19,6 @@ package edu.nyu.cs.omnidroid.app.core.datatypes;
 import java.io.IOException;
 
 import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.Suppress;
-
 import edu.nyu.cs.omnidroid.app.core.datatypes.OmniArea.Filter;
 import edu.nyu.cs.omnidroid.app.external.attributes.EventMonitoringService;
 import edu.nyu.cs.omnidroid.app.util.DataTypeValidationException;
