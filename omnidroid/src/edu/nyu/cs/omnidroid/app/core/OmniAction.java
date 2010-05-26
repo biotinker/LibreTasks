@@ -21,7 +21,7 @@ package edu.nyu.cs.omnidroid.app.core;
 public abstract class OmniAction extends Action {
   
   public static final String APP_NAME = "Omnidroid";
-  public static final String OMNIDROID_PACKAGE_NAME = "edu.nyu.cs.omnidroid";
+  public static final String OMNIDROID_PACKAGE_NAME = "edu.nyu.cs.omnidroid.app";
 
   public OmniAction(String actionName, String executionMethod) {
     super(actionName, executionMethod);
