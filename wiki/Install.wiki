@@ -3,12 +3,12 @@ How to build and install OmniDroid
 
 = Install From the Android Market =
 
-Coming soon.
+Search for "Omnidroid" on the market.
 
 = Install From Source Code = 
 == Requirements ==
   * Ant
-  * Android SDK 1.5
+  * Android SDK 1.6
 
 == Building/Installing with Ant ==
   # Start an [http://developer.android.com/guide/developing/tools/emulator.html emulator] to install onto.
@@ -21,4 +21,4 @@ Coming soon.
     * To install on the running emulator: {{{ant install}}}
     * To update an install on the emulator: {{{ant reinstall}}}
     Specify SDK location by using "-Dsdk-location=" argument, for example:
-    ant install -Dsdk-location=/Library/android-sdk-mac_x86-1.5_r4/
+    ant install -Dsdk-location=/Library/android-sdk-mac_x86/
