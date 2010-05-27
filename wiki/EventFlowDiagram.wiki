@@ -1,4 +1,5 @@
 #summary Core event handler diagram
+#labels Phase-Design,Phase-Implementation
 
 = Introduction =
 
