@@ -1,4 +1,5 @@
 #summary Database Design
+#labels Phase-Design,Phase-Implementation
 
 = Introduction =
 
