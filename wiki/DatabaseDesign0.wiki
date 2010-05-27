@@ -7,5 +7,4 @@ Our data model design based on sqlite3 databases
 
 
 = Diagram =
-http://www.cs.nyu.edu/~yy497/Omnidroid/omnidroid_db.png<br/>
-As updated on 2009-06-16
+http://omnidroid.googlecode.com/svn/docs/omnidroid_db.png<br/>
