@@ -1,4 +1,4 @@
-#labels Featured
+#labels Featured,Phase-Implementation
 Code submitted to the project should follow the following guidelines.
 
 = Code Style Guidelines =
