@@ -8,6 +8,4 @@ Flow of the event handling core from receiving a system intent to launching a li
 
 = Flow Diagram =
 
-http://cs.nyu.edu/~pml270/OmniDroid/EventFlow.jpg<br>
-
-Added 7-01-09
+http://omnidroid.googlecode.com/svn/docs/EventFlow.jpg<br>
