@@ -1,4 +1,5 @@
 #summary Description of simple applications, their events and actions.
+#labels Phase-Requirements,Phase-Implementation,Phase-QA,Phase-Design,Phase-Support
 
 || Application || Event/Action || Parameter || Data Type || Event || Action ||
 || *SMS* ||  ||  ||  ||  ||  ||
