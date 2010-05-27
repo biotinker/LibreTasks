@@ -1,4 +1,5 @@
 #summary The purpose of the glossary is to eliminate ambiguous terms and their usage.
+#labels Phase-Design,Phase-Implementation,Phase-Support
 
 === Action ===
 An intent that OmniDroid initiates as a result of an OmniDroid rule.
