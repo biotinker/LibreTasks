@@ -22,8 +22,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import edu.nyu.cs.omnidroid.app.core.Filter;
-import edu.nyu.cs.omnidroid.app.core.Rule;
+import edu.nyu.cs.omnidroid.app.controller.Filter;
+import edu.nyu.cs.omnidroid.app.controller.Rule;
+import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
+import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidRuntimeException;
+import edu.nyu.cs.omnidroid.app.controller.util.Tree;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
@@ -32,9 +35,6 @@ import edu.nyu.cs.omnidroid.app.model.db.RegisteredEventAttributeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredEventDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
-import edu.nyu.cs.omnidroid.app.util.ExceptionMessageMap;
-import edu.nyu.cs.omnidroid.app.util.OmnidroidRuntimeException;
-import edu.nyu.cs.omnidroid.app.util.Tree;
 
 /**
  * This class serves as a access layer to the database for Omnidroid's core data model

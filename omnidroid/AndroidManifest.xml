@@ -8,7 +8,7 @@
 		android:debuggable="true">
 				
 		<!--  Start UI activity definitions. -->
-		<activity android:name=".ui.simple.ActivityMain"
+		<activity android:name=".view.simple.ActivityMain"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.simple.ActivityChooseRootEvent"
+        <activity android:name=".view.simple.ActivityChooseRootEvent"
                   android:label="Choose a root event">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.simple.ActivityChooseFiltersAndActions"
+        <activity android:name=".view.simple.ActivityChooseFiltersAndActions"
                   android:label="Add filters and actions to your rule!">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>        
 
-        <activity android:name=".ui.simple.ActivityDlgAttributes"
+        <activity android:name=".view.simple.ActivityDlgAttributes"
                   android:label="Attributes"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>        
 
-        <activity android:name=".ui.simple.ActivityDlgFilters"
+        <activity android:name=".view.simple.ActivityDlgFilters"
                   android:label="Filters"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.simple.ActivityDlgFilterInput"
+        <activity android:name=".view.simple.ActivityDlgFilterInput"
                   android:label="Filter Input"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -59,7 +59,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.simple.ActivityDlgApplications"
+        <activity android:name=".view.simple.ActivityDlgApplications"
                   android:label="Applications"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -68,7 +68,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.simple.ActivityDlgActions"
+        <activity android:name=".view.simple.ActivityDlgActions"
                   android:label="Actions"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -77,7 +77,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.simple.ActivityDlgActionInput"
+        <activity android:name=".view.simple.ActivityDlgActionInput"
                   android:label="Action Input"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -86,7 +86,7 @@
             </intent-filter>
         </activity>
         
-         <activity android:name=".ui.simple.ActivityDlgApplicationLoginInput"
+         <activity android:name=".view.simple.ActivityDlgApplicationLoginInput"
                   android:label="Login"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -95,7 +95,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.simple.ActivitySavedRules"
+        <activity android:name=".view.simple.ActivitySavedRules"
                   android:label="Saved Rules">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -103,7 +103,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ui.simple.ActivityDlgRuleName"
+        <activity android:name=".view.simple.ActivityDlgRuleName"
                   android:label="Rule Name"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
@@ -112,7 +112,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".util.ShowWebsiteActivity"
+        <activity android:name=".controller.util.ShowWebsiteActivity"
                   android:label="Show Website">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -123,7 +123,7 @@
 		<!--  End UI activity definitions. -->
 
 		<!-- Receiver that runs when Android or Omnidroid starts/restarts -->	
-		<receiver android:name=".bkgservice.Starter">
+		<receiver android:name=".controller.bkgservice.Starter">
 			<intent-filter>	
 				<action android:name="android.intent.action.BOOT_COMPLETED" />	
 			</intent-filter>
@@ -136,23 +136,23 @@
 		</receiver>    
 		
 		<!-- Receiver that receive TimeTick -->	
-		<receiver android:name=".external.attributes.TimeMonitor">
+		<receiver android:name=".controller.external.attributes.TimeMonitor">
 			<intent-filter>	
 				<action android:name="android.intent.action.TIME_TICK" />	
 			</intent-filter>
 		</receiver>    
 
 		<!--  The service that throws actions to our applications -->
-		<service android:name=".core.HandlerService"></service>
+		<service android:name=".controller.HandlerService"></service>
 
 		<!--
 			The service that monitors for System Events and throws associated
 			intents
 		-->
-		<service android:name=".external.attributes.EventMonitoringService" />
+		<service android:name=".controller.external.attributes.EventMonitoringService" />
 
 		<!--  Receiver that runs to catch events -->
-		<receiver android:name=".bkgservice.BCReceiver">
+		<receiver android:name=".controller.bkgservice.BCReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
 			</intent-filter>
@@ -222,23 +222,23 @@
 		</receiver>
 
 		<!-- Services that runs to fire actions -->
-		<service android:name=".external.actions.SMSService">
+		<service android:name=".controller.external.actions.SMSService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.SMS_SEND" />
 			</intent-filter>
 		</service>
-		<service android:name=".external.actions.GMailService">
+		<service android:name=".controller.external.actions.GMailService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.GMAIL_SEND" />
 			</intent-filter>
 		</service>
-		<service android:name=".external.actions.OmniActionService">
+		<service android:name=".controller.external.actions.OmniActionService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.SHOW_MESSAGE" />
 				<action android:name="omnidroid.intent.action.SHOW_NOTIFICATION" />
 			</intent-filter>
 		</service>
-		<service android:name=".external.actions.UpdateTwitterStatusService">
+		<service android:name=".controller.external.actions.UpdateTwitterStatusService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.TWITTER_UPDATE" />
 			</intent-filter>

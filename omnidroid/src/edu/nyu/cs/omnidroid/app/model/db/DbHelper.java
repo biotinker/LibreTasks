@@ -19,8 +19,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.app.controller.util.IOUtil;
 import edu.nyu.cs.omnidroid.app.model.DbData;
-import edu.nyu.cs.omnidroid.app.util.IOUtil;
 
 /**
  * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
