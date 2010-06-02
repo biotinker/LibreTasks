@@ -19,10 +19,10 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import edu.nyu.cs.omnidroid.app.controller.util.DualKey;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.app.util.DualKey;
 
 /**
  * This class can be used to query the database for dataFilterID efficiently.

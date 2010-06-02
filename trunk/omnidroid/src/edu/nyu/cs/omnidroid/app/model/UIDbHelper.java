@@ -28,8 +28,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.core.datatypes.DataType;
-import edu.nyu.cs.omnidroid.app.core.datatypes.FactoryDataType;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.FactoryDataType;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
@@ -42,16 +42,16 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelAction;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelApplication;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelAttribute;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelEvent;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelFilter;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelParameter;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelRuleAction;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.ModelRuleFilter;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.Rule;
-import edu.nyu.cs.omnidroid.app.ui.simple.model.RuleNode;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelParameter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
+import edu.nyu.cs.omnidroid.app.view.simple.model.RuleNode;
 
 /**
  * This class serves as an access layer of the database for Omnidroid's UI data model 
