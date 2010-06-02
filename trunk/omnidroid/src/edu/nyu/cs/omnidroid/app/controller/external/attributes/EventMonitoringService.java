@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 
-import java.lang.reflect.Constructor;
-
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -33,21 +31,15 @@ public class EventMonitoringService extends Service {
 
   // TODO (dvo203): This value should be checked at runtime, to determine the environment.
   public static final boolean EXECUTING_ON_EMULATOR = true;
-
-  private static final String monitorPackage = "edu.nyu.cs.omnidroid.app.controller.external.attributes";
-
   private final IBinder mBinder = new LocalBinder();
-
-  /*
-   * TODO (dvo203): This should eventually be stored in the DB (currently not available). It would
-   * also allows us to support third party events, like Facebook update.
-   */
-  /** List of monitors to run */
-  private static String MONITORS[] = {
-    monitorPackage + "." + "PhoneRingingMonitor", 
-    monitorPackage + "." + "LocationMonitor",
-    monitorPackage + "." + "TimeMonitor" };
-
+  private static final String LOGGER_TAG = EventMonitoringService.class.getSimpleName();
+  
+  private final SystemServiceEventMonitor MONITORS[] = {
+      new PhoneRingingMonitor(this),
+      new LocationMonitor(this),
+      new TimeMonitor(this),
+  };
+  
   public class LocalBinder extends Binder {
     EventMonitoringService getService() {
       return EventMonitoringService.this;
@@ -56,11 +48,13 @@ public class EventMonitoringService extends Service {
 
   public static void startService(Context context) {
     ComponentName service = context.startService(new Intent(context, EventMonitoringService.class));
+
     if (null == service) {
       Toast.makeText(context, "Failed to start Event Monitoring Service", Toast.LENGTH_LONG).show();
-      Log.i("EventMonitoringService", "EventMonitoringService did not start.");
+      Log.i(LOGGER_TAG, "EventMonitoringService did not start.");
+    } else {
+      Log.i(LOGGER_TAG, "Started EventMonitoringService.");
     }
-    // TODO (dvo203): Log the service start
   }
 
   public static void stopService(Context context) {
@@ -73,25 +67,15 @@ public class EventMonitoringService extends Service {
    */
   @Override
   public void onCreate() {
-    Class<?> theClass = null;
-    Class<?>[] constructorParameters = new Class[1];
-    Constructor<?> classConstructor;
-
-    // For each monitor, create an instance and start (onCreate) the monitoring.
-    for (int i = 0; i < MONITORS.length; i++) {
+    for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
-        theClass = Class.forName(MONITORS[i]);
-        constructorParameters[0] = Class.forName("android.content.Context");
-        classConstructor = theClass.getConstructor(constructorParameters);
-        SystemServiceEventMonitor monitor = (SystemServiceEventMonitor) classConstructor
-            .newInstance(this);
         monitor.init();
+        Log.i(LOGGER_TAG, monitor.getMonitorName() + ": Start\n");
       } catch (Exception e) {
-        Log.w("EventMonitoringService", MONITORS[i]
+        Log.w(LOGGER_TAG, monitor.getMonitorName()
             + " did not start.\nThe following error occurred: " + e + e.getMessage()
             + e.getStackTrace());
       }
-      // TODO (dvo203): Log the event
     }
   }
 
@@ -101,21 +85,11 @@ public class EventMonitoringService extends Service {
    */
   @Override
   public void onDestroy() {
-    Class<?> theClass = null;
-    Class<?>[] constructorParameters = new Class[1];
-    Constructor<?> classConstructor;
-
-    // For each monitor, stop (onDestroy) the monitoring.
-    for (int i = 0; i < MONITORS.length - 1; i++) {
+    for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
-        theClass = Class.forName(MONITORS[i]);
-        constructorParameters[0] = Class.forName("android.content.Context");
-        classConstructor = theClass.getConstructor(constructorParameters);
-        SystemServiceEventMonitor monitor = (SystemServiceEventMonitor) classConstructor
-            .newInstance(this);
         monitor.stop();
       } catch (Exception e) {
-        Log.w("EventMonitoringService", MONITORS[i]
+        Log.w(LOGGER_TAG, monitor.getMonitorName()
             + " did not stop.\nThe following error occurred: " + e + e.getMessage()
             + e.getStackTrace());
       }
