@@ -135,13 +135,6 @@
 			</intent-filter>	
 		</receiver>    
 		
-		<!-- Receiver that receive TimeTick -->	
-		<receiver android:name=".controller.external.attributes.TimeMonitor">
-			<intent-filter>	
-				<action android:name="android.intent.action.TIME_TICK" />	
-			</intent-filter>
-		</receiver>    
-
 		<!--  The service that throws actions to our applications -->
 		<service android:name=".controller.HandlerService"></service>
 
