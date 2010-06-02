@@ -1,6 +1,6 @@
-package edu.nyu.cs.omnidroid.app.core;
+package edu.nyu.cs.omnidroid.app.controller;
 
-import edu.nyu.cs.omnidroid.app.core.RegisteredApp;
+import edu.nyu.cs.omnidroid.app.controller.RegisteredApp;
 import junit.framework.TestCase;
 
 /**

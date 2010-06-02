@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.app.core;
+package edu.nyu.cs.omnidroid.app.controller;
 
-import edu.nyu.cs.omnidroid.app.core.Event;
-import edu.nyu.cs.omnidroid.app.core.IntentParser;
+import edu.nyu.cs.omnidroid.app.controller.Event;
+import edu.nyu.cs.omnidroid.app.controller.IntentParser;
 import junit.framework.TestCase;
 import android.content.Intent;
 
