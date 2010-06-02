@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.app.core;
+package edu.nyu.cs.omnidroid.app.controller;
 
-import edu.nyu.cs.omnidroid.app.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
 import android.content.Intent;
 
 /**

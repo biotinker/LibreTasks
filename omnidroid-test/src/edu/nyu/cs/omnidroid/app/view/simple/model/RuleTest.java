@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.app.ui.simple.model;
+package edu.nyu.cs.omnidroid.app.view.simple.model;
 
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
-import edu.nyu.cs.omnidroid.app.core.datatypes.DataType;
-import edu.nyu.cs.omnidroid.app.core.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelParameter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
+import edu.nyu.cs.omnidroid.app.view.simple.model.RuleNode;
 
 public class RuleTest extends TestCase {
   private Rule dummyRule;
@@ -69,7 +79,7 @@ public class RuleTest extends TestCase {
 
   /**
    * Test method for
-   * {@link edu.nyu.cs.omnidroid.ui.simple.model.Rule#setRootEvent()}.
+   * {@link edu.nyu.cs.omnidroid.app.view.simple.model.Rule#setRootEvent()}.
    */
   public void testResetRule() {
       Rule rule = new Rule(-1);

@@ -14,7 +14,7 @@
  * limitations under the License.
  *******************************************************************************/
 
-package edu.nyu.cs.omnidroid.app.core;
+package edu.nyu.cs.omnidroid.app.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +23,16 @@ import java.util.regex.Pattern;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import edu.nyu.cs.omnidroid.app.core.datatypes.OmniPhoneNumber;
-import edu.nyu.cs.omnidroid.app.core.datatypes.OmniText;
+import edu.nyu.cs.omnidroid.app.controller.Action;
+import edu.nyu.cs.omnidroid.app.controller.Event;
+import edu.nyu.cs.omnidroid.app.controller.Filter;
+import edu.nyu.cs.omnidroid.app.controller.Rule;
+import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPhoneNumber;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
+import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
+import edu.nyu.cs.omnidroid.app.controller.util.Tree;
 import edu.nyu.cs.omnidroid.app.model.CursorHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
@@ -37,8 +45,6 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
-import edu.nyu.cs.omnidroid.app.util.OmnidroidException;
-import edu.nyu.cs.omnidroid.app.util.Tree;
 
 /**
  * This class populates the database with generated {@link Rule} objects and their associated

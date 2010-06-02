@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.app.core;
+package edu.nyu.cs.omnidroid.app.controller;
 
 import java.util.ArrayList;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import edu.nyu.cs.omnidroid.app.core.Action;
-import edu.nyu.cs.omnidroid.app.core.Event;
-import edu.nyu.cs.omnidroid.app.core.Rule;
+import edu.nyu.cs.omnidroid.app.controller.Action;
+import edu.nyu.cs.omnidroid.app.controller.Event;
+import edu.nyu.cs.omnidroid.app.controller.Rule;
+import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.app.util.OmnidroidException;
 
 /**
  * Unit tests for {@link Rule} class.

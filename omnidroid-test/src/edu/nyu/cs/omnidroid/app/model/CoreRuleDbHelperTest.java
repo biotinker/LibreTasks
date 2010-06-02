@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import edu.nyu.cs.omnidroid.app.core.Rule;
-import edu.nyu.cs.omnidroid.app.core.RuleTestData;
-import edu.nyu.cs.omnidroid.app.core.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.app.controller.Rule;
+import edu.nyu.cs.omnidroid.app.controller.RuleTestData;
+import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
 import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 
