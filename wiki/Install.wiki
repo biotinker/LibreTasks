@@ -1,11 +1,18 @@
 #labels Featured,Phase-Deploy
-How to build and install OmniDroid
+How to build and install Omnidroid
 
-= Install From the Android Market =
+= Install by Searching the Android Market =
 
-Search for "Omnidroid" on the market.
+Search for "Omnidroid" on the Market application.
 
-= Install From Source Code = 
+= Install by using a QR code =
+
+If you have a barcode scanner, just scan this QR-C\ code:
+
+<a href="market://search?q=pname:edu.nyu.cs.omnidroid.app">http://omnidroid.googlecode.com/svn/docs/qr_code.png</a>
+
+
+= Install from Source Code = 
 == Requirements ==
   * Ant
   * Android SDK 1.6
