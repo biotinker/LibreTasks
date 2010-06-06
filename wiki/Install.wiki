@@ -1,6 +1,4 @@
 #labels Featured,Phase-Deploy
-How to build and install Omnidroid
-
 = Install by Searching the Android Market =
 
 Search for "Omnidroid" on the Market application.
