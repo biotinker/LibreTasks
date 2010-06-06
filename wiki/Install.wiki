@@ -7,7 +7,7 @@ Search for "Omnidroid" on the Market application.
 
 = Install by using a QR code =
 
-If you have a barcode scanner, just scan this QR-C\ code:
+If you have a barcode scanner, just scan this QR code:
 
 <a href="market://search?q=pname:edu.nyu.cs.omnidroid.app">http://omnidroid.googlecode.com/svn/docs/qr_code.png</a>
 
