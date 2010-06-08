@@ -16,7 +16,7 @@
        	android:paddingLeft="10px"
        	android:paddingBottom="10px"
        	android:paddingRight="10px"
-       	android:text="Enter a rule name below:" />
+       	android:text="@string/enter_rule_name" />
        	
     <EditText android:id="@+id/activity_dlg_rule_name_et_rule_name"
         android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
        	android:paddingTop="0px"
        	android:paddingLeft="10px"
        	android:paddingBottom="10px"
-       	android:text="Enter a rule description below:" />
+       	android:text="@string/enter_rule_description" />
        	
     <EditText android:id="@+id/activity_dlg_rule_name_et_rule_description"
         android:layout_width="fill_parent"
@@ -50,14 +50,14 @@
             android:layout_height="wrap_content" 
             android:minWidth="80px"
             android:layout_gravity="center"
-            android:text="OK" />
+            android:text="@string/ok" />
             
         <Button android:id="@+id/activity_dlg_rule_name_btnCancel"
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:minWidth="80px"
             android:layout_gravity="center"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
     </LinearLayout>
     
 </LinearLayout>

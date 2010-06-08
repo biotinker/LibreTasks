@@ -9,13 +9,13 @@
 	<TextView  
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
-	    android:text="Welcome to Omnidroid!"
+	    android:text="@string/welcome"
 	    android:layout_gravity="center"
 	    android:layout_marginBottom="60dip"
 	    />
 	    
 	<Button 
-	    android:text="Create Rule" 
+	    android:text="@string/create_rule" 
 	    android:id="@+id/activity_main_btnCreateRule" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
 	</Button>
 	
 	<Button 
-	    android:text="View Rules" 
+	    android:text="@string/view_rules" 
 	    android:id="@+id/activity_main_btnViewRules" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
 	</Button>
 	
 	<Button 
-	    android:text="Event Log" 
+	    android:text="@string/event_log" 
 	    android:id="@+id/activity_main_btnEventLog" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 	</Button>
 	
 	<Button 
-	    android:text="Help" 
+	    android:text="@string/help" 
 	    android:id="@+id/activity_main_btnHelp" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
 	</Button>
 	
 	<Button 
-	    android:text="ResetDB" 
+	    android:text="@string/reset_db" 
 	    android:id="@+id/activity_main_btnResetDB" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"

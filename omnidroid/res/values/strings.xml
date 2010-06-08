@@ -16,11 +16,19 @@
 	<string name="action_data_title">Verify the data to use in this action</string>
 	<string name="action_datum_add_title">Choose what data to use in this action</string>
 	<string name="settings_title">OmniDroid Settings</string>
+	<string name="choose_filters_actions_title">Select an item from the list below, then add filters:</string>
 
 	<!--  Buttons -->
 	<string name="add_omnihandler">Add OmniHandler</string>
 	<string name="add_filter">Add Filter</string>
 	<string name="add_action">Add Action</string>
+	<string name="plus_filter">+Filter</string>
+	<string name="plus_action">+Action</string>
+	<string name="create_rule">Create Rule</string>
+	<string name="view_rules">View Rules</string>
+	<string name="event_log">Event Log</string>
+	<string name="reset_db">ResetDB</string>
+	<string name="on_off">On/Off</string>
 
 	<!--  Miscellaneous -->
 	<string name="welcome">Welcome to OmniDroid</string>
@@ -32,6 +40,10 @@
     <string name="save_as">Save as</string>
     <string name="save_dialog">Enter a name to remember this OmniHandler by</string>
 	<string name="manual_entry">Or, enter data manually:</string>
+	<string name="choose_root_event_title">Pick a root event from the list below to start building your rule:</string>
+	<string name="enter_rule_name">Enter a rule name below:</string>
+	<string name="enter_rule_description">Enter a rule description below:</string>
+	<string name="your_saved_rules">Your Saved Rules:</string>
 
 	<!--  Common Words -->
     <string name="omnihandler">OmniHandler</string>
@@ -39,12 +51,16 @@
 	<string name="next">Next</string>
 	<string name="okay">Okay</string>
 	<string name="help">Help</string>
-	<string name="del">Delete</string>
+	<string name="delete">Delete</string>
 	<string name="edit">Edit</string>
     <string name="done">Done</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 	<string name="settings">Settings</string>
+	<string name="ok">OK</string>
+	<string name="info">Info</string>
+	<string name="view">View</string>
+	<string name="params">Params</string>
 
 	<!--  Settings options -->
 	<string name="delete_all">Delete All OmniHandlers</string>
@@ -97,7 +113,4 @@
     <string name="UI_login_CHECK_BOX_TEXT">Stay Signed in</string>
     <string name="UI_login_info_button">Login Info</string>
     <string name="UI_login_info">Please enter your username and password and select the check box to remember it</string>
-
 </resources>
-	
-

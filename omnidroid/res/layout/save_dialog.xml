@@ -10,7 +10,8 @@
        android:layout_height="wrap_content"
        android:hint="@string/save_dialog" />
 
-	<EditText android:id="@+id/save_dialog_name" android:layout_width="fill_parent"
+	<EditText android:id="@+id/save_dialog_name"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -8,7 +8,7 @@
    <TextView  
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="Select an item from the list below, then add filters:"
+    android:text="@string/choose_filters_actions_title"
 	android:layout_marginBottom="10dip"
     />
    
@@ -42,7 +42,7 @@
      >
     
 		<Button 
-		    android:text="+Filter" 
+		    android:text="@string/plus_filter" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddFilter" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
 		</Button>
 		
 		<Button 
-		    android:text="+Action" 
+		    android:text="@string/plus_action" 
 		    android:id="@+id/activity_choosefiltersandactions_btnAddAction" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
 		</Button>
 		
 		<Button 
-            android:text="Delete" 
+            android:text="@string/delete" 
             android:id="@+id/activity_choosefiltersandactions_btnDeleteItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         </Button>
         
         <Button 
-            android:text="Edit" 
+            android:text="@string/edit" 
             android:id="@+id/activity_choosefiltersandactions_btnEditItem" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         </Button>
         
         <Button 
-            android:text="Save" 
+            android:text="@string/save" 
             android:id="@+id/activity_choosefiltersandactions_btnSaveRule" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content"

@@ -5,7 +5,7 @@
 
   <TextView android:layout_width="fill_parent"
 	android:layout_height="wrap_content"
-	android:text="Pick a root event from the list below to start buidling your rule:"
+	android:text="@string/choose_root_event_title"
 	android:layout_marginBottom="10px" />
 
   <FrameLayout android:id="@+id/activity_chooserootevent_frame_list"
@@ -30,13 +30,13 @@
 	  android:layout_width="wrap_content" 
 	  android:layout_height="wrap_content">
 
-      <Button android:text="OK" android:id="@+id/activity_chooserootevent_btnOk"
+      <Button android:text="@string/ok" android:id="@+id/activity_chooserootevent_btnOk"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_gravity="center">
       </Button>
 
-      <Button android:text="Help" android:id="@+id/activity_chooserootevent_btnHelp"
+      <Button android:text="@string/help" android:id="@+id/activity_chooserootevent_btnHelp"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
         android:layout_gravity="center">
