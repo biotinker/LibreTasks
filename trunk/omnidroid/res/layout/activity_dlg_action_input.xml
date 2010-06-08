@@ -41,7 +41,7 @@
         android:paddingBottom="10px">
     
 		<Button 
-		    android:text="OK" 
+		    android:text="@string/ok" 
 		    android:id="@+id/activity_dlg_action_input_btnOk" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 		</Button>
 				
 	    <Button 
-		    android:text="Params" 
+		    android:text="@string/params" 
 		    android:id="@+id/activity_dlg_action_input_btnAttributes" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 		</Button>
 		
 		<Button 
-		    android:text="Help" 
+		    android:text="@string/help" 
 		    android:id="@+id/activity_dlg_action_input_btnHelp" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
 		</Button>
 		
 		<Button 
-		    android:text="Cancel" 
+		    android:text="@string/cancel" 
 		    android:id="@+id/activity_dlg_action_input_btnCancel" 
 		    android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"

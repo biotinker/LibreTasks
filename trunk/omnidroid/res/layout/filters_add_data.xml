@@ -6,8 +6,11 @@
 	<AutoCompleteTextView android:id="@+id/data" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
 -->
-	<EditText android:id="@+id/filters_add_data" android:layout_width="fill_parent"
+	<EditText android:id="@+id/filters_add_data" 
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" />
-	<Button android:id="@+id/filters_add_done" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/done" />
+	<Button android:id="@+id/filters_add_done"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/done" />
 </LinearLayout>
