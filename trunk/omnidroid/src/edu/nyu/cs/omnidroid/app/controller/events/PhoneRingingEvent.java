@@ -1,9 +1,20 @@
+/*******************************************************************************
+ * Copyright 2010 OmniDroid - http://code.google.com/p/omnidroid
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.events;
 
-import java.util.Date;
-
-import edu.nyu.cs.omnidroid.app.controller.Event;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import android.content.Intent;
 import android.util.Log;
 
@@ -11,17 +22,13 @@ import android.util.Log;
  * This class encapsulates an PhoneRinging event. It wraps the intent that triggered this event and
  * provides access to any attribute data associated with it.
  */
-public class PhoneRingingEvent extends Event {
+public class PhoneRingingEvent extends PhoneCallEvent {
   /** Event name (to match record in database) */
-  public static final String APPLICATION_NAME = "Phone";
   public static final String EVENT_NAME = "Phone is Ringing";
-  public static final String ATTRIBUTE_PHONE_NUMBER = "Phone Number";
-  public static final String ATTRIBUTE_PHONE_RING_TIME = "Phone Ring Time";
   public static final String ACTION_NAME = "PHONE_RINGING";
-
-  /** Cache any values that are requested because it is likely they will be asked for again */
-  protected String phoneNumber;
-  protected String phoneRingTime;
+  private static final String LOG_TAG = CallEndedEvent.class.getSimpleName();
+  
+  public static final String ATTRIBUTE_PHONE_NUMBER = "Phone Number";
 
   /**
    * Constructs a new PhoneRinging object that holds an PhoneRinging event fired intent. This intent
@@ -31,34 +38,22 @@ public class PhoneRingingEvent extends Event {
    *          the intent received when the PhoneRinging event was fired
    */
   public PhoneRingingEvent(Intent intent) {
-    super(APPLICATION_NAME, EVENT_NAME, intent);
-    Date date = new Date(System.currentTimeMillis());
-    OmniDate omniDate = new OmniDate(date);
-    phoneRingTime = omniDate.toString();
-    Log.d("PhoneRingingEvent", "The phoneRingTime is : " + phoneRingTime);
+    super(EVENT_NAME, intent);
+    Log.d(LOG_TAG, EVENT_NAME);
   }
-
+  
   /**
-   * Looks up attributes associated with this event.
-   * 
-   * @param attributeName
-   *          the name of the attribute associated with this event
-   * @return the data associated with the attribute
-   * @throws IllegalArgumentException
-   *           if the attribute is not of a type supported by this event
+   * {@inheritDoc}
    */
   @Override
   public String getAttribute(String attributeName) throws IllegalArgumentException {
-    // TODO (dvo203): Replace by a generic method in a super class.
     if (attributeName.equals(PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER)) {
       if (phoneNumber == null) {
         phoneNumber = intent.getStringExtra(PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER);
       }
       return phoneNumber;
-    } else if (attributeName.equals(PhoneRingingEvent.ATTRIBUTE_PHONE_RING_TIME)) {
-        return phoneRingTime;
-      } else {
-      throw (new IllegalArgumentException());
+    } else {
+      return super.getAttribute(attributeName);
     }
   }
 }
