@@ -16,6 +16,8 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -109,11 +111,21 @@ public class ActivityMain extends Activity {
   };
 
   /**
-   * Reset the database, all info will be reset, user set rules will be lost
+   * Cleanup the Database, all info will be reset, user set rules will be lost
    */
   private OnClickListener listenerBtnClickResetDb = new OnClickListener() {
     public void onClick(View v) {
-      UIDbHelperStore.instance().db().resetDB();
+      // Show a dialog to ask users if they're sure they want to cleanup the Database.
+      new AlertDialog.Builder(v.getContext())
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle(getString(R.string.reset_settings))
+        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            UIDbHelperStore.instance().db().resetDB();
+          }
+        })
+        .setNegativeButton(getString(R.string.cancel), null)
+        .show();
     }
   };
 }

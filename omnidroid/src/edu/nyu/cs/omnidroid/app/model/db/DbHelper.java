@@ -57,6 +57,8 @@ public class DbHelper extends SQLiteOpenHelper {
     DbData.prepopulate(db);
   }
 
+  // TODO(Fang Huang) Consider the Log Level, Warn, in this class. Maybe need to change to Info,
+  // Verbose or others?
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -71,7 +73,22 @@ public class DbHelper extends SQLiteOpenHelper {
   }
   
   /**
-   * repopulate the db using dbData, except for user defined rules
+   * Cleanup the DB, including user defined rules
+   * 
+   * @param db
+   *          SQLiteDatabase object to work with
+   */
+  public void cleanup(SQLiteDatabase db) {
+    Log.w(TAG, "Resetting database");
+    dropTables(db);
+    createTables(db);
+    DbData.prepopulate(db);
+    // TODO(Fang Huang) Default rules should be added here also
+  }
+
+  /**
+   * Repopulate the db using dbData, except for user defined rules. Used for manually upgrading the
+   * Dababase in case the onUpgrade method fails.
    */
   public void repopulate(SQLiteDatabase db) {
     //drop all necessary tables i.e. prepopulated using dbData

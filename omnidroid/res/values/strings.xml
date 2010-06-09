@@ -72,6 +72,9 @@
 	<string name="missing_data">Data field can not be empty.</string>	
 	<string name="missing_name">OmniHandler name can not be empty.</string>
 	<string name="oh_no">Oh no! </string>
+	
+	<!--  Other Alerts -->
+	<string name="reset_settings">All user settings will be lost. Continue?</string>
 
 	<!--  Help Dialog Texts -->
     <string name="help_event_intro">OmniHandlers catch events that occur on the platform.</string>
