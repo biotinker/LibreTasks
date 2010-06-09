@@ -38,6 +38,7 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.TimeTickEvent;
@@ -166,7 +167,11 @@ public class DbData {
     eventAttributeDbAdapter.insert(
         PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, eventIdPhoneRings, dataTypeIdPhoneNumber);
     eventAttributeDbAdapter.insert(
-        PhoneRingingEvent.ATTRIBUTE_PHONE_RING_TIME, eventIdPhoneRings, dataTypeIdDate);
+        PhoneRingingEvent.ATTRIBUTE_TIMESTAMP, eventIdPhoneRings, dataTypeIdDate);
+    
+    long eventIdPhoneCallEnded = eventDbAdapter.insert(CallEndedEvent.EVENT_NAME, appIdPhone);  
+    eventAttributeDbAdapter.insert(
+        CallEndedEvent.ATTRIBUTE_TIMESTAMP, eventIdPhoneCallEnded, dataTypeIdDate);
     
     long eventIdGPSLocationChanged = eventDbAdapter.insert(
         LocationChangedEvent.EVENT_NAME, appIdGPS);  

@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemBroadcastedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemEvent;
@@ -58,6 +59,8 @@ public class IntentParser {
       event = new LocationChangedEvent(intent);
     } else if (intent.getAction().equals(PhoneRingingEvent.ACTION_NAME)) {
       event = new PhoneRingingEvent(intent);
+    } else if (intent.getAction().equals(CallEndedEvent.ACTION_NAME)) {
+      event = new CallEndedEvent(intent);
     } else if (intent.getAction().equals(TimeTickEvent.ACTION_NAME)) {
       event = new TimeTickEvent(intent);
     } else { // system events

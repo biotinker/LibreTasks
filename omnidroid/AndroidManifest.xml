@@ -203,8 +203,12 @@
 			<intent-filter>
 				<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
 			</intent-filter>
+			<!-- Intents thrown by Omnidroid SystemSeviceEventMonitor objects -->
 			<intent-filter>
 				<action android:name="LOCATION_CHANGED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="PHONE_CALL_ENDED" />
 			</intent-filter>
 			<intent-filter>
 				<action android:name="PHONE_RINGING" />

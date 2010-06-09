@@ -35,7 +35,7 @@ public class EventMonitoringService extends Service {
   private static final String LOGGER_TAG = EventMonitoringService.class.getSimpleName();
   
   private final SystemServiceEventMonitor MONITORS[] = {
-      new PhoneRingingMonitor(this),
+      new PhoneStateMonitor(this),
       new LocationMonitor(this),
       new TimeMonitor(this),
   };
