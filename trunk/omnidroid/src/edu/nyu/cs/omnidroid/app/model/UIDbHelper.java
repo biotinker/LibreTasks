@@ -22,6 +22,7 @@ import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getStringFromCursor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -93,7 +94,7 @@ public class UIDbHelper {
    * Reset the db, drop all necessary table, and recreate them and repopulate them again
    */
   public void resetDB() {
-    omnidroidDbHelper.repopulate(database);
+    omnidroidDbHelper.cleanup(database);
   }
 
   public UIDbHelper(Context context) {
@@ -744,6 +745,24 @@ public class UIDbHelper {
       ruleFilterDbAdapter.delete(ruleFilterID);
     }
     cursorFilter.close();
+  }
+  
+  /**
+   * Delete certain set of rules
+   * @param rules
+   *          is the set of Rules to be deleted
+   */
+  public void deleteRules(List<? extends Rule> rules) {
+    for(Rule rule:rules) {
+      deleteRule(rule.getDatabaseId());
+    }
+  }
+  
+  /**
+   * Delete all rules
+   */
+  public void deleteAllRules() {
+    deleteRules(getRules());
   }
   
   /**
