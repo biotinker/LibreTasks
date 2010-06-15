@@ -1,6 +1,11 @@
 #labels Phase-Implementation
 This is a simple document to help you add an Event/Action to Omnidroid
 
+==Changes since r744==
+DbData.java is now DbMigration.java. To make changes in the underlying database, make a new private method to perform the necessary changes and call it on migrateToLatest(). Then, increment the value of the static integer DbHelper.DATABASE_VERSION so that DbHelper.onUpgrade will be called when user installs the newer code (or when you upload the apk when debugging). You can also refer to the code review below for sample (Just concentrate on the changes done on DbMigration.java and DbHelper.java):
+
+http://codereview.appspot.com/1683041
+
 ==Add Event==
 
 To add an event to Omnidroid, first one need to create an Monitor class to capture the intent. If the intent is broadcast directly to Omnidroid (or to all apps), no need to create monitor. Secondly create an Event class, as a wrapper class for the intent. The third step is to let Omnidroid aware of this event, this including make changes to AndroidManifest.xml, IntentParser.java, DbDate.java(this class should eventually replaced by a static file) and FactoryDynamicUI.java.
