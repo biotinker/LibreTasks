@@ -19,11 +19,11 @@ REV_OLD_FILE="$BUILD_DIR/.REV_OLD"
 REV_NEW_FILE="$BUILD_DIR/.REV_NEW"
 REV_OLD=""
 REV_NEW=""
-SUBJECT="[build] r"
+SUBJECT="rev"
 
 update_version() {
     new_version=`svn info $REPO_URL | grep ^Rev | awk '{print $2}'`
-    if [ $new_version -gt 0 ]; then
+    if [ "$new_version" -gt 0 ]; then
         mv $REV_NEW_FILE $REV_OLD_FILE
         echo "$new_version" > $REV_NEW_FILE
     else

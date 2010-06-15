@@ -16,8 +16,8 @@ CO_DIR="$BUILD_DIR/work/checkout"
 TRUNK_DIR="$CO_DIR/trunk"
 APP_DIR="$TRUNK_DIR/omnidroid"
 TEST_DIR="$TRUNK_DIR/omnidroid-test"
-ANDROID_VER="2" # From 'android list targets'
-ANDROID_HOME="$BUILD_DIR/tools/android-sdk-linux_x86-1.5_r2"
+ANDROID_VER="android-4" # From 'android list targets'
+ANDROID_HOME="$BUILD_DIR/tools/android-sdk-linux_86"
 AVD_DIR="/home/$USER/.android/avd/autobuild-avd.avd/"
 AVD_INI="/home/$USER/.android/avd/autobuild-avd.ini"
 AVD_NAME="autobuild-avd"
@@ -26,9 +26,12 @@ AVD_SERIAL="emulator-$AVD_PORT"
 JAVA_HOME="/opt/java"
 ANDROID_BIN_DIR="$ANDROID_HOME/tools"
 PATH="$ANDROID_BIN_DIR:$ANT_BIN_DIR:/usr/local/bin:/opt/bin:/opt/java/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-OMNIDROID_APK="$APP_DIR/bin/.ui.simple.ActivityMain-debug.apk"
-OMNIDROID_TEST_APK="$TEST_DIR/bin/.-debug.apk"
-TEST_RUNNER="edu.nyu.cs.omnidroid.tests/android.test.InstrumentationTestRunner"
+OMNIDROID_APK="$APP_DIR/bin/Omnidroid-debug.apk"
+OMNIDROID_TEST_APK="$TEST_DIR/bin/Omnidroid-test-debug.apk"
+TEST_RUNNER="edu.nyu.cs.omnidroid.app.tests/android.test.InstrumentationTestRunner"
+DISPLAY=":0" # Required for emulator to grab graphical interface
+#XAUTH="/tmp/.gdmZALRWU" # Required for emulator to grab graphical interface
+
 export PATH
 export JAVA_HOME
 
@@ -45,11 +48,12 @@ setup() {
     mkdir -p $CO_DIR && \
     mkdir -p $TRUNK_DIR && \
     echo "  + Creating test AVD" && \
-    echo "no" | android create avd --force -n $AVD_NAME -t $ANDROID_VER && \
+    echo "no" | android create avd --force -n $AVD_NAME -t $ANDROID_VER > /dev/null && \
     echo "  + Starting android server" && \
     adb start-server && \
     echo "  + Starting android emulator" && \
-    (emulator -avd $AVD_NAME -port $AVD_PORT &) 
+    #(DISPLAY=$DISPLAY XAUTHORITY=$XAUTH emulator -avd $AVD_NAME -port $AVD_PORT &) 
+    (DISPLAY=$DISPLAY emulator -avd $AVD_NAME -port $AVD_PORT &) 
     return $?
 }
 
@@ -64,7 +68,7 @@ cleanup() {
 # Fresh checkout from source code management
 checkout() {
     # Checkout the source
-    echo "  + Checking out source from SVN." && \
+    echo "  + Checking out source from SVN" && \
     cd $CO_DIR && \
     echo "  +    svn co ${REPO_BASE}/trunk" && \
     svn co ${REPO_BASE}/trunk >/dev/null
@@ -94,14 +98,13 @@ run_tests() {
     echo "  + Building omnidroid-test from ant build file" && \
     ant debug && \
     echo "  + Waiting a few minutes for the emulator to come up" && \
-    adb -s $AVD_SERIAL wait-for-device && \
     sleep 120 && \
     echo "  + Installing omnidroid onto running emulator" && \
-    adb -s $AVD_SERIAL wait-for-device install -r $OMNIDROID_APK && \
+    adb -s $AVD_SERIAL install -r $OMNIDROID_APK && \
     echo "  + Installing omnidroid-test onto running emulator" && \
-    adb -s $AVD_SERIAL wait-for-device install -r $OMNIDROID_TEST_APK && \
+    adb -s $AVD_SERIAL install -r $OMNIDROID_TEST_APK && \
     echo "  + Running Junit Tests on project" && \
-    adb -s $AVD_SERIAL wait-for-device shell am instrument -w $TEST_RUNNER
+    adb -s $AVD_SERIAL shell am instrument -w $TEST_RUNNER
 }
 
 
