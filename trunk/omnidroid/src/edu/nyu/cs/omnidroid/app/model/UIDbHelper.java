@@ -22,8 +22,8 @@ import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getStringFromCursor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -119,7 +119,7 @@ public class UIDbHelper {
     dataTypeClassNames = new HashMap<Long, String>();
     dataFilterNames = new HashMap<Long, String>();
     applications = new HashMap<Long, ModelApplication>();
-    events = new HashMap<Long, ModelEvent>();
+    events = new LinkedHashMap<Long, ModelEvent>();
     actions = new HashMap<Long, ModelAction>();
     attributes = new HashMap<Long, ModelAttribute>();
     parameters = new HashMap<Long, ModelParameter>();
@@ -180,13 +180,13 @@ public class UIDbHelper {
     }
     cursor.close();
 
-    // Load Events
-    cursor = registeredEventDbAdapter.fetchAll();
+    // Load Events in alphabetical order
+    cursor = registeredEventDbAdapter.fetchAllOrdered();
     while (cursor.moveToNext()) {
       ModelEvent event = new ModelEvent(
           getLongFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTID),
           getStringFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTNAME), 
-          "", //TODO(ehotou) After implementing desc for event, load it here
+          "", //TODO(ehotou) After implementing description for event, load it here
           R.drawable.icon_event_unknown);
       events.put(event.getDatabaseId(), event);
     }

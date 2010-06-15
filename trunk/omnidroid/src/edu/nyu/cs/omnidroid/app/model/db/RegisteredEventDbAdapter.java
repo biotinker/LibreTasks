@@ -15,19 +15,23 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import edu.nyu.cs.omnidroid.app.model.CursorHelper;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 /**
- * Database helper class for the RegisteredEvents table. Defines basic CRUD methods. 
+ * Database helper class for the RegisteredEvents table. Defines basic CRUD methods.
  * 
  * <p>
- * This table contains all events registered in Omnidroid. EventName is the name of that event; 
+ * This table contains all events registered in Omnidroid. EventName is the name of that event;
  * FK_AppID points to the application it belongs to.
  * </p>
- * <p> Note: Events belong to the same app should each has a unique name. <p>
+ * <p>
+ * Note: Events belong to the same app should each has a unique name.
+ * <p>
  */
 public class RegisteredEventDbAdapter extends DbAdapter {
 
@@ -44,8 +48,7 @@ public class RegisteredEventDbAdapter extends DbAdapter {
 
   /* Create and drop statement. */
   protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
-      + KEY_EVENTID + " integer primary key autoincrement, " 
-      + KEY_EVENTNAME + " text not null, "
+      + KEY_EVENTID + " integer primary key autoincrement, " + KEY_EVENTNAME + " text not null, "
       + KEY_APPID + " integer);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
@@ -57,6 +60,45 @@ public class RegisteredEventDbAdapter extends DbAdapter {
    */
   public RegisteredEventDbAdapter(SQLiteDatabase database) {
     super(database);
+  }
+
+  /**
+   * Insert a new RegisteredEvent record given the name of the event and details about the
+   * application. Note that a record with {@code appName} with package name {@code appPackageName}
+   * should exist on the registered application table.
+   * 
+   * @param eventName
+   *          the name of the event
+   * @param appName
+   *          the name of the application associated with the event
+   * @param appPackageName
+   *          the package name of the application with the event
+   * @return the primary key id of the new record if successful, -1 otherwise
+   * @throws IllegalArgumentException
+   *           if eventName is null or if no application named {@code appName} with package name
+   *           {@code appPackageName} does not exist
+   */
+  public long insert(String eventName, String appName, String appPackageName) {
+    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(database);
+    Cursor appDbCursor = appDbAdapter.fetchAll(appName, appPackageName, null);
+
+    /**
+     * Just get the first result. The identifiers used in the query should already be unique enough
+     * that it should just return one record if it existed.
+     */
+    appDbCursor.moveToFirst();
+
+    long appIdPhone;
+    try {
+      appIdPhone = CursorHelper.getLongFromCursor(appDbCursor, RegisteredAppDbAdapter.KEY_APPID);
+    } catch (CursorIndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("Application named" + appName + " with package name "
+          + appPackageName + " does not exist.");
+    } finally {
+      appDbCursor.close();
+    }
+
+    return insert(eventName, appIdPhone);
   }
 
   /**
@@ -139,6 +181,16 @@ public class RegisteredEventDbAdapter extends DbAdapter {
   }
 
   /**
+   * Get all registered events in the database with the event names alphabetically ordered.
+   * 
+   * @return a Cursor that contains all RegisteredEvent records
+   */
+  public Cursor fetchAllOrdered() {
+    // Set selections, selectionArgs, groupBy, having, to null to fetch all rows.
+    return database.query(DATABASE_TABLE, KEYS, null, null, null, null, KEY_EVENTNAME + " ASC");
+  }
+
+  /**
    * Return a Cursor that contains all RegisteredEvent records which matches the parameters.
    * 
    * @param eventName
@@ -194,4 +246,7 @@ public class RegisteredEventDbAdapter extends DbAdapter {
     return false;
   }
 
+  public static String getSqliteCreateStatement() {
+    return DATABASE_CREATE;
+  }
 }

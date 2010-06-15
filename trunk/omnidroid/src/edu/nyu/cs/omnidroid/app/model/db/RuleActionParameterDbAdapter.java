@@ -219,4 +219,8 @@ public class RuleActionParameterDbAdapter extends DbAdapter {
     }
     return false;
   }
+  
+  public static String getSqliteCreateStatement() {
+    return DATABASE_CREATE;
+  }
 }

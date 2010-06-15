@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import edu.nyu.cs.omnidroid.app.model.CursorHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredEventDbAdapter;
 import android.database.Cursor;
@@ -64,7 +65,21 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     assertTrue(id1 != -1);
 
     long id2 = dbAdapter.insert(eventNames[1], appIDs[1]);
+    assertTrue(id2 != -1);
     assertTrue(id1 != id2);
+    
+    final String appName = "app";
+    final String pkgName = "package";
+    
+    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(dbAdapter.database);
+    appDbAdapter.insert(appName, pkgName, true, true);
+    
+    long id3 = dbAdapter.insert(eventNames[2], appName, pkgName);
+    assertTrue(id3 != -1);
+    assertTrue(id3 != id1);
+    assertTrue(id3 != id2);
+
+    appDbAdapter.deleteAll();
   }
 
   public void testInsert_illegalArgumentException() {
@@ -79,6 +94,14 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
     expected = null;
     try {
       dbAdapter.insert(eventNames[0], null);
+    } catch (IllegalArgumentException e) {
+      expected = e;
+    }
+    assertNotNull(expected);
+    
+    expected = null;
+    try {
+      dbAdapter.insert(eventNames[0], "", "");
     } catch (IllegalArgumentException e) {
       expected = e;
     }
@@ -172,6 +195,24 @@ public class RegisteredEventDbAdapterTest extends AndroidTestCase {
 
     Cursor cursor = dbAdapter.fetchAll();
     assertEquals(cursor.getCount(), 3);
+  }
+
+  public void testFetchAllOrdered() {
+    dbAdapter.insert(eventNames[1], appIDs[1]);
+    dbAdapter.insert(eventNames[2], appIDs[2]);
+    dbAdapter.insert(eventNames[0], appIDs[0]);
+
+    Cursor cursor = dbAdapter.fetchAllOrdered();
+    cursor.moveToFirst();
+
+    int index = 0;
+    do {
+      assertEquals(eventNames[index], CursorHelper.getStringFromCursor(cursor,
+          RegisteredEventDbAdapter.KEY_EVENTNAME));
+      index++;
+    } while (cursor.moveToNext());
+
+    cursor.close();
   }
 
   public void testFetchAll_withParameters() {

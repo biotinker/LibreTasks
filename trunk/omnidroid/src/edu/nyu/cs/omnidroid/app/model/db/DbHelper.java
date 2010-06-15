@@ -20,18 +20,25 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.app.controller.util.IOUtil;
-import edu.nyu.cs.omnidroid.app.model.DbData;
+import edu.nyu.cs.omnidroid.app.model.DbMigration;
 
 /**
  * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
  * tables and migrations.
  */
 public class DbHelper extends SQLiteOpenHelper {
+  public static class AppName {
+    public static final String SMS = "SMS";
+    public static final String PHONE = "Phone";
+    public static final String GPS = "GPS";
+    public static final String GMAIL = "GMAIL";
+    public static final String TWITTER = "Twitter";
+  }
 
   private static final String TAG = DbHelper.class.getName();
   
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 5;
+  private static final int DATABASE_VERSION = 6;
   
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
@@ -49,27 +56,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
   @Override
   public void onCreate(SQLiteDatabase db) {
-
-    // Create all tables when new database instance is created.
-    createTables(db);
-    
-    // Pre-populate data after installation.
-    DbData.prepopulate(db);
+    DbMigration.migrateToLatest(db, 1);
   }
 
   // TODO(Fang Huang) Consider the Log Level, Warn, in this class. Maybe need to change to Info,
   // Verbose or others?
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion
-        + ", which will destroy all old data");
-
-    // TODO(ehotou) Future migration codes here.
-
-    // Default migration operations, drop all tables and recreate databases
-    dropTables(db);
-    onCreate(db);
+    DbMigration.migrateToLatest(db, oldVersion);
   }
   
   /**
@@ -81,55 +75,7 @@ public class DbHelper extends SQLiteOpenHelper {
   public void cleanup(SQLiteDatabase db) {
     Log.w(TAG, "Resetting database");
     dropTables(db);
-    createTables(db);
-    DbData.prepopulate(db);
-    // TODO(Fang Huang) Default rules should be added here also
-  }
-
-  /**
-   * Repopulate the db using dbData, except for user defined rules. Used for manually upgrading the
-   * Dababase in case the onUpgrade method fails.
-   */
-  public void repopulate(SQLiteDatabase db) {
-    //drop all necessary tables i.e. prepopulated using dbData
-    db.execSQL(RegisteredAppDbAdapter.DATABASE_DROP);
-    db.execSQL(RegisteredEventDbAdapter.DATABASE_DROP);
-    db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_DROP);
-    db.execSQL(RegisteredActionDbAdapter.DATABASE_DROP);
-    db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_DROP);
-    db.execSQL(DataFilterDbAdapter.DATABASE_DROP);
-    db.execSQL(DataTypeDbAdapter.DATABASE_DROP);
-    //create those tables again
-    db.execSQL(RegisteredAppDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredEventDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredActionDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_CREATE);
-    db.execSQL(DataFilterDbAdapter.DATABASE_CREATE);
-    db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
-    //prepopulate the db
-    DbData.prepopulate(db);
-  }
-
-  /**
-   * Create all necessary tables in the database
-   * 
-   * @param db
-   *          SQLiteDatabase object to work with
-   */
-  private void createTables(SQLiteDatabase db) {
-    db.execSQL(RegisteredAppDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredEventDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredEventAttributeDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredActionDbAdapter.DATABASE_CREATE);
-    db.execSQL(RegisteredActionParameterDbAdapter.DATABASE_CREATE);
-    db.execSQL(DataFilterDbAdapter.DATABASE_CREATE);
-    db.execSQL(DataTypeDbAdapter.DATABASE_CREATE);
-    db.execSQL(ExternalAttributeDbAdapter.DATABASE_CREATE);
-    db.execSQL(RuleDbAdapter.DATABASE_CREATE);
-    db.execSQL(RuleFilterDbAdapter.DATABASE_CREATE);
-    db.execSQL(RuleActionDbAdapter.DATABASE_CREATE);
-    db.execSQL(RuleActionParameterDbAdapter.DATABASE_CREATE);
+    onCreate(db);
   }
 
   /**
