@@ -1,17 +1,17 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ *     
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.view.simple;
 
@@ -39,7 +39,7 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
 public class ActivityChooseFiltersAndActions extends Activity {
 
   private static final String KEY_STATE = "StateActivityChooseFilters";
-
+  
   private ListView listview;
   private AdapterRule adapterRule;
   private SharedPreferences state;
@@ -55,10 +55,10 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     // Link up bottom button panel areas.
     initializeButtonPanel();
-
+    
     // Restore UI state if possible.
     state = getSharedPreferences(ActivityChooseFiltersAndActions.KEY_STATE,
-      Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
+        Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
     listview.setItemChecked(state.getInt("selectedRuleItem", 0), true);
   }
 
@@ -79,7 +79,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
         adapterRule.addItemToParentPosition(listview.getCheckedItemPosition(), RuleBuilder
-          .instance().getChosenRuleFilter());
+            .instance().getChosenRuleFilter());
       }
       RuleBuilder.instance().resetFilterPath();
       break;
@@ -89,7 +89,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
         adapterRule.replaceItem(listview.getCheckedItemPosition(), RuleBuilder.instance()
-          .getChosenRuleFilter());
+            .getChosenRuleFilter());
       }
       RuleBuilder.instance().resetFilterPath();
       break;
@@ -99,7 +99,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
         adapterRule.addItemToParentPosition(listview.getCheckedItemPosition(), RuleBuilder
-          .instance().getChosenRuleAction());
+            .instance().getChosenRuleAction());
       }
       RuleBuilder.instance().resetActionPath();
       break;
@@ -109,15 +109,14 @@ public class ActivityChooseFiltersAndActions extends Activity {
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
         adapterRule.replaceItem(listview.getCheckedItemPosition(), RuleBuilder.instance()
-          .getChosenRuleAction());
+            .getChosenRuleAction());
       }
       RuleBuilder.instance().resetActionPath();
       break;
-
+      
     case Constants.ACTIVITY_RESULT_RULE_NAME:
       if (resultCode != Activity.RESULT_CANCELED) {
-        // Try to save the rule for the user now.
-        // We only get this request code if the user picked
+        // Try to save the rule for the user now. We only get this request code if the user picked
         // a valid rule name.
         saveRule();
       }
@@ -127,49 +126,53 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
   private void initializeListView() {
     listview = (ListView) findViewById(R.id.activity_choosefiltersandactions_listview);
-
+    
     adapterRule = new AdapterRule(this, listview);
 
-    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listview.setAdapter(adapterRule);
 
     // Set the adapter to render the rule stored in RuleBuilder.
     // It may be a brand new rule or a saved rule being edited.
     adapterRule.setRule(RuleBuilder.instance().getRule());
   }
-
+  
   private void initializeButtonPanel() {
 
-    Button btnAddFilter = (Button) findViewById(R.id.activity_choosefiltersandactions_btnAddFilter);
+    Button btnAddFilter = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnAddFilter);
     btnAddFilter.setOnClickListener(listenerBtnClickAddFilter);
 
-    Button btnAddAction = (Button) findViewById(R.id.activity_choosefiltersandactions_btnAddAction);
+    Button btnAddAction = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnAddAction);
     btnAddAction.setOnClickListener(listenerBtnClickAddAction);
 
-    Button btnDeleteItem = (Button) findViewById(R.id.activity_choosefiltersandactions_btnDeleteItem);
+    Button btnDeleteItem = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnDeleteItem);
     btnDeleteItem.setOnClickListener(listenerBtnClickDeleteItem);
 
-    Button btnEditItem = (Button) findViewById(R.id.activity_choosefiltersandactions_btnEditItem);
+    Button btnEditItem = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnEditItem);
     btnEditItem.setOnClickListener(listenerBtnClickEditItem);
 
-    Button btnSaveRule = (Button) findViewById(R.id.activity_choosefiltersandactions_btnSaveRule);
+    Button btnSaveRule = (Button) findViewById(
+      R.id.activity_choosefiltersandactions_btnSaveRule);
     btnSaveRule.setOnClickListener(listenerBtnClickSaveRule);
 
-    LinearLayout llBottomButtons = (LinearLayout) findViewById(R.id.activity_choosefiltersandactions_llBottomButtons);
+    LinearLayout llBottomButtons = (LinearLayout) findViewById(
+      R.id.activity_choosefiltersandactions_llBottomButtons);
     llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
   }
-
+  
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
-   * this before launching so we appear as a brand new instance.
-   *
-   * @param context
-   *          Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
+   * call this before launching so we appear as a brand new instance.
+   * @param context  Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
   }
-
+  
   private OnClickListener listenerBtnClickAddFilter = new OnClickListener() {
     public void onClick(View v) {
       ModelItem selectedItem = adapterRule.getItem(listview.getCheckedItemPosition());
@@ -178,8 +181,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
         // filter on for their chosen root event.
         showDlgAttributes();
       } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-          getString(R.string.add_filter_alert));
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+          "Filters can only be added to the root event and other filters!");
         return;
       }
     }
@@ -192,7 +195,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       showDlgApplications();
     }
   };
-
+  
   private OnClickListener listenerBtnClickDeleteItem = new OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Prompt user 'are you sure you want to delete this item?'.
@@ -200,8 +203,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
       if ((item instanceof ModelRuleFilter) || (item instanceof ModelRuleAction)) {
         adapterRule.removeItem(listview.getCheckedItemPosition());
       } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-          getString(R.string.select_filter_delete));
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+            "Please select a filter or action from the list to delete!");
       }
     }
   };
@@ -214,22 +217,18 @@ public class ActivityChooseFiltersAndActions extends Activity {
       } else if (item instanceof ModelRuleAction) {
         editAction(listview.getCheckedItemPosition(), (ModelRuleAction) item);
       } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-          getString(R.string.select_filter_edit));
+        UtilUI.showAlert(v.getContext(), "Sorry!",
+          "Please select a filter or action from the list to edit!");
       }
     }
   };
 
   private OnClickListener listenerBtnClickSaveRule = new OnClickListener() {
     public void onClick(View v) {
-
-      // After press save, the rule is set to 'Enabled' as default
-      RuleBuilder.instance().getRule().setIsEnabled(true);
       // Before launching the new activity, wipe its UI state.
       ActivityDlgRuleName.resetUI(v.getContext());
 
-      // Ask the user for a new rule name.
-      // The result will be stored inside RuleBuilder.
+      // Ask the user for a new rule name. The result will be stored inside RuleBuilder.
       // When the activity returns, we can continue trying to save the rule.
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityDlgRuleName.class);
@@ -245,9 +244,8 @@ public class ActivityChooseFiltersAndActions extends Activity {
     RuleBuilder.instance().resetFilterPath();
 
     ActivityDlgAttributes.resetUI(this);
-
-    // Launch the activity chain for adding a filter.
-    // We check if the user completed a
+    
+    // Launch the activity chain for adding a filter. We check if the user completed a
     // filter in onActivityResult.
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgAttributes.class);
@@ -262,9 +260,9 @@ public class ActivityChooseFiltersAndActions extends Activity {
     RuleBuilder.instance().resetActionPath();
 
     ActivityDlgApplications.resetUI(this);
-
-    // Launch the activity chain for adding an action.
-    // We check if the user completed an action in onActivityResult.
+    
+    // Launch the activity chain for adding an action. We check if the user completed an
+    // action in onActivityResult.
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgApplications.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
@@ -283,7 +281,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_EDIT_FILTER);
   }
-
+  
   /**
    * Shortcuts directly to {@link ActivityDlgActionInput} for editing an existing action.
    */
@@ -297,33 +295,29 @@ public class ActivityChooseFiltersAndActions extends Activity {
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
     startActivityForResult(intent, Constants.ACTIVITY_RESULT_EDIT_ACTION);
   }
-
+  
   /**
    * Saves the built-up rule inside {@link RuleBuilder} to the database.
-   *
    */
   private void saveRule() {
     Log.d("ActivityChooseFiltersAndActions", "entered saveRule()");
-    long newRuleId = 0;
+    long newRuleId;
     try {
-      newRuleId = UIDbHelperStore.instance().db().saveRule(RuleBuilder.instance().getRule());
-    } catch (IllegalStateException e) {
-      UtilUI.showAlert(this, getString(R.string.sorry),
-        getString(R.string.illegal_state_exception_catch));
-      Log.e("Illegal_State_Exception", "Caught Illegal State Exception when saving", e);
-      return;
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      UtilUI.showAlert(this, getString(R.string.sorry), getString(R.string.error_catch));
-      Log.e("Saving_Error", "Caught an error when saving", e);
+      newRuleId = UIDbHelperStore.instance().db().saveRule(
+        RuleBuilder.instance().getRule());
+    }
+    catch (Exception ex) {
+      UtilUI.showAlert(this, "Sorry!",
+        "There was an error saving your rule!:\n" + ex.toString());
       return;
     }
     Log.d("ActivityChooseFiltersAndActions", "new rule saved");
     UtilUI.showAlert(this, "Save Rule", "Rule saved ok!");
-
+    
     // We have to reload the rule from the database now so that the UI representation
     // of it is in-sync with the new element IDs assigned during the save operation.
-    RuleBuilder.instance().resetForEditing(UIDbHelperStore.instance().db().loadRule(newRuleId));
+    RuleBuilder.instance().resetForEditing(
+      UIDbHelperStore.instance().db().loadRule(newRuleId));
     Log.d("ActivityChooseFiltersAndActions", "new rule reloaded from db");
     adapterRule.setRule(RuleBuilder.instance().getRule());
     Log.d("ActivityChooseFiltersAndActions", "new rule set");
