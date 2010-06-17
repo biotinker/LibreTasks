@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.app.model.db;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -46,6 +47,10 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String PKG_ROOT = "/data/data/";
 
   private Context context;
+
+  // Store simple user preferences in a SharedPreferences file and their associated keys.
+  private static final String SHARED_PREFS = "OmnidroidSharedPrefs";
+  public static final String SETTING_ACCEPTED_DISCLAIMER = "SettingDisclaimerAccepted";
 
   public DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
@@ -138,4 +143,10 @@ public class DbHelper extends SQLiteOpenHelper {
     return PKG_ROOT + context.getPackageName() + DATABASE_FOLDER;
   }
 
+  /**
+   * @return the sharedPreferences to allow for get/setting of user preferences. 
+   */
+  public SharedPreferences getSharedPreferences() {
+    return context.getSharedPreferences(SHARED_PREFS, 0);
+  }
 }
