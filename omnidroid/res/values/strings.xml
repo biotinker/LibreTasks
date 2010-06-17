@@ -52,6 +52,9 @@
     <string name="info">Info</string>
     <string name="view">View</string>
     <string name="params">Params</string>
+    <string name="yes">Yes</string>
+	<string name="sorry">Sorry</string>
+	<string name="no">No</string>
 
     <!--  Settings options -->
     <string name="delete_all">Delete All OmniHandlers</string>
@@ -95,4 +98,11 @@
     <string name="stay_signed_in">Stay Signed in</string>
     <string name="login_info_title">Login Info</string>
     <string name="login_info_details">Please enter your username and password and select the check box to remember it</string>
+
+    <!--  Choose Filters and Actions -->
+    <string name="add_filter_alert">Filters can only be added to the root event and other filters! </string>
+    <string name="select_filter_edit">Please select a filter or action from the list to edit! </string>
+    <string name="select_filter_delete">Please select a filter or action from the list to delete! </string>
+    <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule!: </string>
+    <string name="error_catch">There was an error saving your rule!: </string>
 </resources>
