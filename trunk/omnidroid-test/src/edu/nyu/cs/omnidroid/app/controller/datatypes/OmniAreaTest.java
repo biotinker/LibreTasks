@@ -18,12 +18,12 @@ package edu.nyu.cs.omnidroid.app.controller.datatypes;
 
 import java.io.IOException;
 
+import android.os.Build;
 import android.test.AndroidTestCase;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea.Filter;
-import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
 import edu.nyu.cs.omnidroid.app.controller.util.DataTypeValidationException;
 
 /**
@@ -45,6 +45,7 @@ public class OmniAreaTest extends AndroidTestCase {
   private static final double CURRENT_LOCATION_RADIUS = 0.003106856;
   private static final double CURRENT_LOCATION_LONGITUDE = -73.997017;
   private static final double CURRENT_LOCATION_LATITUDE = 40.73198;
+  private static final boolean EXECUTING_ON_EMULATOR = "sdk".equals(Build.PRODUCT);
 
   /*
    * (non-Javadoc)
@@ -155,7 +156,7 @@ public class OmniAreaTest extends AndroidTestCase {
      * getOmniArea requires Geocoder, which does not work correctly on emulator. Therefore the test
      * will pass automatically if EXECUTING_ON_EMULATOR flag is true.
      */
-    if(EventMonitoringService.EXECUTING_ON_EMULATOR) {
+    if(EXECUTING_ON_EMULATOR) {
       return;
     }
     

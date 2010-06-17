@@ -174,7 +174,7 @@ public class FactoryDynamicUI {
       // This is a Time period Before or After filter, so generate a specific UI for it.
       TextView tvInstructionsStart = new TextView(dlg.getContext());
       tvInstructionsStart.setText(dlg.getContext().getString(
-          R.string.UI_OMNITIMEPERIOD_PICK_STARTTIMR));
+          R.string.pick_start_time));
       linearLayout.addView(tvInstructionsStart);
 
       final TimePicker startTimePicker = new TimePicker(dlg.getContext());
@@ -188,7 +188,7 @@ public class FactoryDynamicUI {
 
       TextView tvInstructionsEnd = new TextView(dlg.getContext());
       tvInstructionsEnd.setText(dlg.getContext().getString(
-          R.string.UI_OMNITIMEPERIOD_PICK_ENDTIMR));
+          R.string.pick_end_time));
       linearLayout.addView(tvInstructionsEnd);
 
       final TimePicker endTimePicker = new TimePicker(dlg.getContext());
@@ -262,7 +262,7 @@ public class FactoryDynamicUI {
       // This is a Before or After filter, so generate a specific UI for it.
       TextView tvInstructions = new TextView(dlg.getContext());
       tvInstructions.setText(dlg.getContext().getString(
-          R.string.UI_OMNIDATE_PICK_TIMR));
+          R.string.pick_time));
       linearLayout.addView(tvInstructions);
 
       final TimePicker timePicker = new TimePicker(dlg.getContext());

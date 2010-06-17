@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -86,6 +87,9 @@ public class UIDbHelper {
   private HashMap<Long, ModelAction> actions;
   private HashMap<Long, ModelAttribute> attributes;
   private HashMap<Long, ModelParameter> parameters;
+
+  // Get user configured settings
+  private SharedPreferences settings;
   
   // This flag marks whether this helper is closed
   private boolean isClosed = false;
@@ -145,6 +149,9 @@ public class UIDbHelper {
 
     // TODO(ehotou) Consider lazy initialization for some of these stuff.
     
+    // Load Preferences
+    settings = omnidroidDbHelper.getSharedPreferences();
+    
     // Load DataTypes
     Cursor cursor = dataTypeDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
@@ -164,7 +171,7 @@ public class UIDbHelper {
     }
     cursor.close();
 
-    // Load applications
+    // Load Applications
     cursor = registeredAppDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
       ModelApplication application = new ModelApplication(
@@ -777,4 +784,13 @@ public class UIDbHelper {
   public void setRuleEnabled(long ruleID, boolean enabled) {
     ruleDbAdapter.update(ruleID, null, null, null, enabled);
   }
+
+
+  /**
+   * @return the sharedPreferences to allow for get/setting of user preferences. 
+   */
+  public SharedPreferences getSharedPreferences() {
+    return settings;
+  }
+
 }

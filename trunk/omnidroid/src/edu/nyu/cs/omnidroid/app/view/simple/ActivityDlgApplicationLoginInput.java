@@ -83,7 +83,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
             .getChosenApplication().getDatabaseId());
     
     llDynamic = FactoryActions.buildLoginUI(modelApp, this, 
-        getString(R.string.UI_login_CHECK_BOX_TEXT));
+        getString(R.string.stay_signed_in));
     
     llContent.addView(llDynamic);
   }
@@ -119,8 +119,8 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
-      UtilUI.showAlert(v.getContext(), getString(R.string.UI_login_info_button),
-          getString(R.string.UI_login_info));
+      UtilUI.showAlert(v.getContext(), getString(R.string.login_info_title),
+          getString(R.string.login_info_details));
     }
   };
 
