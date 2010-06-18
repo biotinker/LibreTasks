@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module>
+  <ModulePrefs title="Omnidroid Donation Gadget" author="Andrew Case" author_email="case.andrew@gmail.com" description="Omnidroid Project Donation Widget" /> 
+  <Content type="html">
+     <![CDATA[ 
+<form action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/605697140283782" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+    <table cellpadding="5" cellspacing="0" width="1%">
+        <tr>
+            <td align="right" width="1%">
+                <select name="item_selection_1">
+                    <option value="1">$1.00 - Appreciation</option>
+                    <option value="2">$10.00 - Supporter</option>
+                    <option value="3">$25.00 - Contributor</option>
+                    <option value="4">$200.00 - Financial Committer</option>
+                    <option value="5">$400.00 - Financial Admin</option>
+                </select>
+                <input name="item_option_name_1" type="hidden" value="Appreciation"/>
+                <input name="item_option_price_1" type="hidden" value="1.0"/>
+                <input name="item_option_description_1" type="hidden" value="Letting us know you appreciate our work"/>
+                <input name="item_option_quantity_1" type="hidden" value="1"/>
+                <input name="item_option_currency_1" type="hidden" value="USD"/>
+                <input name="item_option_name_2" type="hidden" value="Supporter"/>
+                <input name="item_option_price_2" type="hidden" value="10.0"/>
+                <input name="item_option_description_2" type="hidden" value="Show us your support"/>
+                <input name="item_option_quantity_2" type="hidden" value="1"/>
+                <input name="item_option_currency_2" type="hidden" value="USD"/>
+                <input name="item_option_name_3" type="hidden" value="Contributor"/>
+                <input name="item_option_price_3" type="hidden" value="25.0"/>
+                <input name="item_option_description_3" type="hidden" value="Donate $25 and we'll consider you a financial contributor to the project"/>
+                <input name="item_option_quantity_3" type="hidden" value="1"/>
+                <input name="item_option_currency_3" type="hidden" value="USD"/>
+                <input name="item_option_name_4" type="hidden" value="Financial Committer"/>
+                <input name="item_option_price_4" type="hidden" value="200.0"/>
+                <input name="item_option_description_4" type="hidden" value="Donating $200 will cover the cost of at least one new phone for us to do testing and development!"/>
+                <input name="item_option_quantity_4" type="hidden" value="1"/>
+                <input name="item_option_currency_4" type="hidden" value="USD"/>
+                <input name="item_option_name_5" type="hidden" value="Financial Admin"/>
+                <input name="item_option_price_5" type="hidden" value="400.0"/>
+                <input name="item_option_description_5" type="hidden" value="Donating $400 will cover the cost of at least one a new Dev Phone for us to stay on the cutting edge of development@"/>
+                <input name="item_option_quantity_5" type="hidden" value="1"/>
+                <input name="item_option_currency_5" type="hidden" value="USD"/>
+            </td>
+            <td align="left" width="1%">
+                <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=605697140283782&amp;w=121&amp;h=44&amp;style=white&amp;variant=text&amp;loc=en_US" type="image"/>
+            </td>
+        </tr>
+    </table>
+</form>
+     ]]>
+  </Content> 
+</Module>
