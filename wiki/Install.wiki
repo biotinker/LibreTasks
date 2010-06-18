@@ -1,4 +1,4 @@
-#labels Featured,Phase-Deploy
+#labels Featured,Phase-Deploy,Phase-QA,Phase-Support
 = Install by Searching the Android Market =
 
 Search for "Omnidroid" on the Market application.
@@ -22,7 +22,7 @@ If you have a barcode scanner, just scan this QR code:
     * {{{svn checkout http://omnidroid.googlecode.com/svn/trunk/omnidroid}}}
   # Edit the build.properties file to point to your Android SDK.
   # Build, Install, or Update
-    * To build an android package run: {{{ant release}}}
+    * To build an android package run: {{{ant build}}}
     * To install on the running emulator: {{{ant install}}}
     * To update an install on the emulator: {{{ant reinstall}}}
     Specify SDK location by using "-Dsdk-location=" argument, for example:
