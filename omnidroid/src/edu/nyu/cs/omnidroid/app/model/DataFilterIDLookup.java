@@ -19,6 +19,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.app.controller.util.DualKey;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
@@ -28,21 +29,30 @@ import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
  * This class can be used to query the database for dataFilterID efficiently.
  */
 public class DataFilterIDLookup {
-
+  private static final String TAG = DataFilterIDLookup.class.getSimpleName();
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private DbHelper omnidroidDbHelper;
+  private SQLiteDatabase database; 
   private HashMap<DualKey<String, String>, Long> dataFilterIDMap;
 
   public DataFilterIDLookup(Context context) {
     omnidroidDbHelper = new DbHelper(context);
-    SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
+    database = omnidroidDbHelper.getWritableDatabase();
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataFilterDbAdapter = new DataFilterDbAdapter(database);
     dataFilterIDMap = new HashMap<DualKey<String, String>, Long>();
   }
 
+  /**
+   * Close this database helper object. Attempting to use this object after this call will cause an
+   * {@link IllegalStateException} being raised.
+   */
   public void close() {
+    Log.i(TAG, "closing database.");
+    database.close();
+    
+    // Not necessary, but also close all omnidroidDbHelper databases just in case.
     omnidroidDbHelper.close();
   }
 
@@ -53,8 +63,14 @@ public class DataFilterIDLookup {
    * @param dataTypeName
    * @param dataFilterName
    * @return
+   * @throws IllegalStateException
+   *           when this object is already closed
    */
   public long getDataFilterID(String dataTypeName, String dataFilterName) {
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
+    }
+    
     return getDataFilterID(dataTypeName, dataTypeName, dataFilterName);
   }
   
@@ -72,10 +88,14 @@ public class DataFilterIDLookup {
    *          is name of the dataFilter
    * 
    * @return filterID that matches dataTypeName and dataFilterName or -1 if no match
+   * @throws IllegalStateException
+   *           when this object is already closed
    */
   public long getDataFilterID(String dataTypeName, String compareDataTypeName, String dataFilterName) {
     if (dataTypeName == null || dataFilterName == null) {
       throw new IllegalArgumentException("Arguments null.");
+    } else if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     DualKey<String, String> key = new DualKey<String, String>(dataTypeName, dataFilterName);

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
@@ -27,19 +28,28 @@ import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
  * This class can be used to query the database for dataTypeID efficiently.
  */
 public class DataTypeIDLookup {
-  
+  private static final String TAG = DataTypeIDLookup.class.getSimpleName();
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DbHelper omnidroidDbHelper;
+  private SQLiteDatabase database;
   private HashMap<String, Long> dataTypeIDMap;
   
   public DataTypeIDLookup(Context context){
     omnidroidDbHelper = new DbHelper(context);
-    SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
+    database = omnidroidDbHelper.getWritableDatabase();
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataTypeIDMap= new HashMap<String, Long>();
   }
   
+  /**
+   * Close this database helper object. Attempting to use this object after this call will cause an
+   * {@link IllegalStateException} being raised.
+   */
   public void close() {
+    Log.i(TAG, "closing database.");
+    database.close();
+    
+    // Not necessary, but also close all omnidroidDbHelper databases just in case.
     omnidroidDbHelper.close();
   }
   
@@ -50,10 +60,14 @@ public class DataTypeIDLookup {
    *          is name of the dataType
    *          
    * @return dataTypeID that matches dataTypeName or -1 if no match
+   * @throws IllegalStateException
+   *           when this object is already closed
    */
   public long getDataTypeID(String dataTypeName) {
     if (dataTypeName == null) {
       throw new IllegalArgumentException("Arguments null.");
+    } else if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
     
     // Return it if the id is already cached.

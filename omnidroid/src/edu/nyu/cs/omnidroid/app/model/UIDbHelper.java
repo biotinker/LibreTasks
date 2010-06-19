@@ -326,17 +326,18 @@ public class UIDbHelper {
   public ModelApplication getApplication(long appDatabaseId) {
     if (isClosed) {
       throw new IllegalStateException("UIDbHelper is closed.");
-    }  
+    }
+    
     Cursor cursor = registeredAppDbAdapter.fetch(appDatabaseId);
-    return  new ModelApplication(
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME), 
-            "",
-            R.drawable.icon_application_unknown, 
-            getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID),
-            getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN),
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME),
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD)
-            );
+    String typeName = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME);
+    long databaseID = getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID); 
+    boolean loginEnabled = getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN);
+    String username = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME);
+    String password = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD);
+    cursor.close();
+    
+    return new ModelApplication(typeName, "", R.drawable.icon_application_unknown, databaseID,
+        loginEnabled, username, password);
   }
 
   /**
@@ -551,6 +552,7 @@ public class UIDbHelper {
       
       // Store the filter instance itself.
       filtersUnlinked.put(filter.getDatabaseId(), filter);
+      cursorFilter.close();
     }
     cursorRuleFilters.close();
 
