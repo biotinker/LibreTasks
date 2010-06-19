@@ -1,6 +1,7 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import android.content.Context;
+import android.util.Log;
 import edu.nyu.cs.omnidroid.app.model.DataFilterIDLookup;
 import edu.nyu.cs.omnidroid.app.model.DataTypeIDLookup;
 import edu.nyu.cs.omnidroid.app.model.UIDbHelper;
@@ -13,6 +14,7 @@ import edu.nyu.cs.omnidroid.app.model.UIDbHelper;
  * instance itself. TODO: (markww) Discuss merging this directly into UIDbHelper.
  */
 public class UIDbHelperStore {
+  private static final String TAG = UIDbHelperStore.class.getSimpleName();
 
   /** The one and only DbInterfaceUI instance. */
   private static UIDbHelperStore instance;
@@ -58,5 +60,14 @@ public class UIDbHelperStore {
 
   public DataTypeIDLookup getDatatypeLookup() {
     return datatypeLookup;
+  }
+  
+  /**
+   * Release all resources held by this helper.
+   */
+  public void releaseResources() {
+    Log.i(TAG, "releasing resources");
+    datatypeLookup.close();
+    filterLookup.close();
   }
 }

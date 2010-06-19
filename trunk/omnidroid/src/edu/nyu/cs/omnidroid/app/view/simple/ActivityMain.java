@@ -37,7 +37,6 @@ import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 public class ActivityMain extends Activity {
   private SharedPreferences settings; 
   
-  /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -99,6 +98,12 @@ public class ActivityMain extends Activity {
     SharedPreferences.Editor editor = settings.edit();
     editor.putBoolean(DbHelper.SETTING_ACCEPTED_DISCLAIMER, accepted);
     editor.commit();
+  }
+  
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    UIDbHelperStore.instance().releaseResources();
   }
 
   /**

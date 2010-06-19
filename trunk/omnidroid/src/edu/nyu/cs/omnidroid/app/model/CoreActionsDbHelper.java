@@ -53,7 +53,7 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
  * 
  */
 public class CoreActionsDbHelper {
-
+  private static final String TAG = CoreActionsDbHelper.class.getSimpleName();
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
   private RuleActionDbAdapter ruleActionDbAdpater;
@@ -62,9 +62,6 @@ public class CoreActionsDbHelper {
   private RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter;
   private RegisteredAppDbAdapter registeredAppDbAdapter;
   private Context context;
-
-  // This flag marks whether this helper is closed
-  private boolean isClosed = false;
 
   // Action info constants
   private final int APP_NAME = 0;
@@ -84,13 +81,15 @@ public class CoreActionsDbHelper {
   }
 
   /**
-   * Close the CoreActionsDBHelper. The core classes need to call this method when they are done
-   * with the database connection. CoreActionDbHelper is not usable after calling this method.
+   * Close this database helper object. Attempting to use this object after this call will cause an
+   * {@link IllegalStateException} being raised.
    */
   public void close() {
-    isClosed = true;
-    omnidroidDbHelper.close();
+    Log.i(TAG, "closing database.");
     database.close();
+    
+    // Not necessary, but also close all omnidroidDbHelper databases just in case.
+    omnidroidDbHelper.close();
   }
 
   /**
@@ -144,8 +143,7 @@ public class CoreActionsDbHelper {
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);
     } else {
-    	Log.d("CoreActionsDbHelper", "doesn't catch AppName is: " + appName + 
-    			" and actionName is: " + actionName);
+    	Log.d(TAG, "doesn't catch AppName is: " + appName + " and actionName is: " + actionName);
       throw new OmnidroidException(120003, ExceptionMessageMap.getMessage(new Integer(120003)
           .toString()));
     }
@@ -161,10 +159,12 @@ public class CoreActionsDbHelper {
    * @param event
    *          The event whose attributes can be used as parameter data
    * @return The parameter data with actual value that can be used in intent
+   * @throws IllegalStateException
+   *           when this object is already closed
    */
   public String fillParamWithEventAttrib(String paramData, Event event) {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
     
     StringBuilder retVal = new StringBuilder();
@@ -208,11 +208,11 @@ public class CoreActionsDbHelper {
    *          The rule Id
    * @return ArrayList of Action Ids for actions to be executed
    * @throws IllegalStateException
-   *           if the helper is closed
+   *           when this object is already closed
    */
   private ArrayList<Long> getRuleActionIds(Long ruleId) {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     Cursor cursor = ruleActionDbAdpater.fetchAll(ruleId, null);
@@ -233,11 +233,11 @@ public class CoreActionsDbHelper {
    * @return String array {application name, action name}. Null if cannot find action name,
    *         application name or action id
    * @throws IllegalStateException
-   *           if the helper is closed
+   *           when this object is already closed
    */
   private String[] getRegisteredActionInfo(Long ruleActionId) {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     Long actionId;
@@ -250,6 +250,7 @@ public class CoreActionsDbHelper {
       actionId = getLongFromCursor(cursor, RuleActionDbAdapter.KEY_ACTIONID);
       cursor.close();
     } else {
+      cursor.close();
       return null;
     }
 
@@ -259,6 +260,7 @@ public class CoreActionsDbHelper {
       appId = getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID);
       cursor.close();
     } else {
+      cursor.close();
       return null;
     }
 
@@ -267,6 +269,7 @@ public class CoreActionsDbHelper {
       appName = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME);
       cursor.close();
     } else {
+      cursor.close();
       return null;
     }
 
@@ -287,12 +290,12 @@ public class CoreActionsDbHelper {
    * @param paramsRegisteredParamId
    *          An empty map of Action parameter Id to Registered action parameter Id
    * @throws IllegalStateException
-   *           if the helper is closed
+   *           when this object is already closed
    */
   private void addDataAndRegisteredParamId(Long ruleActionId, Event event,
       HashMap<Long, String> paramsData, HashMap<Long, Long> paramsRegisteredParamId) {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     Long paramId;
@@ -319,11 +322,11 @@ public class CoreActionsDbHelper {
    * @return HashMap of Registered action parameter Ids to Registered param names for all registered
    *         action parameters
    * @throws IllegalStateException
-   *           if the helper is closed
+   *           when this object is already closed
    */
   private HashMap<Long, String> getRegisteredActionParamNames() {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     Long registeredParamId;
@@ -355,11 +358,11 @@ public class CoreActionsDbHelper {
    *           if the rule is not enabled or not found in database OR if ActionId or ActionName is
    *           not found in database
    * @throws IllegalStateException
-   *           if the helper is closed
+   *           when this object is already closed
    */
   public ArrayList<Action> getActions(long ruleId, Event event) {
-    if (isClosed) {
-      throw new IllegalStateException("CoreActionsDBHelper is closed.");
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     ArrayList<Action> actions = new ArrayList<Action>();

@@ -59,6 +59,10 @@ public class HandlerService extends Service {
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
           coreActionsDbHelper);
+      
+      coreActionsDbHelper.close();
+      coreRuleDbHelper.close();
+      
       Log.d("HandlerService", "get " + actions.size() + " action(s) for event " + intent.getAction());
       // Execute the list of actions.
       try {

@@ -41,7 +41,9 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
  * representation.
  */
 public class CoreRuleDbHelper {
+  private static final String TAG = CoreActionsDbHelper.class.getSimpleName();
   private DbHelper omnidroidDbHelper;
+  private SQLiteDatabase database;
 
   private RegisteredAppDbAdapter applicationDbAdapter;
   private RegisteredEventDbAdapter eventDbAdapter;
@@ -62,7 +64,7 @@ public class CoreRuleDbHelper {
    */
   public CoreRuleDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
-    SQLiteDatabase database = omnidroidDbHelper.getWritableDatabase();
+    database = omnidroidDbHelper.getWritableDatabase();
 
     applicationDbAdapter = new RegisteredAppDbAdapter(database);
     eventDbAdapter = new RegisteredEventDbAdapter(database);
@@ -79,29 +81,36 @@ public class CoreRuleDbHelper {
    * @param eventName
    *          the name of the event to be matched in the database
    * @return a list of rules and their associated filter tree that matches the provided event
+   * @throws IllegalStateException
+   *           when this object is already closed
    */
   public ArrayList<Rule> getRulesMatchingEvent(String appName, String eventName) {
     if (appName == null || eventName == null) {
       throw new OmnidroidRuntimeException(140000, ExceptionMessageMap
           .getMessage(new Integer(140000).toString()));
+    } else if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
     }
 
     ArrayList<Rule> rules = new ArrayList<Rule>();
 
     // Use the appName and eventName to find a unique event in the database
     Cursor appCursor = applicationDbAdapter.fetchAll(appName, null, true);
-    
+
     if (appCursor.getCount() == 0) {
-    	Log.d("CoreRuleDbHelper", "No enabled applications match this event's application " + appName);
-      // No enabled applications match this event's application
+      Log.d(TAG, "No enabled applications match this event's application " + appName);
+      appCursor.close();
       return rules;
     }
+
     appCursor.moveToFirst();
     long appID = CursorHelper.getLongFromCursor(appCursor, RegisteredAppDbAdapter.KEY_APPID);
     Cursor eventCursor = eventDbAdapter.fetchAll(eventName, appID);
+    appCursor.close();
+
     if (eventCursor.getCount() == 0) {
-    	Log.d("CoreRuleDbHelper", "This application does not have an event matching this event's name");
-      // This application does not have an event matching this event's name
+      Log.d(TAG, "This application does not have an event matching this event's name");
+      eventCursor.close();
       return rules;
     }
 
@@ -109,13 +118,14 @@ public class CoreRuleDbHelper {
     eventCursor.moveToFirst();
     long eventID = CursorHelper
         .getLongFromCursor(eventCursor, RegisteredEventDbAdapter.KEY_EVENTID);
+    eventCursor.close();
 
     // Fetch all rules that match this event and are enabled
     Cursor ruleTable = ruleDbAdapter.fetchAll(eventID, null, null, true, null);
 
     if (ruleTable.getCount() == 0) {
-    	Log.d("CoreRuleDbHelper", "No rules matched this event, return empty list");
-      // No rules matched this event, return empty list
+      Log.d(TAG, "No rules matched this event, return empty list");
+      ruleTable.close();
       return rules;
     }
 
@@ -123,6 +133,8 @@ public class CoreRuleDbHelper {
     while (ruleTable.moveToNext()) {
       rules.add(getRule(ruleTable));
     }
+
+    ruleTable.close();
     return rules;
   }
 
@@ -142,6 +154,7 @@ public class CoreRuleDbHelper {
     Cursor filterTable = filterDbAdapter.fetchAll(ruleID, null, null, null, null, null);
     Tree<Filter> filterTree = buildFilterTree(filterTable);
 
+    filterTable.close();
     return new Rule(ruleName, ruleID, filterTree);
   }
 
@@ -204,6 +217,8 @@ public class CoreRuleDbHelper {
           parentNode.addSubTree(newNode);
         }
       }
+
+      currentFilter.close();
     }
     return root;
   }
@@ -251,6 +266,20 @@ public class CoreRuleDbHelper {
     String data = CursorHelper.getStringFromCursor(filterRecord,
         RuleFilterDbAdapter.KEY_RULEFILTERDATA);
 
+    cursor.close();
+
     return new Filter(eventAttributeName, filterOnDataType, comparison, compareWithDataType, data);
+  }
+
+  /**
+   * Close this database helper object. Attempting to use this object after this call will cause an
+   * {@link IllegalStateException} being raised.
+   */
+  public void close() {
+    Log.i(TAG, "closing database.");
+    database.close();
+    
+    // Not necessary, but also close all omnidroidDbHelper databases just in case.
+    omnidroidDbHelper.close();
   }
 }
