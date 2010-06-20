@@ -130,7 +130,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     adapterRule = new AdapterRule(this, listview);
 
-    listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listview.setAdapter(adapterRule);
 
     // Set the adapter to render the rule stored in RuleBuilder.
