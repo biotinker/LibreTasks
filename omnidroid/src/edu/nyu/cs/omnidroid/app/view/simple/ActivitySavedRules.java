@@ -59,8 +59,8 @@ public class ActivitySavedRules extends Activity {
     initializeUI();
 
     // Restore UI state.
-    state = getSharedPreferences(ActivitySavedRules.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
+    state = getSharedPreferences(ActivitySavedRules.KEY_STATE,
+        Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
     listView.setItemChecked(state.getInt("selectedRule", -1), true);
   }
 
