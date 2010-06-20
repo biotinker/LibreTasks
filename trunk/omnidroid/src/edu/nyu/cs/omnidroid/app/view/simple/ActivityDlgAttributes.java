@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
@@ -45,25 +44,23 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
  * an attribute to filter on, we move them to the {@link ActivityDlgFilters} dialog.
  */
 public class ActivityDlgAttributes extends Activity {
-
   private static final String KEY_STATE = "StateDlgAttributes";
-  
+  private static final String KEY_PREF = "selectedAttribute";
   private ListView listView;
   private AdapterAttributes adapterAttributes;
   private SharedPreferences state;
 
-
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
- 
+
     // Link up controls from the xml layout resource file.
     initializeUI();
-    
+
     // Restore UI state.
     state = getSharedPreferences(ActivityDlgAttributes.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedAttribute", -1), true);
+    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
   }
 
   @Override
@@ -72,7 +69,7 @@ public class ActivityDlgAttributes extends Activity {
 
     // Save UI state.
     SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedAttribute", listView.getCheckedItemPosition());
+    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
 
@@ -104,16 +101,16 @@ public class ActivityDlgAttributes extends Activity {
     btnOk.setOnClickListener(listenerBtnClickOk);
     Button btnInfo = (Button) findViewById(R.id.activity_dlg_attributes_btnInfo);
     btnInfo.setOnClickListener(listenerBtnClickInfo);
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_attributes_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_attributes_ll_main));
   }
-  
+
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
+   * this before launching so we appear as a brand new instance.
+   * 
+   * @param context
+   *          Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
@@ -130,14 +127,7 @@ public class ActivityDlgAttributes extends Activity {
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Add help info about attribute.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about the selected attribute soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
 
@@ -146,19 +136,20 @@ public class ActivityDlgAttributes extends Activity {
    */
   private void showDlgFilters(int selectedItemPosition) {
     if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select an attribute from the list, then hit OK!");
+      UtilUI.showAlert(this, getString(R.string.sorry),
+          getString(R.string.select_attribute_alert_inst));
       return;
     }
 
     // Store the selected attribute in the RuleBuilder so the next activity can pick it up.
     ModelAttribute attribute = (ModelAttribute) adapterAttributes.getItem(selectedItemPosition);
     RuleBuilder.instance().setChosenAttribute(attribute);
-    
+
     ActivityDlgFilters.resetUI(this);
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilters.class);
-    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTER);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTER);
   }
 
   /**

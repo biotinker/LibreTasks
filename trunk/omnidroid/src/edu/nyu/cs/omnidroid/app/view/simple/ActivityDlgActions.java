@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
@@ -46,25 +45,23 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
  * action for use with the rule.
  */
 public class ActivityDlgActions extends Activity {
-
   private static final String KEY_STATE = "StateDlgActions";
-  
+  private static final String KEY_PREF = "selectedAction";
   private ListView listView;
   private AdapterActions adapterActions;
   private SharedPreferences state;
 
-
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
- 
+
     // Link up controls from the xml layout resource file.
     initializeUI();
-    
+
     // Restore UI state if possible.
     state = getSharedPreferences(ActivityDlgActions.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedAction", -1), true);
+    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
   }
 
   @Override
@@ -73,7 +70,7 @@ public class ActivityDlgActions extends Activity {
 
     // Save UI state.
     SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedAction", listView.getCheckedItemPosition());
+    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
 
@@ -92,7 +89,7 @@ public class ActivityDlgActions extends Activity {
     // This is the application the user wants to use.
     ModelApplication application = RuleBuilder.instance().getChosenApplication();
 
-    setTitle(application.getTypeName() + " Actions");
+    setTitle(application.getTypeName() + " " + getString(R.string.actions));
 
     adapterActions = new AdapterActions(this, application);
 
@@ -101,27 +98,32 @@ public class ActivityDlgActions extends Activity {
     listView.setAdapter(adapterActions);
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_actions_tv_info1);
+    // TODO(acase): use %s in the string resource and use the string formatter to input
+    //              application.getTypeName()
     mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
 
+    // TODO(acase): Use item select instead of OK button
     Button btnOk = (Button) findViewById(R.id.activity_dlg_actions_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
+
+    // TODO(acase): Move Info to context selection menu
     Button btnInfo = (Button) findViewById(R.id.activity_dlg_actions_btnInfo);
     btnInfo.setOnClickListener(listenerBtnClickInfo);
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_actions_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_actions_ll_main));
   }
-  
+
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
+   * this before launching so we appear as a brand new instance.
+   * 
+   * @param context
+   *          Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
   }
-  
+
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       // The user has chosen an application, now get a list of actions associated
@@ -133,14 +135,7 @@ public class ActivityDlgActions extends Activity {
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) add support for help info on action.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about the selected action soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
 
@@ -149,7 +144,8 @@ public class ActivityDlgActions extends Activity {
    */
   private void showDlgActionInput(int selectedItemPosition) {
     if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select an action from the list above, then hit OK!");
+      UtilUI.showAlert(this, getString(R.string.sorry),
+          getString(R.string.select_action_alert_inst));
       return;
     }
 
@@ -159,7 +155,7 @@ public class ActivityDlgActions extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
-    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
   }
 
   /**

@@ -34,14 +34,14 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
  * we can construct the inner UI elements using <code>FactoryDynamicUI</code>.
  */
 public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI.DlgDynamicInput {
-
+  private static final String TAG = ActivityDlgFilterInput.class.getSimpleName();
   private static final String KEY_STATE = "StateDlgFilterInput";
   public static final int TIME_DIALOG_ID = 0;
 
   /**
    * When the user hits the OK button, we interpret it to mean that they entered valid filter info,
-   * and we can try to construct a filter from it. In the OK handler, we execute the one function 
-   * of this handler to see if their input is OK for the specific filter type chosen.
+   * and we can try to construct a filter from it. In the OK handler, we execute the one function of
+   * this handler to see if their input is OK for the specific filter type chosen.
    */
   private FactoryDynamicUI.InputDone handlerInputDone;
 
@@ -56,13 +56,12 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
   private SharedPreferences state;
 
   /**
-   * By default true, we want to save the UI state when onPause is called. If the user hits the
-   * OK button, and their input constructs a valid filter, we set this to false to skip saving
-   * the UI state. We need this to distinguish between onPause being called in response to the
-   * phone orientation being changed, or the user explicitly telling the dialog to close.
+   * By default true, we want to save the UI state when onPause is called. If the user hits the OK
+   * button, and their input constructs a valid filter, we set this to false to skip saving the UI
+   * state. We need this to distinguish between onPause being called in response to the phone
+   * orientation being changed, or the user explicitly telling the dialog to close.
    */
   private boolean preserveStateOnClose;
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
     try {
       handlerStatePreserver.loadState(state);
     } catch (DataTypeValidationException e) {
-      Log.e("ActivityDlgFilterInput", "Can't load state, " + e);
+      Log.e(TAG, "Can't load state, " + e);
     }
 
     // By default, we want to save UI state on close.
@@ -107,9 +106,6 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_filter_input_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickInfo);
 
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_filter_input_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
-
     // Add dynamic content now based on our filter type.
     ModelFilter modelFilter = RuleBuilder.instance().getChosenModelFilter();
     DataType ruleFilterDataOld = RuleBuilder.instance().getChosenRuleFilterDataOld();
@@ -126,11 +122,11 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
       try {
         filter = (ModelRuleFilter) handlerInputDone.onInputDone(v.getContext());
       } catch (Exception ex) {
-        // TODO: (markww) Make sure DataType classes are providing meaningful error output, then 
+        // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
         // remove the static string below and only use the contents of the exception.
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "There was an error creating your filter, your input was probably bad!:\n"
-            + ex.toString());
+                + ex.toString());
         return;
       }
 
@@ -139,7 +135,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
 
       // We can now dismiss ourselves. Our parent listeners can pick up the
       // constructed filter once we unwind the dialog stack using the
-      // RuleBuilder singleton instance. We don't need of preserve our UI 
+      // RuleBuilder singleton instance. We don't need of preserve our UI
       // state upon closing now.
       preserveStateOnClose = false;
       finish();
@@ -149,15 +145,7 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Add help info about filter.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-      "We'll implement an info dialog about this filter soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      preserveStateOnClose = false;
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
 

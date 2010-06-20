@@ -2,59 +2,37 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_dlg_applications_ll_main"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-	    
-   	<TextView android:id="@+id/activity_dlg_applications_tv_info1"
-       	android:layout_width="fill_parent" 
-       	android:layout_height="wrap_content"  
-       	android:layout_weight="0"
-       	android:paddingTop="0px"
-       	android:paddingLeft="10px"
-       	android:paddingBottom="10px"
-       	android:paddingRight="10px"
-       	android:text="" />
-       	
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/activity_dlg_applications_tv_info1"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:layout_weight="0" android:paddingTop="0px"
+        android:paddingLeft="10px" android:paddingBottom="10px"
+        android:paddingRight="10px" android:text="" />
+
     <FrameLayout android:id="@+id/activity_dlg_applications_frame_list"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="0dip"
-    	android:layout_weight="1" >
-    
-    	<ListView
-          android:id="@+id/activity_dlg_applications_listview"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-          android:paddingLeft="10px"
-       	  android:paddingRight="10px"
-         />
-       
-   	</FrameLayout>
-    
-   	<LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-            
+        android:layout_width="fill_parent" android:layout_height="0dip"
+        android:layout_weight="1">
+
+        <ListView android:id="@+id/activity_dlg_applications_listview"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:paddingLeft="10px" android:paddingRight="10px" />
+
+    </FrameLayout>
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
         <Button android:id="@+id/activity_dlg_applications_btnOk"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:text="@string/ok" />
-            
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:text="@string/ok" />
+
         <Button android:id="@+id/activity_dlg_applications_btnInfo"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:text="@string/info" />
-            
-        <Button android:id="@+id/activity_dlg_applications_btnCancel"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:text="@string/cancel" />
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center" android:text="@string/info" />
+
     </LinearLayout>
-    
+
 </LinearLayout>

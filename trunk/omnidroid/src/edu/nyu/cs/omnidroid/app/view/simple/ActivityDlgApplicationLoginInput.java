@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.factoryui.FactoryActions;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
@@ -72,9 +71,6 @@ public class ActivityDlgApplicationLoginInput extends Activity {
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_input_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickInfo);
 
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_action_input_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
-
     llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
   
     //Add dynamic content from the application
@@ -108,7 +104,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
         
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), ActivityDlgActions.class);
-        startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+        startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
       } catch (Exception ex) {
         UtilUI.showAlert(v.getContext(), "", ex.toString());
         return;
@@ -123,12 +119,4 @@ public class ActivityDlgApplicationLoginInput extends Activity {
           getString(R.string.login_info_details));
     }
   };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      finish();
-    }
-  };
-  
-  
 }

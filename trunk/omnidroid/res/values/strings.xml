@@ -4,9 +4,6 @@
     <!-- TODO: Use in About Omnidroid dialog -->
     <string name="version">0.1.3</string>
 
-    <!--  Page Titles -->
-    <string name="choose_filters_actions_title">Select an item from the list below, then add filters:</string>
-
     <!--  Buttons -->
     <string name="add_filter">Add Filter</string>
     <string name="add_action">Add Action</string>
@@ -29,13 +26,12 @@
     <string name="save_as">Save as</string>
     <string name="save_dialog">Enter a name to remember this OmniHandler by</string>
     <string name="manual_entry">Or, enter data manually:</string>
-    <string name="choose_root_event_title">Pick a root event from the list below to start building your rule:</string>
     <string name="enter_rule_name">Enter a rule name below:</string>
     <string name="enter_rule_description">Enter a rule description below:</string>
-    <string name="your_saved_rules">Your Saved Rules:</string>
+    <string name="your_saved_rules">Your saved rules:</string>
+    <string name="actions">actions</string>
 
     <!--  Common Words -->
-    <string name="omnihandler">OmniHandler</string>
     <string name="about">About</string>
     <string name="next">Next</string>
     <string name="help">Help</string>
@@ -53,6 +49,7 @@
     <string name="yes">Yes</string>
     <string name="sorry">Sorry</string>
     <string name="no">No</string>
+    <string name="coming_soon">We hope to implement this soon.</string>
 
     <!--  Settings -->
     <string name="settings_label">Settings</string>
@@ -64,32 +61,52 @@
     <string name="reset_db">ResetDB</string>
 
     <!--  Settings options -->
-    <string name="delete_all">Delete All OmniHandlers</string>
-    <string name="on_boot">Start OmniDroid at boot time</string>
-    <string name="omniabled">Turn on/off OmniDroid</string>
+    <string name="on_boot">Start Omnidroid at boot time</string>
+    <string name="omniabled">Turn on/off Omnidroid</string>
 
     <!--  Alert on Missing Data -->
-    <string name="missing_action">At least one action must be added.</string>	
-    <string name="missing_data">Data field can not be empty.</string>	
+    <string name="missing_action">At least one action must be added.</string>
+    <string name="missing_data">Data field can not be empty.</string>
     <string name="missing_name">OmniHandler name can not be empty.</string>
     <string name="oh_no">Oh no!</string>
-
     <!--  Help Dialog Texts -->
-    <string name="help_event_intro">OmniHandlers catch events that occur on the platform.</string>
-    <string name="help_event">Select the name of the application whose events you want to catch using this OmniHandler.</string>
-    <string name="help_event_type">Select the type of event that you want to catch.</string>
-    <string name="help_filters">Add filters to limit the events caught by this OmniHandler to a subset of events.\nWhen done adding filters, select \'Done\' to proceed.</string>
-    <string name="help_filters_add_data">Enter the data you want to use for this filter.</string>
-    <string name="help_filters_add_type">Select the type of filter you wish to apply.</string>
-    <string name="help_actions">Add actions that you want OmniDroid to spawn when the event is caught.\nWhen done adding actions, select \'Save\' to save this OmniHandler.</string>
-    <string name="help_action_add">Select the application which will be used to respond for the given event.</string>
-    <string name="help_action_type">Select the action that you want the selected catcher application to respond with.</string>
-    <string name="help_action_data">Listed is the data that the action may need.  Select each data type to set the data to store there.  When finished, select \'Done\' to proceed.</string>
-    <string name="help_action_datum_add">Select from the data provided from the event application, or enter data in manually (ex. 12125550000)</string>
+    <string name="omnidroid_help">Omnidroid Help</string>
+    <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.\n<br/></string>
+    <string name="help_choosefiltersandactions"></string>
+    <string name="help_dlgactioninput"></string>
+    <string name="help_dlgactions"></string>
+    <string name="help_dlgapplicationlogininput"></string>
+    <string name="help_dlgapplications"></string>
+    <string name="help_dlgattributes"></string>
+    <string name="help_dlgfilterinput"></string>
 
     <!--  Actions -->
     <string name="action_default_message">message</string>
+
+    <!--  Activity Titles -->
+    <string name="choose_root_event_title">Choose a root event</string>
+    <string name="addfilters_and_actions_title">Add filters and actions to your rule</string>
+    <string name="attributes_title">Attributes</string>
+    <string name="filters_title">Filters</string>
+    <string name="filter_input_title">Filter Input</string>
+    <string name="applications_title">Applications</string>
+    <string name="show_website_title">Show Website</string>
+    <string name="rule_name_title">Rule Name</string>
+    <string name="saved_rules_title">Saved Rules</string>
+    <string name="login_title">Login</string>
+    <string name="actions_title">Actions</string>
+    <string name="action_input_title">Action Input</string>
     
+    <!--  Activity Instructions -->
+    <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
+    <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
+    <string name="choose_event_inst">Please select an event from the list, then hit OK.</string>    
+    <string name="select_application_inst">Select an application:</string>
+    <string name="select_application_alert_inst">Please select an application from the list, then hit OK.</string>
+    <string name="select_action_alert_inst">Please select an action from the list above, then hit OK!</string>
+    <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK!</string>
+    <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK!</string>
+
     <!--  System Events -->
     
     <!--  UI Strings -->
@@ -103,9 +120,9 @@
     <string name="login_info_details">Please enter your username and password and select the check box to remember it</string>
 
     <!--  Choose Filters and Actions -->
-    <string name="add_filter_alert">Filters can only be added to the root event and other filters! </string>
-    <string name="select_filter_edit">Please select a filter or action from the list to edit! </string>
-    <string name="select_filter_delete">Please select a filter or action from the list to delete! </string>
-    <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule!: </string>
-    <string name="error_catch">There was an error saving your rule!: </string>
+    <string name="add_filter_alert">Filters can only be added to the root event and other filters.</string>
+    <string name="select_filter_edit">Please select a filter or action from the list to edit.</string>
+    <string name="select_filter_delete">Please select a filter or action from the list to delete.</string>
+    <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule:</string>
+    <string name="error_saving_rule">There was an error saving your rule:</string>
 </resources>

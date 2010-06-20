@@ -49,12 +49,6 @@
             android:layout_height="wrap_content" 
             android:layout_gravity="center"
             android:text="@string/info" />
-            
-        <Button android:id="@+id/activity_dlg_attributes_btnCancel"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:text="@string/cancel" />
     </LinearLayout>
     
 </LinearLayout>

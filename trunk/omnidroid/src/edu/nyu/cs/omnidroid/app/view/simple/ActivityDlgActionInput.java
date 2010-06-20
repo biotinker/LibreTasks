@@ -49,7 +49,6 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
  * we can construct the inner UI elements using {@link FactoryDynamicUI}.
  */
 public class ActivityDlgActionInput extends Activity {
-
   private static final String KEY_STATE = "StateDlgActionInput";
   
   /** Layout dynamically generated on our action type by FactoryActions. */
@@ -109,14 +108,12 @@ public class ActivityDlgActionInput extends Activity {
     Button btnOk = (Button) findViewById(R.id.activity_dlg_action_input_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
 
+    // TODO(acase): Only display if applicable
     Button btnAttributes = (Button) findViewById(R.id.activity_dlg_action_input_btnAttributes);
     btnAttributes.setOnClickListener(listenerBtnClickAttributes);
     
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_input_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickInfo);
-
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_action_input_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
     
     llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
 
@@ -186,15 +183,8 @@ public class ActivityDlgActionInput extends Activity {
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Add help info about action.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-        "We'll implement an info dialog about this action soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      preserveStateOnClose = false;
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
+        getString(R.string.coming_soon));
     }
   };
   
@@ -280,8 +270,6 @@ public class ActivityDlgActionInput extends Activity {
 
       Button btnOk = (Button) findViewById(R.id.dlg_attributes_for_action_btnOk);
       btnOk.setOnClickListener(listenerBtnClickOk);
-      Button btnCancel = (Button) findViewById(R.id.dlg_attributes_for_action_btnCancel);
-      btnCancel.setOnClickListener(listenerBtnClickCancel);
 
       UtilUI.inflateDialog((LinearLayout) findViewById(R.id.dlg_attributes_for_action_ll_main));
     }
@@ -298,14 +286,6 @@ public class ActivityDlgActionInput extends Activity {
         }
 
         // The parent activity will pick up our selected attribute from the list.
-        dismiss();
-      }
-    };
-
-    private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-      public void onClick(View v) {
-        // Since the user is canceling the dialog, deselect any items.
-        UtilUI.uncheckListViewSingleChoice(listView);
         dismiss();
       }
     };
