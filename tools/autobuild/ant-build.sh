@@ -5,6 +5,7 @@
 # Notes: This script requires a graphical interface to run.
 #
 # TODO(acase): Sign app and produce a downloadable binary.
+# TODO(acase): Make runs on post-commit and support parallel compilation
 
 #############
 # CONSTANTS #
@@ -28,6 +29,7 @@ ANDROID_BIN_DIR="$ANDROID_HOME/tools"
 PATH="$ANDROID_BIN_DIR:$ANT_BIN_DIR:/usr/local/bin:/opt/bin:/opt/java/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 OMNIDROID_APK="$APP_DIR/bin/Omnidroid-debug.apk"
 OMNIDROID_TEST_APK="$TEST_DIR/bin/Omnidroid-test-debug.apk"
+TEST_CLASS="edu.nyu.cs.omnidroid.app.AllTests"
 TEST_RUNNER="edu.nyu.cs.omnidroid.app.tests/android.test.InstrumentationTestRunner"
 DISPLAY=":0" # Required for emulator to grab graphical interface
 #XAUTH="/tmp/.gdmZALRWU" # Required for emulator to grab graphical interface
@@ -104,7 +106,8 @@ run_tests() {
     echo "  + Installing omnidroid-test onto running emulator" && \
     adb -s $AVD_SERIAL install -r $OMNIDROID_TEST_APK && \
     echo "  + Running Junit Tests on project" && \
-    adb -s $AVD_SERIAL shell am instrument -w $TEST_RUNNER
+    adb -s $AVD_SERIAL shell am instrument -w -e class $TEST_CLASS $TEST_RUNNER
+    return $?
 }
 
 
