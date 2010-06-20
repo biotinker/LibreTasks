@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
 
 /**
@@ -99,7 +98,7 @@ public class ActivitySavedRules extends Activity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case Constants.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS:
+    case ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS:
       // The user returned from the rule building activity. Refresh the list in case they created
       // a new rule, and select the rule currently loaded into RuleBuilder.
       adapterRules.reloadData();
@@ -160,7 +159,8 @@ public class ActivitySavedRules extends Activity {
     
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
-    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS);
+    startActivityForResult(intent,
+        ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS);
   }
 
   private void toggleRuleOnOff(int selectedItemPosition) {

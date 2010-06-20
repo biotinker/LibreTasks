@@ -36,12 +36,6 @@
         android:layout_gravity="center">
       </Button>
 
-      <Button android:text="@string/help" android:id="@+id/activity_chooserootevent_btnHelp"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-      </Button>
-
     </LinearLayout>
 		
   </LinearLayout>

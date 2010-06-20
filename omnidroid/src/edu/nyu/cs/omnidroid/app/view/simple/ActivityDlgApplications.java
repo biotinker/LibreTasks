@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
@@ -46,8 +45,9 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
  * actions available for that application.
  */
 public class ActivityDlgApplications extends Activity {
-
+  // State storage
   private static final String KEY_STATE = "StateDlgApplications";
+  private static final String KEY_PREF = "selectedApplication";
 
   private ListView listView;
   private AdapterApplications adapterApplications;
@@ -63,7 +63,7 @@ public class ActivityDlgApplications extends Activity {
     // Restore UI state.
     state = getSharedPreferences(ActivityDlgApplications.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedApplication", -1), true);
+    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class ActivityDlgApplications extends Activity {
 
     // Save UI state.
     SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedApplication", listView.getCheckedItemPosition());
+    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
 
@@ -87,7 +87,7 @@ public class ActivityDlgApplications extends Activity {
 
   private void initializeUI() {
     setContentView(R.layout.activity_dlg_applications);
-    setTitle("Applications");
+    setTitle(getString(R.string.applications_title));
 
     adapterApplications = new AdapterApplications(this);
 
@@ -96,14 +96,15 @@ public class ActivityDlgApplications extends Activity {
     listView.setAdapter(adapterApplications);
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_applications_tv_info1);
-    mTextViewInfo.setText("Select an application:");
+    mTextViewInfo.setText(getString(R.string.select_application_inst));
 
+    // TODO(acase): Use item select instead of OK button
     Button btnOk = (Button) findViewById(R.id.activity_dlg_applications_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
+
+    // TODO(acase): Move Info to context selection menu
     Button btnInfo = (Button) findViewById(R.id.activity_dlg_applications_btnInfo);
     btnInfo.setOnClickListener(listenerBtnClickInfo);
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_applications_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_applications_ll_main));
   }
@@ -130,14 +131,7 @@ public class ActivityDlgApplications extends Activity {
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Add help info about the application.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-          "We'll implement an info dialog about the selected application soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
 
@@ -146,7 +140,8 @@ public class ActivityDlgApplications extends Activity {
    */
   private void showDlgActions(int selectedItemPosition) {
     if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select an application from the list, then hit OK!");
+      UtilUI.showAlert(this, getString(R.string.sorry),
+          getString(R.string.select_application_alert_inst));
       return;
     }
 
@@ -157,14 +152,14 @@ public class ActivityDlgApplications extends Activity {
 
     Intent intent = new Intent();
 
-    //If the application uses a login window, call the 
+    // If the application uses a login window, call the
     // next window accordingly
-    if(application.getLoginEnabled()){
+    if (application.getLoginEnabled()) {
       intent.setClass(getApplicationContext(), ActivityDlgApplicationLoginInput.class);
-      startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+      startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
     } else {
       intent.setClass(getApplicationContext(), ActivityDlgActions.class);
-      startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_ACTION);
+      startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
     }
 
   }

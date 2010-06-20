@@ -43,14 +43,12 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
  * root event, we move them to {@link ActivityChooseFilters} to continue building their rule.
  */
 public class ActivityChooseRootEvent extends Activity {
-
   private static final String KEY_STATE = "StateActivityChooseRootEvent";
   private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
-  
+
   private ListView listView;
   private AdapterEvents adapterEvents;
   private SharedPreferences state;
-
 
   /**
    * Called when the activity is first created.
@@ -69,11 +67,8 @@ public class ActivityChooseRootEvent extends Activity {
     Button btnCreateRule = (Button) findViewById(R.id.activity_chooserootevent_btnOk);
     btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
 
-    Button btnHelp = (Button) findViewById(R.id.activity_chooserootevent_btnHelp);
-    btnHelp.setOnClickListener(listenerBtnClickHelp);
-
     LinearLayout llBottomButtons = (LinearLayout) findViewById(
-      R.id.activity_chooserootevent_llBottomButtons);
+        R.id.activity_chooserootevent_llBottomButtons);
     llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
 
     // Restore UI control values if possible.
@@ -90,11 +85,13 @@ public class ActivityChooseRootEvent extends Activity {
     prefsEditor.putInt(KEY_STATE_SELECTED_EVENT, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
-  
+
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
+   * this before launching so we appear as a brand new instance.
+   * 
+   * @param context
+   *          Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
@@ -106,8 +103,7 @@ public class ActivityChooseRootEvent extends Activity {
       if (selectedEventPosition > -1 && selectedEventPosition < adapterEvents.getCount()) {
         // The user has chosen a valid root event, store it
         // in the global RuleBuilder.
-        RuleBuilder.instance().resetForNewRuleEditing(
-          adapterEvents.getItem(selectedEventPosition));
+        RuleBuilder.instance().resetForNewRuleEditing(adapterEvents.getItem(selectedEventPosition));
 
         // Wipe UI state for the new activity.
         ActivityChooseFiltersAndActions.resetUI(v.getContext());
@@ -118,18 +114,9 @@ public class ActivityChooseRootEvent extends Activity {
         intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
         startActivity(intent);
       } else {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select an event from the list, then hit OK.");
+        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
+            getString(R.string.choose_root_event_inst));
       }
-    }
-  };
-
-  private OnClickListener listenerBtnClickHelp = new OnClickListener() {
-    public void onClick(View v) {
-      // TODO: (markww) Add help info about event.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-          "Help is not yet available for events. Eventually this would "
-              + "show details about each event type.");
     }
   };
 
@@ -160,10 +147,11 @@ public class ActivityChooseRootEvent extends Activity {
     }
 
     /**
-     * This function will be called once for every element in the listView control, when it needs 
-     * to draw itself. It should return a constructed view representing the data in the position
-     * specified. Each element in the listView is an Event item, so we display the Event's icon 
-     * and title. 
+     * This function will be called once for every element in the listView control, when it needs to
+     * draw itself. It should return a constructed view representing the data in the position
+     * specified. Each element in the listView is an Event item, so we display the Event's icon and
+     * title.
+     * 
      * TODO: Use convertView when possible instead of always creating new views.
      */
     public View getView(int position, View convertView, ViewGroup parent) {

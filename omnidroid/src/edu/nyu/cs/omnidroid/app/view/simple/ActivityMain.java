@@ -140,10 +140,9 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
     public void onClick(View v) {
-      ActivityChooseRootEvent.resetUI(v.getContext());
-
       // User wants to create a new rule, move them to the ActivityChooseRootEvent
       // activity so they can choose the root event.
+      ActivityChooseRootEvent.resetUI(v.getContext());
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityChooseRootEvent.class);
       startActivity(intent);
@@ -156,7 +155,6 @@ public class ActivityMain extends Activity {
   private OnClickListener listenerBtnClickViewRules = new OnClickListener() {
     public void onClick(View v) {
       ActivitySavedRules.resetUI(v.getContext());
-
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivitySavedRules.class);
       startActivity(intent);
@@ -178,8 +176,15 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickHelp = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: Implement showing help activity.
-      UtilUI.showAlert(v.getContext(), "Sorry!", "Help is not yet available!");
+        Builder help = new AlertDialog.Builder(v.getContext());
+        help.setTitle(R.string.omnidroid_help);
+        help.setIcon(R.drawable.icon);
+        help.setMessage(Html.fromHtml(getString(R.string.help_activitymain)));
+        help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+          }
+        });
+        help.show();
     }
   };
 

@@ -89,21 +89,12 @@ public class ActivityDlgRuleName extends Activity {
     
     Button btnOk = (Button) findViewById(R.id.activity_dlg_rule_name_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_rule_name_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
   }
 
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       setRuleNameAndDescription(editTextRuleName.getText().toString(), 
         editTextRuleDescription.getText().toString());
-    }
-  };
-  
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      setResult(RESULT_CANCELED);
-      finish();
     }
   };
 

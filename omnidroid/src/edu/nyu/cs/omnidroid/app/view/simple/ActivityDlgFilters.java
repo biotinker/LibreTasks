@@ -35,24 +35,21 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.Constants;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
 
 /**
- * This activity shows a list of all filters associated with the selected attribute. After the 
- * user selects a filter, we can move them to a final dialog where they input data about the
- * selected filter for use with the rule.
+ * This activity shows a list of all filters associated with the selected attribute. After the user
+ * selects a filter, we can move them to a final dialog where they input data about the selected
+ * filter for use with the rule.
  */
 public class ActivityDlgFilters extends Activity {
-
   private static final String KEY_STATE = "StateDlgFilters";
-  
+  private static final String KEY_PREF = "selectedFilter";
   private ListView listView;
   private AdapterFilters adapterFilters;
   private SharedPreferences state;
-
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -60,20 +57,19 @@ public class ActivityDlgFilters extends Activity {
 
     // Link up controls from the xml layout resource file.
     initializeUI();
-    
+
     // Restore UI state if possible.
     state = getSharedPreferences(ActivityDlgFilters.KEY_STATE, Context.MODE_WORLD_READABLE
         | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedFilter", -1), true);
+    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-
     // Save UI state.
     SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedFilter", listView.getCheckedItemPosition());
+    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
 
@@ -107,16 +103,16 @@ public class ActivityDlgFilters extends Activity {
     btnOk.setOnClickListener(listenerBtnClickOk);
     Button btnInfo = (Button) findViewById(R.id.activity_dlg_filters_btnInfo);
     btnInfo.setOnClickListener(listenerBtnClickInfo);
-    Button btnCancel = (Button) findViewById(R.id.activity_dlg_filters_btnCancel);
-    btnCancel.setOnClickListener(listenerBtnClickCancel);
 
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_filters_ll_main));
   }
-  
+
   /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
+   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
+   * this before launching so we appear as a brand new instance.
+   * 
+   * @param context
+   *          Context of caller.
    */
   public static void resetUI(Context context) {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
@@ -133,14 +129,7 @@ public class ActivityDlgFilters extends Activity {
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) add support for help info on filter.
-      UtilUI.showAlert(v.getContext(), "Sorry!",
-        "We'll implement an info dialog about the selected filter soon!");
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickCancel = new View.OnClickListener() {
-    public void onClick(View v) {
-      finish();
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
 
@@ -149,7 +138,8 @@ public class ActivityDlgFilters extends Activity {
    */
   private void showDlgFilterInput(int selectedItemPosition) {
     if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select a filter from the list, then hit OK!");
+      UtilUI.showAlert(this, getString(R.string.sorry),
+          getString(R.string.select_filter_alert_inst));
       return;
     }
 
@@ -159,7 +149,7 @@ public class ActivityDlgFilters extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
-    startActivityForResult(intent, Constants.ACTIVITY_RESULT_ADD_FILTER);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTER);
   }
 
   /**
@@ -198,7 +188,7 @@ public class ActivityDlgFilters extends Activity {
       ll.setOrientation(LinearLayout.HORIZONTAL);
       ll.setGravity(Gravity.CENTER_VERTICAL);
 
-      //the icon of the filter
+      // the icon of the filter
       ImageView iv = new ImageView(context);
       iv.setImageResource(filters.get(position).getIconResId());
       iv.setAdjustViewBounds(true);
@@ -208,7 +198,7 @@ public class ActivityDlgFilters extends Activity {
         iv.setBackgroundResource(R.drawable.icon_hilight);
       }
 
-      //the description of the filter
+      // the description of the filter
       TextView tv = new TextView(context);
       tv.setText(filters.get(position).getDescriptionShort());
       tv.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,

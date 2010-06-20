@@ -17,7 +17,7 @@
         </activity>
         
         <activity android:name=".view.simple.ActivityChooseRootEvent"
-                  android:label="Choose a root event">
+                  android:label="@string/choose_root_event_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -25,7 +25,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityChooseFiltersAndActions"
-                  android:label="Add filters and actions to your rule!">
+                  android:label="@string/addfilters_and_actions_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -33,7 +33,7 @@
         </activity>        
 
         <activity android:name=".view.simple.ActivityDlgAttributes"
-                  android:label="Attributes"
+                  android:label="@string/attributes_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -42,7 +42,7 @@
         </activity>        
 
         <activity android:name=".view.simple.ActivityDlgFilters"
-                  android:label="Filters"
+                  android:label="@string/filters_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -51,7 +51,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgFilterInput"
-                  android:label="Filter Input"
+                  android:label="@string/filter_input_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -60,7 +60,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgApplications"
-                  android:label="Applications"
+                  android:label="@string/applications_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -69,7 +69,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgActions"
-                  android:label="Actions"
+                  android:label="@string/actions_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -78,7 +78,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgActionInput"
-                  android:label="Action Input"
+                  android:label="@string/action_input_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -87,7 +87,7 @@
         </activity>
 
          <activity android:name=".view.simple.ActivityDlgApplicationLoginInput"
-                  android:label="Login"
+                  android:label="@string/login_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -96,7 +96,7 @@
         </activity>
         
         <activity android:name=".view.simple.ActivitySavedRules"
-                  android:label="Saved Rules">
+                  android:label="@string/saved_rules_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -112,7 +112,7 @@
         </activity>        
 
         <activity android:name=".view.simple.ActivityDlgRuleName"
-                  android:label="Rule Name"
+                  android:label="@string/rule_name_title"
                   android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -121,7 +121,7 @@
         </activity>
 
         <activity android:name=".controller.util.ShowWebsiteActivity"
-                  android:label="Show Website">
+                  android:label="@string/show_website_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
