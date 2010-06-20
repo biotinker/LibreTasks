@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,8 +37,10 @@ import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
  * can choose to create a new rule, view existing rules, or see help items.
  */
 public class ActivityMain extends Activity {
-  private SharedPreferences settings; 
-  
+  private SharedPreferences settings;
+  private static final int SETTINGS_ID = 0;
+  private static final int LOG_ID = 1;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -104,6 +108,31 @@ public class ActivityMain extends Activity {
   public void onDestroy() {
     super.onDestroy();
     UIDbHelperStore.instance().releaseResources();
+  }
+
+  /** Create a options menu for the main screen */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(Menu.NONE, LOG_ID, Menu.NONE, getString(R.string.event_log))
+      .setAlphabeticShortcut('l');
+    menu.add(Menu.NONE, SETTINGS_ID, Menu.NONE, getString(R.string.settings_label))
+      .setIcon(android.R.drawable.ic_menu_preferences)
+      .setAlphabeticShortcut('s');
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  /** Called when an item of options menu is clicked */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case LOG_ID:
+      // TODO (Fang Huang): migrate View Logs here
+      return true;
+    case SETTINGS_ID:
+      startActivity(new Intent(this, ActivitySettings.class));
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   /**

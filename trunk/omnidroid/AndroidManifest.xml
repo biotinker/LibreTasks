@@ -85,7 +85,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+
          <activity android:name=".view.simple.ActivityDlgApplicationLoginInput"
                   android:label="Login"
                   android:theme="@android:style/Theme.Dialog">
@@ -102,7 +102,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+
+        <activity android:name=".view.simple.ActivitySettings"
+                  android:label="@string/settings_label">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+
         <activity android:name=".view.simple.ActivityDlgRuleName"
                   android:label="Rule Name"
                   android:theme="@android:style/Theme.Dialog">
