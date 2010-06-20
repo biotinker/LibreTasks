@@ -88,7 +88,11 @@ public class DbMigration {
     case 5:
       addCallEndEvent(db);
 
-      // insert new versions before this line
+      /*
+       * Insert new versions before this line and do not forget to update {@code
+       * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
+       * trigger the {@code onUpgrade} callback method.
+       */
       break;
     default:
       Log.w(TAG, "Attempting to migrate from an unknown version!");
