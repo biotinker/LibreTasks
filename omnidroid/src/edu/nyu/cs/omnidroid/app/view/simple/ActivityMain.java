@@ -103,7 +103,7 @@ public class ActivityMain extends Activity {
     editor.putBoolean(DbHelper.SETTING_ACCEPTED_DISCLAIMER, accepted);
     editor.commit();
   }
-  
+
   @Override
   public void onDestroy() {
     super.onDestroy();
@@ -114,10 +114,10 @@ public class ActivityMain extends Activity {
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     menu.add(Menu.NONE, LOG_ID, Menu.NONE, getString(R.string.event_log))
-      .setAlphabeticShortcut('l');
+        .setAlphabeticShortcut('l');
     menu.add(Menu.NONE, SETTINGS_ID, Menu.NONE, getString(R.string.settings_label))
-      .setIcon(android.R.drawable.ic_menu_preferences)
-      .setAlphabeticShortcut('s');
+        .setIcon(android.R.drawable.ic_menu_preferences)
+        .setAlphabeticShortcut('s');
     return super.onCreateOptionsMenu(menu);
   }
 
@@ -166,8 +166,10 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewLogs = new OnClickListener() {
     public void onClick(View v) {
-      // TODO: Implement showing logs activity.
-      UtilUI.showAlert(v.getContext(), "Sorry!", "Viewing event logs is not yet implemented!");
+      ActivityEventLog.resetUI(v.getContext());
+      Intent intent = new Intent();
+      intent.setClass(getApplicationContext(), ActivityEventLog.class);
+      startActivity(intent);
     }
   };
 
@@ -176,15 +178,15 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickHelp = new OnClickListener() {
     public void onClick(View v) {
-        Builder help = new AlertDialog.Builder(v.getContext());
-        help.setTitle(R.string.omnidroid_help);
-        help.setIcon(R.drawable.icon);
-        help.setMessage(Html.fromHtml(getString(R.string.help_activitymain)));
-        help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-          }
-        });
-        help.show();
+      Builder help = new AlertDialog.Builder(v.getContext());
+      help.setTitle(R.string.omnidroid_help);
+      help.setIcon(R.drawable.icon);
+      help.setMessage(Html.fromHtml(getString(R.string.help_activitymain)));
+      help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+        }
+      });
+      help.show();
     }
   };
 

@@ -11,7 +11,6 @@
     <string name="plus_action">+Action</string>
     <string name="create_rule">Create Rule</string>
     <string name="view_rules">View Rules</string>
-    <string name="event_log">Event Log</string>
     <string name="on_off">On/Off</string>
 
     <!--  Miscellaneous -->
@@ -71,7 +70,7 @@
     <string name="oh_no">Oh no!</string>
     <!--  Help Dialog Texts -->
     <string name="omnidroid_help">Omnidroid Help</string>
-    <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.\n<br/></string>
+    <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.</string>
     <string name="help_choosefiltersandactions"></string>
     <string name="help_dlgactioninput"></string>
     <string name="help_dlgactions"></string>
@@ -96,6 +95,7 @@
     <string name="login_title">Login</string>
     <string name="actions_title">Actions</string>
     <string name="action_input_title">Action Input</string>
+    <string name="event_log">Event Log</string>
     
     <!--  Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>

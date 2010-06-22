@@ -18,17 +18,18 @@ package edu.nyu.cs.omnidroid.app.controller;
 import java.util.List;
 
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
-import edu.nyu.cs.omnidroid.app.controller.util.OmLogger;
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.util.Log;
 
 /**
  * The ActionExecuter is the engine which will execute all actions.
  */
 public class ActionExecuter {
+  private static final String TAG = ActionExecuter.class.getSimpleName();
+
   /**
    * Execute a list of actions in the given context.
    * 
@@ -57,15 +58,14 @@ public class ActionExecuter {
         }
       } catch (SecurityException e) {
         // Omnidroid does not have permission to perform this action
-        Log.w("Action Executer:", e.toString(), e);
-        Log.w("Action Executer: ", e.getLocalizedMessage());
-        OmLogger.write(context, "No permissions to perform this action: " + action.getActionName());
+        Logger.w(TAG, e.toString(), e);
+        Logger.w(TAG, e.getLocalizedMessage());
+        Logger.w(TAG, "No permissions to perform this action: " + action.getActionName());
       } catch (ActivityNotFoundException e) {
         // No activity found to perform this action
-        Log.w("Action Executer:", e.toString(), e);
-        Log.w("Action Executer: ", e.getLocalizedMessage());
-        OmLogger.write(context, "No activity found to perform this action: "
-            + action.getActionName());
+        Logger.w(TAG, e.toString(), e);
+        Logger.w(TAG, e.getLocalizedMessage());
+        Logger.w(TAG, "No activity found to perform this action: " + action.getActionName());
       }
     }
   }

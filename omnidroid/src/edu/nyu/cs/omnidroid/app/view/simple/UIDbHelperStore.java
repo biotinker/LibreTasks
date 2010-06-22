@@ -11,7 +11,9 @@ import edu.nyu.cs.omnidroid.app.model.UIDbHelper;
  * provides the UI package with representations of the core data. It needs to be initialized with a
  * <code>Context</code> instance, thus it is not a collection of static methods. The functionality
  * of this class could be merged directly into UIDbHelper, it would simply act as the singleton
- * instance itself. TODO: (markww) Discuss merging this directly into UIDbHelper.
+ * instance itself.
+ * 
+ * TODO: (markww) Discuss merging this directly into UIDbHelper.
  */
 public class UIDbHelperStore {
   private static final String TAG = UIDbHelperStore.class.getSimpleName();
@@ -61,7 +63,7 @@ public class UIDbHelperStore {
   public DataTypeIDLookup getDatatypeLookup() {
     return datatypeLookup;
   }
-  
+
   /**
    * Release all resources held by this helper.
    */

@@ -21,7 +21,7 @@ import android.content.Intent;
  * This class encapsulates a generic event. It wraps the {@link android.content.Intent} that
  * triggered this event and provides access to any attribute data associated with it. Event should
  * be overridden by a class that describes the actual event and provides access to its specific data
- * attributes. TODO(londinop): Add event logging support
+ * attributes.
  */
 public abstract class Event {
   /** The name of the event for data lookup */
@@ -53,7 +53,7 @@ public abstract class Event {
   public String getAppName() {
     return appName;
   }
-  
+
   /**
    * Returns the name of the event
    * 

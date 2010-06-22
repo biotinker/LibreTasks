@@ -19,7 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import edu.nyu.cs.omnidroid.app.controller.util.OmLogger;
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 
 /**
  * The Broadcast receiver receives any intent that is broadcast either by the system or by any other
@@ -27,7 +27,8 @@ import edu.nyu.cs.omnidroid.app.controller.util.OmLogger;
  * permission to receive the specific intent, in the applications Manifest.xml file.
  */
 public class BCReceiver extends BroadcastReceiver {
-
+  public static final String TAG = BCReceiver.class.getSimpleName();
+  
   @Override
   public void onReceive(Context context, Intent intent) {
     try {
@@ -36,8 +37,8 @@ public class BCReceiver extends BroadcastReceiver {
       context.startService(intent);
       Log.i("Received Intent", intent.getAction());
     } catch (Exception e) {
-      Log.i("Exception in Intent", e.getLocalizedMessage());
-      OmLogger.write(context, "Unable to execute required action");
+      Logger.i(TAG, e.getLocalizedMessage());
+      Logger.i(TAG, "Unable to execute required action");
     }
   }
 }

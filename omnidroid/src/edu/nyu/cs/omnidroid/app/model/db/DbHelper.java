@@ -37,10 +37,10 @@ public class DbHelper extends SQLiteOpenHelper {
   }
 
   private static final String TAG = DbHelper.class.getName();
-  
+
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 6;
-  
+  private static final int DATABASE_VERSION = 7;
+
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
   private static final String DATABASE_FOLDER = "/databases/";
@@ -70,7 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     DbMigration.migrateToLatest(db, oldVersion);
   }
-  
+
   /**
    * Cleanup the DB, including user defined rules
    * 
@@ -102,6 +102,7 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(RuleFilterDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
+    db.execSQL(LogEventDbAdapter.DATABASE_DROP);
   }
 
   /**
@@ -111,7 +112,7 @@ public class DbHelper extends SQLiteOpenHelper {
     Log.w(TAG, "Backing up" + DATABASE_NAME);
     IOUtil.copy(databaseDir() + DATABASE_NAME, databaseDir() + DATABASE_NAME_BACKUP);
   }
-  
+
   /**
    * Removing the current database file
    */
@@ -144,7 +145,7 @@ public class DbHelper extends SQLiteOpenHelper {
   }
 
   /**
-   * @return the sharedPreferences to allow for get/setting of user preferences. 
+   * @return the sharedPreferences to allow for get/setting of user preferences.
    */
   public SharedPreferences getSharedPreferences() {
     return context.getSharedPreferences(SHARED_PREFS, 0);
