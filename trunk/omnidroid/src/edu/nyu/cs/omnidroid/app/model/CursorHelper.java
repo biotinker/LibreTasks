@@ -20,44 +20,44 @@ import android.database.Cursor;
 /**
  * This class provide with some helper method for manipulating cursor
  */
-public class CursorHelper{
-  
+public class CursorHelper {
+
   /**
    * Helper method to get integer column value from cursor.
    * 
    * @param cursor
    *          is the cursor to get value from
-   *          
+   * 
    * @param columnName
    *          is name of the column to get
-   *          
+   * 
    * @return integer value of the specific column within the cursor
    */
   public static int getIntFromCursor(Cursor cursor, String columnName) {
     return cursor.getInt(cursor.getColumnIndex(columnName));
   }
-  
+
   /**
    * Helper method to get integer column value from cursor.
    * 
    * @param cursor
    *          is the cursor to get value from
-   *          
+   * 
    * @param columnName
    *          is name of the column to get
-   *          
-   * @return integer value of the specific column within the cursor
+   * 
+   * @return String value of the specific column within the cursor
    */
   public static String getStringFromCursor(Cursor cursor, String columnName) {
     return cursor.getString(cursor.getColumnIndex(columnName));
   }
-  
+
   /**
    * Helper method to get long column value from cursor.
    * 
    * @param cursor
    *          is the cursor to get value from
-   *          
+   * 
    * @param columnName
    *          is name of the column to get
    * 
@@ -66,20 +66,20 @@ public class CursorHelper{
   public static long getLongFromCursor(Cursor cursor, String columnName) {
     return cursor.getLong(cursor.getColumnIndex(columnName));
   }
-  
+
   /**
    * Helper method to get boolean value from a column
    * 
    * @param cursor
    *          is the cursor to get value from
-   *          
+   * 
    * @param columnName
    *          is name of the column to get
-   *          
+   * 
    * @return boolean value of the specific column within the cursor
    */
   public static boolean getBooleanFromCursor(Cursor cursor, String columnName) {
-     return cursor.getInt(cursor.getColumnIndex(columnName)) == 1;
+    return cursor.getInt(cursor.getColumnIndex(columnName)) == 1;
   }
-  
+
 }

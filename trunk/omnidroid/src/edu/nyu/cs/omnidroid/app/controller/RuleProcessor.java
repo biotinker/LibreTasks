@@ -17,8 +17,7 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
 
@@ -28,6 +27,7 @@ import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
  * rule matches the event.
  */
 public class RuleProcessor {
+  private static final String TAG = RuleProcessor.class.getSimpleName();
 
   /**
    * This is a static utility class which cannot be instantiated.
@@ -49,19 +49,19 @@ public class RuleProcessor {
   public static ArrayList<Action> getActions(Event event, CoreRuleDbHelper coreRuleDbHelper,
       CoreActionsDbHelper coreActionsDbHelper) {
 
-    ArrayList<Rule> rules = coreRuleDbHelper.getRulesMatchingEvent(event.getAppName(), event.getEventName());
-    Log.d("RuleProcessor", "get " + rules.size() + " rule(s) for event " + event.getEventName() + 
-    		" from App " + event.getAppName());
-    
-    ArrayList<Action> actions = new ArrayList<Action>();
+    ArrayList<Rule> rules = coreRuleDbHelper.getRulesMatchingEvent(event.getAppName(), event
+        .getEventName());
+    Logger.d(TAG, "get " + rules.size() + " rule(s) for event " + event.getEventName()
+        + " from App " + event.getAppName());
 
+    ArrayList<Action> actions = new ArrayList<Action>();
     for (Rule currentRule : rules) {
       if (currentRule.passesFilters(event)) {
         actions.addAll(currentRule.getActions(coreActionsDbHelper, event));
       }
     }
-    Log.d("RuleProcessor", "get " + actions.size() + " action(s) for event " + event.getEventName() + 
-        " from App " + event.getAppName());
+    Logger.d(TAG, "get " + actions.size() + " action(s) for event " + event.getEventName()
+        + " from App " + event.getAppName());
     return actions;
   }
 }

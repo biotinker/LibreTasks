@@ -20,12 +20,11 @@ import java.util.ArrayList;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
-import edu.nyu.cs.omnidroid.app.controller.bkgservice.BCReceiver;
-import edu.nyu.cs.omnidroid.app.controller.util.OmLogger;
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
+import edu.nyu.cs.omnidroid.app.model.LogEvent;
 
 /**
  * This class is the heart of OmniDroid. When this class receives a system intent from
@@ -36,6 +35,7 @@ import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
  */
 public class HandlerService extends Service {
 
+  private static final String TAG = HandlerService.class.getSimpleName();
   /**
    * @see android.app.Service#onCreate()
    */
@@ -55,28 +55,31 @@ public class HandlerService extends Service {
     Event event = IntentParser.getEvent(intent);
 
     if (event != null) {
+      LogEvent logEvent = new LogEvent(this, event);
+      logEvent.Log();
       CoreRuleDbHelper coreRuleDbHelper = new CoreRuleDbHelper(this);
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
+
+      // Get a list of actions that apply to this event.
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
           coreActionsDbHelper);
       
       coreActionsDbHelper.close();
       coreRuleDbHelper.close();
       
-      Log.d("HandlerService", "get " + actions.size() + " action(s) for event " + intent.getAction());
+      Logger.d("HandlerService", "get " + actions.size() + " action(s) for event " + intent.getAction());
       // Execute the list of actions.
       try {
         ActionExecuter.executeActions(this, actions);
       } catch (OmnidroidException e) {
-        Log.w("Handler Service:", e.toString(), e);
-        Log.w("Handler Service: ", e.getLocalizedMessage());
-        OmLogger.write(this, "Illegal Execution Method");
+        Logger.w(TAG, e.toString(), e);
+        Logger.w(TAG, e.getLocalizedMessage());
+        Logger.w(TAG, "Illegal Execution Method");
       }
-      // TODO(londinop): Log events/actions to a database or content provider
     }
     
     stopSelf();
-  }
+  }  
 
   /**
    * @see android.app.Service#onBind(Intent)

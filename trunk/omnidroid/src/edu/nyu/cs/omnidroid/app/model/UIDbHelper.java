@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.FactoryDataType;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.LogEventDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
@@ -56,16 +57,20 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
 import edu.nyu.cs.omnidroid.app.view.simple.model.RuleNode;
 
 /**
- * This class serves as an access layer of the database for Omnidroid's UI data model 
+ * This class serves as an access layer of the database for Omnidroid's UI data model
  * representation.
  * 
  * TODO(ehotou) Consider throwing exceptions when db operations failed.
  */
 public class UIDbHelper {
+  private static final String TAG = UIDbHelper.class.getSimpleName();
 
+  // Database management
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
-  
+  private Context context;
+
+  // Database Adapters
   private DataTypeDbAdapter dataTypeDbAdapter;
   private DataFilterDbAdapter dataFilterDbAdapter;
   private RegisteredAppDbAdapter registeredAppDbAdapter;
@@ -90,10 +95,10 @@ public class UIDbHelper {
 
   // Get user configured settings
   private SharedPreferences settings;
-  
+
   // This flag marks whether this helper is closed
   private boolean isClosed = false;
-  
+
   /**
    * Reset the db, drop all necessary table, and recreate them and repopulate them again
    */
@@ -102,9 +107,10 @@ public class UIDbHelper {
   }
 
   public UIDbHelper(Context context) {
+    this.context = context;
     omnidroidDbHelper = new DbHelper(context);
     database = omnidroidDbHelper.getWritableDatabase();
-    
+
     // Initialize db adapters
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
     dataFilterDbAdapter = new DataFilterDbAdapter(database);
@@ -133,8 +139,8 @@ public class UIDbHelper {
   }
 
   /**
-   * Close the UIDbHelper. UI needs to call this method when it is done with the database 
-   * connection. UIDbHelper is not usable after calling this method. 
+   * Close the UIDbHelper. UI needs to call this method when it is done with the database
+   * connection. UIDbHelper is not usable after calling this method.
    */
   public void close() {
     isClosed = true;
@@ -148,16 +154,16 @@ public class UIDbHelper {
   private void loadDbCache() {
 
     // TODO(ehotou) Consider lazy initialization for some of these stuff.
-    
+
     // Load Preferences
     settings = omnidroidDbHelper.getSharedPreferences();
-    
+
     // Load DataTypes
     Cursor cursor = dataTypeDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
       dataTypeNames.put(getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID),
           getStringFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPENAME));
-      dataTypeClassNames.put(getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID), 
+      dataTypeClassNames.put(getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID),
           getStringFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPECLASSNAME));
     }
     cursor.close();
@@ -165,7 +171,7 @@ public class UIDbHelper {
     // Load Filters
     cursor = dataFilterDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
-      
+
       dataFilterNames.put(getLongFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERID),
           getStringFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERDISPLAYNAME));
     }
@@ -174,15 +180,14 @@ public class UIDbHelper {
     // Load Applications
     cursor = registeredAppDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
-      ModelApplication application = new ModelApplication(
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME), 
-            "", //TODO(ehotou) After implementing desc for app, load it here
-            R.drawable.icon_application_unknown, 
-            getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID),
-            getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN),
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME),
-            getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD)
-            );
+      ModelApplication application = new ModelApplication(getStringFromCursor(cursor,
+          RegisteredAppDbAdapter.KEY_APPNAME), "", // TODO(ehotou) After implementing desc for app,
+                                                   // load it here
+          R.drawable.icon_application_unknown, getLongFromCursor(cursor,
+              RegisteredAppDbAdapter.KEY_APPID), getBooleanFromCursor(cursor,
+              RegisteredAppDbAdapter.KEY_LOGIN), getStringFromCursor(cursor,
+              RegisteredAppDbAdapter.KEY_USERNAME), getStringFromCursor(cursor,
+              RegisteredAppDbAdapter.KEY_PASSWORD));
       applications.put(application.getDatabaseId(), application);
     }
     cursor.close();
@@ -190,53 +195,55 @@ public class UIDbHelper {
     // Load Events in alphabetical order
     cursor = registeredEventDbAdapter.fetchAllOrdered();
     while (cursor.moveToNext()) {
-      ModelEvent event = new ModelEvent(
-          getLongFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTID),
-          getStringFromCursor(cursor, RegisteredEventDbAdapter.KEY_EVENTNAME), 
-          "", //TODO(ehotou) After implementing description for event, load it here
+      ModelEvent event = new ModelEvent(getLongFromCursor(cursor,
+          RegisteredEventDbAdapter.KEY_EVENTID), getStringFromCursor(cursor,
+          RegisteredEventDbAdapter.KEY_EVENTNAME), "", // TODO(ehotou) After implementing
+                                                       // description for event, load it here
           R.drawable.icon_event_unknown);
       events.put(event.getDatabaseId(), event);
     }
     cursor.close();
-    
+
     // Load Event Attributes
     cursor = registeredEventAttributeDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
-      ModelAttribute attribute = new ModelAttribute(
-          getLongFromCursor(cursor, RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID), 
-          getLongFromCursor(cursor, RegisteredEventAttributeDbAdapter.KEY_EVENTID), 
-          getLongFromCursor(cursor, RegisteredEventAttributeDbAdapter.KEY_DATATYPEID), 
-          getStringFromCursor(cursor, RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME), 
-          "", //TODO(ehotou) After implementing desc for attribute, load it here
+      ModelAttribute attribute = new ModelAttribute(getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID), getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTID), getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME), "", // TODO(ehotou) After
+                                                                         // implementing desc for
+                                                                         // attribute, load it here
           R.drawable.icon_attribute_unknown);
-      
+
       attributes.put(attribute.getDatabaseId(), attribute);
     }
     cursor.close();
 
-    // Load Action Parameters  
+    // Load Action Parameters
     cursor = registeredActionParameterDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
-      ModelParameter parameter = new ModelParameter(
-          getLongFromCursor(cursor, RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID),
-          getLongFromCursor(cursor, RegisteredActionParameterDbAdapter.KEY_ACTIONID),
-          getLongFromCursor(cursor, RegisteredActionParameterDbAdapter.KEY_DATATYPEID),
-          getStringFromCursor(cursor, RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME),
-          "" //TODO(ehotou) After implementing desc for parameter, load it here
-          );
-      
+      ModelParameter parameter = new ModelParameter(getLongFromCursor(cursor,
+          RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID), getLongFromCursor(cursor,
+          RegisteredActionParameterDbAdapter.KEY_ACTIONID), getLongFromCursor(cursor,
+          RegisteredActionParameterDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
+          RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME), "" // TODO(ehotou) After
+                                                                          // implementing desc for
+                                                                          // parameter, load it here
+      );
+
       parameters.put(parameter.getDatabaseId(), parameter);
     }
     cursor.close();
-    
+
     // Load Actions
     cursor = registeredActionDbAdapter.fetchAll();
     while (cursor.moveToNext()) {
-      ModelApplication application = applications.get(
-          getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID));
-      
+      ModelApplication application = applications.get(getLongFromCursor(cursor,
+          RegisteredActionDbAdapter.KEY_APPID));
+
       long actionID = getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID);
-      
+
       // Load parameters for each action
       ArrayList<ModelParameter> parameterList = new ArrayList<ModelParameter>();
       for (ModelParameter parameter : parameters.values()) {
@@ -245,11 +252,11 @@ public class UIDbHelper {
         }
       }
 
-      ModelAction action = new ModelAction(
-          getStringFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONNAME), 
-          "", //TODO(ehotou) After implementing desc for action, load it here
+      ModelAction action = new ModelAction(getStringFromCursor(cursor,
+          RegisteredActionDbAdapter.KEY_ACTIONNAME), "", // TODO(ehotou) After implementing desc for
+                                                         // action, load it here
           R.drawable.icon_action_unknown, actionID, application, parameterList);
-      
+
       actions.put(actionID, action);
     }
     cursor.close();
@@ -260,10 +267,10 @@ public class UIDbHelper {
    * 
    * @param dataTypeID
    *          is id of the dataType to be created
-   *          
+   * 
    * @param data
    *          is the content of the data within the dataType object
-   *          
+   * 
    * @return a dataType object
    */
   private DataType getDataType(long dataTypeID, String data) {
@@ -273,80 +280,84 @@ public class UIDbHelper {
 
   /**
    * @return all applications as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<ModelApplication> getAllApplications() {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    ArrayList<ModelApplication> applicationList = new ArrayList<ModelApplication>(
-        applications.size());
+    ArrayList<ModelApplication> applicationList = new ArrayList<ModelApplication>(applications
+        .size());
     applicationList.addAll(applications.values());
     return applicationList;
   }
-  
+
   /**
    * Updates the application username and password in the database.
    * 
    * @param modelApp
    *          the application object to be updated
    * @return true if success, or false otherwise.
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public boolean updateApplicationLoginInfo(ModelApplication modelApp) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    return registeredAppDbAdapter.update(modelApp.getDatabaseId(),
-            null, null, null, null, modelApp.getUsername()
-            , modelApp.getPassword()); 
+    return registeredAppDbAdapter.update(modelApp.getDatabaseId(), null, null, null, null, modelApp
+        .getUsername(), modelApp.getPassword());
   }
-  
+
   /**
-   * Clears the application username and password in the database.
-   * Sets them as empty strings.
+   * Clears the application username and password in the database. Sets them as empty strings.
    * 
    * @param modelApp
    *          the application object to be updated
    * @return true if success, or false otherwise.
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public boolean clearApplicationLoginInfo(ModelApplication modelApp) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
-    }  
+      throw new IllegalStateException(TAG + " is closed.");
+    }
     return registeredAppDbAdapter.update(modelApp.getDatabaseId(), null, null, null, null, "", "");
   }
-  
+
   /**
-   * @param appDatabaseId  the application database Id
+   * @param appDatabaseId
+   *          the application database Id
    * @return application
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ModelApplication getApplication(long appDatabaseId) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
+
     Cursor cursor = registeredAppDbAdapter.fetch(appDatabaseId);
     String typeName = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPNAME);
-    long databaseID = getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID); 
+    long databaseID = getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID);
     boolean loginEnabled = getBooleanFromCursor(cursor, RegisteredAppDbAdapter.KEY_LOGIN);
     String username = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_USERNAME);
     String password = getStringFromCursor(cursor, RegisteredAppDbAdapter.KEY_PASSWORD);
     cursor.close();
-    
+
     return new ModelApplication(typeName, "", R.drawable.icon_application_unknown, databaseID,
         loginEnabled, username, password);
   }
 
   /**
    * @return all events as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<ModelEvent> getAllEvents() {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
     ArrayList<ModelEvent> eventList = new ArrayList<ModelEvent>(events.size());
     eventList.addAll(events.values());
@@ -356,13 +367,14 @@ public class UIDbHelper {
   /**
    * @param application
    *          is a ModelApplication object
-   *          
+   * 
    * @return all actions associated with one application as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<ModelAction> getActionsForApplication(ModelApplication application) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
     ArrayList<ModelAction> actionList = new ArrayList<ModelAction>(actions.size());
     for (ModelAction action : actions.values()) {
@@ -376,17 +388,18 @@ public class UIDbHelper {
   /**
    * @param event
    *          is a ModelEvent object
-   *          
+   * 
    * @return all attributes associated with one event as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
     ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>(attributes.size());
     for (ModelAttribute attribute : attributes.values()) {
-      if(attribute.getForeignKeyEventId() == event.getDatabaseId()) {
+      if (attribute.getForeignKeyEventId() == event.getDatabaseId()) {
         attributesList.add(attribute);
       }
     }
@@ -396,28 +409,28 @@ public class UIDbHelper {
   /**
    * @param attribute
    *          is a ModelAttribute object
-   *          
+   * 
    * @return all filters associated with one attribute as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<ModelFilter> getFiltersForAttribute(ModelAttribute attribute) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
-    // Fetch all filter that filters on this attribute's dataType, set filterName to null, 
+
+    // Fetch all filter that filters on this attribute's dataType, set filterName to null,
     // set compareWithDatatypeID to null
     Cursor cursor = dataFilterDbAdapter.fetchAll(null, null, attribute.getDatatype(), null);
     ArrayList<ModelFilter> filterList = new ArrayList<ModelFilter>(cursor.getCount());
-    
+
     while (cursor.moveToNext()) {
       long filterID = getLongFromCursor(cursor, DataFilterDbAdapter.KEY_DATAFILTERID);
       String filterName = dataFilterNames.get(filterID);
 
-      filterList.add(new ModelFilter(filterName, 
-              "" // TODO(ehotou) After implementing desc for filter, load it here 
-              , R.drawable.icon_filter_unknown, filterID,
-              attribute));
+      filterList.add(new ModelFilter(filterName, "" // TODO(ehotou) After implementing desc for
+                                                    // filter, load it here
+          , R.drawable.icon_filter_unknown, filterID, attribute));
     }
     cursor.close();
     return filterList;
@@ -425,16 +438,17 @@ public class UIDbHelper {
 
   /**
    * @return all Rule objects (sparse version just contains id, name and enabled) as an ArrayList
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public ArrayList<Rule> getRules() {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
+
     Cursor cursor = ruleDbAdapter.fetchAll();
     ArrayList<Rule> ruleList = new ArrayList<Rule>(cursor.getCount());
-    
+
     while (cursor.moveToNext()) {
       ruleList.add(loadRuleSparse(cursor));
     }
@@ -445,22 +459,23 @@ public class UIDbHelper {
   /**
    * @param ruleId
    *          is the rule id
-   *          
+   * 
    * @return a fully loaded Rule object with databaseId
-   * @throws IllegalStateException if this helper is closed
+   * @throws IllegalStateException
+   *           if this helper is closed
    */
   public Rule loadRule(long ruleId) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
+
     Cursor cursorRule = ruleDbAdapter.fetch(ruleId);
 
     Rule rule = loadRuleSparse(cursorRule);
 
     // Fetch and set the root event.
     ModelEvent event = events.get(getLongFromCursor(cursorRule, RuleDbAdapter.KEY_EVENTID));
-    rule.setRootEvent(event);    
+    rule.setRootEvent(event);
     Log.d("UIDbhelper", "rule name: " + rule.getName());
     // Add all filters for this rule to the root node in a tree format.
     addFiltersToRuleNode(ruleId, rule.getRootNode());
@@ -475,9 +490,9 @@ public class UIDbHelper {
 
     return rule;
   }
-  
+
   /**
-   * @return a sparse version of rule object 
+   * @return a sparse version of rule object
    */
   private Rule loadRuleSparse(Cursor cursorRule) {
     Rule rule = new Rule(getLongFromCursor(cursorRule, RuleDbAdapter.KEY_RULEID));
@@ -503,53 +518,51 @@ public class UIDbHelper {
 
     // Map<filterId, filterParentId>, for all filters of the rule.
     HashMap<Long, Long> parentIds = new HashMap<Long, Long>();
-    
+
     // All filters keyed by filterId for quick lookup below.
     HashMap<Long, ModelRuleFilter> filtersUnlinked = new HashMap<Long, ModelRuleFilter>();
 
     // Fetch all ruleFilter associated with this rule, set other parameters to be null
-    Cursor cursorRuleFilters = ruleFilterDbAdapter.fetchAll(ruleId, null, null, null,
-        null, null);
-    
+    Cursor cursorRuleFilters = ruleFilterDbAdapter.fetchAll(ruleId, null, null, null, null, null);
+
     while (cursorRuleFilters.moveToNext()) {
 
       // Get attribute that this ruleFilter associated with
-      ModelAttribute attribute = attributes.get(
-          getLongFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID));
+      ModelAttribute attribute = attributes.get(getLongFromCursor(cursorRuleFilters,
+          RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID));
 
       // Load the user defined data within this rule filter
-      String filterInputFromUser = getStringFromCursor(
-          cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERDATA);
+      String filterInputFromUser = getStringFromCursor(cursorRuleFilters,
+          RuleFilterDbAdapter.KEY_RULEFILTERDATA);
       Log.d("addFiltersToRuleNode", "trying to construct a " + attribute.getDatatype()
           + " dataType with: " + filterInputFromUser);
-      
+
       // For filters, first load up the model filter, then supply it to
       // the model rule filter instance.
       long filterID = getLongFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_DATAFILTERID);
       String filterName = dataFilterNames.get(filterID);
-      
+
       Cursor cursorFilter = dataFilterDbAdapter.fetch(filterID);
       long compareWithDataTypeId = getLongFromCursor(cursorFilter,
           DataFilterDbAdapter.KEY_COMPAREWITHDATATYPEID);
-      
+
       // Construct a data type object
       DataType filterData = getDataType(compareWithDataTypeId, filterInputFromUser);
 
       Log.d("addFiltersToRuleNode", "The object constructed is : " + filterData);
-      
-      ModelFilter modelFilter = new ModelFilter(filterName, 
-          "", // TODO(ehotou) After implementing desc for filter, load it here.
+
+      ModelFilter modelFilter = new ModelFilter(filterName, "", // TODO(ehotou) After implementing
+                                                                // desc for filter, load it here.
           R.drawable.icon_filter_unknown, filterID, attribute);
 
-      ModelRuleFilter filter = new ModelRuleFilter(
-          getLongFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_RULEFILTERID), 
-          modelFilter, filterData);
+      ModelRuleFilter filter = new ModelRuleFilter(getLongFromCursor(cursorRuleFilters,
+          RuleFilterDbAdapter.KEY_RULEFILTERID), modelFilter, filterData);
 
       // Insert filterId, filterParentId
-      long filterParentId = getLongFromCursor(cursorRuleFilters, 
+      long filterParentId = getLongFromCursor(cursorRuleFilters,
           RuleFilterDbAdapter.KEY_PARENTRULEFILTERID);
       parentIds.put(filter.getDatabaseId(), filterParentId);
-      
+
       // Store the filter instance itself.
       filtersUnlinked.put(filter.getDatabaseId(), filter);
       cursorFilter.close();
@@ -591,46 +604,43 @@ public class UIDbHelper {
    */
   private ArrayList<ModelRuleAction> getActionsForRule(long ruleId) {
     Cursor cursorRuleActions = ruleActionDbAdapter.fetchAll(ruleId, null);
-    
-    ArrayList<ModelRuleAction> ruleActionList = new ArrayList<ModelRuleAction>(
-        cursorRuleActions.getCount());
-    
+
+    ArrayList<ModelRuleAction> ruleActionList = new ArrayList<ModelRuleAction>(cursorRuleActions
+        .getCount());
+
     while (cursorRuleActions.moveToNext()) {
-      
-      long ruleActionID = getLongFromCursor(cursorRuleActions, 
-          RuleActionDbAdapter.KEY_RULEACTIONID);
-      
+
+      long ruleActionID = getLongFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_RULEACTIONID);
+
       // Get the action
-      ModelAction action = actions.get(
-          getLongFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_ACTIONID));
-      
+      ModelAction action = actions.get(getLongFromCursor(cursorRuleActions,
+          RuleActionDbAdapter.KEY_ACTIONID));
+
       // Get parameters of this action
       ArrayList<ModelParameter> actionParameters = action.getParameters();
-      
+
       // Get user data
-      Cursor cursorRuleActionParameters = ruleActionParameterDbAdapter.fetchAll(
-          ruleActionID, null, null);
-      
+      Cursor cursorRuleActionParameters = ruleActionParameterDbAdapter.fetchAll(ruleActionID, null,
+          null);
+
       int count = cursorRuleActionParameters.getCount();
-      
-      ArrayList<DataType> userData = new ArrayList<DataType>(count);      
-      
+
+      ArrayList<DataType> userData = new ArrayList<DataType>(count);
+
       for (int j = 0; j < count; j++) {
         cursorRuleActionParameters.moveToNext();
-        
-        DataType data = getDataType(actionParameters.get(j).getDatatype(), 
-            getStringFromCursor(cursorRuleActionParameters, 
-                RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA));
-        
+
+        DataType data = getDataType(actionParameters.get(j).getDatatype(), getStringFromCursor(
+            cursorRuleActionParameters, RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA));
+
         userData.add(data);
       }
-      
-      ModelRuleAction ruleAction = new ModelRuleAction(
-          getLongFromCursor(cursorRuleActions, RuleActionDbAdapter.KEY_RULEACTIONID),
-          action, userData);
-      
+
+      ModelRuleAction ruleAction = new ModelRuleAction(getLongFromCursor(cursorRuleActions,
+          RuleActionDbAdapter.KEY_RULEACTIONID), action, userData);
+
       cursorRuleActionParameters.close();
-      
+
       ruleActionList.add(ruleAction);
     }
     cursorRuleActions.close();
@@ -647,9 +657,9 @@ public class UIDbHelper {
    */
   public long saveRule(Rule rule) throws Exception {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
+
     ModelEvent event = (ModelEvent) rule.getRootNode().getItem();
     ArrayList<RuleNode> ruleFilterList = rule.getFilterBranches();
     ArrayList<ModelRuleAction> ruleActionList = rule.getActions();
@@ -657,26 +667,24 @@ public class UIDbHelper {
     if (rule.getDatabaseId() > 0) {
       deleteRule(rule.getDatabaseId());
     }
-    
+
     String ruleName = rule.getName();
     String ruleDesc = rule.getDescription();
-    long ruleID = ruleDbAdapter.insert(
-      event.getDatabaseId(), 
-      ruleName == null || ruleName.length() == 0 ? "New Rule" : ruleName, 
-      ruleDesc == null || ruleDesc.length() == 0 ? "" : ruleDesc, 
-      rule.getIsEnabled());
+    long ruleID = ruleDbAdapter.insert(event.getDatabaseId(), ruleName == null
+        || ruleName.length() == 0 ? "New Rule" : ruleName, ruleDesc == null
+        || ruleDesc.length() == 0 ? "" : ruleDesc, rule.getIsEnabled());
 
     // Create all ruleAction records
     for (ModelRuleAction ruleAction : ruleActionList) {
-      
-      long ruleActionID = ruleActionDbAdapter.insert(ruleID,
-          ruleAction.getModelAction().getDatabaseId());  
-      
+
+      long ruleActionID = ruleActionDbAdapter.insert(ruleID, ruleAction.getModelAction()
+          .getDatabaseId());
+
       ArrayList<ModelParameter> parameterList = ruleAction.getModelAction().getParameters();
       ArrayList<DataType> dataList = ruleAction.getDatas();
       for (int i = 0; i < dataList.size(); i++) {
-        ruleActionParameterDbAdapter.insert(ruleActionID, 
-          parameterList.get(i).getDatabaseId(), dataList.get(i).toString());
+        ruleActionParameterDbAdapter.insert(ruleActionID, parameterList.get(i).getDatabaseId(),
+            dataList.get(i).toString());
       }
     }
 
@@ -684,7 +692,7 @@ public class UIDbHelper {
     for (RuleNode filterNode : ruleFilterList) {
       saveFilterRuleNode(ruleID, -1, filterNode);
     }
-    
+
     return ruleID;
   }
 
@@ -697,21 +705,18 @@ public class UIDbHelper {
   private void saveFilterRuleNode(long ruleID, long parentRuleNodeID, RuleNode node) {
 
     ModelRuleFilter filter = (ModelRuleFilter) node.getItem();
-    
-    long ruleFilterID = ruleFilterDbAdapter.insert(ruleID, 
-        filter.getModelFilter().getAttribute().getDatabaseId(), 
-        -1L, // TODO(ehotou) after implementing external, insert it here
+
+    long ruleFilterID = ruleFilterDbAdapter.insert(ruleID, filter.getModelFilter().getAttribute()
+        .getDatabaseId(), -1L, // TODO(ehotou) after implementing external, insert it here
         // TODO: (ehotou) verify ModelFilter id is what we want here (not ModelRuleFilter):
-        filter.getModelFilter().getDatabaseId(), 
-        parentRuleNodeID, 
-        filter.getData().toString());
+        filter.getModelFilter().getDatabaseId(), parentRuleNodeID, filter.getData().toString());
 
     // insert all children filters recursively:
     for (RuleNode filterNode : node.getChildren()) {
       saveFilterRuleNode(ruleID, ruleFilterID, filterNode);
     }
   }
-  
+
   /**
    * Delete a rule record as well as ruleAction, ruleActionParameter and ruleFilters records
    * associated with it.
@@ -721,65 +726,65 @@ public class UIDbHelper {
    */
   public void deleteRule(long ruleID) {
     if (isClosed) {
-      throw new IllegalStateException("UIDbHelper is closed.");
+      throw new IllegalStateException(TAG + " is closed.");
     }
-    
+
     ruleDbAdapter.delete(ruleID);
-    
+
     // Delete all rule actions from database
     Cursor cursorRuleAction = ruleActionDbAdapter.fetchAll(ruleID, null);
     while (cursorRuleAction.moveToNext()) {
-      
+
       long ruleActionID = getLongFromCursor(cursorRuleAction, RuleActionDbAdapter.KEY_RULEACTIONID);
       ruleActionDbAdapter.delete(ruleActionID);
-      
+
       // Delete all rule parameters of this rule action
-      Cursor cursorRuleActionParameter = ruleActionParameterDbAdapter.fetchAll(
-          ruleActionID, null, null);
+      Cursor cursorRuleActionParameter = ruleActionParameterDbAdapter.fetchAll(ruleActionID, null,
+          null);
       while (cursorRuleActionParameter.moveToNext()) {
-        long ruleActionParameterID = getLongFromCursor(cursorRuleActionParameter, 
+        long ruleActionParameterID = getLongFromCursor(cursorRuleActionParameter,
             RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERID);
         ruleActionParameterDbAdapter.delete(ruleActionParameterID);
       }
       cursorRuleActionParameter.close();
-      
+
     }
     cursorRuleAction.close();
-    
+
     // Delete all rule filters from database
-    Cursor cursorFilter = ruleFilterDbAdapter.fetchAll(ruleID, null, null, null, 
-        null, null);
+    Cursor cursorFilter = ruleFilterDbAdapter.fetchAll(ruleID, null, null, null, null, null);
     while (cursorFilter.moveToNext()) {
       long ruleFilterID = getLongFromCursor(cursorFilter, RuleFilterDbAdapter.KEY_RULEFILTERID);
       ruleFilterDbAdapter.delete(ruleFilterID);
     }
     cursorFilter.close();
   }
-  
+
   /**
    * Delete certain set of rules
+   * 
    * @param rules
    *          is the set of Rules to be deleted
    */
   public void deleteRules(List<? extends Rule> rules) {
-    for(Rule rule:rules) {
+    for (Rule rule : rules) {
       deleteRule(rule.getDatabaseId());
     }
   }
-  
+
   /**
    * Delete all rules
    */
   public void deleteAllRules() {
     deleteRules(getRules());
   }
-  
+
   /**
    * Update enabled flag of one rule record
    * 
    * @param ruleID
    *          is id of the rule record to be updated
-   *          
+   * 
    * @param enabled
    *          is the enabled flag
    */
@@ -787,12 +792,55 @@ public class UIDbHelper {
     ruleDbAdapter.update(ruleID, null, null, null, enabled);
   }
 
+  public List<LogEvent> getEventLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
+    Cursor cursor = logEventDbAdapter.fetchAll();
+    ArrayList<LogEvent> eventLogList = new ArrayList<LogEvent>(cursor.getCount());
+
+    while (cursor.moveToNext()) {
+      eventLogList.add(loadEventLogSparse(cursor));
+    }
+    cursor.close();
+    return eventLogList;
+  }
+
+  private LogEvent loadEventLogSparse(Cursor cursor) {
+    LogEvent eventLog = new LogEvent(context, getLongFromCursor(cursor,
+        LogEventDbAdapter.KEY_LOGEVENTID));
+    eventLog.setTimestamp(getLongFromCursor(cursor, LogEventDbAdapter.KEY_TIMESTAMP));
+    eventLog.setAppName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_APPNAME));
+    eventLog.setEventName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME));
+    return eventLog;
+  }
+
+  public Cursor getEventLogsCursor() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
+    Cursor cursor = logEventDbAdapter.fetchAll();
+    return cursor;
+  }
 
   /**
-   * @return the sharedPreferences to allow for get/setting of user preferences. 
+   * @return the sharedPreferences to allow for get/setting of user preferences.
    */
   public SharedPreferences getSharedPreferences() {
     return settings;
   }
 
+  public Cursor getEventLogCursor(long eventID) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
+    Cursor cursor = logEventDbAdapter.fetch(eventID);
+    return cursor;
+  }
 }

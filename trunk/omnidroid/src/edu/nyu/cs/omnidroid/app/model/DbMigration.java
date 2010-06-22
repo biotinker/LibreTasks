@@ -47,6 +47,7 @@ import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.ExternalAttributeDbAdapter;
+import edu.nyu.cs.omnidroid.app.model.db.LogEventDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionParameterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
@@ -87,6 +88,8 @@ public class DbMigration {
       initialVersion(db);
     case 5:
       addCallEndEvent(db);
+    case 6:
+      addLogEvent(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -193,8 +196,8 @@ public class DbMigration {
      * Populate registered events and event attributes
      */
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
-    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = 
-      new RegisteredEventAttributeDbAdapter(db);
+    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(
+        db);
 
     for (SystemEvent e : SystemEvent.values()) {
       eventDbAdapter.insert(e.EVENT_NAME, appIdAndroid);
@@ -227,8 +230,8 @@ public class DbMigration {
      * Populate registered actions and action parameters
      */
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-    RegisteredActionParameterDbAdapter actionParameterDbAdapter = new RegisteredActionParameterDbAdapter(
-        db);
+    RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
+        RegisteredActionParameterDbAdapter(db);
 
     long actionIdDisplayMessage = actionDbAdapter.insert(ShowAlertAction.ACTION_NAME,
         appIdOmnidroid);
@@ -287,8 +290,8 @@ public class DbMigration {
    */
   private static void addCallEndEvent(SQLiteDatabase db) {
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
-    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = 
-      new RegisteredEventAttributeDbAdapter(db);
+    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new 
+        RegisteredEventAttributeDbAdapter(db);
 
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
     Cursor dataTypeDbCursor = dataTypeDbAdapter
@@ -308,5 +311,17 @@ public class DbMigration {
         dataTypeIdDate);
 
     dataTypeDbCursor.close();
+  }
+
+  /**
+   * Add table to provide {@code LogEvent} support.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void addLogEvent(SQLiteDatabase db) {
+    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(db);
+    // Create table
+    db.execSQL(logEventDbAdapter.getSqliteCreateStatement());
   }
 }

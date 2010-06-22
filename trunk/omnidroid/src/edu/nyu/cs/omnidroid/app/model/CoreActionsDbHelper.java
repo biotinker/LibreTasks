@@ -39,7 +39,7 @@ import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
-import edu.nyu.cs.omnidroid.app.controller.util.OmLogger;
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
@@ -54,6 +54,7 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
  */
 public class CoreActionsDbHelper {
   private static final String TAG = CoreActionsDbHelper.class.getSimpleName();
+
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
   private RuleActionDbAdapter ruleActionDbAdpater;
@@ -61,7 +62,6 @@ public class CoreActionsDbHelper {
   private RegisteredActionDbAdapter registeredActionDbAdapter;
   private RegisteredActionParameterDbAdapter registeredActionParameterDbAdapter;
   private RegisteredAppDbAdapter registeredAppDbAdapter;
-  private Context context;
 
   // Action info constants
   private final int APP_NAME = 0;
@@ -70,7 +70,6 @@ public class CoreActionsDbHelper {
   public CoreActionsDbHelper(Context context) {
     omnidroidDbHelper = new DbHelper(context);
     database = omnidroidDbHelper.getReadableDatabase();
-    this.context = context;
 
     // Initialize db adapters
     ruleActionDbAdpater = new RuleActionDbAdapter(database);
@@ -409,9 +408,9 @@ public class CoreActionsDbHelper {
         action = getAction(appName, actionName, actionParams);
         actions.add(action); // add action to actions ArrayList
       } catch (OmnidroidException e) {
-        Log.w(this.getClass().getName() + ": ", e.toString(), e);
-        Log.w(this.getClass().getName() + ": ", e.getLocalizedMessage());
-        OmLogger.write(context, "Action " + actionName + " cannot be initialized");
+        Logger.w(TAG, e.toString(), e);
+        Logger.w(TAG, e.getLocalizedMessage());
+        Logger.w(TAG, "Action " + actionName + " cannot be initialized");
       }
     }
     return actions;
