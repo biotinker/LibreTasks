@@ -82,7 +82,7 @@
     <!--  Actions -->
     <string name="action_default_message">message</string>
 
-    <!--  Activity Titles -->
+    <!--  General Activity Titles -->
     <string name="choose_root_event_title">Choose a root event</string>
     <string name="addfilters_and_actions_title">Add filters and actions to your rule</string>
     <string name="attributes_title">Attributes</string>
@@ -97,7 +97,7 @@
     <string name="action_input_title">Action Input</string>
     <string name="event_log">Event Log</string>
     
-    <!--  Activity Instructions -->
+    <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
     <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
     <string name="choose_event_inst">Please select an event from the list, then hit OK.</string>    
@@ -113,6 +113,7 @@
     <string name="pick_start_time">Pick a start time:</string>
     <string name="pick_end_time">Pick an end time:</string>
     <string name="pick_time">Pick a time:</string>
+    <string name="clear_logs">Clear Logs</string>
     
     <!--  UI Login -->
     <string name="stay_signed_in">Stay Signed in</string>

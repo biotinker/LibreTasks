@@ -19,15 +19,17 @@ import java.util.ArrayList;
 
 import android.app.ExpandableListActivity;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.model.LogEvent;
 import edu.nyu.cs.omnidroid.app.model.UIDbHelper;
 
@@ -47,18 +49,19 @@ public class ActivityEventLog extends ExpandableListActivity {
 
   // Store state
   private static final String KEY_STATE = "StateActivityEventLog";
-
+  private static final int MENU_CLEAR_LOGS = 1;
+  
   private ExpandableListAdapter logListAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    updateActivity();
+  }
 
-    // Query for logs
-    Cursor cursor = UIDbHelperStore.instance().db().getEventLogsCursor();
-
-    // Set up our adapter
-    logListAdapter = new LogListAdapter(this, cursor);
+  private void updateActivity() {
+    // Update our list
+    logListAdapter = new LogListAdapter(this);
     setListAdapter(logListAdapter);
   }
 
@@ -73,16 +76,40 @@ public class ActivityEventLog extends ExpandableListActivity {
     UtilUI.resetSharedPreferences(context, KEY_STATE);
   }
 
+  /** Create a options menu for the main screen */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(Menu.NONE, MENU_CLEAR_LOGS, Menu.NONE, getString(R.string.clear_logs))
+        .setAlphabeticShortcut('c')
+        .setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  /** Called when an item of options menu is clicked */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_CLEAR_LOGS:
+      UIDbHelper dbHelper = new UIDbHelper(this);
+      dbHelper.deleteAllLogs();
+      updateActivity();
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
   /**
    * This is a small adapter class that allows for the display of EventLog items in an {@code
    * ExpandableListAdapter}
+   * 
+   * TODO(acase): Replace this with a context menu similar to CallLog
    */
   public class LogListAdapter extends BaseExpandableListAdapter {
     private static final int LOGS_PER_ITEM = 1;
 
     private ArrayList<LogEvent> logs;
 
-    LogListAdapter(Context context, Cursor cursor) {
+    LogListAdapter(Context context) {
       UIDbHelper dbHelper = new UIDbHelper(context);
       logs = (ArrayList<LogEvent>) dbHelper.getEventLogs();
     }

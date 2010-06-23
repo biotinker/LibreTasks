@@ -82,7 +82,8 @@ public class UIDbHelper {
   private RuleActionDbAdapter ruleActionDbAdapter;
   private RuleActionParameterDbAdapter ruleActionParameterDbAdapter;
   private RuleDbAdapter ruleDbAdapter;
-
+  private LogEventDbAdapter logEventDbAdapter;
+  
   // Hash maps for storing cached data for quick lookup
   private HashMap<Long, String> dataTypeNames;
   private HashMap<Long, String> dataTypeClassNames;
@@ -123,6 +124,7 @@ public class UIDbHelper {
     ruleActionDbAdapter = new RuleActionDbAdapter(database);
     ruleActionParameterDbAdapter = new RuleActionParameterDbAdapter(database);
     ruleDbAdapter = new RuleDbAdapter(database);
+    logEventDbAdapter = new LogEventDbAdapter(database);
 
     // Initialize db cache
     dataTypeNames = new HashMap<Long, String>();
@@ -843,4 +845,12 @@ public class UIDbHelper {
     Cursor cursor = logEventDbAdapter.fetch(eventID);
     return cursor;
   }
+
+  public void deleteAllLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    logEventDbAdapter.deleteAll();
+ }
 }
