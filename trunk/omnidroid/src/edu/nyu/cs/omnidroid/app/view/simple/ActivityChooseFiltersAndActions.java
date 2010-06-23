@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelItem;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
+import java.util.List;
 
 /**
  * This activity is used to add multiple filters or actions to a new rule.
@@ -43,7 +45,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private static final String KEY_STATE = "StateActivityChooseFilters";
   private static final String KEY_PREF = "selectedRuleItem";
   private SharedPreferences state;
-  
+
   /** Return code for filter building activities. */
   public static final int ACTIVITY_RESULT_ADD_FILTER = 0;
   /** Return code for action building activities. */
@@ -53,7 +55,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
   /** Return code for action editing activities. */
   public static final int ACTIVITY_RESULT_EDIT_ACTION = 3;
   /** Return code for rule name editing activity. */
-  public static final int ACTIVITY_RESULT_RULE_NAME = 4;  
+  public static final int ACTIVITY_RESULT_RULE_NAME = 4;
   /** Return code for rule building activity. */
   public static final int ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS = 5;
 
@@ -154,10 +156,22 @@ public class ActivityChooseFiltersAndActions extends Activity {
     adapterRule.setRule(RuleBuilder.instance().getRule());
   }
 
-  private void initializeButtonPanel() {
+  /**
+   * Checks whether the currently chosen event has attributes
+   * 
+   * @return true if it has at least one attribute
+   */
+  private boolean hasAttributes() {
+    ModelEvent event = RuleBuilder.instance().getChosenEvent();
+    List<ModelAttribute> attributes = UIDbHelperStore.instance().db().getAttributesForEvent(event);
 
+    return !attributes.isEmpty();
+  }
+
+  private void initializeButtonPanel() {
     Button btnAddFilter = (Button) findViewById(R.id.activity_choosefiltersandactions_btnAddFilter);
     btnAddFilter.setOnClickListener(listenerBtnClickAddFilter);
+    btnAddFilter.setEnabled(hasAttributes());
 
     Button btnAddAction = (Button) findViewById(R.id.activity_choosefiltersandactions_btnAddAction);
     btnAddAction.setOnClickListener(listenerBtnClickAddAction);
