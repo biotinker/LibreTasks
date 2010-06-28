@@ -20,6 +20,6 @@ The solution that the team came up with is to perform a database migration inste
 
 To make changes on the database, just do the following:
  * Create a new private method in DbMigration that will perform the database update and call the new method inside DbMigration.migrateToLatest()
- * Increment the value of DbHelper.DATABASE_VERSION
+ * Increment the value of the DATABASE_VERSION at DbHelper.java
 
-The database migration implementation is made in issue 71 and details on the code changes with sample database update can be seen on this [http://codereview.appspot.com/1683041 code review].
+The database migration implementation is made in issue 71 and details on the code changes with sample database update can be seen on this [http://codereview.appspot.com/1683041 code review] (Just check DbHelper.java and DbMigration.java for the gist).
