@@ -28,7 +28,7 @@ import edu.nyu.cs.omnidroid.app.controller.Rule;
 import edu.nyu.cs.omnidroid.app.controller.RuleProcessor;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
+import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CursorHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
@@ -42,7 +42,7 @@ public class RuleProcessorTest extends AndroidTestCase {
   Event event;
   private SQLiteDatabase database;
   private DbHelper omnidroidDbHelper;
-  CoreRuleDbHelper coreRuleDbHelper;
+  CoreRulesDbHelper coreRulesDbHelper;
   CoreActionsDbHelper coreActionsDbHelper;
 
   public void setUp() {
@@ -51,7 +51,7 @@ public class RuleProcessorTest extends AndroidTestCase {
 
     omnidroidDbHelper = new DbHelper(this.getContext());
     database = omnidroidDbHelper.getWritableDatabase();
-    coreRuleDbHelper = new CoreRuleDbHelper(getContext());
+    coreRulesDbHelper = new CoreRulesDbHelper(getContext());
     coreActionsDbHelper = new CoreActionsDbHelper(getContext());
 
     omnidroidDbHelper.backup();
@@ -84,7 +84,7 @@ public class RuleProcessorTest extends AndroidTestCase {
     expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_SAYHELLO, event));
     expectedActions.add(RuleTestData.getAction(RuleTestData.ACTION_DND2, event));
 
-    ArrayList<Action> actualActions = RuleProcessor.getActions(event, coreRuleDbHelper,
+    ArrayList<Action> actualActions = RuleProcessor.getActions(event, coreRulesDbHelper,
         coreActionsDbHelper);
     assertEquals(expectedActions.size(), actualActions.size());
   }
@@ -122,7 +122,7 @@ public class RuleProcessorTest extends AndroidTestCase {
     for (Long ruleID : ruleIDs) {
       ruleDbAdapter.delete(ruleID);
     }
-    assertEquals(0, RuleProcessor.getActions(anotherEvent, coreRuleDbHelper, coreActionsDbHelper)
+    assertEquals(0, RuleProcessor.getActions(anotherEvent, coreRulesDbHelper, coreActionsDbHelper)
         .size());
   }
 }

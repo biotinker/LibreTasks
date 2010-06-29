@@ -22,7 +22,7 @@ import android.test.AndroidTestCase;
 import edu.nyu.cs.omnidroid.app.controller.Rule;
 import edu.nyu.cs.omnidroid.app.controller.RuleTestData;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
-import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
+import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 
 /**
@@ -32,7 +32,7 @@ public class CoreRuleDbHelperTest extends AndroidTestCase {
 
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
-  private CoreRuleDbHelper coreDbHelper;
+  private CoreRulesDbHelper coreDbHelper;
 
   @Override
   protected void setUp() throws Exception {
@@ -40,7 +40,7 @@ public class CoreRuleDbHelperTest extends AndroidTestCase {
     omnidroidDbHelper = new DbHelper(this.getContext());
     database = omnidroidDbHelper.getWritableDatabase();
 
-    coreDbHelper = new CoreRuleDbHelper(getContext());
+    coreDbHelper = new CoreRulesDbHelper(getContext());
 
     omnidroidDbHelper.backup();
     RuleTestData.prePopulateDatabase(database);
