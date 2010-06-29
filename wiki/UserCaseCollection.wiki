@@ -1,0 +1,34 @@
+This is an incomplete list of what Omnidroid can do or will do in the near future. I believe talented and creative guys like you can found much more cool things that Omnidroid help to make your life easier and better. If you have any suggest feature or new user stories, share with us. 
+
+      *  Active Development: *
+          o If you are pissed off with ur bf/gf or some advertising company, and just
+want to delete their sms's without reading them, then OmniDroid will delete them from
+inbox or auto reply “leave me alone!”.
+	          o If you can not remember where you left your android phone at home, just send an Email to your phone/gmail account with the subject line as “Find me!”. Your android phone will ring at max volume to help you find it. 
+          o If I receiving and incoming calls and our phone is in "silent" mode, then
+automatically reply with an SMS message.
+          o If the power level is low, and we receive and incoming call,
+automatically ignore the call
+	          o  Automatic sent sms/email wishing Happy Birthday at a certain time, or a meeting reminder. 
+
+    * Wishlist:*
+	          o android phone is lost -> Send an email which contains GPS location 
+          o 1st event of the day -> Alarm Wake up
+          o Birthday -> Toast Action
+          o Cold/Rainy Weather -> Toast Msg/Suggest Clothing
+          o Toast Action -> Email/SMS/Call
+          o Date/Time -> Suggest Meals
+          o Email Recd -> Organize/respond based on status
+          o Location -> Set phone profile
+	          o calendar event notification -> send an automatic email or SMS to a recipient or list of recipients.
+          o Set Mood -> Choose Music Playlist
+          o Update profile on one app -> Update profile on others
+          o New song playing -> update away msg
+          o Specific song plays -> Picture Display
+          o Get email from a contact -> Queue song associated with them
+          o Locale coordinate changes -> BooRah (Restaurant listings and reviews)
+          o Alert on Stock Ticker -> Send email to Broker
+          o Update "Not Well" Status -> Send notification to Bosses/Friends
+          o WiFi network -> Automatically connect
+ 	          o Time is Midnight -> Email daily phone usage summary
+          o If location is changing rapidly -> Activate GPS logging to keep track of speed/path/etc, send email or publish somewhere.
