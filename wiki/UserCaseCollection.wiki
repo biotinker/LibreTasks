@@ -1,6 +1,6 @@
 This is an incomplete list of what Omnidroid can do or will do in the near future. I believe talented and creative guys like you can found much more cool things that Omnidroid help to make your life easier and better. If you have any suggest feature or new user stories, share with us. 
 
-_Active Development:_<br> 
+_Active Development:_
  
 o If you are pissed off with ur bf/gf or some advertising company, and just
 want to delete their sms's without reading them, then OmniDroid will delete them from
