@@ -4,16 +4,23 @@ _Active Development:_
 o If you are pissed off with ur bf/gf or some advertising company, and just
 want to delete their sms's without reading them, then OmniDroid will delete them from
 inbox or auto reply “leave me alone!”.
-o If you can not remember where you left your android phone at home, just send an Email to your phone/gmail account with the subject line as “Find me!”. Your android phone will ring at max volume to help you find it. 
+
+o If you can not remember where you left your android phone at home, just send an Email to your phone/gmail account with the subject line as “Find me!”. Your android phone will ring at max volume to help you find it.
+ 
 o If I receiving and incoming calls and our phone is in "silent" mode, then
 automatically reply with an SMS message.
+
 o If the power level is low, and we receive and incoming call,
-automatically ignore the call
+automatically ignore the call.
+
 o Automatic sent sms/email wishing Happy Birthday at a certain time, or a meeting reminder. 
 
 _Wishlist:_
+
 o android phone is lost -> Send an email which contains GPS location 
+
 o 1st event of the day -> Alarm Wake up
+
 o Birthday -> Toast Action
 o Cold/Rainy Weather -> Toast Msg/Suggest Clothing
 o Toast Action -> Email/SMS/Call
