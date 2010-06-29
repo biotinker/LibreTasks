@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
 
 /**
- * This class serves as a access layer to the database for Omnidroid's core data model
+ * This class serves as a access layer to the database for Omnidroid's {@code Rule} data model
  * representation.
  */
-public class CoreRuleDbHelper {
+public class CoreRulesDbHelper {
   private static final String TAG = CoreActionsDbHelper.class.getSimpleName();
-  private DbHelper omnidroidDbHelper;
+  private DbHelper dbHelper;
   private SQLiteDatabase database;
 
   private RegisteredAppDbAdapter applicationDbAdapter;
@@ -62,9 +62,9 @@ public class CoreRuleDbHelper {
    * @param context
    *          context for the application database resource
    */
-  public CoreRuleDbHelper(Context context) {
-    omnidroidDbHelper = new DbHelper(context);
-    database = omnidroidDbHelper.getWritableDatabase();
+  public CoreRulesDbHelper(Context context) {
+    dbHelper = new DbHelper(context);
+    database = dbHelper.getWritableDatabase();
 
     applicationDbAdapter = new RegisteredAppDbAdapter(database);
     eventDbAdapter = new RegisteredEventDbAdapter(database);
@@ -280,6 +280,6 @@ public class CoreRuleDbHelper {
     database.close();
     
     // Not necessary, but also close all omnidroidDbHelper databases just in case.
-    omnidroidDbHelper.close();
+    dbHelper.close();
   }
 }

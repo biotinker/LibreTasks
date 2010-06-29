@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -73,6 +73,11 @@ public class SendGmailAction extends Action {
     intent.putExtra(PARAM_SUBJECT, subject);
     intent.putExtra(PARAM_BODY, body);
     return intent;
+  }
+
+  @Override
+  public String getDescription() {
+    return APP_NAME + "-" + ACTION_NAME;
   }
 
 }

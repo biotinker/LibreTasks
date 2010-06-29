@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Omnidroid</string>
-    <!-- TODO: Use in About Omnidroid dialog -->
+    <!-- TODO: Remove and use android:Version instead in About dialog -->
     <string name="version">0.1.3</string>
 
     <!--  Buttons -->
@@ -68,8 +68,8 @@
     <string name="missing_data">Data field can not be empty.</string>
     <string name="missing_name">OmniHandler name can not be empty.</string>
     <string name="oh_no">Oh no!</string>
+
     <!--  Help Dialog Texts -->
-    <string name="omnidroid_help">Omnidroid Help</string>
     <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.</string>
     <string name="help_choosefiltersandactions"></string>
     <string name="help_dlgactioninput"></string>
@@ -95,7 +95,7 @@
     <string name="login_title">Login</string>
     <string name="actions_title">Actions</string>
     <string name="action_input_title">Action Input</string>
-    <string name="event_log">Event Log</string>
+    <string name="logs">Logs</string>
     
     <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
@@ -110,11 +110,21 @@
     <!--  System Events -->
     
     <!--  UI Strings -->
-    <string name="pick_start_time">Pick a start time:</string>
-    <string name="pick_end_time">Pick an end time:</string>
-    <string name="pick_time">Pick a time:</string>
+    <string name="pick_start_time">Pick a start time</string>
+    <string name="pick_end_time">Pick an end time</string>
+    <string name="pick_time">Pick a time</string>
     <string name="clear_logs">Clear Logs</string>
-    
+    <string name="choose_log">Choose type of logs</string>
+    <string name="event_logs">Event Logs</string>
+    <string name="action_logs">Action Logs</string>
+    <string name="general_logs">General Logs</string>
+    <string name="all_logs">All Logs</string>
+    <string name="event_log">Event Log</string>
+    <string name="action_log">Action Log</string>
+    <string name="general_log">General Log</string>
+    <string name="clear">Clear</string>
+    <string name="no_logs">No logs are available.</string>
+
     <!--  UI Login -->
     <string name="stay_signed_in">Stay Signed in</string>
     <string name="login_info_title">Login Info</string>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
 public class CoreActionsDbHelper {
   private static final String TAG = CoreActionsDbHelper.class.getSimpleName();
 
-  private DbHelper omnidroidDbHelper;
+  private DbHelper dbHelper;
   private SQLiteDatabase database;
   private RuleActionDbAdapter ruleActionDbAdpater;
   private RuleActionParameterDbAdapter ruleActionParameterDbAdapter;
@@ -68,8 +68,8 @@ public class CoreActionsDbHelper {
   private final int ACTION_NAME = 1;
 
   public CoreActionsDbHelper(Context context) {
-    omnidroidDbHelper = new DbHelper(context);
-    database = omnidroidDbHelper.getReadableDatabase();
+    dbHelper = new DbHelper(context);
+    database = dbHelper.getReadableDatabase();
 
     // Initialize db adapters
     ruleActionDbAdpater = new RuleActionDbAdapter(database);
@@ -88,7 +88,7 @@ public class CoreActionsDbHelper {
     database.close();
     
     // Not necessary, but also close all omnidroidDbHelper databases just in case.
-    omnidroidDbHelper.close();
+    dbHelper.close();
   }
 
   /**
@@ -359,7 +359,7 @@ public class CoreActionsDbHelper {
    * @throws IllegalStateException
    *           when this object is already closed
    */
-  public ArrayList<Action> getActions(long ruleId, Event event) {
+  public ArrayList<Action> getActions(long ruleId, String ruleName, Event event) {
     if (!database.isOpen()) {
       throw new IllegalStateException(TAG + " is already closed.");
     }
@@ -406,6 +406,7 @@ public class CoreActionsDbHelper {
       // create action using action parameters, action name and application name
       try {
         action = getAction(appName, actionName, actionParams);
+        action.setRuleName(ruleName);
         actions.add(action); // add action to actions ArrayList
       } catch (OmnidroidException e) {
         Logger.w(TAG, e.toString(), e);

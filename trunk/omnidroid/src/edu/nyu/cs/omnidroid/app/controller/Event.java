@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,4 +74,14 @@ public abstract class Event {
    */
   public abstract String getAttribute(String attributeName) throws IllegalArgumentException;
 
+  /**
+   * @return the parameters of the event as they are passed through the android intent.
+   */
+  public String getParameters() {
+    if (intent.getExtras() != null) {
+      return intent.getExtras().toString();
+    } else {
+      return "";
+    }
+  }
 }
