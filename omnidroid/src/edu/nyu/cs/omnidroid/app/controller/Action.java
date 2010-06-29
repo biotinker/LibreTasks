@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ public abstract class Action {
 
   /** Action name to be used in the intent */
   private final String actionName;
+  private String ruleName;
 
   /** The execution method used to fire an intent */
   private final String executionMethod;
@@ -70,6 +71,31 @@ public abstract class Action {
    */
   public String getActionName() {
     return actionName;
+  }
+
+  /**
+   * @return Description of this type of action, usually used for display to user
+   */
+  abstract public String getDescription();
+
+  public String getRuleName() {
+    return ruleName;
+  }
+
+  public String getAppName() {
+    return getIntent().getComponent().getClassName();
+  }
+
+  public String getParameters() {
+    if (getIntent().getExtras() != null) {
+      return getIntent().getExtras().toString();
+    } else {
+      return "";
+    }
+  }
+
+  public void setRuleName(String ruleName) {
+    this.ruleName = ruleName;    
   }
 
 }

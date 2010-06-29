@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package edu.nyu.cs.omnidroid.app.model;
+package edu.nyu.cs.omnidroid.app.model.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,20 +43,7 @@ import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.TimeTickEvent;
-import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.app.model.db.ExternalAttributeDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.LogEventDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionParameterDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredEventAttributeDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredEventDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RuleActionDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RuleActionParameterDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.RuleFilterDbAdapter;
+import edu.nyu.cs.omnidroid.app.model.CursorHelper;
 
 /**
  * Class used for migrating a database for Omnidroid from one version to another.
@@ -90,6 +77,12 @@ public class DbMigration {
       addCallEndEvent(db);
     case 6:
       addLogEvent(db);
+    case 7:
+      dropLogEvent(db);
+      addLogEvent(db);
+      dropLogAction(db);
+      addLogAction(db);
+      addLogGeneral(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -320,8 +313,51 @@ public class DbMigration {
    *          the database instance to work with
    */
   private static void addLogEvent(SQLiteDatabase db) {
-    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(db);
     // Create table
-    db.execSQL(logEventDbAdapter.getSqliteCreateStatement());
+    db.execSQL(LogEventDbAdapter.DATABASE_CREATE);
+  }
+
+  /**
+   * Drop table that provides {@code LogAction} support.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void dropLogEvent(SQLiteDatabase db) {
+    // Drop table
+    db.execSQL(LogEventDbAdapter.DATABASE_DROP);
+  }
+
+  /**
+   * Add table to provide {@code LogAction} support.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void addLogAction(SQLiteDatabase db) {
+    // Create table
+    db.execSQL(LogActionDbAdapter.DATABASE_CREATE);
+  }
+
+  /**
+   * Drop table that provides {@code LogAction} support.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void dropLogAction(SQLiteDatabase db) {
+    // Drop table
+    db.execSQL(LogActionDbAdapter.DATABASE_DROP);
+  }
+
+  /**
+   * Add table to provide {@code LogGeneral} support.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void addLogGeneral(SQLiteDatabase db) {
+    // Create table
+    db.execSQL(LogGeneralDbAdapter.DATABASE_CREATE);
   }
 }

@@ -20,6 +20,8 @@ import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
 import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getStringFromCursor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -35,6 +37,9 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.FactoryDataType;
 import edu.nyu.cs.omnidroid.app.model.db.DataFilterDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DataTypeDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.LogActionDbAdapter;
+import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
+import edu.nyu.cs.omnidroid.app.model.db.LogGeneralDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.LogEventDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionParameterDbAdapter;
@@ -50,6 +55,7 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelLog;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelParameter;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
@@ -60,15 +66,14 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.RuleNode;
  * This class serves as an access layer of the database for Omnidroid's UI data model
  * representation.
  * 
- * TODO(ehotou) Consider throwing exceptions when db operations failed.
+ * TODO(ehotou): Consider throwing exceptions (or Logging) when db operations fail.
  */
 public class UIDbHelper {
   private static final String TAG = UIDbHelper.class.getSimpleName();
 
   // Database management
-  private DbHelper omnidroidDbHelper;
+  private DbHelper dbHelper;
   private SQLiteDatabase database;
-  private Context context;
 
   // Database Adapters
   private DataTypeDbAdapter dataTypeDbAdapter;
@@ -83,7 +88,9 @@ public class UIDbHelper {
   private RuleActionParameterDbAdapter ruleActionParameterDbAdapter;
   private RuleDbAdapter ruleDbAdapter;
   private LogEventDbAdapter logEventDbAdapter;
-  
+  private LogActionDbAdapter logActionDbAdapter;
+  private LogGeneralDbAdapter logGeneralDbAdapter;
+
   // Hash maps for storing cached data for quick lookup
   private HashMap<Long, String> dataTypeNames;
   private HashMap<Long, String> dataTypeClassNames;
@@ -104,13 +111,12 @@ public class UIDbHelper {
    * Reset the db, drop all necessary table, and recreate them and repopulate them again
    */
   public void resetDB() {
-    omnidroidDbHelper.cleanup(database);
+    dbHelper.cleanup(database);
   }
 
   public UIDbHelper(Context context) {
-    this.context = context;
-    omnidroidDbHelper = new DbHelper(context);
-    database = omnidroidDbHelper.getWritableDatabase();
+    dbHelper = new DbHelper(context);
+    database = dbHelper.getWritableDatabase();
 
     // Initialize db adapters
     dataTypeDbAdapter = new DataTypeDbAdapter(database);
@@ -125,6 +131,8 @@ public class UIDbHelper {
     ruleActionParameterDbAdapter = new RuleActionParameterDbAdapter(database);
     ruleDbAdapter = new RuleDbAdapter(database);
     logEventDbAdapter = new LogEventDbAdapter(database);
+    logActionDbAdapter = new LogActionDbAdapter(database);
+    logGeneralDbAdapter = new LogGeneralDbAdapter(database);
 
     // Initialize db cache
     dataTypeNames = new HashMap<Long, String>();
@@ -146,7 +154,7 @@ public class UIDbHelper {
    */
   public void close() {
     isClosed = true;
-    omnidroidDbHelper.close();
+    dbHelper.close();
     database.close();
   }
 
@@ -158,7 +166,7 @@ public class UIDbHelper {
     // TODO(ehotou) Consider lazy initialization for some of these stuff.
 
     // Load Preferences
-    settings = omnidroidDbHelper.getSharedPreferences();
+    settings = dbHelper.getSharedPreferences();
 
     // Load DataTypes
     Cursor cursor = dataTypeDbAdapter.fetchAll();
@@ -184,7 +192,7 @@ public class UIDbHelper {
     while (cursor.moveToNext()) {
       ModelApplication application = new ModelApplication(getStringFromCursor(cursor,
           RegisteredAppDbAdapter.KEY_APPNAME), "", // TODO(ehotou) After implementing desc for app,
-                                                   // load it here
+          // load it here
           R.drawable.icon_application_unknown, getLongFromCursor(cursor,
               RegisteredAppDbAdapter.KEY_APPID), getBooleanFromCursor(cursor,
               RegisteredAppDbAdapter.KEY_LOGIN), getStringFromCursor(cursor,
@@ -200,7 +208,7 @@ public class UIDbHelper {
       ModelEvent event = new ModelEvent(getLongFromCursor(cursor,
           RegisteredEventDbAdapter.KEY_EVENTID), getStringFromCursor(cursor,
           RegisteredEventDbAdapter.KEY_EVENTNAME), "", // TODO(ehotou) After implementing
-                                                       // description for event, load it here
+          // description for event, load it here
           R.drawable.icon_event_unknown);
       events.put(event.getDatabaseId(), event);
     }
@@ -214,8 +222,7 @@ public class UIDbHelper {
           RegisteredEventAttributeDbAdapter.KEY_EVENTID), getLongFromCursor(cursor,
           RegisteredEventAttributeDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
           RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME), "", // TODO(ehotou) After
-                                                                         // implementing desc for
-                                                                         // attribute, load it here
+          // implementing desc for attribute, load it here
           R.drawable.icon_attribute_unknown);
 
       attributes.put(attribute.getDatabaseId(), attribute);
@@ -230,8 +237,7 @@ public class UIDbHelper {
           RegisteredActionParameterDbAdapter.KEY_ACTIONID), getLongFromCursor(cursor,
           RegisteredActionParameterDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
           RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERNAME), "" // TODO(ehotou) After
-                                                                          // implementing desc for
-                                                                          // parameter, load it here
+      // implementing desc for parameter, load it here
       );
 
       parameters.put(parameter.getDatabaseId(), parameter);
@@ -256,7 +262,7 @@ public class UIDbHelper {
 
       ModelAction action = new ModelAction(getStringFromCursor(cursor,
           RegisteredActionDbAdapter.KEY_ACTIONNAME), "", // TODO(ehotou) After implementing desc for
-                                                         // action, load it here
+          // action, load it here
           R.drawable.icon_action_unknown, actionID, application, parameterList);
 
       actions.put(actionID, action);
@@ -431,7 +437,7 @@ public class UIDbHelper {
       String filterName = dataFilterNames.get(filterID);
 
       filterList.add(new ModelFilter(filterName, "" // TODO(ehotou) After implementing desc for
-                                                    // filter, load it here
+          // filter, load it here
           , R.drawable.icon_filter_unknown, filterID, attribute));
     }
     cursor.close();
@@ -554,7 +560,7 @@ public class UIDbHelper {
       Log.d("addFiltersToRuleNode", "The object constructed is : " + filterData);
 
       ModelFilter modelFilter = new ModelFilter(filterName, "", // TODO(ehotou) After implementing
-                                                                // desc for filter, load it here.
+          // desc for filter, load it here.
           R.drawable.icon_filter_unknown, filterID, attribute);
 
       ModelRuleFilter filter = new ModelRuleFilter(getLongFromCursor(cursorRuleFilters,
@@ -794,29 +800,25 @@ public class UIDbHelper {
     ruleDbAdapter.update(ruleID, null, null, null, enabled);
   }
 
-  public List<LogEvent> getEventLogs() {
+  public List<ModelLog> getEventLogs() {
     if (isClosed) {
       throw new IllegalStateException(TAG + " is closed.");
     }
 
-    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
     Cursor cursor = logEventDbAdapter.fetchAll();
-    ArrayList<LogEvent> eventLogList = new ArrayList<LogEvent>(cursor.getCount());
+    ArrayList<ModelLog> logList = new ArrayList<ModelLog>(cursor.getCount());
 
     while (cursor.moveToNext()) {
-      eventLogList.add(loadEventLogSparse(cursor));
+      Long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+      Long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+      String logName = getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME);
+      String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_event_unknown,
+          logTimestamp, ModelLog.TYPE_EVENT));
     }
-    cursor.close();
-    return eventLogList;
-  }
 
-  private LogEvent loadEventLogSparse(Cursor cursor) {
-    LogEvent eventLog = new LogEvent(context, getLongFromCursor(cursor,
-        LogEventDbAdapter.KEY_LOGEVENTID));
-    eventLog.setTimestamp(getLongFromCursor(cursor, LogEventDbAdapter.KEY_TIMESTAMP));
-    eventLog.setAppName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_APPNAME));
-    eventLog.setEventName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME));
-    return eventLog;
+    cursor.close();
+    return logList;
   }
 
   public Cursor getEventLogsCursor() {
@@ -824,7 +826,6 @@ public class UIDbHelper {
       throw new IllegalStateException(TAG + " is closed.");
     }
 
-    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
     Cursor cursor = logEventDbAdapter.fetchAll();
     return cursor;
   }
@@ -841,9 +842,139 @@ public class UIDbHelper {
       throw new IllegalStateException(TAG + " is closed.");
     }
 
-    LogEventDbAdapter logEventDbAdapter = new LogEventDbAdapter(database);
     Cursor cursor = logEventDbAdapter.fetch(eventID);
     return cursor;
+  }
+
+  public ModelLog getEventLog(long eventID) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    Cursor cursor = logEventDbAdapter.fetch(eventID);
+    long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+    String logName = getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME);
+    long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_event_unknown,
+        logTimestamp, ModelLog.TYPE_EVENT);
+    cursor.close();
+    return log;
+  }
+
+  public void deleteEventLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    logEventDbAdapter.deleteAll();
+  }
+
+  public void deleteActionLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    logActionDbAdapter.deleteAll();
+  }
+
+  public List<ModelLog> getActionLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    Cursor cursor = logActionDbAdapter.fetchAll();
+    ArrayList<ModelLog> logList = new ArrayList<ModelLog>(cursor.getCount());
+
+    while (cursor.moveToNext()) {
+      long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+      String logName = getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONEVENTNAME);
+      long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+      String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_action_unknown,
+          logTimestamp, ModelLog.TYPE_ACTION));
+    }
+    cursor.close();
+    return logList;
+  }
+
+  public ModelLog getActionLog(long id) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    Cursor cursor = logActionDbAdapter.fetch(id);
+    long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+    String logName = getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONEVENTNAME);
+    long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_action_unknown,
+        logTimestamp, ModelLog.TYPE_ACTION);
+    cursor.close();
+    return log;
+  }
+
+  public List<ModelLog> getGeneralLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    Cursor cursor = logGeneralDbAdapter.fetchAll();
+    ArrayList<ModelLog> logList = new ArrayList<ModelLog>(cursor.getCount());
+
+    while (cursor.moveToNext()) {
+      long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+      String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
+      long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+      String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log,
+          logTimestamp, ModelLog.TYPE_GENERAL));
+    }
+    cursor.close();
+    return logList;
+  }
+
+  public ModelLog getGeneralLog(long id) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    Cursor cursor = logGeneralDbAdapter.fetch(id);
+    long logID = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+    String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
+    long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log,
+        logTimestamp, ModelLog.TYPE_GENERAL);
+    cursor.close();
+    return log;
+  }
+
+  
+  public List<ModelLog> getAllLogs() {
+    ArrayList<ModelLog> logs = new ArrayList<ModelLog>();
+    logs.addAll(getGeneralLogs());
+    logs.addAll(getEventLogs());
+    logs.addAll(getActionLogs());
+    Collections.sort(logs, new Comparator<ModelLog>() {
+      public int compare(ModelLog o1, ModelLog o2) {
+        return o1.compareTo(o2);
+      }
+    });
+
+    return logs;
+  }
+
+  public ModelLog getLog(int type, long id) {
+    if (type == ModelLog.TYPE_EVENT) {
+      return getEventLog(id);
+    } else if (type == ModelLog.TYPE_ACTION) {
+      return getActionLog(id);
+    } else if (type == ModelLog.TYPE_GENERAL) {
+      return getGeneralLog(id);
+    } else {
+      return null;
+    }
   }
 
   public void deleteAllLogs() {
@@ -852,5 +983,7 @@ public class UIDbHelper {
     }
 
     logEventDbAdapter.deleteAll();
+    logActionDbAdapter.deleteAll();
+    logGeneralDbAdapter.deleteAll();
  }
 }

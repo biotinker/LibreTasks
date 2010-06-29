@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
+import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 
 /**
  * Gets the {@link Rule}(s) triggered by this {@link Event} and compares the event attributes with
@@ -46,7 +46,7 @@ public class RuleProcessor {
    *          the event that will be compared to all defined user rules
    * @return the list of actions to be performed based on the rules triggered by this event
    */
-  public static ArrayList<Action> getActions(Event event, CoreRuleDbHelper coreRuleDbHelper,
+  public static ArrayList<Action> getActions(Event event, CoreRulesDbHelper coreRuleDbHelper,
       CoreActionsDbHelper coreActionsDbHelper) {
 
     ArrayList<Rule> rules = coreRuleDbHelper.getRulesMatchingEvent(event.getAppName(), event
@@ -57,7 +57,7 @@ public class RuleProcessor {
     ArrayList<Action> actions = new ArrayList<Action>();
     for (Rule currentRule : rules) {
       if (currentRule.passesFilters(event)) {
-        actions.addAll(currentRule.getActions(coreActionsDbHelper, event));
+        actions.addAll(currentRule.getActions(coreActionsDbHelper, event)) ;
       }
     }
     Logger.d(TAG, "get " + actions.size() + " action(s) for event " + event.getEventName()

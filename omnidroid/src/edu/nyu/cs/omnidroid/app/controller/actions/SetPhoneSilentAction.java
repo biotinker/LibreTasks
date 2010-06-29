@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,11 @@ public class SetPhoneSilentAction extends OmniAction {
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_PHONE_SILENT);
     return intent;
+  }
+
+  @Override
+  public String getDescription() {
+    return APP_NAME + "-" + ACTION_NAME;
   }
 
 }

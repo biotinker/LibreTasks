@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import edu.nyu.cs.omnidroid.app.model.Log;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -22,10 +24,17 @@ import android.database.sqlite.SQLiteDatabase;
  * see what is going on.
  */
 public abstract class LogDbAdapter extends DbAdapter {
-  public static final String LOG_ID = "Log ID";
-  public static final String LOG_INFO = "Log information";
+  public static final String KEY_ID = "_ID";
+  public static final String KEY_TIMESTAMP = "TimeStamp";
+  public static final String KEY_DESCRIPTION = "Description";
 
   public LogDbAdapter(SQLiteDatabase database) {
     super(database);
   }
+
+  abstract public Cursor fetchAll();
+
+  abstract public Cursor fetch(Long id);
+
+  abstract public long insert(Log log);
 }

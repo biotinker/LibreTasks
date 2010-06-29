@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -18,10 +18,10 @@ package edu.nyu.cs.omnidroid.app.view.simple.model;
 /**
  * Base class for a representation of core model items in the UI.
  */
-public abstract class ModelItem {
+public class ModelItem implements Comparable<ModelItem> {
 
-  /** Database ID. */
-  private final long databaseId;
+  /** Database Row ID. */
+  protected final long databaseId;
 
   /** Simple name of class for presentation to the user in the UI. */
   protected final String typeName;
@@ -69,5 +69,12 @@ public abstract class ModelItem {
   public String toString() {
     String str = typeName + ", " + description + ", " + iconResId;
     return str;
+  }
+
+  /**
+   * Compare toString() methods.
+   */
+  public int compareTo(ModelItem anotherItem) {
+    return this.toString().compareTo((anotherItem).toString()); 
   }
 }

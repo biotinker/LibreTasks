@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -60,7 +60,7 @@ public class ActivityMain extends Activity {
     Button btnViewRules = (Button) findViewById(R.id.activity_main_btnViewRules);
     btnViewRules.setOnClickListener(listenerBtnClickViewRules);
 
-    Button btnViewLogs = (Button) findViewById(R.id.activity_main_btnEventLog);
+    Button btnViewLogs = (Button) findViewById(R.id.activity_main_btnLogs);
     btnViewLogs.setOnClickListener(listenerBtnClickViewLogs);
 
     Button btnHelp = (Button) findViewById(R.id.activity_main_btnHelp);
@@ -113,7 +113,7 @@ public class ActivityMain extends Activity {
   /** Create a options menu for the main screen */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(Menu.NONE, LOG_ID, Menu.NONE, getString(R.string.event_log))
+    menu.add(Menu.NONE, LOG_ID, Menu.NONE, getString(R.string.logs))
         .setAlphabeticShortcut('l');
     menu.add(Menu.NONE, SETTINGS_ID, Menu.NONE, getString(R.string.settings_label))
         .setIcon(android.R.drawable.ic_menu_preferences)
@@ -166,9 +166,9 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewLogs = new OnClickListener() {
     public void onClick(View v) {
-      ActivityEventLog.resetUI(v.getContext());
+      ActivityLogs.resetUI(v.getContext());
       Intent intent = new Intent();
-      intent.setClass(getApplicationContext(), ActivityEventLog.class);
+      intent.setClass(getApplicationContext(), ActivityLogs.class);
       startActivity(intent);
     }
   };
@@ -179,7 +179,7 @@ public class ActivityMain extends Activity {
   private OnClickListener listenerBtnClickHelp = new OnClickListener() {
     public void onClick(View v) {
       Builder help = new AlertDialog.Builder(v.getContext());
-      help.setTitle(R.string.omnidroid_help);
+      help.setTitle(R.string.help);
       help.setIcon(R.drawable.icon);
       help.setMessage(Html.fromHtml(getString(R.string.help_activitymain)));
       help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

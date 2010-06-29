@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -23,8 +23,10 @@ import android.os.IBinder;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
-import edu.nyu.cs.omnidroid.app.model.CoreRuleDbHelper;
-import edu.nyu.cs.omnidroid.app.model.LogEvent;
+import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
+import edu.nyu.cs.omnidroid.app.model.ActionLog;
+import edu.nyu.cs.omnidroid.app.model.EventLog;
+import edu.nyu.cs.omnidroid.app.model.GeneralLog;
 
 /**
  * This class is the heart of OmniDroid. When this class receives a system intent from
@@ -36,6 +38,7 @@ import edu.nyu.cs.omnidroid.app.model.LogEvent;
 public class HandlerService extends Service {
 
   private static final String TAG = HandlerService.class.getSimpleName();
+
   /**
    * @see android.app.Service#onCreate()
    */
@@ -55,19 +58,37 @@ public class HandlerService extends Service {
     Event event = IntentParser.getEvent(intent);
 
     if (event != null) {
-      LogEvent logEvent = new LogEvent(this, event);
-      logEvent.Log();
-      CoreRuleDbHelper coreRuleDbHelper = new CoreRuleDbHelper(this);
+      // Log event
+      EventLog logEvent = new EventLog(this, event);
+      Long logID = logEvent.insert();
+      logEvent.setID(logID);
+      
+      // Open up Rule/Action Database connections
+      CoreRulesDbHelper coreRuleDbHelper = new CoreRulesDbHelper(this);
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
 
       // Get a list of actions that apply to this event.
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
           coreActionsDbHelper);
       
+      // Close Rule/Action Database connections
       coreActionsDbHelper.close();
       coreRuleDbHelper.close();
       
-      Logger.d("HandlerService", "get " + actions.size() + " action(s) for event " + intent.getAction());
+      // TODO(acase): Consider moving this to the Action Executor so we don't have to loop through
+      //              the actions twice. The problem is that we don't have access to the logEvent
+      //              there.
+      for (Action action : actions) {
+        // Log action
+        ActionLog logAction = new ActionLog(this, action, logEvent.getID());
+        logAction.insert();
+      }
+
+      GeneralLog generalLog = new GeneralLog(this, TAG + " got " + actions.size() + " action(s) for event " +
+          intent.getAction());
+      generalLog.insert();
+      Logger.d(TAG, "get " + actions.size() + " action(s) for event " +
+          intent.getAction());
       // Execute the list of actions.
       try {
         ActionExecuter.executeActions(this, actions);
@@ -79,7 +100,7 @@ public class HandlerService extends Service {
     }
     
     stopSelf();
-  }  
+  }
 
   /**
    * @see android.app.Service#onBind(Intent)

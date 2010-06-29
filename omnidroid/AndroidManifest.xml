@@ -32,6 +32,15 @@
             </intent-filter>
         </activity>        
 
+        <activity android:name=".view.simple.ActivityDlgLog"
+                  android:label="@string/logs"
+                  android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+
         <activity android:name=".view.simple.ActivityDlgAttributes"
                   android:label="@string/attributes_title"
                   android:theme="@android:style/Theme.Dialog">
@@ -120,8 +129,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.simple.ActivityEventLog"
-                  android:label="@string/event_log">
+        <activity android:name=".view.simple.ActivityLogs"
+                  android:label="@string/logs">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

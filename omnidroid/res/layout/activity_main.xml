@@ -31,8 +31,8 @@
 	</Button>
 	
 	<Button 
-	    android:text="@string/event_log" 
-	    android:id="@+id/activity_main_btnEventLog" 
+	    android:text="@string/logs" 
+	    android:id="@+id/activity_main_btnLogs" 
 	    android:layout_width="150dip" 
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center">

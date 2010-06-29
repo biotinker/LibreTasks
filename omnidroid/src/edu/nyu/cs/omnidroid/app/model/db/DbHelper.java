@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import edu.nyu.cs.omnidroid.app.controller.util.IOUtil;
-import edu.nyu.cs.omnidroid.app.model.DbMigration;
 
 /**
  * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
@@ -39,7 +38,7 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
 
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 7;
+  private static final int DATABASE_VERSION = 8;
 
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
@@ -103,6 +102,8 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(RuleActionDbAdapter.DATABASE_DROP);
     db.execSQL(RuleActionParameterDbAdapter.DATABASE_DROP);
     db.execSQL(LogEventDbAdapter.DATABASE_DROP);
+    db.execSQL(LogActionDbAdapter.DATABASE_DROP);
+    db.execSQL(LogGeneralDbAdapter.DATABASE_DROP);
   }
 
   /**

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@ public class Rule {
    */
   public ArrayList<Action> getActions(CoreActionsDbHelper coreActionsDbHelper, Event event) {
     // Get actions arraylist for this rule
-    ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleID, event);
+    ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleID, ruleName, event);
     return actionsList;
   }
 

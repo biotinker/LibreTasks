@@ -15,80 +15,87 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
-import edu.nyu.cs.omnidroid.app.model.EventLog;
 import edu.nyu.cs.omnidroid.app.model.Log;
+import edu.nyu.cs.omnidroid.app.model.ActionLog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Database Adapter class for the LogEvent table. Defines basic CRUD methods.
+ * Database Adapter class for the LogAction table. Defines basic CRUD methods.
  * <p>
- * This table records all events that Omnidroid handles. LogEventID is the primary key. TimeStamp is
- * when it occurred. FK_AppName is the application that caused the event. FK_EventName is the name
- * of the event. EventParameters are the parameters associated with the event that occurred.
+ * This table records all Actions that Omnidroid handles.
  * </p>
  */
-public class LogEventDbAdapter extends LogDbAdapter {
+public class LogActionDbAdapter extends LogDbAdapter {
 
   /* Column names */
-  public static final String KEY_APPNAME = "FK_AppName";
-  public static final String KEY_EVENTNAME = "FK_EventName";
-  public static final String KEY_EVENTPARAMETERS = "EventParameters";
-
+  public static final String KEY_LOGEVENTID = "FK_LogEventID";
+  public static final String KEY_RULENAME = "ruleName";
+  public static final String KEY_ACTIONAPPNAME = "FK_ActionAppName";
+  public static final String KEY_ACTIONEVENTNAME = "FK_ActionEventName";
+  public static final String KEY_ACTIONPARAMETERS = "ActionParameters";
+  
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_ID, KEY_TIMESTAMP, KEY_APPNAME, KEY_EVENTNAME,
-      KEY_EVENTPARAMETERS, KEY_DESCRIPTION };
+  public static final String[] KEYS = { KEY_ID, KEY_TIMESTAMP, KEY_LOGEVENTID, KEY_RULENAME,
+      KEY_ACTIONAPPNAME, KEY_ACTIONEVENTNAME, KEY_ACTIONPARAMETERS, KEY_DESCRIPTION };
 
   /* Table name */
-  private static final String DATABASE_TABLE = "LogEvent";
+  private static final String DATABASE_TABLE = "LogAction";
 
   /* Create and drop statement. */
   protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " (" + KEY_ID
-      + " integer primary key autoincrement, " + KEY_TIMESTAMP + " integer, " + KEY_APPNAME
-      + " text not null, " + KEY_EVENTNAME + " text not null, " + KEY_EVENTPARAMETERS
-      + " text not null," + KEY_DESCRIPTION + " text not null);";
+      + " integer primary key autoincrement, " + KEY_TIMESTAMP + " integer, " + KEY_LOGEVENTID
+      + " integer, " + KEY_RULENAME + " text not null, " + KEY_ACTIONAPPNAME + " text not null, "
+      + KEY_ACTIONEVENTNAME + " text not null, " + KEY_ACTIONPARAMETERS + " text not null, "
+      + KEY_DESCRIPTION + " text not null);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
-  public LogEventDbAdapter(SQLiteDatabase database) {
+  public LogActionDbAdapter(SQLiteDatabase database) {
     super(database);
   }
 
   /**
-   * Insert a new Event Log record.
+   * Insert a new Action Log record.
    * 
    * @param timeStamp
-   *          the time stamp of the log
-   * @param appName
-   *          the name of the application that originated the event
-   * @param eventName
-   *          the name of the event that occurred
-   * @param eventParameters
-   *          the parameters for the event
+   *          the time stamp of the action taken.
+   * @param logEventID
+   *          the FK for the LogEvent record that caused this action
+   * @param ruleName
+   *          the name of the Rule that caused this action
+   * @param actionAppName
+   *          the name of the application for the action
+   * @param actionEventName
+   *          the name of the event for the action
+   * @param actionParameters
+   *          the parameters for the action
    * @param description
    *          a description of the Log
    * @return the row ID of the newly inserted row, or -1 if an error occurred
    */
-  public long insert(Long timeStamp, String appName, String eventName, String eventParameters,
-      String description) {
-    if (timeStamp == null || appName == null || eventName == null || eventParameters == null
-        || description == null) {
+  public long insert(Long timeStamp, Long logEventID, String ruleName, String actionAppName,
+      String actionEventName, String actionParameters, String description) {
+    if (timeStamp == null || logEventID == null || ruleName == null || actionAppName == null
+        || actionEventName == null || actionParameters == null || description == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
     ContentValues initialValues = new ContentValues();
     initialValues.put(KEY_TIMESTAMP, timeStamp);
-    initialValues.put(KEY_APPNAME, appName);
-    initialValues.put(KEY_EVENTNAME, eventName);
-    initialValues.put(KEY_EVENTPARAMETERS, eventParameters);
+    initialValues.put(KEY_LOGEVENTID, logEventID);
+    initialValues.put(KEY_RULENAME, ruleName);
+    initialValues.put(KEY_ACTIONAPPNAME, actionAppName);
+    initialValues.put(KEY_ACTIONEVENTNAME, actionEventName);
+    initialValues.put(KEY_ACTIONPARAMETERS, actionParameters);
     initialValues.put(KEY_DESCRIPTION, description);
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
 
   /**
-   * deletes the specified LogEvent from the database
+   * deletes the specified LogAction from the database
    * 
    * @param id
-   *          - ID of the LogEvent to delete
+   *          - ID of the database entry to delete
    * @return true if success, or false otherwise.
    * @throws IllegalArgumentException
    *           if the primary id is null.
@@ -102,7 +109,7 @@ public class LogEventDbAdapter extends LogDbAdapter {
   }
 
   /**
-   * Delete all LogEvent records.
+   * Delete all LogAction records.
    * 
    * @return true if success, or false if failed or nothing to be deleted.
    */
@@ -112,19 +119,20 @@ public class LogEventDbAdapter extends LogDbAdapter {
   }
 
   /**
-   * Return a Cursor pointing to the record matches the logEventID.
+   * Return a Cursor pointing to the record matches the logActionID.
    * 
    * @param id
-   *          - ID of the LogEvent to delete
+   *          - ID of the database entry to retrieve
    * @return the matching cursor.
    */
   public Cursor fetch(Long id) {
     if (id == null) {
       throw new IllegalArgumentException("primary key null.");
     }
+
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
-    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_ID + "=" + id, null, null,
-        null, null, null);
+    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS,
+        KEY_ID + "=" + id, null, null, null, null, null);
     if (mCursor != null) {
       mCursor.moveToFirst();
     }
@@ -132,7 +140,7 @@ public class LogEventDbAdapter extends LogDbAdapter {
   }
 
   /**
-   * @return a Cursor that contains all LogEvent records.
+   * @return a Cursor that contains all LogAction records.
    */
   public Cursor fetchAll() {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
@@ -140,7 +148,7 @@ public class LogEventDbAdapter extends LogDbAdapter {
   }
 
   /**
-   * @return the sql command to create this LogEvent table
+   * @return the sql command to create this LogAction table
    */
   public String getSqliteCreateStatement() {
     return DATABASE_CREATE;
@@ -148,8 +156,8 @@ public class LogEventDbAdapter extends LogDbAdapter {
 
   @Override
   public long insert(Log log) {
-    EventLog myLog = (EventLog) log;
-    return insert(myLog.getTimestamp(), myLog.getAppName(), myLog.getEventName(), myLog
-        .getParameters(), myLog.getText());
+    ActionLog myLog = (ActionLog) log;
+    return insert(myLog.getTimestamp(), myLog.getLogEventID(), myLog.getRuleName(), myLog
+        .getAppName(), myLog.getActionName(), myLog.getParameters(), myLog.getText());
   }
 }
