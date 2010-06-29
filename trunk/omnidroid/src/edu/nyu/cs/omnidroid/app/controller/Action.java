@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller;
 
+import android.content.ComponentName;
 import android.content.Intent;
 
 /**
@@ -83,7 +84,14 @@ public abstract class Action {
   }
 
   public String getAppName() {
-    return getIntent().getComponent().getClassName();
+    ComponentName component = getIntent().getComponent();
+    
+    if (component == null) {
+      return "";
+    }
+    else {
+      return component.getClassName();
+    }
   }
 
   public String getParameters() {
