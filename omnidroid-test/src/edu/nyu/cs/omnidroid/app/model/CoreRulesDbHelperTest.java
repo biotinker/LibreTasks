@@ -28,7 +28,7 @@ import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 /**
  * Unit tests for {@link CoreRuleDbHelper} class.
  */
-public class CoreRuleDbHelperTest extends AndroidTestCase {
+public class CoreRulesDbHelperTest extends AndroidTestCase {
 
   private DbHelper omnidroidDbHelper;
   private SQLiteDatabase database;
