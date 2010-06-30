@@ -165,7 +165,7 @@ public class ActivityLogs extends Activity {
         .setIcon(R.drawable.icon_action_unknown);
     menu.add(Menu.NONE, MENU_CLEAR_GENERAL_LOGS, Menu.NONE,
         getString(R.string.clear) + getString(R.string.general_logs)).setAlphabeticShortcut('g')
-        .setIcon(R.drawable.icon_hilight);
+        .setIcon(R.drawable.icon_general_log);
     menu.add(Menu.NONE, MENU_CLEAR_ALL_LOGS, Menu.NONE,
         getString(R.string.clear) + getString(R.string.all_logs)).setAlphabeticShortcut('c')
         .setIcon(android.R.drawable.ic_menu_close_clear_cancel);
@@ -188,8 +188,7 @@ public class ActivityLogs extends Activity {
       return true;
     case MENU_CLEAR_GENERAL_LOGS:
       dbHelper = new UIDbHelper(this);
-      // TODO(acase): Support GeneralLogs
-      //dbHelper.deleteGeneralLogs();
+      dbHelper.deleteGeneralLogs();
       updateUI();
       return true;
     case MENU_CLEAR_ALL_LOGS:

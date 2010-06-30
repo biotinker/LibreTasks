@@ -42,15 +42,19 @@ public class CoreActionLogsDbHelper extends CoreLogsDbHelper {
 
   @Override
   public Log getLog(Cursor cursor) {
-    ActionLog log = new ActionLog(context, getLongFromCursor(cursor,
-        LogActionDbAdapter.KEY_ID));
-    log.setTimestamp(getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP));
-    log.setLogEventID(getLongFromCursor(cursor, LogActionDbAdapter.KEY_LOGEVENTID));
-    log.setRuleName(getStringFromCursor(cursor, LogActionDbAdapter.KEY_RULENAME));
-    log.setAppName(getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONAPPNAME));
-    log.setActionName(getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONEVENTNAME));
-    log.setParameters(getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONPARAMETERS));
-    log.setText(getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION));
+    // Get log data from the DB
+    long id = getLongFromCursor(cursor, LogActionDbAdapter.KEY_ID);
+    long timestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    long logEventId = getLongFromCursor(cursor, LogActionDbAdapter.KEY_LOGEVENTID);
+    String ruleName = getStringFromCursor(cursor, LogActionDbAdapter.KEY_RULENAME);
+    String appName = getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONAPPNAME);
+    String eventName = getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONEVENTNAME);
+    String eventParams = getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONPARAMETERS);
+    String text = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+
+    // Create a Log object from the data
+    ActionLog log = new ActionLog(context, id, timestamp, logEventId, ruleName, appName, eventName,
+        eventParams, text);
     return log;
   }
 

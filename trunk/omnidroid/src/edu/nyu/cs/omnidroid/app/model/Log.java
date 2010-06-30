@@ -24,8 +24,7 @@ import android.content.Context;
 public abstract class Log {
   // Database storage accessor variables
   protected Context context;
-  protected CoreLogsDbHelper dbHelper;
-
+  
   // Log data structures
   protected Long id = null;
   protected Long timestamp = null;
@@ -83,7 +82,5 @@ public abstract class Log {
   /**
    * Store this Log in our database.
    */
-  public long insert() {
-    return dbHelper.insert(this);
-  }
+  abstract public long insert();
 }

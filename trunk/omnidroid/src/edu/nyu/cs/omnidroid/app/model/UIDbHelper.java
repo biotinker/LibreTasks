@@ -965,6 +965,14 @@ public class UIDbHelper {
     return log;
   }
 
+  public void deleteGeneralLogs() {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
+    logGeneralDbAdapter.deleteAll();
+  }
+
   
   public List<ModelLog> getAllLogs() {
     ArrayList<ModelLog> logs = new ArrayList<ModelLog>();

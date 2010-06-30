@@ -61,7 +61,7 @@ abstract public class CoreLogsDbHelper {
     Logger.i(TAG, "closing database.");
     database.close();
     
-    // Not necessary, but also close all omnidroidDbHelper databases just in case.
+    // Not necessary, but also close all dbHelper databases just in case.
     dbHelper.close();
   }
 
@@ -81,8 +81,7 @@ abstract public class CoreLogsDbHelper {
    * 
    */
   public Cursor getLogMatchingID(long id) {
-    Cursor cursor = logDbAdapter.fetch(id);
-    return cursor;
+    return logDbAdapter.fetch(id);
   }
 
   /**
