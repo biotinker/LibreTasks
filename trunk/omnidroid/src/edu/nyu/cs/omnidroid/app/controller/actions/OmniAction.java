@@ -28,5 +28,9 @@ public abstract class OmniAction extends Action {
   public OmniAction(String actionName, String executionMethod) {
     super(actionName, executionMethod);
   }
-  
+
+  @Override
+  public String getAppName() {
+    return APP_NAME;
+  }
 }
