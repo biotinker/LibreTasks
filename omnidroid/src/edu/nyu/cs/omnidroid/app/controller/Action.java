@@ -15,7 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller;
 
-import android.content.ComponentName;
 import android.content.Intent;
 
 /**
@@ -83,16 +82,7 @@ public abstract class Action {
     return ruleName;
   }
 
-  public String getAppName() {
-    ComponentName component = getIntent().getComponent();
-    
-    if (component == null) {
-      return "";
-    }
-    else {
-      return component.getClassName();
-    }
-  }
+  public abstract String getAppName();
 
   public String getParameters() {
     if (getIntent().getExtras() != null) {
@@ -105,5 +95,4 @@ public abstract class Action {
   public void setRuleName(String ruleName) {
     this.ruleName = ruleName;    
   }
-
 }

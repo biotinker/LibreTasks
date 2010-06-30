@@ -82,4 +82,7 @@ public class CallPhoneAction extends Action {
     return APP_NAME + "-" + ACTION_NAME;
   }
 
+  public String getAppName() {
+    return APP_NAME;
+  }
 }
