@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -21,7 +21,6 @@ package edu.nyu.cs.omnidroid.app.view.simple.model;
 public class ModelApplication extends ModelItem {
 
   private final boolean loginEnabled;
-  private boolean staySignedIn;
   private String username;
   private String password;
 
@@ -74,19 +73,4 @@ public class ModelApplication extends ModelItem {
   public void setPassword(String password) {
     this.password = password;
   }
-  
-  /**
-   * @return the staySignedIn
-   */
-  public boolean isStaySignedIn() {
-    return staySignedIn;
-  }
-
-  /**
-   * @param staySignedIn the staySignedIn to set
-   */
-  public void setStaySignedIn(boolean staySignedIn) {
-    this.staySignedIn = staySignedIn;
-  }
-
 }

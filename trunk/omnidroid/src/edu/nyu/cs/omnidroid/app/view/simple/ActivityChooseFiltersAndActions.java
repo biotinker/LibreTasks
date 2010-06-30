@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelItem;
@@ -317,12 +319,18 @@ public class ActivityChooseFiltersAndActions extends Activity {
   /**
    * Shortcuts directly to {@link ActivityDlgActionInput} for editing an existing action.
    */
-  private void editAction(int position, ModelRuleAction action) {
+  private void editAction(int position, ModelRuleAction ruleAction) {
     // Set the action data from the existing rule action instance.
-    RuleBuilder.instance().resetFilterPath();
-    RuleBuilder.instance().setChosenModelAction(action.getModelAction());
-    RuleBuilder.instance().setChosenRuleActionDataOld(action.getDatas());
+    ModelAction action = ruleAction.getModelAction();
+    RuleBuilder ruleBuilder = RuleBuilder.instance();
+    ruleBuilder.resetFilterPath();
+    ruleBuilder.setChosenModelAction(ruleAction.getModelAction());
+    ruleBuilder.setChosenRuleActionDataOld(ruleAction.getDatas());
 
+    // Set the application in preparation for activities using user accounts 
+    ModelApplication app = UIDbHelperStore.instance().db().getApplicationFromAction(action);
+    ruleBuilder.setChosenApplication(app);
+    
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
     startActivityForResult(intent, ACTIVITY_RESULT_EDIT_ACTION);

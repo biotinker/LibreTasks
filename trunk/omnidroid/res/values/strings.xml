@@ -126,7 +126,9 @@
     <string name="no_logs">No logs are available.</string>
 
     <!--  UI Login -->
-    <string name="stay_signed_in">Stay Signed in</string>
+    <string name="setup_account">Setup Account</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
     <string name="login_info_title">Login Info</string>
     <string name="login_info_details">Please enter your username and password and select the check box to remember it</string>
 
