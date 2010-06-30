@@ -37,6 +37,7 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniUserAccount;
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
@@ -83,6 +84,8 @@ public class DbMigration {
       dropLogAction(db);
       addLogAction(db);
       addLogGeneral(db);
+    case 8:
+      modifyGmailAndTwitterParam(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -359,5 +362,127 @@ public class DbMigration {
   private static void addLogGeneral(SQLiteDatabase db) {
     // Create table
     db.execSQL(LogGeneralDbAdapter.DATABASE_CREATE);
+  }
+  
+  /**
+   * Modify the Send Gmail and Update Twitter actions by replacing the username and password
+   * attributes into user account (this is done for possible multi-account support and supporting
+   * different authentication methods like OAuth). Also retrieves username and password from
+   * existing rules and the latest entry is used if there are multiple actions that has username and
+   * password.
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  private static void modifyGmailAndTwitterParam(SQLiteDatabase db) {
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    long dataTypeIdAccount = dataTypeDbAdapter.insert(OmniUserAccount.DB_NAME,
+        OmniUserAccount.class.getName());
+
+    modifyActionToSupportUserAccount(db, DbHelper.AppName.GMAIL, SendGmailAction.ACTION_NAME,
+        SendGmailAction.PARAM_USERNAME, SendGmailAction.PARAM_PASSWORD,
+        SendGmailAction.PARAM_USER_ACCOUNT, dataTypeIdAccount);
+
+    modifyActionToSupportUserAccount(db, DbHelper.AppName.TWITTER,
+        UpdateTwitterStatusAction.ACTION_NAME, UpdateTwitterStatusAction.PARAM_USERNAME,
+        UpdateTwitterStatusAction.PARAM_PASSWORD, UpdateTwitterStatusAction.PARAM_USER_ACCOUNT,
+        dataTypeIdAccount);
+  }
+
+  /**
+   * Modify the actions by replacing the username and password attributes into user account (this is
+   * done for possible multi-account support and supporting different authentication methods like
+   * OAuth). Also retrieves username and password from existing rules and the latest entry is used
+   * if there are multiple actions that has username and password.
+   * 
+   * @param db
+   *          the database instance to work with
+   * @param appName
+   *          the name of the application associated with the action
+   * @param actionName
+   *          the name of the action
+   * @param usernameParamName
+   *          the action's parameter name for username
+   * @param passwordParamName
+   *          the action's parameter name for password
+   * @param userAccountParamName
+   *          the action's parameter name for user account
+   * @param dataTypeIdAccount
+   *          primary key id for UserAccount datatype
+   */
+  private static void modifyActionToSupportUserAccount(SQLiteDatabase db, String appName,
+      String actionName, String usernameParamName, String passwordParamName,
+      String userAccountParamName, long dataTypeIdAccount) {
+    // Get the App ID
+    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+    Cursor cursor = appDbAdapter.fetchAll(appName, "", true);
+    cursor.moveToFirst();
+    long appID = CursorHelper.getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID);
+    cursor.close();
+
+    // Get the Action ID
+    RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+    cursor = actionDbAdapter.fetchAll(actionName, appID);
+    cursor.moveToFirst();
+    long actionId = CursorHelper.getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_ACTIONID);
+    cursor.close();
+
+    RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
+        RegisteredActionParameterDbAdapter(db);
+
+    /*
+     * Modify the username parameter to user account. Update was used instead of delete then insert
+     * to have the user account parameter appear on the top position when {@code
+     * FactoryActions.buildUIFromAction} is called.
+     */
+    cursor = actionParameterDbAdapter.fetchAll(usernameParamName, actionId, null);
+    cursor.moveToFirst();
+    long paramID = CursorHelper.getLongFromCursor(cursor,
+        RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID);
+
+    actionParameterDbAdapter.update(paramID, userAccountParamName, null, dataTypeIdAccount);
+    cursor.close();
+
+    /*
+     * Get the username from existing rules and set it to the application. Use the last entry if
+     * there are multiple actions in the database.
+     */
+    RuleActionParameterDbAdapter ruleActionParamDb = new RuleActionParameterDbAdapter(db);
+    cursor = ruleActionParamDb.fetchAll(null, paramID, null);
+    if (cursor.moveToLast()) {
+      String username = CursorHelper.getStringFromCursor(cursor,
+          RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA);
+
+      appDbAdapter.update(appID, null, null, null, null, username, null);
+    }
+    // No need to delete since paramID is now user account
+    cursor.close();
+
+    // Remove the password parameter
+    cursor = actionParameterDbAdapter.fetchAll(passwordParamName, actionId, null);
+    cursor.moveToFirst();
+    paramID = CursorHelper.getLongFromCursor(cursor,
+        RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID);
+    actionParameterDbAdapter.delete(paramID);
+    cursor.close();
+
+    /*
+     * Get the password from existing rules and set it to the application. Use the last entry if
+     * there are multiple gmail send actions in the database. And remove all rule action password
+     * parameter entries.
+     */
+    cursor = ruleActionParamDb.fetchAll(null, paramID, null);
+    if (cursor.moveToLast()) {
+      String password = CursorHelper.getStringFromCursor(cursor,
+          RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA);
+
+      appDbAdapter.update(appID, null, null, null, null, null, password);
+
+      do {
+        ruleActionParamDb.delete(CursorHelper.getLongFromCursor(cursor,
+            RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERID));
+      } while (cursor.moveToPrevious());
+    }
+    cursor.close();
   }
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -16,10 +16,14 @@
  * Uses JTwitter Library http://www.winterwell.com/software/jtwitter.php
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.actions;
+
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
+import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 import android.app.Service;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 
 import winterwell.jtwitter.*;
@@ -33,8 +37,7 @@ public class UpdateTwitterStatusService extends Service {
   /**
    * attributes field names
    */
-  private String username;
-  private String password;
+  private RegisteredAppDbAdapter.AccountCredentials account;
   private String message;
  
   /**
@@ -44,13 +47,23 @@ public class UpdateTwitterStatusService extends Service {
   public IBinder onBind(Intent intent) {
     return null;
   }
-  
+
+  private void extractUserCredentials() {
+    DbHelper omniDbHelper = new DbHelper(this);
+    SQLiteDatabase database = omniDbHelper.getWritableDatabase();
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(database);
+    
+    account = registeredAppDbAdapter.getAccountCredentials(DbHelper.AppName.TWITTER, "");
+    
+    database.close();
+    omniDbHelper.close(); 
+  }
   
   @Override
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
-    username = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_USERNAME);
-    password = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_PASSWORD);
+    
+    extractUserCredentials();
     message = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_MESSAGE);
     update();
   }
@@ -62,7 +75,7 @@ public class UpdateTwitterStatusService extends Service {
   private void update() {
 
     try{   
-      Twitter twitter = new Twitter(username,password);
+      Twitter twitter = new Twitter(account.accountName, account.credential);
       //TODO : To set the source to "OmniDroid" we first have to register the app with Twitter.
       twitter.setSource(getString(R.string.app_name));
       twitter.setStatus(message);

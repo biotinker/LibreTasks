@@ -36,8 +36,9 @@ public class SendGmailAction extends Action {
   public static final String APP_NAME = "GMAIL";
   public static final String GMAIL_INTENT = "omnidroid.intent.action.GMAIL_SEND";
 
-  public static final String PARAM_USERNAME = "Username";
-  public static final String PARAM_PASSWORD = "Password";
+  public static final String PARAM_USERNAME = "Username"; // @deprecated
+  public static final String PARAM_PASSWORD = "Password"; // @deprecated
+  public static final String PARAM_USER_ACCOUNT = "UserAccount";
   public static final String PARAM_TO = "EmailTo";
   public static final String PARAM_SUBJECT = "Subject";
   public static final String PARAM_BODY = "Body";
@@ -45,20 +46,18 @@ public class SendGmailAction extends Action {
   /**
    * Content of the action
    */
-  private String username;
-  private String password;
+  private String accountID;
   private String to;
   private String subject;
   private String body;
 
   public SendGmailAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(SendGmailAction.GMAIL_INTENT, Action.BY_SERVICE);
-    username = parameters.get(PARAM_USERNAME);
-    password = parameters.get(PARAM_PASSWORD);
+    accountID = parameters.get(PARAM_USER_ACCOUNT);
     to = parameters.get(PARAM_TO);
     subject = parameters.get(PARAM_SUBJECT);
     body = parameters.get(PARAM_BODY);
-    if (username == null || password == null || to == null || subject == null || body == null) {
+    if (accountID == null || to == null || subject == null || body == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
           .toString()));
     }
@@ -67,8 +66,7 @@ public class SendGmailAction extends Action {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent(getActionName());
-    intent.putExtra(PARAM_USERNAME, username);
-    intent.putExtra(PARAM_PASSWORD, password);
+    intent.putExtra(accountID, accountID);
     intent.putExtra(PARAM_TO, to);
     intent.putExtra(PARAM_SUBJECT, subject);
     intent.putExtra(PARAM_BODY, body);

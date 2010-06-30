@@ -32,21 +32,20 @@ public class UpdateTwitterStatusAction extends Action {
   public static final String APP_NAME = "Twitter";
   public static final String TWITTER_INTENT = "omnidroid.intent.action.TWITTER_UPDATE";
 
-  public static final String PARAM_USERNAME = "Username";
-  public static final String PARAM_PASSWORD = "Password";
+  public static final String PARAM_USERNAME = "Username"; // @deprecated
+  public static final String PARAM_PASSWORD = "Password"; // @deprecated
+  public static final String PARAM_USER_ACCOUNT = "UserAccount";
   public static final String PARAM_MESSAGE = "Message";
   
   // Content of the action
-  private String username;
-  private String password;
+  private String accountID;
   private String message;
 
   public UpdateTwitterStatusAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(UpdateTwitterStatusAction.TWITTER_INTENT, Action.BY_SERVICE);
-    username = parameters.get(PARAM_USERNAME);
-    password = parameters.get(PARAM_PASSWORD);
+    accountID = parameters.get(PARAM_USER_ACCOUNT);
     message = parameters.get(PARAM_MESSAGE);
-    if (username == null || password == null || message == null) {
+    if (accountID == null || message == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
           .toString()));
     }
@@ -55,8 +54,7 @@ public class UpdateTwitterStatusAction extends Action {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent(getActionName());
-    intent.putExtra(PARAM_USERNAME, username);
-    intent.putExtra(PARAM_PASSWORD, password);
+    intent.putExtra(PARAM_USER_ACCOUNT, accountID);
     intent.putExtra(PARAM_MESSAGE, message);
     return intent;
   }

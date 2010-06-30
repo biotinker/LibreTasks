@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -76,13 +76,6 @@ public class ActivityDlgActionInput extends Activity {
     // Link up controls from the xml layout resource file.
     initializeUI();
     
-    // Restore our UI state.
-    state = getSharedPreferences(ActivityDlgActionInput.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    if (llDynamic != null) {
-      FactoryActions.uiStateLoad(RuleBuilder.instance().getChosenModelAction(), llDynamic, state);
-    }
-
     // By default, we want to save UI state on close.
     preserveStateOnClose = true;
   }
@@ -100,6 +93,18 @@ public class ActivityDlgActionInput extends Activity {
         RuleBuilder.instance().getChosenModelAction(), llDynamic, prefsEditor);
       prefsEditor.commit();
     }
+  }
+  
+  @Override
+  protected void onResume() {
+    super.onResume();
+    
+    // Restore our UI state.
+    state = getSharedPreferences(ActivityDlgActionInput.KEY_STATE, Context.MODE_WORLD_READABLE
+        | Context.MODE_WORLD_WRITEABLE);
+    if (llDynamic != null) {
+      FactoryActions.uiStateLoad(RuleBuilder.instance().getChosenModelAction(), llDynamic, state);
+    }    
   }
 
   private void initializeUI() {

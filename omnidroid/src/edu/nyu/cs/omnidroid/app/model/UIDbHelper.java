@@ -415,6 +415,21 @@ public class UIDbHelper {
   }
 
   /**
+   * Get the application associated with the action
+   * 
+   * @param action
+   *          the action
+   * @return the application associated with the action
+   */
+  public ModelApplication getApplicationFromAction(ModelAction action) {
+    Cursor cursor = registeredActionDbAdapter.fetch(action.getDatabaseId());
+    long appID = CursorHelper.getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID);
+    cursor.close();
+
+    return getApplication(appID);
+  }
+
+  /**
    * @param attribute
    *          is a ModelAttribute object
    * 

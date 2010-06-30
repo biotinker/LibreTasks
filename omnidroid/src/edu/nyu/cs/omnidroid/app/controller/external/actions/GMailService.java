@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -17,14 +17,15 @@ package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
-
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
+import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 import android.app.Service;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -37,8 +38,7 @@ public class GMailService extends Service {
   /**
    * attributes field names
    */
-  private String username;
-  private String password;
+  private RegisteredAppDbAdapter.AccountCredentials account;
   private String to;
   private String subject;
   private String body;
@@ -50,13 +50,26 @@ public class GMailService extends Service {
   public IBinder onBind(Intent intent) {
     return null;
   }
-
+  
+  /**
+   * Get the username and password for the Gmail account 
+   */
+  private void extractUserCredentials() {
+    DbHelper omniDbHelper = new DbHelper(this);
+    SQLiteDatabase database = omniDbHelper.getWritableDatabase();
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(database);
+    
+    account = registeredAppDbAdapter.getAccountCredentials(DbHelper.AppName.GMAIL, "");
+        
+    database.close();
+    omniDbHelper.close(); 
+  }
+  
   @Override
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
 
-    username = intent.getStringExtra(SendGmailAction.PARAM_USERNAME);
-    password = intent.getStringExtra(SendGmailAction.PARAM_PASSWORD);
+    extractUserCredentials();
     to = intent.getStringExtra(SendGmailAction.PARAM_TO);
     subject = intent.getStringExtra(SendGmailAction.PARAM_SUBJECT);
     body = intent.getStringExtra(SendGmailAction.PARAM_BODY);
@@ -85,7 +98,7 @@ public class GMailService extends Service {
     }
 
     try {
-      client.login("localhost", username, password);
+      client.login("localhost", account.accountName, account.credential);
       checkReply(client);
     } catch (IOException e) {
       Toast.makeText(this, "Send GMail failed, Authentication error", Toast.LENGTH_LONG).show();
@@ -93,7 +106,7 @@ public class GMailService extends Service {
     }
 
     try {
-      client.setSender(username);
+      client.setSender(account.accountName);
       checkReply(client);
 
       client.addRecipient(to);
@@ -102,7 +115,7 @@ public class GMailService extends Service {
       Writer writer = client.sendMessageData();
 
       if (writer != null) {
-        SimpleSMTPHeader header = new SimpleSMTPHeader(username, to, subject);
+        SimpleSMTPHeader header = new SimpleSMTPHeader(account.accountName, to, subject);
         writer.write(header.toString());
         writer.write(body);
         writer.close();
