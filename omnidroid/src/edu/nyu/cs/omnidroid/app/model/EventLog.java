@@ -16,10 +16,7 @@
 package edu.nyu.cs.omnidroid.app.model;
 
 import android.content.Context;
-import android.database.Cursor;
 import edu.nyu.cs.omnidroid.app.controller.Event;
-import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
-import edu.nyu.cs.omnidroid.app.model.db.LogEventDbAdapter;
 
 /**
  * This class represents an Event{@code Log}. Logs are displayed on the {@code ActivityLogs} for
@@ -43,7 +40,6 @@ public class EventLog extends Log {
   public EventLog(Context context, Event event) {
     super();
     this.context = context;
-    this.dbHelper = new CoreEventLogsDbHelper(context);
     this.appName = event.getAppName();
     this.eventName = event.getEventName();
     this.parameters = event.getParameters();
@@ -60,7 +56,6 @@ public class EventLog extends Log {
   public EventLog(EventLog log) {
     super(log);
     this.context = log.context;
-    this.dbHelper = new CoreEventLogsDbHelper(context);
     this.id = log.id;
     this.timestamp = log.timestamp;
     this.appName = log.appName;
@@ -68,27 +63,12 @@ public class EventLog extends Log {
     this.parameters = log.parameters;
   }
 
-  /**
-   * Create a new log based on an a new Event
-   * 
-   * @param context
-   *          application context for the db connection
-   * @param id
-   *          the ID for the log in the database
-   */
-  public EventLog(Context context, long id) {
-    super();
-    this.context = context;
-    this.dbHelper = new CoreEventLogsDbHelper(context);
-    Cursor cursor = dbHelper.getLogMatchingID(id);
-    this.id = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
-    this.timestamp = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
-    this.appName = CursorHelper.getStringFromCursor(cursor, LogEventDbAdapter.KEY_APPNAME);
-    this.eventName = CursorHelper.getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME);
-    this.parameters = CursorHelper.getStringFromCursor(cursor,
-        LogEventDbAdapter.KEY_EVENTPARAMETERS);
-    this.text = CursorHelper.getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-    cursor.close();
+  public EventLog(Context context, long id, long timestamp, String appName, String eventName,
+      String parameters, String text) {
+    super(context, id, timestamp, text);
+    this.appName = appName;
+    this.eventName = eventName;
+    this.parameters = parameters;
   }
 
   public void setAppName(String appName) {
@@ -119,4 +99,13 @@ public class EventLog extends Log {
     return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\n" + "Application Name: " + appName
         + "\n" + "Event Name: " + eventName + "\nParameters: " + parameters + "\nText: " + text;
   }
+
+  @Override
+  public long insert() {
+    CoreLogsDbHelper dbHelper = new CoreEventLogsDbHelper(context);
+    long rowid = dbHelper.insert(this);
+    dbHelper.close();
+    return rowid;
+  }
+
 }

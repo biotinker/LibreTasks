@@ -16,8 +16,6 @@
 package edu.nyu.cs.omnidroid.app.model;
 
 import android.content.Context;
-import android.database.Cursor;
-import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
 
 /**
  * This class represents an General{@code Log}. Logs are displayed on the ActivityLogs for
@@ -36,7 +34,6 @@ public class GeneralLog extends Log {
   public GeneralLog(Context context, String text) {
     super();
     this.context = context;
-    this.dbHelper = new CoreGeneralLogsDbHelper(context);
     this.text = text;
   }
 
@@ -50,29 +47,21 @@ public class GeneralLog extends Log {
   public GeneralLog(GeneralLog log) {
     super(log);
     this.context = log.context;
-    this.dbHelper = new CoreGeneralLogsDbHelper(context);
   }
 
-  /**
-   * Create a new log based on an a new Log
-   * 
-   * @param context
-   *          application context for the db connection
-   * @param id
-   *          the ID for the log in the database
-   */
-  public GeneralLog(Context context, long id) {
-    super();
-    this.context = context;
-    this.dbHelper = new CoreGeneralLogsDbHelper(context);
-    Cursor cursor = dbHelper.getLogMatchingID(id);
-    this.id = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
-    this.timestamp = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
-    this.text = CursorHelper.getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-    cursor.close();
+  public GeneralLog(Context context, long id, long timestamp, String text) {
+    super(context, id, timestamp, text);
   }
 
   public String toString() {
     return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\n" + "\nText: " + text;
+  }
+
+  @Override
+  public long insert() {
+    CoreLogsDbHelper dbHelper = new CoreGeneralLogsDbHelper(context);
+    long rowid = dbHelper.insert(this);
+    dbHelper.close();
+    return rowid;
   }
 }

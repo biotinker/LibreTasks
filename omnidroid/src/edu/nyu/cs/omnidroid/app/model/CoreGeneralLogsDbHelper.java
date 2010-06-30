@@ -15,9 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
-import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getStringFromCursor;
-
 import android.content.Context;
 import android.database.Cursor;
 import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
@@ -43,10 +40,13 @@ public class CoreGeneralLogsDbHelper extends CoreLogsDbHelper {
 
   @Override
   public Log getLog(Cursor cursor) {
-    GeneralLog log = new GeneralLog(context, getLongFromCursor(cursor,
-        LogGeneralDbAdapter.KEY_ID));
-    log.setTimestamp(getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP));
-    log.setText(getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION));
+    // Get the log from the db
+    long id = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+    long timestamp = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    String text = CursorHelper.getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+
+    // Make an object out of it
+    GeneralLog log = new GeneralLog(context, id, timestamp, text);
     return log;
   }
 

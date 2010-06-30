@@ -16,9 +16,7 @@
 package edu.nyu.cs.omnidroid.app.model;
 
 import android.content.Context;
-import android.database.Cursor;
 import edu.nyu.cs.omnidroid.app.controller.Action;
-import edu.nyu.cs.omnidroid.app.model.db.LogActionDbAdapter;
 
 /**
  * This class represents an Action {@code Log}. Logs are displayed on the ActivityLogs for
@@ -44,9 +42,9 @@ public class ActionLog extends Log {
    * 
    */
   public ActionLog(Context context, Action action, Long logEventID) {
-    this.dbHelper = new CoreActionLogsDbHelper(context);
-    this.logEventID = logEventID;
+    this.context = context;
     this.ruleName = action.getRuleName();
+    this.logEventID = logEventID;
     this.appName = action.getAppName();
     this.actionName = action.getActionName();
     this.parameters = action.getParameters();
@@ -56,7 +54,6 @@ public class ActionLog extends Log {
   public ActionLog(ActionLog log) {
     super(log);
     this.context = log.context;
-    this.dbHelper = new CoreActionLogsDbHelper(context);
     this.ruleName = log.ruleName;
     this.logEventID = log.logEventID;
     this.appName = log.appName;
@@ -64,30 +61,14 @@ public class ActionLog extends Log {
     this.parameters = log.parameters;
   }
 
-  /**
-   * Create a new log based on a LogAction entry already in the database 
-   * 
-   * @param context
-   *          application context for the db connection
-   * @param id
-   *          the ID for the record in the database
-   */
-  public ActionLog(Context context, long id) {
-    super();
-    this.context = context;
-    this.dbHelper = new CoreActionLogsDbHelper(context);
-    Cursor cursor = dbHelper.getLogMatchingID(id);
-    this.id = CursorHelper.getLongFromCursor(cursor, LogActionDbAdapter.KEY_ID);
-    this.timestamp = CursorHelper.getLongFromCursor(cursor, LogActionDbAdapter.KEY_TIMESTAMP);
-    this.logEventID = CursorHelper.getLongFromCursor(cursor, LogActionDbAdapter.KEY_LOGEVENTID);
-    this.ruleName = CursorHelper.getStringFromCursor(cursor, LogActionDbAdapter.KEY_RULENAME);
-    this.appName = CursorHelper.getStringFromCursor(cursor, LogActionDbAdapter.KEY_ACTIONAPPNAME);
-    this.text = CursorHelper.getStringFromCursor(cursor, LogActionDbAdapter.KEY_DESCRIPTION);
-    this.actionName = CursorHelper.getStringFromCursor(cursor,
-        LogActionDbAdapter.KEY_ACTIONEVENTNAME);
-    this.parameters = CursorHelper.getStringFromCursor(cursor,
-        LogActionDbAdapter.KEY_ACTIONPARAMETERS);
-    cursor.close();
+  public ActionLog(Context context, long id, long timestamp, long logEventID, String ruleName,
+      String appName, String actionName, String parameters, String text) {
+    super(context, id, timestamp, text);
+    this.ruleName = ruleName;
+    this.logEventID = logEventID;
+    this.appName = appName;
+    this.actionName = actionName;
+    this.parameters = parameters;
   }
 
   public void setLogEventID(Long logEventID) {
@@ -134,5 +115,13 @@ public class ActionLog extends Log {
     return "ID: " + id + "\nTimestamp: " + timestamp + "\nLogEventID: " + logEventID
         + "\nRuleName: " + ruleName + "\nApplication Name: " + appName + "\nAction Name: "
         + actionName + "\nParameters: " + parameters;
+  }
+
+  @Override
+  public long insert() {
+    CoreLogsDbHelper dbHelper = new CoreActionLogsDbHelper(context);
+    long rowid = dbHelper.insert(this);
+    dbHelper.close();
+    return rowid;
   }
 }

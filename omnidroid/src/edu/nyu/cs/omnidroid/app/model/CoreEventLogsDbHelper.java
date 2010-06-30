@@ -43,13 +43,16 @@ public class CoreEventLogsDbHelper extends CoreLogsDbHelper {
 
   @Override
   public Log getLog(Cursor cursor) {
-    EventLog log = new EventLog(context, getLongFromCursor(cursor,
-        LogEventDbAdapter.KEY_ID));
-    log.setTimestamp(getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP));
-    log.setAppName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_APPNAME));
-    log.setEventName(getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME));
-    log.setParameters(getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTPARAMETERS));
-    log.setText(getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION));
+    // Get Log data from the DB
+    long id = getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
+    long timestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
+    String appName = getStringFromCursor(cursor, LogEventDbAdapter.KEY_APPNAME);
+    String eventName = getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTNAME);
+    String parameters = getStringFromCursor(cursor, LogEventDbAdapter.KEY_EVENTPARAMETERS);
+    String text = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
+
+    // Create a new Log object from the data
+    EventLog log = new EventLog(context, id, timestamp, appName, eventName, parameters, text);
     return log;
   }
 }
