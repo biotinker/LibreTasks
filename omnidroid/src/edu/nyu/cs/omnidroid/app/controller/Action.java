@@ -30,7 +30,7 @@ public abstract class Action {
 
   /** Action name to be used in the intent */
   private final String actionName;
-  private String ruleName;
+  protected String ruleName;
 
   /** The execution method used to fire an intent */
   private final String executionMethod;
