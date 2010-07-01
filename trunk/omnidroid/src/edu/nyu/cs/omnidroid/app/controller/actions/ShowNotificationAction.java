@@ -30,6 +30,7 @@ public class ShowNotificationAction extends OmniAction {
 
   public static final String ACTION_NAME = "Notify Message";
   public static final String PARAM_ALERT_MESSAGE = "message";
+  public static final String PARAM_TITLE = "title";
   
   private String message = null;
 
@@ -46,8 +47,9 @@ public class ShowNotificationAction extends OmniAction {
   public Intent getIntent() {
     Intent intent = new Intent();
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
-    intent.putExtra(PARAM_ALERT_MESSAGE, message);
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
+    intent.putExtra(PARAM_TITLE, ruleName);
+    intent.putExtra(PARAM_ALERT_MESSAGE, message);
     return intent;
   }
 

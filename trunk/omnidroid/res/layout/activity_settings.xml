@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-	android:title="@string/settings_title" >
+    android:title="@string/settings_title" >
 
-	<!-- TODO: add preference entries below -->
+    <CheckBoxPreference
+            android:key="@string/pref_key_sound"
+            android:defaultValue="false"
+            android:summary="@string/sound_desc"
+            android:title="@string/sound_enabled" />
+    <CheckBoxPreference
+            android:key="@string/pref_key_light"
+            android:defaultValue="false"
+            android:summary="@string/light_desc"
+            android:title="@string/light_enabled" />
+    <CheckBoxPreference
+            android:key="@string/pref_key_vibrate"
+            android:defaultValue="false"
+            android:summary="@string/vibrate_desc"
+            android:title="@string/vibrate_enabled"/>
 
 </PreferenceScreen>
