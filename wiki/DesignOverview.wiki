@@ -11,11 +11,11 @@ Omnidroid presents a simple event handler system.  Omnidroid processes data on t
 == Application Registration ==
 In order for Omnidroid to handle events, it needs to have applications register with it.  This can either be a passive registration where Omnidroid has built-in support for a specific application, or active registration where an application is OmniAware and provides the necessary information to Omnidroid.
 
-Application registration occurs at two times.  First when Omnidroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, OmniDroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with Omnidroid it populates the Omnidroid database with the information that application provides on Events and the infomration it can receive on Actions through intents.
+Application registration occurs at two times.  First when Omnidroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, Omnidroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with Omnidroid it populates the Omnidroid database with the information that application provides on Events and the infomration it can receive on Actions through intents.
 
 
 == User Setup/Configuration ==
-The user can customize OmniDroid by providing customized OmniHandlers and also by customizing the OmniDroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user preference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
+The user can customize Omnidroid by providing customized OmniHandlers and also by customizing the Omnidroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user preference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
 
 
 == Event Handling ==

@@ -3,7 +3,7 @@ This is an incomplete list of what Omnidroid can do or will do in the near futur
 _Active Development:_
  
 o If you are pissed off with ur bf/gf or some advertising company, and just
-want to delete their sms's without reading them, then OmniDroid will delete them from
+want to delete their sms's without reading them, then Omnidroid will delete them from
 inbox or auto reply “leave me alone!”.<br> 
 o If you can not remember where you left your android phone at home, just send an Email to your phone/gmail account with the subject line as “Find me!”. Your android phone will ring at max volume to help you find it.<br>  
 o If I receiving and incoming calls and our phone is in "silent" mode, then
