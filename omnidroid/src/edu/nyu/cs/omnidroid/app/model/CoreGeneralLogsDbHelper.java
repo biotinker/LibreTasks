@@ -46,7 +46,7 @@ public class CoreGeneralLogsDbHelper extends CoreLogsDbHelper {
     String text = CursorHelper.getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
 
     // Make an object out of it
-    GeneralLog log = new GeneralLog(context, id, timestamp, text);
+    GeneralLog log = new GeneralLog(id, timestamp, text);
     return log;
   }
 

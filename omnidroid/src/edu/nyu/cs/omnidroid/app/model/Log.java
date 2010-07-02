@@ -15,17 +15,12 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import android.content.Context;
-
 /**
  * A abstract base class that represents a Log data structure.
  * 
  */
 public abstract class Log {
-  // Database storage accessor variables
-  protected Context context;
-  
-  // Log data structures
+    // Log data structures
   protected Long id = null;
   protected Long timestamp = null;
   protected String text;
@@ -48,8 +43,7 @@ public abstract class Log {
    * @param text
    *          - Text for the log.
    */
-  public Log(Context context, long id, long timestamp, String text) {
-    this.context = context;
+  public Log(long id, long timestamp, String text) {
     this.id = id;
     this.timestamp = timestamp;
     this.text = text;
@@ -78,9 +72,4 @@ public abstract class Log {
   public void setText(String text) {
     this.text = text;
   }
-  
-  /**
-   * Store this Log in our database.
-   */
-  abstract public long insert();
 }

@@ -80,8 +80,8 @@ abstract public class CoreLogsDbHelper {
    * @return a cursor to the event log requested.
    * 
    */
-  public Cursor getLogMatchingID(long id) {
-    return logDbAdapter.fetch(id);
+  public Log getLogMatchingID(long id) {
+    return getLog(logDbAdapter.fetch(id));
   }
 
   /**

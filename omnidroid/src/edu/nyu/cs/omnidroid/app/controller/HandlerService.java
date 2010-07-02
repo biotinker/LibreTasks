@@ -22,7 +22,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
+import edu.nyu.cs.omnidroid.app.model.CoreActionLogsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreActionsDbHelper;
+import edu.nyu.cs.omnidroid.app.model.CoreEventLogsDbHelper;
+import edu.nyu.cs.omnidroid.app.model.CoreGeneralLogsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import edu.nyu.cs.omnidroid.app.model.ActionLog;
 import edu.nyu.cs.omnidroid.app.model.EventLog;
@@ -36,7 +39,6 @@ import edu.nyu.cs.omnidroid.app.model.GeneralLog;
  * that match are passed to ActionExecuter where they are packaged into system intents and run.
  */
 public class HandlerService extends Service {
-
   private static final String TAG = HandlerService.class.getSimpleName();
 
   /**
@@ -58,11 +60,13 @@ public class HandlerService extends Service {
     Event event = IntentParser.getEvent(intent);
 
     if (event != null) {
-      // Log event
-      EventLog logEvent = new EventLog(this, event);
-      Long logID = logEvent.insert();
+      // Log the event that occurred
+      CoreEventLogsDbHelper coreEventLogsDbHelper = new CoreEventLogsDbHelper(this);
+      EventLog logEvent = new EventLog(event);
+      Long logID = coreEventLogsDbHelper.insert(logEvent);
       logEvent.setID(logID);
-      
+      coreEventLogsDbHelper.close();
+
       // Open up Rule/Action Database connections
       CoreRulesDbHelper coreRuleDbHelper = new CoreRulesDbHelper(this);
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
@@ -70,25 +74,31 @@ public class HandlerService extends Service {
       // Get a list of actions that apply to this event.
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
           coreActionsDbHelper);
-      
+
       // Close Rule/Action Database connections
       coreActionsDbHelper.close();
       coreRuleDbHelper.close();
-      
+
       // TODO(acase): Consider moving this to the Action Executor so we don't have to loop through
-      //              the actions twice. The problem is that we don't have access to the logEvent
-      //              there.
+      // the actions twice. The problem is that we don't have access to the logEvent
+      // there.
+      // Log the action taking place
+      CoreActionLogsDbHelper coreActionLogsDbHelper = new CoreActionLogsDbHelper(this);
       for (Action action : actions) {
         // Log action
-        ActionLog logAction = new ActionLog(this, action, logEvent.getID());
-        logAction.insert();
+        ActionLog logAction = new ActionLog(action, logEvent.getID());
+        coreActionLogsDbHelper.insert(logAction);
       }
+      coreActionLogsDbHelper.close();
 
-      GeneralLog generalLog = new GeneralLog(this, TAG + " got " + actions.size() + " action(s) for event " +
-          intent.getAction());
-      generalLog.insert();
-      Logger.d(TAG, "get " + actions.size() + " action(s) for event " +
-          intent.getAction());
+      // Create a general log about what is going on
+      CoreGeneralLogsDbHelper coreGeneralLogsDbHelper = new CoreGeneralLogsDbHelper(this);
+      GeneralLog generalLog = new GeneralLog(TAG + " got " + actions.size()
+          + " action(s) for event " + intent.getAction());
+      coreGeneralLogsDbHelper.insert(generalLog);
+      coreGeneralLogsDbHelper.close();
+
+      Logger.d(TAG, "get " + actions.size() + " action(s) for event " + intent.getAction());
       // Execute the list of actions.
       try {
         ActionExecuter.executeActions(this, actions);
@@ -98,7 +108,7 @@ public class HandlerService extends Service {
         Logger.w(TAG, "Illegal Execution Method");
       }
     }
-    
+
     stopSelf();
   }
 
