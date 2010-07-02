@@ -15,7 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import android.content.Context;
 import edu.nyu.cs.omnidroid.app.controller.Action;
 
 /**
@@ -41,8 +40,7 @@ public class ActionLog extends Log {
    *          the {@code Event} that caused this action.
    * 
    */
-  public ActionLog(Context context, Action action, Long logEventID) {
-    this.context = context;
+  public ActionLog(Action action, Long logEventID) {
     this.ruleName = action.getRuleName();
     this.logEventID = logEventID;
     this.appName = action.getAppName();
@@ -53,7 +51,6 @@ public class ActionLog extends Log {
 
   public ActionLog(ActionLog log) {
     super(log);
-    this.context = log.context;
     this.ruleName = log.ruleName;
     this.logEventID = log.logEventID;
     this.appName = log.appName;
@@ -61,9 +58,29 @@ public class ActionLog extends Log {
     this.parameters = log.parameters;
   }
 
-  public ActionLog(Context context, long id, long timestamp, long logEventID, String ruleName,
+  /**
+   * Create a Log item that stores relevant action data.
+   * 
+   * @param id
+   *          the database id for this log entry
+   * @param timeStamp
+   *          the time stamp of the action taken.
+   * @param logEventID
+   *          the FK for the LogEvent record that caused this action
+   * @param ruleName
+   *          the name of the Rule that caused this action
+   * @param appName
+   *          the name of the application for the action
+   * @param actionName
+   *          the name of the event for the action
+   * @param parameters
+   *          the parameters for the action
+   * @param text
+   *          a textual description of the Log
+   */
+  public ActionLog(long id, long timestamp, long logEventID, String ruleName,
       String appName, String actionName, String parameters, String text) {
-    super(context, id, timestamp, text);
+    super(id, timestamp, text);
     this.ruleName = ruleName;
     this.logEventID = logEventID;
     this.appName = appName;
@@ -115,13 +132,5 @@ public class ActionLog extends Log {
     return "ID: " + id + "\nTimestamp: " + timestamp + "\nLogEventID: " + logEventID
         + "\nRuleName: " + ruleName + "\nApplication Name: " + appName + "\nAction Name: "
         + actionName + "\nParameters: " + parameters;
-  }
-
-  @Override
-  public long insert() {
-    CoreLogsDbHelper dbHelper = new CoreActionLogsDbHelper(context);
-    long rowid = dbHelper.insert(this);
-    dbHelper.close();
-    return rowid;
   }
 }

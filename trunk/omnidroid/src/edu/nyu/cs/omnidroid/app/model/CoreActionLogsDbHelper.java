@@ -53,7 +53,7 @@ public class CoreActionLogsDbHelper extends CoreLogsDbHelper {
     String text = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
 
     // Create a Log object from the data
-    ActionLog log = new ActionLog(context, id, timestamp, logEventId, ruleName, appName, eventName,
+    ActionLog log = new ActionLog(id, timestamp, logEventId, ruleName, appName, eventName,
         eventParams, text);
     return log;
   }

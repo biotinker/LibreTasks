@@ -69,6 +69,7 @@ public class UIDbHelperStore {
    */
   public void releaseResources() {
     Log.i(TAG, "releasing resources");
+    // FIXME(acase): I think this is being released when it shouldn't be
     datatypeLookup.close();
     filterLookup.close();
   }

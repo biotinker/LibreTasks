@@ -15,7 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import android.content.Context;
 import edu.nyu.cs.omnidroid.app.controller.Event;
 
 /**
@@ -37,9 +36,8 @@ public class EventLog extends Log {
    *          to create an {@code Event} out of
    * 
    */
-  public EventLog(Context context, Event event) {
+  public EventLog(Event event) {
     super();
-    this.context = context;
     this.appName = event.getAppName();
     this.eventName = event.getEventName();
     this.parameters = event.getParameters();
@@ -55,7 +53,6 @@ public class EventLog extends Log {
    */
   public EventLog(EventLog log) {
     super(log);
-    this.context = log.context;
     this.id = log.id;
     this.timestamp = log.timestamp;
     this.appName = log.appName;
@@ -63,9 +60,25 @@ public class EventLog extends Log {
     this.parameters = log.parameters;
   }
 
-  public EventLog(Context context, long id, long timestamp, String appName, String eventName,
+  /**
+   * Create a Log item that stores relevant event log data.
+   * 
+   * @param id
+   *          the database id for this log entry
+   * @param timeStamp
+   *          the time stamp of the action taken.
+   * @param appName
+   *          the name of the application for the event
+   * @param actionName
+   *          the name of the event for the event
+   * @param parameters
+   *          the parameters for the aevent
+   * @param text
+   *          a textual description of the Log
+   */
+  public EventLog(long id, long timestamp, String appName, String eventName,
       String parameters, String text) {
-    super(context, id, timestamp, text);
+    super(id, timestamp, text);
     this.appName = appName;
     this.eventName = eventName;
     this.parameters = parameters;
@@ -99,13 +112,4 @@ public class EventLog extends Log {
     return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\n" + "Application Name: " + appName
         + "\n" + "Event Name: " + eventName + "\nParameters: " + parameters + "\nText: " + text;
   }
-
-  @Override
-  public long insert() {
-    CoreLogsDbHelper dbHelper = new CoreEventLogsDbHelper(context);
-    long rowid = dbHelper.insert(this);
-    dbHelper.close();
-    return rowid;
-  }
-
 }

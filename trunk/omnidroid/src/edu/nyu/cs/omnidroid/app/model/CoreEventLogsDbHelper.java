@@ -52,7 +52,7 @@ public class CoreEventLogsDbHelper extends CoreLogsDbHelper {
     String text = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
 
     // Create a new Log object from the data
-    EventLog log = new EventLog(context, id, timestamp, appName, eventName, parameters, text);
+    EventLog log = new EventLog(id, timestamp, appName, eventName, parameters, text);
     return log;
   }
 }

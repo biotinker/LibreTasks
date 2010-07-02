@@ -16,7 +16,6 @@
 package edu.nyu.cs.omnidroid.app.view.simple.model;
 
 import android.content.Context;
-import android.database.Cursor;
 import edu.nyu.cs.omnidroid.app.model.CoreActionLogsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreEventLogsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreGeneralLogsDbHelper;
@@ -56,19 +55,16 @@ public class ModelLog extends ModelItem {
     Log log = null;
     if (type == TYPE_GENERAL) {
       logHelper = new CoreGeneralLogsDbHelper(context);
-      Cursor cursor = logHelper.getLogMatchingID(this.databaseId);
-      log = logHelper.getLog(cursor);
-      cursor.close();
+      log = logHelper.getLogMatchingID(this.databaseId);
+      logHelper.close();
     } else if (type == TYPE_EVENT) {
       logHelper = new CoreEventLogsDbHelper(context);
-      Cursor cursor = logHelper.getLogMatchingID(this.databaseId);
-      log = logHelper.getLog(cursor);
-      cursor.close();
+      log = logHelper.getLogMatchingID(this.databaseId);
+      logHelper.close();
     } else if (type == TYPE_ACTION) {
       logHelper = new CoreActionLogsDbHelper(context);
-      Cursor cursor = logHelper.getLogMatchingID(this.databaseId);
-      log = logHelper.getLog(cursor);
-      cursor.close();
+      log = logHelper.getLogMatchingID(this.databaseId);
+      logHelper.close();
     }
     return log; 
   }

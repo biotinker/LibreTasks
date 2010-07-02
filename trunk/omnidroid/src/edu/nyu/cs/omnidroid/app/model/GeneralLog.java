@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import android.content.Context;
-
 /**
  * This class represents an General{@code Log}. Logs are displayed on the ActivityLogs for
  * users to see what is going on.
@@ -25,15 +23,12 @@ public class GeneralLog extends Log {
   public static final String TAG = GeneralLog.class.getSimpleName();
 
   /**
-   * @param context
-   *          application context for the db connection
    * @param text
-   *          to create an OmniLogEvent out of
+   *          to create a GeneralLog of
    * 
    */
-  public GeneralLog(Context context, String text) {
+  public GeneralLog(String text) {
     super();
-    this.context = context;
     this.text = text;
   }
 
@@ -46,22 +41,23 @@ public class GeneralLog extends Log {
    */
   public GeneralLog(GeneralLog log) {
     super(log);
-    this.context = log.context;
   }
 
-  public GeneralLog(Context context, long id, long timestamp, String text) {
-    super(context, id, timestamp, text);
+  /**
+   * Create a Log item that stores relevant general log data.
+   * 
+   * @param id
+   *          the database id for this log entry
+   * @param timeStamp
+   *          the time stamp of the action taken.
+   * @param text
+   *          a textual description of the Log
+   */
+  public GeneralLog(long id, long timestamp, String text) {
+    super(id, timestamp, text);
   }
 
   public String toString() {
-    return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\n" + "\nText: " + text;
-  }
-
-  @Override
-  public long insert() {
-    CoreLogsDbHelper dbHelper = new CoreGeneralLogsDbHelper(context);
-    long rowid = dbHelper.insert(this);
-    dbHelper.close();
-    return rowid;
+    return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\nText: " + text;
   }
 }
