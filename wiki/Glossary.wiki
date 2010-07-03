@@ -1,4 +1,4 @@
-#summary The purpose of the glossary is to eliminate ambiguous terms and their usage.
+#summary Omnidroid specific terminology and definitions
 #labels Phase-Design,Phase-Implementation,Phase-Support
 
 === Action ===
