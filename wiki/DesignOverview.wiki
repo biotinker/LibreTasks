@@ -6,64 +6,30 @@ General Design Overview for Omnidroid
 Omnidroid presents a simple event handler system.  Omnidroid processes data on three levels:
   * Application Registration
   * User Setup/Configuration
-  * Event Handling.
+  * Event Handling
 
 == Application Registration ==
 In order for Omnidroid to handle events, it needs to have applications register with it.  This can either be a passive registration where Omnidroid has built-in support for a specific application, or active registration where an application is OmniAware and provides the necessary information to Omnidroid.
 
-Application registration occurs at two times.  First when Omnidroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.  Secondly, when a new package is installed, Omnidroid will check to see if newly installed package is OmniCompatible and register it if possible.  When applications are registered with Omnidroid it populates the Omnidroid database with the information that application provides on Events and the infomration it can receive on Actions through intents.
+For OmniAware applications, registration occurs at two times.
+  * TODO: First when Omnidroid is first installed it will query the system for packages and try to register (both passively and actively) any applications which are OmniCompatible.
+  * TODO: Secondly, when a new package is installed, Omnidroid will check to see if newly installed package is OmniCompatible and register it if possible.
+
+When applications are registered with Omnidroid it populates the Omnidroid database with the information that the application provides Event wise and the information it can receive on Actions through intents.
 
 
 == User Setup/Configuration ==
-The user can customize Omnidroid by providing customized OmniHandlers and also by customizing the Omnidroid application settings.  Users can: create, edit, delete, enable, and disable OmniHandlers as the need arises.  Also there are many application settings that can be tweaked based on user preference.  When users make changes to OmniHandlers or in the settings, it populates and updates the User Configuration File.
+The user can customize Omnidroid by providing customized rules and also by customizing the Omnidroid application settings.  Users can: create, edit, delete, enable, and disable Rules as the need arises.  Also there are many application settings that can be tweaked based on user preference.  When users make changes to rules or in the settings, it populates and updates the database.
 
 
 == Event Handling ==
-Event handling is probably the most complex of the processing levels.  The data flow for event handling is seen below:
+Event handling is the core of Omnidroid functionality.  The data flow for event handling is seen below:
 {{{
-   ------------     ---------     --------     ---------     -----------
-  | App Events |-->| Catcher |-->| Engine |-->| Thrower |-->|App Actions|
-   ------------     ---------     --------     ---------     -----------
+   ------------     --------------------     ----------------      -----------
+  | App Events |-->| Broadcast Receiver |-->| Handler Service |-->|App Actions|
+   ------------     --------------------     ----------------      -----------
 }}}
-Applications cause events.  Omnidroid catches these events using a Catcher based on what events have registered with Omnidroid.  The Catcher then hands this event off the Engine.  The engine then checks to see if the event matches a given OmniHandler set in the User Configuration File.  If it does, it then gathers the data needed based on the Application Configuration File in combination with the User Configuration File and hands this data over to the Thrower part of the application.  The Thrower then sends other applications the data they need to perform the action requested by the OmniHandler.
-
-= CONFIG SPECIFICATIONS =
-
-These configuration files are no longer relevant as we store this data in a database, but the information stored should be relatively close still.  Please see DatabaseDesign0 for details.
-
-== Sample Plain-Text AppCfg ==
-{{{
-  Application:SMS 
-  PkgName:edu.nyu.cs.omnidroid
-  ListenerClass:edu.nyu.cs.omnidroid.external.catcherapp.SMSListener
-  EventName:SMS_RECEIVED,RECEIVED SMS 
-  Filters:S_Name,S_Ph_No,Text,Location 
-  EventName:SMS_SENT,SENT SMS 
-  Filters:R_Name,R_Ph_no,Text 
-  ActionName: SMS_SEND,SEND SMS 
-  URIFields:R_NAME,R_Ph_No,Text 
-  ContentMap: 
-  S_Name,SENDER NAME,STRING 
-  R_Name,RECEIVER NAME,STRING 
-  S_Ph_No,SENDER PHONE NUMBER,INT 
-  R_Ph_No,RECEIVER PHONE NUMBER,INT 
-  Text,Text,STRING 
-  Location,SMS Number,INT
-}}}
-
-== Sample Plain-Text UsrCfg ==
-{{{
-  Enabled:True
-  InstanceName:SMS_Email
-  EventName:SMS_RECEIVED  
-  EventApp:SMS 
-  FilterType:S_PhoneNum
-  FilterData:212-555-1234
-  AvtionName:SEND_EMAIL
-  ActionApp:EMAIL /*One Event will have only one action. Make new record for another action.*/
-  ActionData:ContentProvider_URI
-  EnableInstance:True
-}}}
+Applications cause events.  Omnidroid catches these events using a Broadcast Receiver.  The Broadcast Receiver then hands this event off to the Handler Service.  The Handler Service then checks to see if the event matches a given rule set in the user configuration.  If it does, it then gathers the data needed and hands this data over to the Action application.
 
 = DEFINITIONS =
 
