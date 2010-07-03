@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Omnidroid</string>
-    <!-- TODO: Remove and use android:Version instead in About dialog -->
-    <string name="version">0.1.3</string>
-
     <!--  Buttons -->
     <string name="add_filter">Add Filter</string>
     <string name="add_action">Add Action</string>
@@ -15,7 +11,7 @@
 
     <!--  Miscellaneous -->
     <string name="welcome">Welcome to Omnidroid</string>
-    <string name="disclaimer_title">Omnidroid Disclaimer:</string>
+    <string name="disclaimer_title">Omnidroid Disclaimer</string>
     <string name="disclaimer_msg">&lt;b&gt;This software is potentially damaging&lt;/b&gt; and is provided &quot;AS IS&quot; and without any expressed or implied warranties.  In no event shall the copyright owner or contributors be liable for any damages as a result of this software.  By using this software you agree to these terms.</string>
     <string name="select_data_from_list">Either, select the data already provided by the event application:</string>
     <string name="name_to_save">Enter a name to remember me by</string>
@@ -31,6 +27,7 @@
     <string name="actions">actions</string>
 
     <!--  Common Words -->
+    <string name="omnidroid">Omnidroid</string>
     <string name="about">About</string>
     <string name="next">Next</string>
     <string name="help">Help</string>
@@ -49,6 +46,7 @@
     <string name="sorry">Sorry</string>
     <string name="no">No</string>
     <string name="coming_soon">We hope to implement this soon.</string>
+    <string name="unknown">unknown</string>
 
     <!--  Settings -->
     <string name="settings_label">Settings</string>
@@ -70,6 +68,7 @@
     <string name="oh_no">Oh no!</string>
 
     <!--  Help Dialog Texts -->
+    <string name="help_title">Omnidroid Help</string>
     <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.</string>
     <string name="help_choosefiltersandactions"></string>
     <string name="help_dlgactioninput"></string>
@@ -96,7 +95,15 @@
     <string name="actions_title">Actions</string>
     <string name="action_input_title">Action Input</string>
     <string name="logs">Logs</string>
-    
+
+    <!--  About Dialog -->
+    <string name="about_title">About Omnidroid</string>
+    <string name="about_desc">Omnidroid is an Automated Event Handler.</string>
+    <string name="about_version">Version:</string>
+    <string name="about_license">License: Apache 2.0 (http://www.apache.org/licenses/)</string>
+    <string name="about_website">Website: http://code.google.com/p/omnidroid</string>
+    <string name="copyright">&#169;Copyright 2009, 2010 Omnidroid.  All rights reserved.</string>
+
     <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
     <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
@@ -149,5 +156,5 @@
     <string name="sound_desc">Allow Omnidroid to alert using sound</string>
     <string name="light_desc">Allow Omnidroid to alert using lights</string>
     <string name="vibrate_desc">Allow Omnidroid to alert using vibration</string>
-	
+
 </resources>

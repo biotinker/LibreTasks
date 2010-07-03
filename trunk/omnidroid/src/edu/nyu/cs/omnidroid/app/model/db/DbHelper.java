@@ -49,7 +49,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
   // Store simple user preferences in a SharedPreferences file and their associated keys.
   private static final String SHARED_PREFS = "OmnidroidSharedPrefs";
-  public static final String SETTING_ACCEPTED_DISCLAIMER = "SettingDisclaimerAccepted";
 
   public DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.

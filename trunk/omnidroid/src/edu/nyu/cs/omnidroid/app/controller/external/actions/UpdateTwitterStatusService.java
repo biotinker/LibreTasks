@@ -77,7 +77,7 @@ public class UpdateTwitterStatusService extends Service {
     try{   
       Twitter twitter = new Twitter(account.accountName, account.credential);
       //TODO : To set the source to "OmniDroid" we first have to register the app with Twitter.
-      twitter.setSource(getString(R.string.app_name));
+      twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
     }catch(TwitterException e){
       //TODO Exception is received when we try to update twitter with the same message. Log the 
