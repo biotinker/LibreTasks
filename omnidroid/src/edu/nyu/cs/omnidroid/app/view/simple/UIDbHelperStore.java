@@ -72,5 +72,7 @@ public class UIDbHelperStore {
     // FIXME(acase): I think this is being released when it shouldn't be
     datatypeLookup.close();
     filterLookup.close();
+    dbInstance.close();
+    instance = null;
   }
 }
