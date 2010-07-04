@@ -25,28 +25,16 @@
             android:orientation="horizontal" android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <Button android:text="@string/plus_filter"
+            <Button android:text="@string/add_filter"
                 android:id="@+id/activity_choosefiltersandactions_btnAddFilter"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center" android:minWidth="65dip">
             </Button>
 
-            <Button android:text="@string/plus_action"
+            <Button android:text="@string/add_action"
                 android:id="@+id/activity_choosefiltersandactions_btnAddAction"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center" android:minWidth="75dip">
-            </Button>
-
-            <Button android:text="@string/delete"
-                android:id="@+id/activity_choosefiltersandactions_btnDeleteItem"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center" android:minWidth="65dip">
-            </Button>
-
-            <Button android:text="@string/edit"
-                android:id="@+id/activity_choosefiltersandactions_btnEditItem"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center" android:minWidth="40dip">
             </Button>
 
             <Button android:text="@string/save"

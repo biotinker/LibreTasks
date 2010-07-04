@@ -3,8 +3,6 @@
     <!--  Buttons -->
     <string name="add_filter">Add Filter</string>
     <string name="add_action">Add Action</string>
-    <string name="plus_filter">+Filter</string>
-    <string name="plus_action">+Action</string>
     <string name="create_rule">Create Rule</string>
     <string name="view_rules">View Rules</string>
     <string name="on_off">On/Off</string>
