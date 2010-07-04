@@ -21,11 +21,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
@@ -60,6 +64,10 @@ public class ActivityChooseFiltersAndActions extends Activity {
   public static final int ACTIVITY_RESULT_RULE_NAME = 4;
   /** Return code for rule building activity. */
   public static final int ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS = 5;
+
+  // Context Menu Options
+  private static final int MENU_EDIT = 0;
+  private static final int MENU_DELETE = 1;
 
   private ListView listview;
   private AdapterRule adapterRule;
@@ -156,6 +164,28 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // Set the adapter to render the rule stored in RuleBuilder.
     // It may be a brand new rule or a saved rule being edited.
     adapterRule.setRule(RuleBuilder.instance().getRule());
+    registerForContextMenu(listview);
+  }
+
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    menu.add(ContextMenu.NONE, MENU_EDIT, ContextMenu.NONE, R.string.edit);
+    menu.add(ContextMenu.NONE, MENU_DELETE, ContextMenu.NONE, R.string.delete);
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    switch (item.getItemId()) {
+    case MENU_EDIT:
+      editItem(info.position);
+      return true;
+    case MENU_DELETE:
+      deleteItem(info.position);
+      return true;
+    default:
+      return super.onContextItemSelected(item);
+    }
   }
 
   /**
@@ -177,12 +207,6 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     Button btnAddAction = (Button) findViewById(R.id.activity_choosefiltersandactions_btnAddAction);
     btnAddAction.setOnClickListener(listenerBtnClickAddAction);
-
-    Button btnDeleteItem = (Button) findViewById(R.id.activity_choosefiltersandactions_btnDeleteItem);
-    btnDeleteItem.setOnClickListener(listenerBtnClickDeleteItem);
-
-    Button btnEditItem = (Button) findViewById(R.id.activity_choosefiltersandactions_btnEditItem);
-    btnEditItem.setOnClickListener(listenerBtnClickEditItem);
 
     Button btnSaveRule = (Button) findViewById(R.id.activity_choosefiltersandactions_btnSaveRule);
     btnSaveRule.setOnClickListener(listenerBtnClickSaveRule);
@@ -225,32 +249,26 @@ public class ActivityChooseFiltersAndActions extends Activity {
     }
   };
 
-  private OnClickListener listenerBtnClickDeleteItem = new OnClickListener() {
-    public void onClick(View v) {
-      // TODO: (markww) Prompt user 'are you sure you want to delete this item?'.
-      ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
-      if ((item instanceof ModelRuleFilter) || (item instanceof ModelRuleAction)) {
-        adapterRule.removeItem(listview.getCheckedItemPosition());
-      } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-            getString(R.string.select_filter_delete));
-      }
+  private void deleteItem(int position) {
+    // TODO: (markww) Prompt user 'are you sure you want to delete this item?'.
+    ModelItem item = adapterRule.getItem(position);
+    if ((item instanceof ModelRuleFilter) || (item instanceof ModelRuleAction)) {
+      adapterRule.removeItem(position);
+    } else {
+      UtilUI.showAlert(this, getString(R.string.sorry), getString(R.string.select_filter_delete));
     }
-  };
+  }
 
-  private OnClickListener listenerBtnClickEditItem = new OnClickListener() {
-    public void onClick(View v) {
-      ModelItem item = adapterRule.getItem(listview.getCheckedItemPosition());
-      if (item instanceof ModelRuleFilter) {
-        editFilter(listview.getCheckedItemPosition(), (ModelRuleFilter) item);
-      } else if (item instanceof ModelRuleAction) {
-        editAction(listview.getCheckedItemPosition(), (ModelRuleAction) item);
-      } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-            getString(R.string.select_filter_edit));
-      }
+  private void editItem(int position) {
+    ModelItem item = adapterRule.getItem(position);
+    if (item instanceof ModelRuleFilter) {
+      editFilter(position, (ModelRuleFilter) item);
+    } else if (item instanceof ModelRuleAction) {
+      editAction(position, (ModelRuleAction) item);
+    } else {
+      UtilUI.showAlert(this, getString(R.string.sorry), getString(R.string.select_filter_edit));
     }
-  };
+  }
 
   private OnClickListener listenerBtnClickSaveRule = new OnClickListener() {
     public void onClick(View v) {
@@ -327,10 +345,10 @@ public class ActivityChooseFiltersAndActions extends Activity {
     ruleBuilder.setChosenModelAction(ruleAction.getModelAction());
     ruleBuilder.setChosenRuleActionDataOld(ruleAction.getDatas());
 
-    // Set the application in preparation for activities using user accounts 
+    // Set the application in preparation for activities using user accounts
     ModelApplication app = UIDbHelperStore.instance().db().getApplicationFromAction(action);
     ruleBuilder.setChosenApplication(app);
-    
+
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
     startActivityForResult(intent, ACTIVITY_RESULT_EDIT_ACTION);
