@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,11 +37,11 @@ public class Filter {
    * @param eventAttribute
    *          the event attribute data field to be filtered
    * @param filterOnDataType
-   *          the OmniDroid class name of the data type of the event attribute field
+   *          the Omnidroid class name of the data type of the event attribute field
    * @param filter
    *          the comparison to be made between the event attribute and the user filter data
    * @param compareWithDataTyp
-   *          the OmniDroid class name of the data type of the user filter data
+   *          the Omnidroid class name of the data type of the user filter data
    * @param compareWithdata
    *          the user defined data to check against the event attribute
    * @throws IllegalArgumentException

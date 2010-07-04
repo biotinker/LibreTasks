@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -76,7 +76,7 @@ public class UpdateTwitterStatusService extends Service {
 
     try{   
       Twitter twitter = new Twitter(account.accountName, account.credential);
-      //TODO : To set the source to "OmniDroid" we first have to register the app with Twitter.
+      //TODO : To set the source to "Omnidroid" we first have to register the app with Twitter.
       twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
     }catch(TwitterException e){

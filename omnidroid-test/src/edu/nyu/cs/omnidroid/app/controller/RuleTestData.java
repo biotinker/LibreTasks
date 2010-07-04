@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -222,7 +222,7 @@ public class RuleTestData {
   }
 
   /**
-   * Populates the Rules, RuleFilters, RuleActions, and RuleActionParameters tables of the OmniDroid
+   * Populates the Rules, RuleFilters, RuleActions, and RuleActionParameters tables of the Omnidroid
    * database with information from the rule data array. Also creates a list of {@link Rule} objects
    * with the same information.
    */
@@ -460,7 +460,7 @@ public class RuleTestData {
   }
 
   /**
-   * Inserts a single rule into Rules table in the OmniDroid database.
+   * Inserts a single rule into Rules table in the Omnidroid database.
    * 
    * @param rule
    *          the Rule object to be inserted into the database
@@ -482,7 +482,7 @@ public class RuleTestData {
   }
 
   /**
-   * Inserts a filter and all of its sub-filters into RuleFilters table in the OmniDroid database.
+   * Inserts a filter and all of its sub-filters into RuleFilters table in the Omnidroid database.
    * 
    * @param filterNode
    *          top level filter node to be inserted into the database
