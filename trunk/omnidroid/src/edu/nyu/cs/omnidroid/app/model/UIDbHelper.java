@@ -422,6 +422,10 @@ public class UIDbHelper {
    * @return the application associated with the action
    */
   public ModelApplication getApplicationFromAction(ModelAction action) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+
     Cursor cursor = registeredActionDbAdapter.fetch(action.getDatabaseId());
     long appID = CursorHelper.getLongFromCursor(cursor, RegisteredActionDbAdapter.KEY_APPID);
     cursor.close();
