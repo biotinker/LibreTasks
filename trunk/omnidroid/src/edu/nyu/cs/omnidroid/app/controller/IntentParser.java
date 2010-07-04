@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 OmniDroid - http://code.google.com/p/omnidroid
+ * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import android.util.Log;
 
 /**
  * This class parses the received {@link android.content.Intent}'s action field to see if it is an
- * OmniDroid supported event. Then it creates an {@link Event} object which is able to parse the
+ * Omnidroid supported event. Then it creates an {@link Event} object which is able to parse the
  * intent for any associated data attributes.
  */
 public class IntentParser {
@@ -47,7 +47,7 @@ public class IntentParser {
    * 
    * @param intent
    *          an intent received by the system describing the event that took place
-   * @return an OmniDroid Event type that contains the methods to get at the event's data attributes
+   * @return an Omnidroid Event type that contains the methods to get at the event's data attributes
    */
   public static Event getEvent(Intent intent) {
     Log.d("IntentParser:", "get Intent with action: " + intent.getAction());

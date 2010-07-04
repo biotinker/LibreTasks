@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009, 2010 OmniDroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -32,9 +32,9 @@ import edu.nyu.cs.omnidroid.app.model.EventLog;
 import edu.nyu.cs.omnidroid.app.model.GeneralLog;
 
 /**
- * This class is the heart of OmniDroid. When this class receives a system intent from
+ * This class is the heart of Omnidroid. When this class receives a system intent from
  * {@link BCReceiver} it calls {@link IntentParser} to create an {@link Event} if it is supported by
- * OmniDroid. The event is passed to the {@link RuleProcessor} to see if the event's attributes are
+ * Omnidroid. The event is passed to the {@link RuleProcessor} to see if the event's attributes are
  * matched by the parameters of the user's defined {@link Rule}. The {@link Action}(s) of any rules
  * that match are passed to ActionExecuter where they are packaged into system intents and run.
  */
