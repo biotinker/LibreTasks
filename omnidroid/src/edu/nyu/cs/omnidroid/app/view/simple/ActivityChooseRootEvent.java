@@ -46,6 +46,10 @@ public class ActivityChooseRootEvent extends Activity {
   private static final String KEY_STATE = "StateActivityChooseRootEvent";
   private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
 
+  public static final int RESULT_RULE_CREATED=1;
+  
+  private static final int REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS = 0;
+  
   private ListView listView;
   private AdapterEvents adapterEvents;
   private SharedPreferences state;
@@ -112,13 +116,22 @@ public class ActivityChooseRootEvent extends Activity {
         // they can start adding some filters.
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS);
       } else {
         UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
             getString(R.string.choose_root_event_inst));
       }
     }
   };
+  
+  @Override
+  public void onActivityResult(int requestCode,int resultCode,Intent data) {
+    if (requestCode == REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS && 
+        resultCode == RESULT_RULE_CREATED) {
+      setResult(ActivityChooseRootEvent.RESULT_RULE_CREATED );
+      finish();
+    }  
+  }
 
   /**
    * Handles rendering of individual event items for our ListView.

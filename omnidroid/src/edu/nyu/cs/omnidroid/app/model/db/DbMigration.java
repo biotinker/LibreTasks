@@ -29,6 +29,8 @@ import edu.nyu.cs.omnidroid.app.controller.actions.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowAlertAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowWebsiteAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.TurnOffWifiAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.TurnOnWifiAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
@@ -86,6 +88,8 @@ public class DbMigration {
       addLogGeneral(db);
     case 8:
       modifyGmailAndTwitterParam(db);
+    case 9:
+      addWifiActions(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -98,7 +102,7 @@ public class DbMigration {
       break;
     }
   }
-
+  
   /**
    * Create the initial version of the Omnidroid database along with prepopulated data.
    * 
@@ -485,4 +489,15 @@ public class DbMigration {
     }
     cursor.close();
   }
+  private static void addWifiActions(SQLiteDatabase db){
+	
+    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+    long appIdOmnidroid=appDbAdapter.getAppId(OmniAction.APP_NAME);
+    
+    RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+    actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdOmnidroid);
+    actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
+    
+  }
+  
 }

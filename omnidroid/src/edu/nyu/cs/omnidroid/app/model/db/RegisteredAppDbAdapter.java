@@ -378,6 +378,28 @@ public class RegisteredAppDbAdapter extends DbAdapter {
 
     return new AccountCredentials(username, credentials);
   }
+  /**
+   * @param appName application name;
+   * 
+   * @throws IllegalArgumentException when appName is null
+   * 
+   * @return application id, -1 if no records are found
+   */  
+  public long getAppId(String appName) {
+	  
+    if (appName == null) {
+      throw new IllegalArgumentException("primary key null.");
+    }
+    Cursor cursor = fetchAll(appName, null, null);
+    long appId = -1L;
+    if (cursor != null) {
+      if (cursor.moveToFirst()) {
+        appId = CursorHelper.getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID);
+      }
+      cursor.close();
+    }
+    return appId;	
+  }
 
   /**
    * Immutable value class that holds user account credentials.

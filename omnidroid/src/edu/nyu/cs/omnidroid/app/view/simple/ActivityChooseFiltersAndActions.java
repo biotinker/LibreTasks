@@ -383,5 +383,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     Log.d(TAG, "Save Rule: new rule reloaded from db");
     adapterRule.setRule(RuleBuilder.instance().getRule());
     Log.d(TAG, "Save Rule: new rule set");
+    setResult(ActivityChooseRootEvent.RESULT_RULE_CREATED );
+    finish();
   }
 }
