@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -449,14 +449,14 @@ public class FactoryDynamicUI {
     public void build(DlgDynamicInput dlg, LinearLayout ll, final ModelFilter modelFilter,
         DataType dataOld) {
       TextView tvAddress = new TextView(dlg.getContext());
-      tvAddress.setText("Address:");
+      tvAddress.setText(R.string.area_address);
       ll.addView(tvAddress);
 
       final EditText etAddress = new EditText(dlg.getContext());
       ll.addView(etAddress);
 
       TextView tvDistance = new TextView(dlg.getContext());
-      tvDistance.setText("Distance (in miles):");
+      tvDistance.setText(R.string.area_distance);
       ll.addView(tvDistance);
 
       final EditText etDistance = new EditText(dlg.getContext());
