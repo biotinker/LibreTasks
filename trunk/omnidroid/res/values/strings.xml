@@ -108,9 +108,10 @@
     <string name="choose_event_inst">Please select an event from the list, then hit OK.</string>    
     <string name="select_application_inst">Select an application:</string>
     <string name="select_application_alert_inst">Please select an application from the list, then hit OK.</string>
-    <string name="select_action_alert_inst">Please select an action from the list above, then hit OK!</string>
-    <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK!</string>
-    <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK!</string>
+    <string name="select_action_alert_inst">Please select an action from the list above, then hit OK.</string>
+    <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK.</string>
+    <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK.</string>
+    <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>    
 
     <!--  System Events -->
     
@@ -118,6 +119,8 @@
     <string name="pick_start_time">Pick a start time</string>
     <string name="pick_end_time">Pick an end time</string>
     <string name="pick_time">Pick a time</string>
+    <string name="area_address">Address:</string>
+    <string name="area_distance">Distance (in miles):</string>
     <string name="clear_logs">Clear Logs</string>
     <string name="choose_log">Choose type of logs</string>
     <string name="event_logs">Event Logs</string>

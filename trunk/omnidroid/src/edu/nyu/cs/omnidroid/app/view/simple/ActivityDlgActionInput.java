@@ -21,8 +21,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,74 +40,39 @@ import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.view.simple.factoryui.FactoryActions;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
-import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
+import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItem;
+import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
 
 /**
  * This dialog is a shell to contain UI elements specific to different actions. Given an action ID,
- * we can construct the inner UI elements using {@link FactoryDynamicUI}.
+ * we can construct the inner UI elements using {@link FactoryActions}.
  */
 public class ActivityDlgActionInput extends Activity {
-  private static final String KEY_STATE = "StateDlgActionInput";
-  
+  // Request code for opening the create account screen
+  public static final int SETUP_ACCOUNT_REQUEST = 0;
+
   /** Layout dynamically generated on our action type by FactoryActions. */
   private LinearLayout llContent;
-  
-  /** Main layout to which we append the dynamically generated layout. */
-  private LinearLayout llDynamic;
-  
-  /** Our state keeper. */
-  private SharedPreferences state;
 
-  /**
-   * By default true, we want to save the UI state when onPause is called. If the user hits the
-   * OK button, and their input constructs a valid action, we set this to false to skip saving
-   * the UI state. We need this to distinguish between onPause being called in response to the
-   * phone orientation being changed, or the user explicitly telling the dialog to close.
-   */
-  private boolean preserveStateOnClose;
-
+  // Container for the dynamically created view
+  private ViewItemGroup viewItems;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     // Link up controls from the xml layout resource file.
-    initializeUI();
-    
-    // By default, we want to save UI state on close.
-    preserveStateOnClose = true;
+    initializeUI(savedInstanceState);
   }
 
   @Override
-  protected void onPause() {
-    super.onPause();
-
-    // Conditionally save our UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.clear();
-    prefsEditor.commit();
-    if (preserveStateOnClose) {
-      FactoryActions.uiStateSave(
-        RuleBuilder.instance().getChosenModelAction(), llDynamic, prefsEditor);
-      prefsEditor.commit();
-    }
-  }
-  
-  @Override
-  protected void onResume() {
-    super.onResume();
-    
-    // Restore our UI state.
-    state = getSharedPreferences(ActivityDlgActionInput.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    if (llDynamic != null) {
-      FactoryActions.uiStateLoad(RuleBuilder.instance().getChosenModelAction(), llDynamic, state);
-    }    
+  protected void onSaveInstanceState(Bundle bundle) {
+    viewItems.saveState(bundle);
   }
 
-  private void initializeUI() {
+  private void initializeUI(Bundle bundle) {
     setContentView(R.layout.activity_dlg_action_input);
 
     Button btnOk = (Button) findViewById(R.id.activity_dlg_action_input_btnOk);
@@ -116,26 +81,21 @@ public class ActivityDlgActionInput extends Activity {
     // TODO(acase): Only display if applicable
     Button btnAttributes = (Button) findViewById(R.id.activity_dlg_action_input_btnAttributes);
     btnAttributes.setOnClickListener(listenerBtnClickAttributes);
-    
+
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_input_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickInfo);
-    
+
     llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
 
     // Add dynamic content now based on our action type.
     ModelAction modelAction = RuleBuilder.instance().getChosenModelAction();
     ArrayList<DataType> ruleActionDataOld = RuleBuilder.instance().getChosenRuleActionDataOld();
-    
-    //Retrieve the login info from the database to pre-populate the UI
-    ModelApplication modelApp = null;
-    if(RuleBuilder.instance().getChosenApplication() != null){
-      modelApp = UIDbHelperStore.instance().db().getApplication(
-              RuleBuilder.instance().getChosenApplication().getDatabaseId());
-    }
 
-    llDynamic = FactoryActions.buildUIFromAction(modelApp, modelAction, ruleActionDataOld, this);
-    llContent.addView(llDynamic);
-    
+    viewItems = FactoryActions.buildUIFromAction(modelAction, ruleActionDataOld, this);
+    llContent.addView(viewItems.getLayout());
+
+    viewItems.loadState(bundle);
+
     setTitle(modelAction.getTypeName());
   }
 
@@ -145,10 +105,10 @@ public class ActivityDlgActionInput extends Activity {
       // based on our dynamic UI content.
       ModelRuleAction action;
       try {
-        action = FactoryActions.buildActionFromUI(
-          RuleBuilder.instance().getChosenModelAction(), llDynamic);
+        action = FactoryActions.buildActionFromUI(RuleBuilder.instance().getChosenModelAction(),
+            viewItems);
       } catch (Exception ex) {
-        // TODO: (markww) Make sure DataType classes are providing meaningful error output, then 
+        // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
         // remove the static string below and only use the contents of the exception.
         UtilUI.showAlert(v.getContext(), "Sorry!",
             "There was an error creating your action, your input was probably bad!:\n"
@@ -158,61 +118,59 @@ public class ActivityDlgActionInput extends Activity {
 
       // Set our constructed action so the parent activity can pick it up.
       RuleBuilder.instance().setChosenRuleAction(action);
-
-      // We can now dismiss ourselves. Our parent listeners can pick up the
-      // constructed action once we unwind the dialog stack using the
-      // RuleBuilder singleton instance. We don't need to preserve our UI
-      // state upon closing now.
-      preserveStateOnClose = false;
       finish();
     }
   };
 
   private View.OnClickListener listenerBtnClickAttributes = new View.OnClickListener() {
     public void onClick(View v) {
-      // For the selected control, try to pop up a list of attribute parameters that can
-      // be used in the action based on the data type. For example, if the user has an
-      // OmniText UI control selected, and they hit this button, pop up a list of all
-      // attributes from the root event that are also OmniText.
-      int focusedPosition = getFocusedPosition();
-      if (focusedPosition > -1) {
-        showDialogAttributes(focusedPosition);
-      }
-      else {
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-          "Please select a control to use parameters.");
+      /*
+       * For the selected control, try to pop up a list of attribute parameters that can be used in
+       * the action based on the data type. For example, if the user has an OmniText UI control
+       * selected, and they hit this button, pop up a list of all attributes from the root event
+       * that are also OmniText.
+       */
+      ViewItem focusedItem = getFocusedItem();
+      if (focusedItem != null) {
+        showDialogAttributes(focusedItem);
+      } else {
+        Resources resource = v.getContext().getResources();
+        UtilUI.showAlert(v.getContext(), resource.getString(R.string.sorry), resource
+            .getString(R.string.select_control_for_param_alert_inst));
       }
     }
   };
-  
+
   private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
     public void onClick(View v) {
       // TODO: (markww) Add help info about action.
-      UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-        getString(R.string.coming_soon));
+      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
-  
-  private int getFocusedPosition() {
-    View viewFocused = llDynamic.getFocusedChild();
-    if (viewFocused != null) {
-      // We need to know the position of this control.
-      for (int i = 0; i < llDynamic.getChildCount(); i++) {
-        if (llDynamic.getChildAt(i) == viewFocused) {
-          return i;
-        }
-      }
-    }
-    return -1;
+
+  /**
+   * Get the current item on focus. This method can only get the focused item if it was created
+   * dynamically by the factory.
+   * 
+   * @return the {@link ViewItem} instance that is currently being focused. null otherwise
+   */
+  private ViewItem getFocusedItem() {
+    View viewFocused = viewItems.getLayout().getFocusedChild();
+    return viewItems.get(viewFocused.getId());
   }
-  
-  private void showDialogAttributes(final int focusedChildViewPosition) {
-    long datatypeId = FactoryActions.getDatatypeIdForControlAtPosition(
-        RuleBuilder.instance().getChosenModelAction(), llDynamic, focusedChildViewPosition);
-    
+
+  /**
+   * Show the attributes dialog for the specified {@code viewItem} if applicable
+   * 
+   * @param viewItem
+   *          the item chosen to show the attributes
+   */
+  private void showDialogAttributes(final ViewItem viewItem) {
+    long datatypeId = viewItem.getDataTypeDbID();
+
     // Get all attributes that have the same data type ID.
     ArrayList<ModelAttribute> attributes = UIDbHelperStore.instance().db().getAttributesForEvent(
-      RuleBuilder.instance().getChosenEvent());
+        RuleBuilder.instance().getChosenEvent());
     ArrayList<ModelAttribute> attributesValid;
     if (datatypeId != UIDbHelperStore.instance().getDatatypeLookup().getDataTypeID("Text")) {
       attributesValid = new ArrayList<ModelAttribute>();
@@ -222,11 +180,10 @@ public class ActivityDlgActionInput extends Activity {
           attributesValid.add(attribute);
         }
       }
-     }
-     else {
-       attributesValid = attributes;
-     }
-    
+    } else {
+      attributesValid = attributes;
+    }
+
     // Show the dialog finally if they have any choice.
     if (attributesValid.size() > 0) {
       DlgAttributes dlg = new DlgAttributes(this, attributesValid);
@@ -234,28 +191,21 @@ public class ActivityDlgActionInput extends Activity {
         public void onDismiss(DialogInterface dialog) {
           // Fetch the attribute they chose, if any.
           ModelAttribute modelAttribute = ((DlgAttributes) dialog).getSelectedAttribute();
+
           if (modelAttribute != null) {
-            // Insert this model attribute into the control.
-            FactoryActions.insertAttributeForControlAtPosition(
-              RuleBuilder.instance().getChosenModelAction(),
-              modelAttribute, 
-              llDynamic,
-              focusedChildViewPosition);
+            viewItem.insertAttribute(modelAttribute);
           }
         }
       });
       dlg.show();
-    }
-    else {
+    } else {
       UtilUI.showAlert(this, "Sorry!",
-        "There are no matching parameters for the selected attribute type!");
+          "There are no matching parameters for the selected attribute type!");
     }
   }
-  
-  
+
   /**
-   * Shows attributes for the root event that can work as parameters for the
-   * action.
+   * Shows attributes for the root event that can work as parameters for the action.
    */
   private static class DlgAttributes extends Dialog {
 
@@ -285,16 +235,18 @@ public class ActivityDlgActionInput extends Activity {
         // with that attribute, from the database.
         int position = listView.getCheckedItemPosition();
         if (position < 0) {
-          UtilUI.showAlert(v.getContext(), "Sorry!",
-            "Please select an attribute from the list!");
+          Resources resource = v.getContext().getResources();
+          UtilUI.showAlert(v.getContext(), resource.getString(R.string.sorry), resource
+              .getString(R.string.select_attribute_alert_inst));
           return;
+
         }
 
         // The parent activity will pick up our selected attribute from the list.
         dismiss();
       }
     };
-    
+
     public ModelAttribute getSelectedAttribute() {
       return adapterAttributes.getItem(listView.getCheckedItemPosition());
     }

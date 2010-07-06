@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.factoryui.FactoryActions;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
+import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
 
 /**
  * This dialog is a shell to contain UI elements specific to creating a login UI. Given an
@@ -34,7 +35,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
   private LinearLayout llContent;
 
   /** Main layout to which we append the dynamically generated layout. */
-  private LinearLayout llDynamic;
+  private ViewItemGroup viewItems;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -63,16 +64,16 @@ public class ActivityDlgApplicationLoginInput extends Activity {
     ModelApplication modelApp = UIDbHelperStore.instance().db().getApplication(
         RuleBuilder.instance().getChosenApplication().getDatabaseId());
 
-    llDynamic = FactoryActions.buildLoginUI(modelApp, this);
+    viewItems = FactoryActions.buildLoginUI(modelApp, this);
 
-    llContent.addView(llDynamic);
+    llContent.addView(viewItems.getLayout());
   }
 
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
       ModelApplication application = RuleBuilder.instance().getChosenApplication();
       try {
-        FactoryActions.buildApplicationFromLoginUI(application, llDynamic);
+        FactoryActions.buildApplicationFromLoginUI(application, viewItems);
         UIDbHelperStore.instance().db().updateApplicationLoginInfo(application);
       } catch (Exception e) {
         UtilUI.showAlert(v.getContext(), "", e.toString());
