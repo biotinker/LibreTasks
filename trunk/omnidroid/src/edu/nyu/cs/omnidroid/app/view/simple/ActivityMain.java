@@ -46,6 +46,9 @@ public class ActivityMain extends Activity {
   // Disclaimer stored in SharedPreferences
   private SharedPreferences prefs;
   private static final String SETTING_ACCEPTED_DISCLAIMER = "SettingDisclaimerAccepted";
+  
+  /** request code for ChooseRootEventActivity*/
+  private static final int REQUEST_ACTIVITY_CREATE_RULE = 0;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,20 @@ public class ActivityMain extends Activity {
       showDisclaimer();
     }
   }
-
+  @Override
+  public void onActivityResult(int requestCode, int resultCode,Intent data) {
+    switch (requestCode) {
+    case REQUEST_ACTIVITY_CREATE_RULE :
+      if (resultCode == ActivityChooseRootEvent.RESULT_RULE_CREATED) {
+        ActivitySavedRules.resetUI(this);
+        Intent intent = new Intent();
+        intent.setClass(this, ActivitySavedRules.class);
+        startActivity(intent);
+      }
+    default :
+  	   //do nothing
+    }
+  }
   /**
    * Display our disclaimer dialog and require acceptance.
    */
@@ -182,7 +198,7 @@ public class ActivityMain extends Activity {
       ActivityChooseRootEvent.resetUI(v.getContext());
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityChooseRootEvent.class);
-      startActivity(intent);
+      startActivityForResult(intent, REQUEST_ACTIVITY_CREATE_RULE);
     }
   };
   

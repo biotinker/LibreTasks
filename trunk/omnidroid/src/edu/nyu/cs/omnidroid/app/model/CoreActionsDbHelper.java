@@ -37,6 +37,8 @@ import edu.nyu.cs.omnidroid.app.controller.actions.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowAlertAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowWebsiteAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.TurnOffWifiAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.TurnOnWifiAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
@@ -138,6 +140,12 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(SetPhoneVibrateAction.APP_NAME)
         && actionName.equals(SetPhoneVibrateAction.ACTION_NAME)) {
       return new SetPhoneVibrateAction(actionParams);
+    } else if (appName.equals(TurnOffWifiAction.APP_NAME)
+        && actionName.equals(TurnOffWifiAction.ACTION_NAME)) {
+      return new TurnOffWifiAction(actionParams);
+    } else if (appName.equals(TurnOnWifiAction.APP_NAME)
+        && actionName.equals(TurnOnWifiAction.ACTION_NAME)) {
+      return new TurnOnWifiAction(actionParams);
     } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);
