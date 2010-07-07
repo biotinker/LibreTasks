@@ -187,7 +187,14 @@ public class ActivityChooseRootEvent extends Activity {
 
       // Title of the event.
       TextView tv = new TextView(context);
-      tv.setText(events.get(position).getDescriptionShort());
+      String text=events.get(position).getDescriptionShort();
+      int numOfRules=UIDbHelperStore.instance().db().getRuleCount(events.get(position).getDatabaseId());
+      if (numOfRules == 1) {
+        text += " (1 rule)";
+      } else if (numOfRules > 1) {
+        text += " (" + numOfRules + " rules)";
+      }
+      tv.setText(text);
       tv.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
           LayoutParams.FILL_PARENT));
       tv.setGravity(Gravity.CENTER_VERTICAL);

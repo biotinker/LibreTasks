@@ -1012,5 +1012,24 @@ public class UIDbHelper {
     logEventDbAdapter.deleteAll();
     logActionDbAdapter.deleteAll();
     logGeneralDbAdapter.deleteAll();
- }
+  }
+  /**
+   * 
+   * @param eventID database id 
+   * 
+   * @throws IllegarStateException when database is closed
+   * @return number of rules for event
+   */
+  public int getRuleCount(Long eventID) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+    Cursor cursor = ruleDbAdapter.fetchAll(eventID, null, null, null, null);
+    if (cursor!=null) {
+      int count=cursor.getCount();
+      cursor.close();
+      return count;
+    }
+    return -1;
+  }
 }
