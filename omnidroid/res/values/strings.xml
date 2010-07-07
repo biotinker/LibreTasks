@@ -39,7 +39,7 @@
     <string name="disagree">I Disagree</string>
     <string name="info">Info</string>
     <string name="view">View</string>
-    <string name="params">Params</string>
+    <string name="event_attributes">Attributes</string>
     <string name="yes">Yes</string>
     <string name="sorry">Sorry</string>
     <string name="no">No</string>

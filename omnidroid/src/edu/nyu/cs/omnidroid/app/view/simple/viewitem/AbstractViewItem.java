@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 
+import android.content.Intent;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 
 /**
@@ -45,5 +46,12 @@ public abstract class AbstractViewItem implements ViewItem {
 
   protected final static String getAttributeInsertName(ModelAttribute modelAttribute) {
     return "<" + modelAttribute.getTypeName() + ">";
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    // Do nothing by default
   }
 }

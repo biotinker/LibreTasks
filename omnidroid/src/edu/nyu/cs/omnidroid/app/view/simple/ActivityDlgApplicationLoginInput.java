@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.view.simple.factoryui.FactoryActions;
+import edu.nyu.cs.omnidroid.app.view.simple.factoryui.ActionParameterViewFactory;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
 
@@ -64,7 +64,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
     ModelApplication modelApp = UIDbHelperStore.instance().db().getApplication(
         RuleBuilder.instance().getChosenApplication().getDatabaseId());
 
-    viewItems = FactoryActions.buildLoginUI(modelApp, this);
+    viewItems = ActionParameterViewFactory.buildLoginUI(modelApp, this);
 
     llContent.addView(viewItems.getLayout());
   }
@@ -73,13 +73,14 @@ public class ActivityDlgApplicationLoginInput extends Activity {
     public void onClick(View v) {
       ModelApplication application = RuleBuilder.instance().getChosenApplication();
       try {
-        FactoryActions.buildApplicationFromLoginUI(application, viewItems);
+        ActionParameterViewFactory.buildApplicationFromLoginUI(application, viewItems);
         UIDbHelperStore.instance().db().updateApplicationLoginInfo(application);
       } catch (Exception e) {
         UtilUI.showAlert(v.getContext(), "", e.toString());
         return;
       }
 
+      setResult(RESULT_OK, getIntent());
       finish();
     }
   };

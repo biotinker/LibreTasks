@@ -37,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Static factory class for setting up a dynamic UI for every action type.
  */
-public class FactoryActions {
+public class ActionParameterViewFactory {
   private static final long TEXT_DATATYPE_DB_ID;
   private static final long PASSWORD_INPUT_DATATYPE_DB_ID;
 
@@ -52,7 +52,7 @@ public class FactoryActions {
     PASSWORD_INPUT_DATATYPE_DB_ID = lookup.getDataTypeID(OmniPasswordInput.DB_NAME);
   }
 
-  private FactoryActions() {
+  private ActionParameterViewFactory() {
   }
 
   /**
