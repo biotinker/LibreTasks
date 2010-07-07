@@ -18,7 +18,6 @@ package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniUserAccount;
-import edu.nyu.cs.omnidroid.app.view.simple.ActivityDlgActionInput;
 import edu.nyu.cs.omnidroid.app.view.simple.ActivityDlgApplicationLoginInput;
 import edu.nyu.cs.omnidroid.app.view.simple.RuleBuilder;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
@@ -37,6 +36,9 @@ import android.widget.LinearLayout.LayoutParams;
  * {@link ViewItem} implementation for {@link OmniUserAccount}
  */
 public class UserAccountViewItem extends AbstractViewItem {
+  // Request code for opening the create account screen
+  private static final int SETUP_ACCOUNT_REQUEST = 0;
+
   private final EditText userAcountText;
   private final Button setupAccountButton;
   private final Activity mActivity;
@@ -63,7 +65,8 @@ public class UserAccountViewItem extends AbstractViewItem {
     setupAccountButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
         Intent intent = new Intent(mActivity, ActivityDlgApplicationLoginInput.class);
-        mActivity.startActivityForResult(intent, ActivityDlgActionInput.SETUP_ACCOUNT_REQUEST);
+        intent.putExtra(ViewItemGroup.INTENT_EXTRA_SOURCE_ID, ID);
+        mActivity.startActivityForResult(intent, SETUP_ACCOUNT_REQUEST);
       }
     });
   }
@@ -124,5 +127,25 @@ public class UserAccountViewItem extends AbstractViewItem {
    */
   private void setUserName() {
     userAcountText.setText(RuleBuilder.instance().getChosenApplication().getUsername());
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+    case SETUP_ACCOUNT_REQUEST:
+      switch (resultCode) {
+      case Activity.RESULT_OK:
+        /*
+         * Since we only have a single user per account, we need to refresh the field with the
+         * latest account created by the user. Pass null to {@link loadState} since the bundle is
+         * not being used as of now (Because there is only one account, there is no ambiguity which
+         * is the current account).
+         */
+        loadState(null);
+        break;
+      }
+
+      break;
+    }
   }
 }

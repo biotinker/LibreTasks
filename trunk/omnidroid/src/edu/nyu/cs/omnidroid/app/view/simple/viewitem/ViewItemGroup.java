@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
@@ -30,6 +31,8 @@ import java.util.Map;
  * Container class for holding sets of {@link ViewItem} objects.
  */
 public class ViewItemGroup {
+  public static final String INTENT_EXTRA_SOURCE_ID = "source ID";
+
   private final Map<Integer, ViewItem> items;
   private final LinearLayout layout;
 
@@ -137,5 +140,15 @@ public class ViewItemGroup {
    */
   public LinearLayout getLayout() {
     return layout;
+  }
+
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (data != null) {
+      int sourceID = data.getIntExtra(INTENT_EXTRA_SOURCE_ID, -1);
+
+      if (sourceID != -1) {
+        items.get(sourceID).onActivityResult(requestCode, resultCode, data);
+      }
+    }
   }
 }

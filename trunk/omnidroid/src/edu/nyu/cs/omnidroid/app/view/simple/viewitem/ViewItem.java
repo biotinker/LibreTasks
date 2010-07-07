@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
@@ -76,4 +77,11 @@ public interface ViewItem {
    * Insert an attribute parameter tag directly into the underlying {@link View}
    */
   public void insertAttribute(ModelAttribute attribute);
+  
+  /**
+   * Callback method for this object when an activity finishes
+   * 
+   * @see {@link Activity#onActivityResult}
+   */
+  public void onActivityResult(int requestCode, int resultCode, Intent data);
 }

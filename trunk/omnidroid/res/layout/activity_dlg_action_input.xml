@@ -59,7 +59,7 @@
                 </Button>
                         
                 <Button 
-                    android:text="@string/params" 
+                    android:text="@string/event_attributes" 
                     android:id="@+id/activity_dlg_action_input_btnAttributes" 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content"

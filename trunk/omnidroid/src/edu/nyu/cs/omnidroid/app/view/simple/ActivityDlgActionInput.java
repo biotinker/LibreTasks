@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -38,7 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
-import edu.nyu.cs.omnidroid.app.view.simple.factoryui.FactoryActions;
+import edu.nyu.cs.omnidroid.app.view.simple.factoryui.ActionParameterViewFactory;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
@@ -47,12 +48,9 @@ import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
 
 /**
  * This dialog is a shell to contain UI elements specific to different actions. Given an action ID,
- * we can construct the inner UI elements using {@link FactoryActions}.
+ * we can construct the inner UI elements using {@link ActionParameterViewFactory}.
  */
 public class ActivityDlgActionInput extends Activity {
-  // Request code for opening the create account screen
-  public static final int SETUP_ACCOUNT_REQUEST = 0;
-
   /** Layout dynamically generated on our action type by FactoryActions. */
   private LinearLayout llContent;
 
@@ -91,7 +89,7 @@ public class ActivityDlgActionInput extends Activity {
     ModelAction modelAction = RuleBuilder.instance().getChosenModelAction();
     ArrayList<DataType> ruleActionDataOld = RuleBuilder.instance().getChosenRuleActionDataOld();
 
-    viewItems = FactoryActions.buildUIFromAction(modelAction, ruleActionDataOld, this);
+    viewItems = ActionParameterViewFactory.buildUIFromAction(modelAction, ruleActionDataOld, this);
     llContent.addView(viewItems.getLayout());
 
     viewItems.loadState(bundle);
@@ -105,7 +103,7 @@ public class ActivityDlgActionInput extends Activity {
       // based on our dynamic UI content.
       ModelRuleAction action;
       try {
-        action = FactoryActions.buildActionFromUI(RuleBuilder.instance().getChosenModelAction(),
+        action = ActionParameterViewFactory.buildActionFromUI(RuleBuilder.instance().getChosenModelAction(),
             viewItems);
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
@@ -204,6 +202,12 @@ public class ActivityDlgActionInput extends Activity {
     }
   }
 
+  @Override
+  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    viewItems.onActivityResult(requestCode, resultCode, data);
+  }
+  
   /**
    * Shows attributes for the root event that can work as parameters for the action.
    */
