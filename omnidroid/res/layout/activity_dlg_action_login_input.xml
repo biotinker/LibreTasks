@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_dlg_action_input_ll_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="300px"
+    >
+    
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/activity_dlg_action_input_llDynamicContent"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="10px"
+      android:paddingRight="10px"
+      >
+      
+      <!-- ************************************************************** -->
+      <!-- 
+         UI content added programmatically at runtime. The actual creation
+         of the UI elements is handled inside:
+         
+             ActionParameterViewFactory.buildApplicationFromLoginUI()
+      -->
+      <!-- ************************************************************** -->
+    
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" 
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+        android:paddingTop="10px"
+        android:paddingBottom="10px">
+    
+		<Button 
+		    android:text="@string/ok" 
+		    android:id="@+id/activity_dlg_action_login_input_btnOk" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+		
+		<Button 
+		    android:text="@string/help" 
+		    android:id="@+id/activity_dlg_action_login_input_btnHelp" 
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center">
+		</Button>
+    </LinearLayout>
+</LinearLayout>

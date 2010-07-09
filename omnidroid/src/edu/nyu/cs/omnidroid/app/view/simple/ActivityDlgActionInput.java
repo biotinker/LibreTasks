@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -39,6 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.app.view.simple.factoryui.ActionParameterViewFactory;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
@@ -76,7 +78,6 @@ public class ActivityDlgActionInput extends Activity {
     Button btnOk = (Button) findViewById(R.id.activity_dlg_action_input_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
 
-    // TODO(acase): Only display if applicable
     Button btnAttributes = (Button) findViewById(R.id.activity_dlg_action_input_btnAttributes);
     btnAttributes.setOnClickListener(listenerBtnClickAttributes);
 
@@ -92,6 +93,11 @@ public class ActivityDlgActionInput extends Activity {
     viewItems = ActionParameterViewFactory.buildUIFromAction(modelAction, ruleActionDataOld, this);
     llContent.addView(viewItems.getLayout());
 
+    ArrayList<View> textEdits = llContent.getFocusables(View.FOCUS_FORWARD);
+    for (View t : textEdits) {
+      t.setOnFocusChangeListener(editTextFocusChangeListener);
+    }
+
     viewItems.loadState(bundle);
 
     setTitle(modelAction.getTypeName());
@@ -103,8 +109,8 @@ public class ActivityDlgActionInput extends Activity {
       // based on our dynamic UI content.
       ModelRuleAction action;
       try {
-        action = ActionParameterViewFactory.buildActionFromUI(RuleBuilder.instance().getChosenModelAction(),
-            viewItems);
+        action = ActionParameterViewFactory.buildActionFromUI(RuleBuilder.instance()
+            .getChosenModelAction(), viewItems);
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
         // remove the static string below and only use the contents of the exception.
@@ -158,19 +164,21 @@ public class ActivityDlgActionInput extends Activity {
   }
 
   /**
-   * Show the attributes dialog for the specified {@code viewItem} if applicable
+   * For a selected event, retrieve any attributes that could be useful for the action
    * 
    * @param viewItem
-   *          the item chosen to show the attributes
+   *          -the selected view item
+   * @return List of attributes applicable to the view item
    */
-  private void showDialogAttributes(final ViewItem viewItem) {
+  private List<ModelAttribute> getAttributes(final ViewItem viewItem) {
     long datatypeId = viewItem.getDataTypeDbID();
 
     // Get all attributes that have the same data type ID.
     ArrayList<ModelAttribute> attributes = UIDbHelperStore.instance().db().getAttributesForEvent(
         RuleBuilder.instance().getChosenEvent());
     ArrayList<ModelAttribute> attributesValid;
-    if (datatypeId != UIDbHelperStore.instance().getDatatypeLookup().getDataTypeID("Text")) {
+    if (datatypeId != UIDbHelperStore.instance().getDatatypeLookup()
+        .getDataTypeID(OmniText.DB_NAME)) {
       attributesValid = new ArrayList<ModelAttribute>();
       for (int i = 0; i < attributes.size(); i++) {
         ModelAttribute attribute = attributes.get(i);
@@ -181,9 +189,45 @@ public class ActivityDlgActionInput extends Activity {
     } else {
       attributesValid = attributes;
     }
+    return attributesValid;
+  }
 
+  /**
+   * Check whether the selected {@code viewItem} has any attributes
+   * 
+   * @param viewItem
+   *          the view item in question
+   * @return true if there are attributes related to the view item
+   */
+  private boolean checkForAttributes(final ViewItem viewItem) {
+    return !getAttributes(viewItem).isEmpty();
+  }
+
+  /**
+   * If an input field gains focus, enable or disable the attributes button if there are any
+   * attributes from the original event.
+   */
+  private View.OnFocusChangeListener editTextFocusChangeListener = new View.OnFocusChangeListener() {
+
+    public void onFocusChange(View v, boolean hasFocus) {
+      Button btnAttributes = (Button) findViewById(R.id.activity_dlg_action_input_btnAttributes);
+      if (hasFocus) {
+        btnAttributes.setEnabled(checkForAttributes(getFocusedItem()));
+      }
+    }
+  };
+
+  /**
+   * Show the attributes dialog for the specified {@code viewItem} if applicable
+   * 
+   * @param viewItem
+   *          the item chosen to show the attributes
+   */
+  private void showDialogAttributes(final ViewItem viewItem) {
+
+    ArrayList<ModelAttribute> attributesValid = (ArrayList<ModelAttribute>) getAttributes(viewItem);
     // Show the dialog finally if they have any choice.
-    if (attributesValid.size() > 0) {
+    if (!attributesValid.isEmpty()) {
       DlgAttributes dlg = new DlgAttributes(this, attributesValid);
       dlg.setOnDismissListener(new OnDismissListener() {
         public void onDismiss(DialogInterface dialog) {
@@ -197,17 +241,18 @@ public class ActivityDlgActionInput extends Activity {
       });
       dlg.show();
     } else {
+      // Shouldn't happen but leaving in for safety
       UtilUI.showAlert(this, "Sorry!",
           "There are no matching parameters for the selected attribute type!");
     }
   }
 
   @Override
-  protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     viewItems.onActivityResult(requestCode, resultCode, data);
   }
-  
+
   /**
    * Shows attributes for the root event that can work as parameters for the action.
    */

@@ -50,13 +50,13 @@ public class ActivityDlgApplicationLoginInput extends Activity {
   }
 
   private void initializeUI() {
-    setContentView(R.layout.activity_dlg_action_input);
+    setContentView(R.layout.activity_dlg_action_login_input);
 
-    Button btnOk = (Button) findViewById(R.id.activity_dlg_action_input_btnOk);
+    Button btnOk = (Button) findViewById(R.id.activity_dlg_action_login_input_btnOk);
     btnOk.setOnClickListener(listenerBtnClickOk);
 
-    Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_input_btnHelp);
-    btnHelp.setOnClickListener(listenerBtnClickInfo);
+    Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_login_input_btnHelp);
+    btnHelp.setOnClickListener(listenerBtnClickHelp);
 
     llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
 
@@ -85,7 +85,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
     }
   };
 
-  private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
+  private View.OnClickListener listenerBtnClickHelp = new View.OnClickListener() {
     public void onClick(View v) {
       UtilUI.showAlert(v.getContext(), getString(R.string.login_info_title),
           getString(R.string.login_info_details));
