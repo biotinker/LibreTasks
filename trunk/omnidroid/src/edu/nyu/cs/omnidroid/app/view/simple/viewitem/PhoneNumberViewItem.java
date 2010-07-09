@@ -15,15 +15,31 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Contacts;
+import android.provider.Contacts.People;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPhoneNumber;
-import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItem;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
+import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 
 /**
  * {@link ViewItem} implementation for {@link OmniPhoneNumber}
  */
-public class PhoneNumberViewItem extends TextViewItem {
+public class PhoneNumberViewItem extends AbstractViewItem  {
+  private final AutoCompleteTextView editText;
+  private final Activity activity;
+  
   /**
    * Class Constructor.
    * 
@@ -35,13 +51,87 @@ public class PhoneNumberViewItem extends TextViewItem {
    *          the activity where this view item is to be built on
    */
   public PhoneNumberViewItem(int id, long dataTypeDbID, Activity activity) {
-    super(id, dataTypeDbID, activity);
+    super(id, dataTypeDbID);
+    
+    this.activity = activity;
+    editText = new AutoCompleteTextView(activity);
+    editText.setId(id);
   }
 
   /**
    * {@inheritDoc}
    */
   public DataType getData() throws Exception {
-    return new OmniPhoneNumber(editText.getText().toString());
+    String namePhone = editText.getText().toString();
+    String phoneNo = namePhone.substring(1 + namePhone.lastIndexOf(":"));
+    return new OmniPhoneNumber(phoneNo);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public View buildUI(DataType initData) {
+    if (initData != null) {
+      editText.setText(initData.getValue());
+    }
+    
+    ContentResolver cr = activity.getContentResolver();
+    List<String> contacts = new ArrayList<String>();
+    // Form an array specifying which columns to return.
+    String[] projection = new String[] {People.NAME, People.NUMBER };
+    // Get the base URI for the People table in the Contacts content provider.
+    Uri contactsUri = People.CONTENT_URI;
+    // Make the query.
+    Cursor cursor = cr.query(contactsUri, 
+        projection, // Which columns to return
+        null, // Which rows to return (all rows)
+        null, // Selection arguments (none)
+        Contacts.People.DEFAULT_SORT_ORDER);
+    if (cursor.moveToFirst()) {
+      String name;
+      String phoneNumber;
+      int nameColumn = cursor.getColumnIndex(People.NAME);
+      int phoneColumn = cursor.getColumnIndex(People.NUMBER);
+      do {
+        // Get the field values of contacts
+        name = cursor.getString(nameColumn);
+        phoneNumber = cursor.getString(phoneColumn);
+        contacts.add(name + ": " + phoneNumber);
+      } while (cursor.moveToNext());
+    }
+    cursor.close();
+    
+    String[] contactsStr = new String[]{};
+    ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+        android.R.layout.simple_dropdown_item_1line, contacts.toArray(contactsStr));
+    
+    editText.setAdapter(adapter);
+    editText.setThreshold(1);
+    return(editText);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void insertAttribute(ModelAttribute attribute) {
+    UtilUI.replaceEditText(editText, getAttributeInsertName(attribute));  
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void loadState(Bundle bundle) {
+    String key = String.valueOf(ID);
+
+    if (bundle.containsKey(key)) {
+      editText.setText(bundle.getString(key));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void saveState(Bundle bundle) {
+    bundle.putString(String.valueOf(ID), editText.getText().toString());
   }
 }
