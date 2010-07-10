@@ -19,13 +19,15 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
 
@@ -109,6 +111,11 @@ public class SMSService extends Service {
         if (state != TelephonyManager.CALL_STATE_RINGING) {
           SmsManager sms = SmsManager.getDefault();
           sms.sendTextMessage(phoneNumber, null, textMessage, sentPI, deliveredPI);
+          // Update the Android SMS application
+          ContentValues values = new ContentValues();
+          values.put("address", phoneNumber);
+          values.put("body", textMessage);
+          getContentResolver().insert(Uri.parse("content://sms/sent"), values);
           // Stop listening to events.
           ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).listen(this,
               PhoneStateListener.LISTEN_NONE);
