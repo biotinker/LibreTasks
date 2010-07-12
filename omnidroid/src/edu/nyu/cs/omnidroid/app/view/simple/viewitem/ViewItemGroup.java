@@ -124,8 +124,9 @@ public class ViewItemGroup {
    * 
    * @param bundle
    *          {@link Bundle} object where the state will be extracted
+   * @throws Exception
    */
-  public void loadState(Bundle bundle) {
+  public void loadState(Bundle bundle) throws Exception {
     if (bundle != null && !bundle.isEmpty()) {
       for (ViewItem item : getItems()) {
         item.loadState(bundle);

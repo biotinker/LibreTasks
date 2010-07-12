@@ -46,7 +46,7 @@ public interface ViewItem {
    * Get the data underlying the controls
    * 
    * @return the data
-   * @throws Exception
+   * @throws Exception when data is invalid
    */
   public DataType getData() throws Exception;
 
@@ -70,14 +70,15 @@ public interface ViewItem {
    * 
    * @param bundle
    *          the {@link Bundle} object where the data will be extracted
+   * @throws Exception
    */
-  public void loadState(Bundle bundle);
+  public void loadState(Bundle bundle) throws Exception;
 
   /**
    * Insert an attribute parameter tag directly into the underlying {@link View}
    */
   public void insertAttribute(ModelAttribute attribute);
-  
+
   /**
    * Callback method for this object when an activity finishes
    * 

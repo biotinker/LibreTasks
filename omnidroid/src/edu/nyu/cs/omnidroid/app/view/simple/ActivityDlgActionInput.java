@@ -27,6 +27,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
  * we can construct the inner UI elements using {@link ActionParameterViewFactory}.
  */
 public class ActivityDlgActionInput extends Activity {
+  private static final String TAG = ActivityDlgActionInput.class.getSimpleName();
   /** Layout dynamically generated on our action type by FactoryActions. */
   private LinearLayout llContent;
 
@@ -98,7 +100,11 @@ public class ActivityDlgActionInput extends Activity {
       t.setOnFocusChangeListener(editTextFocusChangeListener);
     }
 
-    viewItems.loadState(bundle);
+    try {
+      viewItems.loadState(bundle);
+    } catch (Exception e) {
+      Log.e(TAG, "Failed during loadState", e);
+    }
 
     setTitle(modelAction.getTypeName());
   }
@@ -114,9 +120,10 @@ public class ActivityDlgActionInput extends Activity {
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
         // remove the static string below and only use the contents of the exception.
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "There was an error creating your action, your input was probably bad!:\n"
-                + ex.toString());
+        Resources resource = v.getContext().getResources();
+        UtilUI.showAlert(v.getContext(), resource.getString(R.string.sorry), resource
+            .getString(R.string.bad_data_format)
+            + ex.getMessage());
         return;
       }
 

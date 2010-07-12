@@ -17,9 +17,11 @@ package edu.nyu.cs.omnidroid.app.view.simple.viewitem;
 
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniCheckBoxInput;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPhoneNumber;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniUserAccount;
 import edu.nyu.cs.omnidroid.app.model.DataTypeIDLookup;
 import edu.nyu.cs.omnidroid.app.view.simple.UIDbHelperStore;
@@ -31,12 +33,14 @@ import android.app.Activity;
 public class ViewItemFactory {
   private static final ViewItemFactory INSTANCE = new ViewItemFactory();
 
-  private final long PHONE_NUMBER_DATATYPE_DB_ID;
-  private final long TEXT_DATATYPE_DB_ID;
-  private final long AREA_DATATYPE_DB_ID;
-  private final long PASSWORD_INPUT_DATATYPE_DB_ID;
-  private final long CHECK_BOX_DATATYPE_DB_ID;
-  private final long USER_ACCOUNT_DATATYPE_DB_ID;
+  public final long PHONE_NUMBER_DATATYPE_DB_ID;
+  public final long TEXT_DATATYPE_DB_ID;
+  public final long AREA_DATATYPE_DB_ID;
+  public final long PASSWORD_INPUT_DATATYPE_DB_ID;
+  public final long CHECK_BOX_DATATYPE_DB_ID;
+  public final long USER_ACCOUNT_DATATYPE_DB_ID;
+  public final long DATE_DATATYPE_DB_ID;
+  public final long TIME_PERIOD_DATATYPE_DB_ID;
 
   private ViewItemFactory() {
     DataTypeIDLookup lookup = UIDbHelperStore.instance().getDatatypeLookup();
@@ -47,6 +51,8 @@ public class ViewItemFactory {
     PASSWORD_INPUT_DATATYPE_DB_ID = lookup.getDataTypeID(OmniPasswordInput.DB_NAME);
     CHECK_BOX_DATATYPE_DB_ID = lookup.getDataTypeID(OmniCheckBoxInput.DB_NAME);
     USER_ACCOUNT_DATATYPE_DB_ID = lookup.getDataTypeID(OmniUserAccount.DB_NAME);
+    DATE_DATATYPE_DB_ID = lookup.getDataTypeID(OmniDate.DB_NAME);
+    TIME_PERIOD_DATATYPE_DB_ID = lookup.getDataTypeID(OmniTimePeriod.DB_NAME);
   }
 
   /**
@@ -80,10 +86,14 @@ public class ViewItemFactory {
       viewItem = new AreaViewItem(itemID, dataTypeID, activity);
     } else if (dataTypeID == PASSWORD_INPUT_DATATYPE_DB_ID) {
       viewItem = new PasswordInputViewItem(itemID, dataTypeID, activity);
-    } else if (dataTypeID == CHECK_BOX_DATATYPE_DB_ID) {
-      viewItem = new CheckBoxViewItem(itemID, dataTypeID, activity);
     } else if (dataTypeID == USER_ACCOUNT_DATATYPE_DB_ID) {
       viewItem = new UserAccountViewItem(itemID, dataTypeID, activity);
+    } else if (dataTypeID == DATE_DATATYPE_DB_ID) {
+      viewItem = new DateViewItem(itemID, dataTypeID, activity);
+    } else if (dataTypeID == TIME_PERIOD_DATATYPE_DB_ID) {
+      viewItem = new TimePeriodViewItem(itemID, dataTypeID, activity);
+    } else if (dataTypeID == CHECK_BOX_DATATYPE_DB_ID) {
+      viewItem = new CheckBoxViewItem(itemID, dataTypeID, activity);
     } else {
       throw new IllegalArgumentException("Unknown Datatype ID: " + dataTypeID);
     }

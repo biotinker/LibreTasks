@@ -22,8 +22,6 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.app.controller.util.DataTypeValidationException;
-import edu.nyu.cs.omnidroid.app.model.DataTypeIDLookup;
-import edu.nyu.cs.omnidroid.app.view.simple.UIDbHelperStore;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelParameter;
@@ -38,18 +36,9 @@ import java.util.ArrayList;
  * Static factory class for setting up a dynamic UI for every action type.
  */
 public class ActionParameterViewFactory {
-  private static final long TEXT_DATATYPE_DB_ID;
-  private static final long PASSWORD_INPUT_DATATYPE_DB_ID;
-
   private static class LoginViewID {
     public static final int USERNAME = 0;
     public static final int PASSWORD = 1;
-  }
-
-  static {
-    DataTypeIDLookup lookup = UIDbHelperStore.instance().getDatatypeLookup();
-    TEXT_DATATYPE_DB_ID = lookup.getDataTypeID(OmniText.DB_NAME);
-    PASSWORD_INPUT_DATATYPE_DB_ID = lookup.getDataTypeID(OmniPasswordInput.DB_NAME);
   }
 
   private ActionParameterViewFactory() {
@@ -112,16 +101,17 @@ public class ActionParameterViewFactory {
     usernameText.setText(R.string.username);
     viewItems.addView(usernameText);
 
-    ViewItem usernameItem = ViewItemFactory.instance().create(LoginViewID.USERNAME,
-        TEXT_DATATYPE_DB_ID, activity);
+    ViewItemFactory viewItemFactory = ViewItemFactory.instance();
+    ViewItem usernameItem = viewItemFactory.create(LoginViewID.USERNAME,
+        viewItemFactory.TEXT_DATATYPE_DB_ID, activity);
     viewItems.addViewItem(usernameItem, new OmniText(modelApp.getUsername()));
 
     TextView passwordText = new TextView(activity);
     passwordText.setText(R.string.password);
     viewItems.addView(passwordText);
 
-    ViewItem passwordItem = ViewItemFactory.instance().create(LoginViewID.PASSWORD,
-        PASSWORD_INPUT_DATATYPE_DB_ID, activity);
+    ViewItem passwordItem = viewItemFactory.create(LoginViewID.PASSWORD,
+        viewItemFactory.PASSWORD_INPUT_DATATYPE_DB_ID, activity);
     viewItems.addViewItem(passwordItem, new OmniPasswordInput(modelApp.getPassword()));
 
     return viewItems;

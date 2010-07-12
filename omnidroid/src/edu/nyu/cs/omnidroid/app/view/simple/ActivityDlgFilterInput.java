@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -16,8 +16,7 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,79 +24,35 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
-import edu.nyu.cs.omnidroid.app.controller.util.DataTypeValidationException;
+import edu.nyu.cs.omnidroid.app.view.simple.factoryui.RuleFilterViewFactory;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
+import edu.nyu.cs.omnidroid.app.view.simple.viewitem.ViewItemGroup;
 
 /**
  * This dialog is a shell to contain UI elements specific to different filters. Given a filter ID,
- * we can construct the inner UI elements using <code>FactoryDynamicUI</code>.
+ * we can construct the inner UI elements using {@link RuleFilterViewFactory}.
  */
-public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI.DlgDynamicInput {
+public class ActivityDlgFilterInput extends Activity {
   private static final String TAG = ActivityDlgFilterInput.class.getSimpleName();
-  private static final String KEY_STATE = "StateDlgFilterInput";
-  public static final int TIME_DIALOG_ID = 0;
 
-  /**
-   * When the user hits the OK button, we interpret it to mean that they entered valid filter info,
-   * and we can try to construct a filter from it. In the OK handler, we execute the one function of
-   * this handler to see if their input is OK for the specific filter type chosen.
-   */
-  private FactoryDynamicUI.InputDone handlerInputDone;
-
-  /**
-   * We don't know what inner UI elements we have, but we need to support UI state between
-   * orientation changes etc. We can execute the two methods of this handler to let the UI elements
-   * handle state save/load themselves.
-   */
-  private FactoryDynamicUI.DlgPreserveState handlerStatePreserver;
-
-  /** Our state keeper. */
-  private SharedPreferences state;
-
-  /**
-   * By default true, we want to save the UI state when onPause is called. If the user hits the OK
-   * button, and their input constructs a valid filter, we set this to false to skip saving the UI
-   * state. We need this to distinguish between onPause being called in response to the phone
-   * orientation being changed, or the user explicitly telling the dialog to close.
-   */
-  private boolean preserveStateOnClose;
+  // Container for the dynamically created view
+  private ViewItemGroup viewItems;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     // Link up controls from the xml layout resource file.
-    initializeUI();
-
-    // Restore our UI state.
-    state = getSharedPreferences(ActivityDlgFilterInput.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    try {
-      handlerStatePreserver.loadState(state);
-    } catch (DataTypeValidationException e) {
-      Log.e(TAG, "Can't load state, " + e);
-    }
-
-    // By default, we want to save UI state on close.
-    preserveStateOnClose = true;
+    initializeUI(savedInstanceState);
   }
 
   @Override
-  protected void onPause() {
-    super.onPause();
-
-    // Conditionally save our UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.clear();
-    prefsEditor.commit();
-    if (preserveStateOnClose) {
-      handlerStatePreserver.saveState(prefsEditor);
-      prefsEditor.commit();
-    }
+  protected void onSaveInstanceState(Bundle bundle) {
+    viewItems.saveState(bundle);
   }
 
-  private void initializeUI() {
+  private void initializeUI(Bundle savedInstanceState) {
     setContentView(R.layout.activity_dlg_filter_input);
 
     Button btnOk = (Button) findViewById(R.id.activity_dlg_filter_input_btnOk);
@@ -109,35 +64,39 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
     // Add dynamic content now based on our filter type.
     ModelFilter modelFilter = RuleBuilder.instance().getChosenModelFilter();
     DataType ruleFilterDataOld = RuleBuilder.instance().getChosenRuleFilterDataOld();
-    FactoryDynamicUI.buildUIForFilter(this, modelFilter, ruleFilterDataOld);
+
+    viewItems = RuleFilterViewFactory.buildUIForFilter(modelFilter, ruleFilterDataOld, this);
+    LinearLayout llContent = (LinearLayout) findViewById(R.id.activity_dlg_filter_input_llDynamicContent);
+    llContent.addView(viewItems.getLayout());
+
+    try {
+      viewItems.loadState(savedInstanceState);
+    } catch (Exception e) {
+      Log.e(TAG, "Failed during loadState", e);
+    }
 
     setTitle(modelFilter.getAttribute().getTypeName() + " " + modelFilter.getTypeName() + " Filter");
   }
 
   private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
     public void onClick(View v) {
-      // Have the listener try to construct a full ModelFilter for us now
-      // based on our dynamic UI content.
       ModelRuleFilter filter;
       try {
-        filter = (ModelRuleFilter) handlerInputDone.onInputDone(v.getContext());
+        filter = RuleFilterViewFactory.buildFilterFromUI(RuleBuilder.instance()
+            .getChosenModelFilter(), viewItems);
       } catch (Exception ex) {
         // TODO: (markww) Make sure DataType classes are providing meaningful error output, then
         // remove the static string below and only use the contents of the exception.
-        UtilUI.showAlert(v.getContext(), "Sorry!",
-            "There was an error creating your filter, your input was probably bad!:\n"
-                + ex.toString());
+        Resources resource = v.getContext().getResources();
+        UtilUI.showAlert(v.getContext(), resource.getString(R.string.sorry), resource
+            .getString(R.string.bad_data_format)
+            + ex.getMessage());
         return;
       }
 
       // Set our constructed filter so the parent activity can pick it up.
       RuleBuilder.instance().setChosenRuleFilter(filter);
 
-      // We can now dismiss ourselves. Our parent listeners can pick up the
-      // constructed filter once we unwind the dialog stack using the
-      // RuleBuilder singleton instance. We don't need of preserve our UI
-      // state upon closing now.
-      preserveStateOnClose = false;
       finish();
     }
   };
@@ -148,29 +107,4 @@ public class ActivityDlgFilterInput extends Activity implements FactoryDynamicUI
       UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
     }
   };
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public Context getContext() {
-    return this;
-  }
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public void addDynamicLayout(LinearLayout ll) {
-    LinearLayout llContent = (LinearLayout) findViewById(
-        R.id.activity_dlg_filter_input_llDynamicContent);
-    llContent.addView(ll);
-  }
-
-  /** Implements FactoryDynamicUI.DlgDynamicInput. */
-  public void setHandlerOnFilterInputDone(FactoryDynamicUI.InputDone handler) {
-    handlerInputDone = handler;
-  }
-
-  public void setHandlerPreserveState(FactoryDynamicUI.DlgPreserveState handler) {
-    handlerStatePreserver = handler;
-  }
-
-  public void showActivityDialog(int id) {
-    showDialog(id);
-  }
 }

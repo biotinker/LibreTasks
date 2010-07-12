@@ -26,13 +26,11 @@ import android.widget.LinearLayout.LayoutParams;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
+import edu.nyu.cs.omnidroid.app.controller.util.DataTypeValidationException;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 
 /**
  * {@link ViewItem} implementation for {@link OmniArea}
- * 
- * Note: Refactored from FactoryActions (former class name @ r791), but not tested because there no
- * existing actions with this datatype as a parameter.
  */
 public class AreaViewItem extends AbstractViewItem {
   private final static String ADDRESS = "Address";
@@ -105,15 +103,22 @@ public class AreaViewItem extends AbstractViewItem {
    * {@inheritDoc}
    */
   public DataType getData() throws Exception {
-    double distance = Double.parseDouble(etDistance.getText().toString());
-    return new OmniArea(OmniArea.getOmniArea(mActivity, etAddress.getText().toString(), distance));
+    double distance = 0;
+
+    try {
+      distance = Double.parseDouble(etDistance.getText().toString());
+    } catch (NumberFormatException ex) {
+      throw new DataTypeValidationException(mActivity.getString(R.string.bad_distance_format));
+    }
+
+    return OmniArea.getOmniArea(mActivity, etAddress.getText().toString(), distance);
   }
 
   /**
    * {@inheritDoc}
    */
   public void insertAttribute(ModelAttribute attribute) {
-    // TODO: (markww) figure out if BuilderOmniArea should allow copy parameter arguments.
+    // TODO: (markww) figure out if OmniArea should allow copy parameter arguments.
   }
 
   /**
