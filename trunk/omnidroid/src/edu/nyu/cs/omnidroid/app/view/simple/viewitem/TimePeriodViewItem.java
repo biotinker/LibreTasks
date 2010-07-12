@@ -28,7 +28,6 @@ import android.widget.LinearLayout.LayoutParams;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 
