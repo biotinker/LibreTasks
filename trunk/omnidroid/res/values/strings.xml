@@ -49,6 +49,7 @@
     <!--  Settings -->
     <string name="settings_label">Settings</string>
     <string name="settings_title">Settings</string>
+    
     <!--  Settings - Reset -->
     <string name="reset_title">Reset</string>
     <string name="reset_all">Reset All Settings</string>
@@ -111,7 +112,13 @@
     <string name="select_action_alert_inst">Please select an action from the list above, then hit OK.</string>
     <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK.</string>
     <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK.</string>
-    <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>    
+    <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
+    <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
+    <string name="text_eq_filter_inst">Enter an exact text string to match below:</string>
+    <string name="text_cont_filter_inst">Enter a phrase in the text body to match below:</string>
+    <string name="bad_data_format">Bad data format:\n</string>
+    <string name="bad_distance_format">Please enter a distance in miles.</string>
+    
 
     <!--  System Events -->
     
