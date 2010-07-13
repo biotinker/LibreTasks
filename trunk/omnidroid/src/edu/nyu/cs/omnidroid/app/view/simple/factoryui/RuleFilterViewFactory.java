@@ -66,6 +66,13 @@ public class RuleFilterViewFactory {
 
       viewItemGroup.addViewItem(viewItemFactory.create(uiID,
           viewItemFactory.PHONE_NUMBER_DATATYPE_DB_ID, activity), initData);
+    } else if (filterDbID == AllFilterID.PHONENUMBER_NOT_EQUALS) {
+        TextView tvInstructions = new TextView(activity);
+        tvInstructions.setText(R.string.phone_num_not_eq_filter_inst);
+        viewItemGroup.addView(tvInstructions);
+
+        viewItemGroup.addViewItem(viewItemFactory.create(uiID,
+            viewItemFactory.PHONE_NUMBER_DATATYPE_DB_ID, activity), initData);
     } else if (filterDbID == AllFilterID.TEXT_EQUALS) {
       TextView tvInstructions = new TextView(activity);
       tvInstructions.setText(R.string.text_eq_filter_inst);
@@ -126,6 +133,8 @@ public class RuleFilterViewFactory {
   private static class AllFilterID {
     public static final long PHONENUMBER_EQUALS = UIDbHelperStore.instance().getFilterLookup()
         .getDataFilterID(OmniPhoneNumber.DB_NAME, OmniPhoneNumber.Filter.EQUALS.toString());
+    public static final long PHONENUMBER_NOT_EQUALS = UIDbHelperStore.instance().getFilterLookup()
+        .getDataFilterID(OmniPhoneNumber.DB_NAME, OmniPhoneNumber.Filter.NOTEQUALS.toString());     
     public static final long TEXT_EQUALS = UIDbHelperStore.instance().getFilterLookup()
         .getDataFilterID(OmniText.DB_NAME, OmniText.Filter.EQUALS.toString());
     public static final long TEXT_CONTAINS = UIDbHelperStore.instance().getFilterLookup()

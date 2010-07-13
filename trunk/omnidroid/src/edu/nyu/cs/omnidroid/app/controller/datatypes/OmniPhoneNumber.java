@@ -32,7 +32,7 @@ public class OmniPhoneNumber extends DataType {
   public static final String DB_NAME = "PhoneNumber";
   
   public enum Filter implements DataType.Filter {
-    EQUALS("equals");
+    EQUALS("equals") , NOTEQUALS("not equals");
     
     public final String displayName;
     
@@ -98,6 +98,8 @@ public class OmniPhoneNumber extends DataType {
     switch (filter) {
     case EQUALS:
       return compare(value, comparisonValue.value);
+    case NOTEQUALS: 
+      return !compare(value, comparisonValue.value); 
     default:
       return false;
     }
