@@ -17,7 +17,11 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.Action;
+import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
@@ -25,8 +29,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import winterwell.jtwitter.*;
+import winterwell.jtwitter.TwitterException.*;
 
 /**
  * This service can be used to Update Twitter Status
@@ -39,6 +45,7 @@ public class UpdateTwitterStatusService extends Service {
    */
   private RegisteredAppDbAdapter.AccountCredentials account;
   private String message;
+  private boolean notificationIsOn;
  
   /**
    * @return null because client can't bind to this service
@@ -65,6 +72,7 @@ public class UpdateTwitterStatusService extends Service {
     
     extractUserCredentials();
     message = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_MESSAGE);
+    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, false);
     update();
   }
 
@@ -73,17 +81,38 @@ public class UpdateTwitterStatusService extends Service {
    * 
    */
   private void update() {
-
+    
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+    String time = dateFormat.format(calendar.getTime());
+    message += " " + time;
     try{   
       Twitter twitter = new Twitter(account.accountName, account.credential);
       //TODO : To set the source to "Omnidroid" we first have to register the app with Twitter.
       twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
-    }catch(TwitterException e){
-      //TODO Exception is received when we try to update twitter with the same message. Log the 
-      // exception.
+    }catch(E401 e){
+       showNotification(getString(R.string.twitter_failed) + getString(R.string.separator_comma)
+           +getString(R.string.authentication_error));  
+       return;
+    } catch (TwitterException e) {
+    	  showNotification(getString(R.string.twitter_failed));
+    		return;
+    }
+    
+    showNotification(getString(R.string.twitter_updated));
+  }
+  
+  private  void showNotification(String message) {
+    if (notificationIsOn) {
+      Intent intent = new Intent();
+      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
+      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
+      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
+      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
+      startService(intent);
+    } else {
+      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
   }
-
-
 }

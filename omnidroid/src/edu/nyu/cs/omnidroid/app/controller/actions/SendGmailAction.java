@@ -70,6 +70,7 @@ public class SendGmailAction extends Action {
     intent.putExtra(PARAM_TO, to);
     intent.putExtra(PARAM_SUBJECT, subject);
     intent.putExtra(PARAM_BODY, body);
+    intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }
 

@@ -29,7 +29,10 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 
 /**
  * This class automatically sends SMS when it receives SMS intent created by {@link SendSmsAction}
@@ -44,10 +47,13 @@ public class SMSService extends Service {
   /**
    * attributes field names
    */
-  private String phoneNumber;
-  private String textMessage;
   public static final String SENT = "SMS_SENT";
   public static final String DELIVERED = "SMS_DELIVERED";
+
+
+  private String phoneNumber;
+  private String textMessage;
+  private boolean notificationIsOn;
 
   /**
    * @return null because client can't bind to this service
@@ -77,6 +83,7 @@ public class SMSService extends Service {
 
     phoneNumber = intent.getStringExtra(SendSmsAction.PARAM_PHONE_NO);
     textMessage = intent.getStringExtra(SendSmsAction.PARAM_SMS);
+    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, false);
 
     Toast.makeText(this, "SMS Service Started", Toast.LENGTH_LONG).show();
 
@@ -85,20 +92,23 @@ public class SMSService extends Service {
       public void onReceive(Context arg0, Intent arg1) {
         switch (getResultCode()) {
         case Activity.RESULT_OK:
-          Toast.makeText(getBaseContext(), "SMS sent", Toast.LENGTH_SHORT).show();
+          showNotification(getString(R.string.sms_sent));
           break;
         case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-          Toast.makeText(getBaseContext(), "SMS not sent - Generic failure", Toast.LENGTH_SHORT)
-              .show();
+          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
+              + getString(R.string.generic_failure));
           break;
         case SmsManager.RESULT_ERROR_NO_SERVICE:
-          Toast.makeText(getBaseContext(), "SMS not sent - No service", Toast.LENGTH_SHORT).show();
+          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
+              + getString(R.string.no_service));
           break;
         case SmsManager.RESULT_ERROR_NULL_PDU:
-          Toast.makeText(getBaseContext(), "SMS not sent - Null PDU", Toast.LENGTH_SHORT).show();
+          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
+              + getString(R.string.null_pdu));
           break;
         case SmsManager.RESULT_ERROR_RADIO_OFF:
-          Toast.makeText(getBaseContext(), "SMS not sent - Radio off", Toast.LENGTH_SHORT).show();
+          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
+              + getString(R.string.radio_off));
           break;
         }
       }
@@ -123,4 +133,17 @@ public class SMSService extends Service {
       }
     }, PhoneStateListener.LISTEN_CALL_STATE);
   }
+  private  void showNotification(String message) {
+    if (notificationIsOn) {
+      Intent intent = new Intent();
+      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
+      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
+      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
+      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
+      startService(intent);
+    } else {
+      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+  }
+
 }

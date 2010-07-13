@@ -40,7 +40,7 @@ public class UpdateTwitterStatusAction extends Action {
   // Content of the action
   private String accountID;
   private String message;
-
+  
   public UpdateTwitterStatusAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(UpdateTwitterStatusAction.TWITTER_INTENT, Action.BY_SERVICE);
     accountID = parameters.get(PARAM_USER_ACCOUNT);
@@ -56,6 +56,7 @@ public class UpdateTwitterStatusAction extends Action {
     Intent intent = new Intent(getActionName());
     intent.putExtra(PARAM_USER_ACCOUNT, accountID);
     intent.putExtra(PARAM_MESSAGE, message);
+    intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }
 

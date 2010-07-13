@@ -30,6 +30,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowAlertAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
@@ -56,6 +57,8 @@ public class OmniActionService extends Service {
   
   //TODO(Roger): chose a more meaningful id
   public static final int NOTIFICATION_ID = 1;
+  
+  private boolean notificationIsOn;
 
   @Override
   public IBinder onBind(Intent intent) {
@@ -66,6 +69,7 @@ public class OmniActionService extends Service {
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
     int operationType = intent.getIntExtra(OPERATION_TYPE, NO_ACTION);
+    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, false);
     switch (operationType) {
     case SHOW_ALERT_ACTION :
       showAlert(intent);
@@ -105,6 +109,7 @@ public class OmniActionService extends Service {
     int ringstream = AudioManager.STREAM_RING;
     int ringmaxvolume = audioManager.getStreamMaxVolume(ringstream);
     audioManager.setStreamVolume(ringstream, ringmaxvolume, AudioManager.FLAG_SHOW_UI);
+    preShowNotification(getString(R.string.phone_set_loud));
    }
   
   /**
@@ -113,6 +118,7 @@ public class OmniActionService extends Service {
   private void setPhoneSilent() {
     AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
     audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+    preShowNotification(getString(R.string.phone_set_silent));
    }
   
   /**
@@ -121,6 +127,7 @@ public class OmniActionService extends Service {
   private void setPhoneVibrate() {
     AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
     audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+    preShowNotification(getString(R.string.phone_set_on_vibrate));
    }
   
   /**
@@ -129,14 +136,16 @@ public class OmniActionService extends Service {
   private void turnOffWifi() {
     WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
     wifiManager.setWifiEnabled(false);
+    preShowNotification(getString(R.string.wifi_turned_off));
   }
   
   /**
-   * turn on the wifi.
+   * turn on the wifi. 
    */
   private void turnOnWifi() {
     WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
     wifiManager.setWifiEnabled(true);
+    preShowNotification(getString(R.string.wifi_turned_on));
   }
 
   /**
@@ -196,6 +205,18 @@ public class OmniActionService extends Service {
   private void setScreenBrightness(Intent intent) {
     int brightness = intent.getIntExtra(SetScreenBrightnessAction.PARAM_BRIGHTNESS, 200);
     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightness);
+  }
+  
+  private void preShowNotification (String message) {
+    if (notificationIsOn) {
+      Intent intent = new Intent();
+      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
+      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
+      showNotification(intent);
+    } else {
+      Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    
   }
 
 }

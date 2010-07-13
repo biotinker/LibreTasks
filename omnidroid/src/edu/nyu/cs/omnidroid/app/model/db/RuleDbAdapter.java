@@ -46,10 +46,14 @@ public class RuleDbAdapter extends DbAdapter {
   public static final String KEY_ENABLED = "Enabled";
   public static final String KEY_CREATED = "Created";
   public static final String KEY_UPDATED = "Updated";
+  public static final String KEY_NOTIFICATION = "Notification";
+ 
+  //set this 
+  private static boolean notification=true;
 
   /* An array of all column names */
   public static final String[] KEYS = { KEY_RULEID, KEY_EVENTID, KEY_RULENAME, KEY_RULEDESC,
-      KEY_ENABLED, KEY_CREATED, KEY_UPDATED };
+      KEY_ENABLED, KEY_CREATED, KEY_UPDATED, KEY_NOTIFICATION };
 
   /* Table name */
   private static final String DATABASE_TABLE = "Rules";
@@ -64,6 +68,9 @@ public class RuleDbAdapter extends DbAdapter {
       + KEY_CREATED + " datetime, " 
       + KEY_UPDATED + " datetime);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
+  
+  protected static final String ADD_NOTIFICATION_COLUMN = "ALTER TABLE " + DATABASE_TABLE  
+               + " ADD " + KEY_NOTIFICATION + " integer not null DEFAULT 1";
 
   /**
    * Constructor.
@@ -106,7 +113,8 @@ public class RuleDbAdapter extends DbAdapter {
     initialValues.put(KEY_ENABLED, enabled);
     initialValues.put(KEY_CREATED, insertTime);
     initialValues.put(KEY_UPDATED, insertTime);
-
+    initialValues.put(KEY_NOTIFICATION, notification);
+    
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
@@ -228,7 +236,7 @@ public class RuleDbAdapter extends DbAdapter {
    *           if ruleID is null
    */
   public boolean update(Long ruleID, Long eventID, String ruleName, String ruleDesc, 
-      Boolean enabled) {
+      Boolean enabled, Boolean notification) {
 
     // Create time stamp with database format.
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -250,6 +258,9 @@ public class RuleDbAdapter extends DbAdapter {
     if (enabled != null) {
       args.put(KEY_ENABLED, enabled);
     }
+    if (notification != null) {
+      args.put(KEY_NOTIFICATION, notification);
+    }
 
     if (args.size() > 0) {
       // Set update time stamp here
@@ -260,7 +271,11 @@ public class RuleDbAdapter extends DbAdapter {
     return false;
   }
   
-
+  /** Sets notifications  */
+  public static void setDefaultNotificationValue(Boolean notificationValue) {
+    notification=notificationValue;
+  }
+  
   public static String getSqliteCreateStatement() {
     return DATABASE_CREATE;
   }

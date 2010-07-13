@@ -27,11 +27,17 @@ public abstract class Action {
   public static final String BY_ACTIVITY = "action.execution.ByActivity";
   public static final String BY_SERVICE = "action.execution.ByService";
   public static final String BY_BROADCAST = "action.execution.ByBroadcast";
+  
+  /** Keyword */
+  public static final String NOTIFICATION = "notification";
 
   /** Action name to be used in the intent */
   private final String actionName;
   protected String ruleName;
 
+  /** Shows whether notification service is on or off for this Action*/
+  protected boolean notificationIsOn;
+  
   /** The execution method used to fire an intent */
   private final String executionMethod;
 
@@ -46,6 +52,7 @@ public abstract class Action {
   public Action(String actionName, String executionMethod) {
     this.actionName = actionName;
     this.executionMethod = executionMethod;
+    this.notificationIsOn = true;
   }
 
   /**
@@ -95,4 +102,13 @@ public abstract class Action {
   public void setRuleName(String ruleName) {
     this.ruleName = ruleName;    
   }
+  
+  public void setNotification(Boolean notification) {
+    this.notificationIsOn = notification;
+  }
+  
+  public boolean notificationIsOn() {
+    return this.notificationIsOn;
+  }
+  
 }

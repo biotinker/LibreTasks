@@ -20,7 +20,10 @@ import java.io.Writer;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 import android.app.Service;
@@ -42,6 +45,7 @@ public class GMailService extends Service {
   private String to;
   private String subject;
   private String body;
+  private boolean notificationIsOn;
 
   /**
    * @return null because client can't bind to this service
@@ -73,6 +77,7 @@ public class GMailService extends Service {
     to = intent.getStringExtra(SendGmailAction.PARAM_TO);
     subject = intent.getStringExtra(SendGmailAction.PARAM_SUBJECT);
     body = intent.getStringExtra(SendGmailAction.PARAM_BODY);
+    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, true);
 
     send();
   }
@@ -81,19 +86,20 @@ public class GMailService extends Service {
    * Send a GMail
    */
   private void send() {
-    Toast.makeText(this, "GMail Service Started", Toast.LENGTH_LONG).show();
+    //Toast.makeText(this, "GMail Service Started", Toast.LENGTH_LONG).show();
 
     SMTPClient client = new SMTPClient("UTF-8");
     client.setDefaultTimeout(60 * 1000);
 
     client.setRequireStartTLS(true); // requires STARTTLS
     client.setUseAuth(true); // use SMTP AUTH
-
+    
     try {
       client.connect("smtp.gmail.com", 587);
       checkReply(client);
     } catch (IOException e) {
-      Toast.makeText(this, "Send GMail failed, No network", Toast.LENGTH_LONG).show();
+      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
+          + getString(R.string.no_network));
       return;
     }
 
@@ -101,7 +107,8 @@ public class GMailService extends Service {
       client.login("localhost", account.accountName, account.credential);
       checkReply(client);
     } catch (IOException e) {
-      Toast.makeText(this, "Send GMail failed, Authentication error", Toast.LENGTH_LONG).show();
+      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
+          + getString(R.string.authentication_error));
       return;
     }
 
@@ -127,11 +134,12 @@ public class GMailService extends Service {
       client.disconnect();
 
     } catch (IOException e) {
-      Toast.makeText(this, "Send GMail failed, Server error", Toast.LENGTH_LONG).show();
+      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
+          + getString(R.string.server_error));
       return;
     }
-
-    Toast.makeText(this, "GMail Sended", Toast.LENGTH_LONG).show();
+    
+    showNotification(getString(R.string.gmail_sent));
   }
 
   /**
@@ -144,6 +152,18 @@ public class GMailService extends Service {
     } else if (SMTPReply.isNegativePermanent(sc.getReplyCode())) {
       sc.disconnect();
       throw new IOException("Permanent SMTP error " + sc.getReplyCode());
+    }
+  }
+  private  void showNotification(String message) {
+    if (notificationIsOn) {
+      Intent intent = new Intent();
+      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
+      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
+      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
+      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
+      startService(intent);
+    } else {
+      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
   }
 

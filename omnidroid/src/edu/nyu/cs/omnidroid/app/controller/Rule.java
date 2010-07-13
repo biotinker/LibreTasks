@@ -36,7 +36,10 @@ public class Rule {
 
   /** An event to check against this rule */
   private Event event;
-
+  
+  /** Shows whether notification service is on or off for this rule*/
+  private Boolean notificationIsOn;
+  
   /**
    * Constructs a rule from all rule parameters
    * 
@@ -48,13 +51,14 @@ public class Rule {
    * @throws IllegalArgumentException
    *           if required parameters are null
    */
-  public Rule(String ruleName, long ruleID, Tree<Filter> filterTree) {
+  public Rule(String ruleName, long ruleID, Tree<Filter> filterTree, Boolean notificationIsOn) {
     if (ruleName == null) {
       throw new IllegalArgumentException("ruleName cannot be null");
     }
     this.ruleName = ruleName;
     this.ruleID = ruleID;
     this.filterTree = filterTree;
+    this.notificationIsOn = notificationIsOn;
   }
 
   /**
@@ -87,6 +91,9 @@ public class Rule {
   public ArrayList<Action> getActions(CoreActionsDbHelper coreActionsDbHelper, Event event) {
     // Get actions arraylist for this rule
     ArrayList<Action> actionsList = coreActionsDbHelper.getActions(ruleID, ruleName, event);
+    for (Action action : actionsList) {
+      action.setNotification(notificationIsOn);
+    }
     return actionsList;
   }
 
@@ -131,5 +138,9 @@ public class Rule {
     result = 37 * result + ruleName.hashCode();
     result = 37 * result + (filterTree == null ? 0 : filterTree.hashCode());
     return result;
+  }
+  
+  public void setNotification(boolean notificationIsOn) {
+    this.notificationIsOn = notificationIsOn;
   }
 }

@@ -149,13 +149,14 @@ public class CoreRulesDbHelper {
   private Rule getRule(Cursor ruleRecord) {
     long ruleID = CursorHelper.getLongFromCursor(ruleRecord, RuleDbAdapter.KEY_RULEID);
     String ruleName = CursorHelper.getStringFromCursor(ruleRecord, RuleDbAdapter.KEY_RULENAME);
-
+    boolean notify = CursorHelper.getBooleanFromCursor(ruleRecord, RuleDbAdapter.KEY_NOTIFICATION);
+  
     // Get all filters that belong to this rule
     Cursor filterTable = filterDbAdapter.fetchAll(ruleID, null, null, null, null, null);
     Tree<Filter> filterTree = buildFilterTree(filterTable);
 
     filterTable.close();
-    return new Rule(ruleName, ruleID, filterTree);
+    return new Rule(ruleName, ruleID, filterTree, notify);
   }
 
   /**
