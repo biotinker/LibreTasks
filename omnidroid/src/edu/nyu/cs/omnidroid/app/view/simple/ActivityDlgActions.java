@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelApplication;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
@@ -99,7 +100,7 @@ public class ActivityDlgActions extends Activity {
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_actions_tv_info1);
     // TODO(acase): use %s in the string resource and use the string formatter to input
-    //              application.getTypeName()
+    // application.getTypeName()
     mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
 
     // TODO(acase): Use item select instead of OK button
@@ -153,9 +154,19 @@ public class ActivityDlgActions extends Activity {
     ModelAction action = (ModelAction) adapterActions.getItem(selectedItemPosition);
     RuleBuilder.instance().setChosenModelAction(action);
 
-    Intent intent = new Intent();
-    intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
-    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
+    if (!action.getParameters().isEmpty()) {
+      Intent intent = new Intent();
+      intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
+      startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
+    } else {
+      /*
+       * Build rule using a ModelRuleAction with empty list of DataType since there are no
+       * action parameters. Done here because ActivityActionInput is being skipped.
+       */
+      RuleBuilder.instance().setChosenRuleAction(
+          new ModelRuleAction(-1, action, new ArrayList<DataType>()));
+      finish();
+    }
   }
 
   /**
