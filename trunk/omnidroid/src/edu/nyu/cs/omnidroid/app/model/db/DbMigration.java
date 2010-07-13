@@ -90,6 +90,8 @@ public class DbMigration {
       modifyGmailAndTwitterParam(db);
     case 9:
       addWifiActions(db);
+    case 10:
+      addNotification(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -490,7 +492,6 @@ public class DbMigration {
     cursor.close();
   }
   private static void addWifiActions(SQLiteDatabase db){
-	
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
     long appIdOmnidroid=appDbAdapter.getAppId(OmniAction.APP_NAME);
     
@@ -498,6 +499,9 @@ public class DbMigration {
     actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdOmnidroid);
     actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
     
+  }
+  private static void addNotification(SQLiteDatabase db) {
+    db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
   }
   
 }

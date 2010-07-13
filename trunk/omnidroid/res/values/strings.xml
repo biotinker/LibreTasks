@@ -159,6 +159,7 @@
     <string name="pref_key_light">LightKey</string>
     <string name="pref_key_vibrate">VibrateKey</string>
     <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
+    <string name="pref_key_notification">NotificationKey</string>
     <string name="sound_enabled">Sound Notifications</string>
     <string name="light_enabled">LED Notifications</string>
     <string name="vibrate_enabled">Vibrate Notifications</string>
@@ -166,5 +167,31 @@
     <string name="sound_desc">Allow Omnidroid to alert using sound</string>
     <string name="light_desc">Allow Omnidroid to alert using lights</string>
     <string name="vibrate_desc">Allow Omnidroid to alert using vibration</string>
+    <string name="notification_desc">Set notifications on by default</string>
     <string name="omnidroid_enabled_desc">Enable Omnidroid</string>
+    <string name="notification">Notifications</string>
+    
+    <!-- message -->
+    <string name="authentication_error">Authentication  error</string>
+    <string name="twitter_updated">Twitter status updated</string>
+    <string name="twitter_failed">Twitter status update failed</string>
+    <string name="gmail_failed">Send GMail failed</string>
+    <string name="no_network">No network</string>
+    <string name="server_error">Server error</string>
+    <string name="gmail_sent">GMail sent</string>
+    <string name="separator_comma">, </string>
+    <string name="sms_sent">SMS sent</string>
+    <string name="sms_not_sent">SMS not sent</string>
+    <string name="generic_failure">Generic failure</string>
+    <string name="no_service">No serivce</string>
+    <string name="null_pdu">Null PDU</string>
+    <string name="radio_off">Radio off</string>
+    <string name="phone_set_loud">Phone set loud</string>
+    <string name="phone_set_silent">Phone set silent</string>
+    <string name="phone_set_on_vibrate">Phone set on vibrate</string>
+    <string name="wifi_turned_on">Wifi was turned on</string>
+    <string name="wifi_turned_off">Wifi was turned off</string>
+    
+    
+
 </resources>

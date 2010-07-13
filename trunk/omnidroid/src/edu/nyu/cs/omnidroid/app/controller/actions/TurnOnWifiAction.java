@@ -39,6 +39,7 @@ public class TurnOnWifiAction extends OmniAction {
     Intent intent = new Intent();
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.TURN_ON_WIFI_ACTION);
+    intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }
   

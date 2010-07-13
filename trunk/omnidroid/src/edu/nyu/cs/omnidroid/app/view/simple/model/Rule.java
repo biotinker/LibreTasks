@@ -40,6 +40,9 @@ public class Rule {
   /** Is the rule enabled or disabled? */
   private boolean isEnabled;
   
+  /** Shows whether notifications service is on or off for this Rule*/
+  private boolean notificationIsOn;
+  
   /**
    * The rule tree can look like: 
    * RootEvent 
@@ -195,5 +198,13 @@ public class Rule {
     for (int i = 0; i < numChildren; i++) {
       buildNaturalLanguageString(node.getChildren().get(i), sb);
     }
+  }
+
+  public void setNotification(boolean notificationIsOn) {
+    this.notificationIsOn = notificationIsOn;
+  }
+
+  public boolean notificationIsOn() {
+    return notificationIsOn;
   }
 }

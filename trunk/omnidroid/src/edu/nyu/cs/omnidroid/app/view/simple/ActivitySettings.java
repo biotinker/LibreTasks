@@ -16,6 +16,7 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
 import edu.nyu.cs.omnidroid.app.controller.OmnidroidManager;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -26,6 +27,7 @@ import android.preference.PreferenceActivity;
  * This activity shows all the settings/preferences
  */
 public class ActivitySettings extends PreferenceActivity {
+  
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,12 +36,19 @@ public class ActivitySettings extends PreferenceActivity {
     getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(
         new OnSharedPreferenceChangeListener() {
       public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_key_omnidroid_enabled))) {
+         if (key.equals(getString(R.string.pref_key_omnidroid_enabled))) {
           //TODO consider Alert Dialog, 
           //you have this many rules anabled, are you sure ...
           OmnidroidManager.enable(getApplicationContext(), sharedPreferences.getBoolean(key, true));
-        }
+        } else if (key.equals(getString(R.string.pref_key_notification))) {
+          setNotification(sharedPreferences.getBoolean(key, true));          
+        }                        
       }
     });
+  }
+  
+  private void setNotification(boolean defaultNotificationIsOn) {
+    //TODO consider setting notifications on/off for existing rules;
+    RuleDbAdapter.setDefaultNotificationValue(defaultNotificationIsOn);
   }
 }

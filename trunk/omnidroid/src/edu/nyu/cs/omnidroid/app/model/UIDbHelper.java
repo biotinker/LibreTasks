@@ -526,6 +526,7 @@ public class UIDbHelper {
     rule.setName(getStringFromCursor(cursorRule, RuleDbAdapter.KEY_RULENAME));
     rule.setDescription(getStringFromCursor(cursorRule, RuleDbAdapter.KEY_RULEDESC));
     rule.setIsEnabled(getBooleanFromCursor(cursorRule, RuleDbAdapter.KEY_ENABLED));
+    rule.setNotification(getBooleanFromCursor(cursorRule, RuleDbAdapter.KEY_NOTIFICATION));
     return rule;
   }
 
@@ -816,7 +817,7 @@ public class UIDbHelper {
    *          is the enabled flag
    */
   public void setRuleEnabled(long ruleID, boolean enabled) {
-    ruleDbAdapter.update(ruleID, null, null, null, enabled);
+    ruleDbAdapter.update(ruleID, null, null, null, enabled, null);
   }
 
   public List<ModelLog> getEventLogs() {
@@ -1018,18 +1019,27 @@ public class UIDbHelper {
    * @param eventID database id 
    * 
    * @throws IllegarStateException when database is closed
-   * @return number of rules for event
+   * @return number of rules for event or -1 if no matching eventID.
    */
   public int getRuleCount(Long eventID) {
     if (isClosed) {
       throw new IllegalStateException(TAG + " is closed.");
     }
     Cursor cursor = ruleDbAdapter.fetchAll(eventID, null, null, null, null);
-    if (cursor!=null) {
+    if (cursor != null) {
       int count=cursor.getCount();
       cursor.close();
       return count;
     }
     return -1;
   }
+  
+  public void setNotification(Long ruleId, Boolean notification) {
+    if (isClosed) {
+      throw new IllegalStateException(TAG + " is closed.");
+    }
+    
+    ruleDbAdapter.update(ruleId, null, null, null, null, notification);    
+  }
+  
 }
