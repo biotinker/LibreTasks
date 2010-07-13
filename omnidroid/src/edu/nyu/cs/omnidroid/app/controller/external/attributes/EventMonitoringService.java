@@ -15,13 +15,13 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -30,14 +30,14 @@ import android.widget.Toast;
 public class EventMonitoringService extends Service {
 
   private final IBinder mBinder = new LocalBinder();
-  private static final String LOGGER_TAG = EventMonitoringService.class.getSimpleName();
+  private static final String TAG = EventMonitoringService.class.getSimpleName();
   
   private final SystemServiceEventMonitor MONITORS[] = {
       new PhoneStateMonitor(this),
       new LocationMonitor(this),
       new TimeMonitor(this),
   };
-  
+   
   public class LocalBinder extends Binder {
     EventMonitoringService getService() {
       return EventMonitoringService.this;
@@ -45,18 +45,21 @@ public class EventMonitoringService extends Service {
   }
 
   public static void startService(Context context) {
+    
     ComponentName service = context.startService(new Intent(context, EventMonitoringService.class));
-
     if (null == service) {
       Toast.makeText(context, "Failed to start Event Monitoring Service", Toast.LENGTH_LONG).show();
-      Log.i(LOGGER_TAG, "EventMonitoringService did not start.");
+      Logger.i(TAG, "EventMonitoringService did not start.");
     } else {
-      Log.i(LOGGER_TAG, "Started EventMonitoringService.");
+      Logger.i(TAG, "Started EventMonitoringService.");
     }
   }
 
   public static void stopService(Context context) {
-    context.stopService(new Intent(context, EventMonitoringService.class));
+  
+    if (context.stopService(new Intent(context, EventMonitoringService.class))) {
+      Logger.w(TAG, "EventMonitoringService stopped");
+    }
   }
 
   /**
@@ -68,9 +71,9 @@ public class EventMonitoringService extends Service {
     for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
         monitor.init();
-        Log.i(LOGGER_TAG, monitor.getMonitorName() + ": Start\n");
+        Logger.i(TAG, monitor.getMonitorName() + ": Start\n");
       } catch (Exception e) {
-        Log.w(LOGGER_TAG, monitor.getMonitorName()
+        Logger.w(TAG, monitor.getMonitorName()
             + " did not start.\nThe following error occurred: " + e + e.getMessage()
             + e.getStackTrace());
       }
@@ -87,7 +90,7 @@ public class EventMonitoringService extends Service {
       try {
         monitor.stop();
       } catch (Exception e) {
-        Log.w(LOGGER_TAG, monitor.getMonitorName()
+        Logger.w(TAG, monitor.getMonitorName()
             + " did not stop.\nThe following error occurred: " + e + e.getMessage()
             + e.getStackTrace());
       }

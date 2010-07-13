@@ -18,5 +18,10 @@
             android:defaultValue="false"
             android:summary="@string/vibrate_desc"
             android:title="@string/vibrate_enabled"/>
+    <CheckBoxPreference
+            android:key="@string/pref_key_omnidroid_enabled"
+            android:defaultValue="true"
+            android:summary="@string/omnidroid_enabled_desc"
+            android:title="@string/omnidroid_enabled"/>
 
 </PreferenceScreen>

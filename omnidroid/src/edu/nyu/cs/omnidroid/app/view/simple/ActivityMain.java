@@ -31,7 +31,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
 
 /**
  * This is the main entry point of the application. Here the user will see a main menu where they
@@ -59,8 +58,6 @@ public class ActivityMain extends Activity {
     // our connection to the omnidroid database.
     UIDbHelperStore.init(this);
 
-    // Make sure the background monitoring service is running.
-    EventMonitoringService.startService(this);
 
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_main_btnCreateRule);

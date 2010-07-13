@@ -158,11 +158,13 @@
     <string name="pref_key_sound">SoundKey</string>
     <string name="pref_key_light">LightKey</string>
     <string name="pref_key_vibrate">VibrateKey</string>
+    <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
     <string name="sound_enabled">Sound Notifications</string>
     <string name="light_enabled">LED Notifications</string>
     <string name="vibrate_enabled">Vibrate Notifications</string>
+    <string name="omnidroid_enabled">Omnidroid is enabled</string>
     <string name="sound_desc">Allow Omnidroid to alert using sound</string>
     <string name="light_desc">Allow Omnidroid to alert using lights</string>
     <string name="vibrate_desc">Allow Omnidroid to alert using vibration</string>
-
+    <string name="omnidroid_enabled_desc">Enable Omnidroid</string>
 </resources>

@@ -16,6 +16,9 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.OmnidroidManager;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
@@ -27,5 +30,16 @@ public class ActivitySettings extends PreferenceActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.layout.activity_settings);
+    
+    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(
+        new OnSharedPreferenceChangeListener() {
+      public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_key_omnidroid_enabled))) {
+          //TODO consider Alert Dialog, 
+          //you have this many rules anabled, are you sure ...
+          OmnidroidManager.enable(getApplicationContext(), sharedPreferences.getBoolean(key, true));
+        }
+      }
+    });
   }
 }
