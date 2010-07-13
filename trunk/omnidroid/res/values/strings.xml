@@ -114,6 +114,7 @@
     <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK.</string>
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
+    <string name="phone_num_not_eq_filter_inst">Enter the phone number to exclude from the filter </string>
     <string name="text_eq_filter_inst">Enter an exact text string to match below:</string>
     <string name="text_cont_filter_inst">Enter a phrase in the text body to match below:</string>
     <string name="bad_data_format">Bad data format:\n</string>
@@ -193,5 +194,6 @@
     <string name="wifi_turned_off">Wifi was turned off</string>
     
     
+
 
 </resources>
