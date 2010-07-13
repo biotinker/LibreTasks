@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="edu.nyu.cs.omnidroid.app" android:versionCode="3"
 	android:versionName="0.1.2">
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
 
     <application android:icon="@drawable/icon" android:label="@string/omnidroid"
 		android:debuggable="true">
