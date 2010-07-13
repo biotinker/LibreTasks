@@ -92,6 +92,9 @@ public class DbMigration {
       addWifiActions(db);
     case 10:
       addNotification(db);
+    case 11:
+      addPhoneNumberNotEqualsFilter(db);
+    	
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -504,4 +507,21 @@ public class DbMigration {
     db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
   }
   
+  private static void addPhoneNumberNotEqualsFilter(SQLiteDatabase db) {
+    DataFilterDbAdapter dataFilterDbAdapter = new DataFilterDbAdapter(db);
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    Cursor cursor = dataTypeDbAdapter.fetchAll(OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class
+        .getName());
+    if ((cursor != null) && (cursor.getCount() > 0)) {
+      cursor.moveToFirst();
+    }
+    long dataTypeIdPhoneNumber = CursorHelper.getLongFromCursor(cursor,
+        DataTypeDbAdapter.KEY_DATATYPEID);
+    if (cursor != null) {
+      cursor.close();
+    }
+    dataFilterDbAdapter.insert(OmniPhoneNumber.Filter.NOTEQUALS.toString(),
+        OmniPhoneNumber.Filter.NOTEQUALS.displayName, dataTypeIdPhoneNumber, dataTypeIdPhoneNumber);
+  }
+	    
 }
