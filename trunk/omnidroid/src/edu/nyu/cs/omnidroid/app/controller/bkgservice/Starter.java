@@ -15,10 +15,13 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.bkgservice;
 
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * This broadcast receiver detect intents including System Boot, OmniStart and OmniRestart to
@@ -30,7 +33,11 @@ public class Starter extends BroadcastReceiver {
     
     if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
       // Start the background monitoring service.
-      EventMonitoringService.startService(context);
+      SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+      if (sharedPreferences.getBoolean(context.getString(R.string.pref_key_omnidroid_enabled),
+          true)) {
+        EventMonitoringService.startService(context);
+      }
     } else if ("OmniStart".equals(intent.getAction())) {
       // Do something when receiving 'OmniStart'
 

@@ -47,7 +47,7 @@ public class TimeMonitor extends BroadcastReceiver implements SystemServiceEvent
    * In this monitor, we only receive intent, no need to do anything here
    */
   public void stop() {
-    return;
+    context.unregisterReceiver(this);
   }
 
   public String getMonitorName() {
