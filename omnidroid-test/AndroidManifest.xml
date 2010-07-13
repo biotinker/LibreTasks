@@ -19,7 +19,7 @@
     package="edu.nyu.cs.omnidroid.app.tests">
 
     <!-- Specify what version of the SDK is needed -->
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
 
     <!-- We add an application tag here just so that we can indicate that
          this package needs to link against the android.test library,
