@@ -21,7 +21,6 @@
     <string name="manual_entry">Or, enter data manually:</string>
     <string name="enter_rule_name">Enter a rule name below:</string>
     <string name="enter_rule_description">Enter a rule description below:</string>
-    <string name="your_saved_rules">Your saved rules:</string>
     <string name="actions">actions</string>
 
     <!--  Common Words -->
@@ -89,7 +88,7 @@
     <string name="applications_title">Applications</string>
     <string name="show_website_title">Show Website</string>
     <string name="rule_name_title">Rule Name</string>
-    <string name="saved_rules_title">Saved Rules</string>
+    <string name="saved_rules_title">Enable Saved Rules</string>
     <string name="login_title">Login</string>
     <string name="actions_title">Actions</string>
     <string name="action_input_title">Action Input</string>
@@ -112,6 +111,7 @@
     <string name="select_action_alert_inst">Please select an action from the list above, then hit OK.</string>
     <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK.</string>
     <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK.</string>
+    <string name="select_rule_toggle_inst">Please select a rule from the list to turn on/off.</string>
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
     <string name="phone_num_not_eq_filter_inst">Enter the phone number to exclude from the filter </string>
@@ -119,7 +119,6 @@
     <string name="text_cont_filter_inst">Enter a phrase in the text body to match below:</string>
     <string name="bad_data_format">Bad data format:\n</string>
     <string name="bad_distance_format">Please enter a distance in miles.</string>
-    
 
     <!--  System Events -->
     
@@ -140,6 +139,12 @@
     <string name="general_log">General Log</string>
     <string name="clear">Clear</string>
     <string name="no_logs">No logs are available.</string>
+    <string name="toggle_enabled">Toggle Enabled</string>
+    <string name="enable_all">Enable All</string>
+    <string name="disable_all">Disable All</string>
+    <string name="edit_rule">Edit Rule</string>
+    <string name="delete_rule">Delete Rule</string>
+    <string name="toggle_rule">Toggle Rule</string>
 
     <!--  UI Login -->
     <string name="setup_account">Setup Account</string>
@@ -155,7 +160,7 @@
     <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule:</string>
     <string name="error_saving_rule">There was an error saving your rule:</string>
 
-	<!--  Settings -->
+    <!--  Settings -->
     <string name="pref_key_sound">SoundKey</string>
     <string name="pref_key_light">LightKey</string>
     <string name="pref_key_vibrate">VibrateKey</string>

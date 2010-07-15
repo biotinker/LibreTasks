@@ -52,18 +52,23 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private static final String KEY_PREF = "selectedRuleItem";
   private SharedPreferences state;
 
+  /** Request codes for Activity creation */
   /** Return code for filter building activities. */
-  public static final int ACTIVITY_RESULT_ADD_FILTER = 0;
+  public static final int REQUEST_ADD_FILTER = 0;
   /** Return code for action building activities. */
-  public static final int ACTIVITY_RESULT_ADD_ACTION = 1;
+  public static final int REQUEST_ADD_ACTION = 1;
   /** Return code for filter editing activities. */
-  public static final int ACTIVITY_RESULT_EDIT_FILTER = 2;
+  public static final int REQUEST_EDIT_FILTER = 2;
   /** Return code for action editing activities. */
-  public static final int ACTIVITY_RESULT_EDIT_ACTION = 3;
+  public static final int REQUEST_EDIT_ACTION = 3;
   /** Return code for rule name editing activity. */
-  public static final int ACTIVITY_RESULT_RULE_NAME = 4;
+  public static final int REQUEST_SET_RULE_NAME = 4;
   /** Return code for rule building activity. */
-  public static final int ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS = 5;
+  public static final int REQUEST_ADD_FILTERS_AND_ACTIONS = 5;
+  
+  /** Result codes for this activity */
+  /** Result code for saving a rule successfully. */
+  public static final int RESULT_RULE_SAVED = 1;
 
   // Context Menu Options
   private static final int MENU_EDIT = 0;
@@ -102,7 +107,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ACTIVITY_RESULT_ADD_FILTER:
+    case REQUEST_ADD_FILTER:
       // Did the user construct a valid filter? If so add it to the rule.
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
@@ -112,7 +117,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       RuleBuilder.instance().resetFilterPath();
       break;
 
-    case ACTIVITY_RESULT_EDIT_FILTER:
+    case REQUEST_EDIT_FILTER:
       // Did the user modify a valid filter? If so replace it in the rule.
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
@@ -122,7 +127,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       RuleBuilder.instance().resetFilterPath();
       break;
 
-    case ACTIVITY_RESULT_ADD_ACTION:
+    case REQUEST_ADD_ACTION:
       // Did the user construct a valid action? If so add it to the rule.
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
@@ -132,7 +137,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       RuleBuilder.instance().resetActionPath();
       break;
 
-    case ACTIVITY_RESULT_EDIT_ACTION:
+    case REQUEST_EDIT_ACTION:
       // Did the user modify a valid action? If so replace it in the rule.
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
@@ -142,7 +147,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       RuleBuilder.instance().resetActionPath();
       break;
 
-    case ACTIVITY_RESULT_RULE_NAME:
+    case REQUEST_SET_RULE_NAME:
       if (resultCode != Activity.RESULT_CANCELED) {
         // Try to save the rule for the user now.
         // We only get this request code if the user picked
@@ -283,7 +288,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       // When the activity returns, we can continue trying to save the rule.
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityDlgRuleName.class);
-      startActivityForResult(intent, ACTIVITY_RESULT_RULE_NAME);
+      startActivityForResult(intent, REQUEST_SET_RULE_NAME);
     }
   };
 
@@ -301,7 +306,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // filter in onActivityResult.
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgAttributes.class);
-    startActivityForResult(intent, ACTIVITY_RESULT_ADD_FILTER);
+    startActivityForResult(intent, REQUEST_ADD_FILTER);
   }
 
   /**
@@ -317,7 +322,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // We check if the user completed an action in onActivityResult.
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgApplications.class);
-    startActivityForResult(intent, ACTIVITY_RESULT_ADD_ACTION);
+    startActivityForResult(intent, REQUEST_ADD_ACTION);
   }
 
   /**
@@ -331,7 +336,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
-    startActivityForResult(intent, ACTIVITY_RESULT_EDIT_FILTER);
+    startActivityForResult(intent, REQUEST_EDIT_FILTER);
   }
 
   /**
@@ -351,7 +356,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
-    startActivityForResult(intent, ACTIVITY_RESULT_EDIT_ACTION);
+    startActivityForResult(intent, REQUEST_EDIT_ACTION);
   }
 
   /**
@@ -383,7 +388,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     Log.d(TAG, "Save Rule: new rule reloaded from db");
     adapterRule.setRule(RuleBuilder.instance().getRule());
     Log.d(TAG, "Save Rule: new rule set");
-    setResult(ActivityChooseRootEvent.RESULT_RULE_CREATED );
+    setResult(RESULT_RULE_SAVED);
     finish();
   }
 }

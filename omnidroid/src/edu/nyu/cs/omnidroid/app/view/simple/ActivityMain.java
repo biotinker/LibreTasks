@@ -85,7 +85,6 @@ public class ActivityMain extends Activity {
     switch (requestCode) {
     case REQUEST_ACTIVITY_CREATE_RULE :
       if (resultCode == ActivityChooseRootEvent.RESULT_RULE_CREATED) {
-        ActivitySavedRules.resetUI(this);
         Intent intent = new Intent();
         intent.setClass(this, ActivitySavedRules.class);
         startActivity(intent);
@@ -204,7 +203,6 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewRules = new OnClickListener() {
     public void onClick(View v) {
-      ActivitySavedRules.resetUI(v.getContext());
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivitySavedRules.class);
       startActivity(intent);
