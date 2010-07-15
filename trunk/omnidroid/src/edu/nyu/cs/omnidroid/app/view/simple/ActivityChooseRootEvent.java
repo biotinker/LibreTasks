@@ -46,9 +46,11 @@ public class ActivityChooseRootEvent extends Activity {
   private static final String KEY_STATE = "StateActivityChooseRootEvent";
   private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
 
-  public static final int RESULT_RULE_CREATED=1;
-  
+  // Request codes for creating new activities
   private static final int REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS = 0;
+
+  // Result code for successfully creating a rule 
+  public static final int RESULT_RULE_CREATED=1;
   
   private ListView listView;
   private AdapterEvents adapterEvents;
@@ -127,8 +129,8 @@ public class ActivityChooseRootEvent extends Activity {
   @Override
   public void onActivityResult(int requestCode,int resultCode,Intent data) {
     if (requestCode == REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS && 
-        resultCode == RESULT_RULE_CREATED) {
-      setResult(ActivityChooseRootEvent.RESULT_RULE_CREATED );
+        resultCode == ActivityChooseFiltersAndActions.RESULT_RULE_SAVED) {
+      setResult(RESULT_RULE_CREATED);
       finish();
     }  
   }

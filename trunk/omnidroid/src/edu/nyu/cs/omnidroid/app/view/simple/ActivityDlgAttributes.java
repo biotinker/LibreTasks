@@ -149,7 +149,7 @@ public class ActivityDlgAttributes extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilters.class);
-    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTER);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_FILTER);
   }
 
   /**

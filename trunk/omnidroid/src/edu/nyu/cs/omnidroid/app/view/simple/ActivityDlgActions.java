@@ -157,7 +157,7 @@ public class ActivityDlgActions extends Activity {
     if (!action.getParameters().isEmpty()) {
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
-      startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
+      startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_ACTION);
     } else {
       /*
        * Build rule using a ModelRuleAction with empty list of DataType since there are no

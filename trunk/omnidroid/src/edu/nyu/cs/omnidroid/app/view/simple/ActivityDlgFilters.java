@@ -149,7 +149,7 @@ public class ActivityDlgFilters extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
-    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTER);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_FILTER);
   }
 
   /**

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -17,307 +17,340 @@ package edu.nyu.cs.omnidroid.app.view.simple;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AbsListView;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
 
 /**
  * This activity shows all rules currently in the system, and their on/off status.
  */
-public class ActivitySavedRules extends Activity {
+public class ActivitySavedRules extends ListActivity {
+  // Options Menu IDs
+  private static final int MENU_SETTINGS = 0;
+  private static final int MENU_ADD_RULE = 1;
+  private static final int MENU_ENABLE_ALL = 2;
+  private static final int MENU_DISABLE_ALL = 3;
 
-  private static final String KEY_STATE = "StateActivitySavedRules";
+  // Context Menu Options
+  private static final int MENU_EDIT = 0;
+  private static final int MENU_DELETE = 1;
+  private static final int MENU_TOGGLE = 2;
 
-  private ListView listView;
-  private AdapterRules adapterRules;
-  private SharedPreferences state;
-  
+  // Activity Request codes for activity results
+  private static final int REQUEST_ACTIVITY_EDIT_RULE = 0;
+  private static final int REQUEST_ACTIVITY_CREATE_RULE = 1;
+
+  // List storage
+  private ListView listview;
+  RuleListAdapter ruleListAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    // Put our data together
+    ruleListAdapter = new RuleListAdapter(this, R.layout.activity_saved_rules);
 
-    // Link up controls from the xml layout resource file.
-    initializeUI();
+    // Connect our data to the listview
+    setListAdapter(ruleListAdapter);
+    listview = getListView();
 
-    // Restore UI state.
-    state = getSharedPreferences(ActivitySavedRules.KEY_STATE,
-        Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt("selectedRule", -1), true);
+    // Provide click to edit functionality
+    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        editRule(position);
+        return;
+      }
+    });
+
+    // Provide context menu functionality
+    registerForContextMenu(listview);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-
-    // Save UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt("selectedRule", listView.getCheckedItemPosition());
-    prefsEditor.commit();
   }
 
-  private void initializeUI() {
-    setContentView(R.layout.activity_saved_rules);
-    setTitle("Saved Rules");
-
-    adapterRules = new AdapterRules(this);
-
-    listView = (ListView) findViewById(R.id.activity_saved_rules_listview);
-    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    listView.setAdapter(adapterRules);
-
-    Button btnOk = (Button) findViewById(R.id.activity_saved_rules_btnViewRule);
-    btnOk.setOnClickListener(listenerBtnClickViewRule);
-    Button btnInfo = (Button) findViewById(R.id.activity_saved_rules_btnToggleOnOff);
-    btnInfo.setOnClickListener(listenerBtnClickToggleOnOff);
-    Button btnCancel = (Button) findViewById(R.id.activity_saved_rules_btnDeleteRule);
-    btnCancel.setOnClickListener(listenerBtnClickDeleteRule);
-    
-    LinearLayout llBottomButtons = (LinearLayout) findViewById(
-      R.id.activity_saved_rules_llBottomButtons);
-    llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
-  } 
-  
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS:
-      // The user returned from the rule building activity. Refresh the list in case they created
-      // a new rule, and select the rule currently loaded into RuleBuilder.
-      adapterRules.reloadData();
-      adapterRules.notifyDataSetChanged();
-      adapterRules.setCheckedItemByRuleId(RuleBuilder.instance().getRule().getDatabaseId());
+    case REQUEST_ACTIVITY_EDIT_RULE:
+      if (resultCode == ActivityChooseFiltersAndActions.RESULT_RULE_SAVED) {
+        // The user returned from the rule building activity. Refresh the list in case they updated
+        // a rule.
+        ruleListAdapter.notifyDataSetChanged();
+      }
+      break;
+    case REQUEST_ACTIVITY_CREATE_RULE:
+      if (resultCode == ActivityChooseRootEvent.RESULT_RULE_CREATED) {
+        // The user returned from the rule building activity. Refresh the list in case they created
+        // a new rule
+        ruleListAdapter.notifyDataSetChanged();
+      }
       break;
     }
   }
 
-  /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should
-   * call this before launching so we appear as a brand new instance.
-   * @param context  Context of caller.
-   */
-  public static void resetUI(Context context) {
-    UtilUI.resetSharedPreferences(context, KEY_STATE);
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+    // TODO(acase): Create ViewRule option and corresponding Activity that doesn't provide "Editing"
+    menu.setHeaderTitle(ruleListAdapter.getItem(info.position).getName());
+    menu.add(ContextMenu.NONE, MENU_TOGGLE, ContextMenu.NONE, R.string.toggle_rule);
+    menu.add(ContextMenu.NONE, MENU_EDIT, ContextMenu.NONE, R.string.edit_rule);
+    menu.add(ContextMenu.NONE, MENU_DELETE, ContextMenu.NONE, R.string.delete_rule);
   }
-  
-  private View.OnClickListener listenerBtnClickViewRule = new View.OnClickListener() {
-    public void onClick(View v) {
-      showActivityViewRule(listView.getCheckedItemPosition());
-    }
-  };
 
-  private View.OnClickListener listenerBtnClickToggleOnOff = new View.OnClickListener() {
-    public void onClick(View v) {
-      toggleRuleOnOff(listView.getCheckedItemPosition());
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    switch (item.getItemId()) {
+    case MENU_EDIT:
+      editRule(info.position);
+      return true;
+    case MENU_DELETE:
+      deleteRule(info.position);
+      return true;
+    case MENU_TOGGLE:
+      ruleListAdapter.toggleRule(info.position);
+      return true;
+    default:
+      return super.onContextItemSelected(item);
     }
-  };
+  }
 
-  private View.OnClickListener listenerBtnClickDeleteRule = new View.OnClickListener() {
-    public void onClick(View v) {
-      deleteRule(listView.getCheckedItemPosition());
+  /** Create an options menu */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, getString(R.string.settings_label)).setIcon(
+        android.R.drawable.ic_menu_preferences).setAlphabeticShortcut('s');
+    menu.add(Menu.NONE, MENU_ADD_RULE, Menu.NONE, getString(R.string.create_rule))
+        .setAlphabeticShortcut('a').setIcon(android.R.drawable.ic_menu_add);
+    menu.add(Menu.NONE, MENU_ENABLE_ALL, Menu.NONE, getString(R.string.enable_all))
+        .setAlphabeticShortcut('e').setIcon(android.R.drawable.checkbox_on_background);
+    menu.add(Menu.NONE, MENU_DISABLE_ALL, Menu.NONE, getString(R.string.disable_all))
+        .setAlphabeticShortcut('d').setIcon(android.R.drawable.checkbox_off_background);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu) {
+    boolean allEnabled = ruleListAdapter.allEnabled();
+    boolean allDisabled = ruleListAdapter.allDisabled();
+    menu.getItem(MENU_ENABLE_ALL).setEnabled(!allEnabled);
+    menu.getItem(MENU_DISABLE_ALL).setEnabled(!allDisabled);
+    return super.onPrepareOptionsMenu(menu);
+  }
+
+  /** Called when an item of options menu is clicked */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_SETTINGS:
+      startActivity(new Intent(this, ActivitySettings.class));
+      return true;
+    case MENU_ADD_RULE:
+      Intent intent = new Intent(this, ActivityChooseRootEvent.class);
+      startActivityForResult(intent, REQUEST_ACTIVITY_CREATE_RULE);
+      return true;
+    case MENU_ENABLE_ALL:
+      ruleListAdapter.setRulesEnabled(true);
+      return true;
+    case MENU_DISABLE_ALL:
+      ruleListAdapter.setRulesEnabled(false);
+      return true;
     }
-  };
+    return super.onOptionsItemSelected(item);
+  }
 
-  private void showActivityViewRule(int selectedItemPosition) {
-    if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select a rule from the list to view!");
-      return;
-    }
+  private void deleteRule(final int position) {
+    // Ask the user if they're sure they want to delete the rule.
+    new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
+        "Are you sure you want to delete this rule?").setPositiveButton("Yes",
+        new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            ruleListAdapter.deleteRule(position);
+          }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        // Do nothing
+      }
+    }).show();
+  }
 
+  private void editRule(int selectedItemPosition) {
     // The user wants to view and possibly edit an existing rule. We can send them to
     // the ActivityChooseFiltersAndActions activity which can handle rendering and
     // editing a saved rule or a new rule.
-    try {
-      Rule rule = UIDbHelperStore.instance().db().loadRule(
-          ((Rule) adapterRules.getItem(selectedItemPosition)).getDatabaseId());
-      RuleBuilder.instance().resetForEditing(rule);
-    } catch (Exception ex) {
-      // Error loading full rule from database.
-      UtilUI.showAlert(this, "Sorry!", "There was an error loading your rule:\n" + ex.toString());
-      return;
-    }
+    Rule rule = UIDbHelperStore.instance().db().loadRule(
+        ((Rule) ruleListAdapter.getItem(selectedItemPosition)).getDatabaseId());
+    RuleBuilder.instance().resetForEditing(rule);
 
     // Wipe UI state for the new activity.
     ActivityChooseFiltersAndActions.resetUI(this);
-    
+
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
-    startActivityForResult(intent,
-        ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_FILTERS_AND_ACTIONS);
-  }
-
-  private void toggleRuleOnOff(int selectedItemPosition) {
-    if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select a rule from the list to turn on/off!");
-      return;
-    }
-
-    adapterRules.toggleRuleOnOff(selectedItemPosition);
-  }
-
-  private void deleteRule(final int selectedItemPosition) {
-    if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, "Sorry!", "Please select a rule from the list to delete!");
-      return;
-    }
-
-    // Ask the user if they're sure they want to delete the rule.
-    new AlertDialog.Builder(this)
-      .setIcon(android.R.drawable.ic_dialog_alert)
-      .setTitle("Are you sure you want to delete this rule?")
-      .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-          adapterRules.deleteRule(selectedItemPosition);
-        }
-      })
-      .setNegativeButton("No", new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int whichButton) {
-        }
-      })
-      .show();
+    startActivityForResult(intent, REQUEST_ACTIVITY_EDIT_RULE);
   }
 
   /**
-   * Here we display all rules saved in the database.
+   * Adapter class handles the storage and presentation of our Rules.
    */
-  private class AdapterRules extends BaseAdapter {
-    private Context context;
+  private class RuleListAdapter extends BaseAdapter {
+    private LayoutInflater mInflater;
+    private int layoutId;
     private ArrayList<Rule> rules;
 
-    public AdapterRules(Context context) {
-      this.context = context;
-
-      // Fetch all available rules.
-      reloadData();
-    }
-    
-    public void reloadData() {
+    public RuleListAdapter(Context context, int layoutId) {
+      super();
+      this.layoutId = layoutId;
+      mInflater = LayoutInflater.from(context);
       rules = UIDbHelperStore.instance().db().getRules();
     }
 
-    public void toggleRuleOnOff(int position) {
-      Rule rule = rules.get(position);
-      
+    @Override
+    public void notifyDataSetChanged() {
+      rules = UIDbHelperStore.instance().db().getRules();
+      super.notifyDataSetChanged();
+    }
+
+    private void toggleRule(int position) {
       // Update from memory representation
+      Rule rule = rules.get(position);
       rule.setIsEnabled(!rule.getIsEnabled());
-      
       // Update the enabled flag in the database
       UIDbHelperStore.instance().db().setRuleEnabled(rule.getDatabaseId(), rule.getIsEnabled());
-      
+      notifyDataSetChanged();
+    }
+
+    /**
+     * Set all rules to the enable value passed in.
+     * 
+     * @param enable
+     *          boolean to set for all rules
+     */
+    private void setRulesEnabled(boolean enable) {
+      for (int i = 0; i < getCount(); i++) {
+        setIsEnabled(i, enable);
+        notifyDataSetChanged();
+      }
+    }
+
+    /**
+     * @return true if all rules are disabled, false otherwise
+     */
+    public boolean allDisabled() {
+      for (int i = 0; i < getCount(); i++) {
+        if (rules.get(i).getIsEnabled()) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    /**
+     * @return true if all rules are enabled, false otherwise
+     */
+    public boolean allEnabled() {
+      for (int i = 0; i < getCount(); i++) {
+        if (!rules.get(i).getIsEnabled()) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    /**
+     * Render a single Rule element in the list of all rules.
+     * 
+     * TODO(acase): Consider using convertView for performance
+     * 
+     * @return the view for this listview item
+     */
+    public View getView(final int position, View convertView, ViewGroup parent) {
+      // Initialize views
+      View item = mInflater.inflate(layoutId, null);
+      TextView text = (TextView) item.findViewById(R.id.text1);
+      TextView desc = (TextView) item.findViewById(R.id.text2);
+      CheckBox checkbox = (CheckBox) item.findViewById(R.id.checkbox);
+
+      // Main text shouldn't be focusable so that the listview item is clickable
+      text.setText(rules.get(position).getName());
+      text.setFocusable(false);
+      text.setClickable(false);
+
+      // Rule description shouldn't be focusable so that the listview item is clickable
+      desc.setText(rules.get(position).getDescription());
+      desc.setFocusable(false);
+      desc.setClickable(false);
+
+      // Enable/disable rule checkbox, connect it to toggling event listener
+      checkbox.setChecked(rules.get(position).getIsEnabled());
+      checkbox.setFocusable(false);
+      checkbox.setOnClickListener(new OnClickListener() {
+        public void onClick(View v) {
+          toggleRule(position);
+        }
+      });
+
+      return item;
+    }
+
+    public void setIsEnabled(int position, boolean enabled) {
+      // Update the rule storage
+      rules.get(position).setIsEnabled(enabled);
+      // Update the enabled flag in the database
+      UIDbHelperStore.instance().db().setRuleEnabled(rules.get(position).getDatabaseId(), enabled);
       notifyDataSetChanged();
     }
 
     public void deleteRule(int position) {
       Rule rule = rules.get(position);
-      
+
       // Delete from the database.
       UIDbHelperStore.instance().db().deleteRule(rule.getDatabaseId());
 
       // Delete from our memory representation.
       rules.remove(position);
       notifyDataSetChanged();
-
-      // Uncheck whatever item was selected in the list.
-      UtilUI.uncheckListViewSingleChoice(listView);
     }
-    
+
     public int getCount() {
       return rules.size();
     }
 
-    public Object getItem(int position) {
+    /**
+     * @return the rule found at position
+     */
+    public Rule getItem(int position) {
       return rules.get(position);
     }
 
-    public long getItemId(int position) {
-      return position;
-    }
-    
-    @SuppressWarnings("unused")
-    public long getCheckedRuleId() {
-      if (listView.getCheckedItemPosition() > -1) {
-        return rules.get(listView.getCheckedItemPosition()).getDatabaseId();
-      }
-      return -1;
-    }
-    
-    public void setCheckedItemByRuleId(long ruleId) {
-      UtilUI.uncheckListViewSingleChoice(listView);
-      if (ruleId != -1) {
-        for (int i = 0; i < rules.size(); i++) {
-          if (rules.get(i).getDatabaseId() == ruleId) {
-            listView.setItemChecked(i, true);
-            return;
-          }
-        }
-      }
-    }
-
     /**
-     * Render a single Rule element in the list of all rules.
-     * TODO: (markww) Use convertView for efficiency.
+     * @return the database row id for the rule at position.
      */
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-      // The rule we're rendering.
-      Rule rule = rules.get(position);
-
-      LinearLayout ll = new LinearLayout(context);
-      ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
-          LayoutParams.FILL_PARENT));
-      ll.setMinimumHeight(50);
-      ll.setOrientation(LinearLayout.HORIZONTAL);
-      ll.setGravity(Gravity.CENTER_VERTICAL);
-
-      // Choose a color for the title text of the rule. If it's on, make the text
-      // white, if the rule is off, dull it out, but override both with yellow if
-      // the user has selected this rule in the UI.
-      int fontColor;
-      if (listView.getCheckedItemPosition() == position) {
-        fontColor = context.getResources().getColor(
-            R.color.list_element_text_selected_rule_disabled);
-        if (rule.getIsEnabled()) {
-          fontColor = context.getResources().getColor(R.color.list_element_text_selected_rule);
-        }
-      } else {
-        fontColor = context.getResources().getColor(R.color.list_element_text_disabled);
-        if (rule.getIsEnabled()) {
-          fontColor = context.getResources().getColor(R.color.list_element_text);
-        }
-      }
-
-      TextView tv = new TextView(context);
-      tv.setText(rules.get(position).getName());
-      tv.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
-          LayoutParams.FILL_PARENT));
-      tv.setGravity(Gravity.CENTER_VERTICAL);
-      tv.setPadding(10, 0, 0, 0);
-      tv.setTextSize(14.0f);
-      tv.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-      tv.setTextColor(fontColor);
-      tv.setMinHeight(46);
-
-      ll.addView(tv);
-
-      return ll;
+    public long getItemId(int position) {
+      return rules.get(position).getDatabaseId();
     }
-  }//AdapterRules
-  
+  }
 }

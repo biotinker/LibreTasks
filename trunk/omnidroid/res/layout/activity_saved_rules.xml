@@ -1,60 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical" android:layout_width="fill_parent"
-  android:layout_height="fill_parent">
 
-  <TextView android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:text="@string/your_saved_rules"
-	android:layout_marginBottom="10dip" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/checked_test_list" android:orientation="horizontal"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:paddingLeft="6dip" android:paddingRight="6dip">
 
-  <FrameLayout android:id="@+id/activity_saved_rules_frame_list"
-	android:layout_width="fill_parent" 
-	android:layout_height="0dip"
-	android:layout_weight="1">
 
-	<ListView android:id="@+id/activity_saved_rules_listview"
-	  android:layout_width="fill_parent" 
-	  android:layout_height="fill_parent" />
+    <CheckBox android:id="@+id/checkbox"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" android:focusable="true"
+        android:clickable="true" android:layout_alignParentRight="true"
+        android:checked="true" android:layout_weight="1" />
 
-  </FrameLayout>
-
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/activity_saved_rules_llBottomButtons"
-	android:orientation="horizontal" 
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content" 
-	android:gravity="center">
-
-	<LinearLayout 
-      android:id="@+id/activity_saved_rules_llButtons"
-      android:orientation="horizontal"
-	  android:layout_width="wrap_content" 
-	  android:layout_height="wrap_content">
-	  
-      <Button android:text="@string/view" android:id="@+id/activity_saved_rules_btnViewRule"
-        android:layout_width="wrap_content" 
+    <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+        android:paddingTop="2dip" android:id="@+id/textarea"
+        android:paddingBottom="2dip"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minWidth="60dip">
-      </Button>
-
-      <Button android:text="@string/on_off" android:id="@+id/activity_saved_rules_btnToggleOnOff"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minWidth="70dip">
-      </Button>
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:layout_toLeftOf="@id/checkbox"
+        android:mode="twoLine" >   
       
-      <Button android:text="@string/delete" android:id="@+id/activity_saved_rules_btnDeleteRule"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minWidth="75dip">
-      </Button>
-
-    </LinearLayout>
-		
-  </LinearLayout>
-
-</LinearLayout>
+        <TextView android:id="@+id/text1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:layout_marginTop="6dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+            
+        <TextView android:id="@+id/text2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text1"
+            android:layout_alignLeft="@id/text1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+    
+    </TwoLineListItem>
+    
+</RelativeLayout>

@@ -152,7 +152,7 @@ public class ActivityDlgApplications extends Activity {
 
     Intent intent = new Intent();
     intent.setClass(getApplicationContext(), ActivityDlgActions.class);
-    startActivityForResult(intent, ActivityChooseFiltersAndActions.ACTIVITY_RESULT_ADD_ACTION);
+    startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_ACTION);
   }
 
   /**
