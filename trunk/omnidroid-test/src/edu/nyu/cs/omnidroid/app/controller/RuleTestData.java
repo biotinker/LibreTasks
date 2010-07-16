@@ -69,6 +69,9 @@ public class RuleTestData {
   public static final int ACTION_SAYHELLO = 1;
   public static final int ACTION_DND2 = 2;
 
+  // Default to sending notification on rule trigger
+  public static final boolean SEND_NOTIFICATION = true;
+
   /**
    * The rule data used to build an array of {@link Rule} objects and populate the database,
    * consisting of the following fields: Event Name, Rule Name, Rule Description, Filters, Actions.
@@ -319,7 +322,7 @@ public class RuleTestData {
     }
     // This rule was never in the database so it doesn't have an ID
     long mockID = -1;
-    return new Rule(ruleName, mockID, filterTree);
+    return new Rule(ruleName, mockID, filterTree, SEND_NOTIFICATION);
   }
 
   /**

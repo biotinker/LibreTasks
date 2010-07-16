@@ -23,10 +23,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 /**
- * this class serves provides functionality disable/anable omnidroid; *
+ * this class serves provides functionality disable/enable omnidroid *
  */
 public class OmnidroidManager {
-  
+
   /** 
    * @param context  context in which the action needs to be performed.
    * @param enable <br> true if intended to enable;
@@ -36,10 +36,12 @@ public class OmnidroidManager {
     ComponentName componentName = new ComponentName(context.getPackageName(),
         BCReceiver.class.getName());
     if (enable) {
+      // Start service monitors and set app to enabled state
       context.getPackageManager().setComponentEnabledSetting(componentName, 
           PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
       EventMonitoringService.startService(context);
     } else {
+      // Stop service monitors and set app to disabled state
       context.getPackageManager().setComponentEnabledSetting(componentName,
           PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
       EventMonitoringService.stopService(context);    
