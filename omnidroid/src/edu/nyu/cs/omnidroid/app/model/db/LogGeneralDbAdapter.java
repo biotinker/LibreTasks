@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.GeneralLog;
 import edu.nyu.cs.omnidroid.app.model.Log;
 import android.content.ContentValues;
@@ -30,10 +31,14 @@ import android.database.sqlite.SQLiteDatabase;
 public class LogGeneralDbAdapter extends LogDbAdapter {
 
   /* Column names */
-  // No specialty information for General logs.
+  // Log level
+  public static final String KEY_LEVEL = "Level";
+  
+  // Default log leve if not set
+  protected static final int LOG_LEVEL_DEFAULT = Logger.INFO;
 
   /* An array of all column names */
-  public static final String[] KEYS = { KEY_ID, KEY_TIMESTAMP, KEY_DESCRIPTION };
+  public static final String[] KEYS = { KEY_ID, KEY_TIMESTAMP, KEY_DESCRIPTION, KEY_LEVEL };
 
   /* Table name */
   private static final String DATABASE_TABLE = "LogGeneral";
@@ -43,6 +48,9 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
       + " integer primary key autoincrement, " + KEY_TIMESTAMP + " integer, " + KEY_DESCRIPTION
       + " text not null);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
+  
+  protected static final String ADD_LEVEL_COLUMN = "ALTER TABLE " + DATABASE_TABLE  
+               + " ADD " + KEY_LEVEL + " integer not null DEFAULT " + LOG_LEVEL_DEFAULT;
 
   public LogGeneralDbAdapter(SQLiteDatabase database) {
     super(database);
@@ -55,13 +63,14 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
    *          the time stamp of the action taken.
    * @return the row ID of the newly inserted row, or -1 if an error occurred
    */
-  public long insert(Long timeStamp, String description) {
+  public long insert(Long timeStamp, String description, int level) {
     if (timeStamp == null || description == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
     ContentValues initialValues = new ContentValues();
     initialValues.put(KEY_TIMESTAMP, timeStamp);
     initialValues.put(KEY_DESCRIPTION, description);
+    initialValues.put(KEY_LEVEL, level);
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
 
@@ -131,6 +140,6 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
   @Override
   public long insert(Log log) {
     GeneralLog myLog = (GeneralLog) log;
-    return insert(myLog.getTimestamp(), myLog.getText());
+    return insert(myLog.getTimestamp(), myLog.getText(), myLog.getLevel());
   }
 }

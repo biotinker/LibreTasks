@@ -24,6 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
  * see what is going on.
  */
 public abstract class LogDbAdapter extends DbAdapter {
+
+  /* Database Column Names */
   public static final String KEY_ID = "_ID";
   public static final String KEY_TIMESTAMP = "TimeStamp";
   public static final String KEY_DESCRIPTION = "Description";

@@ -38,7 +38,7 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
 
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 12;
+  private static final int DATABASE_VERSION = 13;
 
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
@@ -53,19 +53,18 @@ public class DbHelper extends SQLiteOpenHelper {
   public DbHelper(Context context) {
     // Set the CursorFactory to null since we don't use it.
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     this.context = context;
   }
 
   @Override
   public void onCreate(SQLiteDatabase db) {
+    // If the first install, upgrade starting from DB version 1
     DbMigration.migrateToLatest(db, 1);
   }
 
-  // TODO(Fang Huang) Consider the Log Level, Warn, in this class. Maybe need to change to Info,
-  // Verbose or others?
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    // If upgrading, upgrade starting from the last version of the DB
     DbMigration.migrateToLatest(db, oldVersion);
   }
 
@@ -76,6 +75,7 @@ public class DbHelper extends SQLiteOpenHelper {
    *          SQLiteDatabase object to work with
    */
   public void cleanup(SQLiteDatabase db) {
+    // Log using standard log since the DB may not be setup yet
     Log.w(TAG, "Resetting database");
     dropTables(db);
     onCreate(db);
@@ -109,6 +109,7 @@ public class DbHelper extends SQLiteOpenHelper {
    * Back up the database by backing up the sqlite file.
    */
   public void backup() {
+    // Log using standard log since the DB may not be setup yet
     Log.w(TAG, "Backing up" + DATABASE_NAME);
     IOUtil.copy(databaseDir() + DATABASE_NAME, databaseDir() + DATABASE_NAME_BACKUP);
   }
@@ -117,6 +118,7 @@ public class DbHelper extends SQLiteOpenHelper {
    * Removing the current database file
    */
   public void remove() {
+    // Log using standard log since the DB may not be setup yet
     Log.w(TAG, "Removing" + DATABASE_NAME);
     IOUtil.remove(databaseDir() + DATABASE_NAME);
   }
@@ -125,6 +127,7 @@ public class DbHelper extends SQLiteOpenHelper {
    * Restore the database by using the sqlite file backed up.
    */
   public void restore() {
+    // Log using standard log since the DB may not be setup yet
     Log.w(TAG, "Restoring " + DATABASE_NAME);
     remove();
     IOUtil.move(databaseDir() + DATABASE_NAME_BACKUP, databaseDir() + DATABASE_NAME);

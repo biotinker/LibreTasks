@@ -59,11 +59,13 @@
     <string name="on_boot">Start Omnidroid at boot time</string>
     <string name="omniabled">Turn on/off Omnidroid</string>
 
-    <!--  Alert on Missing Data -->
+    <!--  Alerts -->
     <string name="missing_action">At least one action must be added.</string>
     <string name="missing_data">Data field can not be empty.</string>
     <string name="missing_name">OmniHandler name can not be empty.</string>
     <string name="oh_no">Oh no!</string>
+    <string name="throttle_alert_title">Omnidroid Temporarily Disabled</string>
+    <string name="throttle_alert_msg">Omnidroid exceeded throttle limit of %d by processing %d events in the last minute.\nOmnidroid will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>
@@ -166,6 +168,9 @@
     <string name="pref_key_vibrate">VibrateKey</string>
     <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
     <string name="pref_key_notification">NotificationKey</string>
+    <string name="pref_key_throttle">Throttle</string>
+    <string name="throttle">Throttle</string>
+    <string name="throttle_description">Limit number of events processed per minute</string>
     <string name="sound_enabled">Sound Notifications</string>
     <string name="light_enabled">LED Notifications</string>
     <string name="vibrate_enabled">Vibrate Notifications</string>
@@ -197,8 +202,5 @@
     <string name="phone_set_on_vibrate">Phone set on vibrate</string>
     <string name="wifi_turned_on">Wifi was turned on</string>
     <string name="wifi_turned_off">Wifi was turned off</string>
-    
-    
-
 
 </resources>

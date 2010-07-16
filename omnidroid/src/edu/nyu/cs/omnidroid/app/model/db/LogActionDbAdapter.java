@@ -35,7 +35,7 @@ public class LogActionDbAdapter extends LogDbAdapter {
   public static final String KEY_ACTIONAPPNAME = "FK_ActionAppName";
   public static final String KEY_ACTIONEVENTNAME = "FK_ActionEventName";
   public static final String KEY_ACTIONPARAMETERS = "ActionParameters";
-  
+
   /* An array of all column names */
   public static final String[] KEYS = { KEY_ID, KEY_TIMESTAMP, KEY_LOGEVENTID, KEY_RULENAME,
       KEY_ACTIONAPPNAME, KEY_ACTIONEVENTNAME, KEY_ACTIONPARAMETERS, KEY_DESCRIPTION };
@@ -131,8 +131,8 @@ public class LogActionDbAdapter extends LogDbAdapter {
     }
 
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
-    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS,
-        KEY_ID + "=" + id, null, null, null, null, null);
+    Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_ID + "=" + id, null, null,
+        null, null, null);
     if (mCursor != null) {
       mCursor.moveToFirst();
     }

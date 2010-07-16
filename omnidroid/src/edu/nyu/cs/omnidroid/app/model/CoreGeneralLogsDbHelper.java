@@ -44,9 +44,9 @@ public class CoreGeneralLogsDbHelper extends CoreLogsDbHelper {
     long id = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_ID);
     long timestamp = CursorHelper.getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
     String text = CursorHelper.getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-
+    int level = CursorHelper.getIntFromCursor(cursor, LogGeneralDbAdapter.KEY_LEVEL);
     // Make an object out of it
-    GeneralLog log = new GeneralLog(id, timestamp, text);
+    GeneralLog log = new GeneralLog(id, timestamp, text, level);
     return log;
   }
 
