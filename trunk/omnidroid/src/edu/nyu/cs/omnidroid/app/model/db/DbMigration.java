@@ -69,6 +69,7 @@ public class DbMigration {
    *          the version number of the current database before migrating
    */
   public static void migrateToLatest(SQLiteDatabase db, int currentDbVersionNumber) {
+    // Use standard Logger since DB may not be setup yet
     Log.i(TAG, "Migrating database from version " + currentDbVersionNumber);
     switch (currentDbVersionNumber) {
     case 1:
@@ -94,6 +95,8 @@ public class DbMigration {
       addNotification(db);
     case 11:
       addPhoneNumberNotEqualsFilter(db);
+    case 12:
+      addGeneralLogLevels(db);
     	
 
       /*
@@ -494,6 +497,7 @@ public class DbMigration {
     }
     cursor.close();
   }
+
   private static void addWifiActions(SQLiteDatabase db){
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
     long appIdOmnidroid=appDbAdapter.getAppId(OmniAction.APP_NAME);
@@ -503,8 +507,13 @@ public class DbMigration {
     actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
     
   }
+
   private static void addNotification(SQLiteDatabase db) {
     db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
+  }
+
+  private static void addGeneralLogLevels(SQLiteDatabase db) {
+    db.execSQL(LogGeneralDbAdapter.ADD_LEVEL_COLUMN);
   }
   
   private static void addPhoneNumberNotEqualsFilter(SQLiteDatabase db) {

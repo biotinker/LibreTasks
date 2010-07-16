@@ -22,14 +22,18 @@ package edu.nyu.cs.omnidroid.app.model;
 public class GeneralLog extends Log {
   public static final String TAG = GeneralLog.class.getSimpleName();
 
+  // Log level (higher is less severe, more informational) see {@ Logger} for details
+  protected int level;
+  
   /**
    * @param text
    *          to create a GeneralLog of
    * 
    */
-  public GeneralLog(String text) {
+  public GeneralLog(String text, int level) {
     super();
     this.text = text;
+    this.level = level;  
   }
 
   /**
@@ -41,6 +45,7 @@ public class GeneralLog extends Log {
    */
   public GeneralLog(GeneralLog log) {
     super(log);
+    this.level = log.level;
   }
 
   /**
@@ -53,11 +58,20 @@ public class GeneralLog extends Log {
    * @param text
    *          a textual description of the Log
    */
-  public GeneralLog(long id, long timestamp, String text) {
+  public GeneralLog(long id, long timestamp, String text, int level) {
     super(id, timestamp, text);
+    this.level = level;
   }
 
   public String toString() {
-    return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\nText: " + text;
+    return "ID: " + id + "\n" + "Timestamp: " + timestamp + "\nLevel: " + level + "\nText: " + text;
+  }
+
+  public void setLevel(int level) {
+    this.level = level;
+  }
+  
+  public int getLevel() {
+    return level;
   }
 }

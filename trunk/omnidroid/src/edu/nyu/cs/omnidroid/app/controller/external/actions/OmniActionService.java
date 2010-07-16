@@ -35,6 +35,7 @@ import edu.nyu.cs.omnidroid.app.controller.actions.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowAlertAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.view.simple.ActivityLogs;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
 /**
  * This service is for Omnidroid to launch simple actions like: show a message, put some message on
@@ -54,9 +55,6 @@ public class OmniActionService extends Service {
   public static final int SET_PHONE_LOUD = 6;
   public static final int SET_PHONE_SILENT = 7;
   public static final int SET_PHONE_VIBRATE = 8;
-  
-  //TODO(Roger): chose a more meaningful id
-  public static final int NOTIFICATION_ID = 1;
   
   private boolean notificationIsOn;
 
@@ -156,6 +154,7 @@ public class OmniActionService extends Service {
     String title = intent.getStringExtra(ShowNotificationAction.PARAM_TITLE);
     String message = intent.getStringExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE);
     
+    // TODO(acase): Replace code below with UtilUI.showNoficiation()
     if (message == null) {
       Log.w("showNotification", "No user message provided");
       message = getString(R.string.action_default_message);
@@ -182,7 +181,7 @@ public class OmniActionService extends Service {
     }
 
     // Send the notification
-    nm.notify(NOTIFICATION_ID, notification);
+    nm.notify(UtilUI.NOTIFICATION_INFO, notification);
   }
 
   /**

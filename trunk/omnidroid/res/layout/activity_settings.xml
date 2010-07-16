@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/settings_title" >
 
+	<!-- Using keys from the strings resource allows for compile time 
+	     errors where these preferences are accessed programmatically. -->
     <CheckBoxPreference
             android:key="@string/pref_key_sound"
             android:defaultValue="false"
@@ -17,16 +19,22 @@
             android:key="@string/pref_key_vibrate"
             android:defaultValue="false"
             android:summary="@string/vibrate_desc"
-            android:title="@string/vibrate_enabled"/>
+            android:title="@string/vibrate_enabled" />
     <CheckBoxPreference
             android:key="@string/pref_key_omnidroid_enabled"
             android:defaultValue="true"
             android:summary="@string/omnidroid_enabled_desc"
-            android:title="@string/omnidroid_enabled"/>
+            android:title="@string/omnidroid_enabled" />
     <CheckBoxPreference
             android:key="@string/pref_key_notification"
             android:defaultValue="true"
             android:summary="@string/notification_desc"
-            android:title="@string/notification"/>
-
+            android:title="@string/notification" />
+    <ListPreference
+            android:key="@string/pref_key_throttle"
+            android:summary="@string/throttle_description"
+            android:title="@string/throttle"
+            android:entries="@array/throttle_list"
+            android:entryValues="@array/throttle_values"
+            android:dialogTitle="@string/throttle_description" />
 </PreferenceScreen>

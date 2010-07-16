@@ -55,4 +55,16 @@ public class CoreEventLogsDbHelper extends CoreLogsDbHelper {
     EventLog log = new EventLog(id, timestamp, appName, eventName, parameters, text);
     return log;
   }
+
+  /**
+   * 
+   * @return number of events that were performed in the last minute
+   */
+  public int getLogCountDuringLastMinute() {
+    // Fetch all actions recorded in the last minute
+    Cursor logTable = ((LogEventDbAdapter)logDbAdapter).fetchAllDuringLastMinute();
+    int count = logTable.getCount();
+    logTable.close();
+    return count;
+  }
 }

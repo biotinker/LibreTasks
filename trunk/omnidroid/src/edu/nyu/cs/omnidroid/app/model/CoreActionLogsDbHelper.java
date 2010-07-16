@@ -57,5 +57,4 @@ public class CoreActionLogsDbHelper extends CoreLogsDbHelper {
         eventParams, text);
     return log;
   }
-
 }

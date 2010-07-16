@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import edu.nyu.cs.omnidroid.app.controller.HandlerService;
+import edu.nyu.cs.omnidroid.app.controller.HandlerService;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 
 /**

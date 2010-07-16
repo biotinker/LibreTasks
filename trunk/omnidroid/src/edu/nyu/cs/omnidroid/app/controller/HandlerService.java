@@ -19,7 +19,10 @@ import java.util.ArrayList;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionLogsDbHelper;
@@ -30,6 +33,7 @@ import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import edu.nyu.cs.omnidroid.app.model.ActionLog;
 import edu.nyu.cs.omnidroid.app.model.EventLog;
 import edu.nyu.cs.omnidroid.app.model.GeneralLog;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
 /**
  * This class is the heart of Omnidroid. When this class receives a system intent from
@@ -41,12 +45,60 @@ import edu.nyu.cs.omnidroid.app.model.GeneralLog;
 public class HandlerService extends Service {
   private static final String TAG = HandlerService.class.getSimpleName();
 
+  // Limit the number of rules that can be applied in any minute (stored in string form)
+  private static final String THROTTLE_DEFAULT = "15";
+
+  // Throttle disabled value
+  private static final int THROTTLE_DISABLED = 0;
+
   /**
    * @see android.app.Service#onCreate()
    */
   @Override
   public void onCreate() {
     super.onCreate();
+  }
+
+  /**
+   * @return true if over throttle limit, false otherwise.
+   */
+  // TODO(acase): Write Test Units for this.
+  private boolean throttled() {
+    // Default is not throttled
+    boolean throttled = false;
+
+    // Get throttle setting
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    String sThrottle = prefs.getString(getString(R.string.pref_key_throttle), THROTTLE_DEFAULT);
+    int throttle = Integer.parseInt(sThrottle);
+
+    CoreEventLogsDbHelper coreEventLogsDbHelper = new CoreEventLogsDbHelper(this);
+
+    /*
+     * See how many events we've taken in the last minute and if it's higher than our throttle
+     * limit, then log/notify that this event is being ignored due to a possible loop or abuse.
+     */
+    if ((throttle != THROTTLE_DISABLED)
+        && (coreEventLogsDbHelper.getLogCountDuringLastMinute() > throttle)) {
+      // Log event to logcat
+      String log = getString(R.string.throttle_alert_msg, throttle, coreEventLogsDbHelper
+          .getLogCountDuringLastMinute());
+      Logger.w(TAG, log);
+
+      // Log event in DB
+      CoreGeneralLogsDbHelper coreGeneralLogsDbHelper = new CoreGeneralLogsDbHelper(this);
+      GeneralLog generalLog = new GeneralLog(log, Logger.INFO);
+      coreGeneralLogsDbHelper.insert(generalLog);
+      coreGeneralLogsDbHelper.close();
+
+      // Send user notification
+      UtilUI.ShowNotification(this, UtilUI.NOTIFICATION_WARN,
+          getString(R.string.throttle_alert_title), log.toString());
+      throttled = true;
+    }
+    
+    coreEventLogsDbHelper.close();
+    return throttled;
   }
 
   /**
@@ -65,11 +117,18 @@ public class HandlerService extends Service {
       EventLog logEvent = new EventLog(event);
       Long logID = coreEventLogsDbHelper.insert(logEvent);
       logEvent.setID(logID);
-      coreEventLogsDbHelper.close();
+
+      // Don't run if we're over our throttle threshold
+      if (throttled()) {
+        return;
+      }
 
       // Open up Rule/Action Database connections
       CoreRulesDbHelper coreRuleDbHelper = new CoreRulesDbHelper(this);
       CoreActionsDbHelper coreActionsDbHelper = new CoreActionsDbHelper(this);
+
+      // Open our Log accessor utilities to do some log checking/updating
+      CoreActionLogsDbHelper coreActionLogsDbHelper = new CoreActionLogsDbHelper(this);
 
       // Get a list of actions that apply to this event.
       ArrayList<Action> actions = RuleProcessor.getActions(event, coreRuleDbHelper,
@@ -80,12 +139,9 @@ public class HandlerService extends Service {
       coreRuleDbHelper.close();
 
       // TODO(acase): Consider moving this to the Action Executor so we don't have to loop through
-      // the actions twice. The problem is that we don't have access to the logEvent
-      // there.
-      // Log the action taking place
-      CoreActionLogsDbHelper coreActionLogsDbHelper = new CoreActionLogsDbHelper(this);
+      // the actions twice. The problem is that we don't have access to the logEvent there.
       for (Action action : actions) {
-        // Log action
+        // Log the actions taking place
         ActionLog logAction = new ActionLog(action, logEvent.getID());
         coreActionLogsDbHelper.insert(logAction);
       }
@@ -94,11 +150,11 @@ public class HandlerService extends Service {
       // Create a general log about what is going on
       CoreGeneralLogsDbHelper coreGeneralLogsDbHelper = new CoreGeneralLogsDbHelper(this);
       GeneralLog generalLog = new GeneralLog(TAG + " got " + actions.size()
-          + " action(s) for event " + intent.getAction());
+          + " action(s) for event " + intent.getAction(), Logger.INFO);
       coreGeneralLogsDbHelper.insert(generalLog);
       coreGeneralLogsDbHelper.close();
+      Logger.d(TAG, "got " + actions.size() + " action(s) for event " + intent.getAction());
 
-      Logger.d(TAG, "get " + actions.size() + " action(s) for event " + intent.getAction());
       // Execute the list of actions.
       try {
         ActionExecuter.executeActions(this, actions);
@@ -109,6 +165,7 @@ public class HandlerService extends Service {
       }
     }
 
+    // Nothing left to do for this event
     stopSelf();
   }
 

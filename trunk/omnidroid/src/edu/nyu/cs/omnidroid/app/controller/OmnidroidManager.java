@@ -18,6 +18,7 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import edu.nyu.cs.omnidroid.app.controller.bkgservice.BCReceiver;
 import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
+import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.content.pm.PackageManager;
  * this class serves provides functionality disable/enable omnidroid *
  */
 public class OmnidroidManager {
+  private static final String TAG = OmnidroidManager.class.getSimpleName();
 
   /** 
    * @param context  context in which the action needs to be performed.
@@ -36,11 +38,13 @@ public class OmnidroidManager {
     ComponentName componentName = new ComponentName(context.getPackageName(),
         BCReceiver.class.getName());
     if (enable) {
+      Logger.w(TAG, "Starting Omnidroid.");
       // Start service monitors and set app to enabled state
       context.getPackageManager().setComponentEnabledSetting(componentName, 
           PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
       EventMonitoringService.startService(context);
     } else {
+      Logger.w(TAG, "Stopping Omnidroid.");
       // Stop service monitors and set app to disabled state
       context.getPackageManager().setComponentEnabledSetting(componentName,
           PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
