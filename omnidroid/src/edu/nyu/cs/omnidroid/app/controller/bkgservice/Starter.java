@@ -16,7 +16,7 @@
 package edu.nyu.cs.omnidroid.app.controller.bkgservice;
 
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
+import edu.nyu.cs.omnidroid.app.controller.OmnidroidManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,20 +30,28 @@ import android.preference.PreferenceManager;
 public class Starter extends BroadcastReceiver {
 
   public void onReceive(Context context, Intent intent) {
-    
-    if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-      // Start the background monitoring service.
+
+    if (android.content.Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+      // Start the background monitoring service on boot
       SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-      if (sharedPreferences.getBoolean(context.getString(R.string.pref_key_omnidroid_enabled),
-          true)) {
-        EventMonitoringService.startService(context);
+      if (sharedPreferences
+          .getBoolean(context.getString(R.string.pref_key_omnidroid_enabled), true)) {
+        OmnidroidManager.enable(context, true);
       }
     } else if ("OmniStart".equals(intent.getAction())) {
-      // Do something when receiving 'OmniStart'
-
+      // Start the background monitoring service by request
+      OmnidroidManager.enable(context, true);
     } else if ("OmniRestart".equals(intent.getAction())) {
-      // Do something when receiving 'OmniRestart'
-      
+      /*
+       * Restart the background monitoring service on request (maybe we loaded new data and need a
+       * restart)
+       */
+      OmnidroidManager.enable(context, false);
+      OmnidroidManager.enable(context, true);
+    } else if ("OmniStop".equals(intent.getAction())) {
+      // Stop the background monitoring services by request
+      OmnidroidManager.enable(context, false);
     }
   }
+
 }

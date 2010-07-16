@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,16 +28,18 @@ import android.widget.Toast;
  * The service creates monitors for System Events, and could later support third party applications.
  */
 public class EventMonitoringService extends Service {
-
-  private final IBinder mBinder = new LocalBinder();
+  // Log tag
   private static final String TAG = EventMonitoringService.class.getSimpleName();
-  
-  private final SystemServiceEventMonitor MONITORS[] = {
-      new PhoneStateMonitor(this),
-      new LocationMonitor(this),
-      new TimeMonitor(this),
-  };
-   
+
+  // Internal binding to provide service bindings
+  private final IBinder mBinder = new LocalBinder();
+
+  // Keep track if already running or not
+  private static boolean isAlreadyRunning = false;
+
+  private final SystemServiceEventMonitor MONITORS[] = { new PhoneStateMonitor(this),
+      new LocationMonitor(this), new TimeMonitor(this), };
+
   public class LocalBinder extends Binder {
     EventMonitoringService getService() {
       return EventMonitoringService.this;
@@ -45,18 +47,27 @@ public class EventMonitoringService extends Service {
   }
 
   public static void startService(Context context) {
-    
-    ComponentName service = context.startService(new Intent(context, EventMonitoringService.class));
-    if (null == service) {
-      Toast.makeText(context, "Failed to start Event Monitoring Service", Toast.LENGTH_LONG).show();
-      Logger.i(TAG, "EventMonitoringService did not start.");
+    /*
+     * I don't think the isAlreadyRunning check is really necessary as I think Android really only
+     * doesn't run the onCreate code twice anyway, but just to be sure.
+     */
+    if (!isAlreadyRunning) {
+      ComponentName service = context
+          .startService(new Intent(context, EventMonitoringService.class));
+      if (null == service) {
+        Toast.makeText(context, "Failed to start Event Monitoring Service", Toast.LENGTH_LONG)
+            .show();
+        Logger.e(TAG, "EventMonitoringService did not start.");
+      } else {
+        Logger.w(TAG, "Started EventMonitoringService.");
+      }
     } else {
-      Logger.i(TAG, "Started EventMonitoringService.");
+      // We're already running, don't start again.
+      return;
     }
   }
 
   public static void stopService(Context context) {
-  
     if (context.stopService(new Intent(context, EventMonitoringService.class))) {
       Logger.w(TAG, "EventMonitoringService stopped");
     }
@@ -68,14 +79,22 @@ public class EventMonitoringService extends Service {
    */
   @Override
   public void onCreate() {
+    // Don't restart these monitors if we're already running.
+    synchronized (this) {
+      if (!isAlreadyRunning) {
+        isAlreadyRunning = true;
+      } else {
+        return;
+      }
+    }
+    // Start System Monitors
     for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
         monitor.init();
-        Logger.i(TAG, monitor.getMonitorName() + ": Start\n");
+        Logger.w(TAG, monitor.getMonitorName() + ": Start\n");
       } catch (Exception e) {
-        Logger.w(TAG, monitor.getMonitorName()
-            + " did not start.\nThe following error occurred: " + e + e.getMessage()
-            + e.getStackTrace());
+        Logger.e(TAG, monitor.getMonitorName() + " did not start.\nThe following error occurred: "
+            + e + e.getMessage() + e.getStackTrace());
       }
     }
   }
@@ -89,12 +108,13 @@ public class EventMonitoringService extends Service {
     for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
         monitor.stop();
+        Logger.w(TAG, monitor.getMonitorName() + " stopped");
       } catch (Exception e) {
-        Logger.w(TAG, monitor.getMonitorName()
-            + " did not stop.\nThe following error occurred: " + e + e.getMessage()
-            + e.getStackTrace());
+        Logger.e(TAG, monitor.getMonitorName() + " did not stop.\nThe following error occurred: "
+            + e + e.getMessage() + e.getStackTrace());
       }
     }
+    isAlreadyRunning = false;
   }
 
   @Override

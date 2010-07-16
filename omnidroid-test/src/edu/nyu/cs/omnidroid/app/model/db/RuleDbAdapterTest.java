@@ -34,6 +34,8 @@ public class RuleDbAdapterTest extends AndroidTestCase {
   private String[] ruleNames = { "rule1", "rule2", "rule3" };
   private String[] ruleDescs = { "desc1", "desc2", "desc3" };
 
+  private static final boolean SEND_NOTIFICATION = true;
+
   @Override
   protected void setUp() throws Exception {
     super.setUp();
@@ -46,12 +48,12 @@ public class RuleDbAdapterTest extends AndroidTestCase {
   @Override
   protected void tearDown() throws Exception {
     dbAdapter.deleteAll();
-    
+
     // Try to restore the database
-    if(omnidroidDbHelper.isBackedUp()) {
+    if (omnidroidDbHelper.isBackedUp()) {
       omnidroidDbHelper.restore();
     }
-    
+
     omnidroidDbHelper.close();
     super.tearDown();
   }
@@ -152,7 +154,8 @@ public class RuleDbAdapterTest extends AndroidTestCase {
 
   public void testUpdate() {
     long id = dbAdapter.insert(eventIDs[0], ruleNames[0], ruleDescs[0], false);
-    assertTrue(dbAdapter.update(id, eventIDs[1], ruleNames[1], ruleDescs[1], true));
+    assertTrue(dbAdapter.update(id, eventIDs[1], ruleNames[1], ruleDescs[1], true,
+        SEND_NOTIFICATION));
     // Validate the updated record.
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, eventIDs[1], ruleNames[1], ruleDescs[1], true);
@@ -161,12 +164,13 @@ public class RuleDbAdapterTest extends AndroidTestCase {
   public void testUpdate_notExisting() {
     long id = dbAdapter.insert(eventIDs[0], ruleNames[0], ruleDescs[0], true);
     dbAdapter.delete(id);
-    assertFalse(dbAdapter.update(id, eventIDs[1], ruleNames[1], ruleDescs[1], false));
+    assertFalse(dbAdapter.update(id, eventIDs[1], ruleNames[1], ruleDescs[1], false,
+        SEND_NOTIFICATION));
   }
 
   public void testUpdate_withNullValues() {
     long id = dbAdapter.insert(eventIDs[1], ruleNames[1], ruleDescs[1], false);
-    assertFalse(dbAdapter.update(id, null, null, null, null));
+    assertFalse(dbAdapter.update(id, null, null, null, null, null));
     // Validate the updated record.
     Cursor cursor = dbAdapter.fetch(id);
     assertCursorEquals(cursor, eventIDs[1], ruleNames[1], ruleDescs[1], false);
@@ -175,7 +179,7 @@ public class RuleDbAdapterTest extends AndroidTestCase {
   public void testUpdate_illegalArgumentException() {
     Exception expected = null;
     try {
-      dbAdapter.update(null, eventIDs[0], ruleNames[0], ruleDescs[0], false);
+      dbAdapter.update(null, eventIDs[0], ruleNames[0], ruleDescs[0], false, SEND_NOTIFICATION);
     } catch (IllegalArgumentException e) {
       expected = e;
     }
@@ -214,7 +218,7 @@ public class RuleDbAdapterTest extends AndroidTestCase {
 
     // Update record 3, 2, 1
     for (int i = 2; i >= 0; i--) {
-      dbAdapter.update(ids[i], eventIDs[i], ruleNames[i], ruleDescs[i], true);
+      dbAdapter.update(ids[i], eventIDs[i], ruleNames[i], ruleDescs[i], true, SEND_NOTIFICATION);
       Thread.sleep(1000); // SQLite3 datetime type doesn't support less than 1 second
     }
 

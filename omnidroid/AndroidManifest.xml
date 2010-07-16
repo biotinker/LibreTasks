@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="edu.nyu.cs.omnidroid.app" android:versionCode="3"
-	android:versionName="0.1.2">
+	package="edu.nyu.cs.omnidroid.app" android:versionCode="4"
+	android:versionName="0.1.3">
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
 
     <application android:icon="@drawable/icon" android:label="@string/omnidroid"
@@ -243,7 +243,7 @@
 			</intent-filter>
 		</receiver>
 
-		<!-- Services that runs to fire actions -->
+		<!-- Services that run to fire actions -->
 		<service android:name=".controller.external.actions.SMSService">
 			<intent-filter>
 				<action android:name="omnidroid.intent.action.SMS_SEND" />
@@ -265,7 +265,7 @@
 				<action android:name="omnidroid.intent.action.TWITTER_UPDATE" />
 			</intent-filter>
 		</service>
-		<!-- End Services that runs to fire actions -->
+		<!-- End Services that run to fire actions -->
 		
 	</application>
 

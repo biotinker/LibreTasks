@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -18,7 +18,7 @@ package edu.nyu.cs.omnidroid.app.controller.bkgservice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import edu.nyu.cs.omnidroid.app.controller.HandlerService;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 
 /**
@@ -32,10 +32,10 @@ public class BCReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context context, Intent intent) {
     try {
-      intent.setClass(context, edu.nyu.cs.omnidroid.app.controller.HandlerService.class);
+      intent.setClass(context, HandlerService.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       context.startService(intent);
-      Log.i("Received Intent", intent.getAction());
+      Logger.i("Received Intent", intent.getAction());
     } catch (Exception e) {
       Logger.i(TAG, e.getLocalizedMessage());
       Logger.i(TAG, "Unable to execute required action");

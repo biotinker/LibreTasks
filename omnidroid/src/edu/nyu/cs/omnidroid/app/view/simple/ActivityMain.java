@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.OmnidroidManager;
 
 /**
  * This is the main entry point of the application. Here the user will see a main menu where they
@@ -42,11 +43,11 @@ public class ActivityMain extends Activity {
   private static final int MENU_SETTINGS_ID = 0;
   private static final int MENU_ABOUT_ID = 1;
 
-  // Disclaimer stored in SharedPreferences
+  // Disclaimer and background service prefs are stored in SharedPreferences
   private SharedPreferences prefs;
   private static final String SETTING_ACCEPTED_DISCLAIMER = "SettingDisclaimerAccepted";
-  
-  /** request code for ChooseRootEventActivity*/
+
+  /** request code for ChooseRootEventActivity */
   private static final int REQUEST_ACTIVITY_CREATE_RULE = 0;
 
   @Override
@@ -58,7 +59,6 @@ public class ActivityMain extends Activity {
     // our connection to the omnidroid database.
     UIDbHelperStore.init(this);
 
-
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_main_btnCreateRule);
     btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
@@ -68,31 +68,48 @@ public class ActivityMain extends Activity {
 
     Button btnViewLogs = (Button) findViewById(R.id.activity_main_btnLogs);
     btnViewLogs.setOnClickListener(listenerBtnClickViewLogs);
-    
+
     Button btnHelp = (Button) findViewById(R.id.activity_main_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickHelp);
 
     Button btnResetDB = (Button) findViewById(R.id.activity_main_btnResetDB);
     btnResetDB.setOnClickListener(listenerBtnClickResetDb);
 
+    // Show disclaimer if it hasn't been accepted yet
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
     if (prefs.getBoolean(SETTING_ACCEPTED_DISCLAIMER, false) == false) {
       showDisclaimer();
     }
+
+    /*
+     * Start Omnidroid service if it's not already running and it should be. This addresses two key
+     * times: 1) On first run when the preference for running has not yet been set (since it
+     * defaults to "true"), and 2) After upgrade the service will no longer be running, so this will
+     * need to be start it again.
+     * 
+     * It's okay to try and start it multiple times, Android is smart enough to not create multiple
+     * instances.
+     */
+    if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
+      OmnidroidManager.enable(this, true);
+    }
+
   }
+
   @Override
-  public void onActivityResult(int requestCode, int resultCode,Intent data) {
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
-    case REQUEST_ACTIVITY_CREATE_RULE :
+    case REQUEST_ACTIVITY_CREATE_RULE:
       if (resultCode == ActivityChooseRootEvent.RESULT_RULE_CREATED) {
         Intent intent = new Intent();
         intent.setClass(this, ActivitySavedRules.class);
         startActivity(intent);
       }
-    default :
-  	   //do nothing
+    default:
+      // do nothing
     }
   }
+
   /**
    * Display our disclaimer dialog and require acceptance.
    */
@@ -197,7 +214,7 @@ public class ActivityMain extends Activity {
       startActivityForResult(intent, REQUEST_ACTIVITY_CREATE_RULE);
     }
   };
-  
+
   /**
    * View saved rules.
    */
