@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  Used for general list selection dialogs such as: 
+      ActivityDlg[Applications|Filters|Attributes|Actions]
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_dlg_list_selector_ll_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView android:id="@+id/activity_dlg_list_selector_tv_info1"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"  
+        android:layout_weight="0"
+        android:paddingTop="0px"
+        android:paddingLeft="10px"
+        android:paddingBottom="10px"
+        android:paddingRight="10px"
+        android:text="" />
+
+    <FrameLayout android:id="@+id/activity_dlg_list_selector_frame_list"
+        android:layout_width="fill_parent" 
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+
+        <ListView
+          android:id="@+id/activity_dlg_list_selector_listview"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:paddingLeft="10px"
+          android:paddingRight="10px" />
+    </FrameLayout>
+
+</LinearLayout>

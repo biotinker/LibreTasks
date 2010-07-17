@@ -16,8 +16,12 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +63,7 @@ public class ActivityDlgFilterInput extends Activity {
     btnOk.setOnClickListener(listenerBtnClickOk);
 
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_filter_input_btnHelp);
-    btnHelp.setOnClickListener(listenerBtnClickInfo);
+    btnHelp.setOnClickListener(listenerBtnClickHelp);
 
     // Add dynamic content now based on our filter type.
     ModelFilter modelFilter = RuleBuilder.instance().getChosenModelFilter();
@@ -97,14 +101,22 @@ public class ActivityDlgFilterInput extends Activity {
       // Set our constructed filter so the parent activity can pick it up.
       RuleBuilder.instance().setChosenRuleFilter(filter);
 
+      setResult(RESULT_OK);
       finish();
     }
   };
 
-  private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
+  private View.OnClickListener listenerBtnClickHelp = new View.OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) Add help info about filter.
-      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
+      Builder help = new AlertDialog.Builder(v.getContext());
+      help.setIcon(android.R.drawable.ic_menu_help);
+      help.setTitle(R.string.help);
+      help.setMessage(Html.fromHtml(getString(R.string.help_dlgfilterinput)));
+      help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+        }
+      });
+      help.show();
     }
   };
 }

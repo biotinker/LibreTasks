@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -86,7 +89,7 @@ public class ActivityDlgActionInput extends Activity {
     btnAttributes.setOnClickListener(listenerBtnClickAttributes);
 
     Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_input_btnHelp);
-    btnHelp.setOnClickListener(listenerBtnClickInfo);
+    btnHelp.setOnClickListener(listenerBtnClickHelp);
 
     llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
 
@@ -154,10 +157,17 @@ public class ActivityDlgActionInput extends Activity {
     }
   };
 
-  private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
+  private View.OnClickListener listenerBtnClickHelp = new View.OnClickListener() {
     public void onClick(View v) {
-      // TODO: (markww) Add help info about action.
-      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
+      Builder help = new AlertDialog.Builder(v.getContext());
+      help.setIcon(android.R.drawable.ic_menu_help);
+      help.setTitle(R.string.help);
+      help.setMessage(Html.fromHtml(getString(R.string.help_dlgactioninput)));
+      help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int whichButton) {
+        }
+      });
+      help.show();
     }
   };
 

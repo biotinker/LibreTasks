@@ -19,11 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.ContextMenu;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -34,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
@@ -47,6 +55,12 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
  * action for use with the rule.
  */
 public class ActivityDlgActions extends Activity {
+  // Options Menu IDs
+  private static final int MENU_HELP = 0;
+
+  // Context Menu Options
+  private static final int MENU_INFO = 0;
+
   private ListView listView;
   private AdapterActions adapterActions;
 
@@ -68,7 +82,7 @@ public class ActivityDlgActions extends Activity {
   }
 
   private void initializeUI() {
-    setContentView(R.layout.activity_dlg_actions);
+    setContentView(R.layout.activity_dlg_list_selector);
 
     // This is the application the user wants to use.
     ModelApplication application = RuleBuilder.instance().getChosenApplication();
@@ -77,10 +91,14 @@ public class ActivityDlgActions extends Activity {
 
     adapterActions = new AdapterActions(this, application);
 
-    listView = (ListView) findViewById(R.id.activity_dlg_actions_listview);
+    listView = (ListView) findViewById(R.id.activity_dlg_list_selector_listview);
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listView.setAdapter(adapterActions);
 
+    TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_list_selector_tv_info1);
+    // TODO(acase): use %s in the string resource and use the string formatter to input
+    // application.getTypeName()
+    mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
     listView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         // Store the selected action in the RuleBuilder so the next activity can pick it up.
@@ -103,12 +121,61 @@ public class ActivityDlgActions extends Activity {
       }
     });
 
-    TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_actions_tv_info1);
-    // TODO(acase): use %s in the string resource and use the string formatter to input
-    // application.getTypeName()
-    mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
+    UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_list_selector_ll_main));
 
-    UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_actions_ll_main));
+    // Provide context menu functionality
+    // TODO(acase): Action specific information
+    // registerForContextMenu(listView);
+  }
+
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+    menu.setHeaderTitle(adapterActions.getItem(info.position).getDescription());
+    menu.add(ContextMenu.NONE, MENU_INFO, ContextMenu.NONE, R.string.info);
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    switch (item.getItemId()) {
+    case MENU_INFO:
+      // TODO(acase): Action specific information
+      return true;
+    default:
+      return super.onContextItemSelected(item);
+    }
+  }
+
+  /** Create an options menu */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(Menu.NONE, MENU_HELP, Menu.NONE, getString(R.string.help)).setIcon(
+        android.R.drawable.ic_menu_help).setAlphabeticShortcut('h');
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  /** Called when an item of options menu is clicked */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_HELP:
+      help();
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  private void help() {
+    Builder help = new AlertDialog.Builder(this);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setTitle(R.string.help);
+    help.setMessage(Html.fromHtml(getString(R.string.help_dlgactions)));
+    help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
   /**

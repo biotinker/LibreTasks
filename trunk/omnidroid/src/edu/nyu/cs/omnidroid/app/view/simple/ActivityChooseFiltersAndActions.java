@@ -16,12 +16,17 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -69,6 +74,9 @@ public class ActivityChooseFiltersAndActions extends Activity {
   /** Result codes for this activity */
   /** Result code for saving a rule successfully. */
   public static final int RESULT_RULE_SAVED = 1;
+
+  // Context Menu Options
+  private static final int MENU_HELP = 0;
 
   // Context Menu Options
   private static final int MENU_EDIT = 0;
@@ -170,6 +178,37 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // It may be a brand new rule or a saved rule being edited.
     adapterRule.setRule(RuleBuilder.instance().getRule());
     registerForContextMenu(listview);
+  }
+
+  /** Create an options menu */
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    menu.add(Menu.NONE, MENU_HELP, Menu.NONE, getString(R.string.help)).setIcon(
+        android.R.drawable.ic_menu_help).setAlphabeticShortcut('h');
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  /** Called when an item of options menu is clicked */
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+    case MENU_HELP:
+      help();
+      return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  private void help() {
+    Builder help = new AlertDialog.Builder(this);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setTitle(R.string.help);
+    help.setMessage(Html.fromHtml(getString(R.string.help_filtersandactions)));
+    help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {

@@ -63,20 +63,25 @@
     <string name="missing_action">At least one action must be added.</string>
     <string name="missing_data">Data field can not be empty.</string>
     <string name="missing_name">OmniHandler name can not be empty.</string>
+    <string name="bad_input">There was an error creating your action, check your input and try again.</string>
+    <string name="select_input">Please select an input to use parameters.</string>
+    <string name="error_was">The error was:</string>
     <string name="oh_no">Oh no!</string>
     <string name="throttle_alert_title">Omnidroid Temporarily Disabled</string>
     <string name="throttle_alert_msg">Omnidroid exceeded throttle limit of %d by processing %d events in the last minute.\nOmnidroid will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>
-    <string name="help_activitymain">Omnidroid allows you to create rules that automatically handle events that occur on your Android device.</string>
-    <string name="help_choosefiltersandactions"></string>
-    <string name="help_dlgactioninput"></string>
-    <string name="help_dlgactions"></string>
+    <string name="help_activitymain">Omnidroid allows you to create rules that processes events that occur on your Android device and automatically take action as a result.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;Create Rule&lt;/i&gt; button to store new rules.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;View Rules&lt;/i&gt; button to view, edit, delete, enable, or disable rules that have already been created.</string>
+    <string name="help_filtersandactions">Add filters to an event to limit when this rule is triggered.  Add actions you would like performed when this rule is triggered.</string>
+    <string name="help_saved_rules">Use this screen to enable and disable the rules that are saved.</string>
+    <string name="help_dlgattributes">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Events have different attribute types that can be filtered.&lt;br /&gt;Select the type of attribute you would like to match.</string>
+    <string name="help_dlgfilters">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Select from the list of filter types that you want to apply.</string>
+    <string name="help_dlgfilterinput">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Input entered here will be passed to the filter.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;This rule will only be activated if it matches the data provided by this filter.</string>
+    <string name="help_dlgapplications">Select the application that will provide the resultant action for this rule.</string>
+    <string name="help_dlgactions">Applications support certain actions.  Select the action that you want this application to perform as a result of the root event.</string>
+    <string name="help_dlgactioninput">Input entered here will be passed to the action you are creating.  If parameters from the event that triggered this application are compatible with the inputs here, you can select the Parameter by clicking on the Params button.</string>
     <string name="help_dlgapplicationlogininput"></string>
-    <string name="help_dlgapplications"></string>
-    <string name="help_dlgattributes"></string>
-    <string name="help_dlgfilterinput"></string>
 
     <!--  Actions -->
     <string name="action_default_message">message</string>
@@ -107,7 +112,7 @@
     <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
     <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
-    <string name="select_application_inst">Select an application:</string>
+    <string name="select_application_title">Select an application:</string>
     <string name="select_rule_toggle_inst">Please select a rule from the list to turn on/off.</string>
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
