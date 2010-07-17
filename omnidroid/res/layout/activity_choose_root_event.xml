@@ -18,26 +18,4 @@
 	  android:layout_height="fill_parent" />
 
   </FrameLayout>
-
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/activity_chooserootevent_llBottomButtons"
-	android:orientation="horizontal" 
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content" 
-	android:gravity="center">
-
-	<LinearLayout android:orientation="horizontal"
-	  android:layout_width="wrap_content" 
-	  android:layout_height="wrap_content">
-
-      <Button android:text="@string/ok" android:id="@+id/activity_chooserootevent_btnOk"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-      </Button>
-
-    </LinearLayout>
-		
-  </LinearLayout>
-
 </LinearLayout>

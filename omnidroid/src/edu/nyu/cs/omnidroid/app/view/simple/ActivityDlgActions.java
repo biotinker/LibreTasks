@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -16,11 +16,11 @@
 package edu.nyu.cs.omnidroid.app.view.simple;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -28,12 +28,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
@@ -46,11 +47,8 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleAction;
  * action for use with the rule.
  */
 public class ActivityDlgActions extends Activity {
-  private static final String KEY_STATE = "StateDlgActions";
-  private static final String KEY_PREF = "selectedAction";
   private ListView listView;
   private AdapterActions adapterActions;
-  private SharedPreferences state;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -58,21 +56,6 @@ public class ActivityDlgActions extends Activity {
 
     // Link up controls from the xml layout resource file.
     initializeUI();
-
-    // Restore UI state if possible.
-    state = getSharedPreferences(ActivityDlgActions.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-
-    // Save UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
-    prefsEditor.commit();
   }
 
   @Override
@@ -98,84 +81,42 @@ public class ActivityDlgActions extends Activity {
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listView.setAdapter(adapterActions);
 
+    listView.setOnItemClickListener(new OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        // Store the selected action in the RuleBuilder so the next activity can pick it up.
+        ModelAction action = adapterActions.getItem(position);
+        RuleBuilder.instance().setChosenModelAction(action);
+
+        if (!action.getParameters().isEmpty()) {
+          Intent intent = new Intent();
+          intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
+          startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_ACTION);
+        } else {
+          /*
+           * Build rule using a ModelRuleAction with empty list of DataType since there are no
+           * action parameters. Done here because ActivityActionInput is being skipped.
+           */
+          RuleBuilder.instance().setChosenRuleAction(
+              new ModelRuleAction(-1, action, new ArrayList<DataType>()));
+          finish();
+        }
+      }
+    });
+
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_actions_tv_info1);
     // TODO(acase): use %s in the string resource and use the string formatter to input
     // application.getTypeName()
     mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
 
-    // TODO(acase): Use item select instead of OK button
-    Button btnOk = (Button) findViewById(R.id.activity_dlg_actions_btnOk);
-    btnOk.setOnClickListener(listenerBtnClickOk);
-
-    // TODO(acase): Move Info to context selection menu
-    Button btnInfo = (Button) findViewById(R.id.activity_dlg_actions_btnInfo);
-    btnInfo.setOnClickListener(listenerBtnClickInfo);
-
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_actions_ll_main));
-  }
-
-  /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
-   * this before launching so we appear as a brand new instance.
-   * 
-   * @param context
-   *          Context of caller.
-   */
-  public static void resetUI(Context context) {
-    UtilUI.resetSharedPreferences(context, KEY_STATE);
-  }
-
-  private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
-    public void onClick(View v) {
-      // The user has chosen an application, now get a list of actions associated
-      // with that application type.
-      showDlgActionInput(listView.getCheckedItemPosition());
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
-    public void onClick(View v) {
-      // TODO: (markww) add support for help info on action.
-      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
-    }
-  };
-
-  /**
-   * Start the action input activity, which will let the user input data for the selected action.
-   */
-  private void showDlgActionInput(int selectedItemPosition) {
-    if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, getString(R.string.sorry),
-          getString(R.string.select_action_alert_inst));
-      return;
-    }
-
-    // Store the selected action in the RuleBuilder so the next activity can pick it up.
-    ModelAction action = (ModelAction) adapterActions.getItem(selectedItemPosition);
-    RuleBuilder.instance().setChosenModelAction(action);
-
-    if (!action.getParameters().isEmpty()) {
-      Intent intent = new Intent();
-      intent.setClass(getApplicationContext(), ActivityDlgActionInput.class);
-      startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_ACTION);
-    } else {
-      /*
-       * Build rule using a ModelRuleAction with empty list of DataType since there are no
-       * action parameters. Done here because ActivityActionInput is being skipped.
-       */
-      RuleBuilder.instance().setChosenRuleAction(
-          new ModelRuleAction(-1, action, new ArrayList<DataType>()));
-      finish();
-    }
   }
 
   /**
    * Here we display action associated with our parent application.
    */
   public class AdapterActions extends BaseAdapter {
-
     private Context context;
-    private ArrayList<ModelAction> actions;
+    private final List<ModelAction> actions;
 
     public AdapterActions(Context context, ModelApplication application) {
       this.context = context;
@@ -188,7 +129,7 @@ public class ActivityDlgActions extends Activity {
       return actions.size();
     }
 
-    public Object getItem(int position) {
+    public ModelAction getItem(int position) {
       return actions.get(position);
     }
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -15,12 +15,11 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.view.simple;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -28,12 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAttribute;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelFilter;
@@ -45,11 +45,8 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelRuleFilter;
  * filter for use with the rule.
  */
 public class ActivityDlgFilters extends Activity {
-  private static final String KEY_STATE = "StateDlgFilters";
-  private static final String KEY_PREF = "selectedFilter";
   private ListView listView;
   private AdapterFilters adapterFilters;
-  private SharedPreferences state;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -57,20 +54,6 @@ public class ActivityDlgFilters extends Activity {
 
     // Link up controls from the xml layout resource file.
     initializeUI();
-
-    // Restore UI state if possible.
-    state = getSharedPreferences(ActivityDlgFilters.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt(KEY_PREF, -1), true);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    // Save UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
-    prefsEditor.commit();
   }
 
   @Override
@@ -96,69 +79,29 @@ public class ActivityDlgFilters extends Activity {
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listView.setAdapter(adapterFilters);
 
+    listView.setOnItemClickListener(new OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        // Store the selected filter in the RuleBuilder so the next activity can pick it up.
+        RuleBuilder.instance().setChosenModelFilter(adapterFilters.getItem(position));
+
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
+        startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_FILTER);
+      }
+    });
+
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_filters_tv_info1);
     mTextViewInfo.setText("Select a filter to apply to [ " + attribute.getTypeName() + " ]:");
 
-    Button btnOk = (Button) findViewById(R.id.activity_dlg_filters_btnOk);
-    btnOk.setOnClickListener(listenerBtnClickOk);
-    Button btnInfo = (Button) findViewById(R.id.activity_dlg_filters_btnInfo);
-    btnInfo.setOnClickListener(listenerBtnClickInfo);
-
     UtilUI.inflateDialog((LinearLayout) findViewById(R.id.activity_dlg_filters_ll_main));
-  }
-
-  /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
-   * this before launching so we appear as a brand new instance.
-   * 
-   * @param context
-   *          Context of caller.
-   */
-  public static void resetUI(Context context) {
-    UtilUI.resetSharedPreferences(context, KEY_STATE);
-  }
-
-  private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
-    public void onClick(View v) {
-      // The user has chosen an attribute, now get a list of filters associated
-      // with that attribute data type.
-      showDlgFilterInput(listView.getCheckedItemPosition());
-    }
-  };
-
-  private View.OnClickListener listenerBtnClickInfo = new View.OnClickListener() {
-    public void onClick(View v) {
-      // TODO: (markww) add support for help info on filter.
-      UtilUI.showAlert(v.getContext(), getString(R.string.sorry), getString(R.string.coming_soon));
-    }
-  };
-
-  /**
-   * Start the filter input activity, which will let the user input data for the selected filter.
-   */
-  private void showDlgFilterInput(int selectedItemPosition) {
-    if (selectedItemPosition < 0) {
-      UtilUI.showAlert(this, getString(R.string.sorry),
-          getString(R.string.select_filter_alert_inst));
-      return;
-    }
-
-    // Store the selected filter in the RuleBuilder so the next activity can pick it up.
-    ModelFilter filter = (ModelFilter) adapterFilters.getItem(selectedItemPosition);
-    RuleBuilder.instance().setChosenModelFilter(filter);
-
-    Intent intent = new Intent();
-    intent.setClass(getApplicationContext(), ActivityDlgFilterInput.class);
-    startActivityForResult(intent, ActivityChooseFiltersAndActions.REQUEST_ADD_FILTER);
   }
 
   /**
    * Here we display filters associated with our parent attribute.
    */
   public class AdapterFilters extends BaseAdapter {
-
     private Context context;
-    private ArrayList<ModelFilter> filters;
+    private final List<ModelFilter> filters;
 
     public AdapterFilters(Context context, ModelAttribute attribute) {
       this.context = context;
@@ -171,7 +114,7 @@ public class ActivityDlgFilters extends Activity {
       return filters.size();
     }
 
-    public Object getItem(int position) {
+    public ModelFilter getItem(int position) {
       return filters.get(position);
     }
 
