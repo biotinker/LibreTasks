@@ -280,8 +280,6 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
       // After press save, the rule is set to 'Enabled' as default
       RuleBuilder.instance().getRule().setIsEnabled(true);
-      // Before launching the new activity, wipe its UI state.
-      ActivityDlgRuleName.resetUI(v.getContext());
 
       // Ask the user for a new rule name.
       // The result will be stored inside RuleBuilder.
@@ -299,8 +297,6 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // Reset the chosen filter data if left over from a previous run.
     RuleBuilder.instance().resetFilterPath();
 
-    ActivityDlgAttributes.resetUI(this);
-
     // Launch the activity chain for adding a filter.
     // We check if the user completed a
     // filter in onActivityResult.
@@ -315,8 +311,6 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private void showDlgApplications() {
     // Reset the chosen action data if left over from a previous run.
     RuleBuilder.instance().resetActionPath();
-
-    ActivityDlgApplications.resetUI(this);
 
     // Launch the activity chain for adding an action.
     // We check if the user completed an action in onActivityResult.

@@ -20,19 +20,4 @@
             android:paddingLeft="10px" android:paddingRight="10px" />
 
     </FrameLayout>
-
-    <LinearLayout android:orientation="horizontal"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <Button android:id="@+id/activity_dlg_applications_btnOk"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center" android:text="@string/ok" />
-
-        <Button android:id="@+id/activity_dlg_applications_btnInfo"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center" android:text="@string/info" />
-
-    </LinearLayout>
-
 </LinearLayout>

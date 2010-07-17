@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -20,21 +20,20 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
 
@@ -43,18 +42,14 @@ import edu.nyu.cs.omnidroid.app.view.simple.model.ModelEvent;
  * root event, we move them to {@link ActivityChooseFilters} to continue building their rule.
  */
 public class ActivityChooseRootEvent extends Activity {
-  private static final String KEY_STATE = "StateActivityChooseRootEvent";
-  private static final String KEY_STATE_SELECTED_EVENT = "selectedEventItem";
-
   // Request codes for creating new activities
   private static final int REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS = 0;
 
-  // Result code for successfully creating a rule 
-  public static final int RESULT_RULE_CREATED=1;
-  
+  // Result code for successfully creating a rule
+  public static final int RESULT_RULE_CREATED = 1;
+
   private ListView listView;
   private AdapterEvents adapterEvents;
-  private SharedPreferences state;
 
   /**
    * Called when the activity is first created.
@@ -70,69 +65,32 @@ public class ActivityChooseRootEvent extends Activity {
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listView.setAdapter(adapterEvents);
 
-    Button btnCreateRule = (Button) findViewById(R.id.activity_chooserootevent_btnOk);
-    btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
-
-    LinearLayout llBottomButtons = (LinearLayout) findViewById(
-        R.id.activity_chooserootevent_llBottomButtons);
-    llBottomButtons.setBackgroundColor(getResources().getColor(R.color.layout_button_panel));
-
-    // Restore UI control values if possible.
-    state = getSharedPreferences(ActivityChooseRootEvent.KEY_STATE, Context.MODE_WORLD_READABLE
-        | Context.MODE_WORLD_WRITEABLE);
-    listView.setItemChecked(state.getInt(KEY_STATE_SELECTED_EVENT, -1), true);
-  }
-
-  protected void onPause() {
-    super.onPause();
-
-    // Save UI state.
-    SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt(KEY_STATE_SELECTED_EVENT, listView.getCheckedItemPosition());
-    prefsEditor.commit();
-  }
-
-  /**
-   * Wipes any UI state saves in {@link:state}. Activities which create this activity should call
-   * this before launching so we appear as a brand new instance.
-   * 
-   * @param context
-   *          Context of caller.
-   */
-  public static void resetUI(Context context) {
-    UtilUI.resetSharedPreferences(context, KEY_STATE);
-  }
-
-  private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
-    public void onClick(View v) {
-      int selectedEventPosition = listView.getCheckedItemPosition();
-      if (selectedEventPosition > -1 && selectedEventPosition < adapterEvents.getCount()) {
-        // The user has chosen a valid root event, store it
-        // in the global RuleBuilder.
-        RuleBuilder.instance().resetForNewRuleEditing(adapterEvents.getItem(selectedEventPosition));
+    listView.setOnItemClickListener(new OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        // Store the rule in the global RuleBuilder.
+        RuleBuilder.instance().resetForNewRuleEditing(adapterEvents.getItem(position));
 
         // Wipe UI state for the new activity.
         ActivityChooseFiltersAndActions.resetUI(v.getContext());
 
-        // Move them along to the ActivityChooseFilters activity where
-        // they can start adding some filters.
+        /*
+         * Move them along to the ActivityChooseFilters activity where they can start adding some
+         * filters.
+         */
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(), ActivityChooseFiltersAndActions.class);
         startActivityForResult(intent, REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS);
-      } else {
-        UtilUI.showAlert(v.getContext(), getString(R.string.sorry),
-            getString(R.string.choose_root_event_inst));
       }
-    }
-  };
-  
+    });
+  }
+
   @Override
-  public void onActivityResult(int requestCode,int resultCode,Intent data) {
-    if (requestCode == REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS && 
-        resultCode == ActivityChooseFiltersAndActions.RESULT_RULE_SAVED) {
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == REQUEST_ACTIVITY_CHOOSE_FILTERS_ACTIONS
+        && resultCode == ActivityChooseFiltersAndActions.RESULT_RULE_SAVED) {
       setResult(RESULT_RULE_CREATED);
       finish();
-    }  
+    }
   }
 
   /**
@@ -189,13 +147,16 @@ public class ActivityChooseRootEvent extends Activity {
 
       // Title of the event.
       TextView tv = new TextView(context);
-      String text=events.get(position).getDescriptionShort();
-      int numOfRules=UIDbHelperStore.instance().db().getRuleCount(events.get(position).getDatabaseId());
+      String text = events.get(position).getDescriptionShort();
+
+      int numOfRules = UIDbHelperStore.instance().db().getRuleCount(
+          events.get(position).getDatabaseId());
       if (numOfRules == 1) {
         text += " (1 rule)";
       } else if (numOfRules > 1) {
         text += " (" + numOfRules + " rules)";
       }
+
       tv.setText(text);
       tv.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
           LayoutParams.FILL_PARENT));
@@ -208,6 +169,7 @@ public class ActivityChooseRootEvent extends Activity {
 
       ll.addView(iv);
       ll.addView(tv);
+
       return ll;
     }
   }

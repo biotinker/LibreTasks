@@ -107,12 +107,7 @@
     <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
     <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
-    <string name="choose_event_inst">Please select an event from the list, then hit OK.</string>    
     <string name="select_application_inst">Select an application:</string>
-    <string name="select_application_alert_inst">Please select an application from the list, then hit OK.</string>
-    <string name="select_action_alert_inst">Please select an action from the list above, then hit OK.</string>
-    <string name="select_attribute_alert_inst">Please select an attribute from the list, then hit OK.</string>
-    <string name="select_filter_alert_inst">Please select a filter from the list, then hit OK.</string>
     <string name="select_rule_toggle_inst">Please select a rule from the list to turn on/off.</string>
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
@@ -153,7 +148,7 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login_info_title">Login Info</string>
-    <string name="login_info_details">Please enter your username and password and select the check box to remember it</string>
+    <string name="login_info_details">Please enter your username and password</string>
 
     <!--  Choose Filters and Actions -->
     <string name="add_filter_alert">Filters can only be added to the root event and other filters.</string>

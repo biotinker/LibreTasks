@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -33,14 +33,14 @@ public class Rule {
 
   /** Name given to rule by user. */
   private String name;
-  
+
   /** Description given to rule by user. */
   private String description;
-  
+
   /** Is the rule enabled or disabled? */
   private boolean isEnabled;
-  
-  /** Shows whether notifications service is on or off for this Rule*/
+
+  /** Shows whether notifications service is on or off for this Rule */
   private boolean notificationIsOn;
   
   /**
@@ -63,26 +63,44 @@ public class Rule {
     this.name = name;
   }
 
+  /**
+   * Gets the name of this rule.
+   * 
+   * @return the name. Empty string if this has no name.
+   */
   public String getName() {
-    return name;
+    if (name == null) {
+      return "";
+    } else {
+      return name;
+    }
   }
-  
+
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * Gets a description of this rule.
+   * 
+   * @return the description string. Empty string if there are no descriptions
+   */
   public String getDescription() {
-    return description;
+    if (description == null) {
+      return "";
+    } else {
+      return description;
+    }
   }
 
   public long getDatabaseId() {
     return databaseId;
   }
-  
+
   public boolean getIsEnabled() {
     return isEnabled;
   }
-  
+
   public void setIsEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
   }
@@ -150,7 +168,7 @@ public class Rule {
         actions.add((ModelRuleAction) node.getChildren().get(i).getItem());
       }
     }
-    
+
     return actions;
   }
 

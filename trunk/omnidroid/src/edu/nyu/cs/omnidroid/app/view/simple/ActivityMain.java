@@ -205,10 +205,6 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickCreateRule = new OnClickListener() {
     public void onClick(View v) {
-      // User wants to create a new rule, move them to the
-      // ActivityChooseRootEvent
-      // activity so they can choose the root event.
-      ActivityChooseRootEvent.resetUI(v.getContext());
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityChooseRootEvent.class);
       startActivityForResult(intent, REQUEST_ACTIVITY_CREATE_RULE);

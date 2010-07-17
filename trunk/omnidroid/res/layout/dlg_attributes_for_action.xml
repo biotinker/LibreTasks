@@ -30,19 +30,5 @@
           android:paddingRight="10px"
          />
        
-        </FrameLayout>
-    
-        <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-            
-        <Button android:id="@+id/dlg_attributes_for_action_btnOk"
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:text="@string/ok" />
-    </LinearLayout>
-    
+    </FrameLayout>
 </LinearLayout>

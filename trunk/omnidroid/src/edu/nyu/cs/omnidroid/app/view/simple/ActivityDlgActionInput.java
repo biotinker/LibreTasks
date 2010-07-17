@@ -33,12 +33,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
@@ -167,7 +169,12 @@ public class ActivityDlgActionInput extends Activity {
    */
   private ViewItem getFocusedItem() {
     View viewFocused = viewItems.getLayout().getFocusedChild();
-    return viewItems.get(viewFocused.getId());
+
+    if (viewFocused == null) {
+      return null;
+    } else {
+      return viewItems.get(viewFocused.getId());
+    }
   }
 
   /**
@@ -264,8 +271,8 @@ public class ActivityDlgActionInput extends Activity {
    * Shows attributes for the root event that can work as parameters for the action.
    */
   private static class DlgAttributes extends Dialog {
-
     private ListView listView;
+    private int selectedIndex;
     private AdapterAttributes adapterAttributes;
 
     public DlgAttributes(Context context, ArrayList<ModelAttribute> attributes) {
@@ -278,40 +285,26 @@ public class ActivityDlgActionInput extends Activity {
       listView = (ListView) findViewById(R.id.dlg_attributes_for_action_listview);
       listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
       listView.setAdapter(adapterAttributes);
-
-      Button btnOk = (Button) findViewById(R.id.dlg_attributes_for_action_btnOk);
-      btnOk.setOnClickListener(listenerBtnClickOk);
+      
+      listView.setOnItemClickListener(new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+          selectedIndex = position;
+          dismiss();
+        }
+      });
 
       UtilUI.inflateDialog((LinearLayout) findViewById(R.id.dlg_attributes_for_action_ll_main));
     }
 
-    private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
-      public void onClick(View v) {
-        // The user has chosen an attribute, now get a list of filters associated
-        // with that attribute, from the database.
-        int position = listView.getCheckedItemPosition();
-        if (position < 0) {
-          Resources resource = v.getContext().getResources();
-          UtilUI.showAlert(v.getContext(), resource.getString(R.string.sorry), resource
-              .getString(R.string.select_attribute_alert_inst));
-          return;
-
-        }
-
-        // The parent activity will pick up our selected attribute from the list.
-        dismiss();
-      }
-    };
-
     public ModelAttribute getSelectedAttribute() {
-      return adapterAttributes.getItem(listView.getCheckedItemPosition());
+      return adapterAttributes.getItem(selectedIndex);
     }
 
     public class AdapterAttributes extends BaseAdapter {
       private Context context;
-      private ArrayList<ModelAttribute> attributes;
+      private final List<ModelAttribute> attributes;
 
-      public AdapterAttributes(Context context, ArrayList<ModelAttribute> attributes) {
+      public AdapterAttributes(Context context, List<ModelAttribute> attributes) {
         this.context = context;
         this.attributes = attributes;
       }
@@ -321,10 +314,7 @@ public class ActivityDlgActionInput extends Activity {
       }
 
       public ModelAttribute getItem(int position) {
-        if (position > -1 && position < attributes.size()) {
-          return attributes.get(position);
-        }
-        return null;
+        return attributes.get(position);
       }
 
       public long getItemId(int position) {
@@ -332,7 +322,6 @@ public class ActivityDlgActionInput extends Activity {
       }
 
       public View getView(int position, View convertView, ViewGroup parent) {
-
         LinearLayout ll = new LinearLayout(context);
         ll.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.FILL_PARENT,
             LayoutParams.FILL_PARENT));
