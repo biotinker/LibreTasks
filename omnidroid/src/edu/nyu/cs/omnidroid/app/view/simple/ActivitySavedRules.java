@@ -19,10 +19,12 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,6 +50,7 @@ public class ActivitySavedRules extends ListActivity {
   private static final int MENU_ADD_RULE = 1;
   private static final int MENU_ENABLE_ALL = 2;
   private static final int MENU_DISABLE_ALL = 3;
+  private static final int MENU_HELP = 4;
 
   // Context Menu Options
   private static final int MENU_EDIT = 0;
@@ -178,8 +181,23 @@ public class ActivitySavedRules extends ListActivity {
     case MENU_DISABLE_ALL:
       ruleListAdapter.setRulesEnabled(false);
       return true;
+    case MENU_HELP:
+      help();
+      return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  private void help() {
+    Builder help = new AlertDialog.Builder(this);
+    help.setIcon(android.R.drawable.ic_menu_help);
+    help.setTitle(R.string.help);
+    help.setMessage(Html.fromHtml(getString(R.string.help_saved_rules)));
+    help.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+      }
+    });
+    help.show();
   }
 
   private void deleteRule(final int position) {
