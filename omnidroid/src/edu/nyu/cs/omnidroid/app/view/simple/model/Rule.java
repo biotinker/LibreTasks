@@ -28,6 +28,9 @@ import java.util.ArrayList;
  */
 public class Rule {
 
+  /** Place holder for a new rule that isn't stored in the DB yet */
+  public static final int NEW_RULE_ID = -1;
+
   /** Database ID for this rule. */
   private final long databaseId;
 
@@ -54,6 +57,10 @@ public class Rule {
    *   |- Action2
    */
   private RuleNode node;
+
+  public Rule() {
+    this.databaseId = NEW_RULE_ID;
+  }
 
   public Rule(long databaseId) {
     this.databaseId = databaseId;
