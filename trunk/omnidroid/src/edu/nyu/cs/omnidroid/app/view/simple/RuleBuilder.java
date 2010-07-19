@@ -78,7 +78,7 @@ public class RuleBuilder {
    * new rule.
    */
   public void resetForNewRuleEditing(ModelEvent rootEvent) {
-    rule = new Rule(-1);
+    rule = new Rule();
     rule.setRootEvent(rootEvent);
     resetFilterPath();
     resetActionPath();

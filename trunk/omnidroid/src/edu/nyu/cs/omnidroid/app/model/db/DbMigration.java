@@ -97,7 +97,6 @@ public class DbMigration {
       addPhoneNumberNotEqualsFilter(db);
     case 12:
       addGeneralLogLevels(db);
-    	
 
       /*
        * Insert new versions before this line and do not forget to update {@code
