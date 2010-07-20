@@ -64,10 +64,14 @@ public class UtilUI {
    * @param title - to display on notification
    * @param message - to display on notification
    */
-  public static void ShowNotification(Context context, int notifyType, String title, String message) {
+  public static void showNotification(Context context, int notifyType, String title, String message) {
     if (message == null) {
       Log.w("showNotification", "No user message provided");
       message = context.getString(R.string.action_default_message);
+    }
+    if (title == null) {
+      Log.i("showNotification", "No title provided");
+      title = message;    
     }
 
     // Start building notification

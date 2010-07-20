@@ -69,6 +69,12 @@
     <string name="oh_no">Oh no!</string>
     <string name="throttle_alert_title">Omnidroid Temporarily Disabled</string>
     <string name="throttle_alert_msg">Omnidroid exceeded throttle limit of %d by processing %d events in the last minute.\nOmnidroid will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
+    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
+    <string name="confirm_rule_delete">Are you sure you want to delete this rule?</string>
+    <string name="enable_msg">Enabling Omnidroid (%d rules activated)</string>
+    <string name="disable_msg">Disabling Omnidroid (%d rules de-activated)</string>
+    <string name="save_rule">Save Rule</string>
+    <string name="rule_saved">Rule saved ok!</string>
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>
@@ -76,11 +82,11 @@
     <string name="help_filtersandactions">Add filters to an event to limit when this rule is triggered.  Add actions you would like performed when this rule is triggered.</string>
     <string name="help_saved_rules">Use this screen to enable and disable the rules that are saved.</string>
     <string name="help_dlgattributes">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Events have different attribute types that can be filtered.&lt;br /&gt;Select the type of attribute you would like to match.</string>
-    <string name="help_dlgfilters">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Select from the list of filter types that you want to apply.</string>
+    <string name="help_dlgfilters">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Select the filter that you want to apply from the list of filter types.</string>
     <string name="help_dlgfilterinput">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Input entered here will be passed to the filter.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;This rule will only be activated if it matches the data provided by this filter.</string>
     <string name="help_dlgapplications">Select the application that will provide the resultant action for this rule.</string>
     <string name="help_dlgactions">Applications support certain actions.  Select the action that you want this application to perform as a result of the root event.</string>
-    <string name="help_dlgactioninput">Input entered here will be passed to the action you are creating.  If parameters from the event that triggered this application are compatible with the inputs here, you can select the Parameter by clicking on the Params button.</string>
+    <string name="help_dlgactioninput">Input entered here will be passed to the action you are creating.  If attributes from the event that triggered this application are compatible with the inputs here, you can select the attribute by clicking on the attributes button.</string>
     <string name="help_dlgapplicationlogininput"></string>
 
     <!--  Actions -->
@@ -113,6 +119,9 @@
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
     <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
     <string name="select_application_title">Select an application:</string>
+    <string name="select_action_title">Select an action of [%s] to use:</string>
+    <string name="select_attribute_title">Select an attribute for [%s] to filter on:</string>
+    <string name="select_filter_title">Select a filter to apply to [%s]:</string>
     <string name="select_rule_toggle_inst">Please select a rule from the list to turn on/off.</string>
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>

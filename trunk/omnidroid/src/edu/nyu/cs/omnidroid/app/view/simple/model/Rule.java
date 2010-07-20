@@ -23,8 +23,9 @@ import java.util.ArrayList;
  * structure allows us to nest filters within other filters.
  * 
  * The root node <code>mNode</code> is the root event. Action nodes are always appended to the end
- * of the root node's child array. TODO: it may be convenient to move actions to their own separate
- * array.
+ * of the root node's child array. 
+ * 
+ * TODO: it may be convenient to move actions to their own separate array.
  */
 public class Rule {
 

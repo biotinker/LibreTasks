@@ -225,7 +225,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       editItem(info.position);
       return true;
     case MENU_DELETE:
-      deleteItem(info.position);
+      confirmDeleteItem(info.position);
       return true;
     default:
       return super.onContextItemSelected(item);
@@ -293,8 +293,22 @@ public class ActivityChooseFiltersAndActions extends Activity {
     }
   };
 
+  private void confirmDeleteItem(final int position) {
+    // Ask the user if they're sure they want to delete this item.
+    new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
+        R.string.confirm_item_delete).setPositiveButton(getString(R.string.yes),
+        new DialogInterface.OnClickListener() {
+          public void onClick(DialogInterface dialog, int whichButton) {
+            deleteItem(position);
+          }
+        }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int whichButton) {
+        // Do nothing
+      }
+    }).show();
+  }
+
   private void deleteItem(int position) {
-    // TODO: (markww) Prompt user 'are you sure you want to delete this item?'.
     ModelItem item = adapterRule.getItem(position);
     if ((item instanceof ModelRuleFilter) || (item instanceof ModelRuleAction)) {
       adapterRule.removeItem(position);
@@ -407,13 +421,12 @@ public class ActivityChooseFiltersAndActions extends Activity {
       Log.e(TAG, "Save Rule Error: Caught Illegal State Exception when saving", e);
       return;
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       UtilUI.showAlert(this, getString(R.string.sorry), getString(R.string.error_saving_rule));
       Log.e(TAG, "Save Rule Error: Caught an error when saving", e);
       return;
     }
     Log.d(TAG, "New rule saved.");
-    UtilUI.showAlert(this, "Save Rule", "Rule saved ok!");
+    UtilUI.showAlert(this, getString(R.string.save_rule), getString(R.string.rule_saved));
 
     // We have to reload the rule from the database now so that the UI representation
     // of it is in-sync with the new element IDs assigned during the save operation.

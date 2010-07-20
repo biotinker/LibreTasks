@@ -90,7 +90,7 @@ public class ActivityDlgAttributes extends Activity {
     listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     listView.setAdapter(adapterAttributes);
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_list_selector_tv_info1);
-    mTextViewInfo.setText("Select an attribute for [" + event.getTypeName() + "] to filter on:");
+    mTextViewInfo.setText(getString(R.string.select_attribute_title, event.getTypeName()));
     
     listView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

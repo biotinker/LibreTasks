@@ -89,6 +89,7 @@ public class UpdateTwitterStatusService extends Service {
     try{   
       Twitter twitter = new Twitter(account.accountName, account.credential);
       //TODO : To set the source to "Omnidroid" we first have to register the app with Twitter.
+      //       http://twitter.com/apps/new (service was down when I tried)
       twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
     }catch(E401 e){

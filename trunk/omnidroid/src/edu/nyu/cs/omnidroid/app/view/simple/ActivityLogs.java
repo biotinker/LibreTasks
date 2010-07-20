@@ -53,7 +53,6 @@ public class ActivityLogs extends Activity {
   // TODO(acase): Implement filterable by KEYS
   // TODO(acase): Implement user customizable logs (e.g. "don't log TimeTick")
   // TODO(acase): Restore state
-  // TODO(acase): Show "There are no logs for this log type" when appropriate
   
   // Store state
   private static final String KEY_STATE = "StateActivityLog";

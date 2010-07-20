@@ -37,8 +37,6 @@ public class ActivitySettings extends PreferenceActivity {
         new OnSharedPreferenceChangeListener() {
       public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
          if (key.equals(getString(R.string.pref_key_omnidroid_enabled))) {
-          //TODO consider Alert Dialog, 
-          //you have this many rules anabled, are you sure ...
           OmnidroidManager.enable(getApplicationContext(), sharedPreferences.getBoolean(key, true));
         } else if (key.equals(getString(R.string.pref_key_notification))) {
           setNotification(sharedPreferences.getBoolean(key, true));          
