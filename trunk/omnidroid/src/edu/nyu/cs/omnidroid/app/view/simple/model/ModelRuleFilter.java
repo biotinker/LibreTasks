@@ -50,7 +50,11 @@ public class ModelRuleFilter extends ModelItem {
 
   @Override
   public String getDescriptionShort() {
-    return modelFilter.getAttribute().getDescriptionShort() + " " + modelFilter.getTypeName()
-        + ": " + filterData.getValue();
+    if (modelFilter.getAttribute() == null) {
+      return modelFilter.getTypeName() + ": " + filterData.getValue();
+    } else {
+      return modelFilter.getAttribute().getDescriptionShort() + " " + modelFilter.getTypeName()
+          + ": " + filterData.getValue();
+    }
   }
 }
