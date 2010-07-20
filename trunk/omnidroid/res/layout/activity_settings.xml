@@ -5,36 +5,44 @@
 
 	<!-- Using keys from the strings resource allows for compile time 
 	     errors where these preferences are accessed programmatically. -->
-    <CheckBoxPreference
-            android:key="@string/pref_key_sound"
+    <Preference
+        android:key="@string/pref_key_omnidroid_enabled"
+        android:defaultValue="true"
+        android:summary="@string/disable_omnidroid_desc"
+        android:title="@string/disable_omnidroid" />
+    <PreferenceScreen 
+        android:title="@string/notification"
+        android:summary="@string/notification_desc" >
+        <CheckBoxPreference
+           android:key="@string/pref_key_sound"
             android:defaultValue="false"
             android:summary="@string/sound_desc"
             android:title="@string/sound_enabled" />
-    <CheckBoxPreference
+        <CheckBoxPreference
             android:key="@string/pref_key_light"
             android:defaultValue="false"
             android:summary="@string/light_desc"
             android:title="@string/light_enabled" />
-    <CheckBoxPreference
+        <CheckBoxPreference
             android:key="@string/pref_key_vibrate"
             android:defaultValue="false"
             android:summary="@string/vibrate_desc"
             android:title="@string/vibrate_enabled" />
-    <CheckBoxPreference
-            android:key="@string/pref_key_omnidroid_enabled"
-            android:defaultValue="true"
-            android:summary="@string/omnidroid_enabled_desc"
-            android:title="@string/omnidroid_enabled" />
-    <CheckBoxPreference
+        <CheckBoxPreference
             android:key="@string/pref_key_notification"
             android:defaultValue="true"
-            android:summary="@string/notification_desc"
-            android:title="@string/notification" />
+            android:summary="@string/default_notification_desc"
+            android:title="@string/default_notification" />
+    </PreferenceScreen>
     <ListPreference
-            android:key="@string/pref_key_throttle"
-            android:summary="@string/throttle_description"
-            android:title="@string/throttle"
-            android:entries="@array/throttle_list"
-            android:entryValues="@array/throttle_values"
-            android:dialogTitle="@string/throttle_description" />
+        android:key="@string/pref_key_throttle"
+        android:summary="@string/throttle_description"
+        android:title="@string/throttle"
+        android:entries="@array/throttle_list"
+        android:entryValues="@array/throttle_values"
+        android:dialogTitle="@string/throttle_description" />
+    <Preference
+        android:key="@string/pref_key_reset_db"
+        android:summary="@string/reset_db_desc"
+        android:title="@string/reset_db" />
 </PreferenceScreen>

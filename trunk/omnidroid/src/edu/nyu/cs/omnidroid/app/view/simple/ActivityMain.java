@@ -72,9 +72,6 @@ public class ActivityMain extends Activity {
     Button btnHelp = (Button) findViewById(R.id.activity_main_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickHelp);
 
-    Button btnResetDB = (Button) findViewById(R.id.activity_main_btnResetDB);
-    btnResetDB.setOnClickListener(listenerBtnClickResetDb);
-
     // Show disclaimer if it hasn't been accepted yet
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
     if (prefs.getBoolean(SETTING_ACCEPTED_DISCLAIMER, false) == false) {
@@ -251,19 +248,4 @@ public class ActivityMain extends Activity {
     }
   };
 
-  /**
-   * Cleanup the Database, all info will be reset, user set rules will be lost
-   */
-  private OnClickListener listenerBtnClickResetDb = new OnClickListener() {
-    public void onClick(View v) {
-      // Show a dialog to ask users if they're sure they want to cleanup the Database
-      new AlertDialog.Builder(v.getContext()).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
-          getString(R.string.reset_settings)).setPositiveButton(getString(R.string.ok),
-          new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-              UIDbHelperStore.instance().db().resetDB();
-            }
-          }).setNegativeButton(getString(R.string.cancel), null).show();
-    }
-  };
 }
