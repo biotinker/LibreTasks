@@ -34,3 +34,4 @@ o Update "Not Well" Status -> Send notification to Bosses/Friends<br>
 o WiFi network -> Automatically connect<br> 
 o Time is Midnight -> Email daily phone usage summary<br> 
 o If location is changing rapidly -> Activate GPS logging to keep track of speed/path/etc, send email or publish somewhere.<br> 
+o Phone rings at wrong time -> Turn the phone over or shake it will make it silence<br> 
