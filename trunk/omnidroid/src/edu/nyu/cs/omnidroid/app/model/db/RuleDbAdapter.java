@@ -177,24 +177,6 @@ public class RuleDbAdapter extends DbAdapter {
   }
 
   /**
-   * Fetch all rows with matching criteria
-   *
-   * @param selection - null to fetch all.
-   * @param selectionArgs[] - null to fetch all.
-   * @param groupBy - null if you don't care.
-   * @param having - null if you don't care.
-   * @param orderBy - null if you don't care.
-   * 
-   * @return a Cursor that contains all RegisteredApp records.
-   */
-  public Cursor fetchAll(String selections, String selectionArgs[], String groupBy, String having,
-      String orderBy) {
-    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
-    return database
-        .query(DATABASE_TABLE, KEYS, selections, selectionArgs, groupBy, having, orderBy);
-  }
-
-  /**
    * Return a Cursor that contains all Rule records which matches the parameters.
    * 
    * @param eventID

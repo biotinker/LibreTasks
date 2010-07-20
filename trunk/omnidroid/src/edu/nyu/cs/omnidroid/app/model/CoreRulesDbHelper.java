@@ -286,7 +286,7 @@ public class CoreRulesDbHelper {
 
   public int getActiveRuleCount() {
     // Fetch all rules that are enabled
-    Cursor ruleTable = ruleDbAdapter.fetchAll(RuleDbAdapter.KEY_ENABLED + "!=0", null, null, null, null);
+    Cursor ruleTable = ruleDbAdapter.fetchAll(null, null, null, new Boolean(true), null);
     int ruleCount = ruleTable.getCount();
     ruleTable.close();
     return ruleCount;
