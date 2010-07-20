@@ -46,12 +46,5 @@
 	    android:layout_gravity="center">
 	</Button>
 	
-	<Button 
-	    android:text="@string/reset_db" 
-	    android:id="@+id/activity_main_btnResetDB" 
-	    android:layout_width="150dip" 
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center">
-	</Button>
 
 </LinearLayout>

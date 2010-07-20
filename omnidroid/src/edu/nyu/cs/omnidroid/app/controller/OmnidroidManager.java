@@ -16,12 +16,15 @@
 
 package edu.nyu.cs.omnidroid.app.controller;
 
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.bkgservice.BCReceiver;
 import edu.nyu.cs.omnidroid.app.controller.external.attributes.EventMonitoringService;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 
 /**
  * this class serves provides functionality disable/enable omnidroid *
@@ -50,5 +53,13 @@ public class OmnidroidManager {
           PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
       EventMonitoringService.stopService(context);    
     }
+    
+    // Set Preference to enabled status in case we disable/enable Omnidroid on the code side.
+    // If status is changed from the code side, 
+    //then this ensures the status in ActivitySettings is updated as well.
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putBoolean(context.getString(R.string.pref_key_omnidroid_enabled), enable);
+    editor.commit();
   }
 }

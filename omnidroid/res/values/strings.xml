@@ -48,16 +48,6 @@
     <!--  Settings -->
     <string name="settings_label">Settings</string>
     <string name="settings_title">Settings</string>
-    
-    <!--  Settings - Reset -->
-    <string name="reset_title">Reset</string>
-    <string name="reset_all">Reset All Settings</string>
-    <string name="reset_settings">All user settings will be lost. Continue?</string>
-    <string name="reset_db">ResetDB</string>
-
-    <!--  Settings options -->
-    <string name="on_boot">Start Omnidroid at boot time</string>
-    <string name="omniabled">Turn on/off Omnidroid</string>
 
     <!--  Alerts -->
     <string name="missing_action">At least one action must be added.</string>
@@ -171,25 +161,34 @@
     <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule:</string>
     <string name="error_saving_rule">There was an error saving your rule:</string>
 
-    <!--  Settings -->
+    <!-- preference keys, must not be modified -->
     <string name="pref_key_sound">SoundKey</string>
     <string name="pref_key_light">LightKey</string>
     <string name="pref_key_vibrate">VibrateKey</string>
     <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
     <string name="pref_key_notification">NotificationKey</string>
     <string name="pref_key_throttle">Throttle</string>
+    <string name="pref_key_reset_db">ResetDb</string>
+    
+    <!--  Settings -->
     <string name="throttle">Throttle</string>
     <string name="throttle_description">Limit number of events processed per minute</string>
     <string name="sound_enabled">Sound Notifications</string>
     <string name="light_enabled">LED Notifications</string>
     <string name="vibrate_enabled">Vibrate Notifications</string>
-    <string name="omnidroid_enabled">Omnidroid is enabled</string>
+    <string name="enable_omnidroid">Enable Omnidroid</string>
+    <string name="disable_omnidroid">Disable Omnidroid</string>
+    <string name="enable_omnidroid_desc">Omnidroid is currently disabled</string>
+    <string name="disable_omnidroid_desc">Omnidroid is currently enabled</string>
     <string name="sound_desc">Allow Omnidroid to alert using sound</string>
     <string name="light_desc">Allow Omnidroid to alert using lights</string>
     <string name="vibrate_desc">Allow Omnidroid to alert using vibration</string>
-    <string name="notification_desc">Set notifications on by default</string>
-    <string name="omnidroid_enabled_desc">Enable Omnidroid</string>
+    <string name="notification_desc"></string>
     <string name="notification">Notifications</string>
+    <string name="default_notification_desc">Set notifications on by default</string>
+    <string name="default_notification">Notifications</string>
+    <string name="reset_db_desc">Resetting database will clear all user data</string>
+    <string name="reset_db">Reset Database</string>
     
     <!-- message -->
     <string name="authentication_error">Authentication  error</string>
@@ -203,7 +202,7 @@
     <string name="sms_sent">SMS sent</string>
     <string name="sms_not_sent">SMS not sent</string>
     <string name="generic_failure">Generic failure</string>
-    <string name="no_service">No serivce</string>
+    <string name="no_service">No service</string>
     <string name="null_pdu">Null PDU</string>
     <string name="radio_off">Radio off</string>
     <string name="phone_set_loud">Phone set loud</string>
@@ -211,5 +210,10 @@
     <string name="phone_set_on_vibrate">Phone set on vibrate</string>
     <string name="wifi_turned_on">Wifi was turned on</string>
     <string name="wifi_turned_off">Wifi was turned off</string>
-
+    
+    <!-- Dialog  -->
+    <string name="reset_db_dialog_msg">All user settings will be lost. Continue?</string>
+    <string name="enable_omnidroid_dialog_msg">Are you sure you want to enable Omnidroid?</string>
+    <string name="disable_omnidroid_dialog_msg">Are you sure you want to disable Omnidroid?</string>
+    
 </resources>
