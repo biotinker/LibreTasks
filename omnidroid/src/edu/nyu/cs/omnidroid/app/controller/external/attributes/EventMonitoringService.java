@@ -15,7 +15,9 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
+import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -87,6 +89,15 @@ public class EventMonitoringService extends Service {
         return;
       }
     }
+
+    // Let the user know we're activating rules
+    CoreRulesDbHelper dbHelper = new CoreRulesDbHelper(this);
+    int activeRuleCount = dbHelper.getActiveRuleCount();
+    dbHelper.close();
+    String message = this.getString(R.string.enable_msg, activeRuleCount);
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    Logger.w(TAG, message);
+
     // Start System Monitors
     for (SystemServiceEventMonitor monitor : MONITORS) {
       try {
@@ -115,6 +126,15 @@ public class EventMonitoringService extends Service {
       }
     }
     isAlreadyRunning = false;
+
+    // Let the user know we're de-activating rules
+    CoreRulesDbHelper dbHelper = new CoreRulesDbHelper(this);
+    int activeRuleCount = dbHelper.getActiveRuleCount();
+    dbHelper.close();
+    String message = this.getString(R.string.disable_msg, activeRuleCount);
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    Logger.w(TAG, message);
+
   }
 
   @Override

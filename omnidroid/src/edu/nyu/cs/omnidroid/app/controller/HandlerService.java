@@ -92,7 +92,7 @@ public class HandlerService extends Service {
       coreGeneralLogsDbHelper.close();
 
       // Send user notification
-      UtilUI.ShowNotification(this, UtilUI.NOTIFICATION_WARN,
+      UtilUI.showNotification(this, UtilUI.NOTIFICATION_WARN,
           getString(R.string.throttle_alert_title), log.toString());
       throttled = true;
     }
@@ -138,10 +138,8 @@ public class HandlerService extends Service {
       coreActionsDbHelper.close();
       coreRuleDbHelper.close();
 
-      // TODO(acase): Consider moving this to the Action Executor so we don't have to loop through
-      // the actions twice. The problem is that we don't have access to the logEvent there.
+      // Log the actions taking place
       for (Action action : actions) {
-        // Log the actions taking place
         ActionLog logAction = new ActionLog(action, logEvent.getID());
         coreActionLogsDbHelper.insert(logAction);
       }

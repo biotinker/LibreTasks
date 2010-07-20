@@ -87,7 +87,7 @@ public class ActivityMain extends Activity {
      * defaults to "true"), and 2) After upgrade the service will no longer be running, so this will
      * need to be start it again.
      * 
-     * It's okay to try and start it multiple times, Android is smart enough to not create multiple
+     * It's okay to try and start it multiple times, it's smart enough to not create multiple
      * instances.
      */
     if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {

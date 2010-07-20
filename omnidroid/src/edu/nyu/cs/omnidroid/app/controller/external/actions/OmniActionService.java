@@ -15,14 +15,9 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.preference.PreferenceManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
@@ -34,7 +29,6 @@ import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetScreenBrightnessAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowAlertAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
-import edu.nyu.cs.omnidroid.app.view.simple.ActivityLogs;
 import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
 /**
@@ -153,35 +147,7 @@ public class OmniActionService extends Service {
   private void showNotification(Intent intent) {
     String title = intent.getStringExtra(ShowNotificationAction.PARAM_TITLE);
     String message = intent.getStringExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE);
-    
-    // TODO(acase): Replace code below with UtilUI.showNoficiation()
-    if (message == null) {
-      Log.w("showNotification", "No user message provided");
-      message = getString(R.string.action_default_message);
-    }
-    NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-    Notification notification = new Notification(R.drawable.icon, message, System.currentTimeMillis());
-    CharSequence contentTitle = title;
-    CharSequence contentText = message;
-    Intent notificationIntent = new Intent(this, ActivityLogs.class);
-    // TODO(acase): Pass actionID to ActivityLog to pull up the exact log message
-    PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-    notification.setLatestEventInfo(this, contentTitle, contentText, contentIntent);
-
-    // Get Preferences for notification options (sound/vibrate/lights)
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);      
-    if (prefs.getBoolean(getString(R.string.pref_key_sound), false)) {
-      notification.defaults |= Notification.DEFAULT_SOUND;      
-    }
-    if (prefs.getBoolean(getString(R.string.pref_key_vibrate), false)) {
-      notification.defaults |= Notification.DEFAULT_VIBRATE;
-    }
-    if (prefs.getBoolean(getString(R.string.pref_key_light), false)) {
-      notification.defaults |= Notification.DEFAULT_LIGHTS;
-    }
-
-    // Send the notification
-    nm.notify(UtilUI.NOTIFICATION_INFO, notification);
+    UtilUI.showNotification(this, UtilUI.NOTIFICATION_INFO, title, message);
   }
 
   /**

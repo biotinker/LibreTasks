@@ -203,12 +203,12 @@ public class ActivitySavedRules extends ListActivity {
   private void deleteRule(final int position) {
     // Ask the user if they're sure they want to delete the rule.
     new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle(
-        "Are you sure you want to delete this rule?").setPositiveButton("Yes",
+        getString(R.string.confirm_rule_delete)).setPositiveButton(getString(R.string.yes),
         new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int whichButton) {
             ruleListAdapter.deleteRule(position);
           }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+        }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
         // Do nothing
       }

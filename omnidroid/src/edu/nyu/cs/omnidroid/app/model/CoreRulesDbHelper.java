@@ -283,4 +283,12 @@ public class CoreRulesDbHelper {
     // Not necessary, but also close all omnidroidDbHelper databases just in case.
     dbHelper.close();
   }
+
+  public int getActiveRuleCount() {
+    // Fetch all rules that are enabled
+    Cursor ruleTable = ruleDbAdapter.fetchAll(RuleDbAdapter.KEY_ENABLED + "!=0", null, null, null, null);
+    int ruleCount = ruleTable.getCount();
+    ruleTable.close();
+    return ruleCount;
+  }
 }

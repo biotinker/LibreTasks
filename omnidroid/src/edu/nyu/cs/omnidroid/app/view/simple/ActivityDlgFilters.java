@@ -94,7 +94,7 @@ public class ActivityDlgFilters extends Activity {
     listView.setAdapter(adapterFilters);
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_list_selector_tv_info1);
-    mTextViewInfo.setText("Select a filter to apply to [ " + attribute.getTypeName() + " ]:");
+    mTextViewInfo.setText(getString(R.string.select_filter_title, attribute.getTypeName()));
 
     listView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

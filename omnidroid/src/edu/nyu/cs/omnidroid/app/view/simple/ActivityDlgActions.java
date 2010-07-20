@@ -96,9 +96,7 @@ public class ActivityDlgActions extends Activity {
     listView.setAdapter(adapterActions);
 
     TextView mTextViewInfo = (TextView) findViewById(R.id.activity_dlg_list_selector_tv_info1);
-    // TODO(acase): use %s in the string resource and use the string formatter to input
-    // application.getTypeName()
-    mTextViewInfo.setText("Select an action of [" + application.getTypeName() + "] to use:");
+    mTextViewInfo.setText(getString(R.string.select_action_title, application.getTypeName()));
     listView.setOnItemClickListener(new OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
         // Store the selected action in the RuleBuilder so the next activity can pick it up.

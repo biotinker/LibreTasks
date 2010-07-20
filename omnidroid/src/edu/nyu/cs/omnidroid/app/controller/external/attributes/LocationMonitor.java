@@ -34,10 +34,8 @@ public class LocationMonitor implements SystemServiceEventMonitor {
   private static final String SYSTEM_SERVICE_NAME = "LOCATION_SERVICE";
   private static final String MONITOR_NAME = "LocationMonitor";
   private static OmniArea lastLocation;
-  // TODO (dvo203): Change interval to 5 minutes (300000)
   /** Minimum frequency in updates(in milliseconds). Default value is 300000 (5 minutes). */
   private static final long MIN_PROVIDER_UPDATE_INTERVAL = 300000;
-  // TODO (dvo203): Change distance to 50 meters (50)
   /** Minimum change in location(in meters). Default value is 50 meters. */
   private static final float MIN_PROVIDER_UPDATE_DISTANCE = 50;
   private static final String PROVIDER = LocationManager.GPS_PROVIDER;
