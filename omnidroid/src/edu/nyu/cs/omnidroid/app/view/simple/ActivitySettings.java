@@ -92,7 +92,7 @@ public class ActivitySettings extends PreferenceActivity implements OnSharedPref
   private void setOmnidroidEnabledPrefName () {
     final String prefTitle;
     final String prefSummary;   
-    if (!sharedPreferences.getBoolean(getString(R.string.pref_key_omnidroid_enabled), false)){
+    if (sharedPreferences.getBoolean(getString(R.string.pref_key_omnidroid_enabled), false)){
       prefTitle = getString(R.string.disable_omnidroid);
       prefSummary = getString(R.string.disable_omnidroid_desc);
     } else {
