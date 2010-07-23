@@ -1,0 +1,4 @@
+#summary How to add a new datatype (backend data storage) into Omnidroid
+#labels Phase-Design,Phase-Implementation
+
+Coming soon.
