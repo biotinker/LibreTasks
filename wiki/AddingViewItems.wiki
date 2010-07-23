@@ -1,0 +1,4 @@
+#summary How to add new ViewItems (Datatype inputs options) to Omnidroid
+#labels Phase-Implementation
+
+Coming soon
