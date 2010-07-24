@@ -198,9 +198,9 @@ public class ActivityDlgActionInput extends Activity {
     long datatypeId = viewItem.getDataTypeDbID();
 
     // Get all attributes that have the same data type ID.
-    ArrayList<ModelAttribute> attributes = UIDbHelperStore.instance().db().getAttributesForEvent(
+    List<ModelAttribute> attributes = UIDbHelperStore.instance().db().getAttributesForEvent(
         RuleBuilder.instance().getChosenEvent());
-    ArrayList<ModelAttribute> attributesValid;
+    List<ModelAttribute> attributesValid;
     if (datatypeId != UIDbHelperStore.instance().getDatatypeLookup()
         .getDataTypeID(OmniText.DB_NAME)) {
       attributesValid = new ArrayList<ModelAttribute>();

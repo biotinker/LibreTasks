@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -272,7 +272,21 @@ public class RuleFilterDbAdapter extends DbAdapter {
     return false;
   }
   
-
+  /**
+   * Package protected method to perform a sqlite update statement.
+   * 
+   * @param values
+   *          a map from column names to new column values. null is a valid value that will be
+   *          translated to NULL.
+   * 
+   * @param whereClause
+   *          the optional WHERE clause to apply when updating. Passing null will update all rows.
+   * @see SQLiteDatabase#update(String, ContentValues, String, String[])
+   */
+  void sqlUpdate(ContentValues values, String whereClause) {
+    database.update(DATABASE_TABLE, values, whereClause, null);
+  }
+  
   public static String getSqliteCreateStatement() {
     return DATABASE_CREATE;
   }
