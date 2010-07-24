@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid 
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
  * you may not use this file except in compliance with the License. 
@@ -27,20 +27,4 @@ public class SystemBroadcastedEvent extends Event {
   public SystemBroadcastedEvent(Intent intent, SystemEvent systemEvent) {
     super(systemEvent.APPLICATION_NAME, systemEvent.EVENT_NAME, intent);
   }
-
-  /**
-   * Looks up attributes associated with this event. In this class, there should always no attribute
-   * support.
-   * 
-   * @param attributeName
-   *          the name of the attribute associated with this event
-   * @return the data associated with the attribute
-   * @throws IllegalArgumentException
-   *           if the attribute is not of a type supported by this event
-   */
-  @Override
-  public String getAttribute(String attributeName) throws IllegalArgumentException {
-    throw (new IllegalArgumentException());
-  }
-
 }

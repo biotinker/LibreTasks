@@ -15,11 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.events;
 
-import java.util.Date;
 import edu.nyu.cs.omnidroid.app.controller.Event;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * Abstract class that encapsulates a phone call event. It wraps the intent that triggered this
@@ -36,11 +33,10 @@ public abstract class PhoneCallEvent extends Event {
    * Note: This was originally named ATTRIBUTE_PHONE_RING_TIME, and the string literal was left as
    * is to make it compatible with existing databases.
    */
-  public static final String ATTRIBUTE_TIMESTAMP = "Phone Ring Time";
+  @Deprecated public static final String ATTRIBUTE_TIMESTAMP = "Phone Ring Time";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
-  protected String phoneRingTime;
 
   private final static String LOG_TAG = PhoneCallEvent.class.getSimpleName();
 
@@ -53,29 +49,5 @@ public abstract class PhoneCallEvent extends Event {
    */
   public PhoneCallEvent(String eventName, Intent intent) {
     super(APPLICATION_NAME, eventName, intent);
-
-    Date date = new Date(System.currentTimeMillis());
-    OmniDate omniDate = new OmniDate(date);
-    phoneRingTime = omniDate.toString();
-    Log.d(LOG_TAG, "time at " + phoneRingTime);
-  }
-
-  /**
-   * Looks up attributes associated with this event.
-   * 
-   * @param attributeName
-   *          the name of the attribute associated with this event
-   * @return the data associated with the attribute
-   * @throws IllegalArgumentException
-   *           if the attribute is not of a type supported by this event
-   */
-  @Override
-  public String getAttribute(String attributeName) throws IllegalArgumentException {
-    // TODO (dvo203): Replace by a generic method in a super class.
-    if (attributeName.equals(PhoneRingingEvent.ATTRIBUTE_TIMESTAMP)) {
-      return phoneRingTime;
-    } else {
-      throw (new IllegalArgumentException());
-    }
   }
 }

@@ -1,13 +1,24 @@
+/*******************************************************************************
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid 
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License"); 
+ * you may not use this file except in compliance with the License. 
+ * You may obtain a copy of the License at 
+ *  
+ *     http://www.apache.org/licenses/LICENSE-2.0 
+ *     
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+ * See the License for the specific language governing permissions and 
+ * limitations under the License. 
+ *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.events;
 
-import java.util.Date;
-
 import edu.nyu.cs.omnidroid.app.controller.Event;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 /**
  * This class encapsulates an SMS event. It wraps the intent that triggered this event and provides
@@ -21,12 +32,11 @@ public class SMSReceivedEvent extends Event {
   /** Attribute field names */
   public static final String ATTRIB_PHONE_NO = "SMS Phonenumber";
   public static final String ATTRIB_MESSAGE_TEXT = "SMS Text";
-  public static final String ATTRIB_MESSAGE_TIME = "SMS Time";
+  @Deprecated public static final String ATTRIB_MESSAGE_TIME = "SMS Time";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
   protected String messageText;
-  protected String messageTime;
 
   /**
    * Constructs a new SMS object that holds an SMS event fired intent. This intent holds the data
@@ -37,10 +47,6 @@ public class SMSReceivedEvent extends Event {
    */
   public SMSReceivedEvent(Intent intent) {
     super(APPLICATION_NAME, EVENT_NAME, intent);
-    Date date = new Date(System.currentTimeMillis());
-    OmniDate omniDate = new OmniDate(date);
-    messageTime = omniDate.toString();
-    Log.d("SMSReceivedEvent", "The message received at : " + messageTime);
   }
 
   /**
@@ -64,10 +70,8 @@ public class SMSReceivedEvent extends Event {
         getMessageData();
       }
       return messageText;
-    } else if (attributeName.equals(ATTRIB_MESSAGE_TIME)) {
-      return messageTime;
     } else {
-      throw (new IllegalArgumentException());
+      return super.getAttribute(attributeName);
     }
     // TODO(londinop): Add exception for invalid data field name
   }

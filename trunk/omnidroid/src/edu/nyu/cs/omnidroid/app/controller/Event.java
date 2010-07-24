@@ -24,9 +24,16 @@ import android.content.Intent;
  * attributes.
  */
 public abstract class Event {
+  // Constants used in display and attribute tags
+  public static final String ATTRIBUTE_LOCATION = "Location";
+  public static final String ATTRIBUTE_TIME = "Time";
+
   /** The name of the event for data lookup */
   private final String appName;
   private final String eventName;
+
+  protected final String timeAttribute;
+  protected final String locationAttribute;
 
   /** Stores the intent that triggered this event, which contains data associated with it */
   protected final Intent intent;
@@ -41,6 +48,19 @@ public abstract class Event {
    */
   public Event(String appName, String eventName, Intent intent) {
     this.intent = intent;
+
+    if (intent.hasExtra(ATTRIBUTE_TIME)) {
+      timeAttribute = intent.getStringExtra(ATTRIBUTE_TIME);
+    } else {
+      timeAttribute = "";
+    }
+
+    if (intent.hasExtra(ATTRIBUTE_LOCATION)) {
+      locationAttribute = intent.getStringExtra(ATTRIBUTE_LOCATION);
+    } else {
+      locationAttribute = "";
+    }
+
     this.appName = appName;
     this.eventName = eventName;
   }
@@ -72,7 +92,15 @@ public abstract class Event {
    * @throws IllegalArgumentException
    *           if the attribute name is not valid for this event
    */
-  public abstract String getAttribute(String attributeName) throws IllegalArgumentException;
+  public String getAttribute(String attributeName) throws IllegalArgumentException {
+    if (attributeName.equals(ATTRIBUTE_TIME)) {
+      return timeAttribute;
+    } else if (attributeName.equals(ATTRIBUTE_LOCATION)) {
+      return locationAttribute;
+    } else {
+      throw new IllegalArgumentException();
+    }
+  }
 
   /**
    * @return the parameters of the event as they are passed through the android intent.

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
  * 
  * <p>
  * This table contains all event attributes registered in Omnidroid. EventAttributeName is the name
- * of that attribute; FK_EventID points to the event it belongs to; FK_DataTypeID points the 
+ * of that attribute; FK_EventID points to the event it belongs to; FK_DataTypeID points the
  * dataType of this attribute.
  * </p>
- * <p>Note: Attributes belong to the same event should each has a unique name.<p>
+ * <p>
+ * Note: Attributes belong to the same event should each has a unique name.
+ * <p>
  */
 public class RegisteredEventAttributeDbAdapter extends DbAdapter {
 
@@ -44,13 +46,16 @@ public class RegisteredEventAttributeDbAdapter extends DbAdapter {
 
   /* Table name */
   private static final String DATABASE_TABLE = "RegisteredEventAttributes";
+  /*
+   * FK_EventID used for global attributes. -1 is used since it is the number that will not appear
+   * as the eventID of the RegisteredEvents table.
+   */
+  private static final long GLOBAL_ATTRIBUTE_DB_ID = -1L;
 
   /* Create and drop statement. */
   protected static final String DATABASE_CREATE = "create table " + DATABASE_TABLE + " ("
-      + KEY_EVENTATTRIBUTEID + " integer primary key autoincrement, " 
-      + KEY_EVENTATTRIBUTENAME + " text not null, " 
-      + KEY_EVENTID + " integer, " 
-      + KEY_DATATYPEID + " integer);";
+      + KEY_EVENTATTRIBUTEID + " integer primary key autoincrement, " + KEY_EVENTATTRIBUTENAME
+      + " text not null, " + KEY_EVENTID + " integer, " + KEY_DATATYPEID + " integer);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
 
   /**
@@ -86,6 +91,21 @@ public class RegisteredEventAttributeDbAdapter extends DbAdapter {
     initialValues.put(KEY_DATATYPEID, dataTypeID);
     // Set null because don't use 'null column hack'.
     return database.insert(DATABASE_TABLE, null, initialValues);
+  }
+
+  /**
+   * Insert a new RegisteredEventAttribute record.
+   * 
+   * @param attributeName
+   *          is the name of the event attribute.
+   * @param dataTypeID
+   *          is the id of data type it has.
+   * @return attribute id or -1 if creation failed.
+   * @throws IllegalArgumentException
+   *           if there is null within parameters
+   */
+  public long insertGeneralAttribute(String attributeName, Long dataTypeID) {
+    return insert(attributeName, GLOBAL_ATTRIBUTE_DB_ID, dataTypeID);
   }
 
   /**
@@ -143,6 +163,25 @@ public class RegisteredEventAttributeDbAdapter extends DbAdapter {
   public Cursor fetchAll() {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
     return database.query(DATABASE_TABLE, KEYS, null, null, null, null, null);
+  }
+
+  /**
+   * @return a Cursor that contains all RegisteredEventAttribute records that applies to all events.
+   */
+  public Cursor fetchAllGlobalAttributes() {
+    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
+    return database.query(DATABASE_TABLE, KEYS, KEY_EVENTID + " = " + GLOBAL_ATTRIBUTE_DB_ID, null,
+        null, null, null);
+  }
+
+  /**
+   * @return a Cursor that contains all RegisteredEventAttribute records that are specific for
+   *         certain events.
+   */
+  public Cursor fetchAllSpecificAttibutes() {
+    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
+    return database.query(DATABASE_TABLE, KEYS, KEY_EVENTID + " != " + GLOBAL_ATTRIBUTE_DB_ID,
+        null, null, null, null);
   }
 
   /**
@@ -206,8 +245,7 @@ public class RegisteredEventAttributeDbAdapter extends DbAdapter {
 
     if (args.size() > 0) {
       // Set whereArg to null here
-      return database.update(DATABASE_TABLE, args, KEY_EVENTATTRIBUTEID + "=" + 
-          attributeID, null) > 0;
+      return database.update(DATABASE_TABLE, args, KEY_EVENTATTRIBUTEID + "=" + attributeID, null) > 0;
     }
     return false;
   }

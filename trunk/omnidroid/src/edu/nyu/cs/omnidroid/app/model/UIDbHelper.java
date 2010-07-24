@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -92,14 +94,15 @@ public class UIDbHelper {
   private LogGeneralDbAdapter logGeneralDbAdapter;
 
   // Hash maps for storing cached data for quick lookup
-  private HashMap<Long, String> dataTypeNames;
-  private HashMap<Long, String> dataTypeClassNames;
-  private HashMap<Long, String> dataFilterNames;
-  private HashMap<Long, ModelApplication> applications;
-  private HashMap<Long, ModelEvent> events;
-  private HashMap<Long, ModelAction> actions;
-  private HashMap<Long, ModelAttribute> attributes;
-  private HashMap<Long, ModelParameter> parameters;
+  private Map<Long, String> dataTypeNames;
+  private Map<Long, String> dataTypeClassNames;
+  private Map<Long, String> dataFilterNames;
+  private Map<Long, ModelApplication> applications;
+  private Map<Long, ModelEvent> events;
+  private Map<Long, ModelAction> actions;
+  private Map<Long, ModelAttribute> globalAttributes;
+  private Map<Long, ModelAttribute> specificAttributes;
+  private Map<Long, ModelParameter> parameters;
 
   // Get user configured settings
   private SharedPreferences settings;
@@ -141,7 +144,8 @@ public class UIDbHelper {
     applications = new HashMap<Long, ModelApplication>();
     events = new LinkedHashMap<Long, ModelEvent>();
     actions = new HashMap<Long, ModelAction>();
-    attributes = new HashMap<Long, ModelAttribute>();
+    globalAttributes = new HashMap<Long, ModelAttribute>();
+    specificAttributes = new HashMap<Long, ModelAttribute>();
     parameters = new HashMap<Long, ModelParameter>();
 
     // Load db cache maps
@@ -215,7 +219,7 @@ public class UIDbHelper {
     cursor.close();
 
     // Load Event Attributes
-    cursor = registeredEventAttributeDbAdapter.fetchAll();
+    cursor = registeredEventAttributeDbAdapter.fetchAllGlobalAttributes();
     while (cursor.moveToNext()) {
       ModelAttribute attribute = new ModelAttribute(getLongFromCursor(cursor,
           RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID), getLongFromCursor(cursor,
@@ -225,7 +229,21 @@ public class UIDbHelper {
           // implementing desc for attribute, load it here
           R.drawable.icon_attribute_unknown);
 
-      attributes.put(attribute.getDatabaseId(), attribute);
+      globalAttributes.put(attribute.getDatabaseId(), attribute);
+    }
+    cursor.close();
+
+    cursor = registeredEventAttributeDbAdapter.fetchAllSpecificAttibutes();
+    while (cursor.moveToNext()) {
+      ModelAttribute attribute = new ModelAttribute(getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID), getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTID), getLongFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_DATATYPEID), getStringFromCursor(cursor,
+          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTENAME), "", // TODO(ehotou) After
+          // implementing desc for attribute, load it here
+          R.drawable.icon_attribute_unknown);
+
+      specificAttributes.put(attribute.getDatabaseId(), attribute);
     }
     cursor.close();
 
@@ -401,16 +419,21 @@ public class UIDbHelper {
    * @throws IllegalStateException
    *           if this helper is closed
    */
-  public ArrayList<ModelAttribute> getAttributesForEvent(ModelEvent event) {
+  public List<ModelAttribute> getAttributesForEvent(ModelEvent event) {
     if (isClosed) {
       throw new IllegalStateException(TAG + " is closed.");
     }
-    ArrayList<ModelAttribute> attributesList = new ArrayList<ModelAttribute>(attributes.size());
-    for (ModelAttribute attribute : attributes.values()) {
+
+    List<ModelAttribute> attributesList = new ArrayList<ModelAttribute>(specificAttributes.size());
+
+    attributesList.addAll(globalAttributes.values());
+
+    for (ModelAttribute attribute : specificAttributes.values()) {
       if (attribute.getForeignKeyEventId() == event.getDatabaseId()) {
         attributesList.add(attribute);
       }
     }
+
     return attributesList;
   }
 
@@ -556,9 +579,16 @@ public class UIDbHelper {
     while (cursorRuleFilters.moveToNext()) {
 
       // Get attribute that this ruleFilter associated with
-      ModelAttribute attribute = attributes.get(getLongFromCursor(cursorRuleFilters,
-          RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID));
-
+      long attributeID = getLongFromCursor(cursorRuleFilters, RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID);
+      ModelAttribute attribute;
+      
+      if (specificAttributes.containsKey(attributeID)) {
+        attribute = specificAttributes.get(attributeID);
+      }
+      else {
+        attribute = globalAttributes.get(attributeID);
+      }
+      
       // Load the user defined data within this rule filter
       String filterInputFromUser = getStringFromCursor(cursorRuleFilters,
           RuleFilterDbAdapter.KEY_RULEFILTERDATA);
@@ -947,8 +977,8 @@ public class UIDbHelper {
       String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
       long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
       String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log,
-          logTimestamp, ModelLog.TYPE_GENERAL));
+      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log, logTimestamp,
+          ModelLog.TYPE_GENERAL));
     }
     cursor.close();
     return logList;
@@ -964,8 +994,8 @@ public class UIDbHelper {
     String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
     long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
     String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log,
-        logTimestamp, ModelLog.TYPE_GENERAL);
+    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log, logTimestamp,
+        ModelLog.TYPE_GENERAL);
     cursor.close();
     return log;
   }
@@ -978,7 +1008,6 @@ public class UIDbHelper {
     logGeneralDbAdapter.deleteAll();
   }
 
-  
   public List<ModelLog> getAllLogs() {
     ArrayList<ModelLog> logs = new ArrayList<ModelLog>();
     logs.addAll(getGeneralLogs());
@@ -1014,11 +1043,14 @@ public class UIDbHelper {
     logActionDbAdapter.deleteAll();
     logGeneralDbAdapter.deleteAll();
   }
+
   /**
    * 
-   * @param eventID database id 
+   * @param eventID
+   *          database id
    * 
-   * @throws IllegarStateException when database is closed
+   * @throws IllegarStateException
+   *           when database is closed
    * @return number of rules for event or -1 if no matching eventID.
    */
   public int getRuleCount(Long eventID) {
@@ -1027,19 +1059,19 @@ public class UIDbHelper {
     }
     Cursor cursor = ruleDbAdapter.fetchAll(eventID, null, null, null, null);
     if (cursor != null) {
-      int count=cursor.getCount();
+      int count = cursor.getCount();
       cursor.close();
       return count;
     }
     return -1;
   }
-  
+
   public void setNotification(Long ruleId, Boolean notification) {
     if (isClosed) {
       throw new IllegalStateException(TAG + " is closed.");
     }
-    
-    ruleDbAdapter.update(ruleId, null, null, null, null, notification);    
+
+    ruleDbAdapter.update(ruleId, null, null, null, null, notification);
   }
-  
+
 }

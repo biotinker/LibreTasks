@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.events;
 
-import java.util.Date;
-
 import edu.nyu.cs.omnidroid.app.controller.Event;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * This class encapsulates an TimeTick event. It wraps the intent that triggered this event and
@@ -31,11 +27,8 @@ public class TimeTickEvent extends Event {
   //TODO(Roger): store human read strings in String.xml
   public static final String APPLICATION_NAME = "Android";
   public static final String EVENT_NAME = "Time is";
-  public static final String ATTRIBUTE_CURRENT_TIME = "Current Time";
+  @Deprecated public static final String ATTRIBUTE_CURRENT_TIME = "Current Time";
   public static final String ACTION_NAME = "TIME_TICK";
-
-  /** Cache any values that are requested because it is likely they will be asked for again */
-  protected String currentTime;
 
   /**
    * Constructs a new TimeTickEvent object that holds an TimeTick event fired intent. This intent
@@ -46,28 +39,5 @@ public class TimeTickEvent extends Event {
    */
   public TimeTickEvent(Intent intent) {
     super(APPLICATION_NAME, EVENT_NAME, intent);
-    Date date = new Date(System.currentTimeMillis());
-    OmniDate omniDate = new OmniDate(date);
-    currentTime = omniDate.toString();
-    Log.d("TimeTickEvent", "The currentTime is : " + currentTime);
-  }
-
-  /**
-   * Looks up attributes associated with this event.
-   * 
-   * @param attributeName
-   *          the name of the attribute associated with this event
-   * @return the data associated with the attribute
-   * @throws IllegalArgumentException
-   *           if the attribute is not of a type supported by this event
-   */
-  @Override
-  public String getAttribute(String attributeName) throws IllegalArgumentException {
-    // TODO (dvo203): Replace by a generic method in a super class.
-    if (attributeName.equals(TimeTickEvent.ATTRIBUTE_CURRENT_TIME)) {
-      return currentTime;
-    } else {
-      throw (new IllegalArgumentException());
-    }
   }
 }

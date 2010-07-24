@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.app.controller.Event;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.util.DataTypeValidationException;
@@ -77,7 +78,7 @@ public class LocationMonitor implements SystemServiceEventMonitor {
         // Create intent
         Intent intent = new Intent(LocationChangedEvent.ACTION_NAME);
         String temp = newLocation.toString();
-        intent.putExtra(LocationChangedEvent.ATTRIBUTE_CURRENT_LOCATION, temp);
+        intent.putExtra(Event.ATTRIBUTE_LOCATION, temp);
         context.sendBroadcast(intent);
       }
     }

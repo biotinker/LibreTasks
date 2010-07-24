@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ import android.database.sqlite.SQLiteQueryBuilder;
  * <p>
  * This table contains parameter association with each ruleAction as well as data that required to
  * feed in to these parameters.
- *  
- * FK_RuleActionID points to the ruleAction it belongs to.
- * FK_ActionParameterID points to the actionParameter record associated.
- * FK_RuleActionParameterData is the user defined data for this parameter
+ * 
+ * FK_RuleActionID points to the ruleAction it belongs to. FK_ActionParameterID points to the
+ * actionParameter record associated. FK_RuleActionParameterData is the user defined data for this
+ * parameter
  * </p>
  */
 public class RuleActionParameterDbAdapter extends DbAdapter {
@@ -160,8 +160,7 @@ public class RuleActionParameterDbAdapter extends DbAdapter {
    *          is the data associated with this parameter, or null to fetch any
    * @return a Cursor that contains all RuleActionParameter records which matches the parameters.
    */
-  public Cursor fetchAll(Long ruleActionID, Long actionParameterID, 
-      String ruleActionParameterData) {
+  public Cursor fetchAll(Long ruleActionID, Long actionParameterID, String ruleActionParameterData) {
 
     SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
     qb.setTables(DATABASE_TABLE);
@@ -178,6 +177,17 @@ public class RuleActionParameterDbAdapter extends DbAdapter {
     }
     // Not using additional selections, selectionArgs, groupBy, having, orderBy, set them to null.
     return qb.query(database, KEYS, null, null, null, null, null);
+  }
+
+  /**
+   * Package protected method for performing a simple SQLite select query.
+   * 
+   * @param queryBuilder
+   *          {@link SQLiteQueryBuilder} instance with the necessary query parameters
+   */
+  Cursor sqlQuery(SQLiteQueryBuilder queryBuilder) {
+    queryBuilder.setTables(DATABASE_TABLE);
+    return queryBuilder.query(database, null, null, null, null, null, null);
   }
 
   /**
@@ -219,7 +229,7 @@ public class RuleActionParameterDbAdapter extends DbAdapter {
     }
     return false;
   }
-  
+
   public static String getSqliteCreateStatement() {
     return DATABASE_CREATE;
   }
