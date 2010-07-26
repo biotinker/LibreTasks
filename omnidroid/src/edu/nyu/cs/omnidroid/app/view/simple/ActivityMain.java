@@ -28,6 +28,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import edu.nyu.cs.omnidroid.app.R;
@@ -58,7 +59,8 @@ public class ActivityMain extends Activity {
     // Initialize singleton instance of UIDbHelperStore, which is
     // our connection to the omnidroid database.
     UIDbHelperStore.init(this);
-
+          
+    
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_main_btnCreateRule);
     btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
@@ -72,8 +74,9 @@ public class ActivityMain extends Activity {
     Button btnHelp = (Button) findViewById(R.id.activity_main_btnHelp);
     btnHelp.setOnClickListener(listenerBtnClickHelp);
 
-    // Show disclaimer if it hasn't been accepted yet
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
+    
+    // Show disclaimer if it hasn't been accepted yet
     if (prefs.getBoolean(SETTING_ACCEPTED_DISCLAIMER, false) == false) {
       showDisclaimer();
     }
@@ -172,6 +175,18 @@ public class ActivityMain extends Activity {
     UIDbHelperStore.instance().releaseResources();
   }
 
+  @Override
+  public void onResume() {
+    super.onResume();
+    TextView tv = (TextView) findViewById(R.id.activity_main_omnidroidDisabled);
+    prefs = UIDbHelperStore.instance().db().getSharedPreferences();
+    if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
+      tv.setVisibility(TextView.INVISIBLE);
+    } else {
+      tv.setVisibility(TextView.VISIBLE);
+    }
+  }
+  
   /** Create a options menu for the main screen */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

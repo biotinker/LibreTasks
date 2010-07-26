@@ -22,6 +22,8 @@
     <string name="enter_rule_name">Enter a rule name below:</string>
     <string name="enter_rule_description">Enter a rule description below:</string>
     <string name="actions">actions</string>
+    <string name="omnidroid_is_disabled">Omnidroid has been disabled. To enable Omnidroid go to the settings menu.</string>
+
 
     <!--  Common Words -->
     <string name="omnidroid">Omnidroid</string>
@@ -116,6 +118,8 @@
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
     <string name="phone_num_not_eq_filter_inst">Enter the phone number to exclude from the filter </string>
+    <string name="day_of_week_eq_filter_inst">Enter a day of the week to match below:</string>
+    <string name="day_of_week_not_eq_filter_inst">Enter the day of the week to exclude from the filter </string>
     <string name="text_eq_filter_inst">Enter an exact text string to match below:</string>
     <string name="text_cont_filter_inst">Enter a phrase in the text body to match below:</string>
     <string name="bad_data_format">Bad data format:\n</string>
