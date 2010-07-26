@@ -24,7 +24,6 @@
     <string name="actions">actions</string>
     <string name="omnidroid_is_disabled">Omnidroid has been disabled. To enable Omnidroid go to the settings menu.</string>
 
-
     <!--  Common Words -->
     <string name="omnidroid">Omnidroid</string>
     <string name="about">About</string>
@@ -173,6 +172,11 @@
     <string name="pref_key_notification">NotificationKey</string>
     <string name="pref_key_throttle">Throttle</string>
     <string name="pref_key_reset_db">ResetDb</string>
+    <string name="pref_key_gmail_signature">GmailSignature</string>
+    <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
+    <string name="pref_key_sms_signature">SMSSignature</string>
+    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>
+    
     
     <!--  Settings -->
     <string name="throttle">Throttle</string>
@@ -193,6 +197,23 @@
     <string name="default_notification">Notifications</string>
     <string name="reset_db_desc">Resetting database will clear all user data</string>
     <string name="reset_db">Reset Database</string>
+    <string name="gmail_signature_title">Gmail Signature</string>
+    <string name="gmail_signature_dialog_message">Enter gmail signature below</string>
+    <string name="sms_signature_title">SMS Signature</string>
+    <string name="sms_signature_desc_on">Turn on sms signature</string>
+    <string name="sms_signature_desc_off">Turn off sms signature</string>
+    <string name="gmail_signature_desc_on">Turn on Gmail signature</string>
+    <string name="gmail_signature_desc_off">Turn off Gmail signature</string>
+    <string name="sms_signature_dialog_message">Enter sms signature below </string>
+    <string name="sms_signature">\n(Omnidroid)</string>
+    <string name="gmail_signature">\n\nSent by Omnidroid</string>
+    <string name="signature_settings">Signature settings</string>
+    <string name="signature_desc">Modify Gmail and Sms Signatures</string>
+    <string name="gmail_signature_settings_title">Gmail signature settings</string>
+    <string name="sms_signature_settings_title">SMS signature settings</string>
+    <string name="gmail_signature_settings_desc">Modify SMS signature</string>
+    <string name="sms_signature_settings_desc">Modify Gmail signature</string>
+    
     
     <!-- message -->
     <string name="authentication_error">Authentication  error</string>

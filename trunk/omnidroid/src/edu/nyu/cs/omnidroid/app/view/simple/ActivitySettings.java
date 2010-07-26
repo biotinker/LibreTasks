@@ -119,6 +119,31 @@ public class ActivitySettings extends PreferenceActivity implements OnSharedPref
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     if (key.equals(getString(R.string.pref_key_notification))) {
       setNotification(sharedPreferences.getBoolean(key, true));          
-    }                            
+    } else if (key.equals(getString(R.string.pref_key_gmail_signature))){
+      setGmailSignaturePrefDescription(sharedPreferences.getBoolean(key, false));
+    } else if (key.equals(getString(R.string.pref_key_sms_signature))){
+      setSmsSignaturePrefDescription(sharedPreferences.getBoolean(key, false));
+    } 
   }
+
+  private void setSmsSignaturePrefDescription(boolean prefValue) {
+    if (prefValue) {
+      findPreference(getString(R.string.pref_key_sms_signature))
+          .setSummary(getString(R.string.sms_signature_desc_off));
+    } else {
+      findPreference(getString(R.string.pref_key_sms_signature))
+          .setSummary(getString(R.string.sms_signature_desc_on));
+    }    
+  }
+
+  private void setGmailSignaturePrefDescription(boolean prefValue) {
+    if (prefValue) {
+      findPreference(getString(R.string.pref_key_gmail_signature))
+          .setSummary(getString(R.string.gmail_signature_desc_off));
+    } else {
+      findPreference(getString(R.string.pref_key_gmail_signature))
+          .setSummary(getString(R.string.gmail_signature_desc_on));
+    }    
+  }
+  
 }

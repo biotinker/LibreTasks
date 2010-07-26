@@ -120,6 +120,7 @@ public class HandlerService extends Service {
       CoreEventLogsDbHelper coreEventLogsDbHelper = new CoreEventLogsDbHelper(this);
       EventLog logEvent = new EventLog(event);
       Long logID = coreEventLogsDbHelper.insert(logEvent);
+      coreEventLogsDbHelper.close();
       logEvent.setID(logID);
 
       // Don't run if we're over our throttle threshold

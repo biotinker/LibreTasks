@@ -16,8 +16,14 @@
 package edu.nyu.cs.omnidroid.app.view.simple.factoryui;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.DataType;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniPasswordInput;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
@@ -63,7 +69,10 @@ public class ActionParameterViewFactory {
       throw new IllegalArgumentException(
           "Action parameter data array does not match parameter size!");
     }
-
+    
+    if (initData == null) {
+      initData = generateInitialData(activity.getApplicationContext(), modelAction);
+    }
     ViewItemGroup viewItemGroup = new ViewItemGroup(activity);
 
     int numParameters = parameters.size();
@@ -166,5 +175,32 @@ public class ActionParameterViewFactory {
     }
 
     return new ModelRuleAction(-1, modelAction, datas);
+  }
+  
+  /** generates initial data from signatures. */
+  private static ArrayList<DataType> generateInitialData(Context context, ModelAction modelAction) {
+    SharedPreferences sharedPreferences = PreferenceManager
+        .getDefaultSharedPreferences(context);
+    ArrayList<DataType> initData = null;
+    if (modelAction.getTypeName().equals(SendSmsAction.ACTION_NAME) && sharedPreferences
+        .getBoolean(context.getString(R.string.pref_key_sms_signature), true)) {
+      initData = new ArrayList<DataType> ();
+      initData.add(null); //phone number
+      initData.add(new OmniText (sharedPreferences.
+          getString(context.getString(R.string.pref_key_sms_signature_settings), "")));
+    } else if (modelAction.getTypeName().equals(SendGmailAction.ACTION_NAME) 
+        && sharedPreferences.getBoolean(context.
+        getString(R.string.pref_key_gmail_signature), true)) {
+      initData = new ArrayList<DataType> ();
+      initData.add(null); // user account
+      initData.add(null); //email To
+      initData.add(null); //subject
+      initData.add(new OmniText (sharedPreferences.
+          getString(context.getString(R.string.pref_key_gmail_signature_settings), "")));
+    } else if (modelAction.getTypeName().equals(ShowWebsiteAction.ACTION_NAME) ) {
+      initData = new ArrayList <DataType> ();
+      initData.add(new OmniText("http://"));
+    }
+    return initData;
   }
 }
