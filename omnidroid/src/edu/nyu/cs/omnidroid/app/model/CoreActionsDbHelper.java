@@ -415,6 +415,8 @@ public class CoreActionsDbHelper {
       try {
         action = getAction(appName, actionName, actionParams);
         action.setRuleName(ruleName);
+        action.setDatabaseId(ruleActionId);
+        action.setActionType(Action.RULE_ACTION);
         actions.add(action); // add action to actions ArrayList
       } catch (OmnidroidException e) {
         Logger.w(TAG, e.toString(), e);

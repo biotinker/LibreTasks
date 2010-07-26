@@ -20,7 +20,6 @@ import java.util.Map;
 import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
-import edu.nyu.cs.omnidroid.app.controller.util.ShowWebsiteActivity;
 import android.content.Intent;
 
 /**
@@ -31,11 +30,12 @@ public class ShowWebsiteAction extends OmniAction {
 
   public static final String ACTION_NAME = "Show Web Site";
   public static final String PARAM_WEB_URL = "WEB_URL";
+  public static final String SHOW_WEBSITE_INTENT = "omnidroid.intent.action.SHOW_WEBSITE";
   
   private String url = null;
 
   public ShowWebsiteAction(Map<String, String> parameters) throws OmnidroidException {
-    super(ShowWebsiteActivity.class.getName(), Action.BY_ACTIVITY);
+    super(SHOW_WEBSITE_INTENT, Action.BY_SERVICE);
     url = parameters.get(PARAM_WEB_URL);
     if (url == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
@@ -45,10 +45,10 @@ public class ShowWebsiteAction extends OmniAction {
 
   @Override
   public Intent getIntent() {
-    Intent intent = new Intent();
-    intent.setClassName(OMNIDROID_PACKAGE_NAME, ShowWebsiteActivity.class.getName());
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    Intent intent = new Intent(getActionName());
     intent.putExtra(PARAM_WEB_URL, url);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     return intent;
   }
 

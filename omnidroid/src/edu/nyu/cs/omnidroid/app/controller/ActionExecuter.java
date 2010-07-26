@@ -17,12 +17,11 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import java.util.List;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
-
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 
 /**
  * The ActionExecuter is the engine which will execute all actions.
@@ -66,7 +65,7 @@ public class ActionExecuter {
         Logger.w(TAG, e.toString(), e);
         Logger.w(TAG, e.getLocalizedMessage());
         Logger.w(TAG, "No activity found to perform this action: " + action.getActionName());
-      }
+      }      
     }
   }
 

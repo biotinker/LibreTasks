@@ -17,10 +17,12 @@ package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.ServiceAvailableEvent;
 import edu.nyu.cs.omnidroid.app.controller.external.helper.telephony.PhoneStateMachine;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.PhoneStateListener;
+import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -31,6 +33,8 @@ public class PhoneStateMonitor implements SystemServiceEventMonitor {
   private static final String SYSTEM_SERVICE_NAME = "TELEPHONY_SERVICE";
   private static final String MONITOR_NAME = PhoneStateMonitor.class.getSimpleName();
 
+  private static volatile boolean serviceAvailable = false; 
+  
   /**
    * Since there is currently no direct way to determine if a phone call has ended (the system only
    * sends ringing, off-hook and idle events and the API does not provide an accessor to determine
@@ -63,6 +67,7 @@ public class PhoneStateMonitor implements SystemServiceEventMonitor {
       return;
     }
     tm.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+    tm.listen(phoneStateListener1, PhoneStateListener. LISTEN_SERVICE_STATE);
   }
 
   public void stop() {
@@ -128,11 +133,28 @@ public class PhoneStateMonitor implements SystemServiceEventMonitor {
     }
   };
 
+  private final PhoneStateListener phoneStateListener1 = new PhoneStateListener() {    
+    @Override
+    public void onServiceStateChanged(ServiceState serviceState){      
+      if (serviceState.getState() == ServiceState.STATE_IN_SERVICE ) {
+        Intent intent = new Intent(ServiceAvailableEvent.ACTION_NAME);
+        context.sendBroadcast(intent);
+        serviceAvailable = true;
+      } else {
+        serviceAvailable = false;
+      }
+    }
+  };
+
   public String getMonitorName() {
     return MONITOR_NAME;
   }
 
   public String getSystemServiceName() {
     return SYSTEM_SERVICE_NAME;
+  }
+  
+  public static boolean isServiceAvailable() {
+    return serviceAvailable;
   }
 }

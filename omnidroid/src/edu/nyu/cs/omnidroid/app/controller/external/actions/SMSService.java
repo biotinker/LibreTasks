@@ -31,6 +31,7 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.Action;
+import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 
@@ -43,6 +44,8 @@ public class SMSService extends Service {
 
   private PendingIntent sentPI;
   private PendingIntent deliveredPI;
+  
+  BroadcastReceiver smsResultReceiver;
 
   /**
    * attributes field names
@@ -87,37 +90,43 @@ public class SMSService extends Service {
 
     Toast.makeText(this, "SMS Service Started", Toast.LENGTH_LONG).show();
 
-    registerReceiver(new BroadcastReceiver() {
+    smsResultReceiver = new  BroadcastReceiver() {
       @Override
-      public void onReceive(Context arg0, Intent arg1) {
+      public void onReceive(Context context, Intent intent) {
         switch (getResultCode()) {
         case Activity.RESULT_OK:
           showNotification(getString(R.string.sms_sent));
+          ResultProcessor.process(context, intent, ResultProcessor.RESULT_SUCCESS);
           break;
         case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
           showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
               + getString(R.string.generic_failure));
+          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
           break;
         case SmsManager.RESULT_ERROR_NO_SERVICE:
           showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
               + getString(R.string.no_service));
+          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_SERVICE);
           break;
         case SmsManager.RESULT_ERROR_NULL_PDU:
           showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
               + getString(R.string.null_pdu));
+          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
           break;
         case SmsManager.RESULT_ERROR_RADIO_OFF:
           showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
               + getString(R.string.radio_off));
+          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_SERVICE);
           break;
         }
       }
-    }, new IntentFilter(SENT));
+    };
+    registerReceiver(smsResultReceiver, new IntentFilter(SENT));
 
     TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
     tm.listen(new PhoneStateListener() {
       public void onCallStateChanged(int state, String incomingNumber) {
-        // Only send SMS if the Phone state is not ringing.
+        // send SMS when phone is not ringing.
         if (state != TelephonyManager.CALL_STATE_RINGING) {
           SmsManager sms = SmsManager.getDefault();
           sms.sendTextMessage(phoneNumber, null, textMessage, sentPI, deliveredPI);
@@ -129,6 +138,7 @@ public class SMSService extends Service {
           // Stop listening to events.
           ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).listen(this,
               PhoneStateListener.LISTEN_NONE);
+          stopSelf();
         }
       }
     }, PhoneStateListener.LISTEN_CALL_STATE);
@@ -144,6 +154,12 @@ public class SMSService extends Service {
     } else {
       Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+  }
+  
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    unregisterReceiver(smsResultReceiver);
   }
 
 }

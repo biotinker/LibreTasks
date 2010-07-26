@@ -16,21 +16,16 @@
 package edu.nyu.cs.omnidroid.app.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.IBinder;
+import edu.nyu.cs.omnidroid.app.controller.events.InternetAvailableEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.ServiceAvailableEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.TimeTickEvent;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniArea;
-import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniDate;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
 import edu.nyu.cs.omnidroid.app.model.CoreActionLogsDbHelper;
@@ -40,6 +35,7 @@ import edu.nyu.cs.omnidroid.app.model.CoreGeneralLogsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
 import edu.nyu.cs.omnidroid.app.model.ActionLog;
 import edu.nyu.cs.omnidroid.app.model.EventLog;
+import edu.nyu.cs.omnidroid.app.model.FailedActionsDbHelper;
 import edu.nyu.cs.omnidroid.app.model.GeneralLog;
 import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
@@ -104,7 +100,7 @@ public class HandlerService extends Service {
           getString(R.string.throttle_alert_title), log.toString());
       throttled = true;
     }
-
+    
     coreEventLogsDbHelper.close();
     return throttled;
   }
@@ -117,7 +113,6 @@ public class HandlerService extends Service {
    */
   @Override
   public void onStart(Intent intent, int id) {
-    addGlobalAttributesToIntent(intent);
     Event event = IntentParser.getEvent(intent);
 
     if (event != null) {
@@ -169,76 +164,30 @@ public class HandlerService extends Service {
         Logger.w(TAG, e.toString(), e);
         Logger.w(TAG, e.getLocalizedMessage());
         Logger.w(TAG, "Illegal Execution Method");
+      } finally {
+        actions.clear();
       }
+      
+      FailedActionsDbHelper failedActionsDbHelper = new FailedActionsDbHelper(this);
+      if (event.getEventName().equals(InternetAvailableEvent.EVENT_NAME)) {
+        actions = failedActionsDbHelper.getActions(ResultProcessor.RESULT_FAILURE_INTERNET);
+      } else if (event.getEventName().equals(ServiceAvailableEvent.EVENT_NAME)) {
+        actions = failedActionsDbHelper.getActions(ResultProcessor.RESULT_FAILURE_SERVICE);
+      } else if (event.getEventName().equals(TimeTickEvent.EVENT_NAME)) {
+        //TODO clean up old actions;
+        actions = failedActionsDbHelper.getActions(ResultProcessor.RESULT_FAILURE_UNKNOWN);
+      }
+      failedActionsDbHelper.close();
+      try {
+        Logger.i(TAG, "Retrying to execute queued actions");
+        ActionExecuter.executeActions(this, actions);;
+      } catch (OmnidroidException e) {
+        Logger.w(TAG, e.toString(), e);
+      }
+      
     }
-
     // Nothing left to do for this event
     stopSelf();
-  }
-
-  /**
-   * Add global attributes of an event to the extra values of the intent.
-   * 
-   * @param intent
-   *          the intent to modify
-   */
-  private void addGlobalAttributesToIntent(Intent intent) {
-    if (!intent.hasExtra(Event.ATTRIBUTE_TIME)) {
-      insertTimeStamp(intent);
-    }
-
-    if (!intent.hasExtra(Event.ATTRIBUTE_LOCATION)) {
-      insertLocationData(intent);
-    }
-  }
-
-  /**
-   * Insert a time stamp to the intent.
-   * 
-   * @param intent
-   *          the intent to modify
-   */
-  private void insertTimeStamp(Intent intent) {
-    Date date = new Date(System.currentTimeMillis());
-    OmniDate omniDate = new OmniDate(date);
-
-    intent.putExtra(Event.ATTRIBUTE_TIME, omniDate.toString());
-  }
-
-  /**
-   * Insert GPS location data to the intent.
-   * 
-   * @param intent
-   *          the intent to modify
-   */
-  private void insertLocationData(Intent intent) {
-    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-    String bestProvider = locationManager.getBestProvider(new Criteria(), true);
-    Location location = locationManager.getLastKnownLocation(bestProvider);
-
-    String locationData;
-    try {
-      OmniArea newLocation = new OmniArea(null, location.getLatitude(), location.getLongitude(),
-          location.getAccuracy());
-      locationData = newLocation.toString();
-    } catch (Exception e) {
-      locationData = "";
-
-      final String GET_LOCATION_FAILURE_LOG_MSG = "Unable to retrieve location data";
-
-      if (location == null) {
-        /*
-         * Use the normal logging since this case happens quite often, and we don't want to clutter
-         * the logs very much.
-         */
-        Log.i(TAG, GET_LOCATION_FAILURE_LOG_MSG);
-      } else {
-        Log.e(TAG, GET_LOCATION_FAILURE_LOG_MSG, e);
-      }
-    }
-
-    intent.putExtra(Event.ATTRIBUTE_LOCATION, locationData);
   }
 
   /**

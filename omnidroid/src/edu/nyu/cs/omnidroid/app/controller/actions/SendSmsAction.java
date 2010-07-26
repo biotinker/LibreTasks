@@ -77,6 +77,8 @@ public class SendSmsAction extends Action {
     Intent intent = new Intent(getActionName());
     intent.putExtra(PARAM_PHONE_NO, phoneNumber);
     intent.putExtra(PARAM_SMS, sms);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
 

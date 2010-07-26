@@ -50,6 +50,8 @@ public class ShowNotificationAction extends OmniAction {
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
     intent.putExtra(PARAM_TITLE, ruleName);
     intent.putExtra(PARAM_ALERT_MESSAGE, message);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     return intent;
   }
 

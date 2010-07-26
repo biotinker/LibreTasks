@@ -18,8 +18,8 @@ package edu.nyu.cs.omnidroid.app.controller.bkgservice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import edu.nyu.cs.omnidroid.app.controller.HandlerService;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
+import edu.nyu.cs.omnidroid.app.controller.HandlerService;
 
 /**
  * The Broadcast receiver receives any intent that is broadcast either by the system or by any other
@@ -35,7 +35,7 @@ public class BCReceiver extends BroadcastReceiver {
       intent.setClass(context, HandlerService.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       context.startService(intent);
-      Logger.i("Received Intent", intent.getAction());
+      Logger.i(TAG, "Received Intent" + intent.getAction());
     } catch (Exception e) {
       Logger.i(TAG, e.getLocalizedMessage());
       Logger.i(TAG, "Unable to execute required action");

@@ -101,6 +101,8 @@ public class DbHelper extends SQLiteOpenHelper {
     db.execSQL(LogEventDbAdapter.DATABASE_DROP);
     db.execSQL(LogActionDbAdapter.DATABASE_DROP);
     db.execSQL(LogGeneralDbAdapter.DATABASE_DROP);
+    db.execSQL(FailedActionsDbAdapter.DATABASE_DROP);
+    db.execSQL(FailedActionParameterDbAdapter.DATABASE_DROP);
   }
 
   /**

@@ -30,7 +30,9 @@ public abstract class Action {
   
   /** Keyword */
   public static final String NOTIFICATION = "notification";
-
+  public static final String DATABASE_ID = "DatabaseId";
+  public static final String ACTION_TYPE = "ActionType";
+  
   /** Action name to be used in the intent */
   private final String actionName;
   protected String ruleName;
@@ -40,7 +42,22 @@ public abstract class Action {
   
   /** The execution method used to fire an intent */
   private final String executionMethod;
-
+  
+  /** Action type constants  */
+  public static final String RULE_ACTION = "RuleAction";
+  public static final String FAILED_ACTION = "FailedAction";
+  
+  /** 
+   * type of action, indicates whether action is retrieved 
+   * from RuleActions or FailedActions table.
+   */
+  protected String actionType = null;
+  
+  /**
+   * this is used in conjunction with actionType to provide access 
+   * to the database entry where this action is stored.
+   * */
+  protected long databaseId;
   /**
    * Create a new Action.
    * 
@@ -102,7 +119,20 @@ public abstract class Action {
   public void setRuleName(String ruleName) {
     this.ruleName = ruleName;    
   }
-  
+  public void setDatabaseId(long databaseId) {
+    this.databaseId = databaseId;
+  }
+
+  public long getDatabaseId() {
+    return databaseId;
+  }
+  public void setActionType(String actionType) {
+    if (actionType.equals(RULE_ACTION) || actionType.equals(FAILED_ACTION)) {
+      this.actionType = actionType;
+    } else {
+      throw new IllegalArgumentException ();
+    }
+  }
   public void setNotification(Boolean notification) {
     this.notificationIsOn = notification;
   }

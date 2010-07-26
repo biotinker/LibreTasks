@@ -20,9 +20,7 @@ import java.util.HashMap;
 import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.util.ExceptionMessageMap;
 import edu.nyu.cs.omnidroid.app.controller.util.OmnidroidException;
-
 import android.content.Intent;
-import android.net.Uri;
 
 /**
  * CallPhoneAction can return an Intent that can be fired to perform a phone call.
@@ -34,7 +32,8 @@ public class CallPhoneAction extends Action {
   public static final String ACTION_NAME = "Dial Number";
   public static final String APP_NAME = "Phone";
   public static final String PARAM_PHONE_NO = "Phone Number";
-
+  public static final String PHONE_CALL_INTENT = "omnidroid.intent.action.PHONE_CALL";
+  
   /** The phone number to call */
   private String phoneNumber = null;
 
@@ -56,7 +55,7 @@ public class CallPhoneAction extends Action {
    *           if Action Parameter "Phone Number" is not found
    */
   public CallPhoneAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(Intent.ACTION_CALL, Action.BY_ACTIVITY);
+    super(PHONE_CALL_INTENT, Action.BY_SERVICE);
     phoneNumber = parameters.get(PARAM_PHONE_NO);
     if (phoneNumber == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
@@ -71,9 +70,10 @@ public class CallPhoneAction extends Action {
    */
   @Override
   public Intent getIntent() {
-    // TODO(Rutvij): Fetch "tel:" from constants of another class (if any).
-    Intent intent = new Intent(getActionName(), Uri.parse("tel:" + phoneNumber));
-    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    Intent intent = new Intent(getActionName());
+    intent.putExtra(PARAM_PHONE_NO, phoneNumber);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }
