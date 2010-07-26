@@ -15,12 +15,9 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import edu.nyu.cs.omnidroid.app.controller.Event;
 import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.OmniAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
@@ -44,10 +41,11 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniText;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniUserAccount;
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
-import edu.nyu.cs.omnidroid.app.controller.events.PhoneCallEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.InternetAvailableEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.ServiceAvailableEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.TimeTickEvent;
 import edu.nyu.cs.omnidroid.app.model.CursorHelper;
@@ -102,8 +100,9 @@ public class DbMigration {
     case 12:
       addGeneralLogLevels(db);
     case 13:
-      addSupprotForGlobalEventAttributes(db);
-
+      addFailedActions(db);
+      addInternetAndServiceAvailableEvents(db);
+      
       /*
        * Insert new versions before this line and do not forget to update {@code
        * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
@@ -115,7 +114,7 @@ public class DbMigration {
       break;
     }
   }
-
+  
   /**
    * Create the initial version of the Omnidroid database along with prepopulated data.
    * 
@@ -380,7 +379,7 @@ public class DbMigration {
     // Create table
     db.execSQL(LogGeneralDbAdapter.DATABASE_CREATE);
   }
-
+  
   /**
    * Modify the Send Gmail and Update Twitter actions by replacing the username and password
    * attributes into user account (this is done for possible multi-account support and supporting
@@ -503,22 +502,39 @@ public class DbMigration {
     cursor.close();
   }
 
-  private static void addWifiActions(SQLiteDatabase db) {
+  private static void addWifiActions(SQLiteDatabase db){
     RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-    long appIdOmnidroid = appDbAdapter.getAppId(OmniAction.APP_NAME);
-
+    long appIdOmnidroid=appDbAdapter.getAppId(OmniAction.APP_NAME);
+    
     RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
     actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdOmnidroid);
     actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
-
+    
   }
 
   private static void addNotification(SQLiteDatabase db) {
     db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
   }
 
+  private static void addFailedActions(SQLiteDatabase db) {
+    db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
+    db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());    
+  }
+
   private static void addGeneralLogLevels(SQLiteDatabase db) {
     db.execSQL(LogGeneralDbAdapter.ADD_LEVEL_COLUMN);
+  }
+
+  private static void addInternetAndServiceAvailableEvents(SQLiteDatabase db) {
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db);
+    Cursor cursor = registeredAppDbAdapter.fetchAll(OmniAction.APP_NAME, null, null, null, null, null);
+    cursor.moveToFirst();
+    long appId = CursorHelper.getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID);
+    cursor.close();
+    
+    RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
+    registeredEventDbAdapter.insert(InternetAvailableEvent.EVENT_NAME, appId);
+    registeredEventDbAdapter.insert(ServiceAvailableEvent.EVENT_NAME, appId);
   }
 
   private static void addPhoneNumberNotEqualsFilter(SQLiteDatabase db) {
@@ -538,87 +554,4 @@ public class DbMigration {
         OmniPhoneNumber.Filter.NOTEQUALS.displayName, dataTypeIdPhoneNumber, dataTypeIdPhoneNumber);
   }
 
-  /**
-   * Convert all time and location entries in the attributes table to general attributes.
-   * 
-   * @param db
-   *          the database instance to work with
-   */
-  private static void addSupprotForGlobalEventAttributes(SQLiteDatabase db) {
-    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(
-        db);
-
-    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
-
-    // Query is unique enough to return one entry
-    Cursor cursor = dataTypeDbAdapter.fetchAll(OmniDate.DB_NAME, OmniDate.class.getName());
-    cursor.moveToFirst();
-    long dataTypeIdDate = CursorHelper.getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
-
-    long dateAttributeID = eventAttributeDbAdapter.insertGeneralAttribute(Event.ATTRIBUTE_TIME,
-        dataTypeIdDate);
-
-    // Query is unique enough to return one entry
-    cursor = dataTypeDbAdapter.fetchAll(OmniArea.DB_NAME, OmniArea.class.getName());
-    cursor.moveToFirst();
-    long dataTypeIdArea = CursorHelper.getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
-
-    long areaAttributeID = eventAttributeDbAdapter.insertGeneralAttribute(Event.ATTRIBUTE_LOCATION,
-        dataTypeIdArea);
-
-    cursor.close();
-
-    RuleFilterDbAdapter ruleFilterDbAdapter = new RuleFilterDbAdapter(db);
-    RuleActionParameterDbAdapter ruleActionParamDbAdapter = new RuleActionParameterDbAdapter(db);
-
-    generalizeAttribute(SMSReceivedEvent.ATTRIB_MESSAGE_TIME, Event.ATTRIBUTE_TIME,
-        dateAttributeID, eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
-    generalizeAttribute(PhoneCallEvent.ATTRIBUTE_TIMESTAMP, Event.ATTRIBUTE_TIME, dateAttributeID,
-        eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
-    generalizeAttribute(LocationChangedEvent.ATTRIBUTE_CURRENT_LOCATION, Event.ATTRIBUTE_LOCATION,
-        areaAttributeID, eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
-    generalizeAttribute(TimeTickEvent.ATTRIBUTE_CURRENT_TIME, Event.ATTRIBUTE_TIME,
-        dateAttributeID, eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
-  }
-
-  private static void generalizeAttribute(String attributeName, String newAttributeName,
-      long newAttributeDbID, RegisteredEventAttributeDbAdapter eventAttributeDbAdapter,
-      RuleFilterDbAdapter ruleFilterDbAdapter, RuleActionParameterDbAdapter ruleActionParamDbAdapter) {
-
-    Cursor cursor = eventAttributeDbAdapter.fetchAll(attributeName, null, null);
-
-    while (cursor.moveToNext()) {
-      // Delete the entry in the Event Attribute Table
-      long primaryKey = CursorHelper.getLongFromCursor(cursor,
-          RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID);
-      eventAttributeDbAdapter.delete(primaryKey);
-
-      // Update the Event Attribute ID on existing rule filters to the more general version
-      ContentValues values = new ContentValues();
-      values.put(RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID, newAttributeDbID);
-      ruleFilterDbAdapter.sqlUpdate(values, RuleFilterDbAdapter.KEY_EVENTATTRIBUTEID + " = "
-          + primaryKey);
-
-      // Update all attribute tags in existing rule parameters to the general version
-      SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-      queryBuilder.appendWhere(RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA
-          + " LIKE \"%<" + attributeName + ">%\"");
-
-      Cursor paramCursor = ruleActionParamDbAdapter.sqlQuery(queryBuilder);
-      while (paramCursor.moveToNext()) {
-        long paramID = CursorHelper.getLongFromCursor(paramCursor,
-            RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERID);
-
-        String newParamData = CursorHelper.getStringFromCursor(paramCursor,
-            RuleActionParameterDbAdapter.KEY_RULEACTIONPARAMETERDATA).replaceAll(
-            "<" + attributeName + ">", "<" + newAttributeName + ">");
-
-        ruleActionParamDbAdapter.update(paramID, null, null, newParamData);
-      }
-
-      paramCursor.close();
-    }
-
-    cursor.close();
-  }
 }

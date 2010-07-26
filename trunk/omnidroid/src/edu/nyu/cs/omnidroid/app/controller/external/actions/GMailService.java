@@ -20,6 +20,7 @@ import java.io.Writer;
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
+import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
@@ -44,13 +45,15 @@ public class GMailService extends Service {
   private RegisteredAppDbAdapter.AccountCredentials account;
   private String to;
   private String subject;
-  private String body;
+  private String body;  
+  private Intent intent;
   private boolean notificationIsOn;
 
   /**
    * @return null because client can't bind to this service
    */
   @Override
+  
   public IBinder onBind(Intent intent) {
     return null;
   }
@@ -72,13 +75,12 @@ public class GMailService extends Service {
   @Override
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
-
+    this.intent = intent;
     extractUserCredentials();
     to = intent.getStringExtra(SendGmailAction.PARAM_TO);
     subject = intent.getStringExtra(SendGmailAction.PARAM_SUBJECT);
     body = intent.getStringExtra(SendGmailAction.PARAM_BODY);
     notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, true);
-
     send();
   }
 
@@ -100,6 +102,7 @@ public class GMailService extends Service {
     } catch (IOException e) {
       showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
           + getString(R.string.no_network));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_INTERNET);      
       return;
     }
 
@@ -109,6 +112,7 @@ public class GMailService extends Service {
     } catch (IOException e) {
       showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
           + getString(R.string.authentication_error));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
       return;
     }
 
@@ -136,10 +140,13 @@ public class GMailService extends Service {
     } catch (IOException e) {
       showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
           + getString(R.string.server_error));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
       return;
     }
     
     showNotification(getString(R.string.gmail_sent));
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
+    
   }
 
   /**

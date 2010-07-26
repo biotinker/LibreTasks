@@ -36,8 +36,8 @@ public class SendGmailAction extends Action {
   public static final String APP_NAME = "GMAIL";
   public static final String GMAIL_INTENT = "omnidroid.intent.action.GMAIL_SEND";
 
-  @Deprecated public static final String PARAM_USERNAME = "Username";
-  @Deprecated public static final String PARAM_PASSWORD = "Password";
+  public static final String PARAM_USERNAME = "Username"; // @deprecated
+  public static final String PARAM_PASSWORD = "Password"; // @deprecated
   public static final String PARAM_USER_ACCOUNT = "UserAccount";
   public static final String PARAM_TO = "EmailTo";
   public static final String PARAM_SUBJECT = "Subject";
@@ -66,10 +66,12 @@ public class SendGmailAction extends Action {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent(getActionName());
-    intent.putExtra(accountID, accountID);
+    intent.putExtra(PARAM_USER_ACCOUNT, accountID);
     intent.putExtra(PARAM_TO, to);
     intent.putExtra(PARAM_SUBJECT, subject);
     intent.putExtra(PARAM_BODY, body);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }

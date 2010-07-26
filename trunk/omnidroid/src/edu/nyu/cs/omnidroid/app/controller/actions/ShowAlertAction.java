@@ -49,6 +49,8 @@ public class ShowAlertAction extends OmniAction {
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
     intent.putExtra(PARAM_ALERT_MESSAGE, message);
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_ALERT_ACTION);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     return intent;
   }
 

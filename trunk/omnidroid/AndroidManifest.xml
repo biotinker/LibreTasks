@@ -136,15 +136,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".controller.util.ShowWebsiteActivity"
-                  android:label="@string/show_website_title">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 		<!--  End UI activity definitions. -->
 
 		<!-- Receiver that runs when Android or Omnidroid starts/restarts -->	
@@ -241,7 +232,13 @@
 			<intent-filter>
 				<action android:name="TIME_TICK" />
 			</intent-filter>
-		</receiver>
+		    <intent-filter>
+		        <action android:name="SERVICE_AVAILABLE"></action>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="NETWORK_AVAILABLE"></action>
+            </intent-filter>
+        </receiver>
 
 		<!-- Services that run to fire actions -->
 		<service android:name=".controller.external.actions.SMSService">
@@ -265,9 +262,19 @@
 				<action android:name="omnidroid.intent.action.TWITTER_UPDATE" />
 			</intent-filter>
 		</service>
+		<service android:name=".controller.external.actions.PhoneCallService">
+		    <intent-filter>
+		        <action android:name="omnidroid.intent.action.PHONE_CALL"></action>
+		    </intent-filter>
+		</service>
+		<service android:name=".controller.external.actions.ShowWebsiteService">
+        <intent-filter>
+            <action android:name="omnidroid.intent.action.SHOW_WEBSITE"></action>
+        </intent-filter>
+    </service>
 		<!-- End Services that run to fire actions -->
-		
-	</application>
+        
+    </application>
 
 	<!-- Permissions that Omnidroid registers so it can access more complex functionality
 -->

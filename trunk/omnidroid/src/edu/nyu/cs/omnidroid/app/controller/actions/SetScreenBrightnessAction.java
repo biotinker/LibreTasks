@@ -62,6 +62,8 @@ public class SetScreenBrightnessAction extends OmniAction {
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
     intent.putExtra(PARAM_BRIGHTNESS, brightness);
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_SCREEN_BRIGHTNESS);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     return intent;
   }
 

@@ -39,6 +39,8 @@ public class SetPhoneSilentAction extends OmniAction {
     Intent intent = new Intent();
     intent.setClassName(OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_PHONE_SILENT);
+    intent.putExtra(DATABASE_ID, databaseId);
+    intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, notificationIsOn);
     return intent;
   }

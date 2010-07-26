@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.Action;
+import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
@@ -46,6 +47,8 @@ public class UpdateTwitterStatusService extends Service {
   private RegisteredAppDbAdapter.AccountCredentials account;
   private String message;
   private boolean notificationIsOn;
+  
+  private Intent intent;
  
   /**
    * @return null because client can't bind to this service
@@ -69,6 +72,7 @@ public class UpdateTwitterStatusService extends Service {
   @Override
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
+    this.intent = intent;
     
     extractUserCredentials();
     message = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_MESSAGE);
@@ -86,22 +90,34 @@ public class UpdateTwitterStatusService extends Service {
     SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
     String time = dateFormat.format(calendar.getTime());
     message += " " + time;
-    try{   
+    try {   
       Twitter twitter = new Twitter(account.accountName, account.credential);
       //TODO : To set the source to "Omnidroid" we first have to register the app with Twitter.
       //       http://twitter.com/apps/new (service was down when I tried)
       twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
-    }catch(E401 e){
-       showNotification(getString(R.string.twitter_failed) + getString(R.string.separator_comma)
-           +getString(R.string.authentication_error));  
-       return;
-    } catch (TwitterException e) {
-    	  showNotification(getString(R.string.twitter_failed));
-    		return;
-    }
-    
-    showNotification(getString(R.string.twitter_updated));
+      showNotification(getString(R.string.twitter_updated));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
+    } catch(E401 e){
+      showNotification(getString(R.string.twitter_failed) + getString(R.string.separator_comma)
+          + getString(R.string.authentication_error));  
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+    } catch (E403 e) {
+      showNotification(getString(R.string.twitter_failed));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+    } catch (E404 e) {
+      showNotification(getString(R.string.twitter_failed));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+    } catch (E50X e) {
+      showNotification(getString(R.string.twitter_failed));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+    } catch (RateLimit e) {
+      showNotification(getString(R.string.twitter_failed));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+    } catch (Timeout e) {
+      showNotification(getString(R.string.twitter_failed));
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+    }    
   }
   
   private  void showNotification(String message) {

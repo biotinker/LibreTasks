@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2009 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 package edu.nyu.cs.omnidroid.app.controller;
 
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.InternetAvailableEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.ServiceAvailableEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemBroadcastedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SystemEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.TimeTickEvent;
@@ -63,7 +65,11 @@ public class IntentParser {
       event = new CallEndedEvent(intent);
     } else if (intent.getAction().equals(TimeTickEvent.ACTION_NAME)) {
       event = new TimeTickEvent(intent);
-    } else { // system events
+    } else if (intent.getAction().equals(ServiceAvailableEvent.ACTION_NAME)) {
+      event = new ServiceAvailableEvent(intent);
+    } else if (intent.getAction().equals(InternetAvailableEvent.ACTION_NAME)) {
+      event = new InternetAvailableEvent(intent);
+    } else {
       for (SystemEvent e : SystemEvent.values()) {
         if (intent.getAction().equals(e.ACTION_NAME)) {
           Log.d("IntentParser:", e.ACTION_NAME);
