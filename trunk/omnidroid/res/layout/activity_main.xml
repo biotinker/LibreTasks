@@ -11,7 +11,19 @@
 	    android:layout_height="wrap_content" 
 	    android:text="@string/welcome"
 	    android:layout_gravity="center"
-	    android:layout_marginBottom="60dip"
+	    android:layout_marginBottom="10dip"
+	    />
+
+	<TextView  
+	    android:id="@+id/activity_main_omnidroidDisabled" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/omnidroid_is_disabled"
+	    android:textSize="20sp"
+	    android:textColor="@color/omnidroid_is_disabled"
+	    android:layout_gravity="center"
+	    android:layout_marginBottom="50dip"
+	    android:visibility="invisible"
 	    />
 	    
 	<Button 

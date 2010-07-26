@@ -14,4 +14,9 @@
     
     <!-- Dull yellow color for selected+disabled rule in ActivitySavedRules. -->
     <color name="list_element_text_selected_rule_disabled">#CCFFDD1A</color>
+
+    <!-- Red color for warning that omnidroid is disabled -->
+    <color name="omnidroid_is_disabled">#FF0000</color>
+
+
 </resources>
