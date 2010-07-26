@@ -45,4 +45,33 @@
         android:key="@string/pref_key_reset_db"
         android:summary="@string/reset_db_desc"
         android:title="@string/reset_db" />
+     
+    <PreferenceScreen 
+        android:title="@string/signature_settings"
+        android:summary="@string/signature_desc" >
+        <CheckBoxPreference
+            android:key="@string/pref_key_sms_signature"
+            android:defaultValue="true"
+            android:summary="@string/sms_signature_desc_off"
+            android:title="@string/sms_signature_title" />
+        <EditTextPreference 
+            android:key="@string/pref_key_sms_signature_settings"
+            android:title="@string/sms_signature_settings_title"
+            android:summary="@string/sms_signature_settings_desc"
+            android:dialogTitle="@string/sms_signature_title"
+            android:defaultValue="@string/sms_signature"
+            android:dialogMessage="@string/sms_signature_dialog_message"/>
+        <CheckBoxPreference
+            android:key="@string/pref_key_gmail_signature"
+            android:defaultValue="true"
+            android:summary="@string/gmail_signature_desc_off"
+            android:title="@string/gmail_signature_title" />
+        <EditTextPreference 
+            android:key="@string/pref_key_gmail_signature_settings"
+            android:title="@string/gmail_signature_settings_title"
+            android:summary="@string/gmail_signature_settings_desc"
+            android:dialogTitle="@string/gmail_signature_title"
+            android:defaultValue="@string/gmail_signature"
+            android:dialogMessage="@string/gmail_signature_dialog_message"/>
+    </PreferenceScreen>     
 </PreferenceScreen>
