@@ -42,7 +42,6 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.model.UIDbHelper;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelLog;
 
 /**
@@ -79,7 +78,8 @@ public class ActivityLogs extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_logs);
-
+    UIDbHelperStore.init(this);
+    
     // TODO(acase): Consider possibility of using a TabActivity instead.
     // Spinner (static initialization)
     KEY_ALL_LOGS = getString(R.string.all_logs);
@@ -174,25 +174,21 @@ public class ActivityLogs extends Activity {
   /** Called when an item of options menu is clicked */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    UIDbHelper dbHelper = new UIDbHelper(this);
     switch (item.getItemId()) {
     case MENU_CLEAR_EVENT_LOGS:
-      dbHelper.deleteEventLogs();
+      UIDbHelperStore.instance().db().deleteEventLogs();
       updateUI();
       return true;
     case MENU_CLEAR_ACTION_LOGS:
-      dbHelper = new UIDbHelper(this);
-      dbHelper.deleteActionLogs();
+      UIDbHelperStore.instance().db().deleteActionLogs();
       updateUI();
       return true;
     case MENU_CLEAR_GENERAL_LOGS:
-      dbHelper = new UIDbHelper(this);
-      dbHelper.deleteGeneralLogs();
+      UIDbHelperStore.instance().db().deleteGeneralLogs();
       updateUI();
       return true;
     case MENU_CLEAR_ALL_LOGS:
-      dbHelper = new UIDbHelper(this);
-      dbHelper.deleteAllLogs();
+      UIDbHelperStore.instance().db().deleteAllLogs();
       updateUI();
       return true;
     }
@@ -235,7 +231,7 @@ public class ActivityLogs extends Activity {
       } else if (logsSelected == KEY_GENERAL_LOGS) {
         logs = (ArrayList<ModelLog>) UIDbHelperStore.instance().db().getGeneralLogs();
       }
-
+     
       // Tell our user when empty
       if (logs.isEmpty()) {
         Toast.makeText(context, getString(R.string.no_logs), Toast.LENGTH_LONG).show();
