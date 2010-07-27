@@ -15,9 +15,13 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.Event;
 import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.OmniAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
@@ -65,12 +69,14 @@ public class DbMigration {
   /**
    * Migrate the database to its latest version
    * 
+   * @param context the context from DbHelper
+   * 
    * @param db
    *          the database to migrate
    * @param currentDbVersionNumber
    *          the version number of the current database before migrating
    */
-  public static void migrateToLatest(SQLiteDatabase db, int currentDbVersionNumber) {
+  public static void migrateToLatest(Context context, SQLiteDatabase db, int currentDbVersionNumber) {
     // Use standard Logger since DB may not be setup yet
     Log.i(TAG, "Migrating database from version " + currentDbVersionNumber);
     switch (currentDbVersionNumber) {
@@ -102,7 +108,9 @@ public class DbMigration {
     case 13:
       addFailedActions(db);
       addInternetAndServiceAvailableEvents(db);
-      
+    case 14:
+      setDefaultRules(context, db);
+
       /*
        * Insert new versions before this line and do not forget to update {@code
        * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
@@ -114,7 +122,158 @@ public class DbMigration {
       break;
     }
   }
-  
+
+  /**
+   * Set the default rules
+   * 
+   * @param context
+   *          the context
+   * 
+   * @param db
+   *          database
+   * 
+   */
+  private static void setDefaultRules(Context context, SQLiteDatabase db) {
+    final String TIME_NIGHT = "0001-01-01 00:00:00";
+    final String TIME_MORNING = "0001-01-01 09:00:00";
+    RuleDbAdapter ruleAdapter = new RuleDbAdapter(db);
+    RegisteredEventDbAdapter eventsAdapter = new RegisteredEventDbAdapter(db);
+    RegisteredActionDbAdapter actionAdapter = new RegisteredActionDbAdapter(db);
+    RuleActionDbAdapter ruleActionAdapter = new RuleActionDbAdapter(db);
+    RegisteredActionParameterDbAdapter actionParametersAdapter = new RegisteredActionParameterDbAdapter(
+        db);
+    RuleActionParameterDbAdapter ruleActionParametersAdapter = new RuleActionParameterDbAdapter(db);
+    RegisteredEventAttributeDbAdapter eventAttributesAdapter = new RegisteredEventAttributeDbAdapter(
+        db);
+    DataFilterDbAdapter dataFilterAdapter = new DataFilterDbAdapter(db);
+    RuleFilterDbAdapter ruleFilterAdapter = new RuleFilterDbAdapter(db);
+
+    // Set default rule: sent back sms "Busy, in meeting. Will get back to you later" when phone
+    // is ringing
+    Cursor phoneRingEventCursor = eventsAdapter.fetchAll(PhoneRingingEvent.EVENT_NAME, null);
+    if (phoneRingEventCursor.moveToNext()) {
+      long phoneRingEventID = getLongFromCursor(phoneRingEventCursor,
+          RegisteredEventDbAdapter.KEY_EVENTID);
+      String phoneRingToSMSRuleName = context.getString(R.string.phoneRingToSMSRuleName);
+      String phoneRingToSMSRuleDesc = context.getString(R.string.phoneRingToSMSRuleDesc);
+      long phoneToSMSRuleID = ruleAdapter.insert(phoneRingEventID, phoneRingToSMSRuleName,
+          phoneRingToSMSRuleDesc, false);
+      Cursor smsActionCursor = actionAdapter.fetchAll(SendSmsAction.ACTION_NAME, null);
+      if (smsActionCursor.moveToNext()) {
+        long smsActionID = getLongFromCursor(smsActionCursor,
+            RegisteredActionDbAdapter.KEY_ACTIONID);
+        long phoneToSMSRuleActionID = ruleActionAdapter.insert(phoneToSMSRuleID, smsActionID);
+        Cursor smsPhoneNOParameterCursor = actionParametersAdapter.fetchAll(
+            SendSmsAction.PARAM_PHONE_NO, smsActionID, null);
+        if (smsPhoneNOParameterCursor.moveToNext()) {
+          long smsPhoneNOParameterID = getLongFromCursor(smsPhoneNOParameterCursor,
+              RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID);
+          Cursor smsMessageParameterCursor = actionParametersAdapter.fetchAll(
+              SendSmsAction.PARAM_SMS, smsActionID, null);
+          if (smsMessageParameterCursor.moveToNext()) {
+            long smsMessageParameterID = getLongFromCursor(smsMessageParameterCursor,
+                RegisteredActionParameterDbAdapter.KEY_ACTIONPARAMETERID);
+            String phoneParameter = "<" + PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER + ">";
+            ruleActionParametersAdapter.insert(phoneToSMSRuleActionID, smsPhoneNOParameterID,
+                phoneParameter);
+            String PhoneRingToSMSRuleMessage = context
+                .getString(R.string.phoneRingToSMSRuleMessage);
+            ruleActionParametersAdapter.insert(phoneToSMSRuleActionID, smsMessageParameterID,
+                PhoneRingToSMSRuleMessage);
+          }
+          smsMessageParameterCursor.close();
+        }
+        smsPhoneNOParameterCursor.close();
+      }
+      smsActionCursor.close();
+    }
+    phoneRingEventCursor.close();
+
+    // Set default rule: Sleep during night, when time is after midnight set phone silent
+    // Set default rule: Wake up during daytime, when time is after 9am set phone loud
+    Cursor timeEventCursor = eventsAdapter.fetchAll(TimeTickEvent.EVENT_NAME, null);
+    if (timeEventCursor.moveToNext()) {
+      long timeEventID = getLongFromCursor(timeEventCursor, RegisteredEventDbAdapter.KEY_EVENTID);
+      Cursor timeAttributesCursor = eventAttributesAdapter.fetchAll(Event.ATTRIBUTE_TIME,
+          timeEventID, null);
+      if (timeAttributesCursor.moveToNext()) {
+        long timeAttrbutesID = getLongFromCursor(timeAttributesCursor,
+            RegisteredEventAttributeDbAdapter.KEY_EVENTATTRIBUTEID);
+        String timeToSilentRuleTime = TIME_NIGHT;
+        String timeToLoudRuleTime = TIME_MORNING;
+
+        // Set rule: Sleep during night
+        Cursor timeToSilentFilterCursor = dataFilterAdapter.fetchAll(null,
+            OmniDate.Filter.IS_EVERYDAY.displayName, null, null);
+        if (timeToSilentFilterCursor.moveToNext()) {
+          long timeToSilentFilterID = getLongFromCursor(timeToSilentFilterCursor,
+              DataFilterDbAdapter.KEY_DATAFILTERID);
+          String timeToSilentRuleName = context.getString(R.string.timeToSilentRuleName);
+          String timeToSilentRuleDesc = context.getString(R.string.timeToSilentRuleDesc);
+          long timeToSilentRuleID = ruleAdapter.insert(timeEventID, timeToSilentRuleName,
+              timeToSilentRuleDesc, false);
+          Cursor silentActionCursor = actionAdapter
+              .fetchAll(SetPhoneSilentAction.ACTION_NAME, null);
+          if (silentActionCursor.moveToNext()) {
+            long silentActionID = getLongFromCursor(silentActionCursor,
+                RegisteredActionDbAdapter.KEY_ACTIONID);
+            ruleActionAdapter.insert(timeToSilentRuleID, silentActionID);
+            ruleFilterAdapter.insert(timeToSilentRuleID, timeAttrbutesID, -1l,
+                timeToSilentFilterID, -1l, timeToSilentRuleTime);
+          }
+          silentActionCursor.close();
+        }
+        timeToSilentFilterCursor.close();
+
+        // Set rule: Wake up during daytime
+        Cursor timeToLoudFilterCursor = dataFilterAdapter.fetchAll(null,
+            OmniDate.Filter.IS_EVERYDAY.displayName, null, null);
+        if (timeToLoudFilterCursor.moveToNext()) {
+          long timeToLoudFilterID = getLongFromCursor(timeToLoudFilterCursor,
+              DataFilterDbAdapter.KEY_DATAFILTERID);
+          String timeToLoudRuleName = context.getString(R.string.timeToLoudRuleName);
+          String timeToLoudRuleDesc = context.getString(R.string.timeToLoudRuleDesc);
+          long timeToLoudRuleID = ruleAdapter.insert(timeEventID, timeToLoudRuleName,
+              timeToLoudRuleDesc, false);
+          Cursor loudActionCursor = actionAdapter.fetchAll(SetPhoneLoudAction.ACTION_NAME, null);
+          if (loudActionCursor.moveToNext()) {
+            long loudActionID = getLongFromCursor(loudActionCursor,
+                RegisteredActionDbAdapter.KEY_ACTIONID);
+            ruleActionAdapter.insert(timeToLoudRuleID, loudActionID);
+            ruleFilterAdapter.insert(timeToLoudRuleID, timeAttrbutesID, -1l, timeToLoudFilterID,
+                -1l, timeToLoudRuleTime);
+          }
+          loudActionCursor.close();
+        }
+        timeToLoudFilterCursor.close();
+      }
+      timeAttributesCursor.close();
+    }
+    timeEventCursor.close();
+
+    // Set default rule: Disable WiFi, when battery is low
+    Cursor batteryLowEventCursor = eventsAdapter.fetchAll(SystemEvent.BatteryLowEvent.EVENT_NAME,
+        null);
+    if (batteryLowEventCursor.moveToNext()) {
+      long batteryLowEventID = getLongFromCursor(batteryLowEventCursor,
+          RegisteredEventDbAdapter.KEY_EVENTID);
+      Cursor setWifiOffActionCursor = actionAdapter.fetchAll(TurnOffWifiAction.ACTION_NAME, null);
+      if (setWifiOffActionCursor.moveToNext()) {
+        long setWifiOffActionID = getLongFromCursor(setWifiOffActionCursor,
+            RegisteredActionDbAdapter.KEY_ACTIONID);
+        String batteryLowToSetWifiOffRuleName = context
+            .getString(R.string.batteryLowToSetWifiOffRuleName);
+        String batteryLowToSetWifiOffRuleDesc = context
+            .getString(R.string.batteryLowToSetWifiOffRuleDesc);
+        long batteryLowToSetWifiOffRuleID = ruleAdapter.insert(batteryLowEventID,
+            batteryLowToSetWifiOffRuleName, batteryLowToSetWifiOffRuleDesc, false);
+        ruleActionAdapter.insert(batteryLowToSetWifiOffRuleID, setWifiOffActionID);
+      }
+      setWifiOffActionCursor.close();
+    }
+    batteryLowEventCursor.close();
+  }
+
   /**
    * Create the initial version of the Omnidroid database along with prepopulated data.
    * 
