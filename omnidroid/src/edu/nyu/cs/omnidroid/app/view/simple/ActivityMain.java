@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import edu.nyu.cs.omnidroid.app.R;
@@ -178,14 +179,15 @@ public class ActivityMain extends Activity {
   @Override
   public void onResume() {
     super.onResume();
-    TextView tv = (TextView) findViewById(R.id.activity_main_omnidroidDisabled);
+    LinearLayout ll = (LinearLayout) findViewById(R.id.activity_main_omnidroidDisabled);
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
     if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
-      tv.setVisibility(TextView.INVISIBLE);
+      ll.setVisibility(LinearLayout.INVISIBLE);
     } else {
-      tv.setVisibility(TextView.VISIBLE);
+      ll.setVisibility(LinearLayout.VISIBLE);
     }
   }
+ 
   
   /** Create a options menu for the main screen */
   @Override
