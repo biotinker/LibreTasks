@@ -27,6 +27,11 @@ public class LocationChangedEvent extends Event {
   public static final String APPLICATION_NAME = "GPS";
   public static final String EVENT_NAME = "GPS Location Changed";
   public static final String ACTION_NAME = "LOCATION_CHANGED";
+
+  /**
+   * This constant is already deprecated, use the the global attribute
+   * {@link Event#ATTRIBUTE_LOCATION} instead.
+   */
   @Deprecated public static final String ATTRIBUTE_CURRENT_LOCATION = "Current Location";
 
   /** Cache any values that are requested because it is likely they will be asked for again */

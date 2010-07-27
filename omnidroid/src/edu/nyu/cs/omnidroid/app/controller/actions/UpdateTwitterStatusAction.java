@@ -32,8 +32,10 @@ public class UpdateTwitterStatusAction extends Action {
   public static final String APP_NAME = "Twitter";
   public static final String TWITTER_INTENT = "omnidroid.intent.action.TWITTER_UPDATE";
 
-  public static final String PARAM_USERNAME = "Username"; // @deprecated
-  public static final String PARAM_PASSWORD = "Password"; // @deprecated
+  // Username is no longer used as part of the action parameter.
+  @Deprecated public static final String PARAM_USERNAME = "Username";
+  // Password is no longer used as part of the action parameter.
+  @Deprecated public static final String PARAM_PASSWORD = "Password";
   public static final String PARAM_USER_ACCOUNT = "UserAccount";
   public static final String PARAM_MESSAGE = "Message";
   

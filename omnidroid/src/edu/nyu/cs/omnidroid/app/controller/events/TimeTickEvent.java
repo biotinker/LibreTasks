@@ -27,6 +27,11 @@ public class TimeTickEvent extends Event {
   //TODO(Roger): store human read strings in String.xml
   public static final String APPLICATION_NAME = "Android";
   public static final String EVENT_NAME = "Time is";
+  
+  /**
+   * This constant is already deprecated, use the the global attribute {@link Event#ATTRIBUTE_TIME}
+   * instead.
+   */
   @Deprecated public static final String ATTRIBUTE_CURRENT_TIME = "Current Time";
   public static final String ACTION_NAME = "TIME_TICK";
 
