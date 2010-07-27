@@ -31,9 +31,11 @@ public abstract class PhoneCallEvent extends Event {
    * Name for the attribute for storing the time when this event occurred.
    * 
    * Note: This was originally named ATTRIBUTE_PHONE_RING_TIME, and the string literal was left as
-   * is to make it compatible with existing databases.
+   * is to make it compatible with existing databases. This constant is already deprecated, use the
+   * the global attribute {@link Event#ATTRIBUTE_TIME} instead.
    */
-  @Deprecated public static final String ATTRIBUTE_TIMESTAMP = "Phone Ring Time";
+  @Deprecated
+  public static final String ATTRIBUTE_TIMESTAMP = "Phone Ring Time";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;

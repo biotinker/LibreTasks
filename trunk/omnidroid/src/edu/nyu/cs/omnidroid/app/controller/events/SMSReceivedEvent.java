@@ -32,6 +32,11 @@ public class SMSReceivedEvent extends Event {
   /** Attribute field names */
   public static final String ATTRIB_PHONE_NO = "SMS Phonenumber";
   public static final String ATTRIB_MESSAGE_TEXT = "SMS Text";
+
+  /**
+   * This constant is already deprecated, use the the global attribute {@link Event#ATTRIBUTE_TIME}
+   * instead.
+   */
   @Deprecated public static final String ATTRIB_MESSAGE_TIME = "SMS Time";
 
   /** Cache any values that are requested because it is likely they will be asked for again */
