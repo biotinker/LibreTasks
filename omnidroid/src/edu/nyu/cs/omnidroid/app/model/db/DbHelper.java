@@ -27,7 +27,7 @@ import edu.nyu.cs.omnidroid.app.controller.util.IOUtil;
  * This class extends SQLiteOpenHelper to handle creating/open/close database, creating/deleting
  * tables and migrations.
  */
-public class DbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper  {
   public static class AppName {
     public static final String SMS = "SMS";
     public static final String PHONE = "Phone";
@@ -39,7 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
   private static final String TAG = DbHelper.class.getName();
 
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 14;
+  private static final int DATABASE_VERSION = 15;
 
   private static final String DATABASE_NAME = "omnidroid";
   private static final String DATABASE_NAME_BACKUP = "omnidroid_backup";
@@ -57,13 +57,13 @@ public class DbHelper extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase db) {
     // If the first install, upgrade starting from DB version 1
-    DbMigration.migrateToLatest(db, 1);
+    DbMigration.migrateToLatest(context, db, 1);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     // If upgrading, upgrade starting from the last version of the DB
-    DbMigration.migrateToLatest(db, oldVersion);
+    DbMigration.migrateToLatest(context, db, oldVersion);
   }
 
   /**

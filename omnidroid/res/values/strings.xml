@@ -241,4 +241,15 @@
     <string name="enable_omnidroid_dialog_msg">Are you sure you want to enable Omnidroid?</string>
     <string name="disable_omnidroid_dialog_msg">Are you sure you want to disable Omnidroid?</string>
     
+    <!-- names, descriptions and parameters for default rules -->
+    <string name="phoneRingToSMSRuleName">Auto Reply SMS</string>
+    <string name="phoneRingToSMSRuleDesc">Reply SMS with \'Busy in Meeting\' when phone is ringing</string>
+    <string name="phoneRingToSMSRuleMessage">Busy, in meeting. Will get back to you later</string>
+    <string name="timeToSilentRuleName">Set Phone Silent</string>
+    <string name="timeToSilentRuleDesc">Set phone silent after midnight</string>
+    <string name="timeToLoudRuleName">Set Phone Loud</string>
+    <string name="timeToLoudRuleDesc">Set phone loud after 9AM</string>
+    <string name="batteryLowToSetWifiOffRuleName">Turn off WiFi</string>
+    <string name="batteryLowToSetWifiOffRuleDesc">Turn off WiFi when battery is low</string>
+    
 </resources>
