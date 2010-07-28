@@ -70,7 +70,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
   public static final int REQUEST_SET_RULE_NAME = 4;
   /** Return code for rule building activity. */
   public static final int REQUEST_ADD_FILTERS_AND_ACTIONS = 5;
-  
+
   /** Result codes for this activity */
   /** Result code for saving a rule successfully. */
   public static final int RESULT_RULE_SAVED = 1;
@@ -82,7 +82,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
 
-  private ListView listview;
+  private ListView listView;
   private AdapterRule adapterRule;
 
   /** Called when the activity is first created. */
@@ -100,7 +100,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
     // Restore UI state if possible.
     state = getSharedPreferences(ActivityChooseFiltersAndActions.KEY_STATE,
         Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
-    listview.setItemChecked(state.getInt(KEY_PREF, 0), true);
+    listView.setItemChecked(state.getInt(KEY_PREF, 0), true);
   }
 
   protected void onPause() {
@@ -108,7 +108,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
     // Save UI state.
     SharedPreferences.Editor prefsEditor = state.edit();
-    prefsEditor.putInt(KEY_PREF, listview.getCheckedItemPosition());
+    prefsEditor.putInt(KEY_PREF, listView.getCheckedItemPosition());
     prefsEditor.commit();
   }
 
@@ -119,7 +119,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       // Did the user construct a valid filter? If so add it to the rule.
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
-        adapterRule.addItemToParentPosition(listview.getCheckedItemPosition(), RuleBuilder
+        adapterRule.addItemToParentPosition(listView.getCheckedItemPosition(), RuleBuilder
             .instance().getChosenRuleFilter());
       }
       RuleBuilder.instance().resetFilterPath();
@@ -129,7 +129,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       // Did the user modify a valid filter? If so replace it in the rule.
       if (RuleBuilder.instance().getChosenRuleFilter() != null) {
         // Add the filter to the rule builder and the UI tree.
-        adapterRule.replaceItem(listview.getCheckedItemPosition(), RuleBuilder.instance()
+        adapterRule.replaceItem(listView.getCheckedItemPosition(), RuleBuilder.instance()
             .getChosenRuleFilter());
       }
       RuleBuilder.instance().resetFilterPath();
@@ -139,7 +139,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       // Did the user construct a valid action? If so add it to the rule.
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
-        adapterRule.addItemToParentPosition(listview.getCheckedItemPosition(), RuleBuilder
+        adapterRule.addItemToParentPosition(listView.getCheckedItemPosition(), RuleBuilder
             .instance().getChosenRuleAction());
       }
       RuleBuilder.instance().resetActionPath();
@@ -149,7 +149,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
       // Did the user modify a valid action? If so replace it in the rule.
       if (RuleBuilder.instance().getChosenRuleAction() != null) {
         // Add the action to the rule builder and the UI tree.
-        adapterRule.replaceItem(listview.getCheckedItemPosition(), RuleBuilder.instance()
+        adapterRule.replaceItem(listView.getCheckedItemPosition(), RuleBuilder.instance()
             .getChosenRuleAction());
       }
       RuleBuilder.instance().resetActionPath();
@@ -167,17 +167,17 @@ public class ActivityChooseFiltersAndActions extends Activity {
   }
 
   private void initializeListView() {
-    listview = (ListView) findViewById(R.id.activity_choosefiltersandactions_listview);
+    listView = (ListView) findViewById(R.id.activity_choosefiltersandactions_listview);
 
-    adapterRule = new AdapterRule(this, listview);
+    adapterRule = new AdapterRule(this, listView);
 
-    listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-    listview.setAdapter(adapterRule);
+    listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+    listView.setAdapter(adapterRule);
 
     // Set the adapter to render the rule stored in RuleBuilder.
     // It may be a brand new rule or a saved rule being edited.
     adapterRule.setRule(RuleBuilder.instance().getRule());
-    registerForContextMenu(listview);
+    registerForContextMenu(listView);
   }
 
   /** Create an options menu */
@@ -220,12 +220,15 @@ public class ActivityChooseFiltersAndActions extends Activity {
   @Override
   public boolean onContextItemSelected(MenuItem item) {
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    int selectedItemPosition = info.position;
+    listView.setItemChecked(selectedItemPosition, true); // Set the chosen item as selected
+
     switch (item.getItemId()) {
     case MENU_EDIT:
-      editItem(info.position);
+      editItem(selectedItemPosition);
       return true;
     case MENU_DELETE:
-      confirmDeleteItem(info.position);
+      confirmDeleteItem(selectedItemPosition);
       return true;
     default:
       return super.onContextItemSelected(item);
@@ -272,7 +275,7 @@ public class ActivityChooseFiltersAndActions extends Activity {
 
   private OnClickListener listenerBtnClickAddFilter = new OnClickListener() {
     public void onClick(View v) {
-      ModelItem selectedItem = adapterRule.getItem(listview.getCheckedItemPosition());
+      ModelItem selectedItem = adapterRule.getItem(listView.getCheckedItemPosition());
       if ((selectedItem instanceof ModelEvent) || (selectedItem instanceof ModelRuleFilter)) {
         // Now we present the user with a list of attributes they can
         // filter on for their chosen root event.
