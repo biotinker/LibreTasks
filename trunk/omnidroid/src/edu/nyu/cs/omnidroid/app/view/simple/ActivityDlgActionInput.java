@@ -287,6 +287,8 @@ public class ActivityDlgActionInput extends Activity {
 
     public DlgAttributes(Context context, ArrayList<ModelAttribute> attributes) {
       super(context);
+      
+      selectedIndex = -1;
       setContentView(R.layout.dlg_attributes_for_action);
       setTitle("Attributes");
 
@@ -324,7 +326,15 @@ public class ActivityDlgActionInput extends Activity {
       }
 
       public ModelAttribute getItem(int position) {
-        return attributes.get(position);
+        ModelAttribute item;
+        
+        try {
+          item = attributes.get(position);
+        } catch (IndexOutOfBoundsException ex) {
+          item = null;
+        }
+        
+        return item; 
       }
 
       public long getItemId(int position) {
