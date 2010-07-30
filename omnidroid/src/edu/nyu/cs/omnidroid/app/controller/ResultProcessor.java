@@ -17,7 +17,10 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.model.FailedActionsDbHelper;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
 /**
  * This class processes results after action is executed. 
@@ -50,42 +53,54 @@ public class ResultProcessor {
    * @param result
    *        integer identifying success or cause of failure
    */
-  public static void process(Context context, Intent intent, int result) {
+  public static void process(Context context, Intent intent, int result, String message) {
     FailedActionsDbHelper failedActionsDbHelper = new FailedActionsDbHelper(context);
     String actionType = intent.getStringExtra(Action.ACTION_TYPE);
     long databaseId = intent.getLongExtra(Action.DATABASE_ID, -1L);
-    //TODO add support for 3rd party actions
-    
+    boolean showNotification = intent.getBooleanExtra(Action.NOTIFICATION, true);
+    //TODO add support for 3rd party actions 
+       
     switch (result) {
     case RESULT_SUCCESS :
-      if (actionType == Action.RULE_ACTION) {
+      if (actionType.equals(Action.RULE_ACTION)) {
         //TODO move action log here
-      } else if (actionType == Action.FAILED_ACTION) {
+      } else if (actionType.equals(Action.FAILED_ACTION)) {
         failedActionsDbHelper.delete(new Long(databaseId));
       }
+      notifyResult(context, showNotification, message);
       break;
     case RESULT_FAILURE_SERVICE:
     case RESULT_FAILURE_INTERNET:
     case RESULT_FAILURE_UNKNOWN:
       if (actionType.equals(Action.RULE_ACTION)) {
-        failedActionsDbHelper.insert(intent, result);
+        failedActionsDbHelper.insert(intent, result, message);
       } else if (actionType.equals(Action.FAILED_ACTION)) {
-        failedActionsDbHelper.update(intent, result);
+        failedActionsDbHelper.update(intent, result, message);
       } 
+      notifyResult(context, false, message);
       break;
     case RESULT_FAILURE_IRRECOVERABLE:
       if (actionType.equals(Action.FAILED_ACTION)) {
         failedActionsDbHelper.delete(databaseId);
       }
-      //TODO notify irrecoverable failure
+      notifyResult(context, showNotification, message);
       break;    
     default :
       failedActionsDbHelper.close();
       throw new IllegalArgumentException();
     }
     failedActionsDbHelper.close();
-    
   }
   
+  private static void notifyResult(Context context, boolean showNotification, String message){
+    if (message != null) {
+      if (showNotification) {
+        UtilUI.showNotification(context, UtilUI.NOTIFICATION_INFO, 
+            context.getString(R.string.omnidroid), message);
+      } else {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+      }
+    }
+  }
   
 }

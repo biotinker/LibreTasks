@@ -116,6 +116,8 @@ public class DbMigration {
       setDefaultRules(context, db);
     case 15:
       addSupportForGlobalEventAttributes(db);
+    case 16:
+      alterFailedActionsTable(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -129,6 +131,7 @@ public class DbMigration {
     }
   }
 
+ 
   /**
    * Set the default rules
    * 
@@ -808,4 +811,10 @@ public class DbMigration {
 
     cursor.close();
   }
+  private static void alterFailedActionsTable(SQLiteDatabase db) {
+   db.execSQL(FailedActionsDbAdapter.DATABASE_DROP);
+   db.execSQL(FailedActionsDbAdapter.DATABASE_CREATE);    
+  }
+
+  
 }

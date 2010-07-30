@@ -79,7 +79,7 @@ public class SendSmsAction extends Action {
     intent.putExtra(PARAM_SMS, sms);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
 
   }

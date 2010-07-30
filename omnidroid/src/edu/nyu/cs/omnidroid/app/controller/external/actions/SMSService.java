@@ -30,10 +30,8 @@ import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
-import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
 
 /**
  * This class automatically sends SMS when it receives SMS intent created by {@link SendSmsAction}
@@ -56,8 +54,8 @@ public class SMSService extends Service {
 
   private String phoneNumber;
   private String textMessage;
-  private boolean notificationIsOn;
 
+  private Intent actionIntent;
   /**
    * @return null because client can't bind to this service
    */
@@ -80,13 +78,13 @@ public class SMSService extends Service {
    */
   public void onStart(Intent intent, int startId) {
     super.onStart(intent, startId);
+    actionIntent = intent;
 
     sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT), 0);
     deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent(DELIVERED), 0);
 
     phoneNumber = intent.getStringExtra(SendSmsAction.PARAM_PHONE_NO);
     textMessage = intent.getStringExtra(SendSmsAction.PARAM_SMS);
-    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, false);
 
     Toast.makeText(this, "SMS Service Started", Toast.LENGTH_LONG).show();
 
@@ -95,28 +93,24 @@ public class SMSService extends Service {
       public void onReceive(Context context, Intent intent) {
         switch (getResultCode()) {
         case Activity.RESULT_OK:
-          showNotification(getString(R.string.sms_sent));
-          ResultProcessor.process(context, intent, ResultProcessor.RESULT_SUCCESS);
+          ResultProcessor.process(context, actionIntent, ResultProcessor.RESULT_SUCCESS,
+              getString(R.string.sms_sent));
           break;
         case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
-              + getString(R.string.generic_failure));
-          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+          ResultProcessor.process(context, actionIntent, ResultProcessor.RESULT_FAILURE_UNKNOWN, 
+              getString(R.string.sms_failed_generic_failure));
           break;
         case SmsManager.RESULT_ERROR_NO_SERVICE:
-          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
-              + getString(R.string.no_service));
-          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_SERVICE);
+          ResultProcessor.process(context, actionIntent, ResultProcessor.RESULT_FAILURE_SERVICE,
+              getString(R.string.sms_failed_no_service));
           break;
         case SmsManager.RESULT_ERROR_NULL_PDU:
-          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
-              + getString(R.string.null_pdu));
-          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+          ResultProcessor.process(context, actionIntent, ResultProcessor.RESULT_FAILURE_UNKNOWN, 
+              getString(R.string.sms_failed_null_pdu));
           break;
         case SmsManager.RESULT_ERROR_RADIO_OFF:
-          showNotification(getString(R.string.sms_not_sent) + getString(R.string.separator_comma)
-              + getString(R.string.radio_off));
-          ResultProcessor.process(context, intent, ResultProcessor.RESULT_FAILURE_SERVICE);
+          ResultProcessor.process(context, actionIntent, ResultProcessor.RESULT_FAILURE_SERVICE, 
+              getString(R.string.sms_failed_radio_off));
           break;
         }
       }
@@ -142,18 +136,6 @@ public class SMSService extends Service {
         }
       }
     }, PhoneStateListener.LISTEN_CALL_STATE);
-  }
-  private  void showNotification(String message) {
-    if (notificationIsOn) {
-      Intent intent = new Intent();
-      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
-      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
-      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
-      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
-      startService(intent);
-    } else {
-      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
   }
   
   @Override

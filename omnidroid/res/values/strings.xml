@@ -150,6 +150,8 @@
     <string name="edit_rule">Edit Rule</string>
     <string name="delete_rule">Delete Rule</string>
     <string name="toggle_rule">Toggle Rule</string>
+    <string name="enable_notification">Enable Notification</string>
+    <string name="disable_notification">Disable Notification</string>
 
     <!--  UI Login -->
     <string name="setup_account">Setup Account</string>
@@ -217,25 +219,28 @@
     
     
     <!-- message -->
-    <string name="authentication_error">Authentication  error</string>
+    <string name="gmail_failed_no_network">Send GMail failed: No network.</string>
+    <string name="gmail_failed_authentication_error">Send GMail failed: Authentication error.</string>
+    <string name="gmail_failed_server_error">Send GMail failed: Server error.</string>
+    <string name="gmail_sent">GMail sent</string>   
+    <string name="sms_sent">SMS sent</string>
+    <string name="sms_failed_no_service">SMS sending failed: No service</string>
+    <string name="sms_failed_generic_failure">SMS sending failed Generic failure</string>
+    <string name="sms_failed_null_pdu">SMS sending failed: Null PDU</string>
+    <string name="sms_failed_radio_off">SMS sending failed: Radio off</string>
+    <string name="twitter_failed_authentication_error">Twitter status update failed: Authentication error</string>
     <string name="twitter_updated">Twitter status updated</string>
     <string name="twitter_failed">Twitter status update failed</string>
-    <string name="gmail_failed">Send GMail failed</string>
-    <string name="no_network">No network</string>
-    <string name="server_error">Server error</string>
-    <string name="gmail_sent">GMail sent</string>
-    <string name="separator_comma">, </string>
-    <string name="sms_sent">SMS sent</string>
-    <string name="sms_not_sent">SMS not sent</string>
-    <string name="generic_failure">Generic failure</string>
-    <string name="no_service">No service</string>
-    <string name="null_pdu">Null PDU</string>
-    <string name="radio_off">Radio off</string>
     <string name="phone_set_loud">Phone set loud</string>
     <string name="phone_set_silent">Phone set silent</string>
     <string name="phone_set_on_vibrate">Phone set on vibrate</string>
     <string name="wifi_turned_on">Wifi was turned on</string>
     <string name="wifi_turned_off">Wifi was turned off</string>
+    <string name="phone_call">Phone call was made</string>
+    <string name="phone_call_failed">Phone call failed: No service</string>
+    <string name="website_action_failed_no_url">Website action failed: No web url provided by user</string>    
+    <string name="website_action_failed_bad_url">Website action failed: Bad url format</string>
+    <string name="website_action_failed_no_service">Website action failed: No service</string>
     
     <!-- Dialog  -->
     <string name="reset_db_dialog_msg">All user settings will be lost. Continue?</string>

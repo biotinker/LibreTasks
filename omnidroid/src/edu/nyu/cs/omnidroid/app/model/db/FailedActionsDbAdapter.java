@@ -15,6 +15,8 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,10 +38,12 @@ public class FailedActionsDbAdapter extends DbAdapter {
   public static final String KEY_RULEID = "FK_RuleID";
   public static final String KEY_ACTIONID = "FK_ActionID";
   public static final String KEY_FAILURE_TYPE = "failure_type";
+  public static final String KEY_MESSAGE = "messages";
+  public static final String KEY_TIMESTAMP = "timestamp";
   
   /* An array of all column names */
   public static final String[] KEYS = { KEY_FAILEDACTIONID, KEY_RULEID, KEY_ACTIONID, 
-      KEY_FAILURE_TYPE};
+      KEY_FAILURE_TYPE, KEY_MESSAGE, KEY_TIMESTAMP};
 
   /* Table name */
   private static final String DATABASE_TABLE = "FailedActions";
@@ -49,8 +53,11 @@ public class FailedActionsDbAdapter extends DbAdapter {
       + KEY_FAILEDACTIONID + " integer primary key autoincrement, " 
       + KEY_RULEID + " integer not null, " 
       + KEY_ACTIONID + " integer not null, "
-      + KEY_FAILURE_TYPE + " integer not null);";
+      + KEY_FAILURE_TYPE + " integer not null,"
+      + KEY_MESSAGE + " text, "
+      + KEY_TIMESTAMP + " integer not null);";
   protected static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + DATABASE_TABLE;
+  
 
   /**
    * Constructor.
@@ -69,13 +76,15 @@ public class FailedActionsDbAdapter extends DbAdapter {
    *          is id of the rule it belongs to
    * @param actionID
    *          is id of its action type
+   * @param message 
+   *          notification message used if action never recovers.
    * @param failure
    *          integer identifying cause of failure
    * @return FailedActionID or -1 if creation failed.
    * @throws IllegalArgumentException
    *           if there is null within parameters
    */
-  public long insert(Long ruleID, Long actionID, Integer failureType) {
+  public long insert(Long ruleID, Long actionID, Integer failureType, String message) {
     if (ruleID == null || actionID == null || failureType == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
@@ -83,6 +92,8 @@ public class FailedActionsDbAdapter extends DbAdapter {
     initialValues.put(KEY_RULEID, ruleID);
     initialValues.put(KEY_ACTIONID, actionID);
     initialValues.put(KEY_FAILURE_TYPE, failureType);
+    initialValues.put(KEY_MESSAGE, message);
+    initialValues.put(KEY_TIMESTAMP, (new Date()).getTime());
     return database.insert(DATABASE_TABLE, null, initialValues);
   }
 
@@ -184,12 +195,14 @@ public class FailedActionsDbAdapter extends DbAdapter {
    *          is id of its action type, or null if not updating it.
    * @param failureType
    *          is type of failure or null if not updating it
+   * @param message 
+   *          notification message used if action never recovers.
    * @return true if success, or false otherwise.
    * @throws IllegalArgumentException
    *           if ruleActionID is null
    */
   public boolean update(Long ruleActionID, Long ruleID, Long actionID, 
-      Integer failureType) {
+      Integer failureType, String message) {
     if (ruleActionID == null) {
       throw new IllegalArgumentException("primary key null.");
     }
@@ -203,6 +216,9 @@ public class FailedActionsDbAdapter extends DbAdapter {
     if (failureType != null) {
       args.put(KEY_FAILURE_TYPE, failureType);
     }
+    if (message != null) {
+      args.put(KEY_MESSAGE, message);
+    }
 
     if (args.size() > 0) {
       return database.update(DATABASE_TABLE, args, KEY_FAILEDACTIONID + "=" + ruleActionID, 
@@ -210,8 +226,16 @@ public class FailedActionsDbAdapter extends DbAdapter {
     }
     return false;
   }
-
+  
   public static String getSqliteCreateStatement() {
     return DATABASE_CREATE;
+  }
+  
+  private static final int HOUR = 3600000;
+  
+  public Cursor fetchOldActions() {
+    long timeAnHourAgo = (new Date()).getTime() - HOUR;
+    return database.query(DATABASE_TABLE, KEYS, KEY_TIMESTAMP + "<" + timeAnHourAgo, 
+        null, null, null, null);
   }
 }

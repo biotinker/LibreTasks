@@ -41,7 +41,7 @@ public class SetPhoneLoudAction extends OmniAction {
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_PHONE_LOUD);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
 

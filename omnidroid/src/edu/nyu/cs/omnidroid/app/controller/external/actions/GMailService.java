@@ -17,21 +17,20 @@ package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
 import java.io.IOException;
 import java.io.Writer;
+
 import org.apache.commons.net.smtp.SMTPClient;
 import org.apache.commons.net.smtp.SMTPReply;
 import org.apache.commons.net.smtp.SimpleSMTPHeader;
-import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
-import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.Action;
-import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
-import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
-import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
+
 import android.app.Service;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
-import android.widget.Toast;
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
+import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
+import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 
 /**
  * This service can be used to send a GMail when receiving an intent created by
@@ -42,12 +41,12 @@ public class GMailService extends Service {
   /**
    * attributes field names
    */
+  
   private RegisteredAppDbAdapter.AccountCredentials account;
   private String to;
   private String subject;
   private String body;  
   private Intent intent;
-  private boolean notificationIsOn;
 
   /**
    * @return null because client can't bind to this service
@@ -80,7 +79,6 @@ public class GMailService extends Service {
     to = intent.getStringExtra(SendGmailAction.PARAM_TO);
     subject = intent.getStringExtra(SendGmailAction.PARAM_SUBJECT);
     body = intent.getStringExtra(SendGmailAction.PARAM_BODY);
-    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, true);
     send();
   }
 
@@ -100,9 +98,8 @@ public class GMailService extends Service {
       client.connect("smtp.gmail.com", 587);
       checkReply(client);
     } catch (IOException e) {
-      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
-          + getString(R.string.no_network));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_INTERNET);      
+      //ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_INTERNET, 
+       //   getString(R.string.gmail_failed_no_network));      
       return;
     }
 
@@ -110,9 +107,8 @@ public class GMailService extends Service {
       client.login("localhost", account.accountName, account.credential);
       checkReply(client);
     } catch (IOException e) {
-      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
-          + getString(R.string.authentication_error));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE, 
+          getString(R.string.gmail_failed_authentication_error));
       return;
     }
 
@@ -138,14 +134,12 @@ public class GMailService extends Service {
       client.disconnect();
 
     } catch (IOException e) {
-      showNotification(getString(R.string.gmail_failed) + getString(R.string.separator_comma)
-          + getString(R.string.server_error));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN, 
+          getString(R.string.gmail_failed_server_error));
       return;
     }
-    
-    showNotification(getString(R.string.gmail_sent));
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, 
+        getString(R.string.gmail_sent));
     
   }
 
@@ -161,17 +155,4 @@ public class GMailService extends Service {
       throw new IOException("Permanent SMTP error " + sc.getReplyCode());
     }
   }
-  private  void showNotification(String message) {
-    if (notificationIsOn) {
-      Intent intent = new Intent();
-      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
-      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
-      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
-      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
-      startService(intent);
-    } else {
-      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-  }
-
 }
