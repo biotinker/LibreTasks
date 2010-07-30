@@ -95,6 +95,7 @@ public class EventMonitoringService extends Service {
       }
     }
 
+    // TODO(acase): Move this to OmnidroidManager or BCReceiver
     // Let the user know we're activating rules
     CoreRulesDbHelper dbHelper = new CoreRulesDbHelper(this);
     int activeRuleCount = dbHelper.getActiveRuleCount();

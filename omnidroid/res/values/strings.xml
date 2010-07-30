@@ -65,7 +65,8 @@
     <string name="enable_msg">Enabling Omnidroid (%d rules activated)</string>
     <string name="disable_msg">Disabling Omnidroid (%d rules de-activated)</string>
     <string name="save_rule">Save Rule</string>
-    <string name="rule_saved">Rule saved ok!</string>
+    <string name="rule_saved">Rule saved successfully.</string>
+    <string name="omnidroid_is_disabled_alert">Omnidroid is disabled. Enable it for rules to take effect.</string> 
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>

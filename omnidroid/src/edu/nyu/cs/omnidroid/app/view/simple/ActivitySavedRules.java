@@ -23,6 +23,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.ContextMenu;
@@ -38,6 +39,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Toast;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.Rule;
 
@@ -71,9 +73,18 @@ public class ActivitySavedRules extends ListActivity {
     // Put our data together
     ruleListAdapter = new RuleListAdapter(this, R.layout.activity_saved_rules);
 
+    // Get access to the listview
+    listview = getListView();
+
+    // Alert user when Omnidroid is disabled
+    UIDbHelperStore.init(this);
+    SharedPreferences prefs = UIDbHelperStore.instance().db().getSharedPreferences();
+    if (!prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
+      Toast.makeText(this, R.string.omnidroid_is_disabled_alert, Toast.LENGTH_LONG).show();
+    }
+
     // Connect our data to the listview
     setListAdapter(ruleListAdapter);
-    listview = getListView();
 
     // Provide click to edit functionality
     listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

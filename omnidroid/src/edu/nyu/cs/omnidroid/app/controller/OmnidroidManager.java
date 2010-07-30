@@ -32,18 +32,21 @@ import android.preference.PreferenceManager;
 public class OmnidroidManager {
   private static final String TAG = OmnidroidManager.class.getSimpleName();
 
-  /** 
-   * @param context  context in which the action needs to be performed.
-   * @param enable <br> true if intended to enable;
-   *               <br> false if intended to disable
+  /**
+   * @param context
+   *          context in which the action needs to be performed.
+   * @param enable
+   * <br>
+   *          true if intended to enable; <br>
+   *          false if intended to disable
    */
   public static void enable(Context context, boolean enable) {
-    ComponentName componentName = new ComponentName(context.getPackageName(),
-        BCReceiver.class.getName());
+    ComponentName componentName = new ComponentName(context.getPackageName(), BCReceiver.class
+        .getName());
     if (enable) {
       Logger.w(TAG, "Starting Omnidroid.");
       // Start service monitors and set app to enabled state
-      context.getPackageManager().setComponentEnabledSetting(componentName, 
+      context.getPackageManager().setComponentEnabledSetting(componentName,
           PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
       EventMonitoringService.startService(context);
     } else {
@@ -51,12 +54,14 @@ public class OmnidroidManager {
       // Stop service monitors and set app to disabled state
       context.getPackageManager().setComponentEnabledSetting(componentName,
           PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-      EventMonitoringService.stopService(context);    
+      EventMonitoringService.stopService(context);
     }
-    
-    // Set Preference to enabled status in case we disable/enable Omnidroid on the code side.
-    // If status is changed from the code side, 
-    //then this ensures the status in ActivitySettings is updated as well.
+
+    /*
+     * Set Preference to enabled status in case we disable/enable Omnidroid on the code side. If
+     * status is changed from the code side, then this ensures the status in ActivitySettings is
+     * updated as well.
+     */
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     SharedPreferences.Editor editor = sharedPreferences.edit();
     editor.putBoolean(context.getString(R.string.pref_key_omnidroid_enabled), enable);
