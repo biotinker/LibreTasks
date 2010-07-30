@@ -140,11 +140,11 @@ public class LogActionDbAdapter extends LogDbAdapter {
   }
 
   /**
-   * @return a Cursor that contains all LogAction records.
+   * @return a Cursor that contains all LogAction records sorted by timestamp in descending order.
    */
   public Cursor fetchAll() {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
-    return database.query(DATABASE_TABLE, KEYS, null, null, null, null, null);
+    return database.query(DATABASE_TABLE, KEYS, null, null, null, null, KEY_TIMESTAMP + " desc");
   }
 
   /**

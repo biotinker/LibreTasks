@@ -28,7 +28,6 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -248,7 +247,6 @@ public class ActivityMain extends Activity {
    */
   private OnClickListener listenerBtnClickViewLogs = new OnClickListener() {
     public void onClick(View v) {
-      ActivityLogs.resetUI(v.getContext());
       Intent intent = new Intent();
       intent.setClass(getApplicationContext(), ActivityLogs.class);
       startActivity(intent);

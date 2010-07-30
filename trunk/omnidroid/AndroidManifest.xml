@@ -130,7 +130,15 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityLogs"
-                  android:label="@string/logs">
+                  android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".view.simple.ActivityLogTabs"
+                  android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -233,15 +241,15 @@
 				<action android:name="TIME_TICK" />
 			</intent-filter>
 			<intent-filter>
-        <action android:name="SERVICE_AVAILABLE"></action>
+				<action android:name="SERVICE_AVAILABLE"></action>
 			</intent-filter>
 			<intent-filter>
-        <action android:name="NETWORK_AVAILABLE"></action>
+				<action android:name="NETWORK_AVAILABLE"></action>
 			</intent-filter>
 			<intent-filter>
-        <action android:name="MISSED_CALL"></action>
-      </intent-filter>
-    </receiver>
+				<action android:name="MISSED_CALL"></action>
+			</intent-filter>
+		</receiver>
 
 		<!-- Services that run to fire actions -->
 		<service android:name=".controller.external.actions.SMSService">

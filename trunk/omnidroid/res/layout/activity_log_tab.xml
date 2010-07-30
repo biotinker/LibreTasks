@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_logs_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" 
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
+        android:paddingTop="10px"
+        android:paddingBottom="10px">
+<!-- 
+        <Spinner 
+            android:id="@+id/activity_logs_spinner"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:drawSelectorOnTop="true"
+            android:prompt="@string/choose_log">
+        </Spinner>
+ -->
+        <FrameLayout android:id="@+id/activity_lgos_frame_list"
+            android:layout_width="fill_parent" 
+            android:layout_height="0dip"
+            android:layout_weight="1">
+            <ListView android:id="@+id/activity_logs_listview"
+                android:layout_width="fill_parent" 
+                android:layout_height="fill_parent" />	
+        </FrameLayout>
+
+        <ExpandableListView
+            android:id="@+id/list"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+        </ExpandableListView>
+    </LinearLayout>
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/activity_logs_llDynamicContent"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+    </LinearLayout>
+</LinearLayout>
