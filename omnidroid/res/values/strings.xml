@@ -67,6 +67,7 @@
     <string name="save_rule">Save Rule</string>
     <string name="rule_saved">Rule saved successfully.</string>
     <string name="omnidroid_is_disabled_alert">Omnidroid is disabled. Enable it for rules to take effect.</string> 
+    <string name="omnidroid_is_disabled_alert">Omnidroid is disabled.  Enable it for rules to take effect.</string>
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>
@@ -105,7 +106,7 @@
     <string name="about_version">Version:</string>
     <string name="about_license">License: Apache 2.0 (http://www.apache.org/licenses/)</string>
     <string name="about_website">Website: http://code.google.com/p/omnidroid</string>
-    <string name="copyright">&#169;Copyright 2009, 2010 Omnidroid.  All rights reserved.</string>
+    <string name="copyright">&#169; 2009, 2010 Omnidroid.  All rights reserved.</string>
 
     <!--  General Activity Instructions -->
     <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
@@ -118,12 +119,16 @@
     <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
     <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
     <string name="phone_num_not_eq_filter_inst">Enter the phone number to exclude from the filter </string>
-    <string name="day_of_week_eq_filter_inst">Enter a day of the week to match below:</string>
-    <string name="day_of_week_not_eq_filter_inst">Enter the day of the week to exclude from the filter </string>
-    <string name="text_eq_filter_inst">Enter an exact text string to match below:</string>
-    <string name="text_cont_filter_inst">Enter a phrase in the text body to match below:</string>
+    <string name="num_eq_filter_inst">Enter a number to match:</string>
+    <string name="num_not_eq_filter_inst">Enter a number to exclude:</string>
+    <string name="num_lessthan_filter_inst">Enter a number to match less than:</string>
+    <string name="num_greaterthan_filter_inst">Enter a number to match greater than:</string>
+    <string name="text_eq_filter_inst">Enter an exact text string to match:</string>
+    <string name="text_cont_filter_inst">Enter a phrase in the text body to match:</string>
+    <string name="day_of_week_eq_filter_inst">Enter a day of the week to match:</string>
+    <string name="day_of_week_not_eq_filter_inst">Enter the day of the week to exclude from the filter:</string>
     <string name="bad_data_format">Bad data format:\n</string>
-    <string name="bad_distance_format">Please enter a distance in miles.</string>
+    <string name="bad_distance_format">Please enter a distance in miles:</string>
 
     <!--  System Events -->
     
@@ -165,21 +170,7 @@
     <string name="select_filter_edit">Please select a filter or action from the list to edit.</string>
     <string name="select_filter_delete">Please select a filter or action from the list to delete.</string>
     <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule:</string>
-    <string name="error_saving_rule">There was an error saving your rule:</string>
-
-    <!-- preference keys, must not be modified -->
-    <string name="pref_key_sound">SoundKey</string>
-    <string name="pref_key_light">LightKey</string>
-    <string name="pref_key_vibrate">VibrateKey</string>
-    <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
-    <string name="pref_key_notification">NotificationKey</string>
-    <string name="pref_key_throttle">Throttle</string>
-    <string name="pref_key_reset_db">ResetDb</string>
-    <string name="pref_key_gmail_signature">GmailSignature</string>
-    <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
-    <string name="pref_key_sms_signature">SMSSignature</string>
-    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>
-    
+    <string name="error_saving_rule">There was an error saving your rule:</string>    
     
     <!--  Settings -->
     <string name="throttle">Throttle</string>
@@ -200,6 +191,8 @@
     <string name="default_notification">Notifications</string>
     <string name="reset_db_desc">Resetting database will clear all user data</string>
     <string name="reset_db">Reset Database</string>
+    <string name="reset_settings_desc">Resetting settings to default values</string>
+    <string name="reset_settings">Reset Settings</string>
     <string name="gmail_signature_title">Gmail Signature</string>
     <string name="gmail_signature_dialog_message">Enter gmail signature below</string>
     <string name="sms_signature_title">SMS Signature</string>
@@ -216,7 +209,6 @@
     <string name="sms_signature_settings_title">SMS signature settings</string>
     <string name="gmail_signature_settings_desc">Modify SMS signature</string>
     <string name="sms_signature_settings_desc">Modify Gmail signature</string>
-    
     
     <!-- message -->
     <string name="gmail_failed_no_network">Send GMail failed: No network.</string>
@@ -243,9 +235,29 @@
     <string name="website_action_failed_no_service">Website action failed: No service</string>
     
     <!-- Dialog  -->
-    <string name="reset_db_dialog_msg">All user settings will be lost. Continue?</string>
+    <string name="reset_db_dialog_msg">All user data will be lost. Continue?</string>
+    <string name="reset_settings_dialog_msg">User specified preferences will be lost. Continue?</string>
     <string name="enable_omnidroid_dialog_msg">Are you sure you want to enable Omnidroid?</string>
     <string name="disable_omnidroid_dialog_msg">Are you sure you want to disable Omnidroid?</string>
+
+    <!--
+         Shared preference keys - These keys are stored in strings.xml so that code
+         can access them programmatically to try and catch errors at compile time.
+         NOTE: These strings can not change or be updated without losing user stored preferences.
+         NOTE: These strings should not be translated as they are not used for display
+      --> 
+    <string name="pref_key_sound">SoundKey</string>
+    <string name="pref_key_light">LightKey</string>
+    <string name="pref_key_vibrate">VibrateKey</string>
+    <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
+    <string name="pref_key_notification">NotificationKey</string>
+    <string name="pref_key_throttle">Throttle</string>
+    <string name="pref_key_reset_db">ResetDb</string>
+    <string name="pref_key_reset_settings">ResetSettings</string>
+    <string name="pref_key_gmail_signature">GmailSignature</string>
+    <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
+    <string name="pref_key_sms_signature">SMSSignature</string>
+    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>
     
     <!-- names, descriptions and parameters for default rules -->
     <string name="phoneRingToSMSRuleName">Auto Reply SMS</string>

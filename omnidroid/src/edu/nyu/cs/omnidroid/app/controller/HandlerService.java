@@ -58,7 +58,7 @@ public class HandlerService extends Service {
   private static final String TAG = HandlerService.class.getSimpleName();
 
   // Limit the number of rules that can be applied in any minute (stored in string form)
-  private static final String THROTTLE_DEFAULT = "15";
+  private static final String THROTTLE_DEFAULT = "10";
 
   // Throttle disabled value
   private static final int THROTTLE_DISABLED = 0;
@@ -72,14 +72,19 @@ public class HandlerService extends Service {
   }
 
   /**
+   * TODO(acase): Write Test Units for this.
+   * 
    * @return true if over throttle limit, false otherwise.
    */
-  // TODO(acase): Write Test Units for this.
   private boolean throttled() {
     // Default is not throttled
     boolean throttled = false;
 
     // Get throttle setting
+    /* Unfortunately Android doesn't support integer based arrays with the ListPreference
+     * interface, so we have to convert an integer back from a string.  See:
+     * http://code.google.com/p/android/issues/detail?id=2096
+     */
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     String sThrottle = prefs.getString(getString(R.string.pref_key_throttle), THROTTLE_DEFAULT);
     int throttle = Integer.parseInt(sThrottle);

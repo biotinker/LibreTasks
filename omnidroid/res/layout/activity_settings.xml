@@ -10,6 +10,8 @@
         android:defaultValue="true"
         android:summary="@string/disable_omnidroid_desc"
         android:title="@string/disable_omnidroid" />
+
+    <!-- Notification related preferences on their own screen -->
     <PreferenceScreen 
         android:title="@string/notification"
         android:summary="@string/notification_desc" >
@@ -34,17 +36,25 @@
             android:summary="@string/default_notification_desc"
             android:title="@string/default_notification" />
     </PreferenceScreen>
+
     <ListPreference
         android:key="@string/pref_key_throttle"
         android:summary="@string/throttle_description"
         android:title="@string/throttle"
         android:entries="@array/throttle_list"
         android:entryValues="@array/throttle_values"
+        android:defaultValue="10"
         android:dialogTitle="@string/throttle_description" />
+
     <Preference
         android:key="@string/pref_key_reset_db"
         android:summary="@string/reset_db_desc"
         android:title="@string/reset_db" />
+
+    <Preference
+        android:key="@string/pref_key_reset_settings"
+        android:summary="@string/reset_settings_desc"
+        android:title="@string/reset_settings" />
      
     <PreferenceScreen 
         android:title="@string/signature_settings"
