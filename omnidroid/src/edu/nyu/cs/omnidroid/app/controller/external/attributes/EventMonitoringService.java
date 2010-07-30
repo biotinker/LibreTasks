@@ -18,6 +18,7 @@ package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
+import edu.nyu.cs.omnidroid.app.view.simple.UIDbHelperStore;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -97,12 +98,7 @@ public class EventMonitoringService extends Service {
 
     // TODO(acase): Move this to OmnidroidManager or BCReceiver
     // Let the user know we're activating rules
-    CoreRulesDbHelper dbHelper = new CoreRulesDbHelper(this);
-    int activeRuleCount = dbHelper.getActiveRuleCount();
-    dbHelper.close();
-    String message = this.getString(R.string.enable_msg, activeRuleCount);
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    Logger.w(TAG, message);
+    alertUserOnStartStop(true);
 
     // Start System Monitors
     for (SystemServiceEventMonitor monitor : MONITORS) {
@@ -134,13 +130,36 @@ public class EventMonitoringService extends Service {
     isAlreadyRunning = false;
 
     // Let the user know we're de-activating rules
+    alertUserOnStartStop(false);
+
+  }
+
+  /**
+   * Send a Toast alert to the user about how many rules are being
+   * activated/deactivited.
+   * 
+   * @param enabling - whether Omnidroid is being enabled or disabled
+   */
+  private void alertUserOnStartStop(boolean enabled) {
     CoreRulesDbHelper dbHelper = new CoreRulesDbHelper(this);
     int activeRuleCount = dbHelper.getActiveRuleCount();
     dbHelper.close();
-    String message = this.getString(R.string.disable_msg, activeRuleCount);
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    Logger.w(TAG, message);
-
+    String messageText;
+    String enabledText;
+    if (enabled) {
+      messageText = getString(R.string.enable_msg);
+      enabledText = getString(R.string.enabled);
+    } else {
+      messageText = getString(R.string.disable_msg);
+      enabledText = getString(R.string.disabled);
+    }
+    if (activeRuleCount == 1) {
+      messageText += getString(R.string.one_rule_with_arg, enabledText);
+    } else if (activeRuleCount > 1) {
+      messageText += getString(R.string.n_rules_with_arg, activeRuleCount, enabledText);
+    }
+    Toast.makeText(this, messageText, Toast.LENGTH_LONG).show();
+    Logger.w(TAG, messageText);
   }
 
   @Override

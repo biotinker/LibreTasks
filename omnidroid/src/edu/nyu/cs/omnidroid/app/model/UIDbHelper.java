@@ -977,7 +977,7 @@ public class UIDbHelper {
       String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
       long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
       String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log, logTimestamp,
+      logList.add(new ModelLog(logID, logName, logDesc, R.drawable.icon_log_general, logTimestamp,
           ModelLog.TYPE_GENERAL));
     }
     cursor.close();
@@ -994,7 +994,7 @@ public class UIDbHelper {
     String logName = getStringFromCursor(cursor, LogGeneralDbAdapter.KEY_DESCRIPTION);
     long logTimestamp = getLongFromCursor(cursor, LogDbAdapter.KEY_TIMESTAMP);
     String logDesc = getStringFromCursor(cursor, LogDbAdapter.KEY_DESCRIPTION);
-    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_general_log, logTimestamp,
+    ModelLog log = new ModelLog(logID, logName, logDesc, R.drawable.icon_log_general, logTimestamp,
         ModelLog.TYPE_GENERAL);
     cursor.close();
     return log;

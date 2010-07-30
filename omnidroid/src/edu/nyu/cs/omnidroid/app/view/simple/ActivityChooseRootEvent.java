@@ -152,9 +152,9 @@ public class ActivityChooseRootEvent extends Activity {
       int numOfRules = UIDbHelperStore.instance().db().getRuleCount(
           events.get(position).getDatabaseId());
       if (numOfRules == 1) {
-        text += " (1 rule)";
+        text += getString(R.string.one_rule);
       } else if (numOfRules > 1) {
-        text += " (" + numOfRules + " rules)";
+        text += getString(R.string.n_rules, numOfRules);
       }
 
       tv.setText(text);
