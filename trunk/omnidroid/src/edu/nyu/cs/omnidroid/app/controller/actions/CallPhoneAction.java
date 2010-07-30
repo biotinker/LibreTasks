@@ -74,7 +74,7 @@ public class CallPhoneAction extends Action {
     intent.putExtra(PARAM_PHONE_NO, phoneNumber);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
 

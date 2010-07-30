@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.Action;
 import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
@@ -50,6 +51,7 @@ import edu.nyu.cs.omnidroid.app.model.db.RegisteredActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleActionDbAdapter;
 import edu.nyu.cs.omnidroid.app.model.db.RuleDbAdapter;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 
 /**
  * This class serves as a database access layer for Failed Actions framework.
@@ -67,11 +69,14 @@ public class FailedActionsDbHelper {
   private RuleDbAdapter ruleDbAdapter;
   private RuleActionDbAdapter ruleActionDbAdapter;
   
+  private Context context;
+  
   // Action info constants
   private final int KEY_APP_NAME = 0;
   private final int KEY_ACTION_NAME = 1;
 
   public FailedActionsDbHelper(Context context) {
+    this.context = context;
     dbHelper = new DbHelper(context);
     database = dbHelper.getWritableDatabase();
     failedActionsDbAdapter = new FailedActionsDbAdapter(database);
@@ -293,14 +298,14 @@ public class FailedActionsDbHelper {
         failedActionsDbAdapter.delete(failedActionId);
   }
   
-  public long insert (Intent intent, int failureType ) {
+  public long insert (Intent intent, int failureType, String message ) {
  
     long ruleActionId = intent.getLongExtra(Action.DATABASE_ID, -1);
     Logger.w(TAG, "ruleActionId aris" + ruleActionId);
     Cursor cursor = ruleActionDbAdapter.fetch(ruleActionId);
     long ruleId = getLongFromCursor(cursor, RuleActionDbAdapter.KEY_RULEID);
     long actionId = getLongFromCursor(cursor, RuleActionDbAdapter.KEY_ACTIONID);
-    long failedActionId = failedActionsDbAdapter.insert(ruleId, actionId, failureType);
+    long failedActionId = failedActionsDbAdapter.insert(ruleId, actionId, failureType, message);
     
     Logger.w(TAG, "inserting action into database, failure type "+ failureType);
     
@@ -328,9 +333,26 @@ public class FailedActionsDbHelper {
    * @param result
    *           new cause of failure
    * @param result 
+   * @param message 
    */
-  public void update(Intent intent, int result)  {
-      failedActionsDbAdapter.update(intent.getLongExtra(Action.DATABASE_ID, -1), null, null, result);
+  public void update(Intent intent, int result, String message)  {
+      failedActionsDbAdapter.update(intent.getLongExtra(Action.DATABASE_ID, -1), 
+          null, null, result, message);
   }
-  
+  /**
+   * 
+   */
+  public void deleteOldActions() {
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
+    }
+
+    Cursor cursor = failedActionsDbAdapter.fetchOldActions();
+    while (cursor.moveToNext()) {
+      UtilUI.showNotification(context, UtilUI.NOTIFICATION_INFO, context.getString(R.string.omnidroid), getStringFromCursor(cursor, FailedActionsDbAdapter.KEY_MESSAGE));
+      failedActionsDbAdapter.delete(getLongFromCursor(cursor, 
+          FailedActionsDbAdapter.KEY_FAILEDACTIONID));
+    }
+    cursor.close();
+  }
 }

@@ -41,7 +41,7 @@ public class SetPhoneVibrateAction extends OmniAction {
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_PHONE_VIBRATE);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
 

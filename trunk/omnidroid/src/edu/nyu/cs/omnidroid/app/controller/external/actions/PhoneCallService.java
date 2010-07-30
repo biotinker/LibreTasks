@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.external.attributes.PhoneStateMonitor;
@@ -42,9 +43,11 @@ public class PhoneCallService extends Service {
       } catch (Exception e) {
         Logger.e(TAG, e.getMessage(), e);
       }
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
+          getString(R.string.phone_call));
     } else {
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_SERVICE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_SERVICE,
+          getString(R.string.phone_call_failed));
     }    
   }
   @Override

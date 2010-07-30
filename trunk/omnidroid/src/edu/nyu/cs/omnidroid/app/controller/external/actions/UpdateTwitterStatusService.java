@@ -19,21 +19,18 @@ package edu.nyu.cs.omnidroid.app.controller.external.actions;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import edu.nyu.cs.omnidroid.app.R;
-import edu.nyu.cs.omnidroid.app.controller.Action;
-import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
-import edu.nyu.cs.omnidroid.app.controller.actions.ShowNotificationAction;
-import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
-import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
-import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
+
+import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.TwitterException.*;
 import android.app.Service;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
-import android.widget.Toast;
-
-import winterwell.jtwitter.*;
-import winterwell.jtwitter.TwitterException.*;
+import edu.nyu.cs.omnidroid.app.R;
+import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
+import edu.nyu.cs.omnidroid.app.controller.actions.UpdateTwitterStatusAction;
+import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
+import edu.nyu.cs.omnidroid.app.model.db.RegisteredAppDbAdapter;
 
 /**
  * This service can be used to Update Twitter Status
@@ -46,7 +43,6 @@ public class UpdateTwitterStatusService extends Service {
    */
   private RegisteredAppDbAdapter.AccountCredentials account;
   private String message;
-  private boolean notificationIsOn;
   
   private Intent intent;
  
@@ -76,7 +72,6 @@ public class UpdateTwitterStatusService extends Service {
     
     extractUserCredentials();
     message = intent.getStringExtra(UpdateTwitterStatusAction.PARAM_MESSAGE);
-    notificationIsOn = intent.getBooleanExtra(Action.NOTIFICATION, false);
     update();
   }
 
@@ -96,40 +91,27 @@ public class UpdateTwitterStatusService extends Service {
       //       http://twitter.com/apps/new (service was down when I tried)
       twitter.setSource(getString(R.string.omnidroid));
       twitter.setStatus(message);
-      showNotification(getString(R.string.twitter_updated));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
-    } catch(E401 e){
-      showNotification(getString(R.string.twitter_failed) + getString(R.string.separator_comma)
-          + getString(R.string.authentication_error));  
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, 
+          getString(R.string.twitter_updated));
+    } catch(E401 e){  
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE,
+          getString(R.string.twitter_failed_authentication_error));
     } catch (E403 e) {
-      showNotification(getString(R.string.twitter_failed));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE,
+          getString(R.string.twitter_failed));
     } catch (E404 e) {
-      showNotification(getString(R.string.twitter_failed));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE,
+          getString(R.string.twitter_failed));
     } catch (E50X e) {
-      showNotification(getString(R.string.twitter_failed));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN,
+          getString(R.string.twitter_failed));
     } catch (RateLimit e) {
-      showNotification(getString(R.string.twitter_failed));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN,
+          getString(R.string.twitter_failed));
     } catch (Timeout e) {
-      showNotification(getString(R.string.twitter_failed));
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_UNKNOWN,
+          getString(R.string.twitter_failed));
     }    
   }
-  
-  private  void showNotification(String message) {
-    if (notificationIsOn) {
-      Intent intent = new Intent();
-      intent.setClassName(ShowNotificationAction.OMNIDROID_PACKAGE_NAME, OmniActionService.class.getName());
-      intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
-      intent.putExtra(ShowNotificationAction.PARAM_TITLE, getString(R.string.omnidroid));
-      intent.putExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE, message);
-      startService(intent);
-    } else {
-      Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-  }
+
 }

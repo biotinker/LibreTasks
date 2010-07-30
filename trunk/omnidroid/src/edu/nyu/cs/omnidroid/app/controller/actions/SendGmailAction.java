@@ -74,7 +74,7 @@ public class SendGmailAction extends Action {
     intent.putExtra(PARAM_BODY, body);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
 

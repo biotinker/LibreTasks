@@ -41,7 +41,7 @@ public class TurnOnWifiAction extends OmniAction {
     intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.TURN_ON_WIFI_ACTION);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
-    intent.putExtra(NOTIFICATION, notificationIsOn);
+    intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
   

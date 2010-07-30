@@ -184,7 +184,7 @@ public class HandlerService extends Service {
       } else if (event.getEventName().equals(ServiceAvailableEvent.EVENT_NAME)) {
         actions = failedActionsDbHelper.getActions(ResultProcessor.RESULT_FAILURE_SERVICE);
       } else if (event.getEventName().equals(TimeTickEvent.EVENT_NAME)) {
-        //TODO clean up old actions;
+        failedActionsDbHelper.deleteOldActions();
         actions = failedActionsDbHelper.getActions(ResultProcessor.RESULT_FAILURE_UNKNOWN);
       }
       failedActionsDbHelper.close();

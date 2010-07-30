@@ -38,7 +38,7 @@ public abstract class Action {
   protected String ruleName;
 
   /** Shows whether notification service is on or off for this Action*/
-  protected boolean notificationIsOn;
+  protected boolean showNotification;
   
   /** The execution method used to fire an intent */
   private final String executionMethod;
@@ -69,7 +69,7 @@ public abstract class Action {
   public Action(String actionName, String executionMethod) {
     this.actionName = actionName;
     this.executionMethod = executionMethod;
-    this.notificationIsOn = true;
+    this.showNotification = true;
   }
 
   /**
@@ -134,11 +134,11 @@ public abstract class Action {
     }
   }
   public void setNotification(Boolean notification) {
-    this.notificationIsOn = notification;
+    this.showNotification = notification;
   }
   
-  public boolean notificationIsOn() {
-    return this.notificationIsOn;
+  public boolean showsNotification() {
+    return this.showNotification;
   }
   
 }

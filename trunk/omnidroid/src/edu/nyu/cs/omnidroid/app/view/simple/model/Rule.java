@@ -45,7 +45,7 @@ public class Rule {
   private boolean isEnabled;
 
   /** Shows whether notifications service is on or off for this Rule */
-  private boolean notificationIsOn;
+  private boolean showNotification;
   
   /**
    * The rule tree can look like: 
@@ -226,11 +226,12 @@ public class Rule {
     }
   }
 
-  public void setNotification(boolean notificationIsOn) {
-    this.notificationIsOn = notificationIsOn;
+  public void setNotification(boolean showNotification) {
+    this.showNotification = showNotification;
   }
 
-  public boolean notificationIsOn() {
-    return notificationIsOn;
+  public boolean isNotificationEnabled() {
+    return showNotification;
   }
+
 }

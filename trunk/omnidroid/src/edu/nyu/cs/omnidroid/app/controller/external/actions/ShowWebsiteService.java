@@ -20,6 +20,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.ResultProcessor;
 import edu.nyu.cs.omnidroid.app.controller.actions.ShowWebsiteAction;
 import edu.nyu.cs.omnidroid.app.controller.external.attributes.NetworkStateMonitor;
@@ -41,7 +42,8 @@ public class ShowWebsiteService extends Service {
     } catch (Exception e) {
       url = "";
       Logger.w(TAG, "no web url provided by user");
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE, 
+          getString(R.string.website_action_failed_no_url));
     }
     Uri uri = Uri.parse(url);
     Intent newIntent = new Intent(Intent.ACTION_VIEW, uri);
@@ -50,15 +52,16 @@ public class ShowWebsiteService extends Service {
       if (NetworkStateMonitor.isConnected()) {
         startActivity(newIntent);
       } else {
-        ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_INTERNET);
+        ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_INTERNET,
+            getString(R.string.website_action_failed_no_service));
       }
     } catch (ActivityNotFoundException e) {
       Logger.w(TAG, e.getClass().getSimpleName(), e );
-      //TODO notify user
-      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE);
+      ResultProcessor.process(this, intent, ResultProcessor.RESULT_FAILURE_IRRECOVERABLE,
+          getString(R.string.website_action_failed_bad_url));
       return;
     }
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS);
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, null);
   }
 
   @Override

@@ -58,7 +58,8 @@ public class ActivitySavedRules extends ListActivity {
   private static final int MENU_EDIT = 0;
   private static final int MENU_DELETE = 1;
   private static final int MENU_TOGGLE = 2;
-
+  private static final int MENU_NOTIFICATION = 3;
+  
   // Activity Request codes for activity results
   private static final int REQUEST_ACTIVITY_EDIT_RULE = 0;
   private static final int REQUEST_ACTIVITY_CREATE_RULE = 1;
@@ -132,6 +133,16 @@ public class ActivitySavedRules extends ListActivity {
     menu.add(ContextMenu.NONE, MENU_TOGGLE, ContextMenu.NONE, R.string.toggle_rule);
     menu.add(ContextMenu.NONE, MENU_EDIT, ContextMenu.NONE, R.string.edit_rule);
     menu.add(ContextMenu.NONE, MENU_DELETE, ContextMenu.NONE, R.string.delete_rule);
+    menu.add(ContextMenu.NONE, MENU_NOTIFICATION, ContextMenu.NONE, 
+        getNotificationTitle(info.position));
+  }
+
+  private CharSequence getNotificationTitle(int position) {
+    if (ruleListAdapter.getItem(position).isNotificationEnabled()) {
+      return getString(R.string.disable_notification);
+    } else {
+      return getString(R.string.enable_notification);
+    }
   }
 
   @Override
@@ -147,6 +158,8 @@ public class ActivitySavedRules extends ListActivity {
     case MENU_TOGGLE:
       ruleListAdapter.toggleRule(info.position);
       return true;
+    case MENU_NOTIFICATION:
+      ruleListAdapter.setNotification(info.position);
     default:
       return super.onContextItemSelected(item);
     }
@@ -380,6 +393,13 @@ public class ActivitySavedRules extends ListActivity {
      */
     public long getItemId(int position) {
       return rules.get(position).getDatabaseId();
+    }
+    
+    private void setNotification(int position) {
+      Rule rule = ruleListAdapter.getItem(position);
+       UIDbHelperStore.instance().db().setNotification(rule.getDatabaseId(), 
+           !rule.isNotificationEnabled());
+      notifyDataSetChanged();
     }
   }
 }
