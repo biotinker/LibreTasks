@@ -47,7 +47,6 @@ public class ActivityMain extends Activity {
 
   // Disclaimer and background service prefs are stored in SharedPreferences
   private SharedPreferences prefs;
-  private static final String SETTING_ACCEPTED_DISCLAIMER = "SettingDisclaimerAccepted";
 
   /** request code for ChooseRootEventActivity */
   private static final int REQUEST_ACTIVITY_CREATE_RULE = 0;
@@ -60,8 +59,7 @@ public class ActivityMain extends Activity {
     // Initialize singleton instance of UIDbHelperStore, which is
     // our connection to the omnidroid database.
     UIDbHelperStore.init(this);
-          
-    
+
     // Link up click handlers with their buttons.
     Button btnCreateRule = (Button) findViewById(R.id.activity_main_btnCreateRule);
     btnCreateRule.setOnClickListener(listenerBtnClickCreateRule);
@@ -76,29 +74,31 @@ public class ActivityMain extends Activity {
     btnHelp.setOnClickListener(listenerBtnClickHelp);
 
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
-    
-    // Show disclaimer if it hasn't been accepted yet
-    if (prefs.getBoolean(SETTING_ACCEPTED_DISCLAIMER, false) == false) {
+    if (prefs.getBoolean(ActivitySettings.PREF_KEY_ACCEPTED_DISCAIMER, false)) {
+      // Startup our background services
+      startOmnidroid();
+    } else {
       showDisclaimer();
     }
+  }
 
-    /*
-     * Start Omnidroid service if it's not already running and it should be. This addresses two key
-     * times: 1) On first run when the preference for running has not yet been set (since it
-     * defaults to "true"), and 2) After upgrade the service will no longer be running, so this will
-     * need to be start it again.
-     * 
-     * It's okay to try and start it multiple times, it's smart enough to not create multiple
-     * instances.
-     */
+  /*
+   * Start Omnidroid service if it's not already running and it should be. This addresses two key
+   * times: 1) On first run when the preference for running has not yet been set (since it defaults
+   * to "true"), but only if the disclaimer was accepted, and 2) After upgrade the service will no
+   * longer be running, so it needs to start it again.
+   * 
+   * It's okay to try and start it multiple times, it's smart enough to not create multiple
+   * instances.
+   */
+  protected void startOmnidroid() {
     if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
       OmnidroidManager.enable(this, true);
     }
-
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     switch (requestCode) {
     case REQUEST_ACTIVITY_CREATE_RULE:
       if (resultCode == ActivityChooseRootEvent.RESULT_RULE_CREATED) {
@@ -113,20 +113,28 @@ public class ActivityMain extends Activity {
 
   /**
    * Display our disclaimer dialog and require acceptance.
+   * 
    */
   private void showDisclaimer() {
     Builder welcome = new AlertDialog.Builder(this);
     welcome.setTitle(R.string.disclaimer_title);
+    welcome.setCancelable(false);
     welcome.setIcon(R.drawable.icon);
     welcome.setMessage(Html.fromHtml(getString(R.string.disclaimer_msg)));
     welcome.setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
+        // Store acceptance of disclaimer
         setDisclaimerAccepted(true);
+        
+        // Startup our background services
+        startOmnidroid();
       }
     });
     welcome.setNegativeButton(R.string.disagree, new DialogInterface.OnClickListener() {
       public void onClick(DialogInterface dialog, int whichButton) {
+        // Store refusal of disclaimer
         setDisclaimerAccepted(false);
+        
         // Exit immediately if user refused disclaimer
         finish();
       }
@@ -136,7 +144,7 @@ public class ActivityMain extends Activity {
 
   private void setDisclaimerAccepted(boolean accepted) {
     SharedPreferences.Editor editor = prefs.edit();
-    editor.putBoolean(SETTING_ACCEPTED_DISCLAIMER, accepted);
+    editor.putBoolean(ActivitySettings.PREF_KEY_ACCEPTED_DISCAIMER, accepted);
     editor.commit();
   }
 
@@ -187,15 +195,14 @@ public class ActivityMain extends Activity {
       ll.setVisibility(LinearLayout.VISIBLE);
     }
   }
- 
-  
+
   /** Create a options menu for the main screen */
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    menu.add(Menu.NONE, MENU_SETTINGS_ID, Menu.NONE, getString(R.string.settings_label)).setIcon(
-        android.R.drawable.ic_menu_preferences).setAlphabeticShortcut('s');
-    menu.add(Menu.NONE, MENU_ABOUT_ID, Menu.NONE, getString(R.string.about)).setAlphabeticShortcut(
-        'a').setIcon(android.R.drawable.ic_menu_info_details);
+    menu.add(Menu.NONE, MENU_SETTINGS_ID, Menu.NONE, getString(R.string.settings_label))
+        .setIcon(android.R.drawable.ic_menu_preferences).setAlphabeticShortcut('s');
+    menu.add(Menu.NONE, MENU_ABOUT_ID, Menu.NONE, getString(R.string.about))
+        .setAlphabeticShortcut('a').setIcon(android.R.drawable.ic_menu_info_details);
 
     return super.onCreateOptionsMenu(menu);
   }

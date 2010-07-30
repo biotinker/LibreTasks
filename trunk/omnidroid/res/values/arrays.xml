@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string-array name="throttle_list">
-		<item>0 (No throttling)</item>
+		<item>No throttling</item>
 		<item>5</item>
-		<item>10</item>
-		<item>15 (Default)</item>
-		<item>50</item>
+		<item>10 (Default)</item>
+		<item>30</item>
 	</string-array>
+	<!-- Android doesn't support int-arrays for listpreferences so we have to use a string.
+	     see: http://code.google.com/p/android/issues/detail?id=2096 -->
 	<string-array name="throttle_values">
 		<item>0</item>
 		<item>5</item>
-		<item>10</item>
-		<item name="default_value">15</item>
-		<item>50</item>
+		<item name="default_value">10</item>
+		<item>30</item>
 	</string-array>
 </resources>
