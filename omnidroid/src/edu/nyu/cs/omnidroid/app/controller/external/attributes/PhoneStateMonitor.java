@@ -15,6 +15,7 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 
+import edu.nyu.cs.omnidroid.app.controller.events.MissedCallEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.ServiceAvailableEvent;
@@ -32,6 +33,8 @@ import android.util.Log;
 public class PhoneStateMonitor implements SystemServiceEventMonitor {
   private static final String SYSTEM_SERVICE_NAME = "TELEPHONY_SERVICE";
   private static final String MONITOR_NAME = PhoneStateMonitor.class.getSimpleName();
+
+  private static volatile String phoneNumber = null; 
 
   private static volatile boolean serviceAvailable = false; 
   
@@ -104,7 +107,8 @@ public class PhoneStateMonitor implements SystemServiceEventMonitor {
           Intent intent = new Intent(PhoneRingingEvent.ACTION_NAME);
           intent.putExtra(PhoneRingingEvent.ATTRIBUTE_PHONE_NUMBER, incomingNumber);
           context.sendBroadcast(intent);
-
+          
+          phoneNumber = incomingNumber;
           Log.d(MONITOR_NAME, "RINGING");
           phoneStateMachine.onRing();
         } else if (state == TelephonyManager.CALL_STATE_IDLE) {
@@ -119,7 +123,13 @@ public class PhoneStateMonitor implements SystemServiceEventMonitor {
             Log.d(MONITOR_NAME, "inbound? " + phoneStateMachine.isInboundOffhook());
             Intent intent = new Intent(CallEndedEvent.ACTION_NAME);
             context.sendBroadcast(intent);
-          }
+           } else if (phoneStateMachine.isRinging()) {
+             Intent intent = new Intent(MissedCallEvent.ACTION_NAME);
+             if (phoneNumber != null) {
+               intent.putExtra(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER, phoneNumber);
+             }
+             context.sendBroadcast(intent);             
+           }
 
           Log.d(MONITOR_NAME, "IDLE");
           phoneStateMachine.onIdle();

@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.app.controller;
 
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.InternetAvailableEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.MissedCallEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.SMSReceivedEvent;
@@ -69,6 +70,8 @@ public class IntentParser {
       event = new ServiceAvailableEvent(intent);
     } else if (intent.getAction().equals(InternetAvailableEvent.ACTION_NAME)) {
       event = new InternetAvailableEvent(intent);
+    } else if (intent.getAction().equals(MissedCallEvent.ACTION_NAME)) {
+      event = new MissedCallEvent(intent);
     } else {
       for (SystemEvent e : SystemEvent.values()) {
         if (intent.getAction().equals(e.ACTION_NAME)) {

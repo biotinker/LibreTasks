@@ -48,6 +48,7 @@ import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniTimePeriod;
 import edu.nyu.cs.omnidroid.app.controller.datatypes.OmniUserAccount;
 import edu.nyu.cs.omnidroid.app.controller.events.LocationChangedEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.InternetAvailableEvent;
+import edu.nyu.cs.omnidroid.app.controller.events.MissedCallEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneCallEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.PhoneRingingEvent;
 import edu.nyu.cs.omnidroid.app.controller.events.CallEndedEvent;
@@ -118,7 +119,9 @@ public class DbMigration {
       addSupportForGlobalEventAttributes(db);
     case 16:
       alterFailedActionsTable(db);
-
+    case 17:
+      addMissedCallEvent(db);
+     
       /*
        * Insert new versions before this line and do not forget to update {@code
        * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
@@ -769,8 +772,8 @@ public class DbMigration {
         areaAttributeID, eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
     generalizeAttribute(TimeTickEvent.ATTRIBUTE_CURRENT_TIME, Event.ATTRIBUTE_TIME,
         dateAttributeID, eventAttributeDbAdapter, ruleFilterDbAdapter, ruleActionParamDbAdapter);
-  }
-
+  }  
+    
   private static void generalizeAttribute(String attributeName, String newAttributeName,
       long newAttributeDbID, RegisteredEventAttributeDbAdapter eventAttributeDbAdapter,
       RuleFilterDbAdapter ruleFilterDbAdapter, RuleActionParameterDbAdapter ruleActionParamDbAdapter) {
@@ -811,10 +814,30 @@ public class DbMigration {
 
     cursor.close();
   }
+  
   private static void alterFailedActionsTable(SQLiteDatabase db) {
    db.execSQL(FailedActionsDbAdapter.DATABASE_DROP);
    db.execSQL(FailedActionsDbAdapter.DATABASE_CREATE);    
   }
 
+  private static void addMissedCallEvent(SQLiteDatabase db) {
+    
+    RegisteredAppDbAdapter registeredAppDbAdapter = new RegisteredAppDbAdapter(db); 
+    Cursor cursor = registeredAppDbAdapter.fetchAll(MissedCallEvent.APPLICATION_NAME, null, null);
+    cursor.moveToFirst();
+    long appId = getLongFromCursor(cursor, RegisteredAppDbAdapter.KEY_APPID);
+    
+    RegisteredEventDbAdapter registeredEventDbAdapter = new RegisteredEventDbAdapter(db);
+    long eventIdMissedCall = registeredEventDbAdapter.insert(MissedCallEvent.EVENT_NAME, appId);
+    
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(db);
+    //
+    cursor = dataTypeDbAdapter.fetchAll(OmniPhoneNumber.DB_NAME, OmniPhoneNumber.class.getName());
+    cursor.moveToFirst();
+    long dataTypeIdPhoneNumber = CursorHelper.getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
+        eventIdMissedCall, dataTypeIdPhoneNumber);
+  }
   
 }

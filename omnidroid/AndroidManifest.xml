@@ -232,13 +232,16 @@
 			<intent-filter>
 				<action android:name="TIME_TICK" />
 			</intent-filter>
-		    <intent-filter>
-		        <action android:name="SERVICE_AVAILABLE"></action>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="NETWORK_AVAILABLE"></action>
-            </intent-filter>
-        </receiver>
+			<intent-filter>
+        <action android:name="SERVICE_AVAILABLE"></action>
+			</intent-filter>
+			<intent-filter>
+        <action android:name="NETWORK_AVAILABLE"></action>
+			</intent-filter>
+			<intent-filter>
+        <action android:name="MISSED_CALL"></action>
+      </intent-filter>
+    </receiver>
 
 		<!-- Services that run to fire actions -->
 		<service android:name=".controller.external.actions.SMSService">
