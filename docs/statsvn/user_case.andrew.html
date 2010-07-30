@@ -1,0 +1,1434 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: case.andrew</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: case.andrew</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>case.andrew</dd>
+    <dt>Total Commits:</dt>
+    <dd>1,189 (33.6%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>43,310 (45.1%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2010-07-30 12:32</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=case.andrew%20contributed%2043%2C310%20(45.1%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202010-07-30%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_case.andrew.png" alt="Activity by Hour of Day for case.andrew" width="800" height="500" /></p><p class="chart"><img src="activity_day_case.andrew.png" alt="Activity by Day of Week for case.andrew" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>1189 (100.0%)</td>
+        <td>43310 (100.0%)</td>
+        <td>36.4</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_view_simple.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/</a></th>
+        <td>100 (8.4%)</td>
+        <td>6178 (14.3%)</td>
+        <td>61.7</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_model_db.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/</a></th>
+        <td>69 (5.8%)</td>
+        <td>4026 (9.3%)</td>
+        <td>58.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/model/</a></th>
+        <td>69 (5.8%)</td>
+        <td>4006 (9.2%)</td>
+        <td>58.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_ui_simple.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple/</a></th>
+        <td>34 (2.9%)</td>
+        <td>3942 (9.1%)</td>
+        <td>115.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_model_db.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/db/</a></th>
+        <td>40 (3.4%)</td>
+        <td>2691 (6.2%)</td>
+        <td>67.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_core.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/core/</a></th>
+        <td>57 (4.8%)</td>
+        <td>1933 (4.5%)</td>
+        <td>33.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_datatypes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/datatypes/</a></th>
+        <td>31 (2.6%)</td>
+        <td>1743 (4.0%)</td>
+        <td>56.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_core_datatypes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/core/datatypes/</a></th>
+        <td>30 (2.5%)</td>
+        <td>1732 (4.0%)</td>
+        <td>57.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_controller.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/</a></th>
+        <td>22 (1.9%)</td>
+        <td>1165 (2.7%)</td>
+        <td>52.9</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/</a></th>
+        <td>37 (3.1%)</td>
+        <td>1162 (2.7%)</td>
+        <td>31.4</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_core.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/core/</a></th>
+        <td>20 (1.7%)</td>
+        <td>1138 (2.6%)</td>
+        <td>56.9</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_util.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/util/</a></th>
+        <td>29 (2.4%)</td>
+        <td>1109 (2.6%)</td>
+        <td>38.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_util.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/util/</a></th>
+        <td>27 (2.3%)</td>
+        <td>947 (2.2%)</td>
+        <td>35.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_view_simple_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model/</a></th>
+        <td>44 (3.7%)</td>
+        <td>919 (2.1%)</td>
+        <td>20.8</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_controller_datatypes.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/datatypes/</a></th>
+        <td>15 (1.3%)</td>
+        <td>812 (1.9%)</td>
+        <td>54.1</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_core_datatypes.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/core/datatypes/</a></th>
+        <td>16 (1.3%)</td>
+        <td>802 (1.9%)</td>
+        <td>50.1</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_actions.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/actions/</a></th>
+        <td>37 (3.1%)</td>
+        <td>786 (1.8%)</td>
+        <td>21.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_ui_simple_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple/model/</a></th>
+        <td>33 (2.8%)</td>
+        <td>755 (1.7%)</td>
+        <td>22.8</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_res_layout.html" class="directory">omnidroid/res/layout/</a></th>
+        <td>43 (3.6%)</td>
+        <td>753 (1.7%)</td>
+        <td>17.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_view_simple_factoryui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/factoryui/</a></th>
+        <td>3 (0.3%)</td>
+        <td>740 (1.7%)</td>
+        <td>246.6</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_ui_simple_factoryui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple/factoryui/</a></th>
+        <td>3 (0.3%)</td>
+        <td>739 (1.7%)</td>
+        <td>246.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_attributes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes/</a></th>
+        <td>27 (2.3%)</td>
+        <td>586 (1.4%)</td>
+        <td>21.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_actions.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/actions/</a></th>
+        <td>17 (1.4%)</td>
+        <td>549 (1.3%)</td>
+        <td>32.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_external_actions.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/external/actions/</a></th>
+        <td>13 (1.1%)</td>
+        <td>517 (1.2%)</td>
+        <td>39.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_external_attributes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/external/attributes/</a></th>
+        <td>21 (1.8%)</td>
+        <td>485 (1.1%)</td>
+        <td>23.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_events.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events/</a></th>
+        <td>11 (0.9%)</td>
+        <td>416 (1.0%)</td>
+        <td>37.8</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/</a></th>
+        <td>10 (0.8%)</td>
+        <td>344 (0.8%)</td>
+        <td>34.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_res_values.html" class="directory">omnidroid/res/values/</a></th>
+        <td>19 (1.6%)</td>
+        <td>284 (0.7%)</td>
+        <td>14.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>4 (0.3%)</td>
+        <td>227 (0.5%)</td>
+        <td>56.7</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid.html" class="directory">omnidroid/</a></th>
+        <td>25 (2.1%)</td>
+        <td>227 (0.5%)</td>
+        <td>9.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_view_simple_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/view/simple/model/</a></th>
+        <td>3 (0.3%)</td>
+        <td>212 (0.5%)</td>
+        <td>70.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_ui_simple_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/ui/simple/model/</a></th>
+        <td>3 (0.3%)</td>
+        <td>201 (0.5%)</td>
+        <td>67.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_core.html" class="directory">src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>4 (0.3%)</td>
+        <td>148 (0.3%)</td>
+        <td>37.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test.html" class="directory">omnidroid-test/</a></th>
+        <td>15 (1.3%)</td>
+        <td>118 (0.3%)</td>
+        <td>7.8</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_bkgservice.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/bkgservice/</a></th>
+        <td>10 (0.8%)</td>
+        <td>116 (0.3%)</td>
+        <td>11.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_util.html" class="directory">src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>7 (0.6%)</td>
+        <td>105 (0.2%)</td>
+        <td>15.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_ui.html" class="directory">src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>11 (0.9%)</td>
+        <td>88 (0.2%)</td>
+        <td>8.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_bkgservice.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/bkgservice/</a></th>
+        <td>6 (0.5%)</td>
+        <td>85 (0.2%)</td>
+        <td>14.1</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_controller_util.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/util/</a></th>
+        <td>3 (0.3%)</td>
+        <td>74 (0.2%)</td>
+        <td>24.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_util.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/util/</a></th>
+        <td>3 (0.3%)</td>
+        <td>73 (0.2%)</td>
+        <td>24.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_contprovider.html" class="directory">src/edu/nyu/cs/omnidroid/contprovider/</a></th>
+        <td>2 (0.2%)</td>
+        <td>68 (0.2%)</td>
+        <td>34.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>3 (0.3%)</td>
+        <td>66 (0.2%)</td>
+        <td>22.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_tests.html" class="directory">src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>6 (0.5%)</td>
+        <td>63 (0.1%)</td>
+        <td>10.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir.html" class="directory">/</a></th>
+        <td>13 (1.1%)</td>
+        <td>53 (0.1%)</td>
+        <td>4.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_view.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/view/</a></th>
+        <td>2 (0.2%)</td>
+        <td>40 (0.1%)</td>
+        <td>20.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_ui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/ui/</a></th>
+        <td>2 (0.2%)</td>
+        <td>40 (0.1%)</td>
+        <td>20.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/</a></th>
+        <td>4 (0.3%)</td>
+        <td>33 (0.1%)</td>
+        <td>8.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_eventapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/eventapp/</a></th>
+        <td>2 (0.2%)</td>
+        <td>7 (0.0%)</td>
+        <td>3.5</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_helper_telephony.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/helper/telephony/</a></th>
+        <td>6 (0.5%)</td>
+        <td>6 (0.0%)</td>
+        <td>1.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_app_controller_external_helper_telephony.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/external/helper/telephony/</a></th>
+        <td>1 (0.1%)</td>
+        <td>1 (0.0%)</td>
+        <td>1.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_util.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>9 (0.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model/</a></th>
+        <td>11 (0.9%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple_factoryui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/</a></th>
+        <td>17 (1.4%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>13 (1.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_model_db.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/model/db/</a></th>
+        <td>14 (1.2%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/model/</a></th>
+        <td>7 (0.6%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_eventapp.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/eventapp/</a></th>
+        <td>2 (0.2%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>3 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_attributes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/attributes/</a></th>
+        <td>8 (0.7%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_actions.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/actions/</a></th>
+        <td>4 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core_datatypes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes/</a></th>
+        <td>10 (0.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>31 (2.6%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>3 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_res_drawable.html" class="directory">omnidroid/res/drawable/</a></th>
+        <td>7 (0.6%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_util.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_ui_simple_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/ui/simple/model/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_ui.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_model_db.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/model/db/</a></th>
+        <td>13 (1.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/model/</a></th>
+        <td>3 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_core_datatypes.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/core/datatypes/</a></th>
+        <td>5 (0.4%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_core.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>11 (0.9%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_case.andrew.png" alt="Activity of case.andrew" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-30 12:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">843</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 128.<br />
+Switches Logs to using a Tabbed Activity.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>709</strong> lines of code changed in <span class="files">24 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+14&#160;-6)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        icon_action_unknown_small.png&#160;<span class="new">(new)</span>,
+        icon_event_unknown_small.png&#160;<span class="new">(new)</span>,
+        icon_general_log.png&#160;<span class="del">(del)</span>,
+        icon_log_all_small.png&#160;<span class="new">(new)</span>,
+        icon_log_general.png&#160;<span class="new">(new)</span>,
+        icon_log_general_small.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_choose_root_event.xml&#160;<span class="change">(+21&#160;-21)</span>,
+        activity_dlg_action_input.xml&#160;<span class="change">(+78&#160;-78)</span>,
+        activity_dlg_log.xml&#160;<span class="change">(+19&#160;-19)</span>,
+        activity_dlg_rule_name.xml&#160;<span class="change">(+65&#160;-65)</span>,
+        activity_log_tab.xml&#160;<span class="new">(new&#160;50)</span>,
+        activity_logs.xml&#160;<span class="change">(+21&#160;-49)</span>,
+        activity_main.xml&#160;<span class="change">(+80&#160;-80)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+14&#160;-9)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+29&#160;-10)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        LogActionDbAdapter.java&#160;<span class="change">(+2&#160;-2)</span>,
+        LogEventDbAdapter.java&#160;<span class="change">(+2&#160;-2)</span>,
+        LogGeneralDbAdapter.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseRootEvent.java&#160;<span class="change">(+2&#160;-2)</span>,
+        ActivityLogTabs.java&#160;<span class="new">(new&#160;274)</span>,
+        ActivityLogs.java&#160;<span class="change">(+33&#160;-257)</span>,
+        ActivityMain.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-30 00:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">842</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing a double string commit error.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-30 00:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">840</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue146<br />
+Fixes Issue151<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>206</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_settings.xml&#160;<span class="change">(+10)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        arrays.xml&#160;<span class="change">(+7&#160;-7)</span>,
+        strings.xml&#160;<span class="change">(+36&#160;-24)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityMain.java&#160;<span class="change">(+32&#160;-25)</span>,
+        ActivitySettings.java&#160;<span class="change">(+113&#160;-36)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        ModelFilter.java&#160;<span class="change">(+1&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-29 21:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">838</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 145
+    </p>
+    <p class="commitdetails"><strong>35</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_saved_rules.xml&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="change">(+17&#160;-12)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivitySavedRules.java&#160;<span class="change">(+12&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-20 09:57</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">821</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix fetchAll ambiguity introduced in r820
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreRulesDbHelper.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        RuleDbAdapter.java&#160;<span class="change">(-18)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-20 09:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">820</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ Addressing some minor TODO issues. Fixed a SharedPreference problem.
+    </p>
+    <p class="commitdetails"><strong>95</strong> lines of code changed in <span class="files">20 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+11&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+2&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/actions</strong>:
+        OmniActionService.java&#160;<span class="change">(+1&#160;-35)</span>,
+        UpdateTwitterStatusService.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+20)</span>,
+        LocationMonitor.java&#160;<span class="change">(-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreRulesDbHelper.java&#160;<span class="change">(+8)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DbHelper.java&#160;<span class="change">(+2&#160;-4)</span>,
+        RuleDbAdapter.java&#160;<span class="change">(+19&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+17&#160;-4)</span>,
+        ActivityDlgActions.java&#160;<span class="change">(+1&#160;-3)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityLogs.java&#160;<span class="change">(-1)</span>,
+        ActivityMain.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+2&#160;-2)</span>,
+        ActivitySettings.java&#160;<span class="change">(-2)</span>,
+        UIDbHelperStore.java&#160;<span class="change">(-1)</span>,
+        UtilUI.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-20 09:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">819</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 77.
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        ModelFilter.java&#160;<span class="change">(+1&#160;-2)</span>,
+        ModelItem.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelRuleAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelRuleFilter.java&#160;<span class="change">(+7&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-18 22:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">818</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #106
+    </p>
+    <p class="commitdetails"><strong>88</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_dlg_rule_name.xml&#160;<span class="change">(+56&#160;-47)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DbMigration.java&#160;<span class="change">(-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityDlgRuleName.java&#160;<span class="change">(+24&#160;-13)</span>,
+        RuleBuilder.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-17 13:46</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">817</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #59
+    </p>
+    <p class="commitdetails"><strong>441</strong> lines of code changed in <span class="files">16 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_choose_root_event.xml&#160;<span class="change">(+1)</span>,
+        activity_dlg_actions.xml&#160;<span class="del">(del)</span>,
+        activity_dlg_applications.xml&#160;<span class="del">(del)</span>,
+        activity_dlg_attributes.xml&#160;<span class="del">(del)</span>,
+        activity_dlg_filters.xml&#160;<span class="del">(del)</span>,
+        activity_dlg_list_selector.xml&#160;<span class="new">(new&#160;36)</span>,
+        activity_dlg_log.xml&#160;<span class="change">(+12&#160;-12)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+13&#160;-8)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+39)</span>,
+        ActivityDlgActionInput.java&#160;<span class="change">(+14&#160;-4)</span>,
+        ActivityDlgActions.java&#160;<span class="change">(+74&#160;-7)</span>,
+        ActivityDlgApplications.java&#160;<span class="change">(+72&#160;-4)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+72&#160;-5)</span>,
+        ActivityDlgFilterInput.java&#160;<span class="change">(+16&#160;-4)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+74&#160;-6)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+18)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-16 09:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">815</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing a couple autobuild issues
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        build.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-16 09:07</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">814</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #73
+    </p>
+    <p class="commitdetails"><strong>242</strong> lines of code changed in <span class="files">19 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_settings.xml&#160;<span class="change">(+12&#160;-4)</span>,
+        settings.xml&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        arrays.xml&#160;<span class="new">(new&#160;17)</span>,
+        strings.xml&#160;<span class="change">(+6&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+65&#160;-8)</span>,
+        OmnidroidManager.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/actions</strong>:
+        OmniActionService.java&#160;<span class="change">(+3&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreActionLogsDbHelper.java&#160;<span class="change">(-1)</span>,
+        CoreEventLogsDbHelper.java&#160;<span class="change">(+12)</span>,
+        CoreGeneralLogsDbHelper.java&#160;<span class="change">(+2&#160;-2)</span>,
+        GeneralLog.java&#160;<span class="change">(+17&#160;-3)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DbHelper.java&#160;<span class="change">(+7&#160;-4)</span>,
+        DbMigration.java&#160;<span class="change">(+9)</span>,
+        LogActionDbAdapter.java&#160;<span class="change">(+3&#160;-3)</span>,
+        LogDbAdapter.java&#160;<span class="change">(+2)</span>,
+        LogEventDbAdapter.java&#160;<span class="change">(+16)</span>,
+        LogGeneralDbAdapter.java&#160;<span class="change">(+13&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        UtilUI.java&#160;<span class="change">(+52&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-16 08:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">813</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue#84
+    </p>
+    <p class="commitdetails"><strong>119</strong> lines of code changed in <span class="files">26 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        .classpath&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        RuleTestData.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/core</strong>:
+        FilterTest.java&#160;<span class="del">(del)</span>,
+        IntentParserTest.java&#160;<span class="del">(del)</span>,
+        MockSMSReceivedEvent.java&#160;<span class="del">(del)</span>,
+        RegisteredAppTest.java&#160;<span class="del">(del)</span>,
+        RuleProcessorTest.java&#160;<span class="del">(del)</span>,
+        RuleTest.java&#160;<span class="del">(del)</span>,
+        RuleTestData.java&#160;<span class="del">(del)</span>,
+        SMSReceivedEventTest.java&#160;<span class="del">(del)</span>,
+        SMSTest.java&#160;<span class="del">(del)</span>,
+        TestData.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="del">(del)</span>,
+        OmniDateTest.java&#160;<span class="del">(del)</span>,
+        OmniDayOfWeekTest.java&#160;<span class="del">(del)</span>,
+        OmniPhoneNumberTest.java&#160;<span class="del">(del)</span>,
+        OmniTextTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        RuleDbAdapterTest.java&#160;<span class="change">(+12&#160;-8)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/ui/simple/model</strong>:
+        RuleTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+4&#160;-4)</span>,
+        build.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+4&#160;-4)</span>,
+        Starter.java&#160;<span class="change">(+19&#160;-11)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+43&#160;-23)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityMain.java&#160;<span class="change">(+27&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-14 21:25</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">812</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #111. Fixes Issue #66
+    </p>
+    <p class="commitdetails"><strong>331</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_saved_rules.xml&#160;<span class="change">(+42&#160;-60)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+9&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+22&#160;-17)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="change">(+6&#160;-4)</span>,
+        ActivityDlgActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgApplications.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityMain.java&#160;<span class="change">(-2)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+248&#160;-215)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-13 17:47</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">808</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 125
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-12 16:05</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">804</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changing to lower case eclipse project name to match that of omnidroid-test
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        .project&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-04 17:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">794</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #61
+    </p>
+    <p class="commitdetails"><strong>51</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_choose_filters_and_actions.xml&#160;<span class="change">(+2&#160;-14)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+49&#160;-31)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-04 16:33</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">793</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #94
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        UIDbHelperStore.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-04 10:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">792</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #90
+    </p>
+    <p class="commitdetails"><strong>167</strong> lines of code changed in <span class="files">156 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        README&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app</strong>:
+        AllTests.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        FilterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        IntentParserTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        MockSMSReceivedEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleProcessorTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleTestData.java&#160;<span class="change">(+4&#160;-4)</span>,
+        SMSReceivedEventTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SMSTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        TestData.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniDateTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniDayOfWeekTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniPhoneNumberTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniTextTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/external/helper/telephony</strong>:
+        TestPhoneStateMachine.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/util</strong>:
+        TreeTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreRulesDbHelperTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataFilterIDLookupTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataTypeIDLookupTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        AllDbTests.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        RuleTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActionExecuter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Event.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Filter.java&#160;<span class="change">(+3&#160;-3)</span>,
+        HandlerService.java&#160;<span class="change">(+3&#160;-3)</span>,
+        IntentParser.java&#160;<span class="change">(+3&#160;-3)</span>,
+        Rule.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleProcessor.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/actions</strong>:
+        CallPhoneAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SendGmailAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SendSmsAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SetPhoneLoudAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SetPhoneSilentAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SetScreenBrightnessAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ShowAlertAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ShowNotificationAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ShowWebsiteAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        UpdateTwitterStatusAction.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Starter.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/datatypes</strong>:
+        DataType.java&#160;<span class="change">(+1&#160;-1)</span>,
+        FactoryDataType.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniArea.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniCheckBoxInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniDate.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniDayOfWeek.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniPasswordInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniText.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniTimePeriod.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniUserAccount.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        PhoneCallEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        PhoneRingingEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SystemEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        TimeTickEvent.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/actions</strong>:
+        GMailService.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmniActionService.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SMSService.java&#160;<span class="change">(+1&#160;-1)</span>,
+        UpdateTwitterStatusService.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ExternalAttribute.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ExternalAttributeAccessException.java&#160;<span class="change">(+1&#160;-1)</span>,
+        LocationMonitor.java&#160;<span class="change">(+1&#160;-1)</span>,
+        PhoneStateMonitor.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SystemServiceEventMonitor.java&#160;<span class="change">(+1&#160;-1)</span>,
+        TimeMonitor.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/helper/telephony</strong>:
+        IdlePhoneState.java&#160;<span class="change">(+1&#160;-1)</span>,
+        InboundOffHookState.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OutboundOffHookState.java&#160;<span class="change">(+1&#160;-1)</span>,
+        PhoneState.java&#160;<span class="change">(+1&#160;-1)</span>,
+        PhoneStateMachine.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RingingPhoneState.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/util</strong>:
+        DataTypeValidationException.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DualKey.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ExceptionMessageMap.java&#160;<span class="change">(+1&#160;-1)</span>,
+        IOUtil.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Logger.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmnidroidException.java&#160;<span class="change">(+1&#160;-1)</span>,
+        OmnidroidRuntimeException.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ShowWebsiteActivity.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Tree.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        ActionLog.java&#160;<span class="change">(+1&#160;-1)</span>,
+        CoreActionsDbHelper.java&#160;<span class="change">(+1&#160;-1)</span>,
+        CoreRulesDbHelper.java&#160;<span class="change">(+1&#160;-1)</span>,
+        CursorHelper.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataFilterIDLookup.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataTypeIDLookup.java&#160;<span class="change">(+1&#160;-1)</span>,
+        EventLog.java&#160;<span class="change">(+1&#160;-1)</span>,
+        GeneralLog.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Log.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DataFilterDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataTypeDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DbHelper.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DbMigration.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ExternalAttributeDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        LogDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredActionDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredActionParameterDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredAppDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredEventAttributeDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RegisteredEventDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleActionDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleActionParameterDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleFilterDbAdapter.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgActionInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgApplicationLoginInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgApplications.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgFilterInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgLog.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityDlgRuleName.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityLogs.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivityMain.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActivitySettings.java&#160;<span class="change">(+1&#160;-1)</span>,
+        FactoryDynamicUI.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleBuilder.java&#160;<span class="change">(+1&#160;-1)</span>,
+        UtilUI.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/model</strong>:
+        ModelAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelApplication.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelAttribute.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelFilter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelItem.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelLog.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelParameter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelRuleAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelRuleFilter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Rule.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleNode.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-03 11:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">791</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #97
+    </p>
+    <p class="commitdetails"><strong>77</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+14&#160;-7)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/external/actions</strong>:
+        UpdateTwitterStatusService.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DbHelper.java&#160;<span class="change">(-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple</strong>:
+        ActivityMain.java&#160;<span class="change">(+60&#160;-23)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-02 22:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">788</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #57
+    </p>
+    <p class="commitdetails"><strong>69</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_dlg_action_input.xml&#160;<span class="change">(+69&#160;-57)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(38 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

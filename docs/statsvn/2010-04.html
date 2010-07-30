@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - April 2010 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>April 2010 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><a href="commitlog.html">July 2010</a></li>
+    <li><a href="2010-06.html">June 2010</a></li>
+    <li><a href="2010-05.html">May 2010</a></li>
+    <li><span class="here">April 2010</span></li>
+    <li><a href="2010-03.html">March 2010</a></li>
+    <li><a href="2010-02.html">February 2010</a></li>
+    <li><a href="2010-01.html">January 2010</a></li>
+    <li><a href="2009-12.html">December 2009</a></li>
+    <li><a href="2009-11.html">November 2009</a></li>
+    <li><a href="2009-10.html">October 2009</a></li>
+    <li><a href="2009-09.html">September 2009</a></li>
+    <li><a href="2009-08.html">August 2009</a></li>
+    <li><a href="2009-07.html">July 2009</a></li>
+    <li><a href="2009-06.html">June 2009</a></li>
+    <li><a href="2009-05.html">May 2009</a></li>
+    <li><a href="2009-04.html">April 2009</a></li>
+    <li><a href="2009-03.html">March 2009</a></li>
+    <li><a href="2009-02.html">February 2009</a></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>4</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>1</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="4"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-28 08:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">671</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+change brightness added
+    </p>
+    <p class="commitdetails"><strong>99</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetScreenBrightnessAction.java&#160;<span class="new">(new&#160;67)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/actions</strong>:
+        OmniActionService.java&#160;<span class="change">(+14&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="change">(+4)</span>,
+        DbData.java&#160;<span class="change">(+12&#160;-7)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/util</strong>:
+        ExceptionMessageMap.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-15 08:09</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">670</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+changed some tests
+    </p>
+    <p class="commitdetails"><strong>54</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        .classpath&#160;<span class="change">(+2&#160;-2)</span>,
+        default.properties&#160;<span class="change">(+3&#160;-11)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core</strong>:
+        RuleTestData.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model</strong>:
+        DataFilterIDLookupTest.java&#160;<span class="change">(+8&#160;-6)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+40&#160;-25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-14 23:44</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">669</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added timeTickEvnet, parameter support multiple tags
+    </p>
+    <p class="commitdetails"><strong>364</strong> lines of code changed in <span class="files">22 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+8&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Filter.java&#160;<span class="change">(+10&#160;-8)</span>,
+        IntentParser.java&#160;<span class="change">(+2&#160;-2)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(-3)</span>,
+        TimeTickEvent.java&#160;<span class="new">(new&#160;72)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniArea.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniDate.java&#160;<span class="change">(+46&#160;-5)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniText.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniTimePeriod.java&#160;<span class="change">(+8&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+4&#160;-2)</span>,
+        TimeMonitor.java&#160;<span class="new">(new&#160;67)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="change">(+37&#160;-25)</span>,
+        CoreRuleDbHelper.java&#160;<span class="change">(-4)</span>,
+        DataFilterIDLookup.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DbData.java&#160;<span class="change">(+37&#160;-21)</span>,
+        UIDbHelper.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapter.java&#160;<span class="change">(+25&#160;-7)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgFilters.java&#160;<span class="change">(+3&#160;-1)</span>,
+        FactoryDynamicUI.java&#160;<span class="change">(+10&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        ModelFilter.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-01 17:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">668</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+fixed resetDb, refactor OmniActionService
+    </p>
+    <p class="commitdetails"><strong>76</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/actions</strong>:
+        OmniActionService.java&#160;<span class="change">(+49&#160;-11)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        DbData.java&#160;<span class="change">(+1&#160;-3)</span>,
+        UIDbHelper.java&#160;<span class="change">(+2&#160;-3)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DbHelper.java&#160;<span class="change">(+24)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p class="previous"><a href="2010-03.html">March 2010</a> &#187; </p>
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

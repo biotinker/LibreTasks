@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: dvo203</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: dvo203</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>dvo203</dd>
+    <dt>Total Commits:</dt>
+    <dd>34 (1.0%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>1,025 (1.1%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-08-06 17:54</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=dvo203%20contributed%201%2C025%20(1.1%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-08-06%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_dvo203.png" alt="Activity by Hour of Day for dvo203" width="800" height="500" /></p><p class="chart"><img src="activity_day_dvo203.png" alt="Activity by Day of Week for dvo203" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>34 (100.0%)</td>
+        <td>1025 (100.0%)</td>
+        <td>30.1</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_attributes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/attributes/</a></th>
+        <td>14 (41.2%)</td>
+        <td>579 (56.5%)</td>
+        <td>41.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>4 (11.8%)</td>
+        <td>154 (15.0%)</td>
+        <td>38.5</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple_factoryui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui/</a></th>
+        <td>1 (2.9%)</td>
+        <td>136 (13.3%)</td>
+        <td>136.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_external_actions.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/external/actions/</a></th>
+        <td>1 (2.9%)</td>
+        <td>41 (4.0%)</td>
+        <td>41.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/</a></th>
+        <td>3 (8.8%)</td>
+        <td>38 (3.7%)</td>
+        <td>12.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/model/</a></th>
+        <td>1 (2.9%)</td>
+        <td>20 (2.0%)</td>
+        <td>20.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core_datatypes.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes/</a></th>
+        <td>3 (8.8%)</td>
+        <td>20 (2.0%)</td>
+        <td>6.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid.html" class="directory">omnidroid/</a></th>
+        <td>3 (8.8%)</td>
+        <td>20 (2.0%)</td>
+        <td>6.6</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_core_datatypes.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/core/datatypes/</a></th>
+        <td>2 (5.9%)</td>
+        <td>10 (1.0%)</td>
+        <td>5.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test.html" class="directory">omnidroid-test/</a></th>
+        <td>1 (2.9%)</td>
+        <td>4 (0.4%)</td>
+        <td>4.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>1 (2.9%)</td>
+        <td>3 (0.3%)</td>
+        <td>3.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_dvo203.png" alt="Activity of dvo203" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="10"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-06 17:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">647</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Issue  104050: Bug fix for OmniArea Filter. 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        FactoryDynamicUI.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-04 16:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">641</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Issue  99057: Made getOmniArea test to only run when EXECUTING_ON_EMULATOR flag is false. 
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-04 16:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">640</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Issue  100044: Created EXECUTING_ON_EMULATOR flag. Then set to true, the PhoneIsFalling will not initialize.
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+3)</span>,
+        PhoneIsFallingMonitor.java&#160;<span class="change">(+14)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-04 13:04</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">636</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>108</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/actions</strong>:
+        SMSService.java&#160;<span class="change">(+41&#160;-7)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+25&#160;-19)</span>,
+        LocationMonitor.java&#160;<span class="change">(+2&#160;-2)</span>,
+        PhoneIsFallingMonitor.java&#160;<span class="change">(+2&#160;-2)</span>,
+        PhoneRingingMonitor.java&#160;<span class="change">(+2&#160;-2)</span>,
+        SystemServiceEventMonitor.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgApplications.java&#160;<span class="change">(+33&#160;-14)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-04 00:04</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">634</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for Location Services intent and Phone Call intent.
+    </p>
+    <p class="commitdetails"><strong>726</strong> lines of code changed in <span class="files">15 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+17&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        Starter.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        IntentParser.java&#160;<span class="change">(+9)</span>,
+        LocationChangedEvent.java&#160;<span class="new">(new&#160;52)</span>,
+        PhoneIsFallingEvent.java&#160;<span class="new">(new&#160;41)</span>,
+        PhoneRingingEvent.java&#160;<span class="new">(new&#160;52)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="new">(new&#160;118)</span>,
+        ExternalAttribute.java&#160;<span class="new">(new&#160;39)</span>,
+        ExternalAttributeAccessException.java&#160;<span class="new">(new&#160;27)</span>,
+        LocationMonitor.java&#160;<span class="new">(new&#160;122)</span>,
+        PhoneIsFallingMonitor.java&#160;<span class="new">(new&#160;121)</span>,
+        PhoneRingingMonitor.java&#160;<span class="new">(new&#160;70)</span>,
+        SystemServiceEventMonitor.java&#160;<span class="new">(new&#160;31)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        DbData.java&#160;<span class="change">(+20&#160;-3)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityMain.java&#160;<span class="change">(+4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-01 19:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">621</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added reference tag validation to OmniPhoneNumber.
+    </p>
+    <p class="commitdetails"><strong>19</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniPhoneNumber.java&#160;<span class="change">(+19&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-01 17:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">617</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support location action parameters.
+    </p>
+    <p class="commitdetails"><strong>136</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+136&#160;-55)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-07-31 16:18</span>
+  </dt>
+  <dd>
+    <p class="comment">
+Created location based filtering support. Issue 98053.
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="new">(new&#160;1)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniArea.java&#160;<span class="new">(new&#160;1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-07-24 23:18</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">583</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added new permission in order to access GPS LocationProvider.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-07-20 21:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">571</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Created a new class FactoryDataType that will be used to create Omnidroid datatypes dynamically.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

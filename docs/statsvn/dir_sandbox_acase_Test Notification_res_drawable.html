@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory sandbox/acase/Test Notification/res/drawable/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory sandbox/acase/Test Notification/res/drawable/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2009-02-23 11:51</span></dd>
+    <dt>Directory Deleted:</dt>
+    <dd><span class="date">2009-03-08 15:39</span></dd>
+    <dt>Total Files:</dt>
+    <dd>0</dd>
+    <dt>Deleted Files:</dt>
+    <dd>6</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_sandbox.html">sandbox</a>/<a href="dir_sandbox_acase.html">acase</a>/<a href="dir_sandbox_acase_Test Notification.html">Test Notification</a>/<a href="dir_sandbox_acase_Test Notification_res.html">res</a>/<strong>drawable</strong><br/>
+</p>
+
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_acase.html" class="author">acase</a></th>
+        <td>12 (100.0%)</td>
+        <td>0 (-)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="2"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-08 15:39</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">22</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+I've reorganized the repo a bit.  I've also assumed we'll be using the<br />
+program name of "OmniDroid" since that seemed to be the most popular (if<br />
+we want to revist the name we can discuss on Monday).  I've moved the<br />
+sandboxes, so if you're developing in your sandobx, you'll need to note<br />
+that it's moved in the repo and you'll need to drop it in the proper place<br />
+now.  Here are the explanations for the changes:<br />
+<br />
+<br />
+/sp09-google/trunk - Contains just our most recent development<br />
+code that is required to build the app, if someone wants to build our app<br />
+from scratch, this is all that they would checkout from us.<br />
+<br />
+/sp09-google/branches - If you're working on a development<br />
+branch from the original source, but you're code isn't ready to be merged<br />
+back into the trunk yet.<br />
+<br />
+/sp09-google/tags - When we put out release versions, we can tag<br />
+that sepcific version of the code for release.<br />
+<br />
+/sp09-google/tools - Tools are generally things that we might<br />
+have created for use in our development environment (examples:<br />
+configurations files for eclipse/cruise control/etc.)<br />
+<br />
+/sp09-google/vendor - Downloaded packages that we might be using<br />
+in our development, such as cruise control for automated build checks,<br />
+etc.<br />
+<br />
+/sp09-google/sandbox - An area for code that each of us might<br />
+just be tinkering with (I don't think we want these in trunk, becuase<br />
+outside users, shouldn't see these when they checkout the trunk.)<br />
+<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/Test Notification/res/drawable</strong>:
+        icon.png&#160;<span class="del">(del)</span>,
+        sample_thumb_2.jpg&#160;<span class="del">(del)</span>,
+        stat_happy.png&#160;<span class="del">(del)</span>,
+        stat_neutral.png&#160;<span class="del">(del)</span>,
+        stat_sad.png&#160;<span class="del">(del)</span>,
+        stat_sample.png&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-23 11:51</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">13</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Initial Commit
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/Test Notification/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>,
+        sample_thumb_2.jpg&#160;<span class="new">(new)</span>,
+        stat_happy.png&#160;<span class="new">(new)</span>,
+        stat_neutral.png&#160;<span class="new">(new)</span>,
+        stat_sad.png&#160;<span class="new">(new)</span>,
+        stat_sample.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

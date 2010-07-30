@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: bryansuny@gmail.com</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: bryansuny@gmail.com</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>bryansuny@gmail.com</dd>
+    <dt>Total Commits:</dt>
+    <dd>4 (0.1%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>186 (0.2%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2010-07-27 00:05</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=bryansuny%40gmail.com%20contributed%20186%20(0.2%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202010-07-27%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_bryansuny@gmail.com.png" alt="Activity by Hour of Day for bryansuny@gmail.com" width="800" height="500" /></p><p class="chart"><img src="activity_day_bryansuny@gmail.com.png" alt="Activity by Day of Week for bryansuny@gmail.com" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>4 (100.0%)</td>
+        <td>186 (100.0%)</td>
+        <td>46.5</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_model_db.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/</a></th>
+        <td>2 (50.0%)</td>
+        <td>166 (89.2%)</td>
+        <td>83.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_res_values.html" class="directory">omnidroid/res/values/</a></th>
+        <td>1 (25.0%)</td>
+        <td>11 (5.9%)</td>
+        <td>11.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid.html" class="directory">omnidroid/</a></th>
+        <td>1 (25.0%)</td>
+        <td>9 (4.8%)</td>
+        <td>9.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_bryansuny@gmail.com.png" alt="Activity of bryansuny@gmail.com" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="1"></a>
+    <a href="user_bryansuny@gmail.com.html" class="author">bryansuny@gmail.com</a>
+    <span class="date">2010-07-27 00:05</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">832</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed issue 27: set default rules
+    </p>
+    <p class="commitdetails"><strong>186</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        .classpath&#160;<span class="change">(+9&#160;-9)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+11)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DbHelper.java&#160;<span class="change">(+4&#160;-4)</span>,
+        DbMigration.java&#160;<span class="change">(+162&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

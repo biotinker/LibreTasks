@@ -1,0 +1,452 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2009-07-14 15:52</span></dd>
+    <dt>Directory Deleted:</dt>
+    <dd><span class="date">2010-05-25 22:57</span></dd>
+    <dt>Total Files:</dt>
+    <dd>0</dd>
+    <dt>Deleted Files:</dt>
+    <dd>10</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src.html">src</a>/<a href="dir_omnidroid_src_edu.html">edu</a>/<a href="dir_omnidroid_src_edu_nyu.html">nyu</a>/<a href="dir_omnidroid_src_edu_nyu_cs.html">cs</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core.html">core</a>/<strong>datatypes</strong><br/>
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_omnidroid_src_edu_nyu_cs_omnidroid_core_datatypes.png" alt="omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>47 (100.0%)</td>
+        <td>1038 (100.0%)</td>
+        <td>22.0</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_beanxlj.html" class="author">beanxlj</a></th>
+        <td>11 (23.4%)</td>
+        <td>476 (45.9%)</td>
+        <td>43.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_akshah123.html" class="author">akshah123</a></th>
+        <td>15 (31.9%)</td>
+        <td>461 (44.4%)</td>
+        <td>30.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_ehotou.html" class="author">ehotou</a></th>
+        <td>8 (17.0%)</td>
+        <td>81 (7.8%)</td>
+        <td>10.1</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_dvo203.html" class="author">dvo203</a></th>
+        <td>3 (6.4%)</td>
+        <td>20 (1.9%)</td>
+        <td>6.6</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>10 (21.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="16"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:57</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">704</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing old unused directories.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        DataType.java&#160;<span class="del">(del)</span>,
+        FactoryDataType.java&#160;<span class="del">(del)</span>,
+        OmniArea.java&#160;<span class="del">(del)</span>,
+        OmniCheckBoxInput.java&#160;<span class="del">(del)</span>,
+        OmniDate.java&#160;<span class="del">(del)</span>,
+        OmniDayOfWeek.java&#160;<span class="del">(del)</span>,
+        OmniPasswordInput.java&#160;<span class="del">(del)</span>,
+        OmniPhoneNumber.java&#160;<span class="del">(del)</span>,
+        OmniText.java&#160;<span class="del">(del)</span>,
+        OmniTimePeriod.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 08:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">673</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>55</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniCheckBoxInput.java&#160;<span class="new">(new&#160;55)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-14 23:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">669</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added timeTickEvnet, parameter support multiple tags
+    </p>
+    <p class="commitdetails"><strong>82</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniArea.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniDate.java&#160;<span class="change">(+46&#160;-5)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniText.java&#160;<span class="change">(+7&#160;-1)</span>,
+        OmniTimePeriod.java&#160;<span class="change">(+8&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-03-30 08:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">666</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+major update, multiple filter parameter, action added
+    </p>
+    <p class="commitdetails"><strong>339</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="change">(+3)</span>,
+        OmniArea.java&#160;<span class="change">(+5&#160;-4)</span>,
+        OmniDate.java&#160;<span class="change">(+90&#160;-4)</span>,
+        OmniTimePeriod.java&#160;<span class="new">(new&#160;241)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-12-15 22:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">653</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding action for sending GMail.
+    </p>
+    <p class="commitdetails"><strong>57</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniPasswordInput.java&#160;<span class="new">(new&#160;57)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-04 17:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">642</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Bug Fixing: class name in db
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="change">(+2&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-04 15:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">638</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Code Cleaning: Change strings references.
+    </p>
+    <p class="commitdetails"><strong>19</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniArea.java&#160;<span class="change">(+3)</span>,
+        OmniDate.java&#160;<span class="change">(+4&#160;-1)</span>,
+        OmniDayOfWeek.java&#160;<span class="change">(+4&#160;-1)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+4&#160;-1)</span>,
+        OmniText.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-03 01:20</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">627</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Bug Fixing: checking reference tag wrong in OmniPhoneNumber type.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniPhoneNumber.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-01 19:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">621</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added reference tag validation to OmniPhoneNumber.
+    </p>
+    <p class="commitdetails"><strong>19</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniPhoneNumber.java&#160;<span class="change">(+19&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-07-31 16:18</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">605</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Created location based filtering support. Issue 98053.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniArea.java&#160;<span class="new">(new&#160;1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-07-30 14:30</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">599</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added tests around validateUserDefinedValue functions for omni data types.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniPhoneNumber.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-07-29 10:52</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">596</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed a small bug in validateUserDefinedValue functions for data types.
+    </p>
+    <p class="commitdetails"><strong>20</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniDate.java&#160;<span class="change">(+13&#160;-3)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+6&#160;-2)</span>,
+        OmniText.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-07-28 10:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">594</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed unnecessary import from OmniText.java file.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniText.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-07-27 17:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">592</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated DataTypes to accept proper java objects instead of string as parameters.  Introduced possibility of comparing two different types of Omni data types.
+    </p>
+    <p class="commitdetails"><strong>350</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        DataType.java&#160;<span class="change">(+28&#160;-11)</span>,
+        FactoryDataType.java&#160;<span class="change">(+31)</span>,
+        OmniDate.java&#160;<span class="change">(+85&#160;-43)</span>,
+        OmniDayOfWeek.java&#160;<span class="new">(new&#160;113)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+44&#160;-15)</span>,
+        OmniText.java&#160;<span class="change">(+49&#160;-19)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-07-20 21:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">571</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Created a new class FactoryDataType that will be used to create Omnidroid datatypes dynamically.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        FactoryDataType.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-07-14 15:52</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">552</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added code to handle data types that will be supported by omnidroid.  
+    </p>
+    <p class="commitdetails"><strong>88</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        DataType.java&#160;<span class="new">(new&#160;11)</span>,
+        OmniDate.java&#160;<span class="new">(new&#160;43)</span>,
+        OmniPhoneNumber.java&#160;<span class="new">(new&#160;15)</span>,
+        OmniText.java&#160;<span class="new">(new&#160;19)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

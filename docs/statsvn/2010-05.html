@@ -1,0 +1,909 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - May 2010 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>May 2010 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><a href="commitlog.html">July 2010</a></li>
+    <li><a href="2010-06.html">June 2010</a></li>
+    <li><span class="here">May 2010</span></li>
+    <li><a href="2010-04.html">April 2010</a></li>
+    <li><a href="2010-03.html">March 2010</a></li>
+    <li><a href="2010-02.html">February 2010</a></li>
+    <li><a href="2010-01.html">January 2010</a></li>
+    <li><a href="2009-12.html">December 2009</a></li>
+    <li><a href="2009-11.html">November 2009</a></li>
+    <li><a href="2009-10.html">October 2009</a></li>
+    <li><a href="2009-09.html">September 2009</a></li>
+    <li><a href="2009-08.html">August 2009</a></li>
+    <li><a href="2009-07.html">July 2009</a></li>
+    <li><a href="2009-06.html">June 2009</a></li>
+    <li><a href="2009-05.html">May 2009</a></li>
+    <li><a href="2009-04.html">April 2009</a></li>
+    <li><a href="2009-03.html">March 2009</a></li>
+    <li><a href="2009-02.html">February 2009</a></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>16</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>3</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="16"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-31 19:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#16">#16</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">725</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+I think it makes sense for use to add all the permissions that we think<br />
+Omnidroid will want to implement in the future as well.  Specifically<br />
+for the auto-update feature now added in Android 2.2, the feature will<br />
+only auto-update if the permissions haven't been changed from release to<br />
+release.  So including permissions now avoids users from having to<br />
+re-accept with each version where we've added a permission.<br />
+<br />
+I've added all the permissions I think might apply to Omnidroid in the<br />
+future and sorted them alphabetically.  Also, since one of these<br />
+permissions fixes an active bug (incoming call events), I've bumped the<br />
+version so I can update the Market application.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>42</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+42&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#15">#15</a>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing old unused directories.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">153 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core</strong>:
+        FilterTest.java&#160;<span class="del">(del)</span>,
+        IntentParserTest.java&#160;<span class="del">(del)</span>,
+        MockSMSReceivedEvent.java&#160;<span class="del">(del)</span>,
+        OmniHandlerTest.java&#160;<span class="del">(del)</span>,
+        RegisteredAppTest.java&#160;<span class="del">(del)</span>,
+        RuleProcessorTest.java&#160;<span class="del">(del)</span>,
+        RuleTest.java&#160;<span class="del">(del)</span>,
+        RuleTestData.java&#160;<span class="del">(del)</span>,
+        SMSReceivedEventTest.java&#160;<span class="del">(del)</span>,
+        SMSTest.java&#160;<span class="del">(del)</span>,
+        TestData.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="del">(del)</span>,
+        OmniDateTest.java&#160;<span class="del">(del)</span>,
+        OmniDayOfWeekTest.java&#160;<span class="del">(del)</span>,
+        OmniPhoneNumberTest.java&#160;<span class="del">(del)</span>,
+        OmniTextTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreRuleDbHelperTest.java&#160;<span class="del">(del)</span>,
+        DataFilterIDLookupTest.java&#160;<span class="del">(del)</span>,
+        DataTypeIDLookupTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        AllDbTests.java&#160;<span class="del">(del)</span>,
+        DataFilterDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="del">(del)</span>,
+        RuleDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Action.java&#160;<span class="del">(del)</span>,
+        ActionExecuter.java&#160;<span class="del">(del)</span>,
+        CP.java&#160;<span class="del">(del)</span>,
+        CallPhoneAction.java&#160;<span class="del">(del)</span>,
+        DummyActivity.java&#160;<span class="del">(del)</span>,
+        Event.java&#160;<span class="del">(del)</span>,
+        Filter.java&#160;<span class="del">(del)</span>,
+        HandlerService.java&#160;<span class="del">(del)</span>,
+        IntentParser.java&#160;<span class="del">(del)</span>,
+        LocationChangedEvent.java&#160;<span class="del">(del)</span>,
+        OmniAction.java&#160;<span class="del">(del)</span>,
+        OmniHandler.java&#160;<span class="del">(del)</span>,
+        PhoneIsFallingEvent.java&#160;<span class="del">(del)</span>,
+        PhoneRingingEvent.java&#160;<span class="del">(del)</span>,
+        RegisteredApp.java&#160;<span class="del">(del)</span>,
+        Rule.java&#160;<span class="del">(del)</span>,
+        RuleProcessor.java&#160;<span class="del">(del)</span>,
+        SMSReceivedEvent.java&#160;<span class="del">(del)</span>,
+        SendGmailAction.java&#160;<span class="del">(del)</span>,
+        SendSmsAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneLoudAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneSilentAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="del">(del)</span>,
+        SetScreenBrightnessAction.java&#160;<span class="del">(del)</span>,
+        ShowAlertAction.java&#160;<span class="del">(del)</span>,
+        ShowNotificationAction.java&#160;<span class="del">(del)</span>,
+        ShowWebsiteAction.java&#160;<span class="del">(del)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="del">(del)</span>,
+        SystemEvent.java&#160;<span class="del">(del)</span>,
+        TimeTickEvent.java&#160;<span class="del">(del)</span>,
+        UpdateTwitterStatusAction.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        DataType.java&#160;<span class="del">(del)</span>,
+        FactoryDataType.java&#160;<span class="del">(del)</span>,
+        OmniArea.java&#160;<span class="del">(del)</span>,
+        OmniCheckBoxInput.java&#160;<span class="del">(del)</span>,
+        OmniDate.java&#160;<span class="del">(del)</span>,
+        OmniDayOfWeek.java&#160;<span class="del">(del)</span>,
+        OmniPasswordInput.java&#160;<span class="del">(del)</span>,
+        OmniPhoneNumber.java&#160;<span class="del">(del)</span>,
+        OmniText.java&#160;<span class="del">(del)</span>,
+        OmniTimePeriod.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/actions</strong>:
+        GMailService.java&#160;<span class="del">(del)</span>,
+        OmniActionService.java&#160;<span class="del">(del)</span>,
+        SMSService.java&#160;<span class="del">(del)</span>,
+        UpdateTwitterStatusService.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="del">(del)</span>,
+        ExternalAttribute.java&#160;<span class="del">(del)</span>,
+        ExternalAttributeAccessException.java&#160;<span class="del">(del)</span>,
+        LocationMonitor.java&#160;<span class="del">(del)</span>,
+        PhoneIsFallingMonitor.java&#160;<span class="del">(del)</span>,
+        PhoneRingingMonitor.java&#160;<span class="del">(del)</span>,
+        SystemServiceEventMonitor.java&#160;<span class="del">(del)</span>,
+        TimeMonitor.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="del">(del)</span>,
+        SMSCatcher.java&#160;<span class="del">(del)</span>,
+        SMSCatcherActivity.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="del">(del)</span>,
+        ExternalCPActivity.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="del">(del)</span>,
+        CoreRuleDbHelper.java&#160;<span class="del">(del)</span>,
+        CursorHelper.java&#160;<span class="del">(del)</span>,
+        DataFilterIDLookup.java&#160;<span class="del">(del)</span>,
+        DataTypeIDLookup.java&#160;<span class="del">(del)</span>,
+        DbData.java&#160;<span class="del">(del)</span>,
+        UIDbHelper.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapter.java&#160;<span class="del">(del)</span>,
+        DataTypeDbAdapter.java&#160;<span class="del">(del)</span>,
+        DbAdapter.java&#160;<span class="del">(del)</span>,
+        DbHelper.java&#160;<span class="del">(del)</span>,
+        ExternalAttributeDbAdapter.java&#160;<span class="del">(del)</span>,
+        RegisteredActionDbAdapter.java&#160;<span class="del">(del)</span>,
+        RegisteredActionParameterDbAdapter.java&#160;<span class="del">(del)</span>,
+        RegisteredAppDbAdapter.java&#160;<span class="del">(del)</span>,
+        RegisteredEventAttributeDbAdapter.java&#160;<span class="del">(del)</span>,
+        RegisteredEventDbAdapter.java&#160;<span class="del">(del)</span>,
+        RuleActionDbAdapter.java&#160;<span class="del">(del)</span>,
+        RuleActionParameterDbAdapter.java&#160;<span class="del">(del)</span>,
+        RuleDbAdapter.java&#160;<span class="del">(del)</span>,
+        RuleFilterDbAdapter.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionAdd.java&#160;<span class="del">(del)</span>,
+        ActionData.java&#160;<span class="del">(del)</span>,
+        ActionDatumAdd.java&#160;<span class="del">(del)</span>,
+        ActionType.java&#160;<span class="del">(del)</span>,
+        Actions.java&#160;<span class="del">(del)</span>,
+        Constants.java&#160;<span class="del">(del)</span>,
+        Event.java&#160;<span class="del">(del)</span>,
+        EventType.java&#160;<span class="del">(del)</span>,
+        Filters.java&#160;<span class="del">(del)</span>,
+        FiltersAddData.java&#160;<span class="del">(del)</span>,
+        FiltersAddType.java&#160;<span class="del">(del)</span>,
+        Overview.java&#160;<span class="del">(del)</span>,
+        Settings.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="del">(del)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="del">(del)</span>,
+        ActivityDlgActionInput.java&#160;<span class="del">(del)</span>,
+        ActivityDlgActions.java&#160;<span class="del">(del)</span>,
+        ActivityDlgApplicationLoginInput.java&#160;<span class="del">(del)</span>,
+        ActivityDlgApplications.java&#160;<span class="del">(del)</span>,
+        ActivityDlgAttributes.java&#160;<span class="del">(del)</span>,
+        ActivityDlgFilterInput.java&#160;<span class="del">(del)</span>,
+        ActivityDlgFilters.java&#160;<span class="del">(del)</span>,
+        ActivityDlgRuleName.java&#160;<span class="del">(del)</span>,
+        ActivityMain.java&#160;<span class="del">(del)</span>,
+        ActivitySavedRules.java&#160;<span class="del">(del)</span>,
+        AdapterRule.java&#160;<span class="del">(del)</span>,
+        FactoryDynamicUI.java&#160;<span class="del">(del)</span>,
+        RuleBuilder.java&#160;<span class="del">(del)</span>,
+        UIDbHelperStore.java&#160;<span class="del">(del)</span>,
+        UtilUI.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        ModelAction.java&#160;<span class="del">(del)</span>,
+        ModelApplication.java&#160;<span class="del">(del)</span>,
+        ModelAttribute.java&#160;<span class="del">(del)</span>,
+        ModelEvent.java&#160;<span class="del">(del)</span>,
+        ModelFilter.java&#160;<span class="del">(del)</span>,
+        ModelItem.java&#160;<span class="del">(del)</span>,
+        ModelParameter.java&#160;<span class="del">(del)</span>,
+        ModelRuleAction.java&#160;<span class="del">(del)</span>,
+        ModelRuleFilter.java&#160;<span class="del">(del)</span>,
+        Rule.java&#160;<span class="del">(del)</span>,
+        RuleNode.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:25</span>
+    <a class="permalink" title="Permalink to this commit" href="#14">#14</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">702</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes compile warning for unused import.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#13">#13</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">701</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes deprecation and other warnings.  Update reference to new ".app" package name.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/core</strong>:
+        OmniAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SetPhoneLoudAction.java&#160;<span class="change">(-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/external/actions</strong>:
+        SMSService.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-22 01:14</span>
+    <a class="permalink" title="Permalink to this commit" href="#12">#12</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">700</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updating for android-4 build setup.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>32</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        build.xml&#160;<span class="change">(+29&#160;-23)</span>,
+        default.properties&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-22 00:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#11">#11</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">699</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updating for android-4 build setup.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>32</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        build.xml&#160;<span class="change">(+29&#160;-23)</span>,
+        default.properties&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-22 00:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#10">#10</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">698</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Refactoring the package name from edu.nyu.cs.omnidroid to edu.nyu.cs.omnidroid.app to match our application.
+    </p>
+    <p class="commitdetails"><strong>5185</strong> lines of code changed in <span class="files">61 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-3)</span>,
+        build.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        default.properties&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid</strong>:
+        AllTests.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app</strong>:
+        AllTests.java&#160;<span class="new">(new&#160;32)</span>,
+        external&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/core</strong>:
+        FilterTest.java&#160;<span class="new">(new&#160;69)</span>,
+        IntentParserTest.java&#160;<span class="new">(new&#160;40)</span>,
+        MockSMSReceivedEvent.java&#160;<span class="new">(new&#160;53)</span>,
+        RegisteredAppTest.java&#160;<span class="new">(new&#160;31)</span>,
+        RuleProcessorTest.java&#160;<span class="new">(new&#160;128)</span>,
+        RuleTest.java&#160;<span class="new">(new&#160;112)</span>,
+        RuleTestData.java&#160;<span class="new">(new&#160;554)</span>,
+        SMSReceivedEventTest.java&#160;<span class="new">(new&#160;55)</span>,
+        SMSTest.java&#160;<span class="new">(new&#160;55)</span>,
+        TestData.java&#160;<span class="new">(new&#160;41)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/core/datatypes</strong>:
+        OmniAreaTest.java&#160;<span class="new">(new)</span>,
+        OmniDateTest.java&#160;<span class="new">(new)</span>,
+        OmniDayOfWeekTest.java&#160;<span class="new">(new)</span>,
+        OmniPhoneNumberTest.java&#160;<span class="change">(+133)</span>,
+        OmniTextTest.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreRuleDbHelperTest.java&#160;<span class="new">(new&#160;67)</span>,
+        DataFilterIDLookupTest.java&#160;<span class="new">(new&#160;124)</span>,
+        DataTypeIDLookupTest.java&#160;<span class="new">(new&#160;77)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        AllDbTests.java&#160;<span class="change">(+32)</span>,
+        DataFilterDbAdapterTest.java&#160;<span class="new">(new)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="change">(+199)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="new">(new)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="change">(+199)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="change">(+212)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="new">(new)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="change">(+212)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="change">(+198)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="change">(+198)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="change">(+227)</span>,
+        RuleDbAdapterTest.java&#160;<span class="new">(new)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/ui/simple/model</strong>:
+        RuleTest.java&#160;<span class="change">(+201)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/app/util</strong>:
+        TreeTest.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherTest.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/util</strong>:
+        TreeTest.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-22 00:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#9">#9</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">697</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Refactoring the package name from edu.nyu.cs.omnidroid to edu.nyu.cs.omnidroid.app.  This is a result of the original keystore used to sign the market app being lost or broken.  Unfortunately the market doesn't have a way to handle the situation where the key is lost/corrupted.  And although you can unpublish an app, you can't delete it or replace it.  So we had to rename the package instead.  :-/<br />
+<br />
+From now on I'll be the only one posting the app on the Market to avoid this happening again.
+    </p>
+    <p class="commitdetails"><strong>16164</strong> lines of code changed in <span class="files">181 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="new">(new)</span>,
+        Starter.java&#160;<span class="change">(+42)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/core</strong>:
+        Action.java&#160;<span class="new">(new&#160;75)</span>,
+        ActionExecuter.java&#160;<span class="new">(new&#160;73)</span>,
+        CallPhoneAction.java&#160;<span class="new">(new&#160;79)</span>,
+        Event.java&#160;<span class="new">(new&#160;77)</span>,
+        Filter.java&#160;<span class="new">(new&#160;105)</span>,
+        HandlerService.java&#160;<span class="new">(new&#160;85)</span>,
+        IntentParser.java&#160;<span class="new">(new&#160;67)</span>,
+        LocationChangedEvent.java&#160;<span class="new">(new&#160;51)</span>,
+        OmniAction.java&#160;<span class="new">(new&#160;30)</span>,
+        PhoneRingingEvent.java&#160;<span class="new">(new&#160;63)</span>,
+        RegisteredApp.java&#160;<span class="new">(new&#160;150)</span>,
+        Rule.java&#160;<span class="new">(new&#160;135)</span>,
+        RuleProcessor.java&#160;<span class="new">(new&#160;67)</span>,
+        SMSReceivedEvent.java&#160;<span class="new">(new&#160;103)</span>,
+        SendGmailAction.java&#160;<span class="new">(new&#160;77)</span>,
+        SendSmsAction.java&#160;<span class="new">(new&#160;83)</span>,
+        SetPhoneLoudAction.java&#160;<span class="new">(new&#160;45)</span>,
+        SetPhoneSilentAction.java&#160;<span class="new">(new&#160;44)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="new">(new&#160;44)</span>,
+        SetScreenBrightnessAction.java&#160;<span class="new">(new&#160;67)</span>,
+        ShowAlertAction.java&#160;<span class="new">(new&#160;54)</span>,
+        ShowNotificationAction.java&#160;<span class="new">(new&#160;52)</span>,
+        ShowWebsiteAction.java&#160;<span class="new">(new&#160;53)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="new">(new&#160;45)</span>,
+        SystemEvent.java&#160;<span class="new">(new&#160;72)</span>,
+        TimeTickEvent.java&#160;<span class="new">(new&#160;72)</span>,
+        UpdateTwitterStatusAction.java&#160;<span class="new">(new&#160;63)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/core/datatypes</strong>:
+        DataType.java&#160;<span class="change">(+77)</span>,
+        FactoryDataType.java&#160;<span class="change">(+98)</span>,
+        OmniArea.java&#160;<span class="new">(new)</span>,
+        OmniCheckBoxInput.java&#160;<span class="new">(new)</span>,
+        OmniDate.java&#160;<span class="change">(+337)</span>,
+        OmniDayOfWeek.java&#160;<span class="new">(new)</span>,
+        OmniPasswordInput.java&#160;<span class="change">(+57)</span>,
+        OmniPhoneNumber.java&#160;<span class="change">(+150)</span>,
+        OmniText.java&#160;<span class="change">(+127)</span>,
+        OmniTimePeriod.java&#160;<span class="change">(+248)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/external/actions</strong>:
+        GMailService.java&#160;<span class="change">(+137)</span>,
+        OmniActionService.java&#160;<span class="change">(+184)</span>,
+        SMSService.java&#160;<span class="change">(+119)</span>,
+        UpdateTwitterStatusService.java&#160;<span class="change">(+76)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/external/attributes</strong>:
+        EventMonitoringService.java&#160;<span class="change">(+129)</span>,
+        ExternalAttribute.java&#160;<span class="new">(new)</span>,
+        ExternalAttributeAccessException.java&#160;<span class="new">(new)</span>,
+        LocationMonitor.java&#160;<span class="new">(new)</span>,
+        PhoneRingingMonitor.java&#160;<span class="new">(new)</span>,
+        SystemServiceEventMonitor.java&#160;<span class="new">(new)</span>,
+        TimeMonitor.java&#160;<span class="change">(+67)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="new">(new&#160;416)</span>,
+        CoreRuleDbHelper.java&#160;<span class="new">(new&#160;256)</span>,
+        CursorHelper.java&#160;<span class="new">(new&#160;85)</span>,
+        DataFilterIDLookup.java&#160;<span class="new">(new&#160;123)</span>,
+        DataTypeIDLookup.java&#160;<span class="new">(new&#160;81)</span>,
+        DbData.java&#160;<span class="new">(new&#160;242)</span>,
+        UIDbHelper.java&#160;<span class="new">(new&#160;761)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/model/db</strong>:
+        DataFilterDbAdapter.java&#160;<span class="change">(+253)</span>,
+        DataTypeDbAdapter.java&#160;<span class="change">(+199)</span>,
+        DbAdapter.java&#160;<span class="change">(+37)</span>,
+        DbHelper.java&#160;<span class="change">(+178)</span>,
+        ExternalAttributeDbAdapter.java&#160;<span class="new">(new)</span>,
+        RegisteredActionDbAdapter.java&#160;<span class="change">(+195)</span>,
+        RegisteredActionParameterDbAdapter.java&#160;<span class="new">(new)</span>,
+        RegisteredAppDbAdapter.java&#160;<span class="new">(new)</span>,
+        RegisteredEventAttributeDbAdapter.java&#160;<span class="new">(new)</span>,
+        RegisteredEventDbAdapter.java&#160;<span class="new">(new)</span>,
+        RuleActionDbAdapter.java&#160;<span class="new">(new)</span>,
+        RuleActionParameterDbAdapter.java&#160;<span class="new">(new)</span>,
+        RuleDbAdapter.java&#160;<span class="new">(new)</span>,
+        RuleFilterDbAdapter.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/ui</strong>:
+        Constants.java&#160;<span class="new">(new&#160;40)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="new">(new&#160;325)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="new">(new&#160;204)</span>,
+        ActivityDlgActionInput.java&#160;<span class="new">(new&#160;377)</span>,
+        ActivityDlgActions.java&#160;<span class="new">(new&#160;227)</span>,
+        ActivityDlgApplicationLoginInput.java&#160;<span class="new">(new&#160;134)</span>,
+        ActivityDlgApplications.java&#160;<span class="new">(new&#160;250)</span>,
+        ActivityDlgAttributes.java&#160;<span class="new">(new&#160;226)</span>,
+        ActivityDlgFilterInput.java&#160;<span class="new">(new&#160;188)</span>,
+        ActivityDlgFilters.java&#160;<span class="new">(new&#160;229)</span>,
+        ActivityDlgRuleName.java&#160;<span class="new">(new&#160;130)</span>,
+        ActivityMain.java&#160;<span class="new">(new&#160;119)</span>,
+        ActivitySavedRules.java&#160;<span class="new">(new&#160;323)</span>,
+        AdapterRule.java&#160;<span class="new">(new&#160;299)</span>,
+        FactoryDynamicUI.java&#160;<span class="new">(new&#160;555)</span>,
+        RuleBuilder.java&#160;<span class="new">(new&#160;188)</span>,
+        UIDbHelperStore.java&#160;<span class="new">(new&#160;62)</span>,
+        UtilUI.java&#160;<span class="new">(new&#160;106)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+739)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/ui/simple/model</strong>:
+        ModelAction.java&#160;<span class="new">(new)</span>,
+        ModelApplication.java&#160;<span class="new">(new)</span>,
+        ModelAttribute.java&#160;<span class="change">(+40)</span>,
+        ModelEvent.java&#160;<span class="new">(new)</span>,
+        ModelFilter.java&#160;<span class="change">(+43)</span>,
+        ModelItem.java&#160;<span class="new">(new)</span>,
+        ModelParameter.java&#160;<span class="change">(+41)</span>,
+        ModelRuleAction.java&#160;<span class="change">(+57)</span>,
+        ModelRuleFilter.java&#160;<span class="change">(+56)</span>,
+        Rule.java&#160;<span class="change">(+199)</span>,
+        RuleNode.java&#160;<span class="change">(+83)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/util</strong>:
+        DataTypeValidationException.java&#160;<span class="change">(+32)</span>,
+        DualKey.java&#160;<span class="new">(new)</span>,
+        ExceptionMessageMap.java&#160;<span class="change">(+129)</span>,
+        IOUtil.java&#160;<span class="change">(+177)</span>,
+        OmLogger.java&#160;<span class="change">(+68)</span>,
+        OmnidroidException.java&#160;<span class="new">(new)</span>,
+        OmnidroidRuntimeException.java&#160;<span class="new">(new)</span>,
+        ShowWebsiteActivity.java&#160;<span class="new">(new)</span>,
+        Tree.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="del">(del)</span>,
+        BRService.java&#160;<span class="del">(del)</span>,
+        Starter.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="del">(del)</span>,
+        DataTypeValidationException.java&#160;<span class="del">(del)</span>,
+        DualKey.java&#160;<span class="del">(del)</span>,
+        ExceptionMessageMap.java&#160;<span class="del">(del)</span>,
+        IOUtil.java&#160;<span class="del">(del)</span>,
+        ShowWebsiteActivity.java&#160;<span class="del">(del)</span>,
+        StringMap.java&#160;<span class="del">(del)</span>,
+        Tree.java&#160;<span class="del">(del)</span>,
+        UGParser.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-21 23:27</span>
+    <a class="permalink" title="Permalink to this commit" href="#8">#8</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">696</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes "no target help" in eclipse build environment.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        build.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-21 23:20</span>
+    <a class="permalink" title="Permalink to this commit" href="#7">#7</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">695</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moved to Android1.6 as this is the current version available on G1.<br />
+Dropped version to pre-release status.<br />
+Rename project name to the more appopriate Omnidroid.<br />
+Fixed two strings that caused build problems on mac.
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-2)</span>,
+        build.properties&#160;<span class="change">(+1)</span>,
+        build.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        default.properties&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-20 03:01</span>
+    <a class="permalink" title="Permalink to this commit" href="#6">#6</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">690</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updating documentation<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>13</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        LICENSE&#160;<span class="change">(-25)</span>,
+        README&#160;<span class="change">(+11&#160;-8)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        build.properties&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-06 14:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#5">#5</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">676</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 09:33</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">675</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 09:20</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">674</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapter.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 08:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">673</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>763</strong> lines of code changed in <span class="files">15 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+11&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        strings.xml&#160;<span class="change">(+5)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetScreenBrightnessAction.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core/datatypes</strong>:
+        OmniCheckBoxInput.java&#160;<span class="new">(new&#160;55)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="change">(-2)</span>,
+        DbData.java&#160;<span class="change">(+2&#160;-2)</span>,
+        UIDbHelper.java&#160;<span class="change">(+59&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapter.java&#160;<span class="change">(+161&#160;-5)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgActionInput.java&#160;<span class="change">(+9&#160;-1)</span>,
+        ActivityDlgApplicationLoginInput.java&#160;<span class="new">(new&#160;134)</span>,
+        ActivityDlgApplications.java&#160;<span class="change">(+11&#160;-2)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+1)</span>,
+        FactoryDynamicUI.java&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+245&#160;-52)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        ModelApplication.java&#160;<span class="change">(+66)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_anurchandorkar@gmail.com.html" class="author">anurchandorkar@gmail.com</a>
+    <span class="date">2010-05-02 15:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">672</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added 3 actions. Set Phone loud, silent and vibrate
+    </p>
+    <p class="commitdetails"><strong>196</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetPhoneLoudAction.java&#160;<span class="new">(new&#160;45)</span>,
+        SetPhoneSilentAction.java&#160;<span class="new">(new&#160;44)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="new">(new&#160;44)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/actions</strong>:
+        OmniActionService.java&#160;<span class="change">(+41&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        CoreActionsDbHelper.java&#160;<span class="change">(+12)</span>,
+        DbData.java&#160;<span class="change">(+10&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p class="previous"><a href="2010-04.html">April 2010</a> &#187; </p>
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

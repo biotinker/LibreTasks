@@ -1,0 +1,806 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - June 2009 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>June 2009 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><a href="commitlog.html">July 2010</a></li>
+    <li><a href="2010-06.html">June 2010</a></li>
+    <li><a href="2010-05.html">May 2010</a></li>
+    <li><a href="2010-04.html">April 2010</a></li>
+    <li><a href="2010-03.html">March 2010</a></li>
+    <li><a href="2010-02.html">February 2010</a></li>
+    <li><a href="2010-01.html">January 2010</a></li>
+    <li><a href="2009-12.html">December 2009</a></li>
+    <li><a href="2009-11.html">November 2009</a></li>
+    <li><a href="2009-10.html">October 2009</a></li>
+    <li><a href="2009-09.html">September 2009</a></li>
+    <li><a href="2009-08.html">August 2009</a></li>
+    <li><a href="2009-07.html">July 2009</a></li>
+    <li><span class="here">June 2009</span></li>
+    <li><a href="2009-05.html">May 2009</a></li>
+    <li><a href="2009-04.html">April 2009</a></li>
+    <li><a href="2009-03.html">March 2009</a></li>
+    <li><a href="2009-02.html">February 2009</a></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>16</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>7</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="16"></a>
+    <a href="user_ksjohnson3.html" class="author">ksjohnson3</a>
+    <span class="date">2009-06-30 14:11</span>
+    <a class="permalink" title="Permalink to this commit" href="#16">#16</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">498</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding tests for SMSCatcher
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core</strong>:
+        RegisteredAppTest.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherTest.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="new">(new)</span>,
+        SMSCatcher.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-06-27 14:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#15">#15</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">492</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Checking in AppConfig Db adapters.
+    </p>
+    <p class="commitdetails"><strong>472</strong> lines of code changed in <span class="files">18 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="new">(new&#160;28)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="new">(new&#160;27)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="new">(new&#160;14)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="new">(new&#160;12)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="new">(new&#160;16)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapter.java&#160;<span class="new">(new&#160;37)</span>,
+        DataTypeDbAdapter.java&#160;<span class="new">(new&#160;39)</span>,
+        DbAdapter.java&#160;<span class="new">(new&#160;4)</span>,
+        DbHelper.java&#160;<span class="new">(new&#160;13)</span>,
+        ExternalAttributeDbAdapter.java&#160;<span class="new">(new&#160;44)</span>,
+        RegisteredActionDbAdapter.java&#160;<span class="new">(new&#160;34)</span>,
+        RegisteredActionParameterDbAdapter.java&#160;<span class="new">(new&#160;47)</span>,
+        RegisteredAppDbAdapter.java&#160;<span class="new">(new&#160;43)</span>,
+        RegisteredEventAttributeDbAdapter.java&#160;<span class="new">(new&#160;45)</span>,
+        RegisteredEventDbAdapter.java&#160;<span class="new">(new&#160;39)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_londinop.html" class="author">londinop</a>
+    <span class="date">2009-06-24 19:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#14">#14</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">488</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+HandlerService replaces DummyActivity
+    </p>
+    <p class="commitdetails"><strong>497</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+198&#160;-200)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        HandlerService.java&#160;<span class="new">(new&#160;296)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2009-06-22 14:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#13">#13</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">467</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix build problems/warnings and finish the move to SDK 1.5 <br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3)</span>,
+        default.properties&#160;<span class="change">(+11)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_mschidlowsky.html" class="author">mschidlowsky</a>
+    <span class="date">2009-06-17 17:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#12">#12</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">465</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moved omnidroid project to Android 1.5
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        default.properties&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_mschidlowsky.html" class="author">mschidlowsky</a>
+    <span class="date">2009-06-17 16:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#11">#11</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">464</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed project errors, lowercased omnidroid project, and recordered OmniHandlerTest
+    </p>
+    <p class="commitdetails"><strong>110</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test</strong>:
+        .classpath&#160;<span class="change">(+8&#160;-8)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandlerTest.java&#160;<span class="new">(new&#160;80)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventTypeTest.java&#160;<span class="change">(+14&#160;-14)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        .classpath&#160;<span class="change">(+7&#160;-8)</span>,
+        .project&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-06-15 16:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#10">#10</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">457</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for saving UI element state (the text entered in an edit field) for this Activity between orientation changes. Android destroys and recreates an Activity when the user pops the keyboard out, so the developer is responsible for storing its state then restoring it between changes.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui</strong>:
+        FiltersAddData.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_ksjohnson3.html" class="author">ksjohnson3</a>
+    <span class="date">2009-06-15 16:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#9">#9</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">456</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Implements an Activity unit testing framework. Fixes issue 33.
+    </p>
+    <p class="commitdetails"><strong>447</strong> lines of code changed in <span class="files">31 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        .classpath&#160;<span class="del">(del)</span>,
+        .project&#160;<span class="del">(del)</span>,
+        .settings&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test</strong>:
+        .classpath&#160;<span class="new">(new&#160;8)</span>,
+        .project&#160;<span class="new">(new&#160;33)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new&#160;37)</span>,
+        default.properties&#160;<span class="new">(new&#160;11)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/res/layout</strong>:
+        main.xml&#160;<span class="new">(new&#160;12)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/res/values</strong>:
+        strings.xml&#160;<span class="new">(new&#160;5)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid</strong>:
+        AllTests.java&#160;<span class="new">(new&#160;32)</span>
+      </li>
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventTypeTest.java&#160;<span class="new">(new&#160;108)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        .classpath&#160;<span class="change">(+8)</span>,
+        .project&#160;<span class="change">(+33)</span>,
+        tests&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+9&#160;-4)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui</strong>:
+        Constants.java&#160;<span class="new">(new)</span>,
+        Event.java&#160;<span class="new">(new)</span>,
+        EventType.java&#160;<span class="new">(new)</span>,
+        Filters.java&#160;<span class="new">(new)</span>,
+        Overview.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="new">(new)</span>,
+        StringMap.java&#160;<span class="change">(+39&#160;-18)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_mschidlowsky.html" class="author">mschidlowsky</a>
+    <span class="date">2009-06-15 10:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#8">#8</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">453</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moved omnidroid eclipse project into subdirectory.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>220</strong> lines of code changed in <span class="files">156 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="del">(del)</span>,
+        assets&#160;<span class="del">(del)</span>,
+        default.properties&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new&#160;198)</span>,
+        default.properties&#160;<span class="new">(new&#160;22)</span>,
+        tests&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>res/drawable</strong>:
+        icon.png&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        action_data.xml&#160;<span class="del">(del)</span>,
+        action_datum_add.xml&#160;<span class="del">(del)</span>,
+        action_thrower_data.xml&#160;<span class="del">(del)</span>,
+        action_thrower_uri.xml&#160;<span class="del">(del)</span>,
+        actions.xml&#160;<span class="del">(del)</span>,
+        checkboxlistview.xml&#160;<span class="del">(del)</span>,
+        checklistview.xml&#160;<span class="del">(del)</span>,
+        default_linear.xml&#160;<span class="del">(del)</span>,
+        dummy_activity.xml&#160;<span class="del">(del)</span>,
+        event_app_list.xml&#160;<span class="del">(del)</span>,
+        event_catcher.xml&#160;<span class="del">(del)</span>,
+        event_catcher_actions.xml&#160;<span class="del">(del)</span>,
+        event_list_activity.xml&#160;<span class="del">(del)</span>,
+        external_event_cp.xml&#160;<span class="del">(del)</span>,
+        filter_add_data.xml&#160;<span class="del">(del)</span>,
+        filters.xml&#160;<span class="del">(del)</span>,
+        filters_add_data.xml&#160;<span class="del">(del)</span>,
+        linear_default.xml&#160;<span class="del">(del)</span>,
+        main.xml&#160;<span class="del">(del)</span>,
+        main1.xml&#160;<span class="del">(del)</span>,
+        main2.xml&#160;<span class="del">(del)</span>,
+        overview.xml&#160;<span class="del">(del)</span>,
+        overview_activity.xml&#160;<span class="del">(del)</span>,
+        save_dialog.xml&#160;<span class="del">(del)</span>,
+        settings.xml&#160;<span class="del">(del)</span>,
+        summary.xml&#160;<span class="del">(del)</span>,
+        test_checkablelist.xml&#160;<span class="del">(del)</span>,
+        test_checklistview.xml&#160;<span class="del">(del)</span>,
+        test_config.xml&#160;<span class="del">(del)</span>,
+        test_cp2.xml&#160;<span class="del">(del)</span>,
+        test_service.xml&#160;<span class="del">(del)</span>,
+        thrower_data.xml&#160;<span class="del">(del)</span>,
+        thrower_datum_add.xml&#160;<span class="del">(del)</span>,
+        throwers.xml&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/android</strong>:
+        phonemamager&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid</strong>:
+        OmniCP.java&#160;<span class="del">(del)</span>,
+        OmniCPActivity.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="del">(del)</span>,
+        BRService.java&#160;<span class="del">(del)</span>,
+        Logger.java&#160;<span class="del">(del)</span>,
+        OmniBR.java&#160;<span class="del">(del)</span>,
+        Starter.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contentprovider</strong>:
+        ContentProvider.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="del">(del)</span>,
+        ContentProvider.java&#160;<span class="del">(del)</span>,
+        PopulateAppConfigSetup.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="del">(del)</span>,
+        DummyActivity.java&#160;<span class="del">(del)</span>,
+        OmniCP.java&#160;<span class="del">(del)</span>,
+        OmniHandler.java&#160;<span class="del">(del)</span>,
+        ProcessIntent.java&#160;<span class="del">(del)</span>,
+        RegisteredApp.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="del">(del)</span>,
+        R.java&#160;<span class="del">(del)</span>,
+        SMSCatcher.java&#160;<span class="del">(del)</span>,
+        SMSCatcherActivity.java&#160;<span class="del">(del)</span>,
+        SMSListener.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="del">(del)</span>,
+        ExternalCPActivity.java&#160;<span class="del">(del)</span>,
+        OmniCP.java&#160;<span class="del">(del)</span>,
+        OmniCPActivity.java&#160;<span class="del">(del)</span>,
+        R.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/masterapp</strong>:
+        OmniCP.java&#160;<span class="del">(del)</span>,
+        OmniCPActivity.java&#160;<span class="del">(del)</span>,
+        R.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="del">(del)</span>,
+        ActionThrowerDataType.java&#160;<span class="del">(del)</span>,
+        ActionThrowerDataURI.java&#160;<span class="del">(del)</span>,
+        AdapterWrapper.java&#160;<span class="del">(del)</span>,
+        CheckBoxViewWrapper.java&#160;<span class="del">(del)</span>,
+        CheckListView.java&#160;<span class="del">(del)</span>,
+        CheckListViewDemo.java&#160;<span class="del">(del)</span>,
+        CheckableList.java&#160;<span class="del">(del)</span>,
+        CheckableWrapper.java&#160;<span class="del">(del)</span>,
+        Constants.java&#160;<span class="del">(del)</span>,
+        ExceptionHandler.java&#160;<span class="del">(del)</span>,
+        ExternalCP.java&#160;<span class="del">(del)</span>,
+        ExternalCPActivity.java&#160;<span class="del">(del)</span>,
+        Filters.java&#160;<span class="del">(del)</span>,
+        FiltersAdd.java&#160;<span class="del">(del)</span>,
+        FiltersAddData.java&#160;<span class="del">(del)</span>,
+        MainCP.java&#160;<span class="del">(del)</span>,
+        OmniCPActivity.java&#160;<span class="del">(del)</span>,
+        PackageLister.java&#160;<span class="del">(del)</span>,
+        R.java&#160;<span class="del">(del)</span>,
+        SaveDialog.java&#160;<span class="del">(del)</span>,
+        TestActivity.java&#160;<span class="del">(del)</span>,
+        TestApp.java&#160;<span class="del">(del)</span>,
+        TestAppConfig.java&#160;<span class="del">(del)</span>,
+        TestCP.java&#160;<span class="del">(del)</span>,
+        TestConfigFile.java&#160;<span class="del">(del)</span>,
+        TestExceptionHandler.java&#160;<span class="del">(del)</span>,
+        TestService.java&#160;<span class="del">(del)</span>,
+        TestUserConfig.java&#160;<span class="del">(del)</span>,
+        ThrowerAction.java&#160;<span class="del">(del)</span>,
+        ThrowerAdd.java&#160;<span class="del">(del)</span>,
+        ThrowerData.java&#160;<span class="del">(del)</span>,
+        ThrowerDatumAdd.java&#160;<span class="del">(del)</span>,
+        Throwers.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionAdd.java&#160;<span class="del">(del)</span>,
+        ActionData.java&#160;<span class="del">(del)</span>,
+        ActionDatumAdd.java&#160;<span class="del">(del)</span>,
+        ActionDatumChoice.java&#160;<span class="del">(del)</span>,
+        ActionThrower.java&#160;<span class="del">(del)</span>,
+        ActionThrowerActions.java&#160;<span class="del">(del)</span>,
+        ActionThrowerData.java&#160;<span class="del">(del)</span>,
+        ActionThrowerURI.java&#160;<span class="del">(del)</span>,
+        ActionType.java&#160;<span class="del">(del)</span>,
+        Actions.java&#160;<span class="del">(del)</span>,
+        AdapterWrapper.java&#160;<span class="del">(del)</span>,
+        CheckBoxListView.java&#160;<span class="del">(del)</span>,
+        CheckBoxViewWrapper.java&#160;<span class="del">(del)</span>,
+        CheckListView.java&#160;<span class="del">(del)</span>,
+        CheckListViewDemo.java&#160;<span class="del">(del)</span>,
+        CheckableWrapper.java&#160;<span class="del">(del)</span>,
+        Constants.java&#160;<span class="del">(del)</span>,
+        Event.java&#160;<span class="del">(del)</span>,
+        EventAppListActivity.java&#160;<span class="del">(del)</span>,
+        EventCatcher.java&#160;<span class="del">(del)</span>,
+        EventCatcherActions.java&#160;<span class="del">(del)</span>,
+        EventListActivity.java&#160;<span class="del">(del)</span>,
+        EventType.java&#160;<span class="del">(del)</span>,
+        ExceptionHandler.java&#160;<span class="del">(del)</span>,
+        Filters.java&#160;<span class="del">(del)</span>,
+        FiltersAdd.java&#160;<span class="del">(del)</span>,
+        FiltersAddData.java&#160;<span class="del">(del)</span>,
+        FiltersAddType.java&#160;<span class="del">(del)</span>,
+        Overview.java&#160;<span class="del">(del)</span>,
+        OverviewActivity.java&#160;<span class="del">(del)</span>,
+        PackageLister.java&#160;<span class="del">(del)</span>,
+        PhoneManagerEventAppListActivity.java&#160;<span class="del">(del)</span>,
+        PhoneManagerEventListActivity.java&#160;<span class="del">(del)</span>,
+        Settings.java&#160;<span class="del">(del)</span>,
+        Summary.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="del">(del)</span>,
+        AbstractConfig.java&#160;<span class="del">(del)</span>,
+        AppCfgParser.java&#160;<span class="del">(del)</span>,
+        ExceptionMessageMap.java&#160;<span class="del">(del)</span>,
+        OmLogger.java&#160;<span class="del">(del)</span>,
+        OmnidroidException.java&#160;<span class="del">(del)</span>,
+        OmnidroidRuntimeException.java&#160;<span class="del">(del)</span>,
+        StringMap.java&#160;<span class="del">(del)</span>,
+        UGParser.java&#160;<span class="del">(del)</span>,
+        UserConfig.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>tests/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandlerTest.java&#160;<span class="del">(del)</span>,
+        RegisteredAppTest.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-06-11 21:44</span>
+    <a class="permalink" title="Permalink to this commit" href="#7">#7</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">452</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+eliminate duplicated service/receiver definitions in manifest file, Fixes issue #2
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(-8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-06-10 09:50</span>
+    <a class="permalink" title="Permalink to this commit" href="#6">#6</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">449</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Check in the new icon.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/drawable</strong>:
+        icon.png&#160;<span class="change">(changed)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2009-06-09 14:12</span>
+    <a class="permalink" title="Permalink to this commit" href="#5">#5</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">443</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated documentation files to point to online resources (new resources added online) <br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        HACKING&#160;<span class="change">(+1&#160;-113)</span>,
+        README&#160;<span class="change">(+2&#160;-3)</span>,
+        TODO&#160;<span class="change">(+1&#160;-88)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_akshah123.html" class="author">akshah123</a>
+    <span class="date">2009-06-08 14:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">441</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added copyright and removed @author tag in all source files.  <br />
+Fixes issue 15.
+    </p>
+    <p class="commitdetails"><strong>690</strong> lines of code changed in <span class="files">46 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+15&#160;-5)</span>,
+        BRService.java&#160;<span class="change">(+15)</span>,
+        Starter.java&#160;<span class="change">(+15)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+15)</span>,
+        PopulateAppConfigSetup.java&#160;<span class="change">(+15)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+15&#160;-5)</span>,
+        DummyActivity.java&#160;<span class="change">(+15&#160;-5)</span>,
+        OmniHandler.java&#160;<span class="change">(+15&#160;-1)</span>,
+        RegisteredApp.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+15&#160;-2)</span>,
+        SMSCatcher.java&#160;<span class="change">(+15&#160;-5)</span>,
+        SMSCatcherActivity.java&#160;<span class="change">(+15&#160;-2)</span>,
+        SMSListener.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="change">(+15&#160;-1)</span>,
+        ExternalCPActivity.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ExceptionHandler.java&#160;<span class="change">(+15&#160;-1)</span>,
+        PackageLister.java&#160;<span class="change">(+15&#160;-1)</span>,
+        SaveDialog.java&#160;<span class="change">(+15&#160;-1)</span>,
+        TestApp.java&#160;<span class="change">(+15&#160;-1)</span>,
+        TestAppConfig.java&#160;<span class="change">(+15&#160;-1)</span>,
+        TestCP.java&#160;<span class="change">(+15&#160;-1)</span>,
+        TestExceptionHandler.java&#160;<span class="change">(+15&#160;-1)</span>,
+        TestService.java&#160;<span class="change">(+15)</span>,
+        TestUserConfig.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionAdd.java&#160;<span class="change">(+15&#160;-1)</span>,
+        ActionData.java&#160;<span class="change">(+15&#160;-2)</span>,
+        ActionDatumAdd.java&#160;<span class="change">(+15&#160;-2)</span>,
+        ActionType.java&#160;<span class="change">(+15&#160;-1)</span>,
+        Actions.java&#160;<span class="change">(+15&#160;-2)</span>,
+        Constants.java&#160;<span class="change">(+15&#160;-2)</span>,
+        Event.java&#160;<span class="change">(+15&#160;-2)</span>,
+        EventType.java&#160;<span class="change">(+15&#160;-1)</span>,
+        Filters.java&#160;<span class="change">(+15&#160;-2)</span>,
+        FiltersAddData.java&#160;<span class="change">(+15&#160;-2)</span>,
+        FiltersAddType.java&#160;<span class="change">(+15&#160;-2)</span>,
+        Overview.java&#160;<span class="change">(+15&#160;-2)</span>,
+        Settings.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+15&#160;-1)</span>,
+        ExceptionMessageMap.java&#160;<span class="change">(+15)</span>,
+        OmLogger.java&#160;<span class="change">(+15)</span>,
+        OmnidroidException.java&#160;<span class="change">(+15)</span>,
+        OmnidroidRuntimeException.java&#160;<span class="change">(+15)</span>,
+        StringMap.java&#160;<span class="change">(+15&#160;-4)</span>,
+        UGParser.java&#160;<span class="change">(+15)</span>
+      </li>
+      <li>
+        <strong>tests/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandlerTest.java&#160;<span class="change">(+15)</span>,
+        RegisteredAppTest.java&#160;<span class="change">(+15)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_ksjohnson3.html" class="author">ksjohnson3</a>
+    <span class="date">2009-06-06 14:34</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">440</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adds tests/ source directory for unit tests, plus some simple unit test classes. Reviewed in issue 63194.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>99</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        .classpath&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandler.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>tests/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandlerTest.java&#160;<span class="new">(new&#160;65)</span>,
+        RegisteredAppTest.java&#160;<span class="new">(new&#160;30)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2009-06-05 15:11</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">439</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moved BUGS into google code issues tracker.<br />
+Updated README to point more things to the website.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        BUGS&#160;<span class="change">(+1&#160;-18)</span>,
+        README&#160;<span class="change">(+13&#160;-68)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_mschidlowsky.html" class="author">mschidlowsky</a>
+    <span class="date">2009-06-04 12:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">436</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed workspace warnings.<br />
+Cleaned up some variable names.<br />
+svn:ignored gen and bin directories.<br />
+Fixes issue #4.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>55</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+9&#160;-11)</span>,
+        SMSCatcherActivity.java&#160;<span class="change">(+25&#160;-32)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+20&#160;-26)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p class="previous"><a href="2009-05.html">May 2009</a> &#187; </p>
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

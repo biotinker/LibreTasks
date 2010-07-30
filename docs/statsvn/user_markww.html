@@ -1,0 +1,663 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: markww</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: markww</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>markww</dd>
+    <dt>Total Commits:</dt>
+    <dd>134 (3.8%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>5,827 (6.1%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-08-06 08:32</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=markww%20contributed%205%2C827%20(6.1%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-08-06%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_markww.png" alt="Activity by Hour of Day for markww" width="800" height="500" /></p><p class="chart"><img src="activity_day_markww.png" alt="Activity by Day of Week for markww" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>134 (100.0%)</td>
+        <td>5827 (100.0%)</td>
+        <td>43.4</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/</a></th>
+        <td>61 (45.5%)</td>
+        <td>3918 (67.2%)</td>
+        <td>64.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_res_layout.html" class="directory">omnidroid/res/layout/</a></th>
+        <td>15 (11.2%)</td>
+        <td>809 (13.9%)</td>
+        <td>53.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple_factoryui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui/</a></th>
+        <td>5 (3.7%)</td>
+        <td>449 (7.7%)</td>
+        <td>89.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_ui_simple_model.html" class="directory">omnidroid-test/src/edu/nyu/cs/omnidroid/ui/simple/model/</a></th>
+        <td>1 (0.7%)</td>
+        <td>201 (3.4%)</td>
+        <td>201.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/model/</a></th>
+        <td>4 (3.0%)</td>
+        <td>176 (3.0%)</td>
+        <td>44.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui_simple_model.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model/</a></th>
+        <td>26 (19.4%)</td>
+        <td>139 (2.4%)</td>
+        <td>5.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid.html" class="directory">omnidroid/</a></th>
+        <td>3 (2.2%)</td>
+        <td>96 (1.6%)</td>
+        <td>32.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_ui.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>5 (3.7%)</td>
+        <td>21 (0.4%)</td>
+        <td>4.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_res_values.html" class="directory">omnidroid/res/values/</a></th>
+        <td>2 (1.5%)</td>
+        <td>18 (0.3%)</td>
+        <td>9.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_tests.html" class="directory">omnidroid/src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>2 (1.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid_res_drawable.html" class="directory">omnidroid/res/drawable/</a></th>
+        <td>10 (7.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_markww.png" alt="Activity of markww" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-06 08:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">645</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed bug for action params, hitting cancel button would still insert any selected param, also made buttons on saved rules activity larger.
+    </p>
+    <p class="commitdetails"><strong>18</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_saved_rules.xml&#160;<span class="change">(+10&#160;-5)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgActionInput.java&#160;<span class="change">(+3&#160;-1)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-05 11:23</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">643</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for pasting text over a selection in EditText control.
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        UtilUI.java&#160;<span class="change">(+7&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-04 16:40</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">639</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Using new db constants, added support for using OmniArea filter.
+    </p>
+    <p class="commitdetails"><strong>100</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgFilterInput.java&#160;<span class="change">(+1&#160;-1)</span>,
+        FactoryDynamicUI.java&#160;<span class="change">(+95&#160;-20)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+4&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-02 14:14</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">623</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed unused UI and test classes after switching to new simple UI.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(-25)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="del">(del)</span>,
+        TestData.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui</strong>:
+        Constants.java&#160;<span class="change">(+1&#160;-21)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-02 13:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">622</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added util function for inserting text into an EditText control, which can be used to insert attributes for a user-created action.
+    </p>
+    <p class="commitdetails"><strong>27</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        UtilUI.java&#160;<span class="change">(+24)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 18:58</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">620</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for parameter variables in actions.
+    </p>
+    <p class="commitdetails"><strong>357</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_dlg_action_input.xml&#160;<span class="change">(+8)</span>,
+        dlg_attributes_for_action.xml&#160;<span class="new">(new&#160;54)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgActionInput.java&#160;<span class="change">(+208&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+87)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 18:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">619</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Replaced if/else branches with lookup map.
+    </p>
+    <p class="commitdetails"><strong>26</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="change">(+26&#160;-36)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 15:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">615</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added new UI generator for actions using their parameter data.
+    </p>
+    <p class="commitdetails"><strong>363</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityDlgActionInput.java&#160;<span class="change">(+24&#160;-42)</span>,
+        FactoryDynamicUI.java&#160;<span class="change">(-105)</span>,
+        UIDbHelperStore.java&#160;<span class="change">(+10&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/factoryui</strong>:
+        FactoryActions.java&#160;<span class="new">(new&#160;329)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 12:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">614</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+changed model [int] values to [long].
+    </p>
+    <p class="commitdetails"><strong>90</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+68&#160;-71)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        ModelAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelApplication.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelAttribute.java&#160;<span class="change">(+5&#160;-5)</span>,
+        ModelEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelFilter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelItem.java&#160;<span class="change">(+3&#160;-3)</span>,
+        ModelParameter.java&#160;<span class="change">(+5&#160;-5)</span>,
+        ModelRuleAction.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ModelRuleFilter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Rule.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 11:31</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">612</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added proper UI state save for activity derived dialogs.
+    </p>
+    <p class="commitdetails"><strong>96</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+15&#160;-3)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="change">(+14&#160;-6)</span>,
+        ActivityDlgActions.java&#160;<span class="change">(+10&#160;-16)</span>,
+        ActivityDlgApplications.java&#160;<span class="change">(+9&#160;-16)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+11&#160;-16)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+9&#160;-15)</span>,
+        ActivityDlgRuleName.java&#160;<span class="change">(+1&#160;-3)</span>,
+        ActivityMain.java&#160;<span class="change">(+2&#160;-15)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+13&#160;-1)</span>,
+        UtilUI.java&#160;<span class="change">(+12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-08-01 09:08</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">611</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for giving a rule a name and a description. When the user saves a rule, they are now prompted with a dialog asking for a name and description.
+    </p>
+    <p class="commitdetails"><strong>312</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+9)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_dlg_rule_name.xml&#160;<span class="new">(new&#160;63)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+10&#160;-5)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui</strong>:
+        Constants.java&#160;<span class="change">(+6)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+41&#160;-21)</span>,
+        ActivityDlgRuleName.java&#160;<span class="new">(new&#160;132)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+40&#160;-2)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-31 19:26</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">610</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for reloading a rule directly after being saved so its memory representation matches the newly saved rule in the database.
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-31 00:47</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">604</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Connected UI 'delete rule' button to database delete rule method.
+    </p>
+    <p class="commitdetails"><strong>50</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityMain.java&#160;<span class="change">(+6)</span>,
+        ActivitySavedRules.java&#160;<span class="change">(+25&#160;-5)</span>,
+        UtilUI.java&#160;<span class="change">(+19&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-30 22:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">602</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added new definitions in AndroidManifest.xml to point to new UI classes in the ui.simple package.
+    </p>
+    <p class="commitdetails"><strong>87</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+87&#160;-71)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-30 17:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">600</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Bug fix for ui/simple/model/Rule class. The correct number of filter branches/actions was not being returned in some cases. Added a new test (RuleTest.java) to check for different filter/action combinations and that they return the correct number of filters/actions.
+    </p>
+    <p class="commitdetails"><strong>219</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        RuleTest.java&#160;<span class="new">(new&#160;201)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+17&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-30 11:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">598</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added ModelParameter, made changes to UIDbHelper to support save and load of Rules.
+    </p>
+    <p class="commitdetails"><strong>139</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+87&#160;-15)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        ModelAction.java&#160;<span class="change">(+11&#160;-1)</span>,
+        ModelParameter.java&#160;<span class="new">(new&#160;41)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-27 15:21</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">591</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added ActivitySavedRules which shows the user a list of all saved rules on their system. They can then view the full rule by being moved to ActivityChooseFiltersAndActions. Added a new member variable to the Rule class called 'isEnabled'. RuleBuilder now has two methods for initializing, from a root event (brand new rule), or from a saved rule (editing an existing rule).
+    </p>
+    <p class="commitdetails"><strong>354</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_saved_rules.xml&#160;<span class="new">(new&#160;55)</span>
+      </li>
+      <li>
+        <strong>omnidroid/res/values</strong>:
+        colors.xml&#160;<span class="change">(+13&#160;-1)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+1)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="change">(+2&#160;-1)</span>,
+        ActivityMain.java&#160;<span class="change">(+3&#160;-2)</span>,
+        ActivitySavedRules.java&#160;<span class="new">(new&#160;239)</span>,
+        RuleBuilder.java&#160;<span class="change">(+30&#160;-5)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-24 16:34</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">581</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed bug in Rule.getActions() where the returned ModelRuleAction array would be incorrect. Also added comments to UIDbHelper.java for where we probably need to add some additional code to make sure the Rule gets saved to the database correctly.
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/model</strong>:
+        UIDbHelper.java&#160;<span class="change">(+11&#160;-6)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple/model</strong>:
+        Rule.java&#160;<span class="change">(+6&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-24 15:25</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">580</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Replaced toggle button between filter and action button sets, with a single button set which has the following options: [1]Add filter [2]Add action [3]Edit filter/action [4]Delete filter/action [5]Save rule.
+    </p>
+    <p class="commitdetails"><strong>59</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_choose_filters_and_actions.xml&#160;<span class="change">(+20&#160;-50)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+39&#160;-84)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-24 10:14</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">579</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding UI dialogs for adding an action to a rule. Cleaned up comments etc in other files for consistency. 
+    </p>
+    <p class="commitdetails"><strong>1069</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/layout</strong>:
+        activity_dlg_action_input.xml&#160;<span class="new">(new&#160;69)</span>,
+        activity_dlg_actions.xml&#160;<span class="new">(new&#160;60)</span>,
+        activity_dlg_applications.xml&#160;<span class="new">(new&#160;60)</span>
+      </li>
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/ui/simple</strong>:
+        ActivityChooseFiltersAndActions.java&#160;<span class="change">(+51&#160;-18)</span>,
+        ActivityChooseRootEvent.java&#160;<span class="change">(+6&#160;-9)</span>,
+        ActivityDlgActionInput.java&#160;<span class="new">(new&#160;179)</span>,
+        ActivityDlgActions.java&#160;<span class="new">(new&#160;233)</span>,
+        ActivityDlgApplications.java&#160;<span class="new">(new&#160;229)</span>,
+        ActivityDlgAttributes.java&#160;<span class="change">(+45&#160;-41)</span>,
+        ActivityDlgFilterInput.java&#160;<span class="change">(+38&#160;-27)</span>,
+        ActivityDlgFilters.java&#160;<span class="change">(+45&#160;-33)</span>,
+        AdapterRule.java&#160;<span class="change">(+24&#160;-17)</span>,
+        RuleBuilder.java&#160;<span class="change">(+30&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(7 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

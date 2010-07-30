@@ -1,0 +1,564 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: ssg292</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: ssg292</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>ssg292</dd>
+    <dt>Total Commits:</dt>
+    <dd>68 (1.9%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>1,121 (1.2%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-05-12 11:19</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=ssg292%20contributed%201%2C121%20(1.2%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-05-12%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_ssg292.png" alt="Activity by Hour of Day for ssg292" width="800" height="500" /></p><p class="chart"><img src="activity_day_ssg292.png" alt="Activity by Day of Week for ssg292" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>68 (100.0%)</td>
+        <td>1121 (100.0%)</td>
+        <td>16.4</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_core.html" class="directory">src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>14 (20.6%)</td>
+        <td>336 (30.0%)</td>
+        <td>24.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_contprovider.html" class="directory">src/edu/nyu/cs/omnidroid/contprovider/</a></th>
+        <td>12 (17.6%)</td>
+        <td>333 (29.7%)</td>
+        <td>27.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>12 (17.6%)</td>
+        <td>178 (15.9%)</td>
+        <td>14.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>8 (11.8%)</td>
+        <td>118 (10.5%)</td>
+        <td>14.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_tests.html" class="directory">src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>10 (14.7%)</td>
+        <td>64 (5.7%)</td>
+        <td>6.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir.html" class="directory">/</a></th>
+        <td>4 (5.9%)</td>
+        <td>45 (4.0%)</td>
+        <td>11.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_util.html" class="directory">src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>4 (5.9%)</td>
+        <td>33 (2.9%)</td>
+        <td>8.2</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_ui.html" class="directory">src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>1 (1.5%)</td>
+        <td>11 (1.0%)</td>
+        <td>11.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_res_values.html" class="directory">res/values/</a></th>
+        <td>2 (2.9%)</td>
+        <td>3 (0.3%)</td>
+        <td>1.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_contentprovider.html" class="directory">src/edu/nyu/cs/omnidroid/contentprovider/</a></th>
+        <td>1 (1.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_ssg292.png" alt="Activity of ssg292" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-12 11:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">399</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+description
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcher.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-12 11:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">398</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+description<br />
+
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-12 11:14</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">397</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+description of external catcher
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+7&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-12 09:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">393</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+removal of commented statements
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+2&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-12 09:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">392</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+javadocs
+    </p>
+    <p class="commitdetails"><strong>24</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+24&#160;-37)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-10 20:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">382</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+javadocs
+    </p>
+    <p class="commitdetails"><strong>22</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+22&#160;-85)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-04 19:53</span>
+  </dt>
+  <dd>
+    <p class="comment">
+call log
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+13&#160;-4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-05-02 18:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">347</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>51</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+51&#160;-66)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-27 20:16</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>89</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+51)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+14&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-27 20:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">327</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+some permissions<br />
+
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 17:32</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>115</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+14)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcher.java&#160;<span class="new">(new&#160;35)</span>,
+        SMSCatcherActivity.java&#160;<span class="new">(new&#160;54)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 04:46</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>77</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+2&#160;-7)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+75&#160;-50)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 02:24</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">309</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 02:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">308</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+appcfg for sms
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+9&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 01:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">307</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Toasting incoming sms
+    </p>
+    <p class="commitdetails"><strong>28</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+28)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-22 02:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">285</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added sms changes
+    </p>
+    <p class="commitdetails"><strong>15</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+15&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-22 00:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">281</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+1&#160;-24)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-21 18:08</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">280</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+sms
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+29&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-16 20:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">250</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-16 19:38</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(21 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

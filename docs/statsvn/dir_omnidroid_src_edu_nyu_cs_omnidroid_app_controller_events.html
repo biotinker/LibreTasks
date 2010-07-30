@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2010-06-01 22:37</span></dd>
+    <dt>Total Files:</dt>
+    <dd>11</dd>
+    <dt>Deleted Files:</dt>
+    <dd>0</dd>
+    <dt>Lines of Code:</dt>
+    <dd>613</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src.html">src</a>/<a href="dir_omnidroid_src_edu.html">edu</a>/<a href="dir_omnidroid_src_edu_nyu.html">nyu</a>/<a href="dir_omnidroid_src_edu_nyu_cs.html">cs</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app.html">app</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller.html">controller</a>/<strong>events</strong><br/>
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_events.png" alt="omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>26 (100.0%)</td>
+        <td>881 (100.0%)</td>
+        <td>33.8</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>11 (42.3%)</td>
+        <td>416 (47.2%)</td>
+        <td>37.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_renctan.html" class="author">renctan</a></th>
+        <td>12 (46.2%)</td>
+        <td>316 (35.9%)</td>
+        <td>26.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a></th>
+        <td>3 (11.5%)</td>
+        <td>149 (16.9%)</td>
+        <td>49.6</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="7"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-30 00:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">841</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>49</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        MissedCallEvent.java&#160;<span class="new">(new&#160;49)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-07-27 13:49</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">834</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+redo accidentally deleted codes for issue 123
+    </p>
+    <p class="commitdetails"><strong>136</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        LocationChangedEvent.java&#160;<span class="change">(+35&#160;-30)</span>,
+        PhoneCallEvent.java&#160;<span class="change">(+4&#160;-2)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+92&#160;-87)</span>,
+        TimeTickEvent.java&#160;<span class="change">(+5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-26 14:14</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">829</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>100</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        InternetAvailableEvent.java&#160;<span class="new">(new&#160;50)</span>,
+        ServiceAvailableEvent.java&#160;<span class="new">(new&#160;50)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-07-23 23:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">828</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix for issue 123
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        LocationChangedEvent.java&#160;<span class="change">(+16&#160;-23)</span>,
+        PhoneCallEvent.java&#160;<span class="change">(+1&#160;-29)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+17&#160;-13)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="change">(+1&#160;-17)</span>,
+        TimeTickEvent.java&#160;<span class="change">(+2&#160;-32)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-04 10:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">792</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #90
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        PhoneCallEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        PhoneRingingEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        SystemEvent.java&#160;<span class="change">(+1&#160;-1)</span>,
+        TimeTickEvent.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-06-09 11:34</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">742</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Codes for issue 76.
+    </p>
+    <p class="commitdetails"><strong>143</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        CallEndedEvent.java&#160;<span class="new">(new&#160;37)</span>,
+        PhoneCallEvent.java&#160;<span class="new">(new&#160;81)</span>,
+        PhoneRingingEvent.java&#160;<span class="change">(+25&#160;-30)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-01 22:37</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">728</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Migrating to MVC paradigm.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>411</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller/events</strong>:
+        LocationChangedEvent.java&#160;<span class="new">(new&#160;52)</span>,
+        PhoneRingingEvent.java&#160;<span class="new">(new&#160;64)</span>,
+        SMSReceivedEvent.java&#160;<span class="new">(new&#160;104)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="new">(new&#160;46)</span>,
+        SystemEvent.java&#160;<span class="new">(new&#160;72)</span>,
+        TimeTickEvent.java&#160;<span class="new">(new&#160;73)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

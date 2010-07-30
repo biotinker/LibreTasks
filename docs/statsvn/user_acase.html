@@ -1,0 +1,883 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: acase</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: acase</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>acase</dd>
+    <dt>Total Commits:</dt>
+    <dd>769 (21.7%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>17,869 (18.6%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-05-27 19:37</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=acase%20contributed%2017%2C869%20(18.6%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-05-27%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_acase.png" alt="Activity by Hour of Day for acase" width="800" height="500" /></p><p class="chart"><img src="activity_day_acase.png" alt="Activity by Day of Week for acase" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>769 (100.0%)</td>
+        <td>17869 (100.0%)</td>
+        <td>23.2</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_ui.html" class="directory">src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>230 (29.9%)</td>
+        <td>9042 (50.6%)</td>
+        <td>39.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_tests.html" class="directory">src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>89 (11.6%)</td>
+        <td>4894 (27.4%)</td>
+        <td>54.9</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir.html" class="directory">/</a></th>
+        <td>60 (7.8%)</td>
+        <td>930 (5.2%)</td>
+        <td>15.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_res_layout.html" class="directory">res/layout/</a></th>
+        <td>69 (9.0%)</td>
+        <td>897 (5.0%)</td>
+        <td>13.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_core.html" class="directory">src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>20 (2.6%)</td>
+        <td>663 (3.7%)</td>
+        <td>33.1</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_util.html" class="directory">src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>30 (3.9%)</td>
+        <td>562 (3.1%)</td>
+        <td>18.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_eventapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/eventapp/</a></th>
+        <td>10 (1.3%)</td>
+        <td>341 (1.9%)</td>
+        <td>34.1</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_res_values.html" class="directory">res/values/</a></th>
+        <td>31 (4.0%)</td>
+        <td>138 (0.8%)</td>
+        <td>4.4</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_phone-manager_src_edu_nyu_cs_android_phonemamager.html" class="directory">sandbox/acase/phone-manager/src/edu/nyu/cs/android/phonemamager/</a></th>
+        <td>7 (0.9%)</td>
+        <td>108 (0.6%)</td>
+        <td>15.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_phone-manager_src_edu_nyu_cs_android_omnidroid_ui.html" class="directory">sandbox/acase/phone-manager/src/edu/nyu/cs/android/omnidroid/ui/</a></th>
+        <td>6 (0.8%)</td>
+        <td>94 (0.5%)</td>
+        <td>15.6</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>18 (2.3%)</td>
+        <td>85 (0.5%)</td>
+        <td>4.7</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_phone-manager.html" class="directory">sandbox/acase/phone-manager/</a></th>
+        <td>11 (1.4%)</td>
+        <td>80 (0.4%)</td>
+        <td>7.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_phone-manager_res_layout.html" class="directory">sandbox/acase/phone-manager/res/layout/</a></th>
+        <td>6 (0.8%)</td>
+        <td>14 (0.1%)</td>
+        <td>2.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_contprovider.html" class="directory">src/edu/nyu/cs/omnidroid/contprovider/</a></th>
+        <td>5 (0.7%)</td>
+        <td>13 (0.1%)</td>
+        <td>2.6</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_phone-manager_res_values.html" class="directory">sandbox/acase/phone-manager/res/values/</a></th>
+        <td>3 (0.4%)</td>
+        <td>4 (0.0%)</td>
+        <td>1.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>4 (0.5%)</td>
+        <td>2 (0.0%)</td>
+        <td>0.5</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrog_src_edu_nyu_cs_android_hellofrog.html" class="directory">sandbox/acase/HelloFrog/src/edu/nyu/cs/android/hellofrog/</a></th>
+        <td>3 (0.4%)</td>
+        <td>2 (0.0%)</td>
+        <td>0.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent_src_com_CIntents.html" class="directory">sandbox/prad/Catch Intent/src/com/CIntents/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_values.html" class="directory">sandbox/prad/Catch Intent/res/values/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_layout.html" class="directory">sandbox/prad/Catch Intent/res/layout/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_drawable.html" class="directory">sandbox/prad/Catch Intent/res/drawable/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent_bin.html" class="directory">sandbox/prad/Catch Intent/bin/</a></th>
+        <td>3 (0.4%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_.settings.html" class="directory">sandbox/prad/Catch Intent/.settings/</a></th>
+        <td>1 (0.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent.html" class="directory">sandbox/prad/Catch Intent/</a></th>
+        <td>4 (0.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_phone-manager_res_drawable.html" class="directory">sandbox/acase/phone-manager/res/drawable/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_phone-manager_bin.html" class="directory">sandbox/acase/phone-manager/bin/</a></th>
+        <td>16 (2.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_phone-manager_.settings.html" class="directory">sandbox/acase/phone-manager/.settings/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_Test Notification_src_edu_nyu_cs_android_testnotification.html" class="directory">sandbox/acase/Test Notification/src/edu/nyu/cs/android/testnotification/</a></th>
+        <td>16 (2.1%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_Test Notification_res_values.html" class="directory">sandbox/acase/Test Notification/res/values/</a></th>
+        <td>4 (0.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_Test Notification_res_layout.html" class="directory">sandbox/acase/Test Notification/res/layout/</a></th>
+        <td>18 (2.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_Test Notification_res_drawable.html" class="directory">sandbox/acase/Test Notification/res/drawable/</a></th>
+        <td>12 (1.6%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_Test Notification_bin.html" class="directory">sandbox/acase/Test Notification/bin/</a></th>
+        <td>6 (0.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_Test Notification_.settings.html" class="directory">sandbox/acase/Test Notification/.settings/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_Test Notification.html" class="directory">sandbox/acase/Test Notification/</a></th>
+        <td>8 (1.0%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_src_edu_nyu_cs_android_HelloFrogViews.html" class="directory">sandbox/acase/HelloFrogViews/src/edu/nyu/cs/android/HelloFrogViews/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_res_values.html" class="directory">sandbox/acase/HelloFrogViews/res/values/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_res_layout.html" class="directory">sandbox/acase/HelloFrogViews/res/layout/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_res_drawable.html" class="directory">sandbox/acase/HelloFrogViews/res/drawable/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_bin.html" class="directory">sandbox/acase/HelloFrogViews/bin/</a></th>
+        <td>6 (0.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrogViews_.settings.html" class="directory">sandbox/acase/HelloFrogViews/.settings/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrogViews.html" class="directory">sandbox/acase/HelloFrogViews/</a></th>
+        <td>8 (1.0%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrog_res_values.html" class="directory">sandbox/acase/HelloFrog/res/values/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrog_res_layout.html" class="directory">sandbox/acase/HelloFrog/res/layout/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrog_res_drawable.html" class="directory">sandbox/acase/HelloFrog/res/drawable/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrog_bin.html" class="directory">sandbox/acase/HelloFrog/bin/</a></th>
+        <td>6 (0.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_acase_HelloFrog_.settings.html" class="directory">sandbox/acase/HelloFrog/.settings/</a></th>
+        <td>2 (0.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_acase_HelloFrog.html" class="directory">sandbox/acase/HelloFrog/</a></th>
+        <td>8 (1.0%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_res_drawable.html" class="directory">res/drawable/</a></th>
+        <td>4 (0.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_omnidroid.html" class="directory">omnidroid/</a></th>
+        <td>4 (0.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_bin.html" class="directory">bin/</a></th>
+        <td>14 (1.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_acase.png" alt="Activity of acase" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-27 19:37</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">410</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+More documentation added for wrap-up<br />
+<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>84</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        HACKING&#160;<span class="change">(+36&#160;-2)</span>,
+        README&#160;<span class="change">(+3&#160;-1)</span>,
+        TODO&#160;<span class="change">(+45)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-13 18:48</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">403</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting fixes<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        BUGS&#160;<span class="change">(+2&#160;-2)</span>,
+        HACKING&#160;<span class="change">(+35&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-13 18:30</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">402</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updating documentation for future development.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>279</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        BUGS&#160;<span class="new">(new&#160;10)</span>,
+        HACKING&#160;<span class="new">(new&#160;54)</span>,
+        LICENSE&#160;<span class="change">(+188&#160;-3)</span>,
+        README&#160;<span class="change">(+2&#160;-1)</span>,
+        TODO&#160;<span class="new">(new&#160;25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-12 09:43</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">394</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding a license and readme file.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>102</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        LICENSE&#160;<span class="new">(new&#160;17)</span>,
+        README&#160;<span class="new">(new&#160;85)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 22:57</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">381</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed TODO statement.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionAdd.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 22:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">380</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Help Menu's are updated and moved data to strings.xml
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+11&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionAdd.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActionData.java&#160;<span class="change">(+1&#160;-2)</span>,
+        ActionDatumAdd.java&#160;<span class="change">(+1&#160;-2)</span>,
+        ActionType.java&#160;<span class="change">(+1&#160;-2)</span>,
+        Actions.java&#160;<span class="change">(+1&#160;-4)</span>,
+        Event.java&#160;<span class="change">(+1&#160;-3)</span>,
+        EventType.java&#160;<span class="change">(+2&#160;-2)</span>,
+        Filters.java&#160;<span class="change">(+1&#160;-4)</span>,
+        FiltersAddData.java&#160;<span class="change">(+16&#160;-1)</span>,
+        FiltersAddType.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 21:22</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">379</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Imported cleaned up.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 21:20</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">378</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Checkboxes work properly now.<br />
+Removing some test apps.
+    </p>
+    <p class="commitdetails"><strong>300</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+12&#160;-25)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        actions.xml&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+56&#160;-39)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandler.java&#160;<span class="change">(+69&#160;-50)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        PackageLister.java&#160;<span class="new">(new&#160;75)</span>,
+        TestApp.java&#160;<span class="change">(+10&#160;-31)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Actions.java&#160;<span class="change">(+7&#160;-16)</span>,
+        Constants.java&#160;<span class="change">(+5&#160;-7)</span>,
+        Event.java&#160;<span class="change">(+3&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+59&#160;-64)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 00:08</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">372</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Trying to fix pradeep's sqlite exception
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 21:13</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">368</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix a bug in our CP storage.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Actions.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 20:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">366</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix filter data storage.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        FiltersAddType.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 19:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">364</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Filter type now stores the filtername, not the contentprovider name.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        FiltersAddType.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 19:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">362</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix for ActionData2 not being stored in the UGParser.<br />
+Switching to a better ListView on the main Overview page.
+    </p>
+    <p class="commitdetails"><strong>73</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        CheckableList.java&#160;<span class="change">(+16&#160;-8)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Actions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+55&#160;-59)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 17:58</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">361</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing UI for DummyActivity.<br />
+Fixed getCols for DummyActivity.<br />
+
+    </p>
+    <p class="commitdetails"><strong>38</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DummyActivity.java&#160;<span class="change">(+37&#160;-42)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 17:06</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">360</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+This should keep our CP around on update provided the DB version number hasn't been incremented at all.
+    </p>
+    <p class="commitdetails"><strong>19</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+19&#160;-19)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 14:52</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">359</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix for Data storage returning "True".
+    </p>
+    <p class="commitdetails"><strong>89</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+3&#160;-2)</span>,
+        DummyActivity.java&#160;<span class="change">(+5&#160;-6)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        CheckableList.java&#160;<span class="change">(+12&#160;-7)</span>,
+        TestUserConfig.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Actions.java&#160;<span class="change">(+8&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+56&#160;-33)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 00:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">358</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing action data storage.<br />
+Cleaning up the UGParser.<br />
+Added the TestUserConfig to auto add a default OmniHandler.
+    </p>
+    <p class="commitdetails"><strong>539</strong> lines of code changed in <span class="files">14 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+13&#160;-3)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        action_datum_add.xml&#160;<span class="change">(+8&#160;-8)</span>,
+        test_checkablelist.xml&#160;<span class="new">(new&#160;12)</span>,
+        test_checklistview.xml&#160;<span class="change">(-1)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+5&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        CheckableList.java&#160;<span class="new">(new&#160;317)</span>,
+        TestApp.java&#160;<span class="change">(+10&#160;-5)</span>,
+        TestUserConfig.java&#160;<span class="change">(+62&#160;-24)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionData.java&#160;<span class="change">(+13)</span>,
+        ActionDatumAdd.java&#160;<span class="change">(+22&#160;-10)</span>,
+        ActionDatumChoice.java&#160;<span class="change">(-2)</span>,
+        Actions.java&#160;<span class="change">(+29&#160;-12)</span>,
+        Overview.java&#160;<span class="change">(+2&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+46&#160;-49)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-03 19:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">356</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Update comments.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Filters.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-03 19:40</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">355</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Delete Action should work now.<br />
+Delete Filter should work now.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Actions.java&#160;<span class="change">(+3&#160;-2)</span>,
+        Filters.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-03 19:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">354</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Filters use OmniDroid name instead of application name to display and store filterTypes.
+    </p>
+    <p class="commitdetails"><strong>50</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionData.java&#160;<span class="change">(+9&#160;-11)</span>,
+        Filters.java&#160;<span class="change">(+26&#160;-13)</span>,
+        FiltersAddType.java&#160;<span class="change">(+15&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(107 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

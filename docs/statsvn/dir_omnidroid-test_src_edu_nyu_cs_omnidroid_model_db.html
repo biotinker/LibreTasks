@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid-test/src/edu/nyu/cs/omnidroid/model/db/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid-test/src/edu/nyu/cs/omnidroid/model/db/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2009-06-27 14:28</span></dd>
+    <dt>Directory Deleted:</dt>
+    <dd><span class="date">2010-05-25 22:57</span></dd>
+    <dt>Total Files:</dt>
+    <dd>0</dd>
+    <dt>Deleted Files:</dt>
+    <dd>13</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid-test.html">omnidroid-test</a>/<a href="dir_omnidroid-test_src.html">src</a>/<a href="dir_omnidroid-test_src_edu.html">edu</a>/<a href="dir_omnidroid-test_src_edu_nyu.html">nyu</a>/<a href="dir_omnidroid-test_src_edu_nyu_cs.html">cs</a>/<a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid-test_src_edu_nyu_cs_omnidroid_model.html">model</a>/<strong>db</strong><br/>
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_omnidroid-test_src_edu_nyu_cs_omnidroid_model_db.png" alt="omnidroid-test/src/edu/nyu/cs/omnidroid/model/db/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>50 (100.0%)</td>
+        <td>1365 (100.0%)</td>
+        <td>27.3</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_ehotou.html" class="author">ehotou</a></th>
+        <td>34 (68.0%)</td>
+        <td>1320 (96.7%)</td>
+        <td>38.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_beanxlj.html" class="author">beanxlj</a></th>
+        <td>3 (6.0%)</td>
+        <td>45 (3.3%)</td>
+        <td>15.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>13 (26.0%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="8"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:57</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">703</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing old unused directories.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        AllDbTests.java&#160;<span class="del">(del)</span>,
+        DataFilterDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="del">(del)</span>,
+        RuleDbAdapterTest.java&#160;<span class="del">(del)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-06 14:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">676</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 09:33</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">675</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-15 08:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">670</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+changed some tests
+    </p>
+    <p class="commitdetails"><strong>40</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+40&#160;-25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-07-25 12:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">584</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Extend DataFilter table, also fix one bug in RuleActionDbAdapter
+    </p>
+    <p class="commitdetails"><strong>47</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+47&#160;-35)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-07-08 10:51</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">518</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Checking in new versions of db adapters.
+    </p>
+    <p class="commitdetails"><strong>117</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        AllDbTests.java&#160;<span class="new">(new&#160;32)</span>,
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="change">(+8&#160;-1)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="change">(+7)</span>,
+        RuleDbAdapterTest.java&#160;<span class="change">(+7)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="change">(+7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-07-01 20:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">500</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated and new db adapters.
+    </p>
+    <p class="commitdetails"><strong>1029</strong> lines of code changed in <span class="files">12 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="change">(+1&#160;-1)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="change">(+9&#160;-10)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="change">(+27&#160;-27)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="change">(+9&#160;-10)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="change">(+14&#160;-14)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="change">(+12&#160;-12)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="change">(+17&#160;-16)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="change">(+9&#160;-10)</span>,
+        RuleActionDbAdapterTest.java&#160;<span class="new">(new&#160;189)</span>,
+        RuleActionParametersDbAdpaterTest.java&#160;<span class="new">(new&#160;218)</span>,
+        RuleDbAdapterTest.java&#160;<span class="new">(new&#160;255)</span>,
+        RuleFilterDbAdapterTest.java&#160;<span class="new">(new&#160;269)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-06-27 14:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">492</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Checking in AppConfig Db adapters.
+    </p>
+    <p class="commitdetails"><strong>127</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid-test/src/edu/nyu/cs/omnidroid/model/db</strong>:
+        DataFilterDbAdapterTest.java&#160;<span class="new">(new&#160;28)</span>,
+        DataTypeDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>,
+        ExternalAttributeDbAdapterTest.java&#160;<span class="new">(new&#160;27)</span>,
+        RegisteredActionDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>,
+        RegisteredActionParameterDbAdapterTest.java&#160;<span class="new">(new&#160;14)</span>,
+        RegisteredAppDbAdapterTest.java&#160;<span class="new">(new&#160;12)</span>,
+        RegisteredEventAttributeDbAdapterTest.java&#160;<span class="new">(new&#160;16)</span>,
+        RegisteredEventDbAdapterTest.java&#160;<span class="new">(new&#160;10)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

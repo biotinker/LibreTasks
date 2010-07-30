@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid/res/drawable/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid/res/drawable/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2009-07-19 22:21</span></dd>
+    <dt>Total Files:</dt>
+    <dd>15</dd>
+    <dt>Deleted Files:</dt>
+    <dd>1</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_res.html">res</a>/<strong>drawable</strong><br/>
+</p>
+
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>17 (100.0%)</td>
+        <td>0 (-)</td>
+        <td>0.0</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_markww.html" class="author">markww</a></th>
+        <td>10 (58.8%)</td>
+        <td>0 (-)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>7 (41.2%)</td>
+        <td>0 (-)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="5"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-30 12:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">843</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 128.<br />
+Switches Logs to using a Tabbed Activity.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        icon_action_unknown_small.png&#160;<span class="new">(new)</span>,
+        icon_event_unknown_small.png&#160;<span class="new">(new)</span>,
+        icon_general_log.png&#160;<span class="del">(del)</span>,
+        icon_log_all_small.png&#160;<span class="new">(new)</span>,
+        icon_log_general.png&#160;<span class="new">(new)</span>,
+        icon_log_general_small.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-29 09:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">770</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adds support General and Action Logs. Fixes issue #19. <br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        icon_general_log.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-23 19:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">578</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding UI elements for rule building with filters. 
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        treebranch_child.png&#160;<span class="new">(new)</span>,
+        treebranch_child_end.png&#160;<span class="new">(new)</span>,
+        treebranch_parent.png&#160;<span class="new">(new)</span>,
+        treebranch_parent_empty.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-20 14:16</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">570</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding icon pngs for UI.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        icon_action_unknown.png&#160;<span class="new">(new)</span>,
+        icon_application_unknown.png&#160;<span class="new">(new)</span>,
+        icon_attribute_unknown.png&#160;<span class="new">(new)</span>,
+        icon_event_unknown.png&#160;<span class="new">(new)</span>,
+        icon_filter_unknown.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_markww.html" class="author">markww</a>
+    <span class="date">2009-07-19 22:21</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">569</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added ActivityChooseRootEvent, re-enabled ActivityMain to call ActivityChooseRootEvent. Added colors.xml as an external resource file for defining color style constants that can be used throughout the app.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/res/drawable</strong>:
+        icon_hilight.png&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

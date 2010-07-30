@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - File Sizes and File Counts</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>File Sizes and File Counts</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Total Files:</dt>
+    <dd>250</dd>
+    <dt>Average File Size:</dt>
+    <dd>120.0 lines</dd>
+    <dt>Average Revisions Per File:</dt>
+    <dd>4.5</dd>
+</dl>
+<p class="chart"><img src="file_count.png" alt="File Count" width="800" height="500" /></p><p class="chart"><img src="file_size.png" alt="Average File Size" width="800" height="500" /></p>
+<div class="section">
+<h2>File Types</h2>
+  <table  rules="groups" summary="File Extensions">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Files</th>
+        <th>LOC</th>
+        <th>LOC per file</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>250 (100.0%)</td>
+        <td>29992 (100.0%)</td>
+        <td>119.9</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th>*.java</th>
+        <td>192 (76.8%)</td>
+        <td>28045 (93.5%)</td>
+        <td>146.0</td>
+      </tr>
+      <tr  class="even">
+        <th>*.xml</th>
+        <td>26 (10.4%)</td>
+        <td>1608 (5.4%)</td>
+        <td>61.8</td>
+      </tr>
+      <tr  class="odd">
+        <th>*.properties</th>
+        <td>4 (1.6%)</td>
+        <td>35 (0.1%)</td>
+        <td>8.7</td>
+      </tr>
+      <tr  class="even">
+        <th>*.prefs</th>
+        <td>1 (0.4%)</td>
+        <td>5 (0.0%)</td>
+        <td>5.0</td>
+      </tr>
+      <tr  class="odd">
+        <th>Others</th>
+        <td>9 (3.6%)</td>
+        <td>299 (1.0%)</td>
+        <td>33.2</td>
+      </tr>
+      <tr  class="even">
+        <th>Non-Code Files</th>
+        <td>18 (7.2%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Largest Files</h2>
+  <table  rules="groups" summary="The largest files in the repository">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Lines of Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/UIDbHelper.java</th>
+        <td>1077</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/DbMigration.java</th>
+        <td>843</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/RuleTestData.java</th>
+        <td>563</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/controller/datatypes/OmniArea.java</th>
+        <td>466</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/ActivityChooseFiltersAndActions.java</th>
+        <td>443</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/CoreActionsDbHelper.java</th>
+        <td>429</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/RegisteredAppDbAdapter.java</th>
+        <td>424</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/ActivitySavedRules.java</th>
+        <td>405</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/ActivityDlgActionInput.java</th>
+        <td>379</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/FailedActionsDbHelper.java</th>
+        <td>358</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/controller/datatypes/OmniDate.java</th>
+        <td>337</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/AndroidManifest.xml</th>
+        <td>335</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/AdapterRule.java</th>
+        <td>299</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/CoreRulesDbHelper.java</th>
+        <td>294</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/RuleFilterDbAdapter.java</th>
+        <td>293</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid-test/src/edu/nyu/cs/omnidroid/app/controller/datatypes/OmniAreaTest.java</th>
+        <td>282</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/RuleDbAdapter.java</th>
+        <td>282</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/controller/HandlerService.java</th>
+        <td>281</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid-test/src/edu/nyu/cs/omnidroid/app/model/db/RuleFilterDbAdapterTest.java</th>
+        <td>278</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/res/values/strings.xml</th>
+        <td>277</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Files With Most Revisions</h2>
+  <table  rules="groups" summary="The files with most revisions">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Revisions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> AndroidManifest.xml</th>
+        <td>54</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/ui/Overview.java</th>
+        <td>42</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/core/DummyActivity.java</th>
+        <td>41</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/res/values/strings.xml</th>
+        <td>40</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> res/values/strings.xml</th>
+        <td>38</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/AndroidManifest.xml</th>
+        <td>37</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/util/UGParser.java</th>
+        <td>33</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/util/AGParser.java</th>
+        <td>32</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/bkgservice/BRService.java</th>
+        <td>29</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/tests/TestApp.java</th>
+        <td>27</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/ui/EventCatcherActions.java</th>
+        <td>24</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/model/db/DbHelper.java</th>
+        <td>23</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/tests/TestAppConfig.java</th>
+        <td>23</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/tests/TestCP.java</th>
+        <td>22</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file.png" width="15" height="13" alt="file in repo" title="file in repo"/> omnidroid/src/edu/nyu/cs/omnidroid/app/view/simple/ActivityMain.java</th>
+        <td>21</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/ui/Filters.java</th>
+        <td>20</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/ui/ActionThrowerActions.java</th>
+        <td>20</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/ui/ActionThrowerData.java</th>
+        <td>19</td>
+      </tr>
+      <tr  class="odd">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/core/CP.java</th>
+        <td>18</td>
+      </tr>
+      <tr  class="even">
+        <th><img src="file-deleted.png" width="15" height="13" alt="File removed from repo" title="File removed from repo"/> src/edu/nyu/cs/omnidroid/bkgservice/BCReceiver.java</th>
+        <td>18</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

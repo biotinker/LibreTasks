@@ -1,0 +1,429 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - February 2009 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>February 2009 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><a href="commitlog.html">July 2010</a></li>
+    <li><a href="2010-06.html">June 2010</a></li>
+    <li><a href="2010-05.html">May 2010</a></li>
+    <li><a href="2010-04.html">April 2010</a></li>
+    <li><a href="2010-03.html">March 2010</a></li>
+    <li><a href="2010-02.html">February 2010</a></li>
+    <li><a href="2010-01.html">January 2010</a></li>
+    <li><a href="2009-12.html">December 2009</a></li>
+    <li><a href="2009-11.html">November 2009</a></li>
+    <li><a href="2009-10.html">October 2009</a></li>
+    <li><a href="2009-09.html">September 2009</a></li>
+    <li><a href="2009-08.html">August 2009</a></li>
+    <li><a href="2009-07.html">July 2009</a></li>
+    <li><a href="2009-06.html">June 2009</a></li>
+    <li><a href="2009-05.html">May 2009</a></li>
+    <li><a href="2009-04.html">April 2009</a></li>
+    <li><a href="2009-03.html">March 2009</a></li>
+    <li><span class="here">February 2009</span></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>8</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>2</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="8"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-28 19:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#8">#8</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">17</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Page1 now connects to page2
+    </p>
+    <p class="commitdetails"><strong>116</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/phone-manager</strong>:
+        AndroidManifest.xml&#160;<span class="change">(+8&#160;-3)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/bin</strong>:
+        Phone Manager.apk&#160;<span class="change">(changed)</span>,
+        classes.dex&#160;<span class="change">(changed)</span>,
+        resources.ap_&#160;<span class="change">(changed)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/res/layout</strong>:
+        event_app_list.xml&#160;<span class="new">(new&#160;7)</span>,
+        event_list_activity.xml&#160;<span class="new">(new&#160;7)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/src/edu/nyu/cs/android/phonemamager</strong>:
+        PhoneManagerEventAppListActivity.java&#160;<span class="new">(new&#160;47)</span>,
+        PhoneManagerEventListActivity.java&#160;<span class="new">(new&#160;47)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-02-28 17:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#7">#7</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">16</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Testing
+    </p>
+    <p class="commitdetails"><strong>25</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/prad/Catch Intent</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new&#160;2)</span>,
+        assets&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/.settings</strong>:
+        org.eclipse.jdt.core.prefs&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/bin</strong>:
+        Catch Intent.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/res/layout</strong>:
+        main.xml&#160;<span class="new">(new&#160;2)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/res/values</strong>:
+        strings.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/prad/Catch Intent/src/com/CIntents</strong>:
+        CIntents.java&#160;<span class="new">(new&#160;13)</span>,
+        ContactAdded.java&#160;<span class="new">(new&#160;8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-28 16:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#6">#6</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">14</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added test application UI
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/phone-manager/bin</strong>:
+        Phone Manager.apk&#160;<span class="change">(changed)</span>,
+        classes.dex&#160;<span class="change">(changed)</span>,
+        resources.ap_&#160;<span class="change">(changed)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/src/edu/nyu/cs/android/phonemamager</strong>:
+        PhoneManager.java&#160;<span class="change">(+11&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-23 11:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#5">#5</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">13</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Initial Commit
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">33 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/Test Notification</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new)</span>,
+        assets&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/.settings</strong>:
+        org.eclipse.jdt.core.prefs&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/bin</strong>:
+        Test Notification.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>,
+        sample_thumb_2.jpg&#160;<span class="new">(new)</span>,
+        stat_happy.png&#160;<span class="new">(new)</span>,
+        stat_neutral.png&#160;<span class="new">(new)</span>,
+        stat_sad.png&#160;<span class="new">(new)</span>,
+        stat_sample.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/res/layout</strong>:
+        incoming_message.xml&#160;<span class="new">(new)</span>,
+        incoming_message_info.xml&#160;<span class="new">(new)</span>,
+        incoming_message_panel.xml&#160;<span class="new">(new)</span>,
+        incoming_message_view.xml&#160;<span class="new">(new)</span>,
+        main.xml&#160;<span class="new">(new)</span>,
+        notify_with_text.xml&#160;<span class="new">(new)</span>,
+        notifying_controller.xml&#160;<span class="new">(new)</span>,
+        status_bar_balloon.xml&#160;<span class="new">(new)</span>,
+        status_bar_notifications.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/res/values</strong>:
+        ids.xml&#160;<span class="new">(new)</span>,
+        strings.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/Test Notification/src/edu/nyu/cs/android/testnotification</strong>:
+        CreateNotification.java&#160;<span class="new">(new)</span>,
+        IncomingMessage.java&#160;<span class="new">(new)</span>,
+        IncomingMessageView.java&#160;<span class="new">(new)</span>,
+        NotifyWithText.java&#160;<span class="new">(new)</span>,
+        NotifyingController.java&#160;<span class="new">(new)</span>,
+        NotifyingService.java&#160;<span class="new">(new)</span>,
+        StatusBarNotifications.java&#160;<span class="new">(new)</span>,
+        TestNotification.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-16 21:58</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">11</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Modified output
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/HelloFrog/src/edu/nyu/cs/android/hellofrog</strong>:
+        HelloFrog.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-16 14:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">10</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Initial import.
+    </p>
+    <p class="commitdetails"><strong>41</strong> lines of code changed in <span class="files">12 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/phone-manager</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new&#160;33)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new&#160;3)</span>,
+        assets&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/.settings</strong>:
+        org.eclipse.jdt.core.prefs&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/bin</strong>:
+        Phone Manager.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/res/layout</strong>:
+        main.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/res/values</strong>:
+        strings.xml&#160;<span class="new">(new&#160;2)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/phone-manager/src/edu/nyu/cs/android/phonemamager</strong>:
+        PhoneManager.java&#160;<span class="new">(new&#160;3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-16 14:01</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+  </dt>
+  <dd>
+    <p class="comment">
+Initial import.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">24 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>sandbox/acase/HelloFrog</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new)</span>,
+        assets&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/.settings</strong>:
+        org.eclipse.jdt.core.prefs&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/bin</strong>:
+        HelloFrog.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/res/layout</strong>:
+        main.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/res/values</strong>:
+        strings.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrog/src/edu/nyu/cs/android/hellofrog</strong>:
+        HelloFrog.java&#160;<span class="new">(new&#160;1)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews</strong>:
+        .classpath&#160;<span class="new">(new)</span>,
+        .project&#160;<span class="new">(new)</span>,
+        AndroidManifest.xml&#160;<span class="new">(new)</span>,
+        assets&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/.settings</strong>:
+        org.eclipse.jdt.core.prefs&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/bin</strong>:
+        HelloFrogViews.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/res/drawable</strong>:
+        icon.png&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/res/layout</strong>:
+        main.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/res/values</strong>:
+        strings.xml&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>sandbox/acase/HelloFrogViews/src/edu/nyu/cs/android/HelloFrogViews</strong>:
+        HelloFrogViews.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-02-16 13:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">3</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Restructuring a little to be more industry standard as suggested by Michael.  -- Drew<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        tools&#160;<span class="new">(new)</span>,
+        vendor&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

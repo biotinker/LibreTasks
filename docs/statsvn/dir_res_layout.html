@@ -1,0 +1,962 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory res/layout/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory res/layout/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Deleted:</dt>
+    <dd><span class="date">2009-06-15 10:03</span></dd>
+    <dt>Total Files:</dt>
+    <dd>0</dd>
+    <dt>Deleted Files:</dt>
+    <dd>34</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_res.html">res</a>/<strong>layout</strong><br/>
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_res_layout.png" alt="res/layout/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>108 (100.0%)</td>
+        <td>992 (100.0%)</td>
+        <td>9.1</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_acase.html" class="author">acase</a></th>
+        <td>69 (63.9%)</td>
+        <td>897 (90.4%)</td>
+        <td>13.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_rs2642.html" class="author">rs2642</a></th>
+        <td>4 (3.7%)</td>
+        <td>76 (7.7%)</td>
+        <td>19.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_phv204.html" class="author">phv204</a></th>
+        <td>1 (0.9%)</td>
+        <td>19 (1.9%)</td>
+        <td>19.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_mschidlowsky.html" class="author">mschidlowsky</a></th>
+        <td>34 (31.5%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="40"></a>
+    <a href="user_mschidlowsky.html" class="author">mschidlowsky</a>
+    <span class="date">2009-06-15 10:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">453</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moved omnidroid eclipse project into subdirectory.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">34 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_data.xml&#160;<span class="del">(del)</span>,
+        action_datum_add.xml&#160;<span class="del">(del)</span>,
+        action_thrower_data.xml&#160;<span class="del">(del)</span>,
+        action_thrower_uri.xml&#160;<span class="del">(del)</span>,
+        actions.xml&#160;<span class="del">(del)</span>,
+        checkboxlistview.xml&#160;<span class="del">(del)</span>,
+        checklistview.xml&#160;<span class="del">(del)</span>,
+        default_linear.xml&#160;<span class="del">(del)</span>,
+        dummy_activity.xml&#160;<span class="del">(del)</span>,
+        event_app_list.xml&#160;<span class="del">(del)</span>,
+        event_catcher.xml&#160;<span class="del">(del)</span>,
+        event_catcher_actions.xml&#160;<span class="del">(del)</span>,
+        event_list_activity.xml&#160;<span class="del">(del)</span>,
+        external_event_cp.xml&#160;<span class="del">(del)</span>,
+        filter_add_data.xml&#160;<span class="del">(del)</span>,
+        filters.xml&#160;<span class="del">(del)</span>,
+        filters_add_data.xml&#160;<span class="del">(del)</span>,
+        linear_default.xml&#160;<span class="del">(del)</span>,
+        main.xml&#160;<span class="del">(del)</span>,
+        main1.xml&#160;<span class="del">(del)</span>,
+        main2.xml&#160;<span class="del">(del)</span>,
+        overview.xml&#160;<span class="del">(del)</span>,
+        overview_activity.xml&#160;<span class="del">(del)</span>,
+        save_dialog.xml&#160;<span class="del">(del)</span>,
+        settings.xml&#160;<span class="del">(del)</span>,
+        summary.xml&#160;<span class="del">(del)</span>,
+        test_checkablelist.xml&#160;<span class="del">(del)</span>,
+        test_checklistview.xml&#160;<span class="del">(del)</span>,
+        test_config.xml&#160;<span class="del">(del)</span>,
+        test_cp2.xml&#160;<span class="del">(del)</span>,
+        test_service.xml&#160;<span class="del">(del)</span>,
+        thrower_data.xml&#160;<span class="del">(del)</span>,
+        thrower_datum_add.xml&#160;<span class="del">(del)</span>,
+        throwers.xml&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="39"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-05 21:20</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">378</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Checkboxes work properly now.<br />
+Removing some test apps.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        actions.xml&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="38"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-04 00:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">358</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing action data storage.<br />
+Cleaning up the UGParser.<br />
+Added the TestUserConfig to auto add a default OmniHandler.
+    </p>
+    <p class="commitdetails"><strong>20</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_datum_add.xml&#160;<span class="change">(+8&#160;-8)</span>,
+        test_checkablelist.xml&#160;<span class="new">(new&#160;12)</span>,
+        test_checklistview.xml&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="37"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-05-03 15:02</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">351</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing tons of warning messages.<br />
+Adding tons of comments.<br />
+Removing the unused "ProcessIntent" class<br />
+Renaming ActionThrower[string] to Action[string].<br />
+Renaming EventAction to EventType.<br />
+Renaming ActionAction to ActionType.<br />
+Refactoring AG/UGParser keys.<br />
+Moving "Add" buttons from the menu to the screen view.<br />
+Adding more correct way to input ActionData.<br />
+Fixing Contentmap/URIField mapping in TestAppConfig.<br />
+Adding new Settings options for enabling/disabling things.
+    </p>
+    <p class="commitdetails"><strong>189</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_data.xml&#160;<span class="new">(new&#160;13)</span>,
+        action_datum_add.xml&#160;<span class="new">(new&#160;23)</span>,
+        actions.xml&#160;<span class="new">(new&#160;15)</span>,
+        default_linear.xml&#160;<span class="new">(new&#160;5)</span>,
+        dummy_activity.xml&#160;<span class="new">(new&#160;27)</span>,
+        external_event_cp.xml&#160;<span class="new">(new&#160;31)</span>,
+        filters.xml&#160;<span class="change">(+6&#160;-7)</span>,
+        filters_add_data.xml&#160;<span class="change">(+3&#160;-3)</span>,
+        save_dialog.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        settings.xml&#160;<span class="change">(+2&#160;-2)</span>,
+        test_checklistview.xml&#160;<span class="new">(new&#160;17)</span>,
+        test_cp2.xml&#160;<span class="new">(new&#160;27)</span>,
+        test_service.xml&#160;<span class="new">(new&#160;19)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="36"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-30 21:02</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">339</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Building out new tests Action Data.<br />
+
+    </p>
+    <p class="commitdetails"><strong>44</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+1&#160;-2)</span>,
+        thrower_data.xml&#160;<span class="new">(new&#160;20)</span>,
+        thrower_datum_add.xml&#160;<span class="new">(new&#160;11)</span>,
+        throwers.xml&#160;<span class="new">(new&#160;12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="35"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-29 00:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">335</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding Settings options for:<br />
+  on_boot startup<br />
+  enable/disable omnidroid<br />
+<br />
+Filter screen only shows if filters available for selected EventCatcherActions.<br />
+<br />
+Working on ActionCatcherData pages.<br />
+<br />
+Added default.properties which android 1.5 seems to want (but doesn't effecct 1.1).<br />
+<br />
+Renamed FilterAdd to FiltersAddType to be more descriptive.
+    </p>
+    <p class="commitdetails"><strong>22</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+22&#160;-20)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="34"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-28 01:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">333</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Undoing UGParser Enable global becuase it broke things.<br />
+Added a dialog save button for the ActionData page.
+    </p>
+    <p class="commitdetails"><strong>34</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(-9)</span>,
+        checklistview.xml&#160;<span class="new">(new&#160;17)</span>,
+        save_dialog.xml&#160;<span class="change">(-12)</span>,
+        settings.xml&#160;<span class="change">(+17&#160;-8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="33"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-27 21:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">332</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding help dialogs.<br />
+Working on Save dialog.<br />
+Added a global Enable to UGCOnfig for OmniDroid (not the Omnihandlers)<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>33</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        save_dialog.xml&#160;<span class="new">(new&#160;28)</span>,
+        settings.xml&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="32"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 18:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">324</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting changes.<br />
+Warning removals.<br />
+Minor fixes before I update everything (read as break everything) with the Action URI data pages.
+    </p>
+    <p class="commitdetails"><strong>15</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_uri.xml&#160;<span class="new">(new&#160;15)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="31"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 16:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">315</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Destroy works now for filters as well.
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        filters.xml&#160;<span class="change">(+6&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="30"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 14:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">314</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding Help dialog (pops up on Overview is no OmniHandlers exist).<br />
+Adding About dialog.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filters.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="29"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-24 00:30</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">300</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving Filters into production.
+    </p>
+    <p class="commitdetails"><strong>25</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filters.xml&#160;<span class="new">(new&#160;12)</span>,
+        filters_add_data.xml&#160;<span class="new">(new&#160;13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="28"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-22 01:17</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">282</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Very close to getting filters working.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filter_add_data.xml&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="27"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-20 22:06</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">275</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Working on getting filters ready for prime time.<br />
+Also started cleaning up the activities properly with finish/startActivityForResult/etc.
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filter_add_data.xml&#160;<span class="new">(new&#160;11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="26"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-19 16:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">260</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fighting with my CheckListView - I give up for now.<br />
+I've reorganized the TestApp to put things that are being tested near the top.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        checkboxlistview.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="25"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-19 02:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">259</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding a CheckBox Listview Widget so we can have fancy Listviews with checkboxes.<br />
+Adding a default layout.<br />
+Adding some Test classes.
+    </p>
+    <p class="commitdetails"><strong>31</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        checkboxlistview.xml&#160;<span class="new">(new&#160;17)</span>,
+        linear_default.xml&#160;<span class="new">(new&#160;7)</span>,
+        overview.xml&#160;<span class="change">(+7&#160;-63)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="24"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 17:40</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">238</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Prepping for the presentation<br />
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="23"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">219</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Starter - Restart added<br />
+BRService - Dummy uri added to ActionData<br />
+UI - Enable/Disable works<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="22"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 00:10</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">206</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Enable buttons display current setings.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="21"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-14 23:35</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">204</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving data to layout xml files<br />
+Moving strings to strings xml file<br />
+Adding a Settings activity<br />
+General code cleanup<br />
+
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+2&#160;-2)</span>,
+        settings.xml&#160;<span class="new">(new&#160;9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">200</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 19:23</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">191</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Add Version update to CP.<br />
+Connected UI to CP.
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-13 15:48</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">178</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added the OmniDroid Core Content Provider
+    </p>
+    <p class="commitdetails"><strong>27</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="del">(del)</span>,
+        main2.xml&#160;<span class="new">(new&#160;27)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 11:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">165</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Using instanceName for the actions.<br />
+Making KEYs public in UGParser<br />
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 20:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">150</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding an ActionThrowerData UI page to interact with the CP.
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="new">(new&#160;17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-05 20:30</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">97</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added into trunk
+    </p>
+    <p class="commitdetails"><strong>49</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="new">(new&#160;49)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-05 19:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">95</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Lots of changes.  Pradeep is debugging UGParser.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        overview.xml&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-30 23:50</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">82</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+* Adding some generic configuration file handlers (toying with the idea of using java Property objects for those.<br />
+<br />
+* Adding a UI to test the configuration file utility functionality.
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        test_config.xml&#160;<span class="new">(new&#160;7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-28 19:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">78</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added some comments to Manifest.<br />
+Renamed event layouts to better represent the activity names.<br />
+Added context menus for OmniHandler buttons.
+    </p>
+    <p class="commitdetails"><strong>104</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        event_catcher.xml&#160;<span class="new">(new&#160;7)</span>,
+        event_catcher_actions.xml&#160;<span class="new">(new&#160;7)</span>,
+        overview.xml&#160;<span class="new">(new&#160;90)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-25 01:05</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">73</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added a better starting activity page.
+    </p>
+    <p class="commitdetails"><strong>90</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        overview_activity.xml&#160;<span class="new">(new&#160;90)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-23 01:24</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">72</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Committing some display tests for the night.
+    </p>
+    <p class="commitdetails"><strong>19</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+19&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">68</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Final build test
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">67</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Testing commit script again.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:27</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">66</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Test commit.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:21</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">65</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing my test failure.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:16</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">64</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Testing failure build script.
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">63</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 19:03</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">62</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Superficial crap again.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+1&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 18:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">61</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Superficial non-sense.
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-03-22 17:48</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">60</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Playing with layouts.
+    </p>
+    <p class="commitdetails"><strong>18</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        summary.xml&#160;<span class="change">(+18&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(6 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

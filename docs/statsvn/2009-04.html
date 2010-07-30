@@ -1,0 +1,4658 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - April 2009 Commit Log</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>April 2009 Commit Log</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+
+<div id="nav" class="section">
+<h2>Commit Logs</h2>
+<ul>
+    <li><a href="commitlog.html">July 2010</a></li>
+    <li><a href="2010-06.html">June 2010</a></li>
+    <li><a href="2010-05.html">May 2010</a></li>
+    <li><a href="2010-04.html">April 2010</a></li>
+    <li><a href="2010-03.html">March 2010</a></li>
+    <li><a href="2010-02.html">February 2010</a></li>
+    <li><a href="2010-01.html">January 2010</a></li>
+    <li><a href="2009-12.html">December 2009</a></li>
+    <li><a href="2009-11.html">November 2009</a></li>
+    <li><a href="2009-10.html">October 2009</a></li>
+    <li><a href="2009-09.html">September 2009</a></li>
+    <li><a href="2009-08.html">August 2009</a></li>
+    <li><a href="2009-07.html">July 2009</a></li>
+    <li><a href="2009-06.html">June 2009</a></li>
+    <li><a href="2009-05.html">May 2009</a></li>
+    <li><span class="here">April 2009</span></li>
+    <li><a href="2009-03.html">March 2009</a></li>
+    <li><a href="2009-02.html">February 2009</a></li>
+</ul>
+</div><dl class="attributes">
+    <dt>Number of Commits:</dt>
+    <dd>193</dd>
+    <dt>Number of Active Developers:</dt>
+    <dd>4</dd>
+</dl>
+<dl class="commitlist">
+  <dt><a name="193"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-30 21:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#193">#193</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">339</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Building out new tests Action Data.<br />
+
+    </p>
+    <p class="commitdetails"><strong>1501</strong> lines of code changed in <span class="files">17 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+16&#160;-9)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+1&#160;-2)</span>,
+        thrower_data.xml&#160;<span class="new">(new&#160;20)</span>,
+        thrower_datum_add.xml&#160;<span class="new">(new&#160;11)</span>,
+        throwers.xml&#160;<span class="new">(new&#160;12)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+6&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        CheckListViewDemo.java&#160;<span class="change">(+4)</span>,
+        Constants.java&#160;<span class="new">(new&#160;30)</span>,
+        SaveDialog.java&#160;<span class="new">(new&#160;193)</span>,
+        TestApp.java&#160;<span class="change">(+3&#160;-3)</span>,
+        ThrowerAction.java&#160;<span class="new">(new&#160;179)</span>,
+        ThrowerAdd.java&#160;<span class="new">(new&#160;153)</span>,
+        ThrowerData.java&#160;<span class="new">(new&#160;325)</span>,
+        ThrowerDatumAdd.java&#160;<span class="new">(new&#160;162)</span>,
+        Throwers.java&#160;<span class="new">(new&#160;380)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="192"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 14:33</span>
+    <a class="permalink" title="Permalink to this commit" href="#192">#192</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">338</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+  if(actionname.equalsIgnoreCase("SMS_RECEIVED"))<br />
+    new_id = new_id-1;
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="191"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 02:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#191">#191</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">337</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="190"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 02:11</span>
+    <a class="permalink" title="Permalink to this commit" href="#190">#190</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">336</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rectified code for enabled
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="189"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-29 00:09</span>
+    <a class="permalink" title="Permalink to this commit" href="#189">#189</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">335</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding Settings options for:<br />
+  on_boot startup<br />
+  enable/disable omnidroid<br />
+<br />
+Filter screen only shows if filters available for selected EventCatcherActions.<br />
+<br />
+Working on ActionCatcherData pages.<br />
+<br />
+Added default.properties which android 1.5 seems to want (but doesn't effecct 1.1).<br />
+<br />
+Renamed FilterAdd to FiltersAddType to be more descriptive.
+    </p>
+    <p class="commitdetails"><strong>402</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        .classpath&#160;<span class="change">(+6&#160;-6)</span>,
+        AndroidManifest.xml&#160;<span class="change">(+11&#160;-4)</span>,
+        default.properties&#160;<span class="new">(new&#160;20)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+22&#160;-20)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerDataType.java&#160;<span class="new">(new&#160;152)</span>,
+        TestApp.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Filters.java&#160;<span class="change">(+10&#160;-1)</span>,
+        FiltersAddType.java&#160;<span class="new">(new&#160;152)</span>,
+        Settings.java&#160;<span class="change">(+25)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="188"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-28 01:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#188">#188</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">334</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Merging changes from my ui.ActionThrowerData into my tests.ActionThrowerData
+    </p>
+    <p class="commitdetails"><strong>13</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+13&#160;-11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="187"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-28 01:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#187">#187</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">333</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Undoing UGParser Enable global becuase it broke things.<br />
+Added a dialog save button for the ActionData page.
+    </p>
+    <p class="commitdetails"><strong>109</strong> lines of code changed in <span class="files">12 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(-9)</span>,
+        checklistview.xml&#160;<span class="new">(new&#160;17)</span>,
+        save_dialog.xml&#160;<span class="change">(-12)</span>,
+        settings.xml&#160;<span class="change">(+17&#160;-8)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+24&#160;-4)</span>,
+        CheckListViewDemo.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+35&#160;-15)</span>,
+        EventCatcher.java&#160;<span class="change">(+1&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Filters.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+7&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="186"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-27 21:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#186">#186</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">332</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding help dialogs.<br />
+Working on Save dialog.<br />
+Added a global Enable to UGCOnfig for OmniDroid (not the Omnihandlers)<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>208</strong> lines of code changed in <span class="files">15 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        save_dialog.xml&#160;<span class="new">(new&#160;28)</span>,
+        settings.xml&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+18&#160;-5)</span>,
+        TestAppConfig.java&#160;<span class="change">(+2&#160;-1)</span>,
+        TestUserConfig.java&#160;<span class="change">(-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+15&#160;-1)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+15&#160;-1)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+16&#160;-1)</span>,
+        EventCatcher.java&#160;<span class="change">(+15&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+15&#160;-1)</span>,
+        Filters.java&#160;<span class="change">(+18&#160;-2)</span>,
+        FiltersAdd.java&#160;<span class="change">(+15&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+42&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="185"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-27 20:16</span>
+    <a class="permalink" title="Permalink to this commit" href="#185">#185</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>89</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+51)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+14&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="184"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-27 20:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#184">#184</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">327</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+some permissions<br />
+
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="183"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-26 20:20</span>
+    <a class="permalink" title="Permalink to this commit" href="#183">#183</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">326</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving my new ActionData pages to the test folder while under development to allow for everyone else to develop and for me to still be able to check-in without breaking everything.
+    </p>
+    <p class="commitdetails"><strong>392</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+69&#160;-61)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="new">(new&#160;157)</span>,
+        ActionThrowerDataURI.java&#160;<span class="new">(new&#160;157)</span>,
+        TestApp.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(+2&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="182"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 18:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#182">#182</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">325</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving my fancy list interface back into tests package until it's ready for prime-time.
+    </p>
+    <p class="commitdetails"><strong>565</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        AdapterWrapper.java&#160;<span class="new">(new&#160;77)</span>,
+        CheckBoxViewWrapper.java&#160;<span class="new">(new&#160;54)</span>,
+        CheckListView.java&#160;<span class="new">(new&#160;49)</span>,
+        CheckListViewDemo.java&#160;<span class="new">(new&#160;252)</span>,
+        CheckableWrapper.java&#160;<span class="new">(new&#160;132)</span>,
+        TestApp.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="181"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 18:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#181">#181</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">324</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting changes.<br />
+Warning removals.<br />
+Minor fixes before I update everything (read as break everything) with the Action URI data pages.
+    </p>
+    <p class="commitdetails"><strong>1157</strong> lines of code changed in <span class="files">19 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_uri.xml&#160;<span class="new">(new&#160;15)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+21&#160;-25)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+14&#160;-13)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+116&#160;-120)</span>,
+        ActionThrowerURI.java&#160;<span class="change">(+124&#160;-120)</span>,
+        AdapterWrapper.java&#160;<span class="change">(+54&#160;-56)</span>,
+        CheckListView.java&#160;<span class="change">(+18&#160;-19)</span>,
+        CheckListViewDemo.java&#160;<span class="change">(+53&#160;-60)</span>,
+        CheckableWrapper.java&#160;<span class="change">(+12&#160;-12)</span>,
+        EventCatcher.java&#160;<span class="change">(+20&#160;-15)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+23&#160;-22)</span>,
+        ExceptionHandler.java&#160;<span class="change">(+21&#160;-19)</span>,
+        Filters.java&#160;<span class="change">(+223&#160;-235)</span>,
+        FiltersAdd.java&#160;<span class="change">(+17&#160;-16)</span>,
+        FiltersAddData.java&#160;<span class="change">(+78&#160;-79)</span>,
+        Overview.java&#160;<span class="change">(+303&#160;-319)</span>,
+        PackageLister.java&#160;<span class="change">(+43&#160;-43)</span>,
+        Settings.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="180"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 17:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#180">#180</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>115</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+14)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcher.java&#160;<span class="new">(new&#160;35)</span>,
+        SMSCatcherActivity.java&#160;<span class="new">(new&#160;54)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+4&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="179"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 17:14</span>
+    <a class="permalink" title="Permalink to this commit" href="#179">#179</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">316</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix typos and add ActionThrowerURI.
+    </p>
+    <p class="commitdetails"><strong>174</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerURI.java&#160;<span class="new">(new&#160;161)</span>,
+        Overview.java&#160;<span class="change">(+13&#160;-13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="178"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 16:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#178">#178</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">315</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Destroy works now for filters as well.
+    </p>
+    <p class="commitdetails"><strong>321</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+1&#160;-1)</span>,
+        filters.xml&#160;<span class="change">(+6&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Filters.java&#160;<span class="change">(+229&#160;-206)</span>,
+        FiltersAdd.java&#160;<span class="change">(+3&#160;-2)</span>,
+        FiltersAddData.java&#160;<span class="change">(+82&#160;-81)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="177"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-25 14:56</span>
+    <a class="permalink" title="Permalink to this commit" href="#177">#177</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">314</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding Help dialog (pops up on Overview is no OmniHandlers exist).<br />
+Adding About dialog.
+    </p>
+    <p class="commitdetails"><strong>56</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filters.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Filters.java&#160;<span class="change">(+1)</span>,
+        Overview.java&#160;<span class="change">(+51&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="176"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 04:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#176">#176</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>77</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+2&#160;-7)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+75&#160;-50)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="175"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-25 02:55</span>
+    <a class="permalink" title="Permalink to this commit" href="#175">#175</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">311</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added exception handling
+    </p>
+    <p class="commitdetails"><strong>101</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+101&#160;-85)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="174"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-25 02:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#174">#174</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">310</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+comntentmap
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="173"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 02:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#173">#173</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">309</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="172"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 02:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#172">#172</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">308</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+appcfg for sms
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+9&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="171"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-25 01:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#171">#171</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">307</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Toasting incoming sms
+    </p>
+    <p class="commitdetails"><strong>28</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+28)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="170"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-24 19:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#170">#170</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">306</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added actions data2 and uri2
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+17&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="169"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-24 19:14</span>
+    <a class="permalink" title="Permalink to this commit" href="#169">#169</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">305</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added Actiondata2
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+7&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="168"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-24 18:52</span>
+    <a class="permalink" title="Permalink to this commit" href="#168">#168</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">304</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Cleanup/destroy activities.<br />
+Reload Overview display after changes.
+    </p>
+    <p class="commitdetails"><strong>288</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+16&#160;-5)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+22&#160;-2)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+122&#160;-114)</span>,
+        EventCatcher.java&#160;<span class="change">(+4&#160;-3)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+12&#160;-5)</span>,
+        Filters.java&#160;<span class="change">(+21&#160;-2)</span>,
+        FiltersAdd.java&#160;<span class="change">(+22&#160;-3)</span>,
+        Overview.java&#160;<span class="change">(+69&#160;-56)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="167"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-24 17:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#167">#167</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">303</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="166"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-24 15:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#166">#166</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">302</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Not validating filters if no filter set
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+29&#160;-20)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="165"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-24 15:05</span>
+    <a class="permalink" title="Permalink to this commit" href="#165">#165</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">301</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Restarting Omni to register new IntentFilter
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+6&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="164"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-24 00:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#164">#164</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">300</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving Filters into production.
+    </p>
+    <p class="commitdetails"><strong>591</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        filters.xml&#160;<span class="new">(new&#160;12)</span>,
+        filters_add_data.xml&#160;<span class="new">(new&#160;13)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+28&#160;-16)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+25&#160;-41)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+13&#160;-6)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+3&#160;-29)</span>,
+        Filters.java&#160;<span class="new">(new&#160;249)</span>,
+        FiltersAdd.java&#160;<span class="new">(new&#160;117)</span>,
+        FiltersAddData.java&#160;<span class="new">(new&#160;115)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        StringMap.java&#160;<span class="change">(+11&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="163"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-23 19:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#163">#163</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">299</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+I added a stupid icon.<br />
+Working on filters, just checking in so I can go home and check it back out again.
+    </p>
+    <p class="commitdetails"><strong>205</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/drawable</strong>:
+        icon.png&#160;<span class="change">(changed)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        Filters.java&#160;<span class="change">(+194&#160;-107)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+11&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="162"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-23 19:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#162">#162</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+9&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="161"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-23 01:55</span>
+    <a class="permalink" title="Permalink to this commit" href="#161">#161</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">294</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+5&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="160"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-23 01:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#160">#160</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">293</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="159"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-23 01:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#159">#159</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>129</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+3)</span>,
+        DummyActivity.java&#160;<span class="change">(+115&#160;-17)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="158"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-22 21:05</span>
+    <a class="permalink" title="Permalink to this commit" href="#158">#158</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">288</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Debug is crashing for people.  Disabling.<br />
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="157"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-22 13:27</span>
+    <a class="permalink" title="Permalink to this commit" href="#157">#157</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">287</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing my copyright from AdapterWrapper since I didn't write any of that code.<br />
+Adding a profiler to Overview for debugging.
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        AdapterWrapper.java&#160;<span class="change">(-1)</span>,
+        Overview.java&#160;<span class="change">(+11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="156"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-22 03:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#156">#156</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">286</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+newmap
+    </p>
+    <p class="commitdetails"><strong>16</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+16&#160;-16)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="155"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-22 02:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#155">#155</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">285</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added sms changes
+    </p>
+    <p class="commitdetails"><strong>15</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+15&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="154"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-22 02:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#154">#154</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">284</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+test
+    </p>
+    <p class="commitdetails"><strong>38</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+38&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="153"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-22 02:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#153">#153</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">283</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+7&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="152"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-22 01:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#152">#152</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">282</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Very close to getting filters working.
+    </p>
+    <p class="commitdetails"><strong>48</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        filter_add_data.xml&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        PopulateAppConfigSetup.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        Filters.java&#160;<span class="change">(+11&#160;-2)</span>,
+        FiltersAdd.java&#160;<span class="change">(+7&#160;-3)</span>,
+        FiltersAddData.java&#160;<span class="change">(+18&#160;-23)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="151"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-22 00:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#151">#151</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">281</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+1&#160;-24)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="150"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-21 18:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#150">#150</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">280</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+sms
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+29&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="149"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-21 02:21</span>
+    <a class="permalink" title="Permalink to this commit" href="#149">#149</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">279</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding the proper filterName to add to the UGParser.  It's messy, but I just wanted to get in the working version.  I'll clean it up later.
+    </p>
+    <p class="commitdetails"><strong>105</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(+25&#160;-5)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+36&#160;-8)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+6&#160;-2)</span>,
+        StringMap.java&#160;<span class="new">(new&#160;38)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="148"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 23:33</span>
+    <a class="permalink" title="Permalink to this commit" href="#148">#148</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">278</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+format
+    </p>
+    <p class="commitdetails"><strong>21</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+21&#160;-30)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="147"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 23:27</span>
+    <a class="permalink" title="Permalink to this commit" href="#147">#147</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>104</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+102&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="146"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-20 22:06</span>
+    <a class="permalink" title="Permalink to this commit" href="#146">#146</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">275</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Working on getting filters ready for prime time.<br />
+Also started cleaning up the activities properly with finish/startActivityForResult/etc.
+    </p>
+    <p class="commitdetails"><strong>200</strong> lines of code changed in <span class="files">14 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        filter_add_data.xml&#160;<span class="new">(new&#160;11)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        Filters.java&#160;<span class="change">(+1)</span>,
+        FiltersAdd.java&#160;<span class="change">(+16&#160;-11)</span>,
+        FiltersAddData.java&#160;<span class="change">(+44&#160;-23)</span>,
+        TestApp.java&#160;<span class="change">(+1)</span>,
+        TestAppConfig.java&#160;<span class="change">(-9)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+10&#160;-1)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+8&#160;-12)</span>,
+        EventCatcher.java&#160;<span class="change">(+28&#160;-8)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+15&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+63&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="145"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 21:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#145">#145</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">274</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>134</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+134&#160;-125)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="144"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-20 18:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#144">#144</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">271</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="143"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 18:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#143">#143</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">270</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+bug
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="142"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 18:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#142">#142</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">269</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+trial
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="141"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 18:04</span>
+    <a class="permalink" title="Permalink to this commit" href="#141">#141</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="140"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-20 18:04</span>
+    <a class="permalink" title="Permalink to this commit" href="#140">#140</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">266</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+bug fix
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="139"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-20 10:50</span>
+    <a class="permalink" title="Permalink to this commit" href="#139">#139</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">265</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving Filters to Test App to protect the flow.<br />
+Renamed AGParser's agwrite to just write.<br />
+Removing my unused Config files.
+    </p>
+    <p class="commitdetails"><strong>429</strong> lines of code changed in <span class="files">14 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        PopulateAppConfigSetup.java&#160;<span class="change">(+8&#160;-8)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        Filters.java&#160;<span class="new">(new&#160;134)</span>,
+        FiltersAdd.java&#160;<span class="new">(new&#160;112)</span>,
+        FiltersAddData.java&#160;<span class="new">(new&#160;99)</span>,
+        TestApp.java&#160;<span class="change">(+18&#160;-10)</span>,
+        TestAppConfig.java&#160;<span class="change">(+16&#160;-22)</span>,
+        TestUserConfig.java&#160;<span class="change">(+18&#160;-14)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcherActions.java&#160;<span class="change">(+5&#160;-6)</span>,
+        Filters.java&#160;<span class="del">(del)</span>,
+        FiltersAdd.java&#160;<span class="del">(del)</span>,
+        FiltersAddData.java&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+2&#160;-2)</span>,
+        UGParser.java&#160;<span class="change">(+14&#160;-11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="138"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-19 19:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#138">#138</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">264</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+bug fix
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="137"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-19 18:50</span>
+    <a class="permalink" title="Permalink to this commit" href="#137">#137</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">263</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+resolved multiple event bug
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="136"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-19 18:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#136">#136</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">262</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Renamed string from "add" to "add_omnihandler".
+    </p>
+    <p class="commitdetails"><strong>23</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        CheckListViewDemo.java&#160;<span class="change">(+1&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+1&#160;-9)</span>,
+        Filters.java&#160;<span class="change">(+15&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="135"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-19 18:21</span>
+    <a class="permalink" title="Permalink to this commit" href="#135">#135</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">261</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+populating test App Config
+    </p>
+    <p class="commitdetails"><strong>62</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestAppConfig.java&#160;<span class="change">(+62&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="134"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-19 16:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#134">#134</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">260</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fighting with my CheckListView - I give up for now.<br />
+I've reorganized the TestApp to put things that are being tested near the top.
+    </p>
+    <p class="commitdetails"><strong>431</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        checkboxlistview.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+20&#160;-13)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        AdapterWrapper.java&#160;<span class="change">(+4&#160;-2)</span>,
+        CheckBoxViewWrapper.java&#160;<span class="change">(+7&#160;-7)</span>,
+        CheckListView.java&#160;<span class="change">(+50&#160;-46)</span>,
+        CheckListViewDemo.java&#160;<span class="new">(new&#160;257)</span>,
+        CheckableWrapper.java&#160;<span class="change">(+91&#160;-54)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="133"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-19 02:09</span>
+    <a class="permalink" title="Permalink to this commit" href="#133">#133</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">259</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding a CheckBox Listview Widget so we can have fancy Listviews with checkboxes.<br />
+Adding a default layout.<br />
+Adding some Test classes.
+    </p>
+    <p class="commitdetails"><strong>446</strong> lines of code changed in <span class="files">14 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+21&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        checkboxlistview.xml&#160;<span class="new">(new&#160;17)</span>,
+        linear_default.xml&#160;<span class="new">(new&#160;7)</span>,
+        overview.xml&#160;<span class="change">(+7&#160;-63)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+54&#160;-61)</span>,
+        TestAppConfig.java&#160;<span class="new">(new&#160;11)</span>,
+        TestExceptionHandler.java&#160;<span class="new">(new&#160;11)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        AdapterWrapper.java&#160;<span class="new">(new&#160;78)</span>,
+        CheckBoxListView.java&#160;<span class="new">(new&#160;41)</span>,
+        CheckBoxViewWrapper.java&#160;<span class="new">(new&#160;54)</span>,
+        CheckListView.java&#160;<span class="new">(new&#160;46)</span>,
+        CheckableWrapper.java&#160;<span class="new">(new&#160;95)</span>,
+        ExceptionHandler.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="132"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-18 20:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#132">#132</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">258</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding more flow for the filters.<br />
+Adding documentation.<br />
+Fixing some minor formatting.
+    </p>
+    <p class="commitdetails"><strong>85</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+21&#160;-18)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+5&#160;-1)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+3&#160;-3)</span>,
+        EventCatcher.java&#160;<span class="change">(+5&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+5&#160;-2)</span>,
+        Filters.java&#160;<span class="change">(+34&#160;-12)</span>,
+        FiltersAdd.java&#160;<span class="change">(+5&#160;-1)</span>,
+        FiltersAddData.java&#160;<span class="change">(+7&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="131"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-18 20:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#131">#131</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">257</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding Menu Options to the UI pages.<br />
+Adding initial base Filter pages (functionality to come)<br />
+
+    </p>
+    <p class="commitdetails"><strong>496</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+1&#160;-50)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+37)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+37)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+36)</span>,
+        EventCatcher.java&#160;<span class="change">(+37&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+37)</span>,
+        Filters.java&#160;<span class="new">(new&#160;93)</span>,
+        FiltersAdd.java&#160;<span class="new">(new&#160;93)</span>,
+        FiltersAddData.java&#160;<span class="new">(new&#160;93)</span>,
+        Overview.java&#160;<span class="change">(+6&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+26&#160;-13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="130"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-17 01:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#130">#130</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">256</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+flow
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+5&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="129"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-16 23:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#129">#129</a>
+  </dt>
+  <dd>
+    <p class="comment">
+flow
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="128"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-16 23:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#128">#128</a>
+  </dt>
+  <dd>
+    <p class="comment">
+changes
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+12&#160;-12)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+5&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="127"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-16 23:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#127">#127</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">251</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+cahnges
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="126"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-16 20:00</span>
+    <a class="permalink" title="Permalink to this commit" href="#126">#126</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">250</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="125"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-16 19:38</span>
+    <a class="permalink" title="Permalink to this commit" href="#125">#125</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="124"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-16 19:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#124">#124</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="123"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 17:54</span>
+    <a class="permalink" title="Permalink to this commit" href="#123">#123</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">244</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+37&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="122"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 17:41</span>
+    <a class="permalink" title="Permalink to this commit" href="#122">#122</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>76</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+44&#160;-51)</span>,
+        SMSListener.java&#160;<span class="change">(+24&#160;-41)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="121"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 17:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#121">#121</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">238</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Prepping for the presentation<br />
+
+    </p>
+    <p class="commitdetails"><strong>47</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+9&#160;-3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(+3&#160;-3)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+4&#160;-2)</span>,
+        Overview.java&#160;<span class="change">(+28&#160;-27)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="120"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 17:26</span>
+    <a class="permalink" title="Permalink to this commit" href="#120">#120</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="119"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 17:18</span>
+    <a class="permalink" title="Permalink to this commit" href="#119">#119</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">235</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+8&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="118"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 16:51</span>
+    <a class="permalink" title="Permalink to this commit" href="#118">#118</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>130</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+7&#160;-2)</span>,
+        BRService.java&#160;<span class="change">(+7&#160;-6)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="new">(new&#160;113)</span>,
+        ProcessIntent.java&#160;<span class="change">(+3&#160;-20)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="117"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 16:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#117">#117</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="change">(+4&#160;-4)</span>,
+        ExternalCPActivity.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="116"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:41</span>
+    <a class="permalink" title="Permalink to this commit" href="#116">#116</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">227</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Trying to add the external CP<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="change">(+3&#160;-3)</span>,
+        ExternalCPActivity.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="115"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#115">#115</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">226</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixed R resource problem<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="114"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-15 15:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#114">#114</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">225</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Toasts
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="113"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-15 15:22</span>
+    <a class="permalink" title="Permalink to this commit" href="#113">#113</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">224</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Toasts for Demo
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="112"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:22</span>
+    <a class="permalink" title="Permalink to this commit" href="#112">#112</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">223</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Add external app broadcast receiver<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>67</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+6)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+61&#160;-47)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="111"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:12</span>
+    <a class="permalink" title="Permalink to this commit" href="#111">#111</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">221</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Register "OmniRestart" broadcast filter<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="110"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 15:11</span>
+    <a class="permalink" title="Permalink to this commit" href="#110">#110</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="109"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 15:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#109">#109</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">219</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Starter - Restart added<br />
+BRService - Dummy uri added to ActionData<br />
+UI - Enable/Disable works<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>280</strong> lines of code changed in <span class="files">9 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+3&#160;-3)</span>,
+        Starter.java&#160;<span class="change">(+27&#160;-12)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        ProcessIntent.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+1&#160;-2)</span>,
+        Overview.java&#160;<span class="change">(+203&#160;-207)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+17&#160;-17)</span>,
+        UGParser.java&#160;<span class="change">(+23&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="108"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-15 14:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#108">#108</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">218</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+catch OmniStart
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        Starter.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="107"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 12:38</span>
+    <a class="permalink" title="Permalink to this commit" href="#107">#107</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>61</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+47&#160;-13)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+13&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="106"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 05:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#106">#106</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">214</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+14&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="105"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 05:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#105">#105</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">213</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+processes intents
+    </p>
+    <p class="commitdetails"><strong>20</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        ProcessIntent.java&#160;<span class="new">(new&#160;20)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="104"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-15 04:01</span>
+    <a class="permalink" title="Permalink to this commit" href="#104">#104</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">212</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+changed readbyEventName function
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="103"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:44</span>
+    <a class="permalink" title="Permalink to this commit" href="#103">#103</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">211</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated Catcher
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+9&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="102"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#102">#102</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>51</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="new">(new&#160;51)</span>,
+        R.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="101"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#101">#101</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">208</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Catcher App Partial
+    </p>
+    <p class="commitdetails"><strong>35</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="new">(new&#160;35)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="100"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 00:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#100">#100</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">207</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Settings activity now shows up.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+2&#160;-1)</span>,
+        Settings.java&#160;<span class="change">(+2&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="99"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-15 00:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#99">#99</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">206</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Enable buttons display current setings.
+    </p>
+    <p class="commitdetails"><strong>60</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        settings.xml&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+50&#160;-8)</span>,
+        Settings.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="98"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-14 23:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#98">#98</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">205</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed import warning.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="97"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-14 23:35</span>
+    <a class="permalink" title="Permalink to this commit" href="#97">#97</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">204</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving data to layout xml files<br />
+Moving strings to strings xml file<br />
+Adding a Settings activity<br />
+General code cleanup<br />
+
+    </p>
+    <p class="commitdetails"><strong>168</strong> lines of code changed in <span class="files">12 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+2&#160;-2)</span>,
+        settings.xml&#160;<span class="new">(new&#160;9)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+7&#160;-5)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+10&#160;-13)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+1)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+58&#160;-49)</span>,
+        EventCatcher.java&#160;<span class="change">(+8&#160;-24)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+1)</span>,
+        ExceptionHandler.java&#160;<span class="change">(+1)</span>,
+        Overview.java&#160;<span class="change">(+35&#160;-21)</span>,
+        PackageLister.java&#160;<span class="change">(+5&#160;-1)</span>,
+        Settings.java&#160;<span class="new">(new&#160;31)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="96"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-14 21:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#96">#96</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">203</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+removing warnings
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="95"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-14 19:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#95">#95</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">202</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Renamed MainCP to TestCP<br />
+UI now allows new OmniHandlers to be entered into Config file.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>112</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+1&#160;-1)</span>,
+        TestCP.java&#160;<span class="new">(new&#160;105)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+2&#160;-2)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+1&#160;-1)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="94"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:58</span>
+    <a class="permalink" title="Permalink to this commit" href="#94">#94</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">201</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changed the AndroidManifest.xml file to accommodate the Event Thrower 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="93"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:55</span>
+    <a class="permalink" title="Permalink to this commit" href="#93">#93</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">200</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="92"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:49</span>
+    <a class="permalink" title="Permalink to this commit" href="#92">#92</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">198</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Moving the thrower app to edu.nyu.cs.omnidroid.external.eventapp to avoid any confusion
+    </p>
+    <p class="commitdetails"><strong>247</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="new">(new&#160;126)</span>,
+        ExternalCPActivity.java&#160;<span class="new">(new&#160;113)</span>,
+        R.java&#160;<span class="change">(+8&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="91"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:35</span>
+    <a class="permalink" title="Permalink to this commit" href="#91">#91</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">197</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Thrower App in the OmniDroid Package
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ExternalCP.java&#160;<span class="new">(new)</span>,
+        ExternalCPActivity.java&#160;<span class="new">(new)</span>,
+        R.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="90"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#90">#90</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">196</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        MainCP.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="89"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 23:38</span>
+    <a class="permalink" title="Permalink to this commit" href="#89">#89</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">195</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+So close I can taste it!
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(-2)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+12&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="88"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 22:27</span>
+    <a class="permalink" title="Permalink to this commit" href="#88">#88</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">194</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+This should allow the UI to put data into the UGParser properly.  We'll see.  ;-)
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(+9&#160;-23)</span>,
+        ActionThrowerData.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="87"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 22:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#87">#87</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">193</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Cleaning up warnings.<br />
+Added comments to Manifest.<br />
+Removed unused code from BRService.<br />
+Reformatting Overview.<br />
+
+    </p>
+    <p class="commitdetails"><strong>142</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+3)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(-33)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcherActions.java&#160;<span class="change">(-10)</span>,
+        Overview.java&#160;<span class="change">(+138&#160;-138)</span>,
+        PackageLister.java&#160;<span class="change">(+1&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="86"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-13 19:49</span>
+    <a class="permalink" title="Permalink to this commit" href="#86">#86</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">192</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Update record method
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="85"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 19:23</span>
+    <a class="permalink" title="Permalink to this commit" href="#85">#85</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">191</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Add Version update to CP.<br />
+Connected UI to CP.
+    </p>
+    <p class="commitdetails"><strong>63</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+6)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="change">(+52&#160;-17)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+2&#160;-2)</span>,
+        Overview.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="84"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 18:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#84">#84</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">190</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(-77)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="83"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 17:42</span>
+    <a class="permalink" title="Permalink to this commit" href="#83">#83</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>87</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+1&#160;-4)</span>,
+        PopulateAppConfigSetup.java&#160;<span class="new">(new&#160;75)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        PackageLister.java&#160;<span class="change">(+11&#160;-26)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="82"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 17:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#82">#82</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">186</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>22</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(-5)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+20&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="81"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 16:54</span>
+    <a class="permalink" title="Permalink to this commit" href="#81">#81</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">184</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding PackageLister to TestApp
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="80"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-13 16:52</span>
+    <a class="permalink" title="Permalink to this commit" href="#80">#80</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">183</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Content Provider for the OmniDroid App
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="79"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-13 16:52</span>
+    <a class="permalink" title="Permalink to this commit" href="#79">#79</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">182</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changed TestCP to MainCP
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="78"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 16:26</span>
+    <a class="permalink" title="Permalink to this commit" href="#78">#78</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">181</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding PackageLister to TestApp
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+2&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="77"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 16:20</span>
+    <a class="permalink" title="Permalink to this commit" href="#77">#77</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">180</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed unused ug local variable.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="76"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 16:19</span>
+    <a class="permalink" title="Permalink to this commit" href="#76">#76</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">179</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+UI flow now includes actionthrower selection, actionthroweractions selection, and actionthrowerdata input.
+    </p>
+    <p class="commitdetails"><strong>158</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+52&#160;-20)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+90&#160;-29)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+16&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="75"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-13 15:48</span>
+    <a class="permalink" title="Permalink to this commit" href="#75">#75</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">178</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added the OmniDroid Core Content Provider
+    </p>
+    <p class="commitdetails"><strong>268</strong> lines of code changed in <span class="files">7 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="del">(del)</span>,
+        main2.xml&#160;<span class="new">(new&#160;27)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="new">(new&#160;131)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        MainCP.java&#160;<span class="new">(new&#160;105)</span>,
+        TestCP.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="74"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 15:12</span>
+    <a class="permalink" title="Permalink to this commit" href="#74">#74</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">176</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Minor updates (comments/imports/etc.) to:<br />
+ BRService<br />
+Added:<br />
+  OmniHandler<br />
+  RegisteredApp<br />
+<br />
+Fixes:<br />
+  EventCatcher and EventCatcherActions now pass data properly and display list of actions for the specified app.<br />
+  <br />
+  
+    </p>
+    <p class="commitdetails"><strong>393</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+6&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniHandler.java&#160;<span class="new">(new&#160;176)</span>,
+        RegisteredApp.java&#160;<span class="new">(new&#160;131)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcher.java&#160;<span class="change">(+40&#160;-41)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+38&#160;-23)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="73"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 14:39</span>
+    <a class="permalink" title="Permalink to this commit" href="#73">#73</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">174</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>46</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+46&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="72"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 14:25</span>
+    <a class="permalink" title="Permalink to this commit" href="#72">#72</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">172</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+7&#160;-18)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="71"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 14:07</span>
+    <a class="permalink" title="Permalink to this commit" href="#71">#71</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">171</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+12&#160;-20)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="70"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-13 13:47</span>
+    <a class="permalink" title="Permalink to this commit" href="#70">#70</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">170</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+write method return
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+12&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="69"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-13 13:23</span>
+    <a class="permalink" title="Permalink to this commit" href="#69">#69</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>43</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+14&#160;-14)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+23&#160;-17)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="68"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-13 11:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#68">#68</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">165</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Using instanceName for the actions.<br />
+Making KEYs public in UGParser<br />
+
+    </p>
+    <p class="commitdetails"><strong>74</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="del">(del)</span>,
+        TestApp.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerData.java&#160;<span class="new">(new&#160;62)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+9&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="67"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-12 21:42</span>
+    <a class="permalink" title="Permalink to this commit" href="#67">#67</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>177</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        OmniCP.java&#160;<span class="change">(+92&#160;-124)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+85&#160;-103)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="66"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-12 21:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#66">#66</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">160</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting
+    </p>
+    <p class="commitdetails"><strong>98</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniCP.java&#160;<span class="change">(+98&#160;-123)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="65"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-12 20:58</span>
+    <a class="permalink" title="Permalink to this commit" href="#65">#65</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">159</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Minor changes
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniCP.java&#160;<span class="change">(+2&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="64"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-12 20:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#64">#64</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        OmniCPActivity.java&#160;<span class="change">(+1&#160;-27)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+1&#160;-27)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="63"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-12 14:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#63">#63</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">156</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+formatting
+    </p>
+    <p class="commitdetails"><strong>41</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+41&#160;-43)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="62"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-12 14:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#62">#62</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">155</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+5&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="61"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-12 14:21</span>
+    <a class="permalink" title="Permalink to this commit" href="#61">#61</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>39</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+33&#160;-19)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+6&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="60"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-12 14:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#60">#60</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">152</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Formatting AGParser<br />
+
+    </p>
+    <p class="commitdetails"><strong>27</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+27&#160;-59)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="59"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-11 20:04</span>
+    <a class="permalink" title="Permalink to this commit" href="#59">#59</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">151</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+delete by Instance Name
+    </p>
+    <p class="commitdetails"><strong>32</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+32)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="58"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 20:03</span>
+    <a class="permalink" title="Permalink to this commit" href="#58">#58</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">150</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding an ActionThrowerData UI page to interact with the CP.
+    </p>
+    <p class="commitdetails"><strong>139</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+6)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        action_thrower_data.xml&#160;<span class="new">(new&#160;17)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        ActionThrowerData.java&#160;<span class="new">(new&#160;61)</span>,
+        TestApp.java&#160;<span class="change">(+6&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrowerActions.java&#160;<span class="change">(changed)</span>,
+        EventCatcher.java&#160;<span class="change">(+6&#160;-12)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+42&#160;-31)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="57"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-11 18:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#57">#57</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">149</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Minor Change
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="56"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-11 18:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#56">#56</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">148</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+removing unwanted toasts
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+5&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="55"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-11 18:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#55">#55</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">147</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Modified the way to send URI
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="54"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 18:18</span>
+    <a class="permalink" title="Permalink to this commit" href="#54">#54</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">146</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+EventCatcher now calls EventCatcherActions.
+    </p>
+    <p class="commitdetails"><strong>50</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcher.java&#160;<span class="change">(+20&#160;-12)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+3&#160;-1)</span>,
+        Overview.java&#160;<span class="change">(+27&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="53"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 18:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#53">#53</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">145</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added a proper string for TestCP.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="52"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 18:17</span>
+    <a class="permalink" title="Permalink to this commit" href="#52">#52</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">144</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding better comments.  Added a proper label for TestCP.
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+9&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="51"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-11 15:22</span>
+    <a class="permalink" title="Permalink to this commit" href="#51">#51</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">143</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added content provider and activity name
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="50"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-11 15:21</span>
+    <a class="permalink" title="Permalink to this commit" href="#50">#50</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">142</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+CHanged the path for the CP
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="49"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-11 15:20</span>
+    <a class="permalink" title="Permalink to this commit" href="#49">#49</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">141</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+CHanged the Path of the content provider
+    </p>
+    <p class="commitdetails"><strong>5</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniCP.java&#160;<span class="change">(+5&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="48"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 14:40</span>
+    <a class="permalink" title="Permalink to this commit" href="#48">#48</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">139</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="47"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 14:33</span>
+    <a class="permalink" title="Permalink to this commit" href="#47">#47</a>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>28</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+23&#160;-23)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+5&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="46"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 14:15</span>
+    <a class="permalink" title="Permalink to this commit" href="#46">#46</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">136</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+some new stuff
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="change">(+6&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="45"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 14:10</span>
+    <a class="permalink" title="Permalink to this commit" href="#45">#45</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">135</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+changed names
+    </p>
+    <p class="commitdetails"><strong>60</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contprovider</strong>:
+        CProvider.java&#160;<span class="new">(new&#160;60)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="44"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 14:06</span>
+    <a class="permalink" title="Permalink to this commit" href="#44">#44</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">134</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Manifest:<br />
+  Switch to using explicit intents for UI<br />
+  Moved test activities to TestApp instead of a launcher<br />
+Strings:<br />
+  Renamed Overview to just Omnidroid<br />
+OmniBR:<br />
+  Moved to tests pkg and renamed to TestService<br />
+EventCatcher:<br />
+  Start pulling from AGParser<br />
+Overview:<br />
+  Start using explicit intents<br />
+Configs:<br />
+  Added comments<br />
+  <br />
+General:<br />
+  Fixed some import warnings.
+    </p>
+    <p class="commitdetails"><strong>132</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+7&#160;-47)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        Starter.java&#160;<span class="change">(+1&#160;-4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+45&#160;-57)</span>,
+        TestCP.java&#160;<span class="change">(+2&#160;-4)</span>,
+        TestService.java&#160;<span class="new">(new&#160;51)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcher.java&#160;<span class="change">(+13&#160;-33)</span>,
+        Overview.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AbstractConfig.java&#160;<span class="change">(+5)</span>,
+        OmLogger.java&#160;<span class="change">(+1&#160;-1)</span>,
+        UserConfig.java&#160;<span class="change">(+3&#160;-8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="43"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 13:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#43">#43</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">133</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+i1 -&gt; i2 bug.  Removed import warnings.
+    </p>
+    <p class="commitdetails"><strong>6</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+6&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="42"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 13:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#42">#42</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">132</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removed unused Schema<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="41"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 13:23</span>
+    <a class="permalink" title="Permalink to this commit" href="#41">#41</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">131</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixing some warnings and using Keys.  Made Keys public.  Replaced random integers with constants.
+    </p>
+    <p class="commitdetails"><strong>23</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+23&#160;-23)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="40"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-11 13:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#40">#40</a>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Key Constants
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+8&#160;-8)</span>,
+        UGParser.java&#160;<span class="change">(+9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="39"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-11 12:49</span>
+    <a class="permalink" title="Permalink to this commit" href="#39">#39</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">128</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding readLines to AGParser			
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+29&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="38"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 01:02</span>
+    <a class="permalink" title="Permalink to this commit" href="#38">#38</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">127</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+accessing content providers of applications
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/contentprovider</strong>:
+        ContentProvider.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="37"></a>
+    <a href="user_ssg292.html" class="author">ssg292</a>
+    <span class="date">2009-04-11 00:59</span>
+    <a class="permalink" title="Permalink to this commit" href="#37">#37</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">126</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added allRead() method
+    </p>
+    <p class="commitdetails"><strong>24</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+24)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="36"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-10 18:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#36">#36</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">125</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Sweet!!! I finally got explicit intents to work right!  Boo-ya!<br />
+
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+10&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="35"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-10 18:18</span>
+    <a class="permalink" title="Permalink to this commit" href="#35">#35</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">124</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+modify constructor desc
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="34"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-10 01:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#34">#34</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">122</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+urifields and contentmap
+    </p>
+    <p class="commitdetails"><strong>168</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+168&#160;-81)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="33"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-10 01:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#33">#33</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">121</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+new methods
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="32"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 23:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#32">#32</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">119</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+UGParser
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="31"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 23:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#31">#31</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">118</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+AGParser
+    </p>
+    <p class="commitdetails"><strong>81</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="new">(new&#160;81)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="30"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 23:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#30">#30</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">117</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added the AGParser usage
+    </p>
+    <p class="commitdetails"><strong>43</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+43&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="29"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-09 19:54</span>
+    <a class="permalink" title="Permalink to this commit" href="#29">#29</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">116</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Mostly Formatting Changes.<br />
+Also, trying to get intents to fire explicitly.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>379</strong> lines of code changed in <span class="files">10 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+13&#160;-2)</span>,
+        TestUserConfig.java&#160;<span class="change">(+1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ActionThrower.java&#160;<span class="change">(+30&#160;-30)</span>,
+        ActionThrowerActions.java&#160;<span class="change">(+29&#160;-29)</span>,
+        EventCatcher.java&#160;<span class="change">(+60&#160;-54)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+32&#160;-29)</span>,
+        ExceptionHandler.java&#160;<span class="change">(+19&#160;-19)</span>,
+        Overview.java&#160;<span class="change">(+129&#160;-120)</span>,
+        PackageLister.java&#160;<span class="change">(+59&#160;-54)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="28"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-09 19:08</span>
+    <a class="permalink" title="Permalink to this commit" href="#28">#28</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">115</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added proper menu of test activities.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>40</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="change">(+40&#160;-22)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="27"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-09 18:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#27">#27</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">114</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Renaming test classes to just have one test app that runs different tests.  TestApp, should have a menu of all possible test facilities.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>242</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>bin</strong>:
+        OmniDroid.apk&#160;<span class="del">(del)</span>,
+        Phone Manager.apk&#160;<span class="del">(del)</span>,
+        classes.dex&#160;<span class="del">(del)</span>,
+        resources.ap_&#160;<span class="del">(del)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestApp.java&#160;<span class="new">(new&#160;42)</span>,
+        TestCP.java&#160;<span class="new">(new&#160;145)</span>,
+        TestUserConfig.java&#160;<span class="new">(new&#160;54)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="26"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 18:31</span>
+    <a class="permalink" title="Permalink to this commit" href="#26">#26</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">113</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changes in the way to call UGParser
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="25"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 18:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#25">#25</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">112</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changes in BRService
+    </p>
+    <p class="commitdetails"><strong>82</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+82&#160;-88)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="24"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 18:28</span>
+    <a class="permalink" title="Permalink to this commit" href="#24">#24</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">111</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changes in USer Config
+    </p>
+    <p class="commitdetails"><strong>352</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+352&#160;-339)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="23"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-09 18:21</span>
+    <a class="permalink" title="Permalink to this commit" href="#23">#23</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">110</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+  Added edu.nyu.cs.omnidroid.core pkg for core application files<br />
+  Added edu.nyu.cs.omnidroid.external for external applicaitons<br />
+     (helloworld)<br />
+  OmniCP.java moved into edu.nyu.cs.omnidroid.core,<br />
+  OmniCPActivity.java moved into edu.nyu.cs.omnidroid.tests,<br />
+  masterapp is renamed to eventapp (I want to get away from the<br />
+     master/slave concept since that's generally used for one thing<br />
+     controlling another, which in our use, the apps aren't doing this,<br />
+     I'm thinking eventapp and catcherapp terminology is more appropriate)<br />
+
+    </p>
+    <p class="commitdetails"><strong>631</strong> lines of code changed in <span class="files">11 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        OmniCP.java&#160;<span class="new">(new&#160;155)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        OmniCP.java&#160;<span class="change">(+155)</span>,
+        OmniCPActivity.java&#160;<span class="new">(new)</span>,
+        R.java&#160;<span class="change">(+30)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        OmniCPActivity.java&#160;<span class="new">(new&#160;145)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="22"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-09 16:55</span>
+    <a class="permalink" title="Permalink to this commit" href="#22">#22</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">108</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Renaming project to OmniDroid.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        .project&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="21"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-09 03:32</span>
+    <a class="permalink" title="Permalink to this commit" href="#21">#21</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">107</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changed the UGParser
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+4&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-08 20:57</span>
+    <a class="permalink" title="Permalink to this commit" href="#20">#20</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">106</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+More classes to play with<br />
+:q<br />
+--Thi line, and those below, will be ignored--<br />
+<br />
+A    trunk/src/edu/nyu/cs/omnidroid/ui/PackageLister.java<br />
+A    trunk/src/edu/nyu/cs/omnidroid/util/AppCfgParser.java<br />
+
+    </p>
+    <p class="commitdetails"><strong>54</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        PackageLister.java&#160;<span class="new">(new&#160;54)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AppCfgParser.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-08 00:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#19">#19</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">105</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Connecting the Overview to the UserCfg<br />
+Connecting the EventCatcher to the PkgManager<br />
+Updating Comments
+    </p>
+    <p class="commitdetails"><strong>125</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        EventCatcher.java&#160;<span class="change">(+62&#160;-35)</span>,
+        EventCatcherActions.java&#160;<span class="change">(+32&#160;-29)</span>,
+        ExceptionHandler.java&#160;<span class="change">(+11&#160;-114)</span>,
+        Overview.java&#160;<span class="change">(+20&#160;-13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-07 10:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#18">#18</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">104</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding icons to the context menus.<br />
+Adding some more debugging to try and get all the records.
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-07 00:46</span>
+    <a class="permalink" title="Permalink to this commit" href="#17">#17</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">103</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Pushing more towards getting a UserConfig based version of the UI.
+    </p>
+    <p class="commitdetails"><strong>50</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+4)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        Overview.java&#160;<span class="change">(+46&#160;-36)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-06 00:16</span>
+    <a class="permalink" title="Permalink to this commit" href="#16">#16</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">102</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+prad test
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>bin</strong>:
+        OmniDroid.apk&#160;<span class="change">(changed)</span>,
+        classes.dex&#160;<span class="change">(changed)</span>,
+        resources.ap_&#160;<span class="change">(changed)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-06 00:16</span>
+    <a class="permalink" title="Permalink to this commit" href="#15">#15</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">101</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+omlogger
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        OmLogger.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 21:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#14">#14</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">100</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Rajivs strings attached
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 21:13</span>
+    <a class="permalink" title="Permalink to this commit" href="#13">#13</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">99</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rajivs code merged in manifest
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-05 20:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#12">#12</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">97</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added into trunk
+    </p>
+    <p class="commitdetails"><strong>49</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="new">(new&#160;49)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-05 20:30</span>
+    <a class="permalink" title="Permalink to this commit" href="#11">#11</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">96</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Merged Master Application into Trunk<br />
+--Added main1.xml
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid</strong>:
+        OmniCP.java&#160;<span class="new">(new)</span>,
+        OmniCPActivity.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/masterapp</strong>:
+        OmniCP.java&#160;<span class="new">(new)</span>,
+        OmniCPActivity.java&#160;<span class="new">(new)</span>,
+        R.java&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_acase.html" class="author">acase</a>
+    <span class="date">2009-04-05 19:45</span>
+    <a class="permalink" title="Permalink to this commit" href="#10">#10</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">95</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Lots of changes.  Pradeep is debugging UGParser.
+    </p>
+    <p class="commitdetails"><strong>286</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+15&#160;-9)</span>
+      </li>
+      <li>
+        <strong>res/layout</strong>:
+        overview.xml&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestActivity.java&#160;<span class="new">(new&#160;42)</span>,
+        TestConfigFile.java&#160;<span class="change">(+20&#160;-97)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/ui</strong>:
+        ExceptionHandler.java&#160;<span class="new">(new&#160;141)</span>,
+        Overview.java&#160;<span class="change">(+65&#160;-14)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 19:37</span>
+    <a class="permalink" title="Permalink to this commit" href="#9">#9</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">94</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+new one
+    </p>
+    <p class="commitdetails"><strong>13</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+13)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 19:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#8">#8</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">93</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Corrections<br />
+
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 18:36</span>
+    <a class="permalink" title="Permalink to this commit" href="#7">#7</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">91</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added readbyEventName
+    </p>
+    <p class="commitdetails"><strong>51</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+51)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 18:29</span>
+    <a class="permalink" title="Permalink to this commit" href="#6">#6</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">90</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+BRService update
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+3&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 18:24</span>
+    <a class="permalink" title="Permalink to this commit" href="#5">#5</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">89</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Returning HashMap from read record
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+10&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-05 18:18</span>
+    <a class="permalink" title="Permalink to this commit" href="#4">#4</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">88</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Instance Name
+    </p>
+    <p class="commitdetails"><strong>33</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+33&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-04 22:00</span>
+    <a class="permalink" title="Permalink to this commit" href="#3">#3</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">86</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Documentation for BroadCast Receiver
+    </p>
+    <p class="commitdetails"><strong>49</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BCReceiver.java&#160;<span class="change">(+8&#160;-6)</span>,
+        BRService.java&#160;<span class="change">(+30&#160;-27)</span>,
+        OmniBR.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Starter.java&#160;<span class="change">(+10&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-04 21:43</span>
+    <a class="permalink" title="Permalink to this commit" href="#2">#2</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">85</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added JavaDoc for UGParser
+    </p>
+    <p class="commitdetails"><strong>234</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+234&#160;-10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-01 04:06</span>
+    <a class="permalink" title="Permalink to this commit" href="#1">#1</a>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">84</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Starter.java to detect Boot up and UGParser.java to parse UserConfig File
+    </p>
+    <p class="commitdetails"><strong>166</strong> lines of code changed in <span class="files">9 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+6)</span>
+      </li>
+      <li>
+        <strong>bin</strong>:
+        OmniDroid.apk&#160;<span class="new">(new)</span>,
+        classes.dex&#160;<span class="new">(new)</span>,
+        resources.ap_&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/bkgservice</strong>:
+        BRService.java&#160;<span class="change">(+37&#160;-25)</span>,
+        Starter.java&#160;<span class="new">(new&#160;23)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        OmLogger.java&#160;<span class="change">(+4&#160;-2)</span>,
+        UGParser.java&#160;<span class="new">(new&#160;87)</span>,
+        UserConfig.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p class="previous"><a href="2009-03.html">March 2009</a> &#187; </p>
+<div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

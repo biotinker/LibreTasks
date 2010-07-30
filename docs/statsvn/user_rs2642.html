@@ -1,0 +1,540 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: rs2642</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: rs2642</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>rs2642</dd>
+    <dt>Total Commits:</dt>
+    <dd>62 (1.8%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>1,246 (1.3%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-05-12 01:53</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=rs2642%20contributed%201%2C246%20(1.3%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-05-12%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_rs2642.png" alt="Activity by Hour of Day for rs2642" width="800" height="500" /></p><p class="chart"><img src="activity_day_rs2642.png" alt="Activity by Day of Week for rs2642" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>62 (100.0%)</td>
+        <td>1246 (100.0%)</td>
+        <td>20.0</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_eventapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/eventapp/</a></th>
+        <td>12 (19.4%)</td>
+        <td>370 (29.7%)</td>
+        <td>30.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>12 (19.4%)</td>
+        <td>318 (25.5%)</td>
+        <td>26.5</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_core.html" class="directory">src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>8 (12.9%)</td>
+        <td>248 (19.9%)</td>
+        <td>31.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_tests.html" class="directory">src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>14 (22.6%)</td>
+        <td>215 (17.3%)</td>
+        <td>15.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_res_layout.html" class="directory">res/layout/</a></th>
+        <td>4 (6.5%)</td>
+        <td>76 (6.1%)</td>
+        <td>19.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir.html" class="directory">/</a></th>
+        <td>5 (8.1%)</td>
+        <td>16 (1.3%)</td>
+        <td>3.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_res_values.html" class="directory">res/values/</a></th>
+        <td>2 (3.2%)</td>
+        <td>3 (0.2%)</td>
+        <td>1.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_masterapp.html" class="directory">src/edu/nyu/cs/omnidroid/masterapp/</a></th>
+        <td>3 (4.8%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid.html" class="directory">src/edu/nyu/cs/omnidroid/</a></th>
+        <td>2 (3.2%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_rs2642.png" alt="Activity of rs2642" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">389</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added comments/javadocs
+    </p>
+    <p class="commitdetails"><strong>13</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+13&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">388</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added comments/javadocs<br />
+
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+11&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:53</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">387</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added comments/java-docs
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="change">(+9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:52</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">386</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:51</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">385</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added comments/java-docs<br />
+
+    </p>
+    <p class="commitdetails"><strong>12</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+12&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:50</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">384</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added comments
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+7&#160;-6)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-12 01:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">383</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added javadocs<br />
+
+    </p>
+    <p class="commitdetails"><strong>49</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+49&#160;-5)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-04 21:30</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">371</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+working version<br />
+
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/tests</strong>:
+        TestCP.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-04 21:22</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">370</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-05-04 21:21</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">369</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+sms catcher<br />
+
+    </p>
+    <p class="commitdetails"><strong>52</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSCatcherActivity.java&#160;<span class="change">(+52&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-20 18:46</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">271</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        CP.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 17:54</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">244</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>37</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+37&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 17:41</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>76</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+5)</span>
+      </li>
+      <li>
+        <strong>res/values</strong>:
+        strings.xml&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="change">(+44&#160;-51)</span>,
+        SMSListener.java&#160;<span class="change">(+24&#160;-41)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 16:47</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCP.java&#160;<span class="change">(+4&#160;-4)</span>,
+        ExternalCPActivity.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 15:11</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+2&#160;-1)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">211</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated Catcher
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="change">(+9&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:32</span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>51</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        CatcherAppActivity.java&#160;<span class="new">(new&#160;51)</span>,
+        R.java&#160;<span class="new">(new)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/eventapp</strong>:
+        ExternalCPActivity.java&#160;<span class="change">(-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-15 00:29</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">208</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Catcher App Partial
+    </p>
+    <p class="commitdetails"><strong>35</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/external/catcherapp</strong>:
+        SMSListener.java&#160;<span class="new">(new&#160;35)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:58</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">201</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Changed the AndroidManifest.xml file to accommodate the Event Thrower 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        AndroidManifest.xml&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_rs2642.html" class="author">rs2642</a>
+    <span class="date">2009-04-14 18:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">200</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>res/layout</strong>:
+        main1.xml&#160;<span class="new">(new)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(17 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

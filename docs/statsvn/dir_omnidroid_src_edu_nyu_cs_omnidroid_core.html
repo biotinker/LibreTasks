@@ -1,0 +1,615 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid/src/edu/nyu/cs/omnidroid/core/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid/src/edu/nyu/cs/omnidroid/core/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Deleted:</dt>
+    <dd><span class="date">2010-05-25 22:57</span></dd>
+    <dt>Total Files:</dt>
+    <dd>0</dd>
+    <dt>Deleted Files:</dt>
+    <dd>31</dd>
+    <dt>Lines of Code:</dt>
+    <dd>0</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src.html">src</a>/<a href="dir_omnidroid_src_edu.html">edu</a>/<a href="dir_omnidroid_src_edu_nyu.html">nyu</a>/<a href="dir_omnidroid_src_edu_nyu_cs.html">cs</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid.html">omnidroid</a>/<strong>core</strong><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder-deleted.png" width="15" height="13" alt="Folder removed from repo" title="Folder removed from repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_core_datatypes.html">datatypes</a> 
+(0 files, 0 lines)<br />
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_omnidroid_src_edu_nyu_cs_omnidroid_core.png" alt="omnidroid/src/edu/nyu/cs/omnidroid/core/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>96 (100.0%)</td>
+        <td>2225 (100.0%)</td>
+        <td>23.1</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_londinop.html" class="author">londinop</a></th>
+        <td>18 (18.8%)</td>
+        <td>927 (41.7%)</td>
+        <td>51.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_beanxlj.html" class="author">beanxlj</a></th>
+        <td>19 (19.8%)</td>
+        <td>508 (22.8%)</td>
+        <td>26.7</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_rutvij47.html" class="author">rutvij47</a></th>
+        <td>9 (9.4%)</td>
+        <td>243 (10.9%)</td>
+        <td>27.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_anurchandorkar@gmail.com.html" class="author">anurchandorkar@gmail.com</a></th>
+        <td>4 (4.2%)</td>
+        <td>196 (8.8%)</td>
+        <td>49.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_dvo203.html" class="author">dvo203</a></th>
+        <td>4 (4.2%)</td>
+        <td>154 (6.9%)</td>
+        <td>38.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_ehotou.html" class="author">ehotou</a></th>
+        <td>7 (7.3%)</td>
+        <td>104 (4.7%)</td>
+        <td>14.8</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_rohitbhatia55.html" class="author">rohitbhatia55</a></th>
+        <td>2 (2.1%)</td>
+        <td>89 (4.0%)</td>
+        <td>44.5</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_ksjohnson3.html" class="author">ksjohnson3</a></th>
+        <td>2 (2.1%)</td>
+        <td>4 (0.2%)</td>
+        <td>2.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>31 (32.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="21"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-05-25 22:57</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">704</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Removing old unused directories.
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">31 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Action.java&#160;<span class="del">(del)</span>,
+        ActionExecuter.java&#160;<span class="del">(del)</span>,
+        CP.java&#160;<span class="del">(del)</span>,
+        CallPhoneAction.java&#160;<span class="del">(del)</span>,
+        DummyActivity.java&#160;<span class="del">(del)</span>,
+        Event.java&#160;<span class="del">(del)</span>,
+        Filter.java&#160;<span class="del">(del)</span>,
+        HandlerService.java&#160;<span class="del">(del)</span>,
+        IntentParser.java&#160;<span class="del">(del)</span>,
+        LocationChangedEvent.java&#160;<span class="del">(del)</span>,
+        OmniAction.java&#160;<span class="del">(del)</span>,
+        OmniHandler.java&#160;<span class="del">(del)</span>,
+        PhoneIsFallingEvent.java&#160;<span class="del">(del)</span>,
+        PhoneRingingEvent.java&#160;<span class="del">(del)</span>,
+        RegisteredApp.java&#160;<span class="del">(del)</span>,
+        Rule.java&#160;<span class="del">(del)</span>,
+        RuleProcessor.java&#160;<span class="del">(del)</span>,
+        SMSReceivedEvent.java&#160;<span class="del">(del)</span>,
+        SendGmailAction.java&#160;<span class="del">(del)</span>,
+        SendSmsAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneLoudAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneSilentAction.java&#160;<span class="del">(del)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="del">(del)</span>,
+        SetScreenBrightnessAction.java&#160;<span class="del">(del)</span>,
+        ShowAlertAction.java&#160;<span class="del">(del)</span>,
+        ShowNotificationAction.java&#160;<span class="del">(del)</span>,
+        ShowWebsiteAction.java&#160;<span class="del">(del)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="del">(del)</span>,
+        SystemEvent.java&#160;<span class="del">(del)</span>,
+        TimeTickEvent.java&#160;<span class="del">(del)</span>,
+        UpdateTwitterStatusAction.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-05-05 08:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">673</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ 
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetScreenBrightnessAction.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_anurchandorkar@gmail.com.html" class="author">anurchandorkar@gmail.com</a>
+    <span class="date">2010-05-02 15:47</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">672</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added 3 actions. Set Phone loud, silent and vibrate
+    </p>
+    <p class="commitdetails"><strong>133</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetPhoneLoudAction.java&#160;<span class="new">(new&#160;45)</span>,
+        SetPhoneSilentAction.java&#160;<span class="new">(new&#160;44)</span>,
+        SetPhoneVibrateAction.java&#160;<span class="new">(new&#160;44)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-28 08:36</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">671</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+change brightness added
+    </p>
+    <p class="commitdetails"><strong>67</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SetScreenBrightnessAction.java&#160;<span class="new">(new&#160;67)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-04-14 23:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">669</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added timeTickEvnet, parameter support multiple tags
+    </p>
+    <p class="commitdetails"><strong>84</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Filter.java&#160;<span class="change">(+10&#160;-8)</span>,
+        IntentParser.java&#160;<span class="change">(+2&#160;-2)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(-3)</span>,
+        TimeTickEvent.java&#160;<span class="new">(new&#160;72)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_anurchandorkar@gmail.com.html" class="author">anurchandorkar@gmail.com</a>
+    <span class="date">2010-03-31 10:42</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">667</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added Twitter Status Update Action
+    </p>
+    <p class="commitdetails"><strong>63</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        UpdateTwitterStatusAction.java&#160;<span class="new">(new&#160;63)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_beanxlj.html" class="author">beanxlj</a>
+    <span class="date">2010-03-30 08:15</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">666</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+major update, multiple filter parameter, action added
+    </p>
+    <p class="commitdetails"><strong>356</strong> lines of code changed in <span class="files">13 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Action.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Filter.java&#160;<span class="change">(+1)</span>,
+        HandlerService.java&#160;<span class="change">(+2)</span>,
+        IntentParser.java&#160;<span class="change">(+14&#160;-7)</span>,
+        OmniAction.java&#160;<span class="new">(new&#160;30)</span>,
+        PhoneRingingEvent.java&#160;<span class="change">(+13&#160;-1)</span>,
+        RuleProcessor.java&#160;<span class="change">(+7)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+12)</span>,
+        ShowAlertAction.java&#160;<span class="new">(new&#160;54)</span>,
+        ShowNotificationAction.java&#160;<span class="new">(new&#160;52)</span>,
+        ShowWebsiteAction.java&#160;<span class="new">(new&#160;53)</span>,
+        SystemBroadcastedEvent.java&#160;<span class="new">(new&#160;45)</span>,
+        SystemEvent.java&#160;<span class="new">(new&#160;72)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-12-15 22:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">653</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding action for sending GMail.
+    </p>
+    <p class="commitdetails"><strong>77</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        SendGmailAction.java&#160;<span class="new">(new&#160;77)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-12-10 10:47</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">652</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Bug fixing: NullPointerException from the HandlerService.
+    </p>
+    <p class="commitdetails"><strong>16</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        HandlerService.java&#160;<span class="change">(+16&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-04 15:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">638</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Code Cleaning: Change strings references.
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">3 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        LocationChangedEvent.java&#160;<span class="change">(+3&#160;-4)</span>,
+        PhoneIsFallingEvent.java&#160;<span class="change">(+2&#160;-3)</span>,
+        PhoneRingingEvent.java&#160;<span class="change">(+3&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_londinop.html" class="author">londinop</a>
+    <span class="date">2009-08-04 13:32</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">637</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+CoreRuleDbHelper now only retrieves enabled Rules, added stopself to HanderService
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        HandlerService.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_dvo203.html" class="author">dvo203</a>
+    <span class="date">2009-08-04 00:04</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">634</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added support for Location Services intent and Phone Call intent.
+    </p>
+    <p class="commitdetails"><strong>154</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        IntentParser.java&#160;<span class="change">(+9)</span>,
+        LocationChangedEvent.java&#160;<span class="new">(new&#160;52)</span>,
+        PhoneIsFallingEvent.java&#160;<span class="new">(new&#160;41)</span>,
+        PhoneRingingEvent.java&#160;<span class="new">(new&#160;52)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-03 17:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">632</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Coding Cleaning: separate prepopulation codes from Dbhelper.
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        CallPhoneAction.java&#160;<span class="change">(+2&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_ehotou.html" class="author">ehotou</a>
+    <span class="date">2009-08-02 22:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">625</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix one bug in the Phone Call Action.
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        CallPhoneAction.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_londinop.html" class="author">londinop</a>
+    <span class="date">2009-08-02 18:37</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">624</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Working Omnidroid core and tests
+    </p>
+    <p class="commitdetails"><strong>178</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        CallPhoneAction.java&#160;<span class="change">(+3)</span>,
+        Event.java&#160;<span class="change">(+13&#160;-2)</span>,
+        Filter.java&#160;<span class="change">(+72&#160;-12)</span>,
+        HandlerService.java&#160;<span class="change">(+4&#160;-42)</span>,
+        Rule.java&#160;<span class="change">(+71&#160;-32)</span>,
+        RuleProcessor.java&#160;<span class="change">(+7&#160;-4)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+6&#160;-5)</span>,
+        SendSmsAction.java&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_rutvij47.html" class="author">rutvij47</a>
+    <span class="date">2009-07-30 23:49</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">603</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Get a list of actions for a given Rule and execute them for all the rules triggered by an event.
+    </p>
+    <p class="commitdetails"><strong>54</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        ActionExecuter.java&#160;<span class="change">(+7&#160;-5)</span>,
+        CallPhoneAction.java&#160;<span class="change">(+10&#160;-1)</span>,
+        HandlerService.java&#160;<span class="change">(+16&#160;-4)</span>,
+        Rule.java&#160;<span class="change">(+9&#160;-11)</span>,
+        RuleProcessor.java&#160;<span class="change">(+12&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_ksjohnson3.html" class="author">ksjohnson3</a>
+    <span class="date">2009-07-27 23:31</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">593</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix or suppress failing tests
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        RuleProcessor.java&#160;<span class="change">(+1&#160;-17)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(+3&#160;-3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_rohitbhatia55.html" class="author">rohitbhatia55</a>
+    <span class="date">2009-07-26 23:20</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">587</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+SendSmsAction and SMSService classes added
+    </p>
+    <p class="commitdetails"><strong>89</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        RuleProcessor.java&#160;<span class="change">(+8&#160;-1)</span>,
+        SendSmsAction.java&#160;<span class="new">(new&#160;81)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_rutvij47.html" class="author">rutvij47</a>
+    <span class="date">2009-07-19 11:17</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">566</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding the following:<br />
+- Action class<br />
+- Action Executer<br />
+- Call Phone Action<br />
+- Permission to call a phone in AndroidManifest
+    </p>
+    <p class="commitdetails"><strong>189</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Action.java&#160;<span class="change">(+52&#160;-10)</span>,
+        ActionExecuter.java&#160;<span class="new">(new&#160;71)</span>,
+        CallPhoneAction.java&#160;<span class="new">(new&#160;66)</span>,
+        SMSReceivedEvent.java&#160;<span class="change">(-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_londinop.html" class="author">londinop</a>
+    <span class="date">2009-07-14 13:58</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">547</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Core event handling modules redesigned
+    </p>
+    <p class="commitdetails"><strong>452</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        Action.java&#160;<span class="new">(new&#160;33)</span>,
+        Event.java&#160;<span class="new">(new&#160;66)</span>,
+        Filter.java&#160;<span class="new">(new&#160;42)</span>,
+        HandlerService.java&#160;<span class="change">(+12&#160;-204)</span>,
+        IntentParser.java&#160;<span class="new">(new&#160;51)</span>,
+        Rule.java&#160;<span class="new">(new&#160;98)</span>,
+        RuleProcessor.java&#160;<span class="new">(new&#160;56)</span>,
+        SMSReceivedEvent.java&#160;<span class="new">(new&#160;94)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_londinop.html" class="author">londinop</a>
+    <span class="date">2009-06-24 19:46</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">488</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+HandlerService replaces DummyActivity
+    </p>
+    <p class="commitdetails"><strong>296</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/core</strong>:
+        HandlerService.java&#160;<span class="new">(new&#160;296)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - /trunk Developers: phv204</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>/trunk Developers: phv204</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a> &#171; <a href="developers.html">Developers</a></div>
+<dl class="attributes">
+    <dt>Login name:</dt>
+    <dd>phv204</dd>
+    <dt>Total Commits:</dt>
+    <dd>144 (4.1%)</dd>
+    <dt>Lines of Code:</dt>
+    <dd>2,738 (2.8%)</dd>
+    <dt>Most Recent Commit:</dt>
+    <dd><span class="date">2009-05-27 19:33</span></dd>
+    <dt>Tweet this:</dt>
+    <dd><a onclick="return shortenTweet(this.href);" href="http://twitter.com/home?status=phv204%20contributed%202%2C738%20(2.8%25)%20lines%20to%20%2Ftrunk%20%7B0}%20most%20recent%20commit%202009-05-27%20stats%20by%20StatSVN%20http%3A%2F%2Fstatsvn.org"><img style="border:0px" alt="Tweet this" src="tweet-this.png"/></a></dd>
+</dl>
+
+<div class="section">
+<h2>Activity by Clock Time</h2>
+<p class="chart"><img src="activity_time_phv204.png" alt="Activity by Hour of Day for phv204" width="800" height="500" /></p><p class="chart"><img src="activity_day_phv204.png" alt="Activity by Day of Week for phv204" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Activity in Directories</h2>
+  <table  rules="groups" summary="Overview of this author's activities in different directories">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Directory</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>144 (100.0%)</td>
+        <td>2738 (100.0%)</td>
+        <td>19.0</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_util.html" class="directory">src/edu/nyu/cs/omnidroid/util/</a></th>
+        <td>40 (27.8%)</td>
+        <td>1481 (54.1%)</td>
+        <td>37.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_core.html" class="directory">src/edu/nyu/cs/omnidroid/core/</a></th>
+        <td>20 (13.9%)</td>
+        <td>482 (17.6%)</td>
+        <td>24.1</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_bkgservice.html" class="directory">src/edu/nyu/cs/omnidroid/bkgservice/</a></th>
+        <td>22 (15.3%)</td>
+        <td>359 (13.1%)</td>
+        <td>16.3</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_tests.html" class="directory">src/edu/nyu/cs/omnidroid/tests/</a></th>
+        <td>9 (6.3%)</td>
+        <td>154 (5.6%)</td>
+        <td>17.1</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_src_com_CIntents.html" class="directory">sandbox/prad/Catch Intent/src/com/CIntents/</a></th>
+        <td>6 (4.2%)</td>
+        <td>154 (5.6%)</td>
+        <td>25.6</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir.html" class="directory">/</a></th>
+        <td>8 (5.6%)</td>
+        <td>51 (1.9%)</td>
+        <td>6.3</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_res_layout.html" class="directory">res/layout/</a></th>
+        <td>1 (0.7%)</td>
+        <td>19 (0.7%)</td>
+        <td>19.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_ui.html" class="directory">src/edu/nyu/cs/omnidroid/ui/</a></th>
+        <td>4 (2.8%)</td>
+        <td>17 (0.6%)</td>
+        <td>4.2</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_layout.html" class="directory">sandbox/prad/Catch Intent/res/layout/</a></th>
+        <td>2 (1.4%)</td>
+        <td>10 (0.4%)</td>
+        <td>5.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_src_edu_nyu_cs_omnidroid_external_catcherapp.html" class="directory">src/edu/nyu/cs/omnidroid/external/catcherapp/</a></th>
+        <td>3 (2.1%)</td>
+        <td>6 (0.2%)</td>
+        <td>2.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent.html" class="directory">sandbox/prad/Catch Intent/</a></th>
+        <td>5 (3.5%)</td>
+        <td>4 (0.1%)</td>
+        <td>0.8</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_res_values.html" class="directory">res/values/</a></th>
+        <td>1 (0.7%)</td>
+        <td>1 (0.0%)</td>
+        <td>1.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_values.html" class="directory">sandbox/prad/Catch Intent/res/values/</a></th>
+        <td>1 (0.7%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent_res_drawable.html" class="directory">sandbox/prad/Catch Intent/res/drawable/</a></th>
+        <td>1 (0.7%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_sandbox_prad_Catch Intent_bin.html" class="directory">sandbox/prad/Catch Intent/bin/</a></th>
+        <td>8 (5.6%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="dir_sandbox_prad_Catch Intent_.settings.html" class="directory">sandbox/prad/Catch Intent/.settings/</a></th>
+        <td>1 (0.7%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="dir_bin.html" class="directory">bin/</a></th>
+        <td>12 (8.3%)</td>
+        <td>0 (0.0%)</td>
+        <td>0.0</td>
+      </tr>
+    </tbody>
+  </table>
+
+<p class="chart"><img src="directory_sizes_phv204.png" alt="Activity of phv204" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="20"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-27 19:33</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">409</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Added few more bugs
+    </p>
+    <p class="commitdetails"><strong>8</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        BUGS&#160;<span class="change">(+8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-13 18:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">405</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+todo suggestion to restructure parsers
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-13 18:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">404</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added 3rd party interaction setup
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        TODO&#160;<span class="change">(+9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-13 16:29</span>
+  </dt>
+  <dd>
+    <p class="comment">
+inline comments
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+6&#160;-2)</span>
+      </li>
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+1&#160;-7)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-05 00:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">373</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+bug fix in the flow
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-04 20:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">367</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+correction in deletion of tempstr
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-03 20:27</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">357</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+uridata2 updated
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-03 15:41</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">352</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+sending actiondata2 along with the throw intent
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 18:09</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">346</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>10</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+10)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 18:07</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">345</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+closing files
+    </p>
+    <p class="commitdetails"><strong>15</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+15&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 15:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">344</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+check if URIFIELDs for action are empty
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 15:27</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">343</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 15:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">342</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>66</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+66&#160;-49)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 14:01</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">341</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added comments to fillurifields
+    </p>
+    <p class="commitdetails"><strong>69</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+69&#160;-83)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-05-02 00:51</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">340</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+corrected readfilters
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+3&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 14:33</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">338</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+  if(actionname.equalsIgnoreCase("SMS_RECEIVED"))<br />
+    new_id = new_id-1;
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/core</strong>:
+        DummyActivity.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 02:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">337</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-29 02:11</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">336</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+rectified code for enabled
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        UGParser.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-25 02:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">311</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+added exception handling
+    </p>
+    <p class="commitdetails"><strong>101</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+101&#160;-85)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_phv204.html" class="author">phv204</a>
+    <span class="date">2009-04-25 02:46</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">310</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+comntentmap
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>src/edu/nyu/cs/omnidroid/util</strong>:
+        AGParser.java&#160;<span class="change">(+7)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+<p>(68 more)</p>
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>

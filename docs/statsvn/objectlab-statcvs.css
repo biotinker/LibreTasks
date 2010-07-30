@@ -1,0 +1,175 @@
+body {
+  margin-left: 70px;
+    background: #ffffff;
+    color: #002070;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+h1 {
+    padding: 2px 5px;
+    border: 1px solid #c0c0c0;
+    color: #002070;
+    background-color: #eeeeee;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+h2 {
+    padding: 2px 5px;
+    border: 1px solid #aaaaaa;
+    color: #002070;
+    background-color: #eeeeee;
+    font-size: 14px;
+}
+
+#h1 {
+#  margin-left: -25px;
+#  padding: 0.4em;
+#  font-size: 200%;
+#  font-weight: bold;
+#  color: #000;
+#  background-color: #91AB67;
+#}
+#h2 {
+#  margin-left: -25px;
+#  margin-top: 3em;
+#  padding: 0.3em;
+#  font-size: 135%;
+#  font-weight: bold;
+#  color: #000;
+#  background-color: #91AB67;
+#}
+a:link {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #00c;
+}
+a:visited {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #808;
+}
+a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #f00;
+}
+a:link img {
+  border: 1px solid #00c;
+}
+a:visited img {
+  border: 1px solid #808;
+}
+a:hover img {
+  border: 1px solid #f00;
+}
+a.webrepository {
+  text-decoration: none;
+  font-weight: normal;
+}
+a.webrepository:hover {
+  text-decoration: underline;
+  font-weight: normal;
+}
+strong a.webrepository {
+  font-weight: bold;
+}
+
+.summaryperiod {
+  font-size: 85%;
+  font-weight: bold;
+}
+
+.commitlist .revisionNumberOuter {
+  display:block;
+}
+.commitlist .revisionNumberInner {
+  font-weight: bold;
+}
+.commitlist dt {
+  float: left;
+  width: 10em;
+  margin: 0;
+  text-align: right;
+}
+.commitlist .date {
+  font-weight: normal;
+  white-space: nowrap;
+}
+.commitlist dd {
+  margin: 0 0 2em 11em;
+}
+.comment {
+  margin: 0 0 1em;
+  padding: 1em;
+  color: #000;
+  background-color: #eeeeee;
+}
+.commitdetails {
+  margin: 0;
+  font-size: 85%;
+}
+ul.commitdetails {
+  margin-top: 0.5em;
+}
+.commitdetails li {
+  margin: 0 0 0 5em;
+  list-style-type: none;
+  text-indent: -5em;
+}
+
+.new {
+  color: #4a4;
+  background-color: #CCCCBB;
+}
+.del {
+  color: #c44;
+  background-color: #CCCCBB;
+}
+.change {
+  color: #777;
+#  background-color: #CCCCBB;
+}
+
+table {
+  border-collapse: collapse;
+}
+table, thead, tfoot, tbody, colgroup, col, tr, th, td {
+  border: none;
+}
+td, th {
+  padding: 0.1em 1em 0.3em;
+}
+thead th {
+  text-align: center;
+}
+thead {
+  color: #000;
+  background-color: #DFDFC6;
+}
+tfoot {
+  color: #000;
+  background-color: #DFDFC6;
+}
+.odd {
+  color: #000;
+  background-color: #eeeeee;
+}
+.even {
+  color: #000;
+  background-color: #D8D8C8;
+}
+
+#generatedby {
+  color: #667;
+  font-size: 75%;
+  margin-top: 2em;
+  text-align: right;
+}
+#generatedby a:link, #generatedby a:visited {
+  font-weight: normal;
+  color: #559;
+}
+#generatedby a:hover {
+  color: red;
+}

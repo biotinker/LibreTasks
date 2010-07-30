@@ -1,0 +1,648 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>StatSVN - Directory omnidroid/src/edu/nyu/cs/omnidroid/app/controller/</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <meta name="Generator" content="StatSVN 0.7.0"/>
+<link rel="stylesheet" href="objectlab-statcvs.css" type="text/css"/>
+<script type="text/javascript" charset="utf-8" src="http://bit.ly/javascript-api.js?version=latest&#38;login=statsvn&#38;apiKey=R_2c362b417d0517c27876cbaca1bb68cc"></script>
+<script type="text/javascript" charset="utf-8">
+   // wait until page is loaded to call API
+   var redir_url;
+   var short_url;
+   BitlyCB.myShortenCallback = function(data) {
+      // this is how to get a result of shortening a single url
+      var result;
+      short_url=null;
+      for (var r in data.results) {
+         result = data.results[r];
+         result['longUrl'] = r;
+         short_url = result['shortUrl'];
+         break;
+      }
+      if (short_url==null) // bit.ly failed
+      document.location=redir_url;
+      else
+      redirToTwitter();
+   };
+   function shortenTweet(url) {
+      if (short_url == null || redir_url!=url) {
+      redir_url = url;
+      BitlyClient.shorten(document.location, 'BitlyCB.myShortenCallback');
+      }
+      else
+      redirToTwitter();
+      return false;
+   }
+   function redirToTwitter() { 
+      // replace {0} which is visible as %7B0} in the link
+      document.location = redir_url.replace('%7B0}', short_url);
+   }
+</script>
+  </head>
+
+<body>
+
+<h1>Directory omnidroid/src/edu/nyu/cs/omnidroid/app/controller/</h1>
+<div id="parentlink">&#171; <a href="index.html">Development Statistics for /trunk</a></div>
+<dl class="attributes">
+    <dt>Directory Created:</dt>
+    <dd><span class="date">2010-06-01 22:37</span></dd>
+    <dt>Total Files:</dt>
+    <dd>10</dd>
+    <dt>Deleted Files:</dt>
+    <dd>2</dd>
+    <dt>Lines of Code:</dt>
+    <dd>1187</dd>
+</dl>
+<p class="dirtree">
+<a href="dir.html">[root]</a>/<a href="dir_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src.html">src</a>/<a href="dir_omnidroid_src_edu.html">edu</a>/<a href="dir_omnidroid_src_edu_nyu.html">nyu</a>/<a href="dir_omnidroid_src_edu_nyu_cs.html">cs</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid.html">omnidroid</a>/<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app.html">app</a>/<strong>controller</strong><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_actions.html">actions</a> 
+(14 files, 907 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_bkgservice.html">bkgservice</a> 
+(2 files, 101 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_datatypes.html">datatypes</a> 
+(11 files, 1787 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_events.html">events</a> 
+(11 files, 613 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external.html">external</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_actions.html">actions</a> 
+(6 files, 734 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_attributes.html">attributes</a> 
+(8 files, 729 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_helper.html">helper</a> 
+(0 files, 0 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_external_helper_telephony.html">telephony</a> 
+(6 files, 420 lines)<br />
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<img src="folder.png" width="15" height="13" alt="directory in repo" title="directory in repo"/> 
+<a href="dir_omnidroid_src_edu_nyu_cs_omnidroid_app_controller_util.html">util</a> 
+(8 files, 961 lines)<br />
+</p>
+
+<div class="section">
+<h2>Lines of Code</h2>
+<p class="chart"><img src="loc_module_omnidroid_src_edu_nyu_cs_omnidroid_app_controller.png" alt="omnidroid/src/edu/nyu/cs/omnidroid/app/controller/ Lines of Code" width="800" height="500" /></p></div>
+<div class="section">
+<h2>Developers</h2>
+  <table  rules="groups" summary="All authors and the number of their changes and lines of code in this directory">
+    <colgroup align="left"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <colgroup align="right"/>
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Changes</th>
+        <th>Lines of Code</th>
+        <th>Lines per Change</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>Totals</th>
+        <td>59 (100.0%)</td>
+        <td>1643 (100.0%)</td>
+        <td>27.8</td>
+      </tr>
+    </tfoot>
+    <tbody>
+      <tr  class="odd">
+        <th><a href="user_case.andrew.html" class="author">case.andrew</a></th>
+        <td>37 (62.7%)</td>
+        <td>1162 (70.7%)</td>
+        <td>31.4</td>
+      </tr>
+      <tr  class="even">
+        <th><a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a></th>
+        <td>15 (25.4%)</td>
+        <td>286 (17.4%)</td>
+        <td>19.0</td>
+      </tr>
+      <tr  class="odd">
+        <th><a href="user_renctan.html" class="author">renctan</a></th>
+        <td>7 (11.9%)</td>
+        <td>195 (11.9%)</td>
+        <td>27.8</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="section">
+<h2>Most Recent Commits</h2>
+<dl class="commitlist">
+  <dt><a name="25"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-30 00:19</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">841</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        IntentParser.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="24"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-30 00:00</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">840</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue146<br />
+Fixes Issue151<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>7</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+7&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="23"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-29 23:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">839</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>34</strong> lines of code changed in <span class="files">4 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+5&#160;-5)</span>,
+        HandlerService.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ResultProcessor.java&#160;<span class="change">(+24&#160;-9)</span>,
+        Rule.java&#160;<span class="change">(+4&#160;-8)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="22"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-29 21:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">838</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue 145
+    </p>
+    <p class="commitdetails"><strong>17</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="change">(+17&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="21"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-07-27 13:49</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">834</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+redo accidentally deleted codes for issue 123
+    </p>
+    <p class="commitdetails"><strong>74</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+74)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="20"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-26 17:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">831</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="19"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-26 14:14</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">829</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>160</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+33&#160;-3)</span>,
+        ActionExecuter.java&#160;<span class="change">(+3&#160;-4)</span>,
+        HandlerService.java&#160;<span class="change">(+25&#160;-76)</span>,
+        IntentParser.java&#160;<span class="change">(+8&#160;-2)</span>,
+        ResultProcessor.java&#160;<span class="new">(new&#160;91)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="18"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-07-23 23:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">828</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fix for issue 123
+    </p>
+    <p class="commitdetails"><strong>104</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Event.java&#160;<span class="change">(+29&#160;-1)</span>,
+        HandlerService.java&#160;<span class="change">(+75&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="17"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-20 16:47</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">823</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>11</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="change">(+11)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="16"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-20 09:28</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">820</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+ Addressing some minor TODO issues. Fixed a SharedPreference problem.
+    </p>
+    <p class="commitdetails"><strong>2</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+2&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="15"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-16 09:07</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">814</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #73
+    </p>
+    <p class="commitdetails"><strong>70</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+65&#160;-8)</span>,
+        OmnidroidManager.java&#160;<span class="change">(+5&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="14"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-16 08:56</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">813</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue#84
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="change">(+4&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="13"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-13 12:59</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">807</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>29</strong> lines of code changed in <span class="files">2 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+16)</span>,
+        Rule.java&#160;<span class="change">(+13&#160;-2)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="12"></a>
+    <a href="user_sv767@nyu.edu.html" class="author">sv767@nyu.edu</a>
+    <span class="date">2010-07-13 11:12</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">805</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+
+    </p>
+    <p class="commitdetails"><strong>48</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        OmnidroidManager.java&#160;<span class="new">(new&#160;48)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="11"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-04 10:44</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">792</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Fixes Issue #90
+    </p>
+    <p class="commitdetails"><strong>14</strong> lines of code changed in <span class="files">8 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+1&#160;-1)</span>,
+        ActionExecuter.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Event.java&#160;<span class="change">(+1&#160;-1)</span>,
+        Filter.java&#160;<span class="change">(+3&#160;-3)</span>,
+        HandlerService.java&#160;<span class="change">(+3&#160;-3)</span>,
+        IntentParser.java&#160;<span class="change">(+3&#160;-3)</span>,
+        Rule.java&#160;<span class="change">(+1&#160;-1)</span>,
+        RuleProcessor.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="10"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-02 14:38</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">786</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated fix for Issue #103
+    </p>
+    <p class="commitdetails"><strong>27</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+27&#160;-17)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="9"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-07-01 13:49</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">785</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Updated Notifications fixes issue #79
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+1&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="8"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-06-30 11:55</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">783</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Refix for issue 102
+    </p>
+    <p class="commitdetails"><strong>1</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+1&#160;-12)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="7"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-06-29 15:37</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">780</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+fix for issue 102
+    </p>
+    <p class="commitdetails"><strong>9</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+9&#160;-1)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="6"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-29 09:45</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">770</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adds support General and Action Logs. Fixes issue #19. <br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>74</strong> lines of code changed in <span class="files">6 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="change">(+27&#160;-1)</span>,
+        Event.java&#160;<span class="change">(+11&#160;-1)</span>,
+        HandlerService.java&#160;<span class="change">(+29&#160;-8)</span>,
+        Log.java&#160;<span class="del">(del)</span>,
+        Rule.java&#160;<span class="change">(+3&#160;-3)</span>,
+        RuleProcessor.java&#160;<span class="change">(+4&#160;-4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="5"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-22 15:04</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">766</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Adding an Event Logger.<br />
+Fixes Issue #19.<br />
+Fixes Issue #91.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>106</strong> lines of code changed in <span class="files">5 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        ActionExecuter.java&#160;<span class="change">(+9&#160;-9)</span>,
+        Event.java&#160;<span class="change">(+2&#160;-2)</span>,
+        HandlerService.java&#160;<span class="change">(+12&#160;-9)</span>,
+        Log.java&#160;<span class="new">(new&#160;74)</span>,
+        RuleProcessor.java&#160;<span class="change">(+9&#160;-9)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="4"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-20 16:39</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">762</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Movings some strings to strings.xml.<br />
+Removing some unused files.<br />
+Removing cancel buttons (back button is used instead).<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>0</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        RegisteredApp.java&#160;<span class="del">(del)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="3"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-06-18 23:06</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">757</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+codes for issue 46
+    </p>
+    <p class="commitdetails"><strong>4</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        HandlerService.java&#160;<span class="change">(+4)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="2"></a>
+    <a href="user_renctan.html" class="author">renctan</a>
+    <span class="date">2010-06-09 11:34</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">742</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Codes for issue 76.
+    </p>
+    <p class="commitdetails"><strong>3</strong> lines of code changed in <span class="files">1 file</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        IntentParser.java&#160;<span class="change">(+3)</span>
+      </li>
+    </ul>
+  </dd>
+
+  <dt><a name="1"></a>
+    <a href="user_case.andrew.html" class="author">case.andrew</a>
+    <span class="date">2010-06-01 22:37</span>
+    <span class="revisionNumberOuter">Rev.: <span class="revisionNumberInner">728</span></span>
+  </dt>
+  <dd>
+    <p class="comment">
+Migrating to MVC paradigm.<br />
+<br />
+
+    </p>
+    <p class="commitdetails"><strong>840</strong> lines of code changed in <span class="files">9 files</span>:</p>
+    <ul class="commitdetails">
+      <li>
+        <strong>omnidroid/src/edu/nyu/cs/omnidroid/app/controller</strong>:
+        Action.java&#160;<span class="new">(new&#160;75)</span>,
+        ActionExecuter.java&#160;<span class="new">(new&#160;73)</span>,
+        Event.java&#160;<span class="new">(new&#160;77)</span>,
+        Filter.java&#160;<span class="new">(new&#160;105)</span>,
+        HandlerService.java&#160;<span class="new">(new&#160;85)</span>,
+        IntentParser.java&#160;<span class="new">(new&#160;73)</span>,
+        RegisteredApp.java&#160;<span class="new">(new&#160;150)</span>,
+        Rule.java&#160;<span class="new">(new&#160;135)</span>,
+        RuleProcessor.java&#160;<span class="new">(new&#160;67)</span>
+      </li>
+    </ul>
+  </dd>
+
+</dl>
+
+</div><div id="generatedby">Generated by <a href="http://www.statsvn.org">StatSVN</a> 0.7.0</div>
+</body>
+</html>
