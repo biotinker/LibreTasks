@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/checked_test_list" android:orientation="horizontal"
+    android:id="@+id/checked_list" android:orientation="horizontal"
     android:layout_width="fill_parent" android:layout_height="wrap_content"
     android:paddingLeft="6dip" android:paddingRight="6dip">
 
 
     <CheckBox android:id="@+id/checkbox"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" android:focusable="true"
+        android:focusable="true" android:layout_centerInParent="true"
         android:clickable="true" android:layout_alignParentRight="true"
+        android:minHeight="64dip" android:minWidth="48dip"
         android:checked="true" android:layout_weight="1" />
 
     <TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
