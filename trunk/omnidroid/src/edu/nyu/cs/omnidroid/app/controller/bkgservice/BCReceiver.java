@@ -35,7 +35,7 @@ public class BCReceiver extends BroadcastReceiver {
       intent.setClass(context, HandlerService.class);
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
       context.startService(intent);
-      Logger.i(TAG, "Received Intent" + intent.getAction());
+      Logger.i(TAG, "Received Intent: " + intent.getAction());
     } catch (Exception e) {
       Logger.i(TAG, e.getLocalizedMessage());
       Logger.i(TAG, "Unable to execute required action");
