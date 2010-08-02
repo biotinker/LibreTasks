@@ -46,6 +46,15 @@
         android:defaultValue="10"
         android:dialogTitle="@string/throttle_description" />
 
+    <ListPreference
+        android:key="@string/pref_key_log_limit"
+        android:summary="@string/log_limit_description"
+        android:title="@string/log_limit"
+        android:entries="@array/log_limit_list"
+        android:entryValues="@array/log_limit_values"
+        android:defaultValue="24"
+        android:dialogTitle="@string/log_limit_description" />
+
     <Preference
         android:key="@string/pref_key_reset_db"
         android:summary="@string/reset_db_desc"

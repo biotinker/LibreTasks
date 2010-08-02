@@ -18,6 +18,8 @@ package edu.nyu.cs.omnidroid.app.model;
 import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
 import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getStringFromCursor;
 
+import java.util.Date;
+
 import android.content.Context;
 import android.database.Cursor;
 import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
@@ -62,7 +64,8 @@ public class CoreEventLogsDbHelper extends CoreLogsDbHelper {
    */
   public int getLogCountDuringLastMinute() {
     // Fetch all actions recorded in the last minute
-    Cursor logTable = ((LogEventDbAdapter)logDbAdapter).fetchAllDuringLastMinute();
+    long logsSinceTimestamp = (new Date()).getTime() - LogDbAdapter.TIME_IN_MINUTE;
+    Cursor logTable = ((LogEventDbAdapter)logDbAdapter).fetchAllSince(logsSinceTimestamp);
     int count = logTable.getCount();
     logTable.close();
     return count;

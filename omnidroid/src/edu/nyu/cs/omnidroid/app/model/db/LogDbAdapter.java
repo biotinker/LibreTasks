@@ -24,6 +24,11 @@ import android.database.sqlite.SQLiteDatabase;
  * see what is going on.
  */
 public abstract class LogDbAdapter extends DbAdapter {
+  /* Timestamp conversion constants */
+  public static final int MILLISECONDS_TO_SECONDS = 1000;
+  public static final int TIME_IN_MINUTE = 60 * MILLISECONDS_TO_SECONDS;
+  public static final int TIME_IN_HOUR = 60 * TIME_IN_MINUTE;
+  public static final int TIME_IN_DAY = 24 * TIME_IN_HOUR;
 
   /* Database Column Names */
   public static final String KEY_ID = "_ID";
@@ -39,4 +44,11 @@ public abstract class LogDbAdapter extends DbAdapter {
   abstract public Cursor fetch(Long id);
 
   abstract public long insert(Log log);
+
+  /**
+   * @return a Cursor that contains all Log records before timestamp
+   */
+  abstract public Cursor fetchAllBefore(Long timestamp);
+
+  abstract public boolean delete(Long id);
 }

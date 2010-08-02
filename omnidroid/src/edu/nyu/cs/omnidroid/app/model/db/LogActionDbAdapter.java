@@ -156,8 +156,24 @@ public class LogActionDbAdapter extends LogDbAdapter {
 
   @Override
   public long insert(Log log) {
+    if (log == null) {
+      throw new IllegalArgumentException("no log specified.");
+    }
+
     ActionLog myLog = (ActionLog) log;
     return insert(myLog.getTimestamp(), myLog.getLogEventID(), myLog.getRuleName(), myLog
         .getAppName(), myLog.getActionName(), myLog.getParameters(), myLog.getText());
   }
+
+  @Override
+  public Cursor fetchAllBefore(Long timestamp) {
+    if (timestamp == null) {
+      throw new IllegalArgumentException("no time specified.");
+    }
+
+    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
+    String selection = KEY_TIMESTAMP + " < " + timestamp;
+    return database.query(DATABASE_TABLE, KEYS, selection, null, null, null, null);
+  }
+
 }

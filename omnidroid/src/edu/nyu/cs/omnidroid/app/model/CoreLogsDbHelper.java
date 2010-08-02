@@ -15,24 +15,38 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
+import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
+import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.db.DbHelper;
 import edu.nyu.cs.omnidroid.app.model.db.LogDbAdapter;
 
 /**
- * Abstract base class that provides general access to the Log DB layer. 
- *
+ * Abstract base class that provides general access to the Log DB layer.
+ * 
  */
 abstract public class CoreLogsDbHelper {
   // Class identifier
   private static final String TAG = CoreLogsDbHelper.class.getSimpleName();
+
+  /**
+   * Default limit of time to keep logs around, specified in hours
+   * 
+   * Unfortunately Android doesn't support integer based arrays with the ListPreference interface,
+   * so we have to convert an integer back from a string. See:
+   * http://code.google.com/p/android/issues/detail?id=2096
+   */
+  protected static final String LOG_LIMIT_DEFAULT = "24";
 
   // DB Management
   protected Context context;
@@ -60,14 +74,15 @@ abstract public class CoreLogsDbHelper {
   public void close() {
     Logger.i(TAG, "closing database.");
     database.close();
-    
+
     // Not necessary, but also close all dbHelper databases just in case.
     dbHelper.close();
   }
 
   /**
    * 
-   * @param log is a cursor to the current log to return
+   * @param log
+   *          is a cursor to the current log to return
    * @return the {@code Log} at the cursor position
    */
   abstract public Log getLog(Cursor log);
@@ -75,10 +90,9 @@ abstract public class CoreLogsDbHelper {
   /*
    * Retrieves a cursor to the log that matched the ID passed in.
    * 
-   * @param id
-   *            - the ID for the Log that is desired.
-   * @return a cursor to the event log requested.
+   * @param id - the ID for the Log that is desired.
    * 
+   * @return a cursor to the event log requested.
    */
   public Log getLogMatchingID(long id) {
     return getLog(logDbAdapter.fetch(id));
@@ -92,6 +106,7 @@ abstract public class CoreLogsDbHelper {
    * @return id of the record inserted, -1 if unsuccessful
    */
   public long insert(Log log) {
+    deleteOldLogs();
     log.setTimestamp((new Date()).getTime());
     return logDbAdapter.insert(log);
   }
@@ -111,6 +126,34 @@ abstract public class CoreLogsDbHelper {
     }
     logTable.close();
     return logs;
+  }
+
+  public void deleteOldLogs() {
+    if (!database.isOpen()) {
+      throw new IllegalStateException(TAG + " is already closed.");
+    }
+
+    /*
+     * Get the Log limit stored in preferences (in hours)
+     * 
+     * Unfortunately Android doesn't support integer based arrays with the ListPreference interface,
+     * so we have to convert an integer back from a string. See:
+     * http://code.google.com/p/android/issues/detail?id=2096
+     */
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    String sLogLimitHours = prefs.getString(context.getString(R.string.pref_key_log_limit),
+        LOG_LIMIT_DEFAULT);
+    int logLimitHours = Integer.parseInt(sLogLimitHours);
+
+    // Convert hours to a limit based on timestamp
+    long logsBeforeTimestamp = (new Date()).getTime() - (logLimitHours * LogDbAdapter.TIME_IN_HOUR);
+
+    // Get and delete the old logs
+    Cursor cursor = logDbAdapter.fetchAllBefore(logsBeforeTimestamp);
+    while (cursor.moveToNext()) {
+      logDbAdapter.delete(getLongFromCursor(cursor, LogDbAdapter.KEY_ID));
+    }
+    cursor.close();
   }
 
 }
