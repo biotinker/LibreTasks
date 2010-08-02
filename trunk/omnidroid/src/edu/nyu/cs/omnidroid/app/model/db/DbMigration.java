@@ -121,7 +121,7 @@ public class DbMigration {
       alterFailedActionsTable(db);
     case 17:
       addMissedCallEvent(db);
-     
+      
       /*
        * Insert new versions before this line and do not forget to update {@code
        * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
@@ -839,5 +839,5 @@ public class DbMigration {
     eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
         eventIdMissedCall, dataTypeIdPhoneNumber);
   }
-  
+
 }

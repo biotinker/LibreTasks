@@ -70,14 +70,14 @@
 
     <!--  Help Dialog Texts -->
     <string name="help_title">Omnidroid Help</string>
-    <string name="help_activitymain">Omnidroid allows you to create rules that processes events that occur on your Android device and automatically take action as a result.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;Create Rule&lt;/i&gt; button to store new rules.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;View Rules&lt;/i&gt; button to view, edit, delete, enable, or disable rules that have already been created.</string>
+    <string name="help_activitymain">Omnidroid allows you to create rules that process events that occur on your Android device and automatically take action as a result.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;Create Rule&lt;/i&gt; button to store new rules.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;View Rules&lt;/i&gt; button to view, edit, delete, enable, or disable rules that have already been created.</string>
     <string name="help_filtersandactions">Add filters to an event to limit when this rule is triggered.  Add actions you would like performed when this rule is triggered.</string>
     <string name="help_saved_rules">Use this screen to enable and disable the rules that are saved.</string>
     <string name="help_dlgattributes">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Events have different attribute types that can be filtered.&lt;br /&gt;Select the type of attribute you would like to match.</string>
     <string name="help_dlgfilters">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Select the filter that you want to apply from the list of filter types.</string>
     <string name="help_dlgfilterinput">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Input entered here will be passed to the filter.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;This rule will only be activated if it matches the data provided by this filter.</string>
     <string name="help_dlgapplications">Select the application that will provide the resultant action for this rule.</string>
-    <string name="help_dlgactions">Applications support certain actions.  Select the action that you want this application to perform as a result of the root event.</string>
+    <string name="help_dlgactions">Applications can perform certain actions.  Select the action that you want this application to perform as a result of the root event.</string>
     <string name="help_dlgactioninput">Input entered here will be passed to the action you are creating.  If attributes from the event that triggered this application are compatible with the inputs here, you can select the attribute by clicking on the attributes button.</string>
     <string name="help_dlgapplicationlogininput"></string>
 
@@ -153,10 +153,10 @@
     <string name="edit_rule">Edit Rule</string>
     <string name="delete_rule">Delete Rule</string>
     <string name="toggle_rule">Toggle Rule</string>
-    <string name="one_rule">(1 rule)</string>
-    <string name="n_rules">(%d rules)</string>
-    <string name="one_rule_with_arg">(1 rule %s)</string>
-    <string name="n_rules_with_arg">(%d rules %s)</string>
+    <string name="one_rule">" (1 rule)"</string>
+    <string name="n_rules">" (%d rules)"</string>
+    <string name="one_rule_with_arg">" (1 rule %s)"</string>
+    <string name="n_rules_with_arg">" (%d rules %s)"</string>
     <string name="enabled">enabled</string>
     <string name="disabled">disabled</string>
     <string name="enable_notification">Enable Notification</string>
@@ -178,7 +178,9 @@
 
     <!--  Settings -->
     <string name="throttle">Throttle</string>
-    <string name="throttle_description">Limit number of events processed per minute</string>
+    <string name="throttle_description">Limit number of events to process per minute</string>
+    <string name="log_limit">Log Limit</string>
+    <string name="log_limit_description">Limit the length of time to keep logs</string>
     <string name="sound_enabled">Sound Notifications</string>
     <string name="light_enabled">LED Notifications</string>
     <string name="vibrate_enabled">Vibrate Notifications</string>
@@ -195,8 +197,8 @@
     <string name="default_notification">Notifications</string>
     <string name="reset_db_desc">Resetting database will clear all user data</string>
     <string name="reset_db">Reset Database</string>
-    <string name="reset_settings_desc">Resetting settings to default values</string>
-    <string name="reset_settings">Reset Settings</string>
+    <string name="reset_settings_desc">Reset preferences to default values</string>
+    <string name="reset_settings">Reset Preferences</string>
     <string name="gmail_signature_title">Gmail Signature</string>
     <string name="gmail_signature_dialog_message">Enter gmail signature below</string>
     <string name="sms_signature_title">SMS Signature</string>
@@ -256,6 +258,7 @@
     <string name="pref_key_omnidroid_enabled">OmnidroidEnabled</string>
     <string name="pref_key_notification">NotificationKey</string>
     <string name="pref_key_throttle">Throttle</string>
+    <string name="pref_key_log_limit">LogLimit</string>
     <string name="pref_key_reset_db">ResetDb</string>
     <string name="pref_key_reset_settings">ResetSettings</string>
     <string name="pref_key_gmail_signature">GmailSignature</string>

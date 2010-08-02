@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model.db;
 
-import java.util.Date;
-
 import edu.nyu.cs.omnidroid.app.model.EventLog;
 import edu.nyu.cs.omnidroid.app.model.Log;
 import android.content.ContentValues;
@@ -32,9 +30,6 @@ import android.database.sqlite.SQLiteDatabase;
  * </p>
  */
 public class LogEventDbAdapter extends LogDbAdapter {
-  /* Timestamp conversion constants */
-  private static final int MILLISECONDS_TO_SECONDS = 1000;
-  private static final int SECONDS_IN_MINUTE = 60;
 
   /* Column names */
   public static final String KEY_APPNAME = "FK_AppName";
@@ -153,19 +148,37 @@ public class LogEventDbAdapter extends LogDbAdapter {
 
   @Override
   public long insert(Log log) {
+    if (log == null) {
+      throw new IllegalArgumentException("no log specified.");
+    }
+
     EventLog myLog = (EventLog) log;
     return insert(myLog.getTimestamp(), myLog.getAppName(), myLog.getEventName(), myLog
         .getParameters(), myLog.getText());
   }
 
   /**
-   * @return a Cursor that contains all LogEvent records for the last minute.
+   * @return a Cursor that contains all LogEvent records since timestamp
    */
-  public Cursor fetchAllDuringLastMinute() {
+  public Cursor fetchAllSince(Long timestamp) {
+    if (timestamp == null) {
+      throw new IllegalArgumentException("no time specified.");
+    }
+
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
-    // Limit to rows with timestamp > (current time - one minute)
-    long timeMinusMinute = (new Date()).getTime() - (SECONDS_IN_MINUTE * MILLISECONDS_TO_SECONDS);
-    String selection = KEY_TIMESTAMP + " > " + timeMinusMinute;
+    String selection = KEY_TIMESTAMP + " > " + timestamp;
     return database.query(DATABASE_TABLE, KEYS, selection, null, null, null, null);
   }
+
+  @Override
+  public Cursor fetchAllBefore(Long timestamp) {
+    if (timestamp == null) {
+      throw new IllegalArgumentException("no time specified.");
+    }
+
+    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
+    String selection = KEY_TIMESTAMP + " < " + timestamp;
+    return database.query(DATABASE_TABLE, KEYS, selection, null, null, null, null);
+  }
+
 }

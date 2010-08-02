@@ -140,7 +140,21 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
 
   @Override
   public long insert(Log log) {
+    if (log == null) {
+      throw new IllegalArgumentException("no log specified.");
+    }
     GeneralLog myLog = (GeneralLog) log;
     return insert(myLog.getTimestamp(), myLog.getText(), myLog.getLevel());
+  }
+
+  @Override
+  public Cursor fetchAllBefore(Long timestamp) {
+    if (timestamp == null) {
+      throw new IllegalArgumentException("no time specified.");
+    }
+
+    // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
+    String selection = KEY_TIMESTAMP + " < " + timestamp;
+    return database.query(DATABASE_TABLE, KEYS, selection, null, null, null, null);
   }
 }
