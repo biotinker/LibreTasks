@@ -45,6 +45,7 @@
     <string name="no">No</string>
     <string name="coming_soon">We hope to implement this soon.</string>
     <string name="unknown">unknown</string>
+    <string name="gmail">Gmail</string>
 
     <!--  Settings -->
     <string name="settings_label">Settings</string>
@@ -200,7 +201,7 @@
     <string name="reset_settings_desc">Reset preferences to default values</string>
     <string name="reset_settings">Reset Preferences</string>
     <string name="gmail_signature_title">Gmail Signature</string>
-    <string name="gmail_signature_dialog_message">Enter gmail signature below</string>
+    <string name="gmail_signature_dialog_message">Enter Gmail signature below</string>
     <string name="sms_signature_title">SMS Signature</string>
     <string name="sms_signature_desc_on">Turn on sms signature</string>
     <string name="sms_signature_desc_off">Turn off sms signature</string>
@@ -213,14 +214,14 @@
     <string name="signature_desc">Modify Gmail and Sms Signatures</string>
     <string name="gmail_signature_settings_title">Gmail signature settings</string>
     <string name="sms_signature_settings_title">SMS signature settings</string>
-    <string name="gmail_signature_settings_desc">Modify SMS signature</string>
-    <string name="sms_signature_settings_desc">Modify Gmail signature</string>
+    <string name="gmail_signature_settings_desc">Modify Gmail signature</string>
+    <string name="sms_signature_settings_desc">Modify SMS signature</string>
     
     <!-- message -->
-    <string name="gmail_failed_no_network">Send GMail failed: No network.</string>
-    <string name="gmail_failed_authentication_error">Send GMail failed: Authentication error.</string>
-    <string name="gmail_failed_server_error">Send GMail failed: Server error.</string>
-    <string name="gmail_sent">GMail sent</string>   
+    <string name="gmail_failed_no_network">Send Gmail failed: No network.</string>
+    <string name="gmail_failed_authentication_error">Send Gmail failed: Authentication error.</string>
+    <string name="gmail_failed_server_error">Send Gmail failed: Server error.</string>
+    <string name="gmail_sent">Gmail sent</string>   
     <string name="sms_sent">SMS sent</string>
     <string name="sms_failed_no_service">SMS sending failed: No service</string>
     <string name="sms_failed_generic_failure">SMS sending failed Generic failure</string>
