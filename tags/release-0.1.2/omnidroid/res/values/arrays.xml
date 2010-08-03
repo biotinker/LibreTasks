@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="throttle_list">
+		<item>No throttling</item>
+		<item>5</item>
+		<item>10 (Default)</item>
+		<item>30</item>
+	</string-array>
+	<!-- Android doesn't support int-arrays for listpreferences so we have to use a string.
+	     see: http://code.google.com/p/android/issues/detail?id=2096 -->
+	<string-array name="throttle_values">
+		<item>0</item>
+		<item>5</item>
+		<item name="default_value">10</item>
+		<item>30</item>
+	</string-array>
+	<string-array name="log_limit_list">
+		<item>1 Hour (Saves space)</item>
+		<item>1 Day (Default)</item>
+		<item>7 Days</item>
+	</string-array>
+	<!-- Android doesn't support int-arrays for listpreferences so we have to use a string.
+	     see: http://code.google.com/p/android/issues/detail?id=2096 -->
+	<!-- Value is stored in hour units -->
+	<string-array name="log_limit_values">
+		<item>1</item>
+		<item name="default_value">24</item>
+		<item>168</item>
+	</string-array>
+</resources>
