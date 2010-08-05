@@ -18,7 +18,6 @@ package edu.nyu.cs.omnidroid.app.controller.external.attributes;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.util.Logger;
 import edu.nyu.cs.omnidroid.app.model.CoreRulesDbHelper;
-import edu.nyu.cs.omnidroid.app.view.simple.UIDbHelperStore;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;

@@ -40,8 +40,6 @@ public abstract class PhoneCallEvent extends Event {
   /** Cache any values that are requested because it is likely they will be asked for again */
   protected String phoneNumber;
 
-  private final static String LOG_TAG = PhoneCallEvent.class.getSimpleName();
-
   /**
    * Constructs a new PhoneRinging object that holds a PhoneRinging event fired intent. This intent
    * holds the data needed to check the event against user defined rules.
