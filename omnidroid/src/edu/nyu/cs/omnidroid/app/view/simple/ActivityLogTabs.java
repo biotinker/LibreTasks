@@ -66,6 +66,7 @@ public class ActivityLogTabs extends Activity {
   private static final int MENU_SETTINGS = 0;
   private static final int MENU_CLEAR_LOGS = 1;
 
+  
   // General global variables
   protected ListView listView;
   
@@ -84,6 +85,16 @@ public class ActivityLogTabs extends Activity {
     logTypeSelected = KEY_ALL_LOGS;
     if (getIntent().getExtras() != null) {
       logTypeSelected = getIntent().getExtras().getInt(KEY_INTENT_LOG_TYPE, KEY_ALL_LOGS);
+    }
+
+    switch (logTypeSelected) {
+    case (KEY_GENERAL_LOGS):
+      UtilUI.clearNotification(this, UtilUI.NOTIFICATION_WARN);
+      break;
+    case (KEY_ACTION_LOGS):
+      UtilUI.clearNotification(this, UtilUI.NOTIFICATION_RULE);
+      UtilUI.clearNotification(this, UtilUI.NOTIFICATION_ACTION);
+      break;
     }
     
     // Update the UI
@@ -271,4 +282,4 @@ public class ActivityLogTabs extends Activity {
       return ll;
     }
   }
-}
+} 

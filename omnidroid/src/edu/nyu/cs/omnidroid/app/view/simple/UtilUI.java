@@ -37,10 +37,14 @@ import android.widget.ListView;
  */
 public class UtilUI {
 
-  // Alert users about standard info (rules/etc.)
-  public static final int NOTIFICATION_INFO = 1;
-  // Alert users about potential system issues (throttle/etc.)
-  public static final int NOTIFICATION_WARN = 2;
+  /** Alert users about standard info such as actions have been executed etc */
+  public static final int NOTIFICATION_ACTION = 0;
+  /**Alert users about potential system issues (throttle/etc.) */
+  public static final int NOTIFICATION_WARN = 1;
+  /**This is used rule with customized send notificaiton action is triggered  */
+  public static final int NOTIFICATION_RULE = 2;
+   
+  private static final String TAG = UtilUI.class.getSimpleName();
   
   private UtilUI() {  
   }
@@ -64,7 +68,11 @@ public class UtilUI {
    * @param title - to display on notification
    * @param message - to display on notification
    */
-  public static void showNotification(Context context, int notifyType, String title, String message) {
+  //this method could be called by several methods simultaneously with the same notifyType
+  //since all instances will be using and pdating values from sharedPreferences and updating same 
+  //notification in status bar this method needs to be synchronized.
+  public static synchronized void showNotification(Context context, int notifyType, String title, 
+      String message) {
     if (message == null) {
       Log.w("showNotification", "No user message provided");
       message = context.getString(R.string.action_default_message);
@@ -74,17 +82,84 @@ public class UtilUI {
       title = message;    
     }
 
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    int numOfNotifications;
+    switch (notifyType) {
+    case NOTIFICATION_ACTION :
+      numOfNotifications = sharedPreferences.getInt(context.getString(R.string.pref_key_notification_action_count), 0);
+      if (++numOfNotifications == 1) {
+        editor.putString(context.getString(R.string.pref_key_notification_action_message), message);
+      }
+      editor.putInt(context.getString
+          (R.string.pref_key_notification_action_count), numOfNotifications);
+      break;
+    case NOTIFICATION_WARN :
+      numOfNotifications = sharedPreferences.getInt(context.getString(R.string.pref_key_notification_warn_count), 0);
+      if (++numOfNotifications == 1) {
+        editor.putString(context.getString(R.string.pref_key_notification_warn_message), message);
+      } 
+      editor.putInt(context.getString(R.string.pref_key_notification_warn_count), numOfNotifications);
+      break;
+    case NOTIFICATION_RULE :
+      numOfNotifications = sharedPreferences.getInt(context.getString(R.string.pref_key_notification_rule_count), 0);
+      if (++numOfNotifications == 1) {
+        editor.putString(context.getString(R.string.pref_key_notification_rule_message), message);
+        editor.putString(context.getString(R.string.pref_key_notification_rule_title), title);
+      }
+      editor.putInt(context.getString(R.string.pref_key_notification_rule_count), 
+          numOfNotifications);
+      break;
+    default :
+      Log.w(TAG, new IllegalArgumentException());
+      return;
+    }
+    editor.commit();
+    
+    notify (context, notifyType, numOfNotifications, title, message);
+  }
+  
+  private static void notify(Context context, int notifyType, int numOfNotifications, 
+      String title, String message) {
+    
     // Start building notification
     NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
     Notification notification = new Notification(R.drawable.icon, message, System.currentTimeMillis());
-
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);      
+    
     // Link this notification to the Logs activity
     Intent notificationIntent = new Intent(context, ActivityLogs.class);
-    PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+    switch (notifyType) {
+    case NOTIFICATION_ACTION :
+      notificationIntent.putExtra(ActivityLogs.KEY_TAB_TAG, ActivityLogs.TAB_TAG_ACTION_LOG);
+      if (numOfNotifications > 1) {
+        message = context.getString(R.string.notification_action, numOfNotifications);
+        title = context.getString(R.string.notification_action_title, numOfNotifications);
+      }
+      break;
+    case NOTIFICATION_WARN :
+      notificationIntent.putExtra(ActivityLogs.KEY_TAB_TAG, ActivityLogs.TAB_TAG_GENERAL_LOG);
+      if (numOfNotifications > 1) {
+        message = context.getString(R.string.notification_warn, numOfNotifications);
+      }
+      break;
+    case NOTIFICATION_RULE :
+      notificationIntent.putExtra(ActivityLogs.KEY_TAB_TAG, ActivityLogs.TAB_TAG_ACTION_LOG);
+      if (numOfNotifications > 1) {
+        message = context.getString(R.string.notification_rule, numOfNotifications);
+      }
+      break;
+    default :
+      Log.w(TAG, new IllegalArgumentException());
+      return;
+    }
+    
+    PendingIntent contentIntent = PendingIntent.getActivity(context, notifyType, notificationIntent, 
+        PendingIntent.FLAG_UPDATE_CURRENT);    
+    
     notification.setLatestEventInfo(context, title, message, contentIntent);
-
-    // Set Preferences for notification options (sound/vibrate/lights)
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);      
+    
+    // Set Preferences for notification options (sound/vibrate/lights
     if (prefs.getBoolean(context.getString(R.string.pref_key_sound), false)) {
       notification.defaults |= Notification.DEFAULT_SOUND;      
     }
@@ -97,6 +172,70 @@ public class UtilUI {
 
     // Send the notification
     nm.notify(notifyType, notification);
+  }
+  /**
+   * loads notifications that haven't been viewed. this method is called after boot is completed.
+   * 
+   * @param context
+   *         application context
+   */
+  public static void loadNotifications(Context context) {
+    int numOfNotifications;
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    numOfNotifications = sharedPreferences.getInt(context.getString(
+        R.string.pref_key_notification_warn_count), 0);
+    if (numOfNotifications > 0) {
+      notify(context, NOTIFICATION_WARN, numOfNotifications, context.getString(R.string.omnidroid),
+          sharedPreferences.getString(context.getString(R.string
+          .pref_key_notification_warn_message), ""));
+    }
+    numOfNotifications = sharedPreferences.getInt(context.getString(
+        R.string.pref_key_notification_action_count), 0);
+    if (numOfNotifications > 0) {
+      notify(context, NOTIFICATION_ACTION, numOfNotifications, context.getString(
+          R.string.omnidroid), sharedPreferences.getString(context.getString(
+          R.string.pref_key_notification_action_message), ""));
+    }
+    numOfNotifications = sharedPreferences.getInt(context.getString(
+        R.string.pref_key_notification_rule_count), 0);
+    if (numOfNotifications > 0) {
+      notify(context, NOTIFICATION_RULE, numOfNotifications, sharedPreferences.getString(context
+          .getString(R.string.pref_key_notification_rule_title), ""),sharedPreferences.getString(
+          context.getString(R.string.pref_key_notification_rule_message), ""));
+    }      
+  }
+  
+  /**
+   * clears notification from status bar
+   * 
+   * @param context application context;
+   * @param notificationType
+   *         id of notification to be canceled
+   */
+  public static void clearNotification(Context context, int notificationType) {
+    
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    
+    switch (notificationType) {
+    case NOTIFICATION_ACTION:
+      editor.putInt(context.getString(R.string.pref_key_notification_action_count), 0);
+      break;
+    case NOTIFICATION_RULE:
+      editor.putInt(context.getString(R.string.pref_key_notification_rule_count), 0);
+      break;
+    case NOTIFICATION_WARN:
+      editor.putInt(context.getString(R.string.pref_key_notification_warn_count), 0);
+      break;
+    default:
+      Log.w(TAG, new IllegalArgumentException());
+      return;
+    }
+    editor.commit();
+    
+    NotificationManager nm = (NotificationManager)context.getSystemService(
+        Context.NOTIFICATION_SERVICE);
+    nm.cancel(notificationType);
   }
 
   /**
@@ -158,4 +297,5 @@ public class UtilUI {
     sb.append(strContents.substring(end, strContents.length()));
     view.setText(sb.toString());
   }
+
 }

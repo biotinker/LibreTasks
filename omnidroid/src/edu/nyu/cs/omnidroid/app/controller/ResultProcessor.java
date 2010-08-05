@@ -95,7 +95,7 @@ public class ResultProcessor {
   private static void notifyResult(Context context, boolean showNotification, String message){
     if (message != null) {
       if (showNotification) {
-        UtilUI.showNotification(context, UtilUI.NOTIFICATION_INFO, 
+        UtilUI.showNotification(context, UtilUI.NOTIFICATION_RULE, 
             context.getString(R.string.omnidroid), message);
       } else {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
