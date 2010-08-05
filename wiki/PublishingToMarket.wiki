@@ -19,6 +19,7 @@ Android Market account info: Ask Maintainers
   }}}
   # Set key.store and key.alias in build.properties.  Example:
   {{{
+  echo "sdk.dir=/path/to/android-sdk" >> build.properties
   echo "key.store=/path/to/key/omnidroid-release.keystore" >> build.properties
   echo "key.alias=omnidroid" >> build.properties
   }}}
