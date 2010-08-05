@@ -17,6 +17,7 @@ Android Market account info: Ask Maintainers
   {{{
   cd omnidroid
   }}}
+  # Bump the two version strings in AndroidManifest.xml and commit changes 
   # Set key.store and key.alias in build.properties.  Example:
   {{{
   echo "sdk.dir=/path/to/android-sdk" >> build.properties
