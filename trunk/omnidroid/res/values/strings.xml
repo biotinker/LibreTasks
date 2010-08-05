@@ -22,7 +22,7 @@
     <string name="enter_rule_name">Enter a rule name below:</string>
     <string name="enter_rule_description">Enter a rule description below:</string>
     <string name="actions">actions</string>
-    <string name="omnidroid_is_disabled">Omnidroid has been disabled. To enable Omnidroid go to the settings menu.</string>
+    <string name="omnidroid_is_disabled">Omnidroid has been disabled.</string>
 
     <!--  Common Words -->
     <string name="omnidroid">Omnidroid</string>
@@ -265,7 +265,14 @@
     <string name="pref_key_gmail_signature">GmailSignature</string>
     <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
     <string name="pref_key_sms_signature">SMSSignature</string>
-    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>
+    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>       
+    <string name="pref_key_notification_action_count">NotificationActionCount</string>  
+    <string name="pref_key_notification_rule_count">NotificationRuleCount</string>  
+    <string name="pref_key_notification_warn_count">NotificationWarnCount</string>      
+    <string name="pref_key_notification_action_message">NotificationActionMessage</string>  
+    <string name="pref_key_notification_rule_message">NotificationRuleMessage</string>  
+    <string name="pref_key_notification_warn_message">NotificationWarnMessage</string>  
+    <string name="pref_key_notification_rule_title">NotificationRuleTitle</string>
     
     <!-- names, descriptions and parameters for default rules -->
     <string name="phoneRingToSMSRuleName">Auto Reply SMS</string>
@@ -277,5 +284,11 @@
     <string name="timeToLoudRuleDesc">Set phone loud after 9AM</string>
     <string name="batteryLowToSetWifiOffRuleName">Turn off WiFi</string>
     <string name="batteryLowToSetWifiOffRuleDesc">Turn off WiFi when battery is low</string>
+    
+    <!-- notification strings -->
+    <string name="notification_rule">%d actions have been executed</string>
+    <string name="notification_warn">You have %d warnings</string>
+    <string name="notification_action">You have %d notification messages</string>
+    <string name="notification_action_title">New Messages</string>
     
 </resources>

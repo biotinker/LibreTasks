@@ -19,6 +19,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TabHost;
 import edu.nyu.cs.omnidroid.app.R;
@@ -30,6 +31,13 @@ public class ActivityLogs extends TabActivity {
 
   // General global variables
   protected ListView listView;
+  
+  protected static final String TAB_TAG_ALL_LOG = "allLogs";
+  protected static final String TAB_TAG_EVENT_LOG = "eventLog";
+  protected static final String TAB_TAG_ACTION_LOG = "actionLog";
+  protected static final String TAB_TAG_GENERAL_LOG = "generalLog";
+  
+  public static final String KEY_TAB_TAG = "keyTabTag";
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -41,32 +49,38 @@ public class ActivityLogs extends TabActivity {
     TabHost.TabSpec spec; // Resusable TabSpec for each tab
     Intent intent; // Reusable Intent for each tab
 
-
     // Add All Logs tab
     intent = new Intent().setClass(this, ActivityLogTabs.class);
     intent.putExtra(ActivityLogTabs.KEY_INTENT_LOG_TYPE, ActivityLogTabs.KEY_ALL_LOGS);
-    spec = tabHost.newTabSpec("allLogs").setIndicator(getString(R.string.All),
+    spec = tabHost.newTabSpec(TAB_TAG_ALL_LOG).setIndicator(getString(R.string.All),
         res.getDrawable(R.drawable.icon_log_all_small)).setContent(intent);
     tabHost.addTab(spec);
     // Add Event Logs tab
     intent = new Intent().setClass(this, ActivityLogTabs.class);
     intent.putExtra(ActivityLogTabs.KEY_INTENT_LOG_TYPE, ActivityLogTabs.KEY_EVENT_LOGS);
-    spec = tabHost.newTabSpec("eventLogs").setIndicator(getString(R.string.Events),
+    spec = tabHost.newTabSpec(TAB_TAG_EVENT_LOG).setIndicator(getString(R.string.Events),
         res.getDrawable(R.drawable.icon_event_unknown_small)).setContent(intent);
     tabHost.addTab(spec);
     // Add Action Logs tab
     intent = new Intent().setClass(this, ActivityLogTabs.class);
     intent.putExtra(ActivityLogTabs.KEY_INTENT_LOG_TYPE, ActivityLogTabs.KEY_ACTION_LOGS);
-    spec = tabHost.newTabSpec("actionLogs").setIndicator(getString(R.string.Actions),
+    spec = tabHost.newTabSpec(TAB_TAG_ACTION_LOG).setIndicator(getString(R.string.Actions),
         res.getDrawable(R.drawable.icon_action_unknown_small)).setContent(intent);
     tabHost.addTab(spec);
     // Add General Logs tab
     intent = new Intent().setClass(this, ActivityLogTabs.class);
     intent.putExtra(ActivityLogTabs.KEY_INTENT_LOG_TYPE, ActivityLogTabs.KEY_GENERAL_LOGS);
-    spec = tabHost.newTabSpec("generalLogs").setIndicator(getString(R.string.General),
+    spec = tabHost.newTabSpec(TAB_TAG_GENERAL_LOG).setIndicator(getString(R.string.General),
         res.getDrawable(R.drawable.icon_log_general_small)).setContent(intent);
     tabHost.addTab(spec);
-
-    tabHost.setCurrentTab(0);
+    
+    String tabTag = getIntent().getStringExtra(KEY_TAB_TAG);
+    if (tabTag == null) {
+      tabHost.setCurrentTabByTag(TAB_TAG_ALL_LOG);
+    } else {
+      Log.w("LOGS", "tabTag is "+ tabTag);
+      tabHost.setCurrentTabByTag(tabTag);
+    }
+     
   }
 }

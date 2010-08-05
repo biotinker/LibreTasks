@@ -152,7 +152,7 @@ public class OmniActionService extends Service {
   private void showNotification(Intent intent) {
     String title = intent.getStringExtra(ShowNotificationAction.PARAM_TITLE);
     String message = intent.getStringExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE);
-    UtilUI.showNotification(this, UtilUI.NOTIFICATION_INFO, title, message);
+    UtilUI.showNotification(this, UtilUI.NOTIFICATION_ACTION, title, message);
     ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, null);
   }
 

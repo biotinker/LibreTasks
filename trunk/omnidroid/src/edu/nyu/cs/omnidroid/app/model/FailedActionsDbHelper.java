@@ -349,7 +349,8 @@ public class FailedActionsDbHelper {
 
     Cursor cursor = failedActionsDbAdapter.fetchOldActions();
     while (cursor.moveToNext()) {
-      UtilUI.showNotification(context, UtilUI.NOTIFICATION_INFO, context.getString(R.string.omnidroid), getStringFromCursor(cursor, FailedActionsDbAdapter.KEY_MESSAGE));
+      UtilUI.showNotification(context, UtilUI.NOTIFICATION_RULE, context.getString(R.string
+          .omnidroid), getStringFromCursor(cursor, FailedActionsDbAdapter.KEY_MESSAGE));
       failedActionsDbAdapter.delete(getLongFromCursor(cursor, 
           FailedActionsDbAdapter.KEY_FAILEDACTIONID));
     }

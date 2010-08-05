@@ -50,6 +50,7 @@ public class ActivityMain extends Activity {
   /** request code for ChooseRootEventActivity */
   private static final int REQUEST_ACTIVITY_CREATE_RULE = 0;
 
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -187,6 +188,7 @@ public class ActivityMain extends Activity {
   public void onResume() {
     super.onResume();
     LinearLayout ll = (LinearLayout) findViewById(R.id.activity_main_omnidroidDisabled);
+    UIDbHelperStore.init(this);
     prefs = UIDbHelperStore.instance().db().getSharedPreferences();
     if (prefs.getBoolean(getString(R.string.pref_key_omnidroid_enabled), true)) {
       ll.setVisibility(LinearLayout.INVISIBLE);

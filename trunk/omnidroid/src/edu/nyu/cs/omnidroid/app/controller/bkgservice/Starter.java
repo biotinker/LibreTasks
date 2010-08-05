@@ -17,6 +17,7 @@ package edu.nyu.cs.omnidroid.app.controller.bkgservice;
 
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.controller.OmnidroidManager;
+import edu.nyu.cs.omnidroid.app.view.simple.UtilUI;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ public class Starter extends BroadcastReceiver {
           .getBoolean(context.getString(R.string.pref_key_omnidroid_enabled), true)) {
         OmnidroidManager.enable(context, true);
       }
+      UtilUI.loadNotifications(context);
     } else if ("OmniStart".equals(intent.getAction())) {
       // Start the background monitoring service by request
       OmnidroidManager.enable(context, true);
