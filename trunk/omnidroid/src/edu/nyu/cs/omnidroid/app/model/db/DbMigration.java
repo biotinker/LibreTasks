@@ -91,6 +91,7 @@ public class DbMigration {
     case 4:
       initialVersion(db);
     case 5:
+      updateDataTypeClassNameChanges(db);
       addCallEndEvent(db);
     case 6:
       addLogEvent(db);
@@ -121,7 +122,8 @@ public class DbMigration {
       alterFailedActionsTable(db);
     case 17:
       addMissedCallEvent(db);
-      
+
+
       /*
        * Insert new versions before this line and do not forget to update {@code
        * DbHelper.DATABASE_VERSION}. Otherwise, the constructor call on SQLiteOpenHelper will not
@@ -134,6 +136,75 @@ public class DbMigration {
     }
   }
 
+  /**
+   * When name restructuring was done in post r725 (Version 3 (0.1.2)) code, we reorganized the
+   * source tree. DataTypes were moved to a new hierarchy resulting in their class names changing.
+   * This code will update the class names stored in the database to reflect the new class names.
+   * 
+   * @param db
+   *          the database
+   */
+  private static void updateDataTypeClassNameChanges(SQLiteDatabase db) {
+    /**
+     * If upgrading from a r725 or earlier release, these are stored in "DataTypes" table:
+     * 
+     * VALUES(1,'Text','edu.nyu.cs.omnidroid.app.core.datatypes.OmniText')
+     * VALUES(2,'PhoneNumber','edu.nyu.cs.omnidroid.app.core.datatypes.OmniPhoneNumber')
+     * VALUES(3,'DayOfWeek','edu.nyu.cs.omnidroid.app.core.datatypes.OmniDayOfWeek')
+     * VALUES(4,'TimePeriod','edu.nyu.cs.omnidroid.app.core.datatypes.OmniTimePeriod')
+     * VALUES(5,'Date','edu.nyu.cs.omnidroid.app.core.datatypes.OmniDate')
+     * VALUES(6,'Area','edu.nyu.cs.omnidroid.app.core.datatypes.OmniArea')
+     * VALUES(7,'PasswordInput','edu.nyu.cs.omnidroid.app.core.datatypes.OmniPasswordInput')
+     * 
+     * And need to be updated to the new class names.
+     */
+    DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
+    Cursor cursor;
+    long id;
+
+    // Update OmniText
+    cursor = dataTypeDbAdapter.fetchAll(OmniText.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniText.class.getName());
+    cursor.close();
+    // Update OmniPhoneNumber
+    cursor = dataTypeDbAdapter.fetchAll(OmniPhoneNumber.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniPhoneNumber.class.getName());
+    cursor.close();
+    // Update OmniDayOfWeek
+    cursor = dataTypeDbAdapter.fetchAll(OmniDayOfWeek.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniDayOfWeek.class.getName());
+    cursor.close();
+    // Update OmniTimePeriod
+    cursor = dataTypeDbAdapter.fetchAll(OmniTimePeriod.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniTimePeriod.class.getName());
+    cursor.close();
+    // Update OmniDate
+    cursor = dataTypeDbAdapter.fetchAll(OmniDate.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniDate.class.getName());
+    cursor.close();
+    // Update OmniArea
+    cursor = dataTypeDbAdapter.fetchAll(OmniArea.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniArea.class.getName());
+    cursor.close();
+    // Update OmniPasswordInput
+    cursor = dataTypeDbAdapter.fetchAll(OmniPasswordInput.DB_NAME, null);
+    cursor.moveToFirst();
+    id = getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
+    dataTypeDbAdapter.update(id, null, OmniPasswordInput.class.getName());
+    cursor.close();
+  }
  
   /**
    * Set the default rules
@@ -297,6 +368,7 @@ public class DbMigration {
    * @param db
    *          SQLiteDatabase object to work with
    */
+  @SuppressWarnings("deprecation")
   private static void initialVersion(SQLiteDatabase db) {
     /**
      * Create tables
@@ -476,6 +548,7 @@ public class DbMigration {
    * @param db
    *          the database instance to work with
    */
+  @SuppressWarnings("deprecation")
   private static void addCallEndEvent(SQLiteDatabase db) {
     RegisteredEventDbAdapter eventDbAdapter = new RegisteredEventDbAdapter(db);
     RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new 
@@ -566,6 +639,7 @@ public class DbMigration {
    * @param db
    *          the database instance to work with
    */
+  @SuppressWarnings("deprecation")
   private static void modifyGmailAndTwitterParam(SQLiteDatabase db) {
     DataTypeDbAdapter dataTypeDbAdapter = new DataTypeDbAdapter(db);
     long dataTypeIdAccount = dataTypeDbAdapter.insert(OmniUserAccount.DB_NAME,
@@ -737,6 +811,7 @@ public class DbMigration {
    * @param db
    *          the database instance to work with
    */
+  @SuppressWarnings("deprecation")
   private static void addSupportForGlobalEventAttributes(SQLiteDatabase db) {
     RegisteredEventAttributeDbAdapter eventAttributeDbAdapter = new RegisteredEventAttributeDbAdapter(
         db);

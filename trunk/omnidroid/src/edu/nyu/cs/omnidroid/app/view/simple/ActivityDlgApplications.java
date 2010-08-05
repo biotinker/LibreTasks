@@ -41,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import edu.nyu.cs.omnidroid.app.R;
 import edu.nyu.cs.omnidroid.app.view.simple.model.ModelAction;
@@ -117,7 +116,6 @@ public class ActivityDlgApplications extends Activity {
 
   @Override
   public boolean onContextItemSelected(MenuItem item) {
-    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     switch (item.getItemId()) {
     case MENU_INFO:
       // TODO(acase): Application specific information
