@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:text="@string/choose_filters_actions_inst"
+        android:layout_marginBottom="10dip" />
+
+    <FrameLayout android:id="@+id/activity_choosefiltersandactions_frame_list"
+        android:layout_width="fill_parent" android:layout_height="0dip"
+        android:layout_weight="1">
+
+        <ListView android:id="@+id/activity_choosefiltersandactions_listview"
+            android:layout_width="fill_parent" android:layout_height="fill_parent" />
+
+    </FrameLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_choosefiltersandactions_llBottomButtons"
+        android:orientation="horizontal" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:gravity="center">
+
+        <LinearLayout android:id="@+id/activity_choosefiltersandactions_llButtons"
+            android:orientation="horizontal" android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button android:text="@string/add_filter"
+                android:id="@+id/activity_choosefiltersandactions_btnAddFilter"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center" android:minWidth="65dip">
+            </Button>
+
+            <Button android:text="@string/add_action"
+                android:id="@+id/activity_choosefiltersandactions_btnAddAction"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center" android:minWidth="75dip">
+            </Button>
+
+            <Button android:text="@string/save"
+                android:id="@+id/activity_choosefiltersandactions_btnSaveRule"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center" android:minWidth="40dip">
+            </Button>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+</LinearLayout>
