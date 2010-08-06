@@ -15,8 +15,6 @@
  *******************************************************************************/
 package edu.nyu.cs.omnidroid.app.model;
 
-import static edu.nyu.cs.omnidroid.app.model.CursorHelper.getLongFromCursor;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -148,12 +146,8 @@ abstract public class CoreLogsDbHelper {
     // Convert hours to a limit based on timestamp
     long logsBeforeTimestamp = (new Date()).getTime() - (logLimitHours * LogDbAdapter.TIME_IN_HOUR);
 
-    // Get and delete the old logs
-    Cursor cursor = logDbAdapter.fetchAllBefore(logsBeforeTimestamp);
-    while (cursor.moveToNext()) {
-      logDbAdapter.delete(getLongFromCursor(cursor, LogDbAdapter.KEY_ID));
-    }
-    cursor.close();
+    // Delete the old logs
+    logDbAdapter.deleteAllBefore(logsBeforeTimestamp);
   }
 
 }
