@@ -41,14 +41,19 @@ public abstract class LogDbAdapter extends DbAdapter {
 
   abstract public Cursor fetchAll();
 
-  abstract public Cursor fetch(Long id);
+  abstract public Cursor fetch(long id);
 
   abstract public long insert(Log log);
 
   /**
    * @return a Cursor that contains all Log records before timestamp
    */
-  abstract public Cursor fetchAllBefore(Long timestamp);
+  abstract public Cursor fetchAllBefore(long timestamp);
 
-  abstract public boolean delete(Long id);
+  /**
+   * @return number of logs deleted that were before timestamp
+   */
+  abstract public int deleteAllBefore(long timestamp);
+
+  abstract public boolean delete(long id);
 }

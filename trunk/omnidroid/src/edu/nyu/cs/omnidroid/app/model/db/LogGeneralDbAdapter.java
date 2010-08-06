@@ -63,8 +63,8 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
    *          the time stamp of the action taken.
    * @return the row ID of the newly inserted row, or -1 if an error occurred
    */
-  public long insert(Long timeStamp, String description, int level) {
-    if (timeStamp == null || description == null) {
+  public long insert(long timeStamp, String description, int level) {
+    if (description == null) {
       throw new IllegalArgumentException("insert parameter null.");
     }
     ContentValues initialValues = new ContentValues();
@@ -80,13 +80,8 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
    * @param id
    *          - ID of the database entry to delete
    * @return true if success, or false otherwise.
-   * @throws IllegalArgumentException
-   *           if the primary id is null.
    */
-  public boolean delete(Long id) throws IllegalArgumentException {
-    if (id == null) {
-      throw new IllegalArgumentException("primary key null.");
-    }
+  public boolean delete(long id) {
     // Set the whereArgs to null here.
     return database.delete(DATABASE_TABLE, KEY_ID + "=" + id, null) > 0;
   }
@@ -108,11 +103,7 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
    *          - ID of the database entry to retrieve
    * @return the matching cursor.
    */
-  public Cursor fetch(Long id) {
-    if (id == null) {
-      throw new IllegalArgumentException("primary key null.");
-    }
-
+  public Cursor fetch(long id) {
     // Set selectionArgs, groupBy, having, orderBy and limit to be null.
     Cursor mCursor = database.query(true, DATABASE_TABLE, KEYS, KEY_ID + "=" + id, null, null,
         null, null, null);
@@ -148,13 +139,16 @@ public class LogGeneralDbAdapter extends LogDbAdapter {
   }
 
   @Override
-  public Cursor fetchAllBefore(Long timestamp) {
-    if (timestamp == null) {
-      throw new IllegalArgumentException("no time specified.");
-    }
-
+  public Cursor fetchAllBefore(long timestamp) {
     // Set selections, selectionArgs, groupBy, having, orderBy to null to fetch all rows.
     String selection = KEY_TIMESTAMP + " < " + timestamp;
     return database.query(DATABASE_TABLE, KEYS, selection, null, null, null, null);
+  }
+
+  @Override
+  public int deleteAllBefore(long timestamp) {
+    // Set where to before timestamp and whereArgs to null here.
+    String where = KEY_TIMESTAMP + " < " + timestamp;
+    return database.delete(DATABASE_TABLE, where, null);
   }
 }
