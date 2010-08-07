@@ -240,6 +240,9 @@
     <string name="website_action_failed_no_url">Website action failed: No web url provided by user</string>    
     <string name="website_action_failed_bad_url">Website action failed: Bad url format</string>
     <string name="website_action_failed_no_service">Website action failed: No service</string>
+    <string name="location_not_available">Unable to retrieve location data</string>
+    <string name="location_unknown_error">Unable to retrieve location data (unknown error)</string>
+    <string name="location_no_provider">Unable to retrieve location data (no provider)</string>
     
     <!-- Dialog  -->
     <string name="reset_db_dialog_msg">All user data will be lost. Continue?</string>
