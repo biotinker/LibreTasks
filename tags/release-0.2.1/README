@@ -1,0 +1,36 @@
+                            Omnidroid - Read Me
+
+      ==== TABLE OF CONTENTS ====
+
+  I. INSTALL
+ II. DEVELOPING
+III. MORE INFORMATION
+
+
+I. INSTALL (Coming soon)
+
+    Download from the Android Market.
+      or
+    Download the apk from http://code.google.com/p/omnidroid/downloads
+    and install it manually.
+
+II. DEVELOPING
+
+    For setup development environment and install Omnidroid see:
+    http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
+
+    Style Guide see: http://code.google.com/p/omnidroid/wiki/StyleGuide
+
+    Contributing Code:
+        All code must comply with the "Style Guidelines".
+        Patches should be submitted to the mailing list in unified diff format.
+
+    Design Overview see: http://code.google.com/p/omnidroid/wiki/DesignOverview
+
+
+III. MORE INFORMATION
+
+   License: Apache 2.0 License
+   Website: http://code.google.com/p/omnidroid
+   MailingLists: See Website
+   Maintainers: See Website

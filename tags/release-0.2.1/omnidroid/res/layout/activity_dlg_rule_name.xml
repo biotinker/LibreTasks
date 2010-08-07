@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_dlg_rule_name_ll_main"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:minWidth="300px"
+            >
+
+            <TextView android:id="@+id/activity_dlg_rule_name_tv_info_name"
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content"  
+                android:layout_weight="0"
+                android:paddingTop="0px"
+                android:paddingLeft="10px"
+                android:paddingBottom="10px"
+                android:paddingRight="10px"
+                android:text="@string/enter_rule_name" />
+                   
+            <EditText android:id="@+id/activity_dlg_rule_name_et_rule_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+                
+            <TextView android:id="@+id/activity_dlg_rule_name_tv_info_description"
+                android:layout_width="fill_parent" 
+                android:layout_height="wrap_content"  
+                android:layout_weight="0"
+                android:paddingTop="0px"
+                android:paddingLeft="10px"
+                android:paddingBottom="10px"
+                android:text="@string/enter_rule_description" />
+                   
+            <EditText android:id="@+id/activity_dlg_rule_name_et_rule_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px" />
+                    
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+                    
+                <Button android:id="@+id/activity_dlg_rule_name_btnOk"
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:minWidth="80px"
+                    android:layout_gravity="center"
+                    android:text="@string/ok" />
+        
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
