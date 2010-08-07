@@ -242,28 +242,28 @@ public class HandlerService extends Service {
    */
   private void insertLocationData(Intent intent) {
     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    Location location = null;
 
     String bestProvider = locationManager.getBestProvider(new Criteria(), true);
-    Location location = locationManager.getLastKnownLocation(bestProvider);
-
     String locationData;
     try {
+      location = locationManager.getLastKnownLocation(bestProvider);
       OmniArea newLocation = new OmniArea(null, location.getLatitude(), location.getLongitude(),
           location.getAccuracy());
       locationData = newLocation.toString();
     } catch (Exception e) {
       locationData = "";
 
-      final String GET_LOCATION_FAILURE_LOG_MSG = "Unable to retrieve location data";
-
       if (location == null) {
         /*
          * Use the normal logging since this case happens quite often, and we don't want to clutter
-         * the logs very much.
+         * the logs.
          */
-        Log.i(TAG, GET_LOCATION_FAILURE_LOG_MSG);
+        Log.i(TAG, getString(R.string.location_not_available));
+      } else if (bestProvider == null) {
+        Logger.w(TAG, getString(R.string.location_no_provider));
       } else {
-        Log.e(TAG, GET_LOCATION_FAILURE_LOG_MSG, e);
+        Logger.w(TAG, getString(R.string.location_unknown_error), e);
       }
     }
 
