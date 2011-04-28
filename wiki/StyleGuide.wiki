@@ -19,6 +19,9 @@ Code submitted to the project should follow the following guidelines.
 Download the below xml file and save it to your local disk. Import this formatter in eclipse with Window --> Preferences --> Java --> Code Style --> Formatter and choose "Import..." and find this file on disk. Now, when you select code in eclipse, Ctrl + Shift + F will auto format it. Avoid auto-formatting entire classes if you're touching small parts, since it makes the code review unnecessarily large.
   * Eclipse: http://omnidroid.googlecode.com/svn/tools/Eclipse_Formatter-ITP_Conventions.xml
 
+== StyleCheck ==
+Also, if you use eclipse, there's an easy way to make sure you stick with the style guide: use a style-check plug-in, here's one:http://eclipse-cs.sourceforge.net/downloads.html
+
 == Testing ==
 Tests go in the omnidroid-test project that is a sibling project to the main omnidroid project. A test class should go in the same package as the class under test. For testing FooClass, the test class should be name FooClassTest.
 
