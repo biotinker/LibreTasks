@@ -10,7 +10,7 @@ If you have a barcode scanner, just scan this QR code:
 <a href="market://search?q=pname:edu.nyu.cs.omnidroid.app">http://omnidroid.googlecode.com/svn/docs/qr_code.png</a>
 
 
-= Install the APK =
+= Install using the android package file =
 
 <a href="http://andrewcase.net/files/Omnidroid-release.apk">Omnidroid-release.apk</a>
 
