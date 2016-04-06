@@ -60,7 +60,7 @@
     <string name="error_was">The error was:</string>
     <string name="oh_no">Oh no!</string>
     <string name="throttle_alert_title">Omnidroid Temporarily Disabled</string>
-    <string name="throttle_alert_msg">Omnidroid exceeded throttle limit of %d by processing %d events in the last minute.\nOmnidroid will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
+    <string name="throttle_alert_msg">Omnidroid exceeded throttle limit of %%d by processing %%d events in the last minute.\nOmnidroid will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
     <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
     <string name="confirm_rule_delete">Are you sure you want to delete this rule?</string>
     <string name="enable_msg">Enabling Omnidroid</string>
