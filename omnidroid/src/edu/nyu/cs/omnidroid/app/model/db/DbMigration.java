@@ -28,6 +28,8 @@ import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.OmniAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.PauseMediaAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.PlayMediaAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneLoudAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneSilentAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneVibrateAction;
@@ -449,6 +451,7 @@ public class DbMigration {
     long appIdGmail = appDbAdapter.insert(DbHelper.AppName.GMAIL, "", true, true);
     long appIdTwitter = appDbAdapter.insert(DbHelper.AppName.TWITTER, "", true, true);
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
+    long appIdMedia = appDbAdapter.insert(DbHelper.AppName.MEDIA, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME, "",
         true);
 
@@ -512,6 +515,9 @@ public class DbMigration {
     actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdOmnidroid);
     actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdOmnidroid);
     actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdOmnidroid);
+    
+    actionDbAdapter.insert(PlayMediaAction.ACTION_NAME, appIdMedia);
+    actionDbAdapter.insert(PauseMediaAction.ACTION_NAME, appIdMedia);
 
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend,

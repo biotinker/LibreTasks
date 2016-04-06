@@ -19,8 +19,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.net.wifi.WifiManager;
+import android.view.KeyEvent;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,10 +59,10 @@ public class MediaActionService extends Service {
     int operationType = intent.getIntExtra(OPERATION_TYPE, NO_ACTION);
     switch (operationType) {
     case PAUSE_MEDIA_ACTION :
-      pauseMedia(intent);
+      pauseMedia();
       break;
     case PLAY_MEDIA_ACTION :
-      playMedia(intent);
+      playMedia();
       break;
     default:
       Log.e("OmniActionSercive", "No such operation supported as: " + operationType);
@@ -75,7 +76,9 @@ public class MediaActionService extends Service {
     AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
     long eventtime = SystemClock.uptimeMillis() - 1;
 	KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PAUSE, 0);
+	KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PAUSE, 0);
 	audioManager.dispatchMediaKeyEvent(downEvent);
+	audioManager.dispatchMediaKeyEvent(upEvent);
    }
   
   /**
@@ -85,7 +88,9 @@ public class MediaActionService extends Service {
     AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
     long eventtime = SystemClock.uptimeMillis() - 1;
 	KeyEvent downEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY, 0);
+	KeyEvent upEvent = new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY, 0);
 	audioManager.dispatchMediaKeyEvent(downEvent);
+	audioManager.dispatchMediaKeyEvent(upEvent);
    }
   
 

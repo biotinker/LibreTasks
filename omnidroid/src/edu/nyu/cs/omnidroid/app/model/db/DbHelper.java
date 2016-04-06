@@ -32,6 +32,7 @@ public class DbHelper extends SQLiteOpenHelper  {
     public static final String SMS = "SMS";
     public static final String PHONE = "Phone";
     public static final String GPS = "GPS";
+    public static final String MEDIA = "Media";
     public static final String GMAIL = "GMAIL";
     public static final String TWITTER = "Twitter";
   }
@@ -39,7 +40,7 @@ public class DbHelper extends SQLiteOpenHelper  {
   private static final String TAG = DbHelper.class.getName();
 
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 18;
+  private static final int DATABASE_VERSION = 19;
 
 
   private static final String DATABASE_NAME = "omnidroid";

@@ -88,7 +88,7 @@ public class OmniActionService extends Service {
       setPhoneVibrate();
       break;
     default:
-      Log.e("OmniActionSercive", "No such operation supported as: " + operationType);
+      Log.e("OmniActionService", "No such operation supported as: " + operationType);
     }
   }
   

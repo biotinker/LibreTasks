@@ -288,7 +288,7 @@
     <string name="batteryLowToSetWifiOffRuleName">Turn off WiFi</string>
     <string name="batteryLowToSetWifiOffRuleDesc">Turn off WiFi when battery is low</string>
     
-    <!-- notification strings -->i
+    <!-- notification strings -->
     <string name="notification_rule">%d actions have been executed</string>
     <string name="notification_warn">You have %%d warnings</string>
     <string name="notification_action">You have %%d notification messages</string>

@@ -30,6 +30,8 @@ import edu.nyu.cs.omnidroid.app.controller.Event;
 import edu.nyu.cs.omnidroid.app.controller.actions.CallPhoneAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendGmailAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SendSmsAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.PauseMediaAction;
+import edu.nyu.cs.omnidroid.app.controller.actions.PlayMediaAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneLoudAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneSilentAction;
 import edu.nyu.cs.omnidroid.app.controller.actions.SetPhoneVibrateAction;
@@ -131,6 +133,12 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(SetScreenBrightnessAction.APP_NAME)
         && actionName.equals(SetScreenBrightnessAction.ACTION_NAME)) {
       return new SetScreenBrightnessAction(actionParams);
+    } else if (appName.equals(PauseMediaAction.APP_NAME)
+        && actionName.equals(PauseMediaAction.ACTION_NAME)) {
+      return new PauseMediaAction(actionParams);
+    } else if (appName.equals(PlayMediaAction.APP_NAME)
+        && actionName.equals(PlayMediaAction.ACTION_NAME)) {
+      return new PlayMediaAction(actionParams);
     } else if (appName.equals(SetPhoneLoudAction.APP_NAME)
         && actionName.equals(SetPhoneLoudAction.ACTION_NAME)) {
       return new SetPhoneLoudAction(actionParams);
