@@ -156,8 +156,8 @@
     <string name="toggle_rule">Toggle Rule</string>
     <string name="one_rule">" (1 rule)"</string>
     <string name="n_rules">" (%d rules)"</string>
-    <string name="one_rule_with_arg">" (1 rule %s)"</string>
-    <string name="n_rules_with_arg">" (%d rules %s)"</string>
+    <string name="one_rule_with_arg">" (1 rule %%s)"</string>
+    <string name="n_rules_with_arg">" (%d rules %%s)"</string>
     <string name="enabled">enabled</string>
     <string name="disabled">disabled</string>
     <string name="enable_notification">Enable Notification</string>
