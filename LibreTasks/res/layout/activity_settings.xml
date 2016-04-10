@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_title" >
+
+	<!-- Using keys from the strings resource allows for compile time 
+	     errors where these preferences are accessed programmatically. -->
+    <Preference
+        android:key="@string/pref_key_libretasks_enabled"
+        android:defaultValue="true"
+        android:summary="@string/disable_libretasks_desc"
+        android:title="@string/disable_libretasks" />
+
+    <!-- Notification related preferences on their own screen -->
+    <PreferenceScreen 
+        android:title="@string/notification"
+        android:summary="@string/notification_desc" >
+        <CheckBoxPreference
+           android:key="@string/pref_key_sound"
+            android:defaultValue="false"
+            android:summary="@string/sound_desc"
+            android:title="@string/sound_enabled" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_light"
+            android:defaultValue="false"
+            android:summary="@string/light_desc"
+            android:title="@string/light_enabled" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_vibrate"
+            android:defaultValue="false"
+            android:summary="@string/vibrate_desc"
+            android:title="@string/vibrate_enabled" />
+        <CheckBoxPreference
+            android:key="@string/pref_key_notification"
+            android:defaultValue="true"
+            android:summary="@string/default_notification_desc"
+            android:title="@string/default_notification" />
+    </PreferenceScreen>
+     
+    <PreferenceScreen 
+        android:title="@string/signature_settings"
+        android:summary="@string/signature_desc" >
+        <CheckBoxPreference
+            android:key="@string/pref_key_sms_signature"
+            android:defaultValue="true"
+            android:summary="@string/sms_signature_desc_off"
+            android:title="@string/sms_signature_title" />
+        <EditTextPreference 
+            android:key="@string/pref_key_sms_signature_settings"
+            android:title="@string/sms_signature_settings_title"
+            android:summary="@string/sms_signature_settings_desc"
+            android:dialogTitle="@string/sms_signature_title"
+            android:defaultValue="@string/sms_signature"
+            android:dialogMessage="@string/sms_signature_dialog_message"/>
+        <CheckBoxPreference
+            android:key="@string/pref_key_gmail_signature"
+            android:defaultValue="true"
+            android:summary="@string/gmail_signature_desc_off"
+            android:title="@string/gmail_signature_title" />
+        <EditTextPreference 
+            android:key="@string/pref_key_gmail_signature_settings"
+            android:title="@string/gmail_signature_settings_title"
+            android:summary="@string/gmail_signature_settings_desc"
+            android:dialogTitle="@string/gmail_signature_title"
+            android:defaultValue="@string/gmail_signature"
+            android:dialogMessage="@string/gmail_signature_dialog_message"/>
+    </PreferenceScreen>
+    <ListPreference
+        android:key="@string/pref_key_throttle"
+        android:summary="@string/throttle_description"
+        android:title="@string/throttle"
+        android:entries="@array/throttle_list"
+        android:entryValues="@array/throttle_values"
+        android:defaultValue="10"
+        android:dialogTitle="@string/throttle_description" />
+
+    <ListPreference
+        android:key="@string/pref_key_log_limit"
+        android:summary="@string/log_limit_description"
+        android:title="@string/log_limit"
+        android:entries="@array/log_limit_list"
+        android:entryValues="@array/log_limit_values"
+        android:defaultValue="24"
+        android:dialogTitle="@string/log_limit_description" />
+
+    <Preference
+        android:key="@string/pref_key_reset_settings"
+        android:summary="@string/reset_settings_desc"
+        android:title="@string/reset_settings" />
+
+    <Preference
+        android:key="@string/pref_key_reset_db"
+        android:summary="@string/reset_db_desc"
+        android:title="@string/reset_db" />
+     
+</PreferenceScreen>

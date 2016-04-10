@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Buttons -->
+    <string name="add_filter">Add Filter</string>
+    <string name="add_action">Add Action</string>
+    <string name="create_rule">Create Rule</string>
+    <string name="view_rules">View Rules</string>
+    <string name="on_off">On/Off</string>
+
+    <!--  Miscellaneous -->
+    <string name="welcome">Welcome to LibreTasks</string>
+    <string name="disclaimer_title">LibreTasks Disclaimer</string>
+    <string name="disclaimer_msg">&lt;b&gt;This software is potentially damaging&lt;/b&gt; and is provided &quot;AS IS&quot; and without any expressed or implied warranties.  In no event shall the copyright owner or contributors be liable for any damages as a result of this software.  By using this software you agree to these terms.</string>
+    <string name="select_data_from_list">Either, select the data already provided by the event application:</string>
+    <string name="name_to_save">Enter a name to remember me by</string>
+    <string name="save_response">Save data to pass using the OmniHandler</string>
+    <string name="name_omnihandler">Name this OmniHandler</string>
+    <string name="enter_data">Enter the data to be inserted</string>
+    <string name="save_as">Save as</string>
+    <string name="save_dialog">Enter a name to remember this OmniHandler by</string>
+    <string name="manual_entry">Or, enter data manually:</string>
+    <string name="enter_rule_name">Enter a rule name below:</string>
+    <string name="enter_rule_description">Enter a rule description below:</string>
+    <string name="actions">actions</string>
+    <string name="libretasks_is_disabled">LibreTasks has been disabled.</string>
+
+    <!--  Common Words -->
+    <string name="libretasks">LibreTasks</string>
+    <string name="about">About</string>
+    <string name="next">Next</string>
+    <string name="help">Help</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="done">Done</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="agree">I Agree</string>
+    <string name="disagree">I Disagree</string>
+    <string name="info">Info</string>
+    <string name="view">View</string>
+    <string name="event_attributes">Attributes</string>
+    <string name="yes">Yes</string>
+    <string name="sorry">Sorry</string>
+    <string name="no">No</string>
+    <string name="coming_soon">We hope to implement this soon.</string>
+    <string name="unknown">unknown</string>
+    <string name="gmail">Gmail</string>
+
+    <!--  Settings -->
+    <string name="settings_label">Settings</string>
+    <string name="settings_title">Settings</string>
+
+    <!--  Alerts -->
+    <string name="missing_action">At least one action must be added.</string>
+    <string name="missing_data">Data field can not be empty.</string>
+    <string name="missing_name">OmniHandler name can not be empty.</string>
+    <string name="bad_input">There was an error creating your action, check your input and try again.</string>
+    <string name="select_input">Please select an input to use parameters.</string>
+    <string name="error_was">The error was:</string>
+    <string name="oh_no">Oh no!</string>
+    <string name="throttle_alert_title">LibreTasks Temporarily Disabled</string>
+    <string name="throttle_alert_msg">LibreTasks exceeded throttle limit of %1$d by processing %2$d events in the last minute.\LibreTasks will not process any more events until it is under the limit.\nThis may be caused by a looping rule.  Please see the Logs for more information.\n"</string>
+    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
+    <string name="confirm_rule_delete">Are you sure you want to delete this rule?</string>
+    <string name="enable_msg">Enabling LibreTasks</string>
+    <string name="disable_msg">Disabling LibreTasks</string>
+    <string name="save_rule">Save Rule</string>
+    <string name="rule_saved">Rule saved successfully.</string>
+    <string name="libretasks_is_disabled_alert">LibreTasks is disabled.  Enable it for rules to take effect.</string>
+
+    <!--  Help Dialog Texts -->
+    <string name="help_title">LibreTasks Help</string>
+    <string name="help_activitymain">LibreTasks allows you to create rules that process events that occur on your Android device and automatically take action as a result.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;Create Rule&lt;/i&gt; button to store new rules.&lt;br /&gt;&lt;br /&gt;Select the &lt;i&gt;View Rules&lt;/i&gt; button to view, edit, delete, enable, or disable rules that have already been created.</string>
+    <string name="help_filtersandactions">Add filters to an event to limit when this rule is triggered.  Add actions you would like performed when this rule is triggered.</string>
+    <string name="help_saved_rules">Use this screen to enable and disable the rules that are saved.</string>
+    <string name="help_dlgattributes">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Events have different attribute types that can be filtered.&lt;br /&gt;Select the type of attribute you would like to match.</string>
+    <string name="help_dlgfilters">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Select the filter that you want to apply from the list of filter types.</string>
+    <string name="help_dlgfilterinput">Creating filters allows you to match when the event will be acted on.&lt;br /&gt;&lt;br /&gt;Input entered here will be passed to the filter.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;This rule will only be activated if it matches the data provided by this filter.</string>
+    <string name="help_dlgapplications">Select the application that will provide the resultant action for this rule.</string>
+    <string name="help_dlgactions">Applications can perform certain actions.  Select the action that you want this application to perform as a result of the root event.</string>
+    <string name="help_dlgactioninput">Input entered here will be passed to the action you are creating.  If attributes from the event that triggered this application are compatible with the inputs here, you can select the attribute by clicking on the attributes button.</string>
+    <string name="help_dlgapplicationlogininput"></string>
+
+    <!--  Actions -->
+    <string name="action_default_message">message</string>
+
+    <!--  General Activity Titles -->
+    <string name="choose_root_event_title">Choose a root event</string>
+    <string name="addfilters_and_actions_title">Add filters and actions to your rule</string>
+    <string name="attributes_title">Attributes</string>
+    <string name="filters_title">Filters</string>
+    <string name="filter_input_title">Filter Input</string>
+    <string name="applications_title">Applications</string>
+    <string name="show_website_title">Show Website</string>
+    <string name="rule_name_title">Rule Name</string>
+    <string name="saved_rules_title">Enable Saved Rules</string>
+    <string name="login_title">Login</string>
+    <string name="actions_title">Actions</string>
+    <string name="action_input_title">Action Input</string>
+    <string name="logs">Logs</string>
+
+    <!--  About Dialog -->
+    <string name="about_title">About LibreTasks</string>
+    <string name="about_desc">LibreTasks is an Automated Event Handler.</string>
+    <string name="about_version">Version:</string>
+    <string name="about_license">License: GPL v3 forked from Apache 2.0</string>
+    <string name="about_website">Website: https://github.com/biotinker/LibreTasks</string>
+    <string name="copyright">&#169; 2016 LibreTasks.  All rights reserved.</string>
+
+    <!--  General Activity Instructions -->
+    <string name="choose_root_event_inst">Pick a root event from the list below to start building your rule:</string>
+    <string name="choose_filters_actions_inst">Select an item from the list below, then add filters or actions:</string>
+    <string name="select_application_title">Select an application:</string>
+    <string name="select_action_title">Select an action of [%1$s] to use:</string>
+    <string name="select_attribute_title">Select an attribute for [%1$s] to filter on:</string>
+    <string name="select_filter_title">Select a filter to apply to [%1$s]:</string>
+    <string name="select_rule_toggle_inst">Please select a rule from the list to turn on/off.</string>
+    <string name="select_control_for_param_alert_inst">Please select a control to use parameters.</string>
+    <string name="phone_num_eq_filter_inst">Enter a phone number to match below:</string>
+    <string name="phone_num_not_eq_filter_inst">Enter the phone number to exclude from the filter </string>
+    <string name="num_eq_filter_inst">Enter a number to match:</string>
+    <string name="num_not_eq_filter_inst">Enter a number to exclude:</string>
+    <string name="num_lessthan_filter_inst">Enter a number to match less than:</string>
+    <string name="num_greaterthan_filter_inst">Enter a number to match greater than:</string>
+    <string name="text_eq_filter_inst">Enter an exact text string to match:</string>
+    <string name="text_cont_filter_inst">Enter a phrase in the text body to match:</string>
+    <string name="day_of_week_eq_filter_inst">Enter a day of the week to match:</string>
+    <string name="day_of_week_not_eq_filter_inst">Enter the day of the week to exclude from the filter:</string>
+    <string name="bad_data_format">Bad data format:\n</string>
+    <string name="bad_distance_format">Please enter a distance in miles:</string>
+
+    <!--  System Events -->
+    
+    <!--  UI Strings -->
+    <string name="pick_start_time">Pick a start time</string>
+    <string name="pick_end_time">Pick an end time</string>
+    <string name="pick_time">Pick a time</string>
+    <string name="area_address">Address:</string>
+    <string name="area_distance">Distance (in miles):</string>
+    <string name="clear">Clear</string>
+    <string name="clear_logs">Clear Logs</string>
+    <string name="event_log">Event Log</string>
+    <string name="action_log">Action Log</string>
+    <string name="general_log">General Log</string>
+    <string name="All">All</string>
+    <string name="Events">Events</string>
+    <string name="Actions">Actions</string>
+    <string name="General">General</string>
+    <string name="no_logs">No logs are available.</string>
+    <string name="toggle_enabled">Toggle Enabled</string>
+    <string name="enable_all">Enable All</string>
+    <string name="disable_all">Disable All</string>
+    <string name="edit_rule">Edit Rule</string>
+    <string name="delete_rule">Delete Rule</string>
+    <string name="toggle_rule">Toggle Rule</string>
+    <string name="one_rule">" (1 rule)"</string>
+    <string name="n_rules">" (%1$d rules)"</string>
+    <string name="one_rule_with_arg">" (1 rule %1$s)"</string>
+    <string name="n_rules_with_arg">" (%1$d rules %2$s)"</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
+    <string name="enable_notification">Enable Notification</string>
+    <string name="disable_notification">Disable Notification</string>
+
+    <!--  UI Login -->
+    <string name="setup_account">Setup Account</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login_info_title">Login Info</string>
+    <string name="login_info_details">Please enter your username and password</string>
+
+    <!--  Choose Filters and Actions -->
+    <string name="add_filter_alert">Filters can only be added to the root event and other filters.</string>
+    <string name="select_filter_edit">Please select a filter or action from the list to edit.</string>
+    <string name="select_filter_delete">Please select a filter or action from the list to delete.</string>
+    <string name="illegal_state_exception_catch">There was an IllegalStateException when saving your rule:</string>
+    <string name="error_saving_rule">There was an error saving your rule:</string>    
+
+    <!--  Settings -->
+    <string name="throttle">Throttle</string>
+    <string name="throttle_description">Limit number of events to process per minute</string>
+    <string name="log_limit">Log Limit</string>
+    <string name="log_limit_description">Limit the length of time to keep logs</string>
+    <string name="sound_enabled">Sound Notifications</string>
+    <string name="light_enabled">LED Notifications</string>
+    <string name="vibrate_enabled">Vibrate Notifications</string>
+    <string name="enable_libretasks">Enable LibreTasks</string>
+    <string name="disable_libretasks">Disable LibreTasks</string>
+    <string name="enable_libretasks_desc">LibreTasks is currently disabled</string>
+    <string name="disable_libretasks_desc">LibreTasks is currently enabled</string>
+    <string name="sound_desc">Allow LibreTasks to alert using sound</string>
+    <string name="light_desc">Allow LibreTasks to alert using lights</string>
+    <string name="vibrate_desc">Allow LibreTasks to alert using vibration</string>
+    <string name="notification_desc"></string>
+    <string name="notification">Notifications</string>
+    <string name="default_notification_desc">Set notifications on by default</string>
+    <string name="default_notification">Notifications</string>
+    <string name="reset_db_desc">Resetting database will clear all user data</string>
+    <string name="reset_db">Reset Database</string>
+    <string name="reset_settings_desc">Reset preferences to default values</string>
+    <string name="reset_settings">Reset Preferences</string>
+    <string name="gmail_signature_title">Gmail Signature</string>
+    <string name="gmail_signature_dialog_message">Enter Gmail signature below</string>
+    <string name="sms_signature_title">SMS Signature</string>
+    <string name="sms_signature_desc_on">Turn on sms signature</string>
+    <string name="sms_signature_desc_off">Turn off sms signature</string>
+    <string name="gmail_signature_desc_on">Turn on Gmail signature</string>
+    <string name="gmail_signature_desc_off">Turn off Gmail signature</string>
+    <string name="sms_signature_dialog_message">Enter sms signature below </string>
+    <string name="sms_signature">\n(LibreTasks)</string>
+    <string name="gmail_signature">\n\nSent by LibreTasks</string>
+    <string name="signature_settings">Signature settings</string>
+    <string name="signature_desc">Modify Gmail and Sms Signatures</string>
+    <string name="gmail_signature_settings_title">Gmail signature settings</string>
+    <string name="sms_signature_settings_title">SMS signature settings</string>
+    <string name="gmail_signature_settings_desc">Modify Gmail signature</string>
+    <string name="sms_signature_settings_desc">Modify SMS signature</string>
+    
+    <!-- message -->
+    <string name="gmail_failed_no_network">Send Gmail failed: No network.</string>
+    <string name="gmail_failed_authentication_error">Send Gmail failed: Authentication error.</string>
+    <string name="gmail_failed_server_error">Send Gmail failed: Server error.</string>
+    <string name="gmail_sent">Gmail sent</string>   
+    <string name="sms_sent">SMS sent</string>
+    <string name="sms_failed_no_service">SMS sending failed: No service</string>
+    <string name="sms_failed_generic_failure">SMS sending failed Generic failure</string>
+    <string name="sms_failed_null_pdu">SMS sending failed: Null PDU</string>
+    <string name="sms_failed_radio_off">SMS sending failed: Radio off</string>
+    <string name="twitter_failed_authentication_error">Twitter status update failed: Authentication error</string>
+    <string name="twitter_updated">Twitter status updated</string>
+    <string name="twitter_failed">Twitter status update failed</string>
+    <string name="phone_set_loud">Phone set loud</string>
+    <string name="phone_set_silent">Phone set silent</string>
+    <string name="phone_set_on_vibrate">Phone set on vibrate</string>
+    <string name="wifi_turned_on">Wifi was turned on</string>
+    <string name="wifi_turned_off">Wifi was turned off</string>
+    <string name="phone_call">Phone call was made</string>
+    <string name="phone_call_failed">Phone call failed: No service</string>
+    <string name="website_action_failed_no_url">Website action failed: No web url provided by user</string>    
+    <string name="website_action_failed_bad_url">Website action failed: Bad url format</string>
+    <string name="website_action_failed_no_service">Website action failed: No service</string>
+    <string name="location_not_available">Unable to retrieve location data</string>
+    <string name="location_unknown_error">Unable to retrieve location data (unknown error)</string>
+    <string name="location_no_provider">Unable to retrieve location data (no provider)</string>
+    
+    <!-- Dialog  -->
+    <string name="reset_db_dialog_msg">All user data will be lost. Continue?</string>
+    <string name="reset_settings_dialog_msg">User specified preferences will be lost. Continue?</string>
+    <string name="enable_libretasks_dialog_msg">Are you sure you want to enable LibreTasks?</string>
+    <string name="disable_libretasks_dialog_msg">Are you sure you want to disable LibreTasks?</string>
+
+    <!--
+         Shared preference keys - These keys are stored in strings.xml so that code
+         can access them programmatically to try and catch errors at compile time.
+         NOTE: These strings can not change or be updated without losing user stored preferences.
+         NOTE: These strings should not be translated as they are not used for display
+      --> 
+    <string name="pref_key_sound">SoundKey</string>
+    <string name="pref_key_light">LightKey</string>
+    <string name="pref_key_vibrate">VibrateKey</string>
+    <string name="pref_key_libretasks_enabled">LibreTasksEnabled</string>
+    <string name="pref_key_notification">NotificationKey</string>
+    <string name="pref_key_throttle">Throttle</string>
+    <string name="pref_key_log_limit">LogLimit</string>
+    <string name="pref_key_reset_db">ResetDb</string>
+    <string name="pref_key_reset_settings">ResetSettings</string>
+    <string name="pref_key_gmail_signature">GmailSignature</string>
+    <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
+    <string name="pref_key_sms_signature">SMSSignature</string>
+    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>       
+    <string name="pref_key_notification_action_count">NotificationActionCount</string>  
+    <string name="pref_key_notification_rule_count">NotificationRuleCount</string>  
+    <string name="pref_key_notification_warn_count">NotificationWarnCount</string>      
+    <string name="pref_key_notification_action_message">NotificationActionMessage</string>  
+    <string name="pref_key_notification_rule_message">NotificationRuleMessage</string>  
+    <string name="pref_key_notification_warn_message">NotificationWarnMessage</string>  
+    <string name="pref_key_notification_rule_title">NotificationRuleTitle</string>
+    
+    <!-- names, descriptions and parameters for default rules -->
+    <string name="phoneRingToSMSRuleName">Auto Reply SMS</string>
+    <string name="phoneRingToSMSRuleDesc">Reply SMS with \'Busy in Meeting\' when phone is ringing</string>
+    <string name="phoneRingToSMSRuleMessage">Busy, in meeting. Will get back to you later</string>
+    <string name="timeToSilentRuleName">Set Phone Silent</string>
+    <string name="timeToSilentRuleDesc">Set phone silent after midnight</string>
+    <string name="timeToLoudRuleName">Set Phone Loud</string>
+    <string name="timeToLoudRuleDesc">Set phone loud after 9AM</string>
+    <string name="batteryLowToSetWifiOffRuleName">Turn off WiFi</string>
+    <string name="batteryLowToSetWifiOffRuleDesc">Turn off WiFi when battery is low</string>
+    
+    <!-- notification strings -->
+    <string name="notification_rule">%1$d actions have been executed</string>
+    <string name="notification_warn">You have %1$d warnings</string>
+    <string name="notification_action">You have %1$d notification messages</string>
+    <string name="notification_action_title">New Messages</string>
+    
+</resources>

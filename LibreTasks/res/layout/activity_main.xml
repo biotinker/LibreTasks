@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	>
+   
+	<TextView  
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" 
+		android:text="@string/welcome"
+		android:layout_gravity="center"
+		android:layout_marginBottom="5dip"
+		/>
+
+	<LinearLayout 
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/activity_main_omnidroidDisabled" 
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:visibility="invisible"    
+		android:layout_marginBottom="5dip"
+    	>
+    
+		<ImageView
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" 
+			android:src="@android:drawable/ic_dialog_alert"
+			android:layout_gravity="left"
+			android:layout_marginBottom="0dip"
+			/>
+		
+
+		<TextView
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="@string/libretasks_is_disabled"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:textColor="@color/libretasks_is_disabled"
+			android:layout_gravity="center"
+			/>
+
+	</LinearLayout>
+	    
+	<Button 
+		android:text="@string/create_rule" 
+		android:id="@+id/activity_main_btnCreateRule" 
+		android:layout_width="150dip" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+		android:text="@string/view_rules" 
+		android:id="@+id/activity_main_btnViewRules" 
+		android:layout_width="150dip" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+		android:text="@string/logs" 
+		android:id="@+id/activity_main_btnLogs" 
+		android:layout_width="150dip" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center">
+	</Button>
+	
+	<Button 
+		android:text="@string/help" 
+		android:id="@+id/activity_main_btnHelp" 
+		android:layout_width="150dip" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center">
+	</Button>
+	
+
+</LinearLayout>

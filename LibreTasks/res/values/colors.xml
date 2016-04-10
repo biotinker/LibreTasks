@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background grey color for button panels. -->
+    <color name="layout_button_panel">#FFBBBBBB</color>
+    
+    <!-- Normal color for text in our list controls. -->
+    <color name="list_element_text">#FFF</color>
+    
+    <!-- Greyed-out color for text in our list controls, used for a disabled rule. -->
+    <color name="list_element_text_disabled">#FFAAAAAA</color>
+    
+    <!-- Yellow color for selected+enabled rule in ActivitySavedRules. -->
+    <color name="list_element_text_selected_rule">#FFFFDD1A</color>
+    
+    <!-- Dull yellow color for selected+disabled rule in ActivitySavedRules. -->
+    <color name="list_element_text_selected_rule_disabled">#CCFFDD1A</color>
+
+    <!-- Red color for warning that omnidroid is disabled -->
+    <color name="libretasks_is_disabled">#FF0000</color>
+
+
+</resources>

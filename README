@@ -1,4 +1,6 @@
-                            Omnidroid - Read Me
+                            LibreTasks - Read Me
+
+LibreTasks is a fork of Omnidroid http://code.google.com/p/omnidroid with new features.
 
       ==== TABLE OF CONTENTS ====
 
@@ -9,10 +11,7 @@ III. MORE INFORMATION
 
 I. INSTALL (Coming soon)
 
-    Download from the Android Market.
-      or
-    Download the apk from http://code.google.com/p/omnidroid/downloads
-    and install it manually.
+    Download from Fdroid!
 
 II. DEVELOPING
 
@@ -30,7 +29,8 @@ II. DEVELOPING
 
 III. MORE INFORMATION
 
-   License: Apache 2.0 License
-   Website: http://code.google.com/p/omnidroid
+   License: GPL v3
+   Forked from a project under the following license: Apache 2.0 License
+   Website: https://github.com/biotinker/LibreTasks
    MailingLists: See Website
    Maintainers: See Website
