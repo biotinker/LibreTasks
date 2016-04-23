@@ -142,6 +142,10 @@ public class DbMigration {
       alterFailedActionsTable(db);
     case 17:
       addMissedCallEvent(db);
+    case 18:
+    case 19:
+    case 20:
+      removeTwitter(db);
 
 
       /*
@@ -937,6 +941,22 @@ public class DbMigration {
     long dataTypeIdPhoneNumber = CursorHelper.getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
     eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
         eventIdMissedCall, dataTypeIdPhoneNumber);
+  }
+     /**
+   * Remove twitter from db if present
+   * 
+   * @param db
+   *          the database instance to work with
+   */
+  @SuppressWarnings("deprecation")
+  private static void removeTwitter(SQLiteDatabase db) {
+	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+	int twitAppID = appDbAdapter.getAppId("Twitter");
+	if(twitAppID != -1){
+		boolean isAppDeleted = appDbAdapter.delete(twitAppID);
+		boolean isActionDeleted = actionDbAdapter.delete(actionDbAdapter.getAppId("Twitter"));
+	}
   }
 
 }
