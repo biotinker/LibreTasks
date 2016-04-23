@@ -1,3 +1,9 @@
+0.4.1:
+-Removed Twitter functionality altogether
+
+0.4.0:
+-Removed jar dependencies and features to meet FDroid inclusion specifications
+
 0.3.0:
 -First release under new name
 -Added actions to play/pause media

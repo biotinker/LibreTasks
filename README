@@ -5,26 +5,19 @@ LibreTasks is a fork of Omnidroid http://code.google.com/p/omnidroid with new fe
       ==== TABLE OF CONTENTS ====
 
   I. INSTALL
- II. DEVELOPING
+ II. DESCRIPTION
 III. MORE INFORMATION
 
 
-I. INSTALL (Coming soon)
+I. INSTALL
 
     Download from Fdroid!
 
-II. DEVELOPING
+II. DESCRIPTION
 
-    For setup development environment and install Omnidroid see:
-    http://code.google.com/p/omnidroid/wiki/SetUpDevEnvironment
-
-    Style Guide see: http://code.google.com/p/omnidroid/wiki/StyleGuide
-
-    Contributing Code:
-        All code must comply with the "Style Guidelines".
-        Patches should be submitted to the mailing list in unified diff format.
-
-    Design Overview see: http://code.google.com/p/omnidroid/wiki/DesignOverview
+    LibreTasks allows you to set certain actions to happen based upon
+    certain triggers. For example, you may pause your media when your
+    charger is disconnected, or turn off wifi at a certain time of day.
 
 
 III. MORE INFORMATION
