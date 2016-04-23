@@ -952,10 +952,19 @@ public class DbMigration {
   private static void removeTwitter(SQLiteDatabase db) {
 	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
 	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	int twitAppID = appDbAdapter.getAppId("Twitter");
+	long twitAppID = appDbAdapter.getAppId("Twitter");
 	if(twitAppID != -1){
+		//Delete app listing
 		boolean isAppDeleted = appDbAdapter.delete(twitAppID);
-		boolean isActionDeleted = actionDbAdapter.delete(actionDbAdapter.getAppId("Twitter"));
+		
+		//Delete action listings
+		Cursor cursor = actionDbAdapter.fetchAll(null, twitAppID);
+		if(cursor != null) {
+			while (cursor.moveToNext()) {
+				long actionID = getLongFromCursor(cursor, actionDbAdapter.KEY_ACTIONID);
+				boolean isActionDeleted = actionDbAdapter.delete(actionID);
+			}
+		}
 	}
   }
 
