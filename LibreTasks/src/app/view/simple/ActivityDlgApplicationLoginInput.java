@@ -42,6 +42,27 @@ import libretasks.app.R;
 import libretasks.app.view.simple.factoryui.ActionParameterViewFactory;
 import libretasks.app.view.simple.model.ModelApplication;
 import libretasks.app.view.simple.viewitem.ViewItemGroup;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import java.util.Collections;
+import java.util.List;
+import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 
 /**
  * This dialog is a shell to contain UI elements specific to creating a login UI. Given an
@@ -50,16 +71,15 @@ import libretasks.app.view.simple.viewitem.ViewItemGroup;
 public class ActivityDlgApplicationLoginInput extends Activity {
 
   /** Layout dynamically generated on our action type by FactoryActions. */
-  private LinearLayout llContent;
+  private ListView lv;
 
   /** Main layout to which we append the dynamically generated layout. */
   private ViewItemGroup viewItems;
-
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    initializeUI();
+    show_custom_chooser();
   }
 
   @Override
@@ -68,45 +88,89 @@ public class ActivityDlgApplicationLoginInput extends Activity {
   }
 
   private void initializeUI() {
-    setContentView(R.layout.activity_dlg_action_login_input);
 
-    Button btnOk = (Button) findViewById(R.id.activity_dlg_action_login_input_btnOk);
-    btnOk.setOnClickListener(listenerBtnClickOk);
-
-    Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_login_input_btnHelp);
-    btnHelp.setOnClickListener(listenerBtnClickHelp);
-
-    llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
+    //~ Button btnHelp = (Button) findViewById(R.id.activity_dlg_action_login_input_btnHelp);
+    //~ btnHelp.setOnClickListener(listenerBtnClickHelp);
+//~ 
+    //~ llContent = (LinearLayout) findViewById(R.id.activity_dlg_action_input_llDynamicContent);
+    show_custom_chooser();
 
     // Add dynamic content from the application
-    ModelApplication modelApp = UIDbHelperStore.instance().db().getApplication(
-        RuleBuilder.instance().getChosenApplication().getDatabaseId());
-
-    viewItems = ActionParameterViewFactory.buildLoginUI(modelApp, this);
-
-    llContent.addView(viewItems.getLayout());
+    //~ ModelApplication modelApp = UIDbHelperStore.instance().db().getApplication(
+        //~ RuleBuilder.instance().getChosenApplication().getDatabaseId());
+//~ 
+    //~ viewItems = ActionParameterViewFactory.buildLoginUI(modelApp, this);
+//~ 
+    //~ llContent.addView(viewItems.getLayout());
   }
 
-  private View.OnClickListener listenerBtnClickOk = new View.OnClickListener() {
-    public void onClick(View v) {
-      ModelApplication application = RuleBuilder.instance().getChosenApplication();
-      try {
-        ActionParameterViewFactory.buildApplicationFromLoginUI(application, viewItems);
-        UIDbHelperStore.instance().db().updateApplicationLoginInfo(application);
-      } catch (Exception e) {
-        UtilUI.showAlert(v.getContext(), "", e.toString());
-        return;
+  public void show_custom_chooser() {
+		// TODO Auto-generated method stub
+	  final Dialog dialog = new Dialog(ActivityDlgApplicationLoginInput.this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.setContentView(R.layout.about_dialog);
+		dialog.setCancelable(true);
+		ListView lv=(ListView)dialog.findViewById(R.id.listView1);
+		PackageManager pm=getPackageManager();
+		final Intent email = new Intent(Intent.ACTION_SEND);
+		email.setType("text/plain");
+		List<ResolveInfo> launchables=pm.queryIntentActivities(email, 0);
+	    
+	    Collections.sort(launchables,
+	                     new ResolveInfo.DisplayNameComparator(pm)); 
+	    
+	    final AppAdapter adapter=new AppAdapter(pm, launchables);
+	    lv.setAdapter(adapter);	
+	    lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				ResolveInfo launchable=adapter.getItem(position);
+			    ActivityInfo activity=launchable.activityInfo;
+			    ComponentName name=new ComponentName(activity.applicationInfo.packageName,
+			                                         activity.name);
+				email.addCategory(Intent.CATEGORY_LAUNCHER);
+				email.setComponent(name);
+			    startActivity(email);
+			    //~ dialog.dismiss();
+			}
+		});	
+		dialog.show();
+	}
+	class AppAdapter extends ArrayAdapter<ResolveInfo> {
+    private PackageManager pm=null;
+    
+    AppAdapter(PackageManager pm, List<ResolveInfo> apps) {
+      super(ActivityDlgApplicationLoginInput.this, R.layout.row, apps);
+      this.pm=pm;
+    }
+    
+    @Override
+    public View getView(int position, View convertView,
+                          ViewGroup parent) {
+      if (convertView==null) {
+        convertView=newView(parent);
       }
-
-      setResult(RESULT_OK, getIntent());
-      finish();
+      
+      bindView(position, convertView);
+      
+      return(convertView);
     }
-  };
-
-  private View.OnClickListener listenerBtnClickHelp = new View.OnClickListener() {
-    public void onClick(View v) {
-      UtilUI.showAlert(v.getContext(), getString(R.string.login_info_title),
-          getString(R.string.login_info_details));
+    
+    private View newView(ViewGroup parent) {
+      return(ActivityDlgApplicationLoginInput.this.getLayoutInflater().inflate(R.layout.row, parent, false));
     }
-  };
+    
+    private void bindView(int position, View row) {
+      TextView label=(TextView)row.findViewById(R.id.label);
+      
+      label.setText(getItem(position).loadLabel(pm));
+      
+      ImageView icon=(ImageView)row.findViewById(R.id.icon);
+      
+      icon.setImageDrawable(getItem(position).loadIcon(pm));
+    }
+  }
 }

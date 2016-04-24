@@ -1,22 +1,4 @@
-/*  
- * Copyright (c) 2016  LibreTasks - https://github.com/biotinker/LibreTasks  
- *  
- *  This file is free software: you may copy, redistribute and/or modify it  
- *  under the terms of the GNU General Public License as published by the  
- *  Free Software Foundation, either version 3 of the License, or (at your  
- *  option) any later version.  
- *  
- *  This file is distributed in the hope that it will be useful, but  
- *  WITHOUT ANY WARRANTY; without even the implied warranty of  
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
- *  General Public License for more details.  
- *  
- *  You should have received a copy of the GNU General Public License  
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
- *  
- * This file incorporates work covered by the following copyright and  
- * permission notice:  
- /*******************************************************************************
+/*******************************************************************************
  * Copyright 2010 Omnidroid - http://code.google.com/p/omnidroid 
  *  
  * Licensed under the Apache License, Version 2.0 (the "License"); 
@@ -82,8 +64,9 @@ public class UserAccountViewItem extends AbstractViewItem {
     setupAccountButton.setText(activity.getResources().getString(R.string.setup_account));
     setupAccountButton.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
+        //~ Intent intent = new Intent(Intent.ACTION_SEND);
         Intent intent = new Intent(mActivity, ActivityDlgApplicationLoginInput.class);
-        intent.putExtra(ViewItemGroup.INTENT_EXTRA_SOURCE_ID, ID);
+        
         mActivity.startActivityForResult(intent, SETUP_ACCOUNT_REQUEST);
       }
     });
