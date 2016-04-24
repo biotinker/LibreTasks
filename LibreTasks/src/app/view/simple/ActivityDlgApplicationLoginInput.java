@@ -106,7 +106,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 
   public void show_custom_chooser() {
 		// TODO Auto-generated method stub
-	  final Dialog dialog = new Dialog(ActivityDlgApplicationLoginInput.this);
+		final Dialog dialog = new Dialog(ActivityDlgApplicationLoginInput.this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setCanceledOnTouchOutside(true);
 		dialog.setContentView(R.layout.about_dialog);
@@ -119,7 +119,7 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 	    
 	    Collections.sort(launchables,
 	                     new ResolveInfo.DisplayNameComparator(pm)); 
-	    
+	    dialog.show();
 	    final AppAdapter adapter=new AppAdapter(pm, launchables);
 	    lv.setAdapter(adapter);	
 	    lv.setOnItemClickListener(new OnItemClickListener() {
@@ -133,11 +133,12 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 			                                         activity.name);
 				email.addCategory(Intent.CATEGORY_LAUNCHER);
 				email.setComponent(name);
-			    startActivity(email);
-			    //~ dialog.dismiss();
+			    //~ startActivity(email);
+			    dialog.dismiss();
+			    setResult(RESULT_OK, getIntent());
+				finish();
 			}
 		});	
-		dialog.show();
 	}
 	class AppAdapter extends ArrayAdapter<ResolveInfo> {
     private PackageManager pm=null;
