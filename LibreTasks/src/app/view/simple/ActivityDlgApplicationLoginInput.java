@@ -119,7 +119,6 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 	    
 	    Collections.sort(launchables,
 	                     new ResolveInfo.DisplayNameComparator(pm)); 
-	    dialog.show();
 	    final AppAdapter adapter=new AppAdapter(pm, launchables);
 	    lv.setAdapter(adapter);	
 	    lv.setOnItemClickListener(new OnItemClickListener() {
@@ -138,7 +137,8 @@ public class ActivityDlgApplicationLoginInput extends Activity {
 			    setResult(RESULT_OK, getIntent());
 				finish();
 			}
-		});	
+		});
+		dialog.show();
 	}
 	class AppAdapter extends ArrayAdapter<ResolveInfo> {
     private PackageManager pm=null;

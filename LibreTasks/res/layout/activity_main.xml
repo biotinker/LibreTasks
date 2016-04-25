@@ -48,7 +48,7 @@
 	<Button 
 		android:text="@string/create_rule" 
 		android:id="@+id/activity_main_btnCreateRule" 
-		android:layout_width="150dip" 
+		android:layout_width="450dip" 
 		android:layout_height="wrap_content"
 		android:layout_gravity="center">
 	</Button>
@@ -56,7 +56,7 @@
 	<Button 
 		android:text="@string/view_rules" 
 		android:id="@+id/activity_main_btnViewRules" 
-		android:layout_width="150dip" 
+		android:layout_width="450dip" 
 		android:layout_height="wrap_content"
 		android:layout_gravity="center">
 	</Button>
@@ -64,7 +64,7 @@
 	<Button 
 		android:text="@string/logs" 
 		android:id="@+id/activity_main_btnLogs" 
-		android:layout_width="150dip" 
+		android:layout_width="450dip" 
 		android:layout_height="wrap_content"
 		android:layout_gravity="center">
 	</Button>
@@ -72,7 +72,7 @@
 	<Button 
 		android:text="@string/help" 
 		android:id="@+id/activity_main_btnHelp" 
-		android:layout_width="150dip" 
+		android:layout_width="450dip" 
 		android:layout_height="wrap_content"
 		android:layout_gravity="center">
 	</Button>
