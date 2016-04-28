@@ -262,7 +262,13 @@
 				<action android:name="libretasks.intent.action.GMAIL_SEND" />
 			</intent-filter>
 		</service>
-		<service android:name=".controller.external.actions.OmniActionService">
+		<service android:name=".controller.external.actions.SettingsActionService">
+			<intent-filter>
+				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
+				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
+			</intent-filter>
+		</service>
+		<service android:name=".controller.external.actions.SignalsActionService">
 			<intent-filter>
 				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
 				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />

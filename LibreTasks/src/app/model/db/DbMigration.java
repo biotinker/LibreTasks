@@ -146,6 +146,8 @@ public class DbMigration {
     case 19:
     case 20:
       removeTwitter(db);
+    case 21:
+      refactorLocations(db);
 
 
       /*
@@ -949,7 +951,7 @@ public class DbMigration {
    *          the database instance to work with
    */
   @SuppressWarnings("deprecation")
-  private static void removeTwitter(SQLiteDatabase db) {
+  private static void refactorLocations(SQLiteDatabase db) {
 	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
 	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
 	long twitAppID = appDbAdapter.getAppId("Twitter");
@@ -967,5 +969,27 @@ public class DbMigration {
 		}
 	}
   }
-
+  
+  /**
+   * The "LibreTasks" group of actions is being shrunk and 
+   * split out into two other groups for "settings" (things
+   * like brightness, etc) and "signals" (for control of wifi,
+   * bluetooth, airplane mode, etc.
+   */
+   
+  @SuppressWarnings("deprecation")
+  private static void removeTwitter(SQLiteDatabase db) {
+	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+	RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
+		RegisteredActionParameterDbAdapter(db);
+	
+	long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true, true);
+	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true, true);
+	long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
+		appIdSignals);
+	actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
+		actionIdSetBrightness, dataTypeIdText);
+	actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
+	actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
+	actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
 }

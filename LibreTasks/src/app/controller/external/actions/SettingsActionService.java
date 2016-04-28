@@ -54,15 +54,13 @@ import libretasks.app.view.simple.UtilUI;
  * notification bar,etc. More specifically providing execution for actions that is inappropriate 
  * for an activity to be created.
  */
-public class OmniActionService extends Service {
+public class SettingsActionService extends Service {
   
   //operation supported by this service
   public static final String OPERATION_TYPE = "OPERATION_TYPE";
   public static final int NO_ACTION = -1;
   public static final int SHOW_ALERT_ACTION = 1;
   public static final int SHOW_NOTIFICATION_ACTION = 2;
-  public static final int TURN_OFF_WIFI_ACTION = 3;
-  public static final int TURN_ON_WIFI_ACTION = 4;
   public static final int SET_SCREEN_BRIGHTNESS = 5;
   public static final int SET_PHONE_LOUD = 6;
   public static final int SET_PHONE_SILENT = 7;
@@ -87,12 +85,6 @@ public class OmniActionService extends Service {
     case SHOW_NOTIFICATION_ACTION :
       showNotification(intent);
       break;
-    case TURN_OFF_WIFI_ACTION :
-      turnOffWifi();
-      break;
-    case TURN_ON_WIFI_ACTION :
-      turnOnWifi();
-      break;
     case SET_SCREEN_BRIGHTNESS :
       setScreenBrightness(intent);
       break;
@@ -106,7 +98,7 @@ public class OmniActionService extends Service {
       setPhoneVibrate();
       break;
     default:
-      Log.e("OmniActionService", "No such operation supported as: " + operationType);
+      Log.e("LibreTasks: SettingsActionService", "No such operation supported as: " + operationType);
     }
   }
   
@@ -142,26 +134,6 @@ public class OmniActionService extends Service {
     ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
         getString(R.string.phone_set_on_vibrate));
    }
-  
-  /**
-   * turn off the wifi.
-   */
-  private void turnOffWifi() {
-    WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-    wifiManager.setWifiEnabled(false);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
-        getString(R.string.wifi_turned_off));
-  }
-  
-  /**
-   * turn on the wifi. 
-   */
-  private void turnOnWifi() {
-    WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-    wifiManager.setWifiEnabled(true);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
-        getString(R.string.wifi_turned_on));
-  }
 
   /**
    * Show a notification on the notification bar.
