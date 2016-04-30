@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Buttons -->
+    <string name="add_filter">フィルターを追加</string>
+    <string name="add_action">アクションを追加</string>
+    <string name="create_rule">ルールを作成</string>
+    <string name="view_rules">ルールを表示</string>
+    <string name="on_off">オン/オフ</string>
+
+    <!--  Miscellaneous -->
+    <string name="welcome">LibreTasks へようこそ</string>
+    <string name="disclaimer_title">LibreTasks 免責事項</string>
+    <string name="disclaimer_msg">&lt;b&gt;このソフトウェアは損害を与える可能性があり、&lt;/b&gt; &quot;そのままの状態&quot; で提供され、何の明示的または黙示的な保証はありません。 いかなる場合においても、著作権所有者または貢献者が、このソフトウェアの結果としての損害を賠償する責任はありません。 このソフトウェアを使用することで、これらの条件に同意します。</string>
+    <string name="select_data_from_list">イベントのアプリケーションによって提供されるデータを選択してください:</string>
+    <string name="name_to_save">保存する名前を入力してください</string>
+    <string name="save_response">OmniHandler を使用して渡すデータを保存</string>
+    <string name="name_omnihandler">この OmniHandlerの名前</string>
+    <string name="enter_data">挿入するデータを入力してください</string>
+    <string name="save_as">名前を付けて保存</string>
+    <string name="save_dialog">この OmniHandler を保存する名前を入力してください</string>
+    <string name="manual_entry">または、手動でデータを入力してください:</string>
+    <string name="enter_rule_name">以下にルール名を入力してください:</string>
+    <string name="enter_rule_description">以下にルールの説明を入力してください:</string>
+    <string name="actions">アクション</string>
+    <string name="libretasks_is_disabled">LibreTasks は無効です。</string>
+
+    <!--  Common Words -->
+    <string name="libretasks">LibreTasks</string>
+    <string name="about">アプリについて</string>
+    <string name="next">次へ</string>
+    <string name="help">ヘルプ</string>
+    <string name="delete">削除</string>
+    <string name="edit">編集</string>
+    <string name="done">完了</string>
+    <string name="save">保存</string>
+    <string name="cancel">キャンセル</string>
+    <string name="ok">OK</string>
+    <string name="agree">同意する</string>
+    <string name="disagree">同意しない</string>
+    <string name="info">情報</string>
+    <string name="view">表示</string>
+    <string name="event_attributes">属性</string>
+    <string name="yes">はい</string>
+    <string name="sorry">申し訳ありません</string>
+    <string name="no">いいえ</string>
+    <string name="coming_soon">この機能をすぐに実装したいと考えています。</string>
+    <string name="unknown">不明</string>
+    <string name="gmail">Gmail</string>
+
+    <!--  Settings -->
+    <string name="settings_label">設定</string>
+    <string name="settings_title">設定</string>
+
+    <!--  Alerts -->
+    <string name="missing_action">少なくとも1つアクションを追加する必要があります。</string>
+    <string name="missing_data">データフィールドは空にできません。</string>
+    <string name="missing_name">OmniHandler 名は空にできません。</string>
+    <string name="bad_input">アクションの作成中にエラーがありました。入力を確認して、もう一度試してください。</string>
+    <string name="select_input">パラメーターに使用する入力を選択してください。</string>
+    <string name="error_was">エラーは:</string>
+    <string name="oh_no">エラー!</string>
+    <string name="throttle_alert_title">LibreTasks は一時的に無効です</string>
+    <string name="throttle_alert_msg">LibreTasks は、最後の1分間に処理した %2$d イベントによりスロットル制限 %1$d を超えました。\n制限を下回るまで LibreTasks はもうイベントを処理しません。\nこれはルールのループにより発生することがあります。 詳細な情報はログを参照してください。\n</string>
+    <string name="confirm_item_delete">このアイテムを削除してもよろしいですか?</string>
+    <string name="confirm_rule_delete">このルールを削除してもよろしいですか?</string>
+    <string name="enable_msg">LibreTasks を有効にしています</string>
+    <string name="disable_msg">LibreTasks を無効にしています</string>
+    <string name="save_rule">ルールを保存</string>
+    <string name="rule_saved">ルールを正常に保存しました。</string>
+    <string name="libretasks_is_disabled_alert">LibreTasks は無効です。 ルールを有効にするには、有効にしてください。</string>
+
+    <!--  Help Dialog Texts -->
+    <string name="help_title">LibreTasks ヘルプ</string>
+    <string name="help_activitymain">LibreTasks は、お使いの Android デバイスで発生するイベントを処理して、結果として自動的にアクションを行うルールを作成することができます。 &lt;br /&gt;&lt;br /&gt; &lt;i&gt;ルールを作成&lt;/i&gt; ボタンを選択して、新しいルールを保存します。&lt;br /&gt;&lt;br /&gt; &lt;i&gt;ルールを表示&lt;/i&gt; ボタンを選択して、すでに作成済のルールを表示、編集、削除、有効または無効にします。</string>
+    <string name="help_filtersandactions">イベントに、ルールをいつトリガーするか制限するフィルターを追加します。 ルールがトリガーされたときに実行するアクションを追加します。</string>
+    <string name="help_saved_rules">この画面を使用して、保存したルールを有効および無効にします。</string>
+    <string name="help_dlgattributes">フィルターを作成すると、イベントがいつ作用するかを一致させることができます。&lt;br /&gt;&lt;br /&gt;イベントは、異なる属性の種類をフィルタリングすることができます。&lt;br /&gt;一致させたい属性の種類を選択します。</string>
+    <string name="help_dlgfilters">フィルターを作成すると、イベントがいつ作用するかを一致させることができます。&lt;br /&gt;&lt;br /&gt;フィルターの種類のリストから適用したいフィルターを選択します。</string>
+    <string name="help_dlgfilterinput">フィルターを作成すると、イベントがいつ作用するかを一致させることができます。&lt;br /&gt;&lt;br /&gt;ここで入力したものがフィルターに渡されます。&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;このフィルターで提供されるデータに一致した場合のみ、このルールはアクティブになります。</string>
+    <string name="help_dlgapplications">このルールの結果のアクションを提供するアプリケーションを選択します。</string>
+    <string name="help_dlgactions">アプリケーションは、特定のアクションを実行することができます。 ルートイベントの結果として、このアプリケーションが実行したいアクションを選択します。</string>
+    <string name="help_dlgactioninput">ここで入力したものが作成中のアクションに渡されます。 このアプリケーションをトリガーしたイベントの属性が、ここでの入力に対応している場合、属性ボタンをクリックして属性を選択することができます。</string>
+    <string name="help_dlgapplicationlogininput"></string>
+
+    <!--  Actions -->
+    <string name="action_default_message">メッセージ</string>
+
+    <!--  General Activity Titles -->
+    <string name="choose_root_event_title">ルートイベントの選択</string>
+    <string name="addfilters_and_actions_title">ルールにフィルターとアクションを追加</string>
+    <string name="attributes_title">属性</string>
+    <string name="filters_title">フィルター</string>
+    <string name="filter_input_title">フィルターの入力</string>
+    <string name="applications_title">アプリケーション</string>
+    <string name="show_website_title">Webサイトを表示</string>
+    <string name="rule_name_title">ルール名</string>
+    <string name="saved_rules_title">保存したルールを有効にする</string>
+    <string name="login_title">ログイン</string>
+    <string name="actions_title">アクション</string>
+    <string name="action_input_title">アクションの入力</string>
+    <string name="logs">ログ</string>
+
+    <!--  About Dialog -->
+    <string name="about_title">LibreTasks について</string>
+    <string name="about_desc">LibreTasks は自動化のイベントハンドラーです。</string>
+    <string name="about_version">バージョン:</string>
+    <string name="about_license">ライセンス: Apache 2.0 からフォークした GPL v3</string>
+    <string name="about_website">Webサイト: https://github.com/biotinker/LibreTasks</string>
+    <string name="copyright">&#169; 2016 LibreTasks.  All rights reserved.</string>
+
+    <!--  General Activity Instructions -->
+    <string name="choose_root_event_inst">以下のリストからのルートイベントを選択して、ルールの作成を開始します:</string>
+    <string name="choose_filters_actions_inst">以下のリストから項目を選択して、その後にフィルターまたはアクションを追加します:</string>
+    <string name="select_application_title">アプリケーションの選択:</string>
+    <string name="select_action_title">使用する [%1$s] のアクションを選択:</string>
+    <string name="select_attribute_title">フィルターする [%1$s] の属性を選択:</string>
+    <string name="select_filter_title">[%1$s] に適用するフィルターを選択:</string>
+    <string name="select_rule_toggle_inst">リストからオン/オフするルールを選択してください。</string>
+    <string name="select_control_for_param_alert_inst">パラメーターを使用するコントロールを選択してください。</string>
+    <string name="phone_num_eq_filter_inst">以下に一致する電話番号を入力:</string>
+    <string name="phone_num_not_eq_filter_inst">フィルターから除外する電話番号を入力 </string>
+    <string name="num_eq_filter_inst">一致する数値を入力:</string>
+    <string name="num_not_eq_filter_inst">除外する数値を入力:</string>
+    <string name="num_lessthan_filter_inst">これより小さい場合に一致する数値を入力:</string>
+    <string name="num_greaterthan_filter_inst">これより大きい場合に一致する数値を入力:</string>
+    <string name="text_eq_filter_inst">一致する正確なテキスト文字列を入力:</string>
+    <string name="text_cont_filter_inst">一致するテキスト本文中の語句を入力:</string>
+    <string name="day_of_week_eq_filter_inst">一致する曜日を入力:</string>
+    <string name="day_of_week_not_eq_filter_inst">フィルターから除外する曜日を入力:</string>
+    <string name="bad_data_format">不正なデータ形式:\n</string>
+    <string name="bad_distance_format">距離をマイルで入力:</string>
+
+    <!--  System Events -->
+    
+    <!--  UI Strings -->
+    <string name="pick_start_time">開始時刻を選択</string>
+    <string name="pick_end_time">終了時刻を選択</string>
+    <string name="pick_time">時刻を選択</string>
+    <string name="area_address">住所:</string>
+    <string name="area_distance">距離 (マイルで):</string>
+    <string name="clear">クリア</string>
+    <string name="clear_logs">ログをクリア</string>
+    <string name="event_log">イベントログ</string>
+    <string name="action_log">アクションログ</string>
+    <string name="general_log">全般ログ</string>
+    <string name="All">すべて</string>
+    <string name="Events">イベント</string>
+    <string name="Actions">アクション</string>
+    <string name="General">全般</string>
+    <string name="no_logs">利用できるログはありません。</string>
+    <string name="toggle_enabled">有効/無効の切り替え</string>
+    <string name="enable_all">すべて有効にする</string>
+    <string name="disable_all">すべて無効にする</string>
+    <string name="edit_rule">ルールを編集</string>
+    <string name="delete_rule">ルールを削除</string>
+    <string name="toggle_rule">ルールを切り替え</string>
+    <string name="one_rule">" (1 ルール)"</string>
+    <string name="n_rules">" (%1$d ルール)"</string>
+    <string name="one_rule_with_arg">" (1 ルール %1$s)"</string>
+    <string name="n_rules_with_arg">" (%1$d ルール %2$s)"</string>
+    <string name="enabled">有効</string>
+    <string name="disabled">無効</string>
+    <string name="enable_notification">通知を有効にする</string>
+    <string name="disable_notification">通知を無効にする</string>
+
+    <!--  UI Login -->
+    <string name="setup_account">アカウントのセットアップ</string>
+    <string name="username">ユーザー名:</string>
+    <string name="password">パスワード:</string>
+    <string name="login_info_title">ログイン情報</string>
+    <string name="login_info_details">ユーザー名とパスワードを入力してください</string>
+
+    <!--  Choose Filters and Actions -->
+    <string name="add_filter_alert">フィルターはルートイベントや他のフィルターにのみ追加することができます。</string>
+    <string name="select_filter_edit">編集するには、リストからフィルターまたはアクションを選択してください。</string>
+    <string name="select_filter_delete">削除するには、リストからフィルターまたはアクションを選択してください。</string>
+    <string name="illegal_state_exception_catch">ルールを保存する際に IllegalStateException が発生しました:</string>
+    <string name="error_saving_rule">ルールを保存するときにエラーが発生しました:</string>
+
+    <!--  Settings -->
+    <string name="throttle">スロットル</string>
+    <string name="throttle_description">毎分処理するイベント数の限度</string>
+    <string name="log_limit">ログ限度</string>
+    <string name="log_limit_description">ログを保持する期間の限度</string>
+    <string name="sound_enabled">サウンド通知</string>
+    <string name="light_enabled">LED 通知</string>
+    <string name="vibrate_enabled">バイブレーション通知</string>
+    <string name="enable_libretasks">LibreTasks を有効にする</string>
+    <string name="disable_libretasks">LibreTasks を無効にする</string>
+    <string name="enable_libretasks_desc">LibreTasks は現在無効です</string>
+    <string name="disable_libretasks_desc">LibreTasks は現在有効です</string>
+    <string name="sound_desc">LibreTasks がサウンドを使用してアラートすることができます</string>
+    <string name="light_desc">LibreTasks がライトを使用してアラートすることができます</string>
+    <string name="vibrate_desc">LibreTasks がバイブレーションを使用してアラートすることができます</string>
+    <string name="notification_desc"></string>
+    <string name="notification">通知</string>
+    <string name="default_notification_desc">デフォルトで通知を設定します</string>
+    <string name="default_notification">通知</string>
+    <string name="reset_db_desc">データベースをリセットすると、すべてのユーザーデータがクリアされます</string>
+    <string name="reset_db">データベースをリセット</string>
+    <string name="reset_settings_desc">プリファレンスをデフォルト値にリセットします</string>
+    <string name="reset_settings">プリファレンスをリセット</string>
+    <string name="gmail_signature_title">Gmail 署名</string>
+    <string name="gmail_signature_dialog_message">以下に Gmail 署名を入力してください</string>
+    <string name="sms_signature_title">SMS 署名</string>
+    <string name="sms_signature_desc_on">SMS 署名をオンにします</string>
+    <string name="sms_signature_desc_off">SMS 署名をオフにします</string>
+    <string name="gmail_signature_desc_on">Gmail 署名をオンにします</string>
+    <string name="gmail_signature_desc_off">Gmail 署名をオフにします</string>
+    <string name="sms_signature_dialog_message">いかに SMS 署名を入力してください </string>
+    <string name="sms_signature">\n(LibreTasks)</string>
+    <string name="gmail_signature">\n\nLibreTasks で送信しました</string>
+    <string name="signature_settings">署名設定</string>
+    <string name="signature_desc">Gmail と SMS 署名を更新します</string>
+    <string name="gmail_signature_settings_title">Gmail 署名設定</string>
+    <string name="sms_signature_settings_title">SMS 署名設定</string>
+    <string name="gmail_signature_settings_desc">Gmail 署名を更新します</string>
+    <string name="sms_signature_settings_desc">SMS 署名を更新します</string>
+    
+    <!-- message -->
+    <string name="gmail_failed_no_network">Gmail の送信に失敗しました: ネットワーク接続がありません。</string>
+    <string name="gmail_failed_authentication_error">Gmail の送信に失敗しました: 認証エラー。</string>
+    <string name="gmail_failed_server_error">Gmail の送信に失敗しました: サーバーエラー。</string>
+    <string name="gmail_sent">Gmail 送信しました</string>
+    <string name="sms_sent">SMS 送信しました</string>
+    <string name="sms_failed_no_service">SMS の送信に失敗しました: サービスがありません</string>
+    <string name="sms_failed_generic_failure">SMS の送信に失敗しました: 全般エラー</string>
+    <string name="sms_failed_null_pdu">SMS の送信に失敗しました: Null PDU</string>
+    <string name="sms_failed_radio_off">SMS の送信に失敗しました: 電波がオフです</string>
+    <string name="twitter_failed_authentication_error">Twitter ステータスの更新に失敗しました: 認証エラー</string>
+    <string name="twitter_updated">Twitter ステータスを更新しました</string>
+    <string name="twitter_failed">Twitter ステータスの更新に失敗しました</string>
+    <string name="phone_set_loud">電話の音量を大きくしました</string>
+    <string name="phone_set_silent">電話をサイレントに設定しました</string>
+    <string name="phone_set_on_vibrate">電話をバイブレーションに設定しました</string>
+    <string name="wifi_turned_on">Wifi をオンにしました</string>
+    <string name="wifi_turned_off">Wifi をオフにしました</string>
+    <string name="phone_call">電話を発信しました</string>
+    <string name="phone_call_failed">電話の発信に失敗しました: サービスがありません</string>
+    <string name="website_action_failed_no_url">Webサイトのアクションに失敗しました: ユーザーによって URL が提供されていません</string>    
+    <string name="website_action_failed_bad_url">Webサイトのアクションに失敗しました: URL の形式が正しくありません</string>
+    <string name="website_action_failed_no_service">Webサイトのアクションに失敗しました: サービスがありません</string>
+    <string name="location_not_available">位置データが取得できません</string>
+    <string name="location_unknown_error">位置データが取得できません (不明なエラー)</string>
+    <string name="location_no_provider">位置データが取得できません (プロバイダーがありません)</string>
+    
+    <!-- Dialog  -->
+    <string name="reset_db_dialog_msg">すべてのユーザーデータを失います。続行しますか?</string>
+    <string name="reset_settings_dialog_msg">ユーザーが指定したプリファレンスを失います。続行しますか?</string>
+    <string name="enable_libretasks_dialog_msg">LibreTasks を有効にしてもよろしいですか?</string>
+    <string name="disable_libretasks_dialog_msg">LibreTasks を無効にしてもよろしいですか?</string>
+
+    <!--
+         Shared preference keys - These keys are stored in strings.xml so that code
+         can access them programmatically to try and catch errors at compile time.
+         NOTE: These strings can not change or be updated without losing user stored preferences.
+         NOTE: These strings should not be translated as they are not used for display
+      --> 
+    <string name="pref_key_sound">SoundKey</string>
+    <string name="pref_key_light">LightKey</string>
+    <string name="pref_key_vibrate">VibrateKey</string>
+    <string name="pref_key_libretasks_enabled">LibreTasksEnabled</string>
+    <string name="pref_key_notification">NotificationKey</string>
+    <string name="pref_key_throttle">Throttle</string>
+    <string name="pref_key_log_limit">LogLimit</string>
+    <string name="pref_key_reset_db">ResetDb</string>
+    <string name="pref_key_reset_settings">ResetSettings</string>
+    <string name="pref_key_gmail_signature">GmailSignature</string>
+    <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
+    <string name="pref_key_sms_signature">SMSSignature</string>
+    <string name="pref_key_sms_signature_settings">SMSSignatureSettings</string>       
+    <string name="pref_key_notification_action_count">NotificationActionCount</string>  
+    <string name="pref_key_notification_rule_count">NotificationRuleCount</string>  
+    <string name="pref_key_notification_warn_count">NotificationWarnCount</string>      
+    <string name="pref_key_notification_action_message">NotificationActionMessage</string>  
+    <string name="pref_key_notification_rule_message">NotificationRuleMessage</string>  
+    <string name="pref_key_notification_warn_message">NotificationWarnMessage</string>  
+    <string name="pref_key_notification_rule_title">NotificationRuleTitle</string>
+    
+    <!-- names, descriptions and parameters for default rules -->
+    <string name="phoneRingToSMSRuleName">自動的に SMS に返信</string>
+    <string name="phoneRingToSMSRuleDesc">電話の着信時に \'打ち合わせ中\' で SMS を返信します</string>
+    <string name="phoneRingToSMSRuleMessage">打ち合わせのため取り込み中です。後でご連絡します</string>
+    <string name="timeToSilentRuleName">電話をサイレントに設定</string>
+    <string name="timeToSilentRuleDesc">真夜中過ぎは電話をサイレントに設定します</string>
+    <string name="timeToLoudRuleName">電話の音量を大きく設定</string>
+    <string name="timeToLoudRuleDesc">午前 9 時以降、電話の音量を大きく設定します</string>
+    <string name="batteryLowToSetWifiOffRuleName">WiFi をオフにする</string>
+    <string name="batteryLowToSetWifiOffRuleDesc">バッテリー残量が少ない時に WiFi をオフにします</string>
+    
+    <!-- notification strings -->
+    <string name="notification_rule">%1$d のアクションを実行しました</string>
+    <string name="notification_warn">%1$d の警告があります</string>
+    <string name="notification_action">%1$d の通知メッセージがあります</string>
+    <string name="notification_action_title">新しいメッセージ</string>
+    
+</resources>
