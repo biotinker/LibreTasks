@@ -51,7 +51,7 @@ public class DbHelper extends SQLiteOpenHelper  {
     public static final String PHONE = "Phone";
     public static final String GPS = "GPS";
     public static final String MEDIA = "Media";
-    public static final String GMAIL = "GMAIL";
+    public static final String GMAIL = "Email";
     public static final String TWITTER = "Twitter";
     public static final String SETTINGS = "Settings";
     public static final String SIGNALS = "Signals";

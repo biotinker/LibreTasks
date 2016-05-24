@@ -109,45 +109,26 @@ public class DbMigration {
     case 2:
     case 3:
     case 4:
-      initialVersion(db);
     case 5:
-      updateDataTypeClassNameChanges(db);
-      addCallEndEvent(db);
     case 6:
-      addLogEvent(db);
     case 7:
-      dropLogEvent(db);
-      addLogEvent(db);
-      dropLogAction(db);
-      addLogAction(db);
-      addLogGeneral(db);
     case 8:
-      modifyGmailAndTwitterParam(db);
     case 9:
-      addWifiActions(db);
     case 10:
-      addNotification(db);
     case 11:
-      addPhoneNumberNotEqualsFilter(db);
     case 12:
-      addGeneralLogLevels(db);
     case 13:
-      addFailedActions(db);
-      addInternetAndServiceAvailableEvents(db);
     case 14:
-      setDefaultRules(context, db);
     case 15:
-      addSupportForGlobalEventAttributes(db);
     case 16:
-      alterFailedActionsTable(db);
     case 17:
-      addMissedCallEvent(db);
     case 18:
     case 19:
     case 20:
-      removeTwitter(db);
     case 21:
-      refactorLocations(db);
+      clearDB(db);
+      initialVersion(db);
+      setDefaultRules(context, db);
 
 
       /*
@@ -472,9 +453,10 @@ public class DbMigration {
     long appIdSms = appDbAdapter.insert(DbHelper.AppName.SMS, "", true);
     long appIdPhone = appDbAdapter.insert(DbHelper.AppName.PHONE, "", true);
     long appIdGPS = appDbAdapter.insert(DbHelper.AppName.GPS, "", true);
-    long appIdGmail = appDbAdapter.insert(DbHelper.AppName.GMAIL, "", true, true);
-    long appIdTwitter = appDbAdapter.insert(DbHelper.AppName.TWITTER, "", true, true);
+    long appIdEmail = appDbAdapter.insert(DbHelper.AppName.EMAIL, "", true, true);
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
+    long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true, true);
+	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true, true);
     long appIdMedia = appDbAdapter.insert(DbHelper.AppName.MEDIA, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME, "",
         true);
@@ -533,15 +515,18 @@ public class DbMigration {
     actionParameterDbAdapter.insert(ShowWebsiteAction.PARAM_WEB_URL, actionIdShowWebsite,
         dataTypeIdText);
     long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
-        appIdOmnidroid);
+        appIdSettings);
     actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
         actionIdSetBrightness, dataTypeIdText);
-    actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdOmnidroid);
+    actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
+    actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
+    actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
     
     actionDbAdapter.insert(PlayMediaAction.ACTION_NAME, appIdMedia);
     actionDbAdapter.insert(PauseMediaAction.ACTION_NAME, appIdMedia);
+    
+    actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdSignals);
+    actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdSignals);
 
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend,
@@ -561,15 +546,12 @@ public class DbMigration {
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_SUBJECT, actionIdGmailSend,
         dataTypeIdText);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_BODY, actionIdGmailSend, dataTypeIdText);
-
-    long actionIdTwitterUpdate = actionDbAdapter.insert(UpdateTwitterStatusAction.ACTION_NAME,
-        appIdTwitter);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_USERNAME,
-        actionIdTwitterUpdate, dataTypeIdText);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_PASSWORD,
-        actionIdTwitterUpdate, dataTypeIdPasswordInput);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_MESSAGE, actionIdTwitterUpdate,
-        dataTypeIdText);
+    
+    //Add notifications and failed actions
+    db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
+    db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
+    db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());
+    
   }
 
   /**
@@ -782,25 +764,6 @@ public class DbMigration {
     cursor.close();
   }
 
-  private static void addWifiActions(SQLiteDatabase db) {
-    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-    long appIdOmnidroid = appDbAdapter.getAppId(OmniAction.APP_NAME);
-
-    RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-    actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
-
-  }
-
-  private static void addNotification(SQLiteDatabase db) {
-    db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
-  }
-
-  private static void addFailedActions(SQLiteDatabase db) {
-    db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
-    db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());
-  }
-
   private static void addGeneralLogLevels(SQLiteDatabase db) {
     db.execSQL(LogGeneralDbAdapter.ADD_LEVEL_COLUMN);
   }
@@ -950,11 +913,35 @@ public class DbMigration {
    * @param db
    *          the database instance to work with
    */
+   @SuppressWarnings("deprecation")
+  private static void removeTwitter(SQLiteDatabase db) {
+	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+	RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
+		RegisteredActionParameterDbAdapter(db);
+	
+	
+	long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
+		appIdSignals);
+	actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
+		actionIdSetBrightness, dataTypeIdText);
+	actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
+	actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
+	actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
+}
+
+  
+  /**
+   * The "LibreTasks" group of actions is being shrunk and 
+   * split out into two other groups for "settings" (things
+   * like brightness, etc) and "signals" (for control of wifi,
+   * bluetooth, airplane mode, etc.
+   */
   @SuppressWarnings("deprecation")
-  private static void refactorLocations(SQLiteDatabase db) {
+  private static void refactorMenu(SQLiteDatabase db) {
 	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
 	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	long twitAppID = appDbAdapter.getAppId("Twitter");
+	long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true);
+	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true);
 	if(twitAppID != -1){
 		//Delete app listing
 		boolean isAppDeleted = appDbAdapter.delete(twitAppID);
@@ -969,27 +956,3 @@ public class DbMigration {
 		}
 	}
   }
-  
-  /**
-   * The "LibreTasks" group of actions is being shrunk and 
-   * split out into two other groups for "settings" (things
-   * like brightness, etc) and "signals" (for control of wifi,
-   * bluetooth, airplane mode, etc.
-   */
-   
-  @SuppressWarnings("deprecation")
-  private static void removeTwitter(SQLiteDatabase db) {
-	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
-		RegisteredActionParameterDbAdapter(db);
-	
-	long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true, true);
-	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true, true);
-	long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
-		appIdSignals);
-	actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
-		actionIdSetBrightness, dataTypeIdText);
-	actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
-	actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
-	actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
-}
