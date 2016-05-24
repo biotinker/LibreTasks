@@ -47,6 +47,7 @@ import libretasks.app.controller.util.OmnidroidException;
 public class SetPhoneSilentAction extends OmniAction {
 
   public static final String ACTION_NAME = "Set Phone Silent";
+  public static final String APP_NAME = "Settings";
 
   public SetPhoneSilentAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(SettingsActionService.class.getName(), Action.BY_SERVICE);

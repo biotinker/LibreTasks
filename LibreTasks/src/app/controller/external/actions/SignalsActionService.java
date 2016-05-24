@@ -44,9 +44,10 @@ import android.util.Log;
 import android.widget.Toast;
 import libretasks.app.R;
 import libretasks.app.controller.ResultProcessor;
-import libretasks.app.controller.actions.SetScreenBrightnessAction;
-import libretasks.app.controller.actions.ShowAlertAction;
-import libretasks.app.controller.actions.ShowNotificationAction;
+import libretasks.app.controller.actions.TurnOffWifiAction;
+import libretasks.app.controller.actions.TurnOnWifiAction;
+//~ import libretasks.app.controller.actions.TurnOffBluetoothAction;
+//~ import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.view.simple.UtilUI;
 
 /**

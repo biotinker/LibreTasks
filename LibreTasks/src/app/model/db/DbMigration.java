@@ -127,6 +127,8 @@ public class DbMigration {
     case 21:
       initialVersion(db);
       setDefaultRules(context, db);
+    case 22:
+      //~ addBluetooth(db);
 
 
       /*

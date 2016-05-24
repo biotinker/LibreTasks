@@ -47,6 +47,7 @@ import libretasks.app.controller.util.OmnidroidException;
 public class TurnOnWifiAction extends OmniAction {
 
   public static final String ACTION_NAME = "Turn On Wifi";
+  public static final String APP_NAME = "Signals";
 
   public TurnOnWifiAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(SignalsActionService.class.getName(), Action.BY_SERVICE);

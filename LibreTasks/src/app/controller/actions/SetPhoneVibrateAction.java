@@ -47,6 +47,7 @@ import libretasks.app.controller.util.OmnidroidException;
 public class SetPhoneVibrateAction extends OmniAction {
 
   public static final String ACTION_NAME = "Set Phone Vibrate";
+  public static final String APP_NAME = "Settings";
 
   public SetPhoneVibrateAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(SettingsActionService.class.getName(), Action.BY_SERVICE);
