@@ -57,7 +57,6 @@ import libretasks.app.controller.actions.ShowNotificationAction;
 import libretasks.app.controller.actions.ShowWebsiteAction;
 import libretasks.app.controller.actions.TurnOffWifiAction;
 import libretasks.app.controller.actions.TurnOnWifiAction;
-import libretasks.app.controller.actions.UpdateTwitterStatusAction;
 import libretasks.app.controller.datatypes.OmniArea;
 import libretasks.app.controller.datatypes.OmniDate;
 import libretasks.app.controller.datatypes.OmniDayOfWeek;
@@ -126,7 +125,6 @@ public class DbMigration {
     case 19:
     case 20:
     case 21:
-      clearDB(db);
       initialVersion(db);
       setDefaultRules(context, db);
 
@@ -537,7 +535,7 @@ public class DbMigration {
     actionParameterDbAdapter.insert(CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall,
         dataTypeIdPhoneNumber);
 
-    long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdGmail);
+    long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdEmail);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_USERNAME, actionIdGmailSend,
         dataTypeIdText);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_PASSWORD, actionIdGmailSend,
@@ -551,6 +549,21 @@ public class DbMigration {
     db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
     db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
     db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());
+    
+    //Call create statements to reinitialize database
+    addCallEndEvent(db);
+    dropLogEvent(db);
+    addLogEvent(db);
+    dropLogAction(db);
+    addLogAction(db);
+    addLogGeneral(db);
+    modifyGmailAndTwitterParam(db);
+    addPhoneNumberNotEqualsFilter(db);
+    addGeneralLogLevels(db);
+    addInternetAndServiceAvailableEvents(db);
+    addSupportForGlobalEventAttributes(db);
+    alterFailedActionsTable(db);
+    addMissedCallEvent(db);
     
   }
 
@@ -657,14 +670,10 @@ public class DbMigration {
     long dataTypeIdAccount = dataTypeDbAdapter.insert(OmniUserAccount.DB_NAME,
         OmniUserAccount.class.getName());
 
-    modifyActionToSupportUserAccount(db, DbHelper.AppName.GMAIL, SendGmailAction.ACTION_NAME,
+    modifyActionToSupportUserAccount(db, DbHelper.AppName.EMAIL, SendGmailAction.ACTION_NAME,
         SendGmailAction.PARAM_USERNAME, SendGmailAction.PARAM_PASSWORD,
         SendGmailAction.PARAM_USER_ACCOUNT, dataTypeIdAccount);
 
-    modifyActionToSupportUserAccount(db, DbHelper.AppName.TWITTER,
-        UpdateTwitterStatusAction.ACTION_NAME, UpdateTwitterStatusAction.PARAM_USERNAME,
-        UpdateTwitterStatusAction.PARAM_PASSWORD, UpdateTwitterStatusAction.PARAM_USER_ACCOUNT,
-        dataTypeIdAccount);
   }
 
   /**
@@ -907,52 +916,4 @@ public class DbMigration {
     eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
         eventIdMissedCall, dataTypeIdPhoneNumber);
   }
-     /**
-   * Remove twitter from db if present
-   * 
-   * @param db
-   *          the database instance to work with
-   */
-   @SuppressWarnings("deprecation")
-  private static void removeTwitter(SQLiteDatabase db) {
-	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	RegisteredActionParameterDbAdapter actionParameterDbAdapter = new 
-		RegisteredActionParameterDbAdapter(db);
-	
-	
-	long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
-		appIdSignals);
-	actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
-		actionIdSetBrightness, dataTypeIdText);
-	actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
-	actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
-	actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
 }
-
-  
-  /**
-   * The "LibreTasks" group of actions is being shrunk and 
-   * split out into two other groups for "settings" (things
-   * like brightness, etc) and "signals" (for control of wifi,
-   * bluetooth, airplane mode, etc.
-   */
-  @SuppressWarnings("deprecation")
-  private static void refactorMenu(SQLiteDatabase db) {
-	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true);
-	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true);
-	if(twitAppID != -1){
-		//Delete app listing
-		boolean isAppDeleted = appDbAdapter.delete(twitAppID);
-		
-		//Delete action listings
-		Cursor cursor = actionDbAdapter.fetchAll(null, twitAppID);
-		if(cursor != null) {
-			while (cursor.moveToNext()) {
-				long actionID = getLongFromCursor(cursor, actionDbAdapter.KEY_ACTIONID);
-				boolean isActionDeleted = actionDbAdapter.delete(actionID);
-			}
-		}
-	}
-  }
