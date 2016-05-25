@@ -262,7 +262,13 @@
 				<action android:name="libretasks.intent.action.GMAIL_SEND" />
 			</intent-filter>
 		</service>
-		<service android:name=".controller.external.actions.OmniActionService">
+		<service android:name=".controller.external.actions.SettingsActionService">
+			<intent-filter>
+				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
+				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
+			</intent-filter>
+		</service>
+		<service android:name=".controller.external.actions.SignalsActionService">
 			<intent-filter>
 				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
 				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
@@ -302,6 +308,8 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.BATTERY_STATS" />
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 	<uses-permission android:name="android.permission.CALL_PHONE" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />

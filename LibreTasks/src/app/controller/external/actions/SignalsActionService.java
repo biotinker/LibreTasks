@@ -42,11 +42,13 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
+import android.bluetooth.BluetoothAdapter;
 import libretasks.app.R;
 import libretasks.app.controller.ResultProcessor;
-import libretasks.app.controller.actions.SetScreenBrightnessAction;
-import libretasks.app.controller.actions.ShowAlertAction;
-import libretasks.app.controller.actions.ShowNotificationAction;
+import libretasks.app.controller.actions.TurnOffWifiAction;
+import libretasks.app.controller.actions.TurnOnWifiAction;
+import libretasks.app.controller.actions.TurnOffBluetoothAction;
+import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.view.simple.UtilUI;
 
 /**
@@ -54,19 +56,15 @@ import libretasks.app.view.simple.UtilUI;
  * notification bar,etc. More specifically providing execution for actions that is inappropriate 
  * for an activity to be created.
  */
-public class OmniActionService extends Service {
+public class SignalsActionService extends Service {
   
   //operation supported by this service
   public static final String OPERATION_TYPE = "OPERATION_TYPE";
   public static final int NO_ACTION = -1;
-  public static final int SHOW_ALERT_ACTION = 1;
-  public static final int SHOW_NOTIFICATION_ACTION = 2;
+  public static final int TURN_ON_BLUETOOTH_ACTION = 1;
+  public static final int TURN_OFF_BLUETOOTH_ACTION = 2;
   public static final int TURN_OFF_WIFI_ACTION = 3;
   public static final int TURN_ON_WIFI_ACTION = 4;
-  public static final int SET_SCREEN_BRIGHTNESS = 5;
-  public static final int SET_PHONE_LOUD = 6;
-  public static final int SET_PHONE_SILENT = 7;
-  public static final int SET_PHONE_VIBRATE = 8;
   
   private Intent intent;
 
@@ -81,11 +79,11 @@ public class OmniActionService extends Service {
     this.intent = intent;
     int operationType = intent.getIntExtra(OPERATION_TYPE, NO_ACTION);
     switch (operationType) {
-    case SHOW_ALERT_ACTION :
-      showAlert(intent);
+    case TURN_ON_BLUETOOTH_ACTION :
+      turnOnBluetooth();
       break;
-    case SHOW_NOTIFICATION_ACTION :
-      showNotification(intent);
+    case TURN_OFF_BLUETOOTH_ACTION :
+      turnOffBluetooth();
       break;
     case TURN_OFF_WIFI_ACTION :
       turnOffWifi();
@@ -93,55 +91,10 @@ public class OmniActionService extends Service {
     case TURN_ON_WIFI_ACTION :
       turnOnWifi();
       break;
-    case SET_SCREEN_BRIGHTNESS :
-      setScreenBrightness(intent);
-      break;
-    case SET_PHONE_LOUD :
-      setPhoneLoud();
-      break;
-    case SET_PHONE_SILENT :
-      setPhoneSilent();
-      break;
-    case SET_PHONE_VIBRATE :
-      setPhoneVibrate();
-      break;
     default:
-      Log.e("OmniActionService", "No such operation supported as: " + operationType);
+      Log.e("LibreTasks: Signals Action Service", "No such operation supported as: " + operationType);
     }
   }
-  
-  /**
-   * set the phone to loud
-   */
-  private void setPhoneLoud() {
-    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-    int ringstream = AudioManager.STREAM_RING;
-    int ringmaxvolume = audioManager.getStreamMaxVolume(ringstream);
-    audioManager.setStreamVolume(ringstream, ringmaxvolume, AudioManager.FLAG_SHOW_UI);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
-        getString(R.string.phone_set_loud));
-   }
-  
-  /**
-   * set the phone to silent
-   */
-  private void setPhoneSilent() {
-    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
-        getString(R.string.phone_set_silent));
-   }
-  
-  /**
-   * set the phone to vibrate
-   */
-  private void setPhoneVibrate() {
-    AudioManager audioManager =(AudioManager) getSystemService(Context.AUDIO_SERVICE);
-    audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
-        getString(R.string.phone_set_on_vibrate));
-   }
   
   /**
    * turn off the wifi.
@@ -162,41 +115,28 @@ public class OmniActionService extends Service {
     ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
         getString(R.string.wifi_turned_on));
   }
-
+  
   /**
-   * Show a notification on the notification bar.
-   * @param intent provide the message to show
+   * turn off the bluetooth.
    */
-  private void showNotification(Intent intent) {
-    String title = intent.getStringExtra(ShowNotificationAction.PARAM_TITLE);
-    String message = intent.getStringExtra(ShowNotificationAction.PARAM_ALERT_MESSAGE);
-    UtilUI.showNotification(this, UtilUI.NOTIFICATION_ACTION, title, message);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, null);
-  }
-
-  /**
-   * Shows a alert window to uer.
-   * @param intent provide the message to show
-   */
-  private void showAlert(Intent intent) {
-    String message = intent.getStringExtra(ShowAlertAction.PARAM_ALERT_MESSAGE);
-    if (message == null) {
-      Log.w("showAlert", "No user message provided");
-      message = getString(R.string.action_default_message);
-    }
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, null);        
+  private void turnOffBluetooth() {
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+	if (mBluetoothAdapter.isEnabled()) {
+		mBluetoothAdapter.disable(); 
+	}
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
+        getString(R.string.bluetooth_turned_off));
   }
   
   /**
-   * Set the brightness of the screen, the value is between 0 and 255. {@link SCREEN_BRIGHTNESS}
-   * @param brightness
+   * turn on the bluetooth. 
    */
-  private void setScreenBrightness(Intent intent) {
-    int brightness = intent.getIntExtra(SetScreenBrightnessAction.PARAM_BRIGHTNESS, 200);
-    Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightness);
-    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS, null);
+  private void turnOnBluetooth() {
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+	if (!mBluetoothAdapter.isEnabled()) {
+		mBluetoothAdapter.enable(); 
+	}
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
+        getString(R.string.bluetooth_turned_on));
   }
-  
-
 }

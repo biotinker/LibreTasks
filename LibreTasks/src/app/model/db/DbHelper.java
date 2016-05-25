@@ -51,14 +51,15 @@ public class DbHelper extends SQLiteOpenHelper  {
     public static final String PHONE = "Phone";
     public static final String GPS = "GPS";
     public static final String MEDIA = "Media";
-    public static final String GMAIL = "GMAIL";
-    public static final String TWITTER = "Twitter";
+    public static final String EMAIL = "Email";
+    public static final String SETTINGS = "Settings";
+    public static final String SIGNALS = "Signals";
   }
 
   private static final String TAG = DbHelper.class.getName();
 
   // This version number needs to increase whenever a data schema change is made
-  private static final int DATABASE_VERSION = 20;
+  private static final int DATABASE_VERSION = 22;
 
 
   private static final String DATABASE_NAME = "omnidroid";

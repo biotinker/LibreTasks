@@ -37,7 +37,7 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.OmniActionService;
+import libretasks.app.controller.external.actions.SettingsActionService;
 import libretasks.app.controller.util.ExceptionMessageMap;
 import libretasks.app.controller.util.OmnidroidException;
 
@@ -47,13 +47,14 @@ import libretasks.app.controller.util.OmnidroidException;
  */
 public class SetScreenBrightnessAction extends OmniAction {
   //TODO(Roger):in the future store it in R to support internationalization.
+  public static final String APP_NAME = "Settings";
   public static final String ACTION_NAME = "Change screen brightness";
   public static final String PARAM_BRIGHTNESS = "brightness";
   
   private Integer brightness;
 
   public SetScreenBrightnessAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(OmniActionService.class.getName(), Action.BY_SERVICE);
+    super(SettingsActionService.class.getName(), Action.BY_SERVICE);
     String brightnessString = parameters.get(PARAM_BRIGHTNESS);
     if (brightnessString == null) {
       //Action parameters not found error
@@ -77,9 +78,9 @@ public class SetScreenBrightnessAction extends OmniAction {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, OmniActionService.class.getName());
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SettingsActionService.class.getName());
     intent.putExtra(PARAM_BRIGHTNESS, brightness);
-    intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_SCREEN_BRIGHTNESS);
+    intent.putExtra(SettingsActionService.OPERATION_TYPE, SettingsActionService.SET_SCREEN_BRIGHTNESS);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
     return intent;

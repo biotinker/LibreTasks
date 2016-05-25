@@ -37,7 +37,7 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.OmniActionService;
+import libretasks.app.controller.external.actions.SettingsActionService;
 import libretasks.app.controller.util.OmnidroidException;
 
 /**
@@ -47,16 +47,17 @@ import libretasks.app.controller.util.OmnidroidException;
 public class SetPhoneSilentAction extends OmniAction {
 
   public static final String ACTION_NAME = "Set Phone Silent";
+  public static final String APP_NAME = "Settings";
 
   public SetPhoneSilentAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(OmniActionService.class.getName(), Action.BY_SERVICE);
+    super(SettingsActionService.class.getName(), Action.BY_SERVICE);
   }
 
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, OmniActionService.class.getName());
-    intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SET_PHONE_SILENT);
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SettingsActionService.class.getName());
+    intent.putExtra(SettingsActionService.OPERATION_TYPE, SettingsActionService.SET_PHONE_SILENT);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, showNotification);

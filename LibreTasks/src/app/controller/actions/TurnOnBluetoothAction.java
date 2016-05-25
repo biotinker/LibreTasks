@@ -17,7 +17,7 @@
  * This file incorporates work covered by the following copyright and  
  * permission notice:  
  /*******************************************************************************
- * Copyright 2009, 2010 Omnidroid - http://code.google.com/p/omnidroid
+ * Copyright 2010 OmniDroid - http://code.google.com/p/omnidroid
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,36 +37,35 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.SettingsActionService;
+import libretasks.app.controller.external.actions.SignalsActionService;
 import libretasks.app.controller.util.OmnidroidException;
 
 /**
- * Simple action that sets the phone in vibrate mode
+ * Simple action that turns wifi on
  *
  */
-public class SetPhoneVibrateAction extends OmniAction {
+public class TurnOnBluetoothAction extends OmniAction {
 
-  public static final String ACTION_NAME = "Set Phone Vibrate";
-  public static final String APP_NAME = "Settings";
-
-  public SetPhoneVibrateAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(SettingsActionService.class.getName(), Action.BY_SERVICE);
+  public static final String ACTION_NAME = "Turn On Bluetooth";
+  public static final String APP_NAME = "Signals";
+  public TurnOnBluetoothAction(HashMap<String, String> parameters) throws OmnidroidException {
+    super(SignalsActionService.class.getName(), Action.BY_SERVICE);
   }
 
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SettingsActionService.class.getName());
-    intent.putExtra(SettingsActionService.OPERATION_TYPE, SettingsActionService.SET_PHONE_VIBRATE);
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SignalsActionService.class.getName());
+    intent.putExtra(SignalsActionService.OPERATION_TYPE, SignalsActionService.TURN_ON_BLUETOOTH_ACTION);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, showNotification);
     return intent;
   }
-
+  
   @Override
   public String getDescription() {
-    return APP_NAME + "-" + ACTION_NAME;
+	  return APP_NAME + "-" + ACTION_NAME;
   }
 
 }

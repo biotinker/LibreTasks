@@ -36,7 +36,7 @@ package libretasks.app.controller.actions;
 import java.util.Map;
 
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.OmniActionService;
+import libretasks.app.controller.external.actions.SettingsActionService;
 import libretasks.app.controller.util.ExceptionMessageMap;
 import libretasks.app.controller.util.OmnidroidException;
 import android.content.Intent;
@@ -53,7 +53,7 @@ public class ShowNotificationAction extends OmniAction {
   private String message = null;
 
   public ShowNotificationAction(Map<String, String> parameters) throws OmnidroidException {
-    super(OmniActionService.class.getName(), Action.BY_SERVICE);
+    super(SettingsActionService.class.getName(), Action.BY_SERVICE);
     message = parameters.get(PARAM_ALERT_MESSAGE);
     if (message == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
@@ -64,8 +64,8 @@ public class ShowNotificationAction extends OmniAction {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, OmniActionService.class.getName());
-    intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_NOTIFICATION_ACTION);
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SettingsActionService.class.getName());
+    intent.putExtra(SettingsActionService.OPERATION_TYPE, SettingsActionService.SHOW_NOTIFICATION_ACTION);
     intent.putExtra(PARAM_TITLE, ruleName);
     intent.putExtra(PARAM_ALERT_MESSAGE, message);
     intent.putExtra(DATABASE_ID, databaseId);

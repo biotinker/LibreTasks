@@ -37,7 +37,7 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.OmniActionService;
+import libretasks.app.controller.external.actions.SettingsActionService;
 import libretasks.app.controller.util.ExceptionMessageMap;
 import libretasks.app.controller.util.OmnidroidException;
 
@@ -53,7 +53,7 @@ public class ShowAlertAction extends OmniAction {
   private String message = null;
 
   public ShowAlertAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(OmniActionService.class.getName(), Action.BY_SERVICE);
+    super(SettingsActionService.class.getName(), Action.BY_SERVICE);
     message = parameters.get(PARAM_ALERT_MESSAGE);
     if (message == null) {
       throw new OmnidroidException(120002, ExceptionMessageMap.getMessage(new Integer(120002)
@@ -64,9 +64,9 @@ public class ShowAlertAction extends OmniAction {
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, OmniActionService.class.getName());
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SettingsActionService.class.getName());
     intent.putExtra(PARAM_ALERT_MESSAGE, message);
-    intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.SHOW_ALERT_ACTION);
+    intent.putExtra(SettingsActionService.OPERATION_TYPE, SettingsActionService.SHOW_ALERT_ACTION);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
     return intent;

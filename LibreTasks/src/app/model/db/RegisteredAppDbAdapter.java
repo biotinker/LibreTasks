@@ -42,9 +42,9 @@ import android.database.sqlite.SQLiteQueryBuilder;
 /**
  * Database helper class for the RegisteredApps table. Defines basic CRUD methods.
  * <p>
- * This table contains all applications registered in Omnidroid. For each application record:
+ * This table contains all applications registered in LibreTasks. For each application record:
  * AppName is name of the application; PkgName is the package name of the application; Enabled is
- * whether this application is enabled in Omnidroid
+ * whether this application is enabled in Libretasks
  * </p>
  * <p>
  * Note: Every app should have a unique name

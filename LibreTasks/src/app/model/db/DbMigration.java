@@ -57,7 +57,8 @@ import libretasks.app.controller.actions.ShowNotificationAction;
 import libretasks.app.controller.actions.ShowWebsiteAction;
 import libretasks.app.controller.actions.TurnOffWifiAction;
 import libretasks.app.controller.actions.TurnOnWifiAction;
-import libretasks.app.controller.actions.UpdateTwitterStatusAction;
+import libretasks.app.controller.actions.TurnOffBluetoothAction;
+import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.controller.datatypes.OmniArea;
 import libretasks.app.controller.datatypes.OmniDate;
 import libretasks.app.controller.datatypes.OmniDayOfWeek;
@@ -109,44 +110,27 @@ public class DbMigration {
     case 2:
     case 3:
     case 4:
-      initialVersion(db);
     case 5:
-      updateDataTypeClassNameChanges(db);
-      addCallEndEvent(db);
     case 6:
-      addLogEvent(db);
     case 7:
-      dropLogEvent(db);
-      addLogEvent(db);
-      dropLogAction(db);
-      addLogAction(db);
-      addLogGeneral(db);
     case 8:
-      modifyGmailAndTwitterParam(db);
     case 9:
-      addWifiActions(db);
     case 10:
-      addNotification(db);
     case 11:
-      addPhoneNumberNotEqualsFilter(db);
     case 12:
-      addGeneralLogLevels(db);
     case 13:
-      addFailedActions(db);
-      addInternetAndServiceAvailableEvents(db);
     case 14:
-      setDefaultRules(context, db);
     case 15:
-      addSupportForGlobalEventAttributes(db);
     case 16:
-      alterFailedActionsTable(db);
     case 17:
-      addMissedCallEvent(db);
     case 18:
     case 19:
     case 20:
-      removeTwitter(db);
-
+    case 21:
+      initialVersion(db);
+      setDefaultRules(context, db);
+    case 22:
+      addBluetooth(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -470,9 +454,10 @@ public class DbMigration {
     long appIdSms = appDbAdapter.insert(DbHelper.AppName.SMS, "", true);
     long appIdPhone = appDbAdapter.insert(DbHelper.AppName.PHONE, "", true);
     long appIdGPS = appDbAdapter.insert(DbHelper.AppName.GPS, "", true);
-    long appIdGmail = appDbAdapter.insert(DbHelper.AppName.GMAIL, "", true, true);
-    long appIdTwitter = appDbAdapter.insert(DbHelper.AppName.TWITTER, "", true, true);
+    long appIdEmail = appDbAdapter.insert(DbHelper.AppName.EMAIL, "", true, true);
     long appIdOmnidroid = appDbAdapter.insert(OmniAction.APP_NAME, "", true);
+    long appIdSettings = appDbAdapter.insert(DbHelper.AppName.SETTINGS, "", true, true);
+	long appIdSignals = appDbAdapter.insert(DbHelper.AppName.SIGNALS, "", true, true);
     long appIdMedia = appDbAdapter.insert(DbHelper.AppName.MEDIA, "", true);
     long appIdAndroid = appDbAdapter.insert(SystemEvent.PowerConnectedEvent.APPLICATION_NAME, "",
         true);
@@ -531,15 +516,18 @@ public class DbMigration {
     actionParameterDbAdapter.insert(ShowWebsiteAction.PARAM_WEB_URL, actionIdShowWebsite,
         dataTypeIdText);
     long actionIdSetBrightness = actionDbAdapter.insert(SetScreenBrightnessAction.ACTION_NAME,
-        appIdOmnidroid);
+        appIdSettings);
     actionParameterDbAdapter.insert(SetScreenBrightnessAction.PARAM_BRIGHTNESS,
         actionIdSetBrightness, dataTypeIdText);
-    actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdOmnidroid);
+    actionDbAdapter.insert(SetPhoneLoudAction.ACTION_NAME, appIdSettings);
+    actionDbAdapter.insert(SetPhoneSilentAction.ACTION_NAME, appIdSettings);
+    actionDbAdapter.insert(SetPhoneVibrateAction.ACTION_NAME, appIdSettings);
     
     actionDbAdapter.insert(PlayMediaAction.ACTION_NAME, appIdMedia);
     actionDbAdapter.insert(PauseMediaAction.ACTION_NAME, appIdMedia);
+    
+    actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdSignals);
+    actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdSignals);
 
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend,
@@ -550,7 +538,7 @@ public class DbMigration {
     actionParameterDbAdapter.insert(CallPhoneAction.PARAM_PHONE_NO, actionIdPhoneCall,
         dataTypeIdPhoneNumber);
 
-    long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdGmail);
+    long actionIdGmailSend = actionDbAdapter.insert(SendGmailAction.ACTION_NAME, appIdEmail);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_USERNAME, actionIdGmailSend,
         dataTypeIdText);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_PASSWORD, actionIdGmailSend,
@@ -559,15 +547,27 @@ public class DbMigration {
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_SUBJECT, actionIdGmailSend,
         dataTypeIdText);
     actionParameterDbAdapter.insert(SendGmailAction.PARAM_BODY, actionIdGmailSend, dataTypeIdText);
-
-    long actionIdTwitterUpdate = actionDbAdapter.insert(UpdateTwitterStatusAction.ACTION_NAME,
-        appIdTwitter);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_USERNAME,
-        actionIdTwitterUpdate, dataTypeIdText);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_PASSWORD,
-        actionIdTwitterUpdate, dataTypeIdPasswordInput);
-    actionParameterDbAdapter.insert(UpdateTwitterStatusAction.PARAM_MESSAGE, actionIdTwitterUpdate,
-        dataTypeIdText);
+    
+    //Add notifications and failed actions
+    db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
+    db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
+    db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());
+    
+    //Call create statements to reinitialize database
+    addCallEndEvent(db);
+    dropLogEvent(db);
+    addLogEvent(db);
+    dropLogAction(db);
+    addLogAction(db);
+    addLogGeneral(db);
+    modifyGmailAndTwitterParam(db);
+    addPhoneNumberNotEqualsFilter(db);
+    addGeneralLogLevels(db);
+    addInternetAndServiceAvailableEvents(db);
+    addSupportForGlobalEventAttributes(db);
+    alterFailedActionsTable(db);
+    addMissedCallEvent(db);
+    
   }
 
   /**
@@ -673,14 +673,10 @@ public class DbMigration {
     long dataTypeIdAccount = dataTypeDbAdapter.insert(OmniUserAccount.DB_NAME,
         OmniUserAccount.class.getName());
 
-    modifyActionToSupportUserAccount(db, DbHelper.AppName.GMAIL, SendGmailAction.ACTION_NAME,
+    modifyActionToSupportUserAccount(db, DbHelper.AppName.EMAIL, SendGmailAction.ACTION_NAME,
         SendGmailAction.PARAM_USERNAME, SendGmailAction.PARAM_PASSWORD,
         SendGmailAction.PARAM_USER_ACCOUNT, dataTypeIdAccount);
 
-    modifyActionToSupportUserAccount(db, DbHelper.AppName.TWITTER,
-        UpdateTwitterStatusAction.ACTION_NAME, UpdateTwitterStatusAction.PARAM_USERNAME,
-        UpdateTwitterStatusAction.PARAM_PASSWORD, UpdateTwitterStatusAction.PARAM_USER_ACCOUNT,
-        dataTypeIdAccount);
   }
 
   /**
@@ -778,25 +774,6 @@ public class DbMigration {
       } while (cursor.moveToPrevious());
     }
     cursor.close();
-  }
-
-  private static void addWifiActions(SQLiteDatabase db) {
-    RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-    long appIdOmnidroid = appDbAdapter.getAppId(OmniAction.APP_NAME);
-
-    RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-    actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdOmnidroid);
-    actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdOmnidroid);
-
-  }
-
-  private static void addNotification(SQLiteDatabase db) {
-    db.execSQL(RuleDbAdapter.ADD_NOTIFICATION_COLUMN);
-  }
-
-  private static void addFailedActions(SQLiteDatabase db) {
-    db.execSQL(FailedActionsDbAdapter.getSqliteCreateStatement());
-    db.execSQL(FailedActionParameterDbAdapter.getSqliteCreateStatement());
   }
 
   private static void addGeneralLogLevels(SQLiteDatabase db) {
@@ -942,30 +919,14 @@ public class DbMigration {
     eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
         eventIdMissedCall, dataTypeIdPhoneNumber);
   }
-     /**
-   * Remove twitter from db if present
-   * 
-   * @param db
-   *          the database instance to work with
-   */
-  @SuppressWarnings("deprecation")
-  private static void removeTwitter(SQLiteDatabase db) {
-	RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
-	RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
-	long twitAppID = appDbAdapter.getAppId("Twitter");
-	if(twitAppID != -1){
-		//Delete app listing
-		boolean isAppDeleted = appDbAdapter.delete(twitAppID);
-		
-		//Delete action listings
-		Cursor cursor = actionDbAdapter.fetchAll(null, twitAppID);
-		if(cursor != null) {
-			while (cursor.moveToNext()) {
-				long actionID = getLongFromCursor(cursor, actionDbAdapter.KEY_ACTIONID);
-				boolean isActionDeleted = actionDbAdapter.delete(actionID);
-			}
-		}
-	}
-  }
+  
+  private static void addBluetooth(SQLiteDatabase db) {
+		RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+		long appId = appDbAdapter.getAppId(DbHelper.AppName.SIGNALS);
 
+		RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+
+        actionDbAdapter.insert(TurnOffBluetoothAction.ACTION_NAME, appId);
+		actionDbAdapter.insert(TurnOnBluetoothAction.ACTION_NAME, appId);
+  }
 }

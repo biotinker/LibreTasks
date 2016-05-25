@@ -37,7 +37,7 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import libretasks.app.controller.Action;
-import libretasks.app.controller.external.actions.OmniActionService;
+import libretasks.app.controller.external.actions.SignalsActionService;
 import libretasks.app.controller.util.OmnidroidException;
 
 /**
@@ -46,17 +46,18 @@ import libretasks.app.controller.util.OmnidroidException;
  */
 public class TurnOffWifiAction extends OmniAction {
 
+  public static final String APP_NAME = "Signals";
   public static final String ACTION_NAME = "Turn Off WiFi";
 
   public TurnOffWifiAction(HashMap<String, String> parameters) throws OmnidroidException {
-    super(OmniActionService.class.getName(), Action.BY_SERVICE);
+    super(SignalsActionService.class.getName(), Action.BY_SERVICE);
   }
 
   @Override
   public Intent getIntent() {
     Intent intent = new Intent();
-    intent.setClassName(LIBRETASKS_PACKAGE_NAME, OmniActionService.class.getName());
-    intent.putExtra(OmniActionService.OPERATION_TYPE, OmniActionService.TURN_OFF_WIFI_ACTION);
+    intent.setClassName(LIBRETASKS_PACKAGE_NAME, SignalsActionService.class.getName());
+    intent.putExtra(SignalsActionService.OPERATION_TYPE, SignalsActionService.TURN_OFF_WIFI_ACTION);
     intent.putExtra(DATABASE_ID, databaseId);
     intent.putExtra(ACTION_TYPE, actionType);
     intent.putExtra(NOTIFICATION, showNotification);
