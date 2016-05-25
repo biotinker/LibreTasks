@@ -59,6 +59,8 @@ import libretasks.app.controller.actions.ShowNotificationAction;
 import libretasks.app.controller.actions.ShowWebsiteAction;
 import libretasks.app.controller.actions.TurnOffWifiAction;
 import libretasks.app.controller.actions.TurnOnWifiAction;
+import libretasks.app.controller.actions.TurnOffBluetoothAction;
+import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.controller.actions.UpdateTwitterStatusAction;
 import libretasks.app.controller.util.ExceptionMessageMap;
 import libretasks.app.controller.util.Logger;
@@ -172,6 +174,12 @@ public class CoreActionsDbHelper {
     } else if (appName.equals(TurnOnWifiAction.APP_NAME)
         && actionName.equals(TurnOnWifiAction.ACTION_NAME)) {
       return new TurnOnWifiAction(actionParams);
+    } else if (appName.equals(TurnOffBluetoothAction.APP_NAME)
+        && actionName.equals(TurnOffBluetoothAction.ACTION_NAME)) {
+      return new TurnOffBluetoothAction(actionParams);
+    } else if (appName.equals(TurnOnBluetoothAction.APP_NAME)
+        && actionName.equals(TurnOnBluetoothAction.ACTION_NAME)) {
+      return new TurnOnBluetoothAction(actionParams);
     } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);

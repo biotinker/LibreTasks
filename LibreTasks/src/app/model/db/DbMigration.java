@@ -57,6 +57,8 @@ import libretasks.app.controller.actions.ShowNotificationAction;
 import libretasks.app.controller.actions.ShowWebsiteAction;
 import libretasks.app.controller.actions.TurnOffWifiAction;
 import libretasks.app.controller.actions.TurnOnWifiAction;
+import libretasks.app.controller.actions.TurnOffBluetoothAction;
+import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.controller.datatypes.OmniArea;
 import libretasks.app.controller.datatypes.OmniDate;
 import libretasks.app.controller.datatypes.OmniDayOfWeek;
@@ -128,8 +130,7 @@ public class DbMigration {
       initialVersion(db);
       setDefaultRules(context, db);
     case 22:
-      //~ addBluetooth(db);
-
+      addBluetooth(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -917,5 +918,15 @@ public class DbMigration {
     long dataTypeIdPhoneNumber = CursorHelper.getLongFromCursor(cursor, DataTypeDbAdapter.KEY_DATATYPEID);
     eventAttributeDbAdapter.insert(MissedCallEvent.ATTRIBUTE_PHONE_NUMBER,
         eventIdMissedCall, dataTypeIdPhoneNumber);
+  }
+  
+  private static void addBluetooth(SQLiteDatabase db) {
+		RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+		long appId = appDbAdapter.getAppId(DbHelper.AppName.SIGNALS);
+
+		RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+
+        actionDbAdapter.insert(TurnOffBluetoothAction.ACTION_NAME, appId);
+		actionDbAdapter.insert(TurnOnBluetoothAction.ACTION_NAME, appId);
   }
 }

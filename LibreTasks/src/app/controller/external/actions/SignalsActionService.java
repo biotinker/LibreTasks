@@ -42,12 +42,13 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
+import android.bluetooth.BluetoothAdapter;
 import libretasks.app.R;
 import libretasks.app.controller.ResultProcessor;
 import libretasks.app.controller.actions.TurnOffWifiAction;
 import libretasks.app.controller.actions.TurnOnWifiAction;
-//~ import libretasks.app.controller.actions.TurnOffBluetoothAction;
-//~ import libretasks.app.controller.actions.TurnOnBluetoothAction;
+import libretasks.app.controller.actions.TurnOffBluetoothAction;
+import libretasks.app.controller.actions.TurnOnBluetoothAction;
 import libretasks.app.view.simple.UtilUI;
 
 /**
@@ -60,6 +61,8 @@ public class SignalsActionService extends Service {
   //operation supported by this service
   public static final String OPERATION_TYPE = "OPERATION_TYPE";
   public static final int NO_ACTION = -1;
+  public static final int TURN_ON_BLUETOOTH_ACTION = 1;
+  public static final int TURN_OFF_BLUETOOTH_ACTION = 2;
   public static final int TURN_OFF_WIFI_ACTION = 3;
   public static final int TURN_ON_WIFI_ACTION = 4;
   
@@ -76,6 +79,12 @@ public class SignalsActionService extends Service {
     this.intent = intent;
     int operationType = intent.getIntExtra(OPERATION_TYPE, NO_ACTION);
     switch (operationType) {
+    case TURN_ON_BLUETOOTH_ACTION :
+      turnOnBluetooth();
+      break;
+    case TURN_OFF_BLUETOOTH_ACTION :
+      turnOffBluetooth();
+      break;
     case TURN_OFF_WIFI_ACTION :
       turnOffWifi();
       break;
@@ -105,5 +114,29 @@ public class SignalsActionService extends Service {
     wifiManager.setWifiEnabled(true);
     ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
         getString(R.string.wifi_turned_on));
+  }
+  
+  /**
+   * turn off the bluetooth.
+   */
+  private void turnOffBluetooth() {
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+	if (mBluetoothAdapter.isEnabled()) {
+		mBluetoothAdapter.disable(); 
+	}
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
+        getString(R.string.bluetooth_turned_off));
+  }
+  
+  /**
+   * turn on the bluetooth. 
+   */
+  private void turnOnBluetooth() {
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();    
+	if (!mBluetoothAdapter.isEnabled()) {
+		mBluetoothAdapter.enable(); 
+	}
+    ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
+        getString(R.string.bluetooth_turned_on));
   }
 }

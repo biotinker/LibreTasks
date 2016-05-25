@@ -47,6 +47,7 @@ import libretasks.app.controller.util.OmnidroidException;
 public class TurnOffBluetoothAction extends OmniAction {
 
   public static final String ACTION_NAME = "Turn Off Bluetooth";
+  public static final String APP_NAME = "Signals";
 
   public TurnOffBluetoothAction(HashMap<String, String> parameters) throws OmnidroidException {
     super(SignalsActionService.class.getName(), Action.BY_SERVICE);
