@@ -1,3 +1,8 @@
+0.5.0:
+-Reworked menus significantly, splitting many things from "LibreTasks" into "Settings" or "Signals"
+-Added support for bluetooth
+-Forced a database reset
+
 0.4.1:
 -Removed Twitter functionality altogether
 
