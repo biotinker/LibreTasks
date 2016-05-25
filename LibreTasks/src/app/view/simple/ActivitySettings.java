@@ -45,6 +45,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import libretasks.app.R;
 import libretasks.app.controller.OmnidroidManager;
 import libretasks.app.model.db.RuleDbAdapter;
+import android.widget.Toast;
+import java.io.IOException;
 
 /**
  * This activity shows all the settings/preferences
@@ -95,6 +97,16 @@ public class ActivitySettings extends PreferenceActivity implements
           // @Override
           public boolean onPreferenceClick(Preference preference) {
             confirmResetSettings();
+            return true;
+          }
+        });
+        
+    // Add a listener for Settings Root click
+    findPreference(getString(R.string.pref_key_get_root)).setOnPreferenceClickListener(
+        new OnPreferenceClickListener() {
+          // @Override
+          public boolean onPreferenceClick(Preference preference) {
+            getRoot();
             return true;
           }
         });
@@ -241,4 +253,30 @@ public class ActivitySettings extends PreferenceActivity implements
     }    
   }
   
+
+  /**
+   * Try to get root
+   */
+  private void getRoot() {
+		Process p; 
+		try { 
+		   // Preform su to get root privledges
+		   p = Runtime.getRuntime().exec("su"); 
+		   
+		   try { 
+			  p.waitFor(); 
+				   if (p.exitValue() != 255) { 
+					  Toast.makeText(this, "root", Toast.LENGTH_LONG).show();
+				   } 
+				   else { 
+					   Toast.makeText(this, "not root", Toast.LENGTH_LONG).show();
+				   } 
+		   } catch (InterruptedException e) { 
+			   Toast.makeText(this, "not root", Toast.LENGTH_LONG).show();
+		   }
+		} catch (IOException e) { 
+			Toast.makeText(this, "not root", Toast.LENGTH_LONG).show();
+		}
+	}
+
 }

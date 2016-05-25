@@ -267,6 +267,7 @@
     <string name="pref_key_log_limit">LogLimit</string>
     <string name="pref_key_reset_db">ResetDb</string>
     <string name="pref_key_reset_settings">ResetSettings</string>
+    <string name="pref_key_get_root">GetRoot</string>
     <string name="pref_key_gmail_signature">GmailSignature</string>
     <string name="pref_key_gmail_signature_settings">GmailSignatureSetitngs</string>
     <string name="pref_key_sms_signature">SMSSignature</string>
