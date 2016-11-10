@@ -9,7 +9,7 @@
     >
     
     
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
       android:id="@+id/activity_dlg_filter_input_llDynamicContent"
       android:orientation="vertical"
       android:layout_width="fill_parent"
