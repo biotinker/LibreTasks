@@ -47,5 +47,5 @@ A src/edu/nyu/cs/omnidroid/external/actions/SomeService.java -- create a service
 M ~~src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java~~ libretasks.app.model.CoreActionsDbHelper.java:getAction()
 libretasks.app.model.FailedActionsDbHelper.java:getAction() -- add support to the action
 
-M ~~src/edu/nyu/cs/omnidroid/model/DbData.java~~ libretasks.app.model.db.DbMigration.setDefaultRules() -- prepopulate Db
+M ~~src/edu/nyu/cs/omnidroid/model/DbData.java~~ libretasks.app.model.db.DbMigration.initialVersion() -- prepopulate Db
 
