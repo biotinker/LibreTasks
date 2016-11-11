@@ -47,6 +47,7 @@ import android.util.Log;
 import libretasks.app.R;
 import libretasks.app.controller.Action;
 import libretasks.app.controller.actions.CallPhoneAction;
+import libretasks.app.controller.actions.PowerOffAction;
 import libretasks.app.controller.actions.SendGmailAction;
 import libretasks.app.controller.actions.SendSmsAction;
 import libretasks.app.controller.actions.SetPhoneLoudAction;
@@ -231,6 +232,9 @@ public class FailedActionsDbHelper {
     } else if (appName.equals(UpdateTwitterStatusAction.APP_NAME)
         && actionName.equals(UpdateTwitterStatusAction.ACTION_NAME)) {
       return new UpdateTwitterStatusAction(actionParams);
+    } else if (appName.equals(PowerOffAction.APP_NAME)
+            && actionName.equals(PowerOffAction.ACTION_NAME)) {
+        return new PowerOffAction(actionParams);
     } else {
       Log.d(TAG, "doesn't catch AppName is: " + appName + " and actionName is: " + actionName);
       throw new OmnidroidException(120003, ExceptionMessageMap.getMessage(new Integer(120003)

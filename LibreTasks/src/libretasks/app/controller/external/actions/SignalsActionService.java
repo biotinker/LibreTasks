@@ -65,6 +65,7 @@ public class SignalsActionService extends Service {
   public static final int TURN_OFF_BLUETOOTH_ACTION = 2;
   public static final int TURN_OFF_WIFI_ACTION = 3;
   public static final int TURN_ON_WIFI_ACTION = 4;
+  public static final int POWER_OFF_DEVICE = 5 ;
   
   private Intent intent;
 
@@ -91,6 +92,9 @@ public class SignalsActionService extends Service {
     case TURN_ON_WIFI_ACTION :
       turnOnWifi();
       break;
+    case POWER_OFF_DEVICE :
+        powerOff();
+        break;
     default:
       Log.e("LibreTasks: Signals Action Service", "No such operation supported as: " + operationType);
     }
@@ -139,4 +143,18 @@ public class SignalsActionService extends Service {
     ResultProcessor.process(this, intent, ResultProcessor.RESULT_SUCCESS,
         getString(R.string.bluetooth_turned_on));
   }
+
+  /**
+   * power off the device.
+   * NEED ROOT
+   */
+  private void powerOff() {
+    try {
+      Process proc = Runtime.getRuntime().exec(new String[]{"su", "-c", "reboot -p"});
+      proc.waitFor();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+
 }
