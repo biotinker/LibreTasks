@@ -44,6 +44,8 @@ A src/edu/nyu/cs/omnidroid/core/SomeAction.java -- the action
 
 A src/edu/nyu/cs/omnidroid/external/actions/SomeService.java -- create a service to do the job if necessary.
 
-M src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java -- add support to the action
+M ~~src/edu/nyu/cs/omnidroid/model/CoreActionsDbHelper.java~~ libretasks.app.model.CoreActionsDbHelper.java:getAction()
+libretasks.app.model.FailedActionsDbHelper.java:getAction() -- add support to the action
 
-M src/edu/nyu/cs/omnidroid/model/DbData.java -- prepopulate Db
+M ~~src/edu/nyu/cs/omnidroid/model/DbData.java~~ libretasks.app.model.db.DbMigration.initialVersion() -- prepopulate Db
+
