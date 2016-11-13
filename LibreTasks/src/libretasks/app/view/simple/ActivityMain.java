@@ -101,7 +101,7 @@ public class ActivityMain extends Activity {
     } else {
       showDisclaimer();
     }
-    testForeRoot();
+    testForRoot();
   }
 
   /*
@@ -164,7 +164,7 @@ public class ActivityMain extends Activity {
     welcome.show();
   }
 
-  private boolean testForeRoot(){
+  private boolean testForRoot(){
       boolean hasRoot=false;
       try {
           // Perform su to get root privilege
