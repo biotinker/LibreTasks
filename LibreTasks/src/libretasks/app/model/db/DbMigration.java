@@ -48,6 +48,7 @@ import libretasks.app.controller.actions.SendGmailAction;
 import libretasks.app.controller.actions.SendSmsAction;
 import libretasks.app.controller.actions.PauseMediaAction;
 import libretasks.app.controller.actions.PlayMediaAction;
+import libretasks.app.controller.actions.PowerOffAction;
 import libretasks.app.controller.actions.SetPhoneLoudAction;
 import libretasks.app.controller.actions.SetPhoneSilentAction;
 import libretasks.app.controller.actions.SetPhoneVibrateAction;
@@ -528,6 +529,8 @@ public class DbMigration {
     
     actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdSignals);
     actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdSignals);
+
+    actionDbAdapter.insert(PowerOffAction.ACTION_NAME, appIdSignals);
 
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend,

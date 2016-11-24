@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="libretasks.app" android:versionCode="21"
-	android:versionName="0.5.0">
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="16" />
+    package="libretasks.app" android:versionCode="21"
+    android:versionName="0.5.1">
+    <uses-sdk android:minSdkVersion="3"
+        android:targetSdkVersion="22" />
 
-    <application android:icon="@drawable/icon" android:label="@string/libretasks"
-		android:debuggable="true">
-				
-		<!--  Start UI activity definitions. -->
-		<activity android:name=".view.simple.ActivityMain"
-                  android:label="@string/libretasks">
+    <application android:icon="@drawable/icon"
+        android:label="@string/libretasks" android:debuggable="true">
+
+        <!-- Start UI activity definitions. -->
+        <activity android:name=".view.simple.ActivityMain"
+            android:label="@string/libretasks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".view.simple.ActivityChooseRootEvent"
-                  android:label="@string/choose_root_event_title">
+            android:label="@string/choose_root_event_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -25,34 +26,31 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityChooseFiltersAndActions"
-                  android:label="@string/addfilters_and_actions_title">
+            android:label="@string/addfilters_and_actions_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
 
         <activity android:name=".view.simple.ActivityDlgLog"
-                  android:label="@string/logs"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/logs" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
 
         <activity android:name=".view.simple.ActivityDlgAttributes"
-                  android:label="@string/attributes_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/attributes_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
 
         <activity android:name=".view.simple.ActivityDlgFilters"
-                  android:label="@string/filters_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/filters_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -60,8 +58,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgFilterInput"
-                  android:label="@string/filter_input_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/filter_input_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -69,8 +66,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgApplications"
-                  android:label="@string/applications_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/applications_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -78,8 +74,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgActions"
-                  android:label="@string/actions_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/actions_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -87,25 +82,23 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityDlgActionInput"
-                  android:label="@string/action_input_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/action_input_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-         <activity android:name=".view.simple.ActivityDlgApplicationLoginInput"
-                  android:label="@string/login_title"
-                  android:theme="@android:style/Theme.Dialog">
+        <activity android:name=".view.simple.ActivityDlgApplicationLoginInput"
+            android:label="@string/login_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".view.simple.ActivitySavedRules"
-                  android:label="@string/saved_rules_title">
+            android:label="@string/saved_rules_title">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -113,16 +106,15 @@
         </activity>
 
         <activity android:name=".view.simple.ActivitySettings"
-                  android:label="@string/settings_label">
+            android:label="@string/settings_label">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>        
+        </activity>
 
         <activity android:name=".view.simple.ActivityDlgRuleName"
-                  android:label="@string/rule_name_title"
-                  android:theme="@android:style/Theme.Dialog">
+            android:label="@string/rule_name_title" android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -130,7 +122,7 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityLogs"
-                  android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -138,212 +130,213 @@
         </activity>
 
         <activity android:name=".view.simple.ActivityLogTabs"
-                  android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-		<!--  End UI activity definitions. -->
+        <!-- End UI activity definitions. -->
 
-		<!-- Receiver that runs when Android or LibreTasks starts/restarts -->	
-		<receiver android:name=".controller.bkgservice.Starter">
-			<intent-filter>	
-				<action android:name="android.intent.action.BOOT_COMPLETED" />	
-			</intent-filter>
-			<intent-filter>	
-				<action android:name="OmniStart" />	
-			</intent-filter>
-			<intent-filter>	
-				<action android:name="OmniRestart" />	
-			</intent-filter>	
-		</receiver>    
-		
-		<!--  The service that throws actions to our applications -->
-		<service android:name=".controller.HandlerService"></service>
+        <!-- Receiver that runs when Android or LibreTasks starts/restarts -->
+        <receiver android:name=".controller.bkgservice.Starter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="OmniStart" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="OmniRestart" />
+            </intent-filter>
+        </receiver>
 
-		<!--
-			The service that monitors for System Events and throws associated
-			intents
-		-->
-		<service android:name=".controller.external.attributes.EventMonitoringService" />
+        <!-- The service that throws actions to our applications -->
+        <service android:name=".controller.HandlerService" />
 
-		<!--  Receiver that runs to catch events -->
-		<receiver android:name=".controller.bkgservice.BCReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.PHONE_STATE" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.BATTERY_LOW" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.BATTERY_OKAY" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.CAMERA_BUTTON" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.DEVICE_STORAGE_OK" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.DOCK_EVENT" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.GTALK_CONNECTED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.GTALK_DISCONNECTED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.HEADSET_PLUG" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.SCREEN_OFF" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.SCREEN_ON" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.TIMEZONE_CHANGED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.USER_PRESENT" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.WALLPAPER_CHANGED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
-			</intent-filter>
-			<!-- Intents thrown by libretasks SystemSeviceEventMonitor objects -->
-			<intent-filter>
-				<action android:name="LOCATION_CHANGED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="PHONE_CALL_ENDED" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="PHONE_RINGING" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="TIME_TICK" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="SERVICE_AVAILABLE"></action>
-			</intent-filter>
-			<intent-filter>
-				<action android:name="NETWORK_AVAILABLE"></action>
-			</intent-filter>
-			<intent-filter>
-				<action android:name="MISSED_CALL"></action>
-			</intent-filter>
-		</receiver>
+        <!-- The service that monitors for System Events and throws associated 
+            intents -->
+        <service
+            android:name=".controller.external.attributes.EventMonitoringService" />
 
-		<!-- Services that run to fire actions -->
-		<service android:name=".controller.external.actions.SMSService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.SMS_SEND" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.GMailService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.GMAIL_SEND" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.SettingsActionService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
-				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.SignalsActionService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
-				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.MediaActionService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.SHOW_MESSAGE" />
-				<action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.UpdateTwitterStatusService">
-			<intent-filter>
-				<action android:name="libretasks.intent.action.TWITTER_UPDATE" />
-			</intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.PhoneCallService">
-		    <intent-filter>
-		        <action android:name="libretasks.intent.action.PHONE_CALL"></action>
-		    </intent-filter>
-		</service>
-		<service android:name=".controller.external.actions.ShowWebsiteService">
-        <intent-filter>
-            <action android:name="libretasks.intent.action.SHOW_WEBSITE"></action>
-        </intent-filter>
-    </service>
-		<!-- End Services that run to fire actions -->
-        
+        <!-- Receiver that runs to catch events -->
+        <receiver android:name=".controller.bkgservice.BCReceiver">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CAMERA_BUTTON" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DOCK_EVENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.GTALK_CONNECTED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.GTALK_DISCONNECTED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+            </intent-filter>
+            <!-- Intents thrown by libretasks SystemSeviceEventMonitor objects -->
+            <intent-filter>
+                <action android:name="LOCATION_CHANGED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="PHONE_CALL_ENDED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="PHONE_RINGING" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="TIME_TICK" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="SERVICE_AVAILABLE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="NETWORK_AVAILABLE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="MISSED_CALL" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Services that run to fire actions -->
+        <service android:name=".controller.external.actions.SMSService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.SMS_SEND" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.GMailService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.GMAIL_SEND" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.SettingsActionService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.SHOW_MESSAGE" />
+                <action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.SignalsActionService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.SHOW_MESSAGE" />
+                <action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.MediaActionService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.SHOW_MESSAGE" />
+                <action android:name="libretasks.intent.action.SHOW_NOTIFICATION" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".controller.external.actions.UpdateTwitterStatusService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.TWITTER_UPDATE" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.PhoneCallService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.PHONE_CALL" />
+            </intent-filter>
+        </service>
+        <service android:name=".controller.external.actions.ShowWebsiteService">
+            <intent-filter>
+                <action android:name="libretasks.intent.action.SHOW_WEBSITE" />
+            </intent-filter>
+        </service>
+        <!-- End Services that run to fire actions -->
+
     </application>
 
-	<!-- Permissions that LibreTasks registers so it can access more complex functionality
--->
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.BATTERY_STATS" />
-	<uses-permission android:name="android.permission.BLUETOOTH"/>
-	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-	<uses-permission android:name="android.permission.CALL_PHONE" />
-	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-	<uses-permission android:name="android.permission.DEVICE_POWER" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-permission android:name="android.permission.GLOBAL_SEARCH" />
-	<uses-permission android:name="android.permission.INJECT_EVENTS" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-	<uses-permission android:name="android.permission.MANAGE_APP_TOKENS" />
-	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-	<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
-	<uses-permission android:name="android.permission.PERSISTENT_ACTIVITY" />
-	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-	<uses-permission android:name="android.permission.READ_CALENDAR" />
-	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.READ_LOGS" />
-	<uses-permission android:name="android.permission.READ_OWNER_DATA" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.READ_SMS" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.RECEIVE_MMS" />
-	<uses-permission android:name="android.permission.RECEIVE_SMS" />
-	<uses-permission android:name="android.permission.SEND_SMS" />
-	<uses-permission android:name="android.permission.SET_ACTIVITY_WATCHER" />
-	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-	<uses-permission android:name="android.permission.WRITE_SMS" />
+    <!-- Permissions that LibreTasks registers so it can access more complex 
+        functionality -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GLOBAL_SEARCH" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_APP_TOKENS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_OWNER_DATA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SET_ACTIVITY_WATCHER" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
 
 </manifest>

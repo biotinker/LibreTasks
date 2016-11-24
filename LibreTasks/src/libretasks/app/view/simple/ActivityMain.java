@@ -33,6 +33,8 @@
  *******************************************************************************/
 package libretasks.app.view.simple;
 
+import java.io.DataOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -47,6 +49,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import libretasks.app.R;
@@ -98,6 +101,7 @@ public class ActivityMain extends Activity {
     } else {
       showDisclaimer();
     }
+    testForRoot();
   }
 
   /*
@@ -158,6 +162,34 @@ public class ActivityMain extends Activity {
       }
     });
     welcome.show();
+  }
+
+  private boolean testForRoot(){
+      boolean hasRoot=false;
+      try {
+          // Perform su to get root privilege
+          Process p = Runtime.getRuntime().exec("su");
+
+          // Attempt to write a file to a root-only 
+          DataOutputStream os = new DataOutputStream(p.getOutputStream());
+          // we may try to run id here and check that user id is 0. Let's hope for the best :)
+          
+          // Close the terminal
+          os.writeBytes("exit\n");
+          os.flush();
+
+          p.waitFor();
+          if (p.exitValue() != 255) { 
+              Toast.makeText(this, "ROOT Granted", Toast.LENGTH_LONG).show();
+              hasRoot=true;
+          }
+          else {
+              Toast.makeText(this, "ROOT Refused", Toast.LENGTH_LONG).show();
+          }
+      } catch (Exception e) {
+          Toast.makeText(this, "ROOT Refused", Toast.LENGTH_LONG).show();
+      }
+      return hasRoot;
   }
 
   private void setDisclaimerAccepted(boolean accepted) {
