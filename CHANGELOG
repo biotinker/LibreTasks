@@ -1,3 +1,8 @@
+0.6.0:
+-Merged pull request from bilboquet to add:
+--Added optional root support
+--Added action to turn off device (root only)
+
 0.5.0:
 -Reworked menus significantly, splitting many things from "LibreTasks" into "Settings" or "Signals"
 -Added support for bluetooth
