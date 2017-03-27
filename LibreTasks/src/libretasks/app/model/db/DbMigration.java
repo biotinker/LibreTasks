@@ -34,6 +34,7 @@
 package libretasks.app.model.db;
 
 import static libretasks.app.model.CursorHelper.getLongFromCursor;
+import static libretasks.app.model.CursorHelper.getStringFromCursor;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -132,6 +133,7 @@ public class DbMigration {
       setDefaultRules(context, db);
     case 22:
       addBluetooth(db);
+      addPowerOffAction(db);
 
       /*
        * Insert new versions before this line and do not forget to update {@code
@@ -529,8 +531,6 @@ public class DbMigration {
     
     actionDbAdapter.insert(TurnOffWifiAction.ACTION_NAME, appIdSignals);
     actionDbAdapter.insert(TurnOnWifiAction.ACTION_NAME, appIdSignals);
-
-    actionDbAdapter.insert(PowerOffAction.ACTION_NAME, appIdSignals);
 
     long actionIdSmsSend = actionDbAdapter.insert(SendSmsAction.ACTION_NAME, appIdSms);
     actionParameterDbAdapter.insert(SendSmsAction.PARAM_PHONE_NO, actionIdSmsSend,
@@ -931,5 +931,24 @@ public class DbMigration {
 
         actionDbAdapter.insert(TurnOffBluetoothAction.ACTION_NAME, appId);
 		actionDbAdapter.insert(TurnOnBluetoothAction.ACTION_NAME, appId);
+  }
+  
+  private static void addPowerOffAction(SQLiteDatabase db) {
+	  RegisteredAppDbAdapter appDbAdapter = new RegisteredAppDbAdapter(db);
+	  long appId = appDbAdapter.getAppId(OmniAction.APP_NAME);
+
+	  RegisteredActionDbAdapter actionDbAdapter = new RegisteredActionDbAdapter(db);
+
+	  /*
+	   * Previous builds (since the introduction of this action) had a bug due to which this action
+	   * would get inserted in a fresh database but not when upgrading from a previous version.
+	   * This was fixed by subsequently bumping the DB version and adding this method. However, to
+	   * prevent inserting the action twice, we need to check if it's already there.
+	   */
+	  Cursor cursor = actionDbAdapter.fetchAll(PowerOffAction.ACTION_NAME, appId);
+	  if (!cursor.moveToFirst()) {
+		  actionDbAdapter.insert(PowerOffAction.ACTION_NAME, appId);
+	  }
+	  cursor.close();
   }
 }
