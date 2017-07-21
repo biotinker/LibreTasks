@@ -35,15 +35,18 @@ package libretasks.app.controller.external.attributes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import libretasks.app.R;
 import libretasks.app.controller.Event;
 import libretasks.app.controller.datatypes.OmniArea;
 import libretasks.app.controller.events.LocationChangedEvent;
 import libretasks.app.controller.util.DataTypeValidationException;
+import libretasks.app.view.simple.UIDbHelperStore;
 
 /**
  * The class is responsible for communication with the Location Service. It provides access to
@@ -57,7 +60,6 @@ public class LocationMonitor implements SystemServiceEventMonitor {
   private static final long MIN_PROVIDER_UPDATE_INTERVAL = 300000;
   /** Minimum change in location(in meters). Default value is 50 meters. */
   private static final float MIN_PROVIDER_UPDATE_DISTANCE = 50;
-  private static final String PROVIDER = LocationManager.GPS_PROVIDER;
 
   private Context context;
   
@@ -72,7 +74,19 @@ public class LocationMonitor implements SystemServiceEventMonitor {
       Log.i("LocationService", "Could not obtain LOCATION_SERVICE from the system.");
       return;
     }
-    lm.requestLocationUpdates(PROVIDER, MIN_PROVIDER_UPDATE_INTERVAL, MIN_PROVIDER_UPDATE_DISTANCE,
+    
+    SharedPreferences prefs = UIDbHelperStore.instance().db().getSharedPreferences();
+    String provider = null;
+    if (prefs.getBoolean(context.getString(R.string.pref_key_passive), false))
+    	provider = LocationManager.PASSIVE_PROVIDER;
+    else
+    	provider = prefs.getString(context.getString(R.string.pref_key_provider), null);
+    if (provider == null) {
+        Log.i("LocationService", "No location provider set.");
+        return;
+    }
+    
+    lm.requestLocationUpdates(provider, MIN_PROVIDER_UPDATE_INTERVAL, MIN_PROVIDER_UPDATE_DISTANCE,
         locationListener);
   }
 
