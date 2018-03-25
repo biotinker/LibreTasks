@@ -36,7 +36,23 @@
             android:summary="@string/default_notification_desc"
             android:title="@string/default_notification" />
     </PreferenceScreen>
-     
+
+    <!-- Location related preferences on their own screen -->
+    <PreferenceScreen 
+        android:title="@string/location"
+        android:summary="@string/location_desc" >
+        <CheckBoxPreference
+            android:key="@string/pref_key_passive"
+            android:defaultValue="false"
+            android:summary="@string/passive_desc"
+            android:title="@string/passive_enabled" />
+        <ListPreference
+            android:key="@string/pref_key_provider"
+            android:defaultValue="gps"
+            android:summary="@string/provider_desc"
+            android:title="@string/provider" />
+    </PreferenceScreen>
+    
     <PreferenceScreen 
         android:title="@string/signature_settings"
         android:summary="@string/signature_desc" >

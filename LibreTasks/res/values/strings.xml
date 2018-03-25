@@ -196,6 +196,12 @@
     <string name="notification">Notifications</string>
     <string name="default_notification_desc">Set notifications on by default</string>
     <string name="default_notification">Notifications</string>
+    <string name="location_desc">Configure how LibreTasks obtains the current location</string>
+    <string name="location">Location provider settings</string>
+    <string name="passive_desc">Saves battery, but location rules may not work reliably</string>
+    <string name="passive_enabled">Use passive location</string>
+    <string name="provider_desc">Provider to poll for location updates</string>
+    <string name="provider">Location provider</string>
     <string name="reset_db_desc">Resetting database will clear all user data</string>
     <string name="reset_db">Reset Database</string>
     <string name="reset_settings_desc">Reset preferences to default values</string>
@@ -263,6 +269,8 @@
     <string name="pref_key_vibrate">VibrateKey</string>
     <string name="pref_key_libretasks_enabled">LibreTasksEnabled</string>
     <string name="pref_key_notification">NotificationKey</string>
+    <string name="pref_key_passive">UsePassiveLocation</string>
+    <string name="pref_key_provider">LocationProvider</string>
     <string name="pref_key_throttle">Throttle</string>
     <string name="pref_key_log_limit">LogLimit</string>
     <string name="pref_key_reset_db">ResetDb</string>

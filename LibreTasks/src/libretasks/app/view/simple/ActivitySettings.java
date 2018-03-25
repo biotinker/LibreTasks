@@ -33,12 +33,18 @@
  *******************************************************************************/
 package libretasks.app.view.simple;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -66,6 +72,24 @@ public class ActivitySettings extends PreferenceActivity implements
 
     // Get access to our preferences
     sharedPreferences = getPreferenceScreen().getSharedPreferences();
+    
+    // Populate location provider list
+    List<String> providers = ((LocationManager) this.getSystemService(Context.LOCATION_SERVICE)).getAllProviders();
+    if (providers != null) {
+    	List<CharSequence> entries = new ArrayList<CharSequence>();
+    	List<CharSequence> values = new ArrayList<CharSequence>();
+    	
+    	for (String pr: providers)
+    		if (!LocationManager.PASSIVE_PROVIDER.equals(pr)) {
+    			entries.add(pr);
+    			values.add(pr);
+    		}
+    	
+    	ListPreference providerPref = (ListPreference) findPreference(getString(R.string.pref_key_provider));
+    	
+    	providerPref.setEntries(entries.toArray(new CharSequence[]{}));
+    	providerPref.setEntryValues(values.toArray(new CharSequence[]{}));
+    }
 
     // Add a listener for Enable/Disable click
     findPreference(getString(R.string.pref_key_libretasks_enabled)).setOnPreferenceClickListener(
