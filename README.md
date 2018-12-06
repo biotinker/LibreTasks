@@ -9,17 +9,13 @@ For example, you may:
 
 LibreTasks is a fork of [Omnidroid](http://code.google.com/p/omnidroid "Omnidroid") with new features.
 
----
-
-## INSTALLATION ##
-
-Download and install from [F-Droid](https://f-droid.org/ "F-Droid".)
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/libretasks.app/)
 
 For more help, visit the [wiki](../../wiki/)
 
----
-
-## MORE INFORMATION ##
+## More Information ##
 
 * License: GPL v3
 * Forked from [Omnidroid](http://code.google.com/p/omnidroid "Omnidroid") under the Apache 2.0 License
