@@ -5,7 +5,7 @@ LibreTasks automates your Android device by triggering actions based on configur
 For example, you may:
 * pause your media when your charger is disconnected, or 
 * turn off wifi at a certain time of day.
-* [And more!](https://code.google.com/archive/p/omnidroid/wikis)
+* [And more!](https://code.google.com/archive/p/omnidroid/wikis/UserCaseCollection.wiki)
 
 LibreTasks is a fork of [Omnidroid](http://code.google.com/p/omnidroid "Omnidroid") with new features.
 
