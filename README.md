@@ -13,9 +13,9 @@ LibreTasks is a fork of [Omnidroid](http://code.google.com/p/omnidroid "Omnidroi
 
 ## INSTALLATION ##
 
-Download and install from [F-Droid](https://f-droid.org/ "F-Droid".)
+Download and [install from F-Droid](https://f-droid.org/packages/libretasks.app/).
 
-For more help, visit the [wiki](../../wiki/)
+For more help, visit the [wiki](../../wiki/).
 
 ---
 
